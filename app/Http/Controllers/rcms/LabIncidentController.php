@@ -119,6 +119,10 @@ class LabIncidentController extends Controller
         $data->extension_date_idtc=$request->extension_date_idtc;
         $data->immediate_date_ia =$request->immediate_date_ia;
         $data->capa_capa =$request->capa_capa;
+        $data->investigator_qc = $request->investigator_qc;
+        $data->qc_approved_to = $request->qc_approved_to;
+        $data->qc_review_to = $request->qc_review_to;
+        $data->suit_qc_review_to =$request->suit_qc_review_to;
 
         // $data->assign_to_qc_reviewer = $request->assign_to_qc_reviewer;
        
@@ -235,7 +239,10 @@ class LabIncidentController extends Controller
          $labnew->Incident_interval_ssfi  = $request->Incident_interval_ssfi;
          $labnew->Incident_date_analysis_ssfi = $request->Incident_date_analysis_ssfi;
          $labnew->Incident_specification_ssfi = $request->Incident_specification_ssfi;
-         $labnew->Incident_date_incidence_ssfi = $request->Incident_date_incidence_ssfi;
+         if($request->has('Incident_date_incidence_ssfi')&& $request->Incident_date_incidence_ssfi!==null){
+
+             $labnew->Incident_date_incidence_ssfi = $request->Incident_date_incidence_ssfi;
+         }
          $labnew->Incident_stp_ssfi = $request->Incident_stp_ssfi;
          $labnew->Description_incidence_ssfi = $request->Description_incidence_ssfi;
          $labnew->Detail_investigation_ssfi = $request->Detail_investigation_ssfi;
@@ -1101,6 +1108,10 @@ class LabIncidentController extends Controller
         $data->due_date_extension= $request->due_date_extension;
         $data->severity_level2= $request->severity_level2;
         $data->capa_capa =$request->capa_capa;
+        $data->investigator_qc = $request->investigator_qc;
+        $data->qc_approved_to = $request->qc_approved_to;
+        $data->qc_review_to = $request->qc_review_to;
+
 
 
         // new added 
@@ -1501,7 +1512,10 @@ class LabIncidentController extends Controller
         $labtab->stage_stage_ssfi = $request->stage_stage_ssfi;
         $labtab->Incident_stability_cond_ssfi   = $request->Incident_stability_cond_ssfi;
         $labtab->Incident_interval_ssfi  = $request->Incident_interval_ssfi;
-        $labtab->Incident_date_analysis_ssfi = $request->Incident_date_analysis_ssfi;
+        if($request->has('Incident_date_analysis_ssfi')&& $request->Incident_date_analysis_ssfi!==null){
+
+            $labtab->Incident_date_analysis_ssfi = $request->Incident_date_analysis_ssfi;
+        }
         $labtab->Incident_specification_ssfi = $request->Incident_specification_ssfi;
         $labtab->Incident_date_incidence_ssfi = $request->Incident_date_incidence_ssfi;
         $labtab->Incident_stp_ssfi = $request->Incident_stp_ssfi;
@@ -1543,6 +1557,8 @@ class LabIncidentController extends Controller
         }
         
         $labtab->save();
+
+        // dd($labtab);
        
         if (isset($data) && isset($request)) {
                     // For "Sutability" report

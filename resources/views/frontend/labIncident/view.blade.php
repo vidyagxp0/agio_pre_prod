@@ -924,54 +924,54 @@
     
                 {{-- selection field --}}
                 
-                <div class="col-md-4">
+                <div class="col-md-6">
                     <div class="group-input">
                         <label for="search">
                             Investigator(QC) <span class="text-danger"></span>
                         </label>
-                        <select id="select-state" placeholder="Select..." name="assign_to" {{ $data->stage == 0 || $data->stage == 8 ? "disabled" : "" }}>
+                        <select id="select-state" placeholder="Select..." name="investigator_qc" {{ $data->stage == 0 || $data->stage == 8 ? "disabled" : "" }}>
                             <option value="">Select a value</option>
                             @foreach ($users as $key=> $value)
-                                <option  @if ($data->assign_to == $value->id) selected @endif  value="{{ $value->id }}">{{ $value->name }}</option>
+                                <option  @if ($data->investigator_qc == $value->id) selected @endif  value="{{ $value->id }}">{{ $value->name }}</option>
                             @endforeach
                         </select>
-                        @error('assign_to')
+                        @error('investigator_qc')
                             <p class="text-danger">{{ $message }}</p>
                         @enderror
                     </div>
                 </div>
-                <div class="col-md-4">
+                <div class="col-md-6">
                     <div class="group-input">
                         <label for="search">
                             QC Review <span class="text-danger"></span>
                         </label>
-                        <select id="select-state" placeholder="Select..." name="assign_to" {{ $data->stage == 0 || $data->stage == 8 ? "disabled" : "" }}>
+                        <select id="select-state" placeholder="Select..." name="qc_review_to" {{ $data->stage == 0 || $data->stage == 8 ? "disabled" : "" }}>
                             <option value="">Select a value</option>
                             @foreach ($users as $key=> $value)
-                                <option  @if ($data->assign_to == $value->id) selected @endif  value="{{ $value->id }}">{{ $value->name }}</option>
+                                <option  @if ($data->qc_review_to == $value->id) selected @endif  value="{{ $value->id }}">{{ $value->name }}</option>
                             @endforeach
                         </select>
-                        @error('assign_to')
+                        @error('qc_review_to')
                             <p class="text-danger">{{ $message }}</p>
                         @enderror
                     </div>
                 </div>
-                 <div class="col-md-4">
+                 {{-- <div class="col-md-4">
                     <div class="group-input">
                         <label for="search">
                             QC Approved By <span class="text-danger"></span>
                         </label>
-                        <select id="select-state" placeholder="Select..." name="assign_to" {{ $data->stage == 0 || $data->stage == 8 ? "disabled" : "" }}>
+                        <select id="select-state" placeholder="Select..." name="qc_approved_to" {{ $data->stage == 0 || $data->stage == 8 ? "disabled" : "" }}>
                             <option value="">Select a value</option>
                             @foreach ($users as $key=> $value)
-                                <option  @if ($data->assign_to == $value->id) selected @endif  value="{{ $value->id }}">{{ $value->name }}</option>
+                                <option  @if ($data->qc_approved_to == $value->id) selected @endif  value="{{ $value->id }}">{{ $value->name }}</option>
                             @endforeach
                         </select>
-                        @error('assign_to')
+                        @error('qc_approved_to')
                             <p class="text-danger">{{ $message }}</p>
                         @enderror
                     </div>
-                </div>
+                </div> --}}
 
                 {{-- selection field --}}
                 
@@ -1931,14 +1931,22 @@
                                                             </div>
                             
                                                              
-                                                            <div class="col-lg-6">
-                                                                <div class="group-input" id="Incident_date_analysis">
-                                                                    <label for="Incident_date_analysis">Date Of Analysis<span
-                                                                            class="text-danger d-none">*</span></label>
-                                                                    <input type="date" name="Incident_date_analysis_ssfi" value="{{$labnew->Incident_date_analysis_ssfi}}">
+                                                            
+
+                                                            <div class="col-lg-6 new-date-data-field">
+                                                                <div class="group-input input-date">
+                                                                    <label for="Date Due"> Date Of Analysis</label>
+                                                                    <div><small class="text-primary">Please mention expected date of completion</small>
+                                                                    </div>
+                                                                    <div class="calenderauditee">
+                                                                        <input type="text" id="Incident_date_analysis_ssfi" readonly
+                                                                            placeholder="DD-MMM-YYYY" value="{{ Helpers::getdateFormat($labnew->Incident_date_analysis_ssfi) }}" />
+                                                                        <input type="date" name="Incident_date_analysis_ssfi" class="hide-input"
+                                                                            oninput="handleDateInput(this, 'Incident_date_analysis_ssfi')" />
+                                                                    </div>
                                                                 </div>
-                            
                                                             </div>
+
                                                             <div class="col-lg-6">
                                                                 <div class="group-input" id="Incident_specification_no">
                                                                     <label for="Incident_specification_no">Specification Number<span
@@ -1956,7 +1964,7 @@
                             
                                                             </div>
 
-                                                            <div class="col-md-4">
+                                                            {{-- <div class="col-md-6">
                                                                 <div class="group-input">
                                                                     <label for="search">
                                                                         Name Of Analyst<span class="text-danger"></span>
@@ -1971,7 +1979,7 @@
                                                                         <p class="text-danger">{{ $message }}</p>
                                                                     @enderror
                                                                 </div>
-                                                            </div>
+                                                            </div> --}}
                                                             {{-- <div class="col-lg-4">
                                                                 <div class="group-input">
                                                                     <label for="search">
@@ -1989,29 +1997,44 @@
                                                                 </div>
                             
                                                             </div> --}}
-                                                            <div class="col-lg-4">
+                                                            {{-- <div class="col-lg-4">
                                                                 <div class="group-input" id="Incident_date_incidence">
                                                                     <label for="Incident_date_incidence">Date Of Incidence<span
                                                                             class="text-danger d-none">*</span></label>
                                                                     <input type="date" name="Incident_date_incidence_ssfi" value="{{$labnew->Incident_date_incidence_ssfi}}">
                                                                 </div>
                             
+                                                            </div> --}}
+
+                                                            <div class="col-lg-6 new-date-data-field">
+                                                                <div class="group-input input-date">
+                                                                    <label for="Date Due"> Date Of Incidence</label>
+                                                                    <div><small class="text-primary">Please mention expected date of completion</small>
+                                                                    </div>
+                                                                    <div class="calenderauditee">
+                                                                        <input type="text" id="Incident_date_incidence_ssfi" readonly
+                                                                            placeholder="DD-MMM-YYYY" value="{{ Helpers::getdateFormat($labnew->Incident_date_incidence_ssfi) }}"/>
+                                                                        <input type="date" name="Incident_date_incidence_ssfi"  class="hide-input"
+                                                                            oninput="handleDateInput(this, 'Incident_date_incidence_ssfi')" />
+                                                                    </div>
+                                                                </div>
                                                             </div>
 
 
 
-                                                            <div class="col-md-4">
+
+                                                            <div class="col-md-6">
                                                                 <div class="group-input">
                                                                     <label for="search">
                                                                         QC Reviewer<span class="text-danger"></span>
                                                                     </label>
-                                                                    <select id="select-state" placeholder="Select..." name="assign_to" {{ $data->stage == 0 || $data->stage == 8 ? "disabled" : "" }}>
+                                                                    <select id="select-state" placeholder="Select..." name="suit_qc_review_to" {{ $data->stage == 0 || $data->stage == 8 ? "disabled" : "" }}>
                                                                         <option value="">Select a value</option>
                                                                         @foreach ($users as $key=> $value)
-                                                                            <option  @if ($data->assign_to == $value->id) selected @endif  value="{{ $value->id }}">{{ $value->name }}</option>
+                                                                            <option  @if ($data->suit_qc_review_to == $value->id) selected @endif  value="{{ $value->id }}">{{ $value->name }}</option>
                                                                         @endforeach
                                                                     </select>
-                                                                    @error('assign_to')
+                                                                    @error('suit_qc_review_to')
                                                                         <p class="text-danger">{{ $message }}</p>
                                                                     @enderror
                                                                 </div>
@@ -2062,22 +2085,7 @@
                                                             </div>
     
                                                             
-                                    <div class="col-md-4">
-                                        <div class="group-input">
-                                            <label for="search">
-                                                QC Reviewer <span class="text-danger"></span>
-                                            </label>
-                                            <select id="select-state" placeholder="Select..." name="assign_to" {{ $data->stage == 0 || $data->stage == 8 ? "disabled" : "" }}>
-                                                <option value="">Select a value</option>
-                                                @foreach ($users as $key=> $value)
-                                                    <option  @if ($data->assign_to == $value->id) selected @endif  value="{{ $value->id }}">{{ $value->name }}</option>
-                                                @endforeach
-                                            </select>
-                                            @error('assign_to')
-                                                <p class="text-danger">{{ $message }}</p>
-                                            @enderror
-                                        </div>
-                                    </div>
+                                    
                                                         {{-- <div class="col-md-6">
                                                             <div class="group-input">
                                                                   <label for="search">
@@ -2119,7 +2127,7 @@
                                                                         @endforeach
                                                                     @endif
                                                                     </div>
-                                                                    <div class="add-btn">
+                                                                    <div class="add-btn ">
                                                                         <div>Add</div>
                                                                         <input {{ $data->stage == 0 || $data->stage == 8 ? "disabled" : "" }} type="file" id="system_suitable_attachments" name="system_suitable_attachments[]"
                                                                             oninput="addMultipleFiles(this, 'system_suitable_attachments')" multiple>

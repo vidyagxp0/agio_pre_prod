@@ -600,7 +600,7 @@
                                     </div>
                                 </div>
                                 
-                                <div class="col-lg-6">
+                                {{-- <div class="col-lg-6">
                                     <div class="group-input" id="immediate_date_ia">
                                         <label for="immediate_date_ia">Analyst Sign/Date<span
                                                 class="text-danger d-none">*</span></label>
@@ -613,7 +613,7 @@
                                                 class="text-danger d-none">*</span></label>
                                         <input type="date" name="section_date_ia">
                                     </div>
-                                </div>
+                                </div> --}}
                                <div class="col-12">
                                 <div class="group-input">
                                     <label for="detail investigation ">Detail Investigation / Probable Root Cause</label>
@@ -689,13 +689,13 @@
                         <label for="search">
                             Investigator (QC) <span class="text-danger"></span>
                         </label>
-                        <select id="select-state" placeholder="Select..." name="investigator_qc_im">
+                        <select id="select-state" placeholder="Select..." name="investigator_qc">
                             <option value="">Select a value</option>
                             @foreach ($users as $data)
                                 <option value="{{ $data->id }}">{{ $data->name }}</option>
                             @endforeach
                         </select>
-                        @error('assign_to')
+                        @error('investigator_qc')
                             <p class="text-danger">{{ $message }}</p>
                         @enderror
                     </div>
@@ -705,13 +705,13 @@
                         <label for="search">
                             QC Review <span class="text-danger"></span>
                         </label>
-                        <select id="select-state" placeholder="Select..." name="investigator_qcr_im">
+                        <select id="select-state" placeholder="Select..." name="qc_review_to">
                             <option value="">Select a value</option>
                             @foreach ($users as $data)
                                 <option value="{{ $data->id }}">{{ $data->name }}</option>
                             @endforeach
                         </select>
-                        @error('assign_to')
+                        @error('qc_review_to')
                             <p class="text-danger">{{ $message }}</p>
                         @enderror
                     </div>
@@ -966,19 +966,48 @@
                           </div>
 
                        
-                          <div class="col-6">
+                          {{-- <div class="col-6">
                              <div class="group-input">
-                              <label for="extension date">Extension Date (if required)</label>
+                              <label for="extension date">Extension Date</label>
                                <input type="date" name="extension_date__tc" id="extension_date__tc">
                              </div>
-                          </div>
+                          </div> --}}
+
+                          <div class="col-lg-6 new-date-data-field">
+                            <div class="group-input input-date">
+                                <label for="Date Due"> Extension Date</label>
+                                <div><small class="text-primary">Please mention expected date of completion</small>
+                                </div>
+                                <div class="calenderauditee">
+                                    <input type="text" id="extension_date__tc" readonly
+                                        placeholder="DD-MMM-YYYY"/>
+                                    <input type="date" name="extension_date__tc"  class="hide-input"
+                                        oninput="handleDateInput(this, 'extension_date__tc')"  />
+                                </div>
+                            </div>
+                        </div>
                         
-                             <div class="col-6">
+                             {{-- <div class="col-6">
                                  <div class="group-input">
                                  <label for="extension date">Extension Initiator Date</label>
                                  <input type="date" name="extension_date_idtc" id="extension_date_idtc">
                                  </div>
-                             </div>
+                             </div> --}}
+
+
+                             <div class="col-lg-6 new-date-data-field">
+                                <div class="group-input input-date">
+                                    <label for="Date Due"> Extension Initiator Date</label>
+                                    <div><small class="text-primary">Please mention expected date of completion</small>
+                                    </div>
+                                    <div class="calenderauditee">
+                                        <input type="text" id="extension_date_idtc" readonly
+                                            placeholder="DD-MMM-YYYY"/>
+                                        <input type="date" name="extension_date_idtc" class="hide-input"
+                                            oninput="handleDateInput(this, 'extension_date_idtc')"  />
+                                    </div>
+                                </div>
+                            </div>
 
 
                              {{-- check --}}
@@ -1545,13 +1574,28 @@
                                                         </div>
                         
                                                          
-                                                        <div class="col-lg-6">
+                                                        {{-- <div class="col-lg-6">
                                                             <div class="group-input" id="Incident_date_analysis">
-                                                                <label for="Incident_date_analysis">Date Of Analysis<span
+                                                                <label for="Due date">Date Of Analysis<span
                                                                         class="text-danger d-none">*</span></label>
-                                                                <input type="date" name="Incident_date_analysis_ssfi">
+                                                               
+                                                               <div class="calenderauditee"><input type="date" name="Incident_date_analysis_ssfi"></div>
                                                             </div>
                         
+                                                        </div> --}}
+
+                                                        <div class="col-lg-6 new-date-data-field">
+                                                            <div class="group-input input-date">
+                                                                <label for="Date Due"> Date Of Analysis</label>
+                                                                <div><small class="text-primary">Please mention expected date of completion</small>
+                                                                </div>
+                                                                <div class="calenderauditee">
+                                                                    <input type="text" id="Incident_date_analysis" readonly
+                                                                        placeholder="DD-MMM-YYYY"/>
+                                                                    <input type="date" name="Incident_date_analysis"  class="hide-input"
+                                                                        oninput="handleDateInput(this, 'Incident_date_analysis')"  />
+                                                                </div>
+                                                            </div>
                                                         </div>
                                                         <div class="col-lg-6">
                                                             <div class="group-input" id="Incident_specification_no">
@@ -1570,27 +1614,41 @@
                         
                                                         </div>
                                                         
-                                                        <div class="col-lg-4">
+                                                        {{-- <div class="col-lg-4">
                                                             <div class="group-input" id="Incident_date_incidence">
-                                                                <label for="Incident_date_incidence">Date Of Incidence<span
+                                                                <label for="Incident_date_incidence"><span
                                                                         class="text-danger d-none">*</span></label>
                                                                 <input type="date" name="Incident_date_incidence_ssfi">
                                                             </div>
                         
+                                                        </div> --}}
+
+                                                        <div class="col-lg-6 new-date-data-field">
+                                                            <div class="group-input input-date">
+                                                                <label for="Date Due"> Date Of Incidence</label>
+                                                                <div><small class="text-primary">Please mention expected date of completion</small>
+                                                                </div>
+                                                                <div class="calenderauditee">
+                                                                    <input type="text" id="Incident_date_incidence_ssfi" readonly
+                                                                        placeholder="DD-MMM-YYYY"/>
+                                                                    <input type="date" name="Incident_date_incidence_ssfi"  class="hide-input"
+                                                                        oninput="handleDateInput(this, 'Incident_date_incidence_ssfi')"  />
+                                                                </div>
+                                                            </div>
                                                         </div>
 
-                                                        <div class="col-lg-4">
+                                                        <div class="col-lg-6">
                                                             <div class="group-input">
                                                                 <label for="search">
                                                                     QC Reviewer <span class="text-danger"></span>
                                                                 </label>
-                                                                <select id="select-state" placeholder="Select..." name="assign_to">
+                                                                <select id="select-state" placeholder="Select..." name="suit_qc_review_to">
                                                                     <option value="">Select a value</option>
                                                                     @foreach ($users as $data)
                                                                         <option value="{{ $data->id }}">{{ $data->name }}</option>
                                                                     @endforeach
                                                                 </select>
-                                                                @error('assign_to')
+                                                                @error('suit_qc_review_to')
                                                                     <p class="text-danger">{{ $message }}</p>
                                                                 @enderror
                                                             </div>
@@ -1640,7 +1698,7 @@
                         
                                                         </div>
 
-                                                        <div class="col-md-6">
+                                                        {{-- <div class="col-md-6">
                                                             <div class="group-input">
                                                                   <label for="search">
                                                               Investigator(QC) <span class="text-danger"></span>
@@ -1655,24 +1713,24 @@
                                                               <p class="text-danger">{{ $message }}</p>
                                                             @enderror
                                                                      </div>
-                                                    </div>
+                                                    </div> --}}
 
-                                                    <div class="col-md-6">
+                                                    {{-- <div class="col-md-6">
                                                         <div class="group-input">
                                                               <label for="search">
                                                           Reviewed By(QC) <span class="text-danger"></span>
                                                         </label>
-                                                        <select id="select-state" placeholder="Select..." name="assign_to">
+                                                        <select id="select-state" placeholder="Select..." name="suit_review_to">
                                                           <option value="">Select a value</option>
                                                           @foreach ($users as $data)
                                                               <option value="{{ $data->id }}">{{ $data->name }}</option>
                                                           @endforeach
                                                        </select>
-                                                        @error('assign_to')
+                                                        @error('suit_review_to')
                                                           <p class="text-danger">{{ $message }}</p>
                                                         @enderror
                                                                  </div>
-                                                </div>
+                                                </div> --}}
                                                 <div class="col-lg-12">
                                                     <div class="group-input">
                                                         <label for="system_suitable_attachments">File Attachment</label>
