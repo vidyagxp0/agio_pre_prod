@@ -153,10 +153,10 @@
                                         <td>{{Helpers::getDivisionName($capalog->division_id) }}/CP/{{ date('Y') }}/{{ str_pad($capalog->record, 4, '0', STR_PAD_LEFT)}}</td>
                                         <td>{{$capalog->short_description}}</td>
                                         <td>{{Auth::user()->name}}</td>
-                                        <td>{{$capalog->Initiator_Group}} </td>
+                                        <td>{{$capalog->initiator_Group}} </td>
                                         <td>{{Helpers::getDivisionName(session()->get('division'))}}</td>
                                         <td>{{$capalog->capa_type}}</td>
-                                        <td>{{$capalog->id}}</td>
+                                        <td>{{ $capalog->parent_type ?? 'null' }}</td>
                                         <td>{{$capalog->due_date}}</td>
                                         <td>{{$capalog->status}}</td>
 

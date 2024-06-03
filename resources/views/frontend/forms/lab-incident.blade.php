@@ -56,9 +56,14 @@
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="RLS Record Number"><b>Record Number</b></label>
-                                        <input disabled type="text" name="record_number"
-                                            value="{{ Helpers::getDivisionName(session()->get('division')) }}/LI/{{ date('Y') }}/{{ $record_number }}">
-                                        {{-- <div class="static">QMS-EMEA/CAPA/{{ date('Y') }}/{{ $record_number }}</div> --}}
+                                        <input disabled type="text" name="record_number" id="record_number" 
+                                            value="---/LI/{{ date('y') }}/{{ $record_number }}">
+                                            {{-- <span id="record_number_suffix"></span> --}}
+                                      
+                                            {{-- <div class="static">QMS-EMEA/CAPA/{{ date('Y') }}/{{ $record_number }}</div> --}}
+                                        {{-- <input disabled type="text" name="record_number"
+                                        value="{{ Helpers::getDivisionName(session()->get('division')) }}/LI/{{ date('y') }}/{{ $record_number }}">
+                                    <div class="static">QMS-EMEA/CAPA/{{ date('Y') }}/{{ $record_number }}</div> --}}
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
@@ -764,317 +769,7 @@
                     
 
                   
-                    {{-- extension --}}
-                    <div id="CCForm3" class="inner-block cctabcontent">
-                       <div class="inner-block-content">
-                        <div class="row">
-                            <div class="group-input">
-                                <div class="col-12 sub-head">
-                                    First Extension
-                                </div>
-
-                            </div>
-
-                            <div class="col-12">
-                                <div class="group-input">
-                                    <label for="Incident Details">Reason For Extension</label>
-                                    <textarea name="reasoon_for_extension_e"></textarea>
-                                </div>
-                            </div>
-
-                            {{-- <div class="col-6">
-                                <div class="group-input">
-                                    <label for="extension_date">Extension Date (if required)</label>
-                                    <input type="date" name="extension_date_esc" id="extension_date">
-                                </div>
-                            </div> --}}
-
-                            <div class="col-md-6 new-date-data-field">
-                                <div class="group-input input-date">
-                                    <label for="extension_date_esc">Extension Date <span class="text-danger"></span></label>
-                                    
-                                    <div class="calenderauditee">
-                                        <input type="text" id="extension_date_esc_display" readonly
-                                            placeholder="DD-MMM-YYYY"/>
-                                        <input type="date" name="extension_date_esc" id="extension_date_esc" class="hide-input" oninput="handleDateInput(this, 'extension_date_esc_display')" />
-                                    </div>
-                                </div>
-                            </div>
-
-
-     
-                               
-                            {{-- <div class="col-6">
-                                <div class="group-input">
-                                <label for="extension date">Extension Initiator Date</label>
-                                <input type="date" name="extension_date_initiator" id="extension_date">
-                                </div>
-                            </div> --}}
-
-                            <div class="col-md-6 new-date-data-field">
-                                <div class="group-input input-date">
-                                    <label for="extension_date_initiator">Extension Initiator Date <span class="text-danger"></span></label>
-                                    
-                                    <div class="calenderauditee">
-                                        <input type="text" id="extension_date_initiator_display" readonly
-                                            placeholder="DD-MMM-YYYY"/>
-                                        <input type="date" name="extension_date_initiator" id="extension_date_initiator" class="hide-input" oninput="handleDateInput(this, 'extension_date_initiator_display')" />
-                                    </div>
-                                </div>
-                            </div>
-
-
-                            <div class="col-md-12">
-                                <div class="group-input">
-                                    <label for="search">
-                                    Extension HOD <span class="text-danger"></span>
-                                    </label>
-                                    <select id="select-state" placeholder="Select..." name="assign_to">
-                                        <option value="">Select a value</option>
-                                        @foreach ($users as $data)
-                                            <option value="{{ $data->id }}">{{ $data->name }}</option>
-                                        @endforeach
-                                    </select>
-                                    @error('assign_to')
-                                        <p class="text-danger">{{ $message }}</p>
-                                    @enderror
-                             </div>
-                            </div>
-                            {{-- <div class="col-md-6">
-                                <div class="group-input">
-                                    <label for="search">
-                                    Extension Approved By<span class="text-danger"></span>
-                                    </label>
-                                    <select id="select-state" placeholder="Select..." name="assign_to">
-                                        <option value="">Select a value</option>
-                                        @foreach ($users as $data)
-                                            <option value="{{ $data->id }}">{{ $data->name }}</option>
-                                        @endforeach
-                                    </select>
-                                    @error('assign_to')
-                                        <p class="text-danger">{{ $message }}</p>
-                                    @enderror
-                                </div>
-                            </div> --}}
-
-                            
-
-
-                          </div>
-                          <div class="row">
-                               <div class="group-input">
-                                     <div class="col-12 sub-head">
-                                   Second Extension
-                                   </div>
-                               </div>
-                             <div class="col-12">
-                                 <div class="group-input">
-                                <label for="reason for extension sc">Reason For Extension</label>
-                                <textarea name="reasoon_for_extension_esc"></textarea>
-                                </div>
-                             </div>
-
-                          
-                             {{-- <div class="col-6">
-                                <div class="group-input">
-                                 <label for="extension date">Extension Date (if required)</label>
-                                  <input type="date" name="extension_date_e" id="extension_date__sc">
-                                </div>
-                             </div>
-                            --}}
-
-
-
-                            <div class="col-md-6 new-date-data-field">
-                                <div class="group-input input-date">
-                                    <label for="extension_date_e">Extension Date <span class="text-danger"></span></label>
-                                    
-                                    <div class="calenderauditee">
-                                        <input type="text" id="extension_date_e_display" readonly
-                                            placeholder="DD-MMM-YYYY"/>
-                                        <input type="date" name="extension_date_e" id="extension_date_e" class="hide-input" oninput="handleDateInput(this, 'extension_date_e_display')" />
-                                    </div>
-                                </div>
-                            </div>
-                                {{-- <div class="col-6">
-                                    <div class="group-input">
-                                    <label for="extension date">Extension Initiator Date</label>
-                                    <input type="date" name="extension_date_idsc" id="extension_date_idsc">
-                                    </div>
-                                </div> --}}
-
-                                <div class="col-md-6 new-date-data-field">
-                                    <div class="group-input input-date">
-                                        <label for="extension_date_idsc">Extension Initiator Date <span class="text-danger"></span></label>
-                                        
-                                        <div class="calenderauditee">
-                                            <input type="text" id="extension_date_idsc_display" readonly
-                                                placeholder="DD-MMM-YYYY"/>
-                                            <input type="date" name="extension_date_idsc" id="extension_date_idsc" class="hide-input" oninput="handleDateInput(this, 'extension_date_idsc_display')" />
-                                        </div>
-                                    </div>
-                                </div>
-
-
-                                    <div class="col-md-12">
-                                        <div class="group-input">
-                                            <label for="search">
-                                            Extension HOD <span class="text-danger"></span>
-                                            </label>
-                                            <select id="select-state" placeholder="Select..." name="assign_to">
-                                                <option value="0">Select a value</option>
-                                                @foreach ($users as $data)
-                                                    <option value="{{ $data->id }}">{{ $data->name }}</option>
-                                                @endforeach
-                                            </select>
-                                            @error('assign_to')
-                                                <p class="text-danger">{{ $message }}</p>
-                                            @enderror
-                                    </div>
-                                     </div>
-                                    {{-- <div class="col-md-6">
-                                        <div class="group-input">
-                                            <label for="search">
-                                            Extension Approved By<span class="text-danger"></span>
-                                            </label>
-                                            <select id="select-state" placeholder="Select..." name="assign_to">
-                                                <option value="">Select a value</option>
-                                                @foreach ($users as $data)
-                                                    <option value="{{ $data->id }}">{{ $data->name }}</option>
-                                                @endforeach
-                                            </select>
-                                            @error('assign_to')
-                                                <p class="text-danger">{{ $message }}</p>
-                                            @enderror
-                                        </div>
-                                    </div> --}}
-                          </div>
-
-                          {{-- third section --}}
-
-                          <div class="row">
-                            <div class="group-input">
-                                  <div class="col-12 sub-head">
-                                Third Extension
-                                </div>
-                            </div>
-                          <div class="col-12">
-                              <div class="group-input">
-                             <label for="reason for extension tc">Reason For Extension</label>
-                             <textarea name="reasoon_for_extension_tc"></textarea>
-                             </div>
-                          </div>
-
-                       
-                          {{-- <div class="col-6">
-                             <div class="group-input">
-                              <label for="extension date">Extension Date</label>
-                               <input type="date" name="extension_date__tc" id="extension_date__tc">
-                             </div>
-                          </div> --}}
-
-                          <div class="col-lg-6 new-date-data-field">
-                            <div class="group-input input-date">
-                                <label for="Date Due"> Extension Date</label>
-                                <div><small class="text-primary">Please mention expected date of completion</small>
-                                </div>
-                                <div class="calenderauditee">
-                                    <input type="text" id="extension_date__tc" readonly
-                                        placeholder="DD-MMM-YYYY"/>
-                                    <input type="date" name="extension_date__tc"  class="hide-input"
-                                        oninput="handleDateInput(this, 'extension_date__tc')"  />
-                                </div>
-                            </div>
-                        </div>
-                        
-                             {{-- <div class="col-6">
-                                 <div class="group-input">
-                                 <label for="extension date">Extension Initiator Date</label>
-                                 <input type="date" name="extension_date_idtc" id="extension_date_idtc">
-                                 </div>
-                             </div> --}}
-
-
-                             <div class="col-lg-6 new-date-data-field">
-                                <div class="group-input input-date">
-                                    <label for="Date Due"> Extension Initiator Date</label>
-                                    <div><small class="text-primary">Please mention expected date of completion</small>
-                                    </div>
-                                    <div class="calenderauditee">
-                                        <input type="text" id="extension_date_idtc" readonly
-                                            placeholder="DD-MMM-YYYY"/>
-                                        <input type="date" name="extension_date_idtc" class="hide-input"
-                                            oninput="handleDateInput(this, 'extension_date_idtc')"  />
-                                    </div>
-                                </div>
-                            </div>
-
-
-                             {{-- check --}}
-                             
-
-
-                             {{-- check --}}
-
-
-                                 <div class="col-md-6">
-                                     <div class="group-input">
-                                         <label for="search">
-                                        Extension Approved By QA <span class="text-danger"></span>
-                                         </label>
-                                         <select id="select-state" placeholder="Select..." name="assign_to">
-                                             <option value="0">Select a value</option>
-                                             @foreach ($users as $data)
-                                                 <option value="{{ $data->id }}">{{ $data->name }}</option>
-                                             @endforeach
-                                         </select>
-                                         @error('assign_to')
-                                             <p class="text-danger">{{ $message }}</p>
-                                         @enderror
-                                 </div>
-                                  </div>
-                                 <div class="col-md-6">
-                                     <div class="group-input">
-                                         <label for="search">
-                                         Extension Approved By CQA<span class="text-danger"></span>
-                                         </label>
-                                         <select id="select-state" placeholder="Select..." name="assign_to">
-                                             <option value="">Select a value</option>
-                                             @foreach ($users as $data)
-                                                 <option value="{{ $data->id }}">{{ $data->name }}</option>
-                                             @endforeach
-                                         </select>
-                                         @error('assign_to')
-                                             <p class="text-danger">{{ $message }}</p>
-                                         @enderror
-                                     </div>
-                                 </div>
-                       </div>
-                       <div class="col-12">
-                        <div class="group-input">
-                            <label for="Attachments">Extension Attachments</label>
-                            <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
-                            <div class="file-attachment-field">
-                                <div class="file-attachment-list" id="extension_attachments_e"></div>
-                                <div class="add-btn">
-                                    <div>Add</div>
-                                    <input type="file" id="myfile" name="extension_attachments_e[]"
-                                        oninput="addMultipleFiles(this, 'extension_attachments_e')" multiple>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="button-block">
-                        <button type="submit" class="saveButton">Save</button>
-                        <button type="button" class="backButton" onclick="previousStep()">Back</button>
-                        <button type="button" class="nextButton" onclick="nextStep()">Next</button>
-                        <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"> Exit </a> </button>
-                    </div>
-                    
-                
-
-                       </div>
-                    </div>
+                   
                     
                     
                     
@@ -2225,6 +1920,31 @@
             }
         }
     </script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+    var originalRecordNumber = document.getElementById('record_number').value;
+    var initialPlaceholder = '---';
+
+    document.getElementById('initiator_group').addEventListener('change', function() {
+        var selectedValue = this.value;
+        var recordNumberElement = document.getElementById('record_number');
+        var initiatorGroupCodeElement = document.getElementById('initiator_group_code');
+
+        // Update the initiator group code
+        initiatorGroupCodeElement.value = selectedValue;
+
+        // Update the record number by replacing the initial placeholder with the selected initiator group code
+        var newRecordNumber = originalRecordNumber.replace(initialPlaceholder, selectedValue);
+        recordNumberElement.value = newRecordNumber;
+
+        // Update the original record number to keep track of changes
+        originalRecordNumber = newRecordNumber;
+        initialPlaceholder = selectedValue;
+    });
+});
+
+    </script>
+
 
 <script>
     document.getElementById('initiator_group').addEventListener('change', function() {

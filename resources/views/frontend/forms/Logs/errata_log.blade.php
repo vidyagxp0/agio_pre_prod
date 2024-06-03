@@ -163,7 +163,7 @@
                                             <td>{{$logs->type_of_error}}</td>
                                             <td>{{$logs->Date_and_time_of_correction}}</td>
                                             <td>{{$logs->due_date}}</td>
-                                            <td></td>
+                                            <td>{{$logs->qa_head_approval_completed_on}}</td>
                                             <td>{{$logs->status}}</td>
                                             
                                         </tr>

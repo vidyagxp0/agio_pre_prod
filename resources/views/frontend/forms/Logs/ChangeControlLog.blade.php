@@ -153,12 +153,12 @@
                                             <td>{{$loop->index+1}}</td>
                                             <td>{{$control->intiation_date}}</td>
                                             <td>{{ Helpers::getDivisionName($control->division_id) }}/CC/{{ date('Y') }}/{{ str_pad($control->record, 4, '0', STR_PAD_LEFT) }}</td>
-                                            <td>{{$control->division_id}}</td>
+                                            <td>{{Helpers::getDivisionName(session()->get('division'))}}</td>
                                             <td>{{$control->initiator_group_code}}</td>
                                             <td>{{ Auth::user()->name }}</td>
                                             <td>{{$control->short_description}}</td>
                                             <td>{{$control->proposed_change}}</td>
-                                            <td>{{$control->nature_change}}</td>
+                                            <td>{{$control->doc_change}}</td>
                                             <td></td>
                                             <td></td>
                                             <td>{{$control->due_date}}</td>

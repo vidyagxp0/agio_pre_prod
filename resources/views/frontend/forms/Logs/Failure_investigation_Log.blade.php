@@ -156,7 +156,7 @@
                                             <td>{{$failurelog->Initiator_Group}}</td>
                                             <td>{{Helpers::getDivisionName(session()->get('division'))}}</td>
                                             <td>{{$failurelog->due_date}}</td>
-                                            <td></td>
+                                            <td>{{$failurelog->QA_final_approved_on}}</td>
                                             <td>{{$failurelog->status}}</td>
                                            
                                             
