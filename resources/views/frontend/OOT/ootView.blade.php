@@ -74,10 +74,8 @@
                                 href="{{ url('rcms/oot_audit_history', $data->id) }}"> Audit Trail </a> </button>
 
                         @if ($data->stage == 1 && (in_array(3, $userRoleIds) || in_array(18, $userRoleIds)))
-                            <button class="button_theme1" data-bs-toggle="modal"
-                                data-bs-target="#signature-modal">Submit</button>
-                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#cancel-modal"> Cancel
-                            </button>
+                            <button class="button_theme1" data-bs-toggle="modal"data-bs-target="#signature-modal">Submit</button>
+                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#cancel-modal"> Cancel </button>
                         @elseif($data->stage == 2 && (in_array([4, 14], $userRoleIds) || in_array(18, $userRoleIds)))
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#rejection-modal">Request
                                 More Info</button>
@@ -144,7 +142,7 @@
                             @endif
 
                             @if ($data->stage >= 5)
-                                <div class="active">Pending Extended Investigation</div>
+                                 <div class="active">Pending Extended Investigation</div>
                             @else
                                 <div class=""> Pending Extended Investigation</div>
                             @endif
@@ -223,8 +221,9 @@
                             <div class="col-lg-6">
                                 <div class="group-input">
                                     <label for="record_number"><b>Record Number</b></label>
-                                    <input disabled type="text"
-                                        value="{{ Helpers::getDivisionName($data->division_id) }}/OOT/{{ date('Y') }}/{{ str_pad($data->record_number, 4, '0', STR_PAD_LEFT) }}">
+                                    <input disabled type="text" name="record_number" id="record_number" 
+                                            value="{{$data->initiator_group_code}}/LI/{{ date('y') }}/{{ $record_number}}">
+                                        
                                 </div>
                             </div>
                             <div class="col-lg-6">
@@ -426,7 +425,6 @@
                                 </div>
                             </div>
 
-
                             <div class="col-12">
                                 <div class="group-input">
                                     <label class="mt-4" for="Audit Comments"> Repeat Nature</label>
@@ -450,18 +448,14 @@
                                 </div>
                             </div>
 
-
                             <div class="col-lg-6">
                                 <div class="group-input">
                                     <label>OOT Occured On</label>
-                                
                                     <input type="hidden" value="{{ $occuredDate }}" name="oot_occured_on">
                                     <input disabled type="text" value="{{ $occuredDate }}" name="oot_occured_on">
                                     <input type="hidden" value="{{ Helpers::getdateFormat($data->oot_occured_on) }}" name="oot_occured_on">
                                 </div>
                             </div>
-
-
 
                             <div class="col-12">
                                 <div class="group-input">
@@ -488,6 +482,7 @@
                                         value="{{ $data->investigation_details }}">{{ $data->investigation_details }} </textarea>
                                 </div>
                             </div>
+
                             <div class="col-12">
                                 <div class="group-input">
                                     <label class="mt-4" for="Audit Comments">Comments</label>
@@ -495,19 +490,17 @@
                                 </div>
                             </div>
 
-
                             <div class="col-lg-6">
                                 <div class="group-input">
-                                    <label for="Reference Recored">Refrence Record<span
-                                            class="text-danger"></span></label>
-                                    <select id="reference" name="reference">
-                                        <option>---select---</option>
-                                        <option value="1" @if ($data->reference == '1') selected @endif>1
-                                        </option>
-
-                                        <option value="2" @if ($data->reference == '2') selected @endif>2
-                                        </option>
-
+                                    <label for="Reference Recored">Refrence Record<span  class="text-danger"></span></label>
+                                    <select {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}
+                                        multiple id="reference" name="reference[]"
+                                        id="">
+                                        @foreach ($old_record as $new)
+                                            <option value="{{ $new->id }}"{{ in_array($new->id, explode(',', $data->reference)) ? 'selected' : '' }}>
+                                                {{ Helpers::getDivisionName($new->division_id) }}/OOT/{{ date('Y') }}/{{ Helpers::recordFormat($new->record_number) }}
+                                            </option>
+                                        @endforeach
                                     </select>
                                 </div>
                             </div>
@@ -594,16 +587,52 @@
                                                             <input type="text" class="numberDetail"
                                                                 name="product_materiel[{{ $loop->index }}][a_r_number]"value="{{ isset($gridData['a_r_number']) ? $gridData['a_r_number'] : '' }}">
                                                         </td>
-                                                        <td>
+                                                        {{-- <td>
                                                             <input type="date" class="numberDetail"
-                                                                name="product_materiel[{{ $loop->index }}][m_f_g_date]"
-                                                                value="{{ isset($gridData['m_f_g_date']) ? $gridData['m_f_g_date'] : '' }}">
-                                                        </td>
-
+                                                                name="product_materiel[{{ $loop->index }}][m_f_g_date]" value="{{ isset($gridData['m_f_g_date']) ?  $gridData['m_f_g_date'] : '' }}">
+                                                        </td> --}}
+                                                         <td>
+                                                            <div class="col-md-6 new-date-data-field">
+                                                                <div class="group-input input-date">
+                                                                    <div class="calenderauditee">
+                                                                        @if (is_array($gridData) && array_key_exists('m_f_g_date', $gridData))
+                                                                            <input type="text" id="product_materiel[{{ $loop->index }}][m_f_g_date]" value="{{ Helpers::getdateFormat($gridData['m_f_g_date']) }}" readonly placeholder="DD-MM-YYYY" />
+                                                                            <input type="date" name="product_materiel[{{ $loop->index }}][m_f_g_date]" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" value=""
+                                                                            class="hide-input"
+                                                                            oninput="handleDateInput(this, 'product_materiel[{{ $loop->index }}][m_f_g_date]')"/>
+                                                                        @else
+                                                                            <input type="text" id="product_materiel[{{ $loop->index }}][m_f_g_date]" value="" readonly placeholder="DD-MM-YYYY" />
+                                                                            <input type="date" name="product_materiel[{{ $loop->index }}][m_f_g_date]" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" value=""
+                                                                            class="hide-input"
+                                                                            oninput="handleDateInput(this, 'product_materiel[{{ $loop->index }}][m_f_g_date]')"/>
+                                                                        @endif
+                                                                    </div>
+                                                                </div>
+                                                            </div>   
+                                                         </td>
                                                         <td>
-                                                            <input type="date" class="numberDetail"
+                                                            {{-- <input type="date" class="numberDetail"
                                                                 name="product_materiel[{{ $loop->index }}][expiry_date]"
-                                                                value="{{ isset($gridData['expiry_date']) ? $gridData['expiry_date'] : '' }}">
+                                                                value="{{ isset($gridData['expiry_date']) ? $gridData['expiry_date'] : '' }}" min="{{ \Carbon\Carbon::now()->format('d-M-Y') }}" class="hide-input"
+                                                                oninput="handleDateInput(this, 'expiry_date')"> --}}
+
+                                                                <div class="col-md-6 new-date-data-field">
+                                                                    <div class="group-input input-date">
+                                                                        <div class="calenderauditee">
+                                                                            @if (is_array($gridData) && array_key_exists('expiry_date', $gridData))
+                                                                                <input type="text" id="product_materiel[{{ $loop->index }}][expiry_date]" value="{{ Helpers::getdateFormat($gridData['expiry_date']) }}" readonly placeholder="DD-MM-YYYY" />
+                                                                                <input type="date" name="product_materiel[{{ $loop->index }}][expiry_date]" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" value=""
+                                                                                class="hide-input"
+                                                                                oninput="handleDateInput(this, 'product_materiel[{{ $loop->index }}][expiry_date]')"/>
+                                                                            @else
+                                                                                <input type="text" id="product_materiel[{{ $loop->index }}][expiry_date]" value="" readonly placeholder="DD-MM-YYYY" />
+                                                                                <input type="date" name="product_materiel[{{ $loop->index }}][expiry_date]" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" value=""
+                                                                                class="hide-input"
+                                                                                oninput="handleDateInput(this, 'product_materiel[{{ $loop->index }}][expiry_date]')"/>
+                                                                            @endif
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
                                                         </td>
 
                                                         <td>
@@ -1087,13 +1116,49 @@
                                                                 value="{{ isset($gridData['batch_no']) ? $gridData['batch_no'] : '' }}">
                                                         </td>
                                                         <td>
-                                                            <input type="date" class="numberDetail"
+                                                            {{-- <input type="date" class="numberDetail"
                                                                 name="info_product[{{ $loop->index }}][mfg_date]"
-                                                                value="{{ isset($gridData['mfg_date']) ? $gridData['mfg_date'] : '' }}">
+                                                                value="{{ isset($gridData['mfg_date']) ? $gridData['mfg_date'] : '' }}" min="{{ \Carbon\Carbon::now()->format('d-M-Y') }}" class="hide-input"
+                                                                oninput="handleDateInput(this, 'mfg_date')"> --}}
+
+                                                                <div class="col-md-6 new-date-data-field">
+                                                                    <div class="group-input input-date">
+                                                                        <div class="calenderauditee">
+                                                                            @if (is_array($gridData) && array_key_exists('m_f_g_date', $gridData))
+                                                                                <input type="text" id="info_product[{{ $loop->index }}][m_f_g_date]" value="{{ Helpers::getdateFormat($gridData['m_f_g_date']) }}" readonly placeholder="DD-MMM-YYYY"/>
+                                                                                <input type="date" name="info_product[{{ $loop->index }}][m_f_g_date]" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" value=""
+                                                                                class="hide-input"
+                                                                                oninput="handleDateInput(this, 'info_product[{{ $loop->index }}][m_f_g_date]')"/>
+                                                                            @else
+                                                                                <input type="text" id="info_product[{{ $loop->index }}][m_f_g_date]" value="" readonly placeholder="DD-MMM-YYYY" />
+                                                                                <input type="date" name="info_product[{{ $loop->index }}][m_f_g_date]" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" value=""
+                                                                                class="hide-input"
+                                                                                oninput="handleDateInput(this, 'info_product[{{ $loop->index }}][m_f_g_date]')"/>
+                                                                            @endif
+                                                                        </div>
+                                                                    </div>
+                                                                </div> 
                                                         </td>
                                                         <td>
-                                                            <input type="date" class="numberDetail"
-                                                                name="info_product[{{ $loop->index }}][exp_date]"value="{{ isset($gridData['exp_date']) ? $gridData['exp_date'] : '' }}">
+                                                            {{-- <input type="date" class="numberDetail"
+                                                                name="info_product[{{ $loop->index }}][exp_date]"value="{{ isset($gridData['exp_date']) ? $gridData['exp_date'] : '' }}"min="{{ \Carbon\Carbon::now()->format('d-M-Y') }}" class="hide-input"
+                                                                oninput="handleDateInput(this, 'exp_date')" > --}}
+
+                                                                <div class="col-md-6 new-date-data-field">
+                                                                    <div class="group-input input-date">
+                                                                        <div class="calenderauditee">
+                                                                            @if (is_array($gridData) && array_key_exists('exp_date', $gridData))
+                                                                                <input type="text" id="exp_date[{{ $loop->index }}][exp_date]" value="{{ Helpers::getdateFormat($gridData['exp_date']) }}" readonly placeholder="DD-MM-YYYY" />
+                                                                                <input type="date" name="exp_date[{{ $loop->index }}][exp_date]" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" value="" class="hide-input" oninput="handleDateInput(this, 'info_product[{{ $loop->index }}][exp_date]')"/>
+                                                                            @else
+                                                                                <input type="text" id="info_product[{{ $loop->index }}][exp_date]" value="" readonly placeholder="DD-MM-YYYY" />
+                                                                                <input type="date" name="info_product[{{ $loop->index }}][exp_date]" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" value=""
+                                                                                class="hide-input"
+                                                                                oninput="handleDateInput(this, 'info_product[{{ $loop->index }}][exp_date]')"/>
+                                                                            @endif
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
                                                         </td>
                                                         <td>
                                                             <input type="text" class="numberDetail"
@@ -4875,7 +4940,7 @@
 
     <script>
         VirtualSelect.init({
-            ele: '#reference_record, #notify_to, #stability_for'
+            ele: '#reference_record, #notify_to, #stability_for,#reference'
         });
 
         $('#summernote').summernote({
@@ -5083,8 +5148,7 @@
                         '<td><input type="date" name="info_product[' + infoProduct + '][mfg_date]"></td>' +
                         '<td><input type="date" name="info_product[' + infoProduct + '][exp_date]"></td>' +
                         '<td><input type="text" name="info_product[' + infoProduct + '][ar_number]"></td>' +
-                        '<td><input type="text" name="info_product[' + infoProduct +
-                        '][pack_style]"></td>' +
+                        '<td><input type="text" name="info_product[' + infoProduct + '][pack_style]"></td>' +
                         '<td><input type="text" name="info_product[' + infoProduct + '][frequency]"></td>' +
                         '<td><input type="text" name="info_product[' + infoProduct + '][condition]"></td>' +
                         '<td><button type="text" class="removeRowBtn">Remove</button></td>' +
@@ -5102,6 +5166,31 @@
             });
         });
     </script>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+var originalRecordNumber = document.getElementById('record_number').value;
+var initialPlaceholder = '---';
+
+document.getElementById('initiator_group').addEventListener('change', function() {
+    var selectedValue = this.value;
+    var recordNumberElement = document.getElementById('record_number');
+    var initiatorGroupCodeElement = document.getElementById('initiator_group_code');
+
+    // Update the initiator group code
+    initiatorGroupCodeElement.value = selectedValue;
+
+    // Update the record number by replacing the initial placeholder with the selected initiator group code
+    var newRecordNumber = originalRecordNumber.replace(initialPlaceholder, selectedValue);
+    recordNumberElement.value = newRecordNumber;
+
+    // Update the original record number to keep track of changes
+    originalRecordNumber = newRecordNumber;
+    initialPlaceholder = selectedValue;
+});
+});
+
+</script>
 
     <script>
         $(document).ready(function() {

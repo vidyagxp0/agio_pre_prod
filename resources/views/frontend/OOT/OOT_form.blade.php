@@ -1,9 +1,8 @@
 @extends('frontend.layout.main')
 @section('container')
-
-@php
-$users = DB::table('users')->get();
-@endphp
+    @php
+        $users = DB::table('users')->get();
+    @endphp
 
     <style>
         textarea.note-codable {
@@ -48,7 +47,7 @@ $users = DB::table('users')->get();
                 <button class="cctablinks" onclick="openCity(event, 'CCForm3')">Justification Of Delay</button>
                 <button class="cctablinks" onclick="openCity(event, 'CCForm4')">Closure Conclusion</button>
                 {{-- <button class="cctablinks" onclick="openCity(event, 'CCForm4')">Preliminary Lab Investigation Review</button>
-            <button class="cctablinks" onclick="openCity(event, 'CCForm5')">Phase II Investigation</button>
+                <button class="cctablinks" onclick="openCity(event, 'CCForm5')">Phase II Investigation</button>
             <button class="cctablinks" onclick="openCity(event, 'CCForm6')">Phase II QC Review</button>
             <button class="cctablinks" onclick="openCity(event, 'CCForm7')">Additional Testing Proposal</button>
             <button class="cctablinks" onclick="openCity(event, 'CCForm8')">OOT Conclusion</button>
@@ -80,22 +79,27 @@ $users = DB::table('users')->get();
                                 General Information
                             </div> <!-- RECORD NUMBER -->
                             <div class="row">
-                            <div class="col-lg-6">
-                                <div class="group-input">
-                                    <label for="Initiator Group">Type </label>
-                                    <select id="dynamicSelectType" name="type">
-                                        <option value="{{ route('oot.index')  }}">OOT</option>
-                                        <option value="{{ route('oos_micro.index') }}">OOS Micro</option>
-                                        <option value="{{ route('oos.index') }}">OOS Chemical</option>
-                                    </select>
+                                <div class="col-lg-6">
+                                    <div class="group-input">
+                                        <label for="Initiator Group">Type </label>
+                                        <select id="dynamicSelectType" name="type">
+                                            <option value="{{ route('oot.index') }}">OOT</option>
+                                            <option value="{{ route('oos_micro.index') }}">OOS Micro</option>
+                                            <option value="{{ route('oos.index') }}">OOS Chemical</option>
+                                        </select>
+                                    </div>
                                 </div>
-                            </div>
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="RLS Record Number"><b>Record Number</b></label>
-                                        <input disabled type="text" type="text">
+                                        <input disabled type="text" name="record_number" id="record_number"
+                                            value="---/LI/{{ date('y') }}/{{ $data }}">
+
                                     </div>
                                 </div>
+
+
+
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label disabled for="Short Description">Division Code</label>
@@ -145,9 +149,8 @@ $users = DB::table('users')->get();
                                     <div class="group-input">
                                         <label for="Short Description">Severity Level <span
                                                 class="text-danger"></span></label>
-
                                         <select name="severity_level" id="severity_level">
-                                            <option>---select---</option>
+                                            <option value="">Select Option </option>
                                             <option value="major">Major</option>
                                             <option value="minor">minor </option>
                                             <option value="critical">critical </option>
@@ -161,10 +164,12 @@ $users = DB::table('users')->get();
                                     <div class="group-input">
                                         <label for="Short Description">Initiator Group <span
                                                 class="text-danger"></span></label>
-                                        <select name="initiator_group">
-                                            <option>---select---</option>
+                                        <select name="initiator_group" id="initiator_group">
+                                            <option>Select Option </option>
                                             @foreach (Helpers::getInitiatorGroups() as $code => $initiator_group)
-                                                <option value="{{ $code }}" @if (old('initiator_group') == $code) selected @endif>{{ $initiator_group }} </option>
+                                                <option value="{{ $code }}"
+                                                    @if (old('initiator_group') == $code) selected @endif>
+                                                    {{ $initiator_group }} </option>
                                             @endforeach
                                         </select>
                                     </div>
@@ -174,8 +179,9 @@ $users = DB::table('users')->get();
                                     <div class="group-input">
                                         <label for="Short Description">Initiator Group Code <span
                                                 class="text-danger"></span></label>
-                                        <input type="text" name="initiator_group_code"  readonly>
-                                    </div> 
+                                        <input type="text" name="initiator_group_code" id="initiator_group_code"
+                                            readonly>
+                                    </div>
                                 </div>
 
                                 <div class="col-lg-12">
@@ -183,7 +189,7 @@ $users = DB::table('users')->get();
                                         <label for="Short Description">Initiated Through<span
                                                 class="text-danger"></span></label>
                                         <select name="initiated_through" id="initiated_through">
-                                            <option>---select---</option>
+                                            <option value="">Select Option </option>
                                             <option value="oos_micro">OOS Micro </option>
                                             <option value="oos_chemical">OOS Chemical </option>
                                             <option value="lab_incident">Lab Incident</option>
@@ -194,7 +200,7 @@ $users = DB::table('users')->get();
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Initiator Group"> Short Description</label>
-                                        <textarea  name="short_description" value="" required></textarea>
+                                        <textarea name="short_description" value="" required></textarea>
                                     </div>
                                 </div>
                                 <div class="col-12">
@@ -209,7 +215,7 @@ $users = DB::table('users')->get();
                                     <div class="group-input">
                                         <label for="Short Description">Is Repeat<span class="text-danger"></span></label>
                                         <select id="is_repeat" name="is_repeat">
-                                            <option>---select---</option>
+                                            <option value="">Select Option </option>
                                             <option value="yes">Yes </option>
                                             <option value="no">No </option>
                                         </select>
@@ -226,9 +232,10 @@ $users = DB::table('users')->get();
 
                                 <div class="col-lg-12">
                                     <div class="group-input">
-                                        <label for="Short Description">Nature Of Change<span class="text-danger"></span></label>
+                                        <label for="Short Description">Nature Of Change<span
+                                                class="text-danger"></span></label>
                                         <select multiple id="natureOfChange" name="nature_of_change">
-                                            <option>---select---</option>
+                                            <option value="">Select Option </option>
                                             <option value="temporary">Temporary </option>
                                             <option value="permanent">Permanent </option>
                                         </select>
@@ -236,10 +243,20 @@ $users = DB::table('users')->get();
                                 </div>
 
 
-                                <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label>OOT Occured On</label>
-                                        <input type="date" name="oot_occured_on">
+
+
+                                <div class="col-lg-12 new-date-data-field">
+                                    <div class="group-input input-date">
+                                        <label for="Due Date">OOT Occured On</label>
+                                        {{-- <div><small class="text-primary">If revising Due Date, kindly mention revision
+                                                reason in "Due Date Extension Justification" data field.</small></div> --}}
+                                        <div class="calenderauditee">
+                                            <input type="text" id="oot_occured_on" readonly
+                                                placeholder="DD-MM-YYYY" />
+                                            <input type="date" name="oot_occured_on"
+                                                min="{{ \Carbon\Carbon::now()->format('d-M-Y') }}" class="hide-input"
+                                                oninput="handleDateInput(this, 'oot_occured_on')" />
+                                        </div>
                                     </div>
                                 </div>
 
@@ -276,27 +293,25 @@ $users = DB::table('users')->get();
                                     </div>
                                 </div>
 
-                                {{-- <div class="col-lg-6">
+                                <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Reference Recored">Refrence Record<span
                                                 class="text-danger"></span></label>
-                                        <select id="reference" name="reference">
-                                            <option>---select---</option>
-                                            <option value="1">1</option>
-                                            <option value="2">2</option>
+                                        <select multiple id="reference" name="reference[]">
+                                            @foreach ($old_record as $new)
+                                                <option value="{{ $new->id }}">
+                                                    {{ Helpers::getDivisionName($new->division_id) }}/OOT/{{ date('Y') }}/{{ Helpers::recordFormat($new->record_number) }}
+                                                </option>
+                                            @endforeach
                                         </select>
                                     </div>
-                                </div> --}}
-
-
+                                </div>
 
                                 <div class="sub-head">OOT Information</div>
-
-
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label>Product Material Name</label>
-                                        <input  type="text" name="productmaterialname" />
+                                        <input type="text" name="productmaterialname" />
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
@@ -320,14 +335,16 @@ $users = DB::table('users')->get();
                                 <div class="col-lg-12">
                                     <div class="group-input">
                                         <label>Customer</label>
-                                        <input type="text" name="customer"/>
+                                        <input type="text" name="customer" />
                                     </div>
                                 </div>
 
-
                                 <div class="group-input">
-                                    <label for="audit-agenda-grid">  Product/Material  <button type="button" name="audit-agenda-grid" id="infoadd">+</button>
-                                        <span class="text-primary" data-bs-toggle="modal" data-bs-target="#observation-field-instruction-modal" style="font-size: 0.8rem; font-weight: 400; cursor: pointer;"> </span>
+                                    <label for="audit-agenda-grid"> Product/Material <button type="button"
+                                            name="audit-agenda-grid" id="infoadd">+</button>
+                                        <span class="text-primary" data-bs-toggle="modal"
+                                            data-bs-target="#observation-field-instruction-modal"
+                                            style="font-size: 0.8rem; font-weight: 400; cursor: pointer;"> </span>
                                     </label>
                                     <div class="table-responsive">
                                         <table class="table table-bordered" id="info_details">
@@ -343,12 +360,60 @@ $users = DB::table('users')->get();
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                <td><input disabled type="text" name="product_materiel[0][serial]" value="1"></td>
-                                                <td><input type="text" name="product_materiel[0][item_product_code]"></td>
+                                                <td><input disabled type="text" name="product_materiel[0][serial]"
+                                                        value="1"></td>
+                                                <td><input type="text" name="product_materiel[0][item_product_code]">
+                                                </td>
                                                 <td><input type="text" name="product_materiel[0][lot_batch_no]"></td>
                                                 <td><input type="text" name="product_materiel[0][a_r_number]">
-                                                <td><input type="date" name="product_materiel[0][m_f_g_date]"></td>
-                                                <td><input type="date" name="product_materiel[0][expiry_date]"></td>
+
+                                                    {{-- <td>
+                                                        <div class="col-md-6 new-date-data-field">
+                                                            <div class="group-input input-date">
+                                                                <div class="calenderauditee">
+                                                                    <input type="text" id="" readonly placeholder="DD-MM-YYYY" />
+                                                                    <input type="date" name="product_materiel[0][m_f_g_date]" min="{{ \Carbon\Carbon::now()->format('d-M-Y') }}" class="hide-input" oninput="handleDateInput(this, 'm_f_g_date')"/>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </td> --}}
+
+                                                <td>
+                                                    <div class="col-md-6 new-date-data-field">
+                                                        <div class="group-input input-date">
+                                                            <div class="calenderautitee">
+                                                                <input type="text" id="product_materiel_0_mfg_date"
+                                                                    placeholder="DD-MM-YYYY" readonly />
+                                                                <input type="date"
+                                                                    name="product_materiel[0][m_f_g_date]"
+                                                                    min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
+                                                                    class="hide-input"
+                                                                    oninput="handleDateInput(this, 'product_materiel_0_mfg_date')" />
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </td>
+
+                                                <td>
+                                                    <div class="col-md-6 new-date-data-field">
+                                                        <div class="group-input input-date">
+                                                            <div class="calenderautitee">
+                                                                <input type="text" id="product_materiel_0_expiry_date"
+                                                                    placeholder="DD-MM-YYYY" readonly />
+                                                                <input type="date"
+                                                                    name="product_materiel[0][expiry_date]"
+                                                                    min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
+                                                                    class="hide-input"
+                                                                    oninput="handleDateInput(this, 'product_materiel_0_expiry_date')" />
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </td>
+
+
+
+                                                {{-- <td><input type="date" name="product_materiel[0][m_f_g_date]"></td> --}}
+                                                {{-- <td><input type="date" name="product_materiel[0][expiry_date]"></td> --}}
                                                 <td><input type="text" name="product_materiel[0][label_claim]"></td>
 
                                             </tbody>
@@ -369,8 +434,8 @@ $users = DB::table('users')->get();
                                     <div class="group-input">
                                         <label for="Reference Recores">Sample Type </label>
                                         <select multiple id="reference_record" name="reference_record[]" id="">
-                                            <option>--Select---</option>
-                                            <option value="pankaj" >Pankaj</option>
+                                            <option>Select Option</option>
+                                            <option value="pankaj">Pankaj</option>
                                             <option value="gaurav">Gourav</option>
                                         </select>
                                     </div>
@@ -387,9 +452,8 @@ $users = DB::table('users')->get();
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Reference Recores">Stability For </label>
-                                        <select multiple id="stability_for" name="stability_for[]"
-                                            id="">
-                                            <option>--Select---</option>
+                                        <select multiple id="stability_for" name="stability_for[]" id="">
+                                            <option>Select Option</option>
                                             <option value="pankaj">Pankaj</option>
                                             <option value="pankaj">Gourav</option>
                                         </select>
@@ -421,13 +485,16 @@ $users = DB::table('users')->get();
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                <td><input disabled type="text" name="details_of_stability[]" value="1"></td>
+                                                <td><input disabled type="text" name="details_of_stability[]"
+                                                        value="1"></td>
 
                                                 <td><input type="text" name="details_of_stability[0][a_r_number]"></td>
                                                 <td><input type="text" name="details_of_stability[0][temprature]"></td>
                                                 <td><input type="text" name="details_of_stability[0][interval]"></td>
-                                                <td><input type="text" name="details_of_stability[0][orientation]"></td>
-                                                <td><input type="text" name="details_of_stability[0][pack_details]"></td>
+                                                <td><input type="text" name="details_of_stability[0][orientation]">
+                                                </td>
+                                                <td><input type="text" name="details_of_stability[0][pack_details]">
+                                                </td>
                                             </tbody>
                                         </table>
                                     </div>
@@ -472,7 +539,8 @@ $users = DB::table('users')->get();
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                <td><input disabled type="text" name="oot_result[]" value="1"></td>
+                                                <td><input disabled type="text" name="oot_result[]" value="1">
+                                                </td>
                                                 <td><input type="text" name="oot_result[0][a_r_number]"></td>
                                                 <td><input type="text" name="oot_result[0][test_name_of_oot]"></td>
                                                 <td><input type="text" name="oot_result[0][result_obtained]"></td>
@@ -488,46 +556,45 @@ $users = DB::table('users')->get();
 
 
                                 <script>
-                                    $(document).ready(function () {
-                                        $(".add_training_attachment").click(function(){
+                                    $(document).ready(function() {
+                                        $(".add_training_attachment").click(function() {
                                             $("#myfile").trigger("click");
                                         });
                                     });
-    
+
                                     function addAttachmentFiles(input, block_id) {
                                         console.log('test')
-                                            let block = document.getElementById(block_id);
-                                            let files = input.files;
-                                            for (let i = 0; i < files.length; i++) {
-                                                let div = document.createElement('div');
-                                                div.className = 'attachment-item'; 
-                                                div.innerHTML = files[i].name;
-                                
-                                                let viewLink = document.createElement("a");
-                                                viewLink.href = URL.createObjectURL(files[i]);
-                                                viewLink.textContent = "</View>";
-                                                viewLink.addEventListener('click', function(e){
-                                                    e.preventDefault();
-                                                    window.open(viewLink.href,'_blank');
-                                                });
-                                
-                                              
-                                                let removeButton = document.createElement("a");
-                                                removeButton.className = 'remove-button';
-                                                removeButton.textContent = "</Remove>";
-                                                removeButton.addEventListener('click', function() {
-                                                    div.remove();
-                                                    input.value = ''; 
-                                                });
-    
-                                                console.log(removeButton)
-                                
-                                                div.appendChild(viewLink);
-                                                div.appendChild(removeButton);
-                                                block.appendChild(div);
-                                            }
+                                        let block = document.getElementById(block_id);
+                                        let files = input.files;
+                                        for (let i = 0; i < files.length; i++) {
+                                            let div = document.createElement('div');
+                                            div.className = 'attachment-item';
+                                            div.innerHTML = files[i].name;
+
+                                            let viewLink = document.createElement("a");
+                                            viewLink.href = URL.createObjectURL(files[i]);
+                                            viewLink.textContent = "</View>";
+                                            viewLink.addEventListener('click', function(e) {
+                                                e.preventDefault();
+                                                window.open(viewLink.href, '_blank');
+                                            });
+
+
+                                            let removeButton = document.createElement("a");
+                                            removeButton.className = 'remove-button';
+                                            removeButton.textContent = "</Remove>";
+                                            removeButton.addEventListener('click', function() {
+                                                div.remove();
+                                                input.value = '';
+                                            });
+
+                                            console.log(removeButton)
+
+                                            div.appendChild(viewLink);
+                                            div.appendChild(removeButton);
+                                            block.appendChild(div);
                                         }
-                                        
+                                    }
                                 </script>
 
                                 <div class="col-lg-12">
@@ -540,7 +607,8 @@ $users = DB::table('users')->get();
                                             <div class="file-attachment-list" id="Attachment"></div>
                                             <div class="add-btn">
                                                 <div>Add</div>
-                                                <input type="file" id="myfile" name="Attachment[]" oninput="addMultipleFiles(this, 'Attachment')" multiple>
+                                                <input type="file" id="myfile" name="Attachment[]"
+                                                    oninput="addMultipleFiles(this, 'Attachment')" multiple>
                                             </div>
                                         </div>
                                     </div>
@@ -568,7 +636,8 @@ $users = DB::table('users')->get();
 
                                 <div class="col-6">
                                     <div class="group-input">
-                                        <label for="Short Description"> Validity Check After Preliminary Lab Investigation <span class="text-danger"></span></label>
+                                        <label for="Short Description"> Validity Check After Preliminary Lab Investigation
+                                            <span class="text-danger"></span></label>
                                         <select name="pli_finaly_validity_check">
                                             <option>Enter Your Selection Here</option>
                                             <option value="valid">Valid</option>
@@ -577,7 +646,7 @@ $users = DB::table('users')->get();
                                         </select>
                                     </div>
                                 </div>
-                               
+
 
                                 <div class="col-12">
                                     <div class="group-input">
@@ -609,7 +678,8 @@ $users = DB::table('users')->get();
                                             <div class="file-attachment-list" id="inv_file_attachment"></div>
                                             <div class="add-btn">
                                                 <div>Add</div>
-                                                <input type="file" id="myfile" name="inv_file_attachment[]" oninput="addMultipleFiles(this, 'inv_file_attachment')" multiple>
+                                                <input type="file" id="myfile" name="inv_file_attachment[]"
+                                                    oninput="addMultipleFiles(this, 'inv_file_attachment')" multiple>
                                             </div>
                                         </div>
                                     </div>
@@ -625,9 +695,9 @@ $users = DB::table('users')->get();
                                             @endforeach
                                         </select>
                                         @error('inv_head_designee')
-                                         <p class="text-danger">{{ $message }}</p>
-                                         @enderror
-                                       
+                                            <p class="text-danger">{{ $message }}</p>
+                                        @enderror
+
                                     </div>
                                 </div>
 
@@ -656,7 +726,7 @@ $users = DB::table('users')->get();
                                 <div class="group-input">
                                     <label for="audit-agenda-grid">
                                         Info On Product/Material
-                                        <button type="button" name="audit-agenda-grid" id="productMaterialInfo">+</button>
+                                        <button type="button" name="audit-agenda-grid" id="infoProAdd">+</button>
                                         <span class="text-primary" data-bs-toggle="modal"
                                             data-bs-target="#observation-field-instruction-modal"
                                             style="font-size: 0.8rem; font-weight: 400; cursor: pointer;">
@@ -680,8 +750,38 @@ $users = DB::table('users')->get();
                                             <tbody>
                                                 <td><input disabled type="text" name="serial[]" value="1"></td>
                                                 <td><input type="text" name="info_product[0][batch_no]"></td>
-                                                <td><input type="date" name="info_product[0][mfg_date]"></td>
-                                                <td><input type="date" name="info_product[0][exp_date]"></td>
+                                                {{-- <td><input type="date" name="info_product[0][mfg_date]"></td> --}}
+                                                <td>
+                                                    <div class="col-md-6 new-date-data-field">
+                                                        <div class="group-input input-date">
+                                                            <div class="calenderautitee">
+                                                                <input type="text" id="info_product_0_mfg_date"
+                                                                    placeholder="DD-MM-YYYY" readonly />
+                                                                <input type="date" name="info_product[0][m_f_g_date]"
+                                                                    min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
+                                                                    class="hide-input"
+                                                                    oninput="handleDateInput(this, 'info_product_0_mfg_date')" />
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div class="col-md-6 new-date-data-field">
+                                                        <div class="group-input input-date">
+                                                            <div class="calenderautitee">
+                                                                <input type="text" id="info_product_0_exp_date"
+                                                                    placeholder="DD-MM-YYYY" readonly />
+                                                                <input type="date" name="info_product[0][exp_date]"
+                                                                    min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
+                                                                    class="hide-input"
+                                                                    oninput="handleDateInput(this, 'info_product_0_exp_date')" />
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </td>
+
+
+                                                {{-- <td><input type="date" name="info_product[0][exp_date]"></td> --}}
                                                 <td><input type="text" name="info_product[0][ar_number]"></td>
                                                 <td><input type="text" name="info_product[0][pack_style]"></td>
                                                 <td><input type="text" name="info_product[0][frequency]"></td>
@@ -724,14 +824,15 @@ $users = DB::table('users')->get();
                                             @endforeach
                                         </select>
                                         @error('sta_bat_analyst_name')
-                                         <p class="text-danger">{{ $message }}</p>
-                                         @enderror
-                                        
+                                            <p class="text-danger">{{ $message }}</p>
+                                        @enderror
+
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="group-input">
-                                        <label for="search"> QC/QA Head/Designee <span class="text-danger"></span> </label>
+                                        <label for="search"> QC/QA Head/Designee <span class="text-danger"></span>
+                                        </label>
                                         <select id="select-state" placeholder="Select..." name="qa_head_designee">
                                             <option value="">Select a value</option>
                                             @foreach ($users as $data)
@@ -739,8 +840,8 @@ $users = DB::table('users')->get();
                                             @endforeach
                                         </select>
                                         @error('qa_head_designee')
-                                         <p class="text-danger">{{ $message }}</p>
-                                         @enderror
+                                            <p class="text-danger">{{ $message }}</p>
+                                        @enderror
                                     </div>
                                 </div>
 
@@ -762,7 +863,8 @@ $users = DB::table('users')->get();
                             <div class="row">
                                 <div class="col-lg-12">
                                     <div class="group-input">
-                                        <label for="Short Description"> Preliminary Laboratory Investigation Required  ?<span class="text-danger"></span></label>
+                                        <label for="Short Description"> Preliminary Laboratory Investigation Required
+                                            ?<span class="text-danger"></span></label>
                                         <select name="p_l_irequired">
                                             <option value="">Enter Your Selection Here</option>
                                             <option value="yes">Yes</option>
@@ -772,12 +874,15 @@ $users = DB::table('users')->get();
                                 </div>
                                 {{-- Table --}}
                                 <div class="col-12">
-                                        {{-- <label style="font-weight: bold; for=Audit Attachments">Preliminary Laboratory Investigation</label> --}}
+                                    {{-- <label style="font-weight: bold; for=Audit Attachments">Preliminary Laboratory Investigation</label> --}}
 
-                                        <label for="audit-agenda-grid">  Preliminary Laboratory Investigation <button type="button" name="audit-agenda-grid" id="pliAdd">+</button>
-                                            <span class="text-primary" data-bs-toggle="modal" data-bs-target="#observation-field-instruction-modal" style="font-size: 0.8rem; font-weight: 400; cursor: pointer;"> </span>
-                                        </label>
-                                  
+                                    <label for="audit-agenda-grid"> Preliminary Laboratory Investigation <button
+                                            type="button" name="audit-agenda-grid" id="pliAdd">+</button>
+                                        <span class="text-primary" data-bs-toggle="modal"
+                                            data-bs-target="#observation-field-instruction-modal"
+                                            style="font-size: 0.8rem; font-weight: 400; cursor: pointer;"> </span>
+                                    </label>
+
                                     <div class="group-input">
                                         <div class="why-why-chart">
                                             <table class="table table-bordered" id="pliAdddetails">
@@ -792,7 +897,7 @@ $users = DB::table('users')->get();
                                                     </tr>
                                                 </thead>
 
-                                                
+
                                                 <tbody>
                                                     <tr>
                                                         <td class="flex text-center">1</td>
@@ -800,8 +905,10 @@ $users = DB::table('users')->get();
                                                             calibrated state?</td>
                                                         <td>
 
-                                                            <div style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                                <select name="responce_one" id="responce_one"  style="padding:   2px; width:90%; border: 1px solid rgb(125, 125, 125);  background-color: #f0f0f0;">
+                                                            <div
+                                                                style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
+                                                                <select name="responce_one" id="responce_one"
+                                                                    style="padding:   2px; width:90%; border: 1px solid rgb(125, 125, 125);  background-color: #f0f0f0;">
                                                                     <option value="">Select an Option</option>
                                                                     <option value="yes">Yes</option>
                                                                     <option value="no">No</option>
@@ -819,10 +926,13 @@ $users = DB::table('users')->get();
                                                     </tr>
                                                     <tr>
                                                         <td class="flex text-center">2</td>
-                                                        <td>Did all components/parts of equipment instrument function properly</td>
+                                                        <td>Did all components/parts of equipment instrument function
+                                                            properly</td>
                                                         <td>
-                                                            <div style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                                <select name="responce_two" id="responce_one"  style="padding:   2px; width:90%; border: 1px solid rgb(125, 125, 125);  background-color: #f0f0f0;">
+                                                            <div
+                                                                style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
+                                                                <select name="responce_two" id="responce_one"
+                                                                    style="padding:   2px; width:90%; border: 1px solid rgb(125, 125, 125);  background-color: #f0f0f0;">
                                                                     <option value="">Select an Option</option>
                                                                     <option value="yes">Yes</option>
                                                                     <option value="no">No</option>
@@ -868,7 +978,8 @@ $users = DB::table('users')->get();
                                                         <td class="flex text-center">4</td>
                                                         <td>Is the SOP adequate and operation performed as per sop</td>
                                                         <td>
-                                                            <div style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
+                                                            <div
+                                                                style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                                                 <select name="responce_four" id="responce_four"
                                                                     style="padding: 2px; width:90%; border: 1px solid rgb(125, 125, 125);  background-color: #f0f0f0;">
                                                                     <option value="">Select an Option</option>
@@ -894,7 +1005,8 @@ $users = DB::table('users')->get();
                                                         <td>
                                                             <div
                                                                 style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                                <select name="responce_five" id="responce_five"  style="padding: 2px; width:90%; border: 1px solid rgb(125, 125, 125);  background-color: #f0f0f0;">
+                                                                <select name="responce_five" id="responce_five"
+                                                                    style="padding: 2px; width:90%; border: 1px solid rgb(125, 125, 125);  background-color: #f0f0f0;">
                                                                     <option value="">Select an Option</option>
                                                                     <option value="yes">Yes</option>
                                                                     <option value="no">No</option>
@@ -914,11 +1026,13 @@ $users = DB::table('users')->get();
                                                     </tr>
                                                     <tr>
                                                         <td class="flex text-center">6</td>
-                                                        <td>Was there any evidence that the glassware used .may be  contaminated?</td>
+                                                        <td>Was there any evidence that the glassware used .may be
+                                                            contaminated?</td>
                                                         <td>
                                                             <div
                                                                 style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                                <select name="responce_six" id="responce_six"  style="padding: 2px; width:90%; border: 1px solid rgb(125, 125, 125);  background-color: #f0f0f0;">
+                                                                <select name="responce_six" id="responce_six"
+                                                                    style="padding: 2px; width:90%; border: 1px solid rgb(125, 125, 125);  background-color: #f0f0f0;">
                                                                     <option value="">Select an Option</option>
                                                                     <option value="yes">Yes</option>
                                                                     <option value="no">No</option>
@@ -944,7 +1058,8 @@ $users = DB::table('users')->get();
                                                         <td>
                                                             <div
                                                                 style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                                <select name="responce_seven" id="responce_seven" style="padding: 2px; width:90%; border: 1px solid rgb(125, 125, 125);  background-color: #f0f0f0;">
+                                                                <select name="responce_seven" id="responce_seven"
+                                                                    style="padding: 2px; width:90%; border: 1px solid rgb(125, 125, 125);  background-color: #f0f0f0;">
                                                                     <option value="">Select an Option</option>
                                                                     <option value="yes">Yes</option>
                                                                     <option value="no">No</option>
@@ -964,11 +1079,13 @@ $users = DB::table('users')->get();
                                                     </tr>
                                                     <tr>
                                                         <td class="flex text-center">8</td>
-                                                        <td>8 Any critical parts of equipment/instrument like detector, lamp etc. and needed replacement?</td>
+                                                        <td>8 Any critical parts of equipment/instrument like detector, lamp
+                                                            etc. and needed replacement?</td>
                                                         <td>
                                                             <div
                                                                 style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                                <select name="responce_eight" id="responce_eight" style="padding: 2px; width:90%; border: 1px solid rgb(125, 125, 125);  background-color: #f0f0f0;">
+                                                                <select name="responce_eight" id="responce_eight"
+                                                                    style="padding: 2px; width:90%; border: 1px solid rgb(125, 125, 125);  background-color: #f0f0f0;">
                                                                     <option value="">Select an Option</option>
                                                                     <option value="yes">Yes</option>
                                                                     <option value="no">No</option>
@@ -992,7 +1109,8 @@ $users = DB::table('users')->get();
                                                         <td>
                                                             <div
                                                                 style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                                <select name="responce_nine" id="responce_nine"    style="padding: 2px; width:90%; border: 1px solid rgb(125, 125, 125);  background-color: #f0f0f0;">
+                                                                <select name="responce_nine" id="responce_nine"
+                                                                    style="padding: 2px; width:90%; border: 1px solid rgb(125, 125, 125);  background-color: #f0f0f0;">
                                                                     <option value="">Select an Option</option>
                                                                     <option value="yes">Yes</option>
                                                                     <option value="no">No</option>
@@ -1298,7 +1416,8 @@ $users = DB::table('users')->get();
                                                         <td>
                                                             <div
                                                                 style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                                <select name="responce_twenty_one" id="responce_twenty_one"
+                                                                <select name="responce_twenty_one"
+                                                                    id="responce_twenty_one"
                                                                     style="padding: 2px; width:90%; border: 1px solid rgb(125, 125, 125);  background-color: #f0f0f0;">
                                                                     <option value="">Select an Option</option>
                                                                     <option value="yes">Yes</option>
@@ -1324,7 +1443,8 @@ $users = DB::table('users')->get();
                                                         <td>
                                                             <div
                                                                 style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                                <select name="responce_twenty_two" id="responce_twenty_two"
+                                                                <select name="responce_twenty_two"
+                                                                    id="responce_twenty_two"
                                                                     style="padding: 2px; width:90%; border: 1px solid rgb(125, 125, 125);  background-color: #f0f0f0;">
                                                                     <option value="">Select an Option</option>
                                                                     <option value="yes">Yes</option>
@@ -1349,7 +1469,8 @@ $users = DB::table('users')->get();
                                                         <td>
                                                             <div
                                                                 style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                                <select name="responce_twenty_three" id="responce_twenty_three"
+                                                                <select name="responce_twenty_three"
+                                                                    id="responce_twenty_three"
                                                                     style="padding: 2px; width:90%; border: 1px solid rgb(125, 125, 125);  background-color: #f0f0f0;">
                                                                     <option value="">Select an Option</option>
                                                                     <option value="yes">Yes</option>
@@ -1374,7 +1495,8 @@ $users = DB::table('users')->get();
                                                         <td>
                                                             <div
                                                                 style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                                <select name="responce_twenty_four" id="responce_twenty_four"
+                                                                <select name="responce_twenty_four"
+                                                                    id="responce_twenty_four"
                                                                     style="padding: 2px; width:90%; border: 1px solid rgb(125, 125, 125);  background-color: #f0f0f0;">
                                                                     <option value="">Select an Option</option>
                                                                     <option value="yes">Yes</option>
@@ -1395,11 +1517,13 @@ $users = DB::table('users')->get();
                                                     </tr>
                                                     <tr>
                                                         <td class="flex text-center">25</td>
-                                                        <td>Analyst calculated the results correctly as mentioned in testing procedure</td>
+                                                        <td>Analyst calculated the results correctly as mentioned in testing
+                                                            procedure</td>
                                                         <td>
                                                             <div
                                                                 style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                                <select name="responce_twenty_five" id="responce_twenty_five"
+                                                                <select name="responce_twenty_five"
+                                                                    id="responce_twenty_five"
                                                                     style="padding: 2px; width:90%; border: 1px solid rgb(125, 125, 125);  background-color: #f0f0f0;">
                                                                     <option value="">Select an Option</option>
                                                                     <option value="yes">Yes</option>
@@ -1425,7 +1549,8 @@ $users = DB::table('users')->get();
                                                         <td>
                                                             <div
                                                                 style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                                <select name="responce_twenty_six" id="responce_twenty_six"
+                                                                <select name="responce_twenty_six"
+                                                                    id="responce_twenty_six"
                                                                     style="padding: 2px; width:90%; border: 1px solid rgb(125, 125, 125);  background-color: #f0f0f0;">
                                                                     <option value="">Select an Option</option>
                                                                     <option value="yes">Yes</option>
@@ -1450,7 +1575,8 @@ $users = DB::table('users')->get();
                                                         <td>
                                                             <div
                                                                 style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                                <select name="responce_twenty_seven" id="responce_twenty_seven"
+                                                                <select name="responce_twenty_seven"
+                                                                    id="responce_twenty_seven"
                                                                     style="padding: 2px; width:90%; border: 1px solid rgb(125, 125, 125);  background-color: #f0f0f0;">
                                                                     <option value="">Select an Option</option>
                                                                     <option value="yes">Yes</option>
@@ -1477,7 +1603,8 @@ $users = DB::table('users')->get();
                                                         <td>
                                                             <div
                                                                 style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                                <select name="responce_twenty_eight" id="responce_twenty_eight"
+                                                                <select name="responce_twenty_eight"
+                                                                    id="responce_twenty_eight"
                                                                     style="padding: 2px; width:90%; border: 1px solid rgb(125, 125, 125);  background-color: #f0f0f0;">
                                                                     <option value="">Select an Option</option>
                                                                     <option value="yes">Yes</option>
@@ -1502,7 +1629,8 @@ $users = DB::table('users')->get();
                                                         <td>
                                                             <div
                                                                 style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                                <select name="responce_twenty_nine" id="responce_twenty_nine"
+                                                                <select name="responce_twenty_nine"
+                                                                    id="responce_twenty_nine"
                                                                     style="padding: 2px; width:90%; border: 1px solid rgb(125, 125, 125);  background-color: #f0f0f0;">
                                                                     <option value="">Select an Option</option>
                                                                     <option value="yes">Yes</option>
@@ -1548,11 +1676,13 @@ $users = DB::table('users')->get();
                                                     </tr>
                                                     <tr>
                                                         <td class="flex text-center">31</td>
-                                                        <td>Was the Specified storage condition of product sample     maintained? </td>
+                                                        <td>Was the Specified storage condition of product sample
+                                                            maintained? </td>
                                                         <td>
                                                             <div
                                                                 style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                                <select name="responce_thirty_one" id="responce_thirty_one"
+                                                                <select name="responce_thirty_one"
+                                                                    id="responce_thirty_one"
                                                                     style="padding: 2px; width:90%; border: 1px solid rgb(125, 125, 125);  background-color: #f0f0f0;">
                                                                     <option value="">Select an Option</option>
                                                                     <option value="yes">Yes</option>
@@ -1577,7 +1707,8 @@ $users = DB::table('users')->get();
                                                         <td>
                                                             <div
                                                                 style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                                <select name="responce_thirty_two" id="responce_thirty_two"
+                                                                <select name="responce_thirty_two"
+                                                                    id="responce_thirty_two"
                                                                     style="padding: 2px; width:90%; border: 1px solid rgb(125, 125, 125);  background-color: #f0f0f0;">
                                                                     <option value="">Select an Option</option>
                                                                     <option value="yes">Yes</option>
@@ -1602,7 +1733,8 @@ $users = DB::table('users')->get();
                                                         <td>
                                                             <div
                                                                 style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                                <select name="responce_thirty_three" id="responce_thirty_three"
+                                                                <select name="responce_thirty_three"
+                                                                    id="responce_thirty_three"
                                                                     style="padding: 2px; width:90%; border: 1px solid rgb(125, 125, 125);  background-color: #f0f0f0;">
                                                                     <option value="">Select an Option</option>
                                                                     <option value="yes">Yes</option>
@@ -1627,7 +1759,8 @@ $users = DB::table('users')->get();
                                                         <td>
                                                             <div
                                                                 style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                                <select name="responce_thirty_four" id="responce_thirty_four"
+                                                                <select name="responce_thirty_four"
+                                                                    id="responce_thirty_four"
                                                                     style="padding: 2px; width:90%; border: 1px solid rgb(125, 125, 125);  background-color: #f0f0f0;">
                                                                     <option value="">Select an Option</option>
                                                                     <option value="yes">Yes</option>
@@ -1644,7 +1777,7 @@ $users = DB::table('users')->get();
                                                                 <textarea name="remark_thirty_four" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                             </div>
                                                         </td>
-                                                    </tr>                                                   
+                                                    </tr>
                                                 </tbody>
                                             </table>
                                         </div>
@@ -1652,7 +1785,8 @@ $users = DB::table('users')->get();
                                 </div>
                                 <div class="col-lg-12">
                                     <div class="group-input">
-                                        <label for="Short Description"> Laboratory error Identified for OOT - Result(s)<span class="text-danger"></span></label>
+                                        <label for="Short Description"> Laboratory error Identified for OOT -
+                                            Result(s)<span class="text-danger"></span></label>
                                         <select name="l_e_i_oot">
                                             <option value="">Enter Your Selection Here</option>
                                             <option value="yes">Yes</option>
@@ -1662,14 +1796,15 @@ $users = DB::table('users')->get();
                                 </div>
                                 <div class="col-12">
                                     <div class="group-input">
-                                        <label class="mt-4" for="Audit Comments">Elaborate The Reason(s) If Yes    :</label>
+                                        <label class="mt-4" for="Audit Comments">Elaborate The Reason(s) If Yes
+                                            :</label>
                                         <textarea class="summernote" name="elaborate_the_reson" id="summernote-16"></textarea>
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="group-input">
-                                        <label for="search">Lab-Charge <span class="text-danger"></span>   </label>
-                   
+                                        <label for="search">Lab-Charge <span class="text-danger"></span> </label>
+
                                         <select id="select-state" placeholder="Select..." name="in_charge">
                                             <option value="">Select a value</option>
                                             @foreach ($users as $data)
@@ -1681,14 +1816,15 @@ $users = DB::table('users')->get();
 
                                 <div class="col-lg-6">
                                     <div class="group-input">
-                                        <label for="search"> QC Head/Designee <span class="text-danger"></span>  </label>
+                                        <label for="search"> QC Head/Designee <span class="text-danger"></span>
+                                        </label>
                                         <select id="select-state" placeholder="Select..." name="pli_head_designee">
                                             <option value="">Select a value</option>
                                             @foreach ($users as $data)
                                                 <option value="{{ $data->id }}">{{ $data->name }}</option>
                                             @endforeach
                                         </select>
-                                    
+
                                     </div>
                                 </div>
 
@@ -1722,7 +1858,8 @@ $users = DB::table('users')->get();
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label>Retraining to Analyst Required ? <span class="text-danger"></span></label>
-                                        <select id="retraining_to_analyst_required" name="retraining_to_analyst_required">
+                                        <select id="retraining_to_analyst_required"
+                                            name="retraining_to_analyst_required">
                                             <option value="">---select---</option>
                                             <option value="yes">Yes </option>
                                             <option value="no">No </option>
@@ -1790,7 +1927,8 @@ $users = DB::table('users')->get();
                                             <div class="file-attachment-list" id="supporting_attechment"></div>
                                             <div class="add-btn">
                                                 <div>Add</div>
-                                                <input type="file" id="myfile" name="supporting_attechment[]"  oninput="addMultipleFiles(this, 'supporting_attechment')" multiple>
+                                                <input type="file" id="myfile" name="supporting_attechment[]"
+                                                    oninput="addMultipleFiles(this, 'supporting_attechment')" multiple>
                                             </div>
                                         </div>
                                     </div>
@@ -1853,7 +1991,9 @@ $users = DB::table('users')->get();
                                             <div class="file-attachment-list" id="File_Attachment"></div>
                                             <div class="add-btn">
                                                 <div>Add</div>
-                                                <input type="file" id="myfile" name="supporting_documents[]"oninput="addMultipleFiles(this, 'supporting_documents')" multiple>
+                                                <input type="file" id="myfile"
+                                                    name="supporting_documents[]"oninput="addMultipleFiles(this, 'supporting_documents')"
+                                                    multiple>
                                             </div>
                                         </div>
                                     </div>
@@ -1880,19 +2020,22 @@ $users = DB::table('users')->get();
                             <div class="row">
                                 <div class="col-md-6 ">
                                     <div class="group-input ">
-                                        <label for="Last_due-date">Last Due Date <span   class="text-danger"></span></label>
+                                        <label for="Last_due-date">Last Due Date <span
+                                                class="text-danger"></span></label>
                                         <input type="date" name="last_due_date">
                                     </div>
                                 </div>
                                 <div class="col-12">
                                     <div class="group-input">
-                                        <label class="mt-4" for="Audit Comments">Progress/Justification for Delay</label>
+                                        <label class="mt-4" for="Audit Comments">Progress/Justification for
+                                            Delay</label>
                                         <textarea class="summernote" name="progress_justification_delay" id="summernote-16"></textarea>
                                     </div>
                                 </div>
                                 <div class="col-md-6 ">
                                     <div class="group-input ">
-                                        <label for="tentative-date">Tentative Closure Date<span class="text-danger"></span></label>
+                                        <label for="tentative-date">Tentative Closure Date<span
+                                                class="text-danger"></span></label>
                                         <input type="date" name="tentative_clousure_date">
                                     </div>
                                 </div>
@@ -1914,7 +2057,8 @@ $users = DB::table('users')->get();
                                             <div class="file-attachment-list" id="File_Attachment"></div>
                                             <div class="add-btn">
                                                 <div>Add</div>
-                                                <input type="file" id="myfile" name="conclusion_attechment[]" oninput="addMultipleFiles(this, 'conclusion_attechment')" multiple>
+                                                <input type="file" id="myfile" name="conclusion_attechment[]"
+                                                    oninput="addMultipleFiles(this, 'conclusion_attechment')" multiple>
                                             </div>
                                         </div>
                                     </div>
@@ -1940,7 +2084,8 @@ $users = DB::table('users')->get();
 
                                 <div class="col-6">
                                     <div class="group-input">
-                                        <label for="Short Description"> Finaly Validity Check <span class="text-danger"></span></label>
+                                        <label for="Short Description"> Finaly Validity Check <span
+                                                class="text-danger"></span></label>
                                         <select name="finaly_validity_check">
                                             <option>Enter Your Selection Here</option>
                                             <option value="valid">Valid</option>
@@ -1949,7 +2094,7 @@ $users = DB::table('users')->get();
                                         </select>
                                     </div>
                                 </div>
-                            
+
 
                                 <div class="col-12">
                                     <div class="group-input">
@@ -1968,7 +2113,8 @@ $users = DB::table('users')->get();
                                             <div class="file-attachment-list" id="doc_closure"></div>
                                             <div class="add-btn">
                                                 <div>Add</div>
-                                                <input type="file" id="myfile" name="doc_closure[]" oninput="addMultipleFiles(this, 'doc_closure')" multiple>
+                                                <input type="file" id="myfile" name="doc_closure[]"
+                                                    oninput="addMultipleFiles(this, 'doc_closure')" multiple>
                                             </div>
                                         </div>
                                     </div>
@@ -3662,7 +3808,7 @@ $users = DB::table('users')->get();
 
     <script>
         VirtualSelect.init({
-            ele: '#reference_record, #notify_to, #stability_for'
+            ele: '#reference_record, #notify_to, #stability_for,#reference'
         });
 
         $('#summernote').summernote({
@@ -3719,8 +3865,6 @@ $users = DB::table('users')->get();
         $(document).ready(function() {
             $('#summaryadd').click(function(e) {
                 function generateTableRow(serialNumber) {
-
-
                     var html =
                         '<tr>' +
                         '<td><input disabled type="text" name="serial[]" value="' + serialNumber +
@@ -3755,19 +3899,24 @@ $users = DB::table('users')->get();
                         '<tr>' +
                         '<td><input disabled type="text" name="serial[]" value="' + serialNumber +
                         '"></td>' +
-                        '<td><input type="text" name="product_materiel['+ indexDetail +'][item_product_code]"></td>' +
-                        '<td><input type="text" name="product_materiel['+ indexDetail +'][lot_batch_no]"></td>' +
-                        ' <td><input type="text" name="product_materiel['+indexDetail +'][a_r_number]"></td>' +
+                        '<td><input type="text" name="product_materiel[' + indexDetail +
+                        '][item_product_code]"></td>' +
+                        '<td><input type="text" name="product_materiel[' + indexDetail +
+                        '][lot_batch_no]"></td>' +
+                        ' <td><input type="text" name="product_materiel[' + indexDetail +
+                        '][a_r_number]"></td>' +
                         '<td><input type="date" name="product_materiel['+ indexDetail +'][m_f_g_date]"></td>' +
-                        '<td><input type="date" name="product_materiel['+indexDetail +'][expiry_date]"></td>' +
-                        '<td><input type="text" name="product_materiel['+indexDetail+'][label_claim]"></td>' +
+                        // '<td> <div class="col-md-6 new-date-data-field"> <div class="group-input input-date"> <div class="calenderautitee"> <input type="text" id="product_materiel_0_mfg_date" placeholder="DD-MM-YYYY" readonly /> <input type="date" name="product_materiel[0][m_f_g_date]" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input" oninput="handleDateInput(this, "product_materiel_0_mfg_date")" placeholder="DD-MM-YYYY" /> </div> </div> </div> </td>' +
+                        '<td><input type="date" name="product_materiel[' + indexDetail +
+                        '][expiry_date]"></td>' +
+                        '<td><input type="text" name="product_materiel[' + indexDetail +
+                        '][label_claim]"></td>' +
                         '<td><button type="text" class="removeRowBtn">Remove</button></td>' +
                         '</tr>';
                     '</tr>';
                     indexDetail++;
                     return html;
                 }
-
                 var tableBody = $('#info_details tbody');
                 var rowCount = tableBody.children('tr').length;
                 var newRow = generateTableRow(rowCount + 1);
@@ -3778,9 +3927,7 @@ $users = DB::table('users')->get();
 
     <script>
         $(document).ready(function() {
-
             let detailsIndex = 1;
-
             $('#Details').click(function(e) {
                 function generateTableRow(serialNumber) {
 
@@ -3788,11 +3935,16 @@ $users = DB::table('users')->get();
                         '<tr>' +
                         '<td><input disabled type="text" name="serial[]" value="' + serialNumber +
                         '"></td>' +
-                        '<td><input type="text" name="details_of_stability['+ detailsIndex +'][a_r_number]"></td>' +
-                        '<td><input type="text" name="details_of_stability['+ detailsIndex +'][temprature]"></td>' +
-                        '<td><input type="text" name="details_of_stability['+ detailsIndex +'][interval]"></td>' +
-                        '<td><input type="text" name="details_of_stability['+ detailsIndex +'][orientation]"></td>' +
-                        '<td><input type="text" name="details_of_stability['+ detailsIndex +'][pack_details]"></td>' +
+                        '<td><input type="text" name="details_of_stability[' + detailsIndex +
+                        '][a_r_number]"></td>' +
+                        '<td><input type="text" name="details_of_stability[' + detailsIndex +
+                        '][temprature]"></td>' +
+                        '<td><input type="text" name="details_of_stability[' + detailsIndex +
+                        '][interval]"></td>' +
+                        '<td><input type="text" name="details_of_stability[' + detailsIndex +
+                        '][orientation]"></td>' +
+                        '<td><input type="text" name="details_of_stability[' + detailsIndex +
+                        '][pack_details]"></td>' +
                         '<td><button type="text" class="removeRowBtn">Remove</button></td>' +
                         '</tr>';
                     '</tr>';
@@ -3811,27 +3963,29 @@ $users = DB::table('users')->get();
     </script>
     <script>
         $(document).ready(function() {
-            let ootIndex =1;
+            let ootIndex = 1;
             $('#ootadd').click(function(e) {
                 function generateTableRow(serialNumber) {
                     var html =
                         '<tr>' +
                         '<td><input disabled type="text" name="serial[]" value="' + serialNumber +
                         '"></td>' +
-                        ' <td><input type="text" name="oot_result['+ootIndex+'][a_r_number]"></td>' +
-                        ' <td><input type="text"name="oot_result['+ootIndex+'][test_name_of_oot]"></td>' +
-                        '<td><input type="text" name="oot_result['+ootIndex+'][result_obtained]"></td>' +
-                        '<td><input type="text" name="oot_result['+ootIndex+'][i_i_details]"></td>' +
-                        '<td><input type="text" name="oot_result['+ootIndex+'][p_i_details]"></td>' +
-                        '<td><input type="text" name="oot_result['+ootIndex+'][difference_of_result]"></td>' +
-                        '<td><input type="text" name="oot_result['+ootIndex+'][trend_limit]"></td>' +
+                        ' <td><input type="text" name="oot_result[' + ootIndex + '][a_r_number]"></td>' +
+                        ' <td><input type="text"name="oot_result[' + ootIndex +
+                        '][test_name_of_oot]"></td>' +
+                        '<td><input type="text" name="oot_result[' + ootIndex +
+                        '][result_obtained]"></td>' +
+                        '<td><input type="text" name="oot_result[' + ootIndex + '][i_i_details]"></td>' +
+                        '<td><input type="text" name="oot_result[' + ootIndex + '][p_i_details]"></td>' +
+                        '<td><input type="text" name="oot_result[' + ootIndex +
+                        '][difference_of_result]"></td>' +
+                        '<td><input type="text" name="oot_result[' + ootIndex + '][trend_limit]"></td>' +
                         '<td><button type="text" class="removeRowBtn">Remove</button></td>' +
                         '</tr>';
                     '</tr>';
                     ootIndex++;
                     return html;
                 }
-
                 var tableBody = $('#oot_table_details tbody');
                 var rowCount = tableBody.children('tr').length;
                 var newRow = generateTableRow(rowCount + 1);
@@ -3840,21 +3994,45 @@ $users = DB::table('users')->get();
         });
     </script>
 
-<script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            var originalRecordNumber = document.getElementById('record_number').value;
+            var initialPlaceholder = '---';
+
+            document.getElementById('initiator_group').addEventListener('change', function() {
+                var selectedValue = this.value;
+                var recordNumberElement = document.getElementById('record_number');
+                var initiatorGroupCodeElement = document.getElementById('initiator_group_code');
+
+                // Update the initiator group code
+                initiatorGroupCodeElement.value = selectedValue;
+
+                // Update the record number by replacing the initial placeholder with the selected initiator group code
+                var newRecordNumber = originalRecordNumber.replace(initialPlaceholder, selectedValue);
+                recordNumberElement.value = newRecordNumber;
+
+                // Update the original record number to keep track of changes
+                originalRecordNumber = newRecordNumber;
+                initialPlaceholder = selectedValue;
+            });
+        });
+    </script>
+
+    {{-- <script>
     $(document).ready(function() {
         let infoProduct = 1:
-        $('#productMaterialInfo').click(function(e) {
+        $('#infoProAdd').click(function(e) {
             function generateTableRow(serialNumber) {
                 var html =
                     '<tr>' +
-                    '<td><input disabled type="text" name="serial[]" value="' + serialNumber + '"></td>' +
-                    '<td><input type="text"    name="info_product['+infoProduct+'][batch_no]"></td>' +
-                    '<td><input type="date"   name="info_product['+infoProduct+'][mfg_date]"></td>' +
-                    '<td><input type="date"   name="info_product['+infoProduct+'][exp_date]"></td>' +
-                    '<td><input type="text"    name="info_product['+infoProduct+'][ar_number]"></td>' +
-                    '<td><input type="text"    name="info_product['+infoProduct+'][pack_style]"></td>' +
-                    '<td><input type="text"    name="info_product['+infoProduct+'][frequency]"></td>' +
-                    '<td><input type="text"    name="info_product['+infoProduct+'][condition]"></td>' +
+                    '<td><input disabled type="text" name="serial[]" value="' + serialNumber + '"></td>'+
+                    '<td><input type="text" name="info_product['+infoProduct+'][batch_no]"></td>'+
+                    '<td><input type="date" name="info_product['+infoProduct+'][mfg_date]"></td>'+
+                    '<td><input type="date" name="info_product['+infoProduct+'][exp_date]"></td>'+
+                    '<td><input type="text" name="info_product['+infoProduct+'][ar_number]"></td>'+
+                    '<td><input type="text"  name="info_product['+infoProduct+'][pack_style]"></td>'+
+                    '<td><input type="text"  name="info_product['+infoProduct+'][frequency]"></td>'+
+                    '<td><input type="text"  name="info_product['+infoProduct+'][condition]"></td>'+
                     '<td><button type="text" class="removeRowBtn">Remove</button></td>' +
                     '</tr>';
                 '</tr>';
@@ -3867,14 +4045,46 @@ $users = DB::table('users')->get();
             tableBody.append(newRow);
         });
     });
-</script>
+</script> --}}
+
+
+
+    <script>
+        $(document).ready(function() {
+            let infoProduct = 1;
+            $('#infoProAdd').click(function(e) {
+                function generateTableRow(serialNumber) {
+                    var html =
+                        '<tr>' +
+                        '<td><input disabled type="text" name="serial[]" value="' + serialNumber +
+                        '"></td>' +
+                        '<td><input type="text" name="info_product[' + infoProduct + '][batch_no]"></td>' +
+                        '<td><input type="date" name="info_product[' + infoProduct + '][mfg_date]"></td>' +
+                        '<td><input type="date" name="info_product[' + infoProduct + '][exp_date]"></td>' +
+                        '<td><input type="text" name="info_product[' + infoProduct + '][ar_number]"></td>' +
+                        '<td><input type="text" name="info_product[' + infoProduct +
+                        '][pack_style]"></td>' +
+                        '<td><input type="text" name="info_product[' + infoProduct + '][frequency]"></td>' +
+                        '<td><input type="text" name="info_product[' + infoProduct + '][condition]"></td>' +
+                        '<td><button type="text" class="removeRowBtn">Remove</button></td>' +
+                        '</tr>';
+                    '</tr>';
+
+                    infoProduct++;
+                    return html;
+                }
+                var tableBody = $('#productMaterialInfo_details tbody');
+                var rowCount = tableBody.children('tr').length;
+                var newRow = generateTableRow(rowCount + 1);
+                tableBody.append(newRow);
+            });
+        });
+    </script>
 
     <script>
         $(document).ready(function() {
             $('#sumarryOfOotAdd').click(function(e) {
                 function generateTableRow(serialNumber) {
-
-
                     var html =
                         '<tr>' +
                         '<td><input disabled type="text" name="serial[]" value="' + serialNumber +
@@ -3905,8 +4115,6 @@ $users = DB::table('users')->get();
         $(document).ready(function() {
             $('#impactedAdd').click(function(e) {
                 function generateTableRow(serialNumber) {
-
-
                     var html =
                         '<tr>' +
                         '<td><input disabled type="text" name="serial[]" value="' + serialNumber +
@@ -3920,7 +4128,6 @@ $users = DB::table('users')->get();
 
                     return html;
                 }
-
                 var tableBody = $('#impacted-Table tbody');
                 var rowCount = tableBody.children('tr').length;
                 var newRow = generateTableRow(rowCount + 1);
@@ -3928,32 +4135,34 @@ $users = DB::table('users')->get();
             });
         });
     </script>
- <script>
-    $(document).ready(function() {
-        let indexDetail = 1;
-        $('#pliAdd').click(function(e) {
-            function generateTableRow(serialNumber) {
-                var html =
-                    '<tr>' +
-                    '<td style=""><input style="margin-left: 25px;" disabled type="text" name="serial[]" value="' + serialNumber +
-                    '"></td>' +
-                    '<td><input type="text" name="data['+ indexDetail +'][questions]"></td>' +
-                    '<td><select name="data['+ indexDetail +'][response]" id="" style="margin-top: 10px;margin-left: 28px; padding: 3px; width: 81%; border: 1px solid rgb(125, 125, 125);  background-color: #f0f0f0;"> <option value="">Select an Option</option> <option value="yes">Yes</option> <option value="no">No</option><option value="n/a">N/A</option></select></td>' +
-                    ' <td> <textarea name="data['+ indexDetail +'][remarks]" style="border-radius: 7px; border: 1.5px solid black;"></textarea></td>' +
-                    '<td><button type="text" class="removeRowBtn">Remove</button></td>' +
+    <script>
+        $(document).ready(function() {
+            let indexDetail = 1;
+            $('#pliAdd').click(function(e) {
+                function generateTableRow(serialNumber) {
+                    var html =
+                        '<tr>' +
+                        '<td style=""><input style="margin-left: 25px;" disabled type="text" name="serial[]" value="' +
+                        serialNumber +
+                        '"></td>' +
+                        '<td><input type="text" name="data[' + indexDetail + '][questions]"></td>' +
+                        '<td><select name="data[' + indexDetail +
+                        '][response]" id="" style="margin-top: 10px;margin-left: 28px; padding: 3px; width: 81%; border: 1px solid rgb(125, 125, 125);  background-color: #f0f0f0;"> <option value="">Select an Option</option> <option value="yes">Yes</option> <option value="no">No</option><option value="n/a">N/A</option></select></td>' +
+                        ' <td> <textarea name="data[' + indexDetail +
+                        '][remarks]" style="border-radius: 7px; border: 1.5px solid black;"></textarea></td>' +
+                        '<td><button type="text" class="removeRowBtn">Remove</button></td>' +
+                        '</tr>';
                     '</tr>';
-                '</tr>';
-                indexDetail++;
-                return html;
-            }
-
-            var tableBody = $('#pliAdddetails tbody');
-            var rowCount = tableBody.children('tr').length;
-            var newRow = generateTableRow(rowCount + 1);
-            tableBody.append(newRow);
+                    indexDetail++;
+                    return html;
+                }
+                var tableBody = $('#pliAdddetails tbody');
+                var rowCount = tableBody.children('tr').length;
+                var newRow = generateTableRow(rowCount + 1);
+                tableBody.append(newRow);
+            });
         });
-    });
-</script>
+    </script>
 
     <script>
         var maxLength = 255;

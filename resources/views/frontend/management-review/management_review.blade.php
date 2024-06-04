@@ -324,7 +324,7 @@
                                     <div class="group-input input-date">
                                         <label for="Audit Start Date">Scheduled Start Date</label>
                                             <div class="calenderauditee">                                     
-                                                <input type="text"  id="start_date" readonly placeholder="DD-MMM-YYYY"  value="{{ Helpers::getdateFormat($data->start_date) }}"
+                                                <input type="text"  id="start_date" readonly placeholder="DD-MM-YYYY"  value="{{ Helpers::getdateFormat($data->start_date) }}"
                                                  />
                                                 <input type="date" id="start_date_checkdate"  {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} name="start_date"  min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" value="{{ $data->start_date }}"
                                                 class="hide-input"
@@ -336,7 +336,7 @@
                                     <div class="group-input input-date">
                                         <label for="Audit End Date">Scheduled end date</label>
                                             <div class="calenderauditee">                                     
-                                            <input type="text"  id="end_date"  readonly placeholder="DD-MMM-YYYY" value="{{ Helpers::getdateFormat($data->end_date) }}"
+                                            <input type="text"  id="end_date"  readonly placeholder="DD-MM-YYYY" value="{{ Helpers::getdateFormat($data->end_date) }}"
                                              />
                                             <input type="date" id="end_date_checkdate" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} name="end_date"  min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" value="{{ $data->end_date }}"
                                             class="hide-input"
@@ -374,7 +374,7 @@
                                                                 value="{{ $key + 1 }}"></td>
                                                         
                                                                 <td><div class="group-input new-date-data-field mb-0"><div class="input-date "><div class="calenderauditee">
-                                                                    <input type="text" id="date{{$key}}" {{ $data->stage == 0 || $data->stage == 3 ? 'disabled' : '' }}  readonly placeholder="DD-MMM-YYYY" value="{{ Helpers::getdateFormat(unserialize($agenda->date)[$key] ?? null) }}" />
+                                                                    <input type="text" id="date{{$key}}" {{ $data->stage == 0 || $data->stage == 3 ? 'disabled' : '' }}  readonly placeholder="DD-MM-YYYY" value="{{ Helpers::getdateFormat(unserialize($agenda->date)[$key] ?? null) }}" />
                                                                     <input type="date" name="date[]" {{ $data->stage == 0 || $data->stage == 3 ? 'disabled' : '' }}  min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"  value="{{unserialize($agenda->date)[$key] ?? null }}" class="hide-input" 
                                                                     oninput="handleDateInput(this, `date{{$key }}`)" /></div></div></div></td>
                                                         <td><input type="text" name="topic[]" {{ $data->stage == 0 || $data->stage == 3 ? 'disabled' : '' }} 

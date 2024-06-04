@@ -811,7 +811,7 @@
                                         <label for="Incident date">Incident Observed On</label>
                                         <div class="calenderauditee">
                                             <input type="text" id="incident_date" readonly
-                                                placeholder="DD-MMM-YYYY" />
+                                                placeholder="DD-MM-YYYY" />
                                             {{-- <td><input type="time" name="scheduled_start_time[]"></td> --}}
                                             <input type="date" name="incident_date"
                                                 max="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input"
@@ -864,7 +864,7 @@
                                         <label for="Audit Schedule End Date">Incident Reported on</label>
                                         <div class="calenderauditee">
                                             <input type="text" id="incident_reported_date" readonly
-                                                placeholder="DD-MMM-YYYY" />
+                                                placeholder="DD-MM-YYYY" />
                                             <input type="date" name="incident_reported_date"
                                                 max="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input"
                                                 oninput="handleDateInput(this, 'incident_reported_date')" />

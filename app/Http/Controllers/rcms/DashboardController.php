@@ -521,7 +521,7 @@ class DashboardController extends Controller
                 "due_date" => $data->due_date,
                 "stage" => $data->status,
                 "date_open" => $data->create,
-                "initiated_through" => $data->initiated_through? $data->initiated_through : "-",
+                "initiated_through" => $data->initiated_through ? $data->initiated_through : "-",
                 "date_close" => $data->updated_at,
             ]);
         }

@@ -54,8 +54,6 @@ return new class extends Migration
             $table->string('revision_policy')->nullable();
             $table->string('trainer')->nullable();
             $table->longText('comments')->nullable();
-            
-
             $table->softDeletes();
             $table->timestamps();
         });

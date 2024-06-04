@@ -1085,7 +1085,7 @@
                                                 <label for="Scheduled Start Date">Scheduled Start Date</label>
                                                 <div class="calenderauditee">
                                                     <input type="text" id="schedule_start_date" readonly value="{{ Helpers::getdateFormat($data->schedule_start_date1) }}" 
-                                                        placeholder="DD-MMM-YYYY" />
+                                                        placeholder="DD-MM-YYYY" />
                                                     <input type="date" id="schedule_start_date_checkdate" name="schedule_start_date1" value="{{ $data->schedule_start_date1 }}" {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }} class="hide-input" 
                                                         oninput="handleDateInput(this, 'schedule_start_date');checkDate('schedule_start_date_checkdate','schedule_end_date_checkdate')" />
                                                 </div>
@@ -1097,7 +1097,7 @@
                                                 <label for="Scheduled End Date">Scheduled End Date</label>
                                                 <div class="calenderauditee">
                                                     <input type="text" id="schedule_end_date" readonly value="{{ Helpers::getdateFormat($data->schedule_end_date1) }}" 
-                                                        placeholder="DD-MMM-YYYY" />
+                                                        placeholder="DD-MM-YYYY" />
                                                     <input type="date" id="schedule_end_date_checkdate" name="schedule_end_date1" value="{{ $data->schedule_end_date1 }}" {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }} class="hide-input"
                                                         oninput="handleDateInput(this, 'schedule_end_date');checkDate('schedule_start_date_checkdate','schedule_end_date_checkdate')" />
                                                 </div>
@@ -1269,7 +1269,7 @@
                                                                 <td><div class="group-input new-date-data-field mb-0">
                                                                     <div class="input-date "><div
                                                                     class="calenderauditee">
-                                                                    <input type="text" id="deadline{{$key}}' + serialNumber +'" readonly placeholder="DD-MMM-YYYY" value="{{ Helpers::getdateFormat(unserialize($action_plan->deadline)[$key]) }}" />
+                                                                    <input type="text" id="deadline{{$key}}' + serialNumber +'" readonly placeholder="DD-MM-YYYY" value="{{ Helpers::getdateFormat(unserialize($action_plan->deadline)[$key]) }}" />
                                                                     <input type="date" name="deadline[]" class="hide-input" value="{{ unserialize($action_plan->deadline)[$key] }}"
                                                                     oninput="handleDateInput(this, `deadline{{$key}}' + serialNumber +'`)" /></div></div></div></td>
                                                                 
@@ -1979,7 +1979,7 @@
                                                             </td> --}}
                                                             <td><div class="group-input new-date-data-field mb-0">
                                                                 <div class="input-date "><div class="calenderauditee">
-                                                                <input type="text" id="deadline2{{$key}}' + serialNumber +'" readonly placeholder="DD-MMM-YYYY" value="{{ Helpers::getdateFormat(unserialize($mitigation_plan_details->deadline2)[$key]) }}" />
+                                                                <input type="text" id="deadline2{{$key}}' + serialNumber +'" readonly placeholder="DD-MM-YYYY" value="{{ Helpers::getdateFormat(unserialize($mitigation_plan_details->deadline2)[$key]) }}" />
                                                                 <input type="date" name="deadline2[]" class="hide-input" value="{{ unserialize($mitigation_plan_details->deadline2)[$key] }}"
                                                                 oninput="handleDateInput(this, `deadline2{{$key}}' + serialNumber +'`)" /></div></div></div></td>
                                                             {{-- <td><input type="text" name="responsible_person[]"
