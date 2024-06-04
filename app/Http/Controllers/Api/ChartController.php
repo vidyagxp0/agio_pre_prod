@@ -3,7 +3,10 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Models\Deviation;
+use App\Models\Document;
 use App\Models\QMSDivision;
+use Carbon\Carbon;
 use Helpers;
 use Illuminate\Http\Request;
 
@@ -65,6 +68,136 @@ class ChartController extends Controller
 
         return response()->json($res);
     }
+
+    public function document_status_charts()
+    {
+        $res = Helpers::getDefaultResponse();
+
+        try {
+
+            $counts = [
+                'Draft' => 0,
+                'In-HOD Review' => 0,
+                'HOD Review Complete' => 0,
+                'In-Review' => 0,
+                'Reviewed' => 0,
+                'For-Approval' => 0,
+                'Approved' => 0,
+                'Pending-Traning' => 0,
+                'Traning-Complete' => 0,
+                'Effective' => 0,
+                'Obsolete' => 0,
+            ];
+
+            foreach ($counts as $status => $count)
+            {
+                $documents_count = Document::where('status', $status)->get()->count();
+
+                $counts[$status] = $documents_count;
+            }
+
+            $res['body'] = $counts;
+            
+
+        } catch (\Exception $e) {
+            $res['status'] = 'error';
+            $res['message'] = $e->getMessage();
+        }
+
+        return response()->json($res);
+    }
+    
+    public function deviation_classification_charts()
+    {
+        $res = Helpers::getDefaultResponse();
+
+        try {
+
+            $data = [];
+
+            for ($i = 5; $i >= 0; $i--)
+            {
+                $monthly_data = [];
+                $month = Carbon::now()->subMonths($i);
+
+                $minor_deviations = Deviation::where('Deviation_category', 'minor')
+                                    ->whereDate('created_at', '>=', $month->startOfMonth())
+                                    ->whereDate('created_at', '<=', $month->endOfMonth())
+                                    ->get()->count();
+                $major_deviations = Deviation::where('Deviation_category', 'major')
+                                    ->whereDate('created_at', '>=', $month->startOfMonth())
+                                    ->whereDate('created_at', '<=', $month->endOfMonth())
+                                    ->get()->count();
+                $critical_deviations = Deviation::where('Deviation_category', 'critical')
+                                    ->whereDate('created_at', '>=', $month->startOfMonth())
+                                    ->whereDate('created_at', '<=', $month->endOfMonth())
+                                    ->get()->count();
+
+
+                $monthly_data['month'] = $month->format('M');
+                $monthly_data['minor'] = $minor_deviations;
+                $monthly_data['major'] = $major_deviations;
+                $monthly_data['critical'] = $critical_deviations;
+
+                array_push($data, $monthly_data);
+                
+            }
+
+            $res['body'] = $data;
+
+        } catch (\Exception $e) {
+            $res['status'] = 'error';
+            $res['message'] = $e->getMessage();
+        }
+
+        return response()->json($res);
+    }
+    
+    public function deviation_departments_charts()
+    {
+        $res = Helpers::getDefaultResponse();
+
+        try {
+
+            $departments = ["CQA","QAB","CQC","MANU","PSG","CS","ITG","MM","CL","TT","QA","QM","IA","ACC","LOG","SM","BA"];
+
+            $data = [];
+
+            for ($i = 5; $i >= 0; $i--)
+            {
+                $monthly_data = [];
+                $month = Carbon::now()->subMonths($i);
+
+                foreach ($departments as $department)
+                {
+                    $deviations = Deviation::where('Initiator_Group', $department)
+                                    ->whereDate('created_at', '>=', $month->startOfMonth())
+                                    ->whereDate('created_at', '<=', $month->endOfMonth())
+                                    ->get()->count();
+
+                    $data[$department][$month->format('F')] = $deviations;
+                }
+                
+            }
+
+            // foreach ($departments as $department)
+            // {
+            //     $collection = collect($data[$department]);
+
+            //     $data[$department] = $collection->flatten()->all();
+            // }
+
+            $res['body'] = $data;
+
+        } catch (\Exception $e) {
+            $res['status'] = 'error';
+            $res['message'] = $e->getMessage();
+        }
+
+        return response()->json($res);
+    }
+
+    
 
 
     // Helpers

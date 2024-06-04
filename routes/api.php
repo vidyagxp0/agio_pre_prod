@@ -37,6 +37,8 @@ Route::post('upload-files', [HelperController::class, 'upload_file'])->name('api
  */
 
  Route::get('/charts/process-charts', [ChartController::class, 'process_charts'])->name('api.process.chart');
- Route::get('/charts/record-by_division', [ChartController::class, 'record_by_divisions'])->name('api.record_by_division.chart');
+ Route::get('/charts/documents-by-status', [ChartController::class, 'document_status_charts'])->name('api.document_by_status.chart');
+ Route::get('/charts/deviation-by-classification', [ChartController::class, 'deviation_classification_charts'])->name('api.deviation.chart');
+ Route::get('/charts/deviation-by-departments', [ChartController::class, 'deviation_departments_charts'])->name('api.deviation_departments.chart');
 
 
