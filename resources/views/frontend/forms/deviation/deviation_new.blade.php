@@ -1987,7 +1987,7 @@
                                     </textarea>
                                     </div>
                                 </div>
-                                <div class="col-md-12 mb-3 p_erson">
+                                {{-- <div class="col-md-12 mb-3 p_erson">
                                     <div class="group-input">
                                         <label for="Production feedback">Production Feedback</label>
                                         <div><small class="text-primary">Please insert "NA" in the data field if it does
@@ -1995,7 +1995,7 @@
                                         <textarea class="" name="Production_feedback" id="summernote-18">
                                     </textarea>
                                     </div>
-                                </div>
+                                </div> --}}
 
                                 <div class="col-lg-12 p_erson">
                                     <div class="group-input">
@@ -2091,7 +2091,7 @@
                                     </textarea>
                                     </div>
                                 </div>
-                                <div class="col-md-12 mb-3 warehouse">
+                                {{-- <div class="col-md-12 mb-3 warehouse">
                                     <div class="group-input">
                                         <label for="productionfeedback">Warehouse Feedback</label>
                                         <div><small class="text-primary">Please insert "NA" in the data field if it does
@@ -2099,7 +2099,7 @@
                                         <textarea class="" name="Warehouse_feedback" id="summernote-20">
                                     </textarea>
                                     </div>
-                                </div>
+                                </div> --}}
                                 <div class="col-lg-12 warehouse">
                                     <div class="group-input">
                                         <label for="Warehouse attachment"> Warehouse Attachments</label>
@@ -2195,13 +2195,13 @@
                                     </textarea>
                                     </div>
                                 </div>
-                                <div class="col-md-12 mb-3 quality_control">
+                                {{-- <div class="col-md-12 mb-3 quality_control">
                                     <div class="group-input">
                                         <label for="Quality Control Feedback">Quality Control Feedback</label>
                                         <textarea class="" name="Quality_Control_feedback" id="summernote-22">
                                     </textarea>
                                     </div>
-                                </div>
+                                </div> --}}
                                 <div class="col-lg-12 quality_control">
                                     <div class="group-input">
                                         <label for="Quality Control Attachments">Quality Control Attachments</label>
@@ -2301,7 +2301,7 @@
                                     </textarea>
                                     </div>
                                 </div>
-                                <div class="col-md-12 mb-3 quality_assurance">
+                                {{-- <div class="col-md-12 mb-3 quality_assurance">
                                     <div class="group-input">
                                         <label for="Quality Assurance Feedback">Quality Assurance Feedback</label>
                                         <div><small class="text-primary">Please insert "NA" in the data field if it does
@@ -2309,7 +2309,7 @@
                                         <textarea class="" name="QualityAssurance_feedback" id="summernote-24">
                                     </textarea>
                                     </div>
-                                </div>
+                                </div> --}}
                                 <div class="col-lg-12 quality_assurance">
                                     <div class="group-input">
                                         <label for="Quality Assurance Attachments">Quality Assurance Attachments</label>
@@ -2410,7 +2410,7 @@
                                     </textarea>
                                     </div>
                                 </div>
-                                <div class="col-md-12 mb-3 engineering">
+                                {{-- <div class="col-md-12 mb-3 engineering">
                                     <div class="group-input">
                                         <label for="productionfeedback">Engineering Feedback</label>
                                         <div><small class="text-primary">Please insert "NA" in the data field if it does
@@ -2418,7 +2418,7 @@
                                         <textarea class="" name="Engineering_feedback" id="summernote-26">
                                     </textarea>
                                     </div>
-                                </div>
+                                </div> --}}
                                 <div class="col-lg-12 engineering">
                                     <div class="group-input">
                                         <label for="Audit Attachments">Engineering Attachments</label>
@@ -2517,14 +2517,14 @@
                                     </textarea>
                                     </div>
                                 </div>
-                                <div class="col-md-12 mb-3 analytical_development">
+                                {{-- <div class="col-md-12 mb-3 analytical_development">
                                     <div class="group-input">
                                         <label for="Analytical Development Laboratory Feedback"> Analytical Development
                                             Laboratory Feedback</label>
                                         <textarea class="" name="Analytical_Development_feedback" id="summernote-28">
                                     </textarea>
                                     </div>
-                                </div>
+                                </div> --}}
                                 <div class="col-lg-12 analytical_development">
                                     <div class="group-input">
                                         <label for="Audit Attachments"> Analytical Development Laboratory
@@ -2638,14 +2638,14 @@
                                     </textarea>
                                     </div>
                                 </div>
-                                <div class="col-md-12 mb-3 kilo_lab">
+                                {{-- <div class="col-md-12 mb-3 kilo_lab">
                                     <div class="group-input">
                                         <label for="Kilo Lab Feedback"> Process Development Laboratory / Kilo Lab
                                             Feedback</label>
                                         <textarea class="" name="Kilo_Lab_feedback" id="summernote-30">
                                     </textarea>
                                     </div>
-                                </div>
+                                </div> --}}
                                 <div class="col-lg-12 kilo_lab">
                                     <div class="group-input">
                                         <label for="Audit Attachments"> Process Development Laboratory / Kilo Lab
@@ -2749,13 +2749,13 @@
                                     </textarea>
                                     </div>
                                 </div>
-                                <div class="col-md-12 mb-3 technology_transfer">
+                                {{-- <div class="col-md-12 mb-3 technology_transfer">
                                     <div class="group-input">
                                         <label for="Design Feedback"> Technology Transfer / Design Feedback</label>
                                         <textarea class="" name="Technology_transfer_feedback" id="summernote-32">
                                     </textarea>
                                     </div>
-                                </div>
+                                </div> --}}
                                 <div class="col-lg-12 technology_transfer">
                                     <div class="group-input">
                                         <label for="Audit Attachments"> Technology Transfer / Design Attachments</label>
@@ -2857,13 +2857,13 @@
                                     </textarea>
                                     </div>
                                 </div>
-                                <div class="col-md-12 mb-3 environmental_health">
+                                {{-- <div class="col-md-12 mb-3 environmental_health">
                                     <div class="group-input">
                                         <label for="productionfeedback">Environment, Health & Safety Feedback</label>
                                         <textarea class="" name="Health_Safety_feedback" id="summernote-34">
                                     </textarea>
                                     </div>
-                                </div>
+                                </div> --}}
                                 <div class="col-lg-12 environmental_health">
                                     <div class="group-input">
                                         <label for="Audit Attachments"> Environment, Health & Safety Attachments</label>
@@ -2970,13 +2970,13 @@
                                     </textarea>
                                     </div>
                                 </div>
-                                <div class="col-md-12 mb-3 human_resources">
+                                {{-- <div class="col-md-12 mb-3 human_resources">
                                     <div class="group-input">
                                         <label for="productionfeedback">Human Resource & Administration Feedback</label>
                                         <textarea class="" name="Human_Resource_feedback" id="summernote-36">
                                     </textarea>
                                     </div>
-                                </div>
+                                </div> --}}
                                 <div class="col-lg-12 human_resources">
                                     <div class="group-input">
                                         <label for="Audit Attachments"> Human Resource & Administration
@@ -3081,14 +3081,14 @@
                                     </textarea>
                                     </div>
                                 </div>
-                                <div class="col-md-12 mb-3 information_technology">
+                                {{-- <div class="col-md-12 mb-3 information_technology">
                                     <div class="group-input">
                                         <label for="Information Technology Feedback"> Information Technology
                                             Feedback</label>
                                         <textarea class="" name="Information_Technology_feedback" id="summernote-38">
                                     </textarea>
                                     </div>
-                                </div>
+                                </div> --}}
                                 <div class="col-lg-12 information_technology">
                                     <div class="group-input">
                                         <label for="Audit Attachments"> Information Technology Attachments</label>
@@ -3193,13 +3193,13 @@
                                     </textarea>
                                     </div>
                                 </div>
-                                <div class="col-md-12 mb-3 project_management">
+                                {{-- <div class="col-md-12 mb-3 project_management">
                                     <div class="group-input">
                                         <label for="Project management Feedback"> Project management Feedback</label>
                                         <textarea class="" name="Project_management_feedback" id="summernote-40">
                                     </textarea>
                                     </div>
-                                </div>
+                                </div> --}}
                                 <div class="col-lg-12 project_management">
                                     <div class="group-input">
                                         <label for="Audit Attachments"> Project management Attachments</label>
@@ -3329,13 +3329,13 @@
                                         </textarea>
                                     </div>
                                 </div>
-                                <div class="col-md-12 mb-3 other1_reviews">
+                                {{-- <div class="col-md-12 mb-3 other1_reviews">
                                     <div class="group-input">
                                         <label for="productionfeedback"> Other's 1 Feedback</label>
                                         <textarea class="" name="Other1_feedback" id="summernote-42">
                                         </textarea>
                                     </div>
-                                </div>
+                                </div> --}}
                                 <div class="col-lg-12 other1_reviews">
                                     <div class="group-input">
                                         <label for="Audit Attachments"> Other's 1 Attachments</label>
@@ -3456,13 +3456,13 @@
                                         </textarea>
                                     </div>
                                 </div>
-                                <div class="col-md-12 mb-3 Other2_reviews">
+                                {{-- <div class="col-md-12 mb-3 Other2_reviews">
                                     <div class="group-input">
                                         <label for="Feedback2"> Other's 2 Feedback</label>
                                         <textarea class="" name="Other2_feedback" id="summernote-44">
                                         </textarea>
                                     </div>
-                                </div>
+                                </div> --}}
                                 <div class="col-lg-12 Other2_reviews">
                                     <div class="group-input">
                                         <label for="Audit Attachments"> Other's 2 Attachments</label>
@@ -3585,13 +3585,13 @@
                                         </textarea>
                                     </div>
                                 </div>
-                                <div class="col-md-12 mb-3 Other3_reviews">
+                                {{-- <div class="col-md-12 mb-3 Other3_reviews">
                                     <div class="group-input">
                                         <label for="productionfeedback"> Other's 3 Feedback</label>
                                         <textarea class="" name="Other3_feedback" id="summernote-46">
                                         </textarea>
                                     </div>
-                                </div>
+                                </div> --}}
                                 <div class="col-lg-12 Other3_reviews">
                                     <div class="group-input">
                                         <label for="Audit Attachments"> Other's 3 Attachments</label>
@@ -3714,13 +3714,13 @@
                                         </textarea>
                                     </div>
                                 </div>
-                                <div class="col-md-12 mb-3 Other4_reviews">
+                                {{-- <div class="col-md-12 mb-3 Other4_reviews">
                                     <div class="group-input">
                                         <label for="feedback4"> Other's 4 Feedback</label>
                                         <textarea class="" name="Other4_feedback" id="summernote-48">
                                         </textarea>
                                     </div>
-                                </div>
+                                </div> --}}
                                 <div class="col-lg-12 Other4_reviews">
                                     <div class="group-input">
                                         <label for="Audit Attachments"> Other's 4 Attachments</label>
@@ -3844,13 +3844,13 @@
                                         </textarea>
                                     </div>
                                 </div>
-                                <div class="col-md-12 mb-3 Other5_reviews">
+                                {{-- <div class="col-md-12 mb-3 Other5_reviews">
                                     <div class="group-input">
                                         <label for="productionfeedback"> Other's 5 Feedback</label>
                                         <textarea class="" name="Other5_feedback" id="summernote-50">
                                         </textarea>
                                     </div>
-                                </div>
+                                </div> --}}
                                 <div class="col-lg-12 Other5_reviews">
                                     <div class="group-input">
                                         <label for="Audit Attachments"> Other's 5 Attachments</label>
