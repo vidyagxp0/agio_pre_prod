@@ -126,9 +126,7 @@
                         <div class="col-lg-6">
                             <div class="group-input">
                                 <label for="Initiator"><b>Initiator</b></label>
-                                {{-- <div class="static">{{ Auth::user()->name }}</div> --}}
-                                <input  type="hidden" id="initiator" name="initiator" value="{{ Auth::user()->name }}" > 
-                                <input disabled value="{{ Auth::user()->name }}">
+                                <input disabled type="text" value="{{ Auth::user()->name }}">
 
                             </div>
                         </div>
@@ -162,11 +160,11 @@
                                     <div class="text-danger">{{ $message }}</div>
                                 @enderror --}}
                             </div>
-                            {{-- <div class="col-lg-6">
+                            <div class="col-lg-6">
                                 <div class="group-input">
                                     <label for="Assigned To">Reviewer </label>
                                     <select id="choices-multiple-remove" class="choices-multiple-reviewe"
-                                        name="reviewers" placeholder="Select Reviewers"  required>
+                                        name="reviewers" placeholder="Select Reviewers"  >
                                         <option value="">-- Select --</option>
                                         @if (!empty($reviewer))
                                         
@@ -180,12 +178,13 @@
                                         @endif
                                     </select>
                                 </div>
-                            </div> --}}
-                            {{-- <div class="col-lg-6">
+                            </div>
+                            
+                            <div class="col-lg-6">
                                 <div class="group-input">
                                     <label for="Assigned To">Approver </label>
                                     <select id="choices-multiple-remove-but" class="choices-multiple-reviewer"
-                                        name="approvers" placeholder="Select Approvers"  required>
+                                        name="approvers" placeholder="Select Approvers" >
                                         <option value="">-- Select --</option>
 
                                         @if (!empty($approvers))
@@ -199,7 +198,7 @@
                                         @endif
                                     </select>
                                 </div>
-                            </div> --}}
+                            </div>
                            
                             <div class="col-lg-6 new-date-data-field">
                                 <div class="group-input input-date">
@@ -226,10 +225,9 @@
                             </div>
                             <div class="col-12">
                                 <div class="group-input">
-                                    <label for="Short Description"> Description<span
-                                            class="text-danger">*</span></label><span id="rchars">255</span>
+                                    <label for="Short Description"> Description</label><span id="rchars">255</span>
                                     Characters remaining
-                                 <textarea name="description" id="description" cols="30"  required></textarea>
+                                 <textarea name="description" id="description" cols="30"  ></textarea>
                                 </div>
                                 {{-- @error('short_description')
                                     <div class="text-danger">{{ $message }}</div>

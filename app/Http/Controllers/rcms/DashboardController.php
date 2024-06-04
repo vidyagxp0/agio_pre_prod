@@ -16,7 +16,7 @@ use App\Models\LabIncident;
 use App\Models\Auditee;
 use App\Models\NonConformance;
 use App\Models\AuditProgram;
-use App\Models\{Division,Deviation};
+use App\Models\{Division,Deviation, extension_new};
 use App\Models\RootCauseAnalysis;
 use App\Models\Observation;
 use App\Models\QMSDivision;
@@ -64,7 +64,7 @@ class DashboardController extends Controller
 
         $datas = CC::orderByDesc('id')->get();
         $datas1 = ActionItem::orderByDesc('id')->get();
-        $datas2 = Extension::orderByDesc('id')->get();
+        $datas2 = extension_new::orderByDesc('id')->get();
         $datas3 = EffectivenessCheck::orderByDesc('id')->get();
         $datas4 = InternalAudit::orderByDesc('id')->get();
         $datas5 = Capa::orderByDesc('id')->get();
@@ -135,17 +135,18 @@ class DashboardController extends Controller
             array_push($table, [
                 "id" => $data->id,
                 "parent" => $data->cc_id ? $data->cc_id : "-",
-                "record" => $data->record,
+                "record" => $data->record_number,
                 "type" => "Extension",
                 "parent_id" => $data->parent_id,
                 "parent_type" => $data->parent_type,
-                "division_id" => $data->division_id,
+                "division_id" => $data->site_location_code,
                 "short_description" => $data->short_description ? $data->short_description : "-",
-                "initiator_id" => $data->initiator_id,
+                "initiator_id" => $data->initiator,
                 "initiated_through" => $data->initiated_through,
                 "intiation_date" => $data->intiation_date,
                 "stage" => $data->status,
                 "date_open" => $data->create,
+                "due_date" => $data->due_date,
                 "date_close" => $data->updated_at,
             ]);
         }

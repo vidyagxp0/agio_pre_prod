@@ -576,7 +576,12 @@ Route::post('/errata/cancel/{id}', [ErrataController::class, 'erratacancelstage'
 // Route::view('extension_view', 'frontend.extension.extension_view');
 Route::get('extension-new', [ExtensionNewController::class, 'index']);
 Route::post('extension_new', [ExtensionNewController::class, 'store'])->name('extension_new.store');
+Route::get('extension_newshow/{id}', [ExtensionNewController::class, 'show']);
+
 Route::put('extension_new/{id}', [ExtensionNewController::class, 'update'])->name('extension_new.update');
+Route::post('extension_send_stage/{id}', [ExtensionNewController::class, 'sendstage'])->name('extension_send_stage');
+
+
 
 //=====================================================================
 // >>>>>>> B-backup
