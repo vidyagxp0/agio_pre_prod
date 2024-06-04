@@ -345,6 +345,10 @@ Route::group(['prefix' => 'rcms'], function () {
                 Route::get('MarketAuditReport/{id}', [MarketComplaintController::class, 'auditReport'])->name('marketAuditReport');
                 // Route::get('marketauditTrailPdf/{id}', [MarketComplaintController::class, 'auditTrailPdf'])->name('marketauditTrailPdf');
                 Route::get('marketauditTrailPdf/{id}', [MarketComplaintController::class, 'auditTrailPdf'])->name('marketauditTrailPdf');
+            Route::post('MarketComplaintC_AChild/{id}', [MarketComplaintController::class, 'MarketComplaintCapa_ActionChild'])->name('capa_action_child');
+            Route::post('MarketComplaintRCA_ActionChild/{id}', [MarketComplaintController::class, 'MarketComplaintRca_actionChild'])->name('rca_action_child');
+            Route::post('MarketComplaintRegul_Effec_Child/{id}', [MarketComplaintController::class, 'MarketComplaintRegu_Effec_Child'])->name('Regu_Effec_child');
+
             });
             // Route::get('rcms/marketComplaintSingleReport/{id}', [MarketComplaintController::class, 'singleReport']);
             Route::get('pdf-report/{id}', [MarketComplaintController::class, 'singleReport']);

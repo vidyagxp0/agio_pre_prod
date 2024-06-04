@@ -207,9 +207,6 @@
                             </button>
 
 
-                            {{-- <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#cancel-modal">
-                                Cancel
-                            </button> --}}
                         @elseif($data->stage == 2 && (in_array(3, $userRoleIds) || in_array(18, $userRoleIds)))
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#rejection-modal">
                                 More Information Required
@@ -220,6 +217,8 @@
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#cancel-modal">
                                 Cancel
                             </button>
+
+
                         @elseif($data->stage == 3 && (in_array(4, $userRoleIds) || in_array(18, $userRoleIds)))
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#rejection-modal">
                                 More Information Required
@@ -227,46 +226,20 @@
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                 Investigation Completed
                             </button>
-                            {{-- <div class="btn-group">
-                                <button type="button" class="button_theme1" data-bs-toggle="dropdown"
-                                    aria-expanded="false">
-                                    Additional Selections
-                                </button>
-                                <ul class="dropdown-menu">
-                                    <li>
-                                        <a class="dropdown-item" data-bs-toggle="modal"
-                                            data-bs-target="#selection-modal1">Selection 1</a>
-                                    </li>
-                                    <li>
-                                        <a class="dropdown-item" data-bs-toggle="modal"
-                                            data-bs-target="#selection-modal2">Selection 2</a>
-                                    </li>
-                                    <!-- Add more selections as needed -->
-                                </ul>
-                            </div> --}}
+                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal1">
+                                Child
+                            </button>
+
+
                         @elseif($data->stage == 4 && (in_array(4, $userRoleIds) || in_array(18, $userRoleIds)))
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                 Propose Plan
                             </button>
+                        <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal">
+                                Child
+                            </button>
 
-
-                            {{-- <div class="btn-group">
-                                <button type="button" class="button_theme1" data-bs-toggle="dropdown"
-                                    aria-expanded="false">
-                                    Additional Selections
-                                </button>
-                                <ul class="dropdown-menu">
-                                    <li>
-                                        <a class="dropdown-item" data-bs-toggle="modal"
-                                            data-bs-target="#selection-modal1">Selection 1</a>
-                                    </li>
-                                    <li>
-                                        <a class="dropdown-item" data-bs-toggle="modal"
-                                            data-bs-target="#selection-modal2">Selection 2</a>
-                                    </li>
-                                    <!-- Add more selections as needed -->
-                                </ul>
-                            </div> --}}
+                           
                         @elseif($data->stage == 5 && (in_array(4, $userRoleIds) || in_array(18, $userRoleIds)))
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                 Approve Plan
@@ -274,37 +247,27 @@
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#rejection-modal">
                                 Reject
                             </button>
+
+
                         @elseif($data->stage == 6 && (in_array(4, $userRoleIds) || in_array(18, $userRoleIds)))
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                 All CAPA Closed
                             </button>
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#">
                                 Regulatory Reporting child
-
                             </button>
+
+
+
                         @elseif($data->stage == 7 && (in_array(4, $userRoleIds) || in_array(18, $userRoleIds)))
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                 Send Letter
                             </button>
+                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal3">
+                                Child
+                            </button>
 
-                            {{-- <div class="btn-group">
-                                <button type="button" class="button_theme1" data-bs-toggle="dropdown"
-                                    aria-expanded="false">
-                                    child
-                                </button>
-                                <ul class="dropdown-menu">
-                                    <li>
-                                        <a class="dropdown-item" data-bs-toggle="modal"
-                                            data-bs-target="#selection-modal1">Regulatory Reporting
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a class="dropdown-item" data-bs-toggle="modal"
-                                            data-bs-target="#selection-modal2">Effectiveness Check</a>
-                                    </li>
-                                    <!-- Add more selections as needed -->
-                                </ul>
-                            </div> --}}
+                         
                         @endif
                         <button class="button_theme1"> <a class="text-white" href="{{ url('rcms/qms-dashboard') }}"> Exit
                             </a> </button>
@@ -466,69 +429,41 @@
                         </div>
                     </div>
                 </div>
-
+{{-- ==================================capa and  Action child=============================================== --}}
 
 
                 <div class="modal fade" id="child-modal">
                     <div class="modal-dialog modal-dialog-centered">
                         <div class="modal-content">
-
+            
                             <!-- Modal Header -->
                             <div class="modal-header">
                                 <h4 class="modal-title">Child</h4>
                             </div>
-                            {{-- <form action="{{ route('lab_incident_root_child', $data->id) }}" method="POST">
+                            <form action="{{ route('marketcomplaint.capa_action_child', $data->id) }}" method="POST">
                                 @csrf
                                 <!-- Modal body -->
                                 <div class="modal-body">
                                     <div class="group-input">
-                                        <label for="major">
-                                            <input type="radio" name="revision" id="major" value="Action-Item">
-                                            Root Cause Analysis
-                                        </label>
-                                    </div>
-
-                                </div>
-
-                                <!-- Modal footer -->
-                                <!-- <div class="modal-footer">
-                                    <button type="button" data-bs-dismiss="modal">Close</button>
-                                    <button type="submit">Continue</button>
-                                </div> -->
-                                <div class="modal-footer">
-                                          <button type="submit">Submit</button>
-                                         <button type="button" data-bs-dismiss="modal">Close</button>
-                               </div>
-                            </form>
-             --}}
-                        </div>
-                    </div>
-                </div>
-
-
-
-
-                <div class="modal fade" id="child-modal1">
-                    <div class="modal-dialog modal-dialog-centered">
-                        <div class="modal-content">
-
-                            <!-- Modal Header -->
-                            {{-- <div class="modal-header">
-                                <h4 class="modal-title">Child</h4>
-                            </div> --}}
-                            {{-- <form action="{{ route('lab_incident_capa_child', $data->id) }}" method="POST">
-                                @csrf
-                                <!-- Modal body -->
-                                <div class="modal-body">
-                                    <div class="group-input">
-                                        <label for="major">
-                                            <input type="radio" name="revision" id="major" value="Action-Item">
+                                        <label for="capa-child">
+                                            <input type="radio" name="revision" id="capa-child" value="capa-child">
                                             CAPA
                                         </label>
                                     </div>
-
+                                    <div class="group-input">
+                                        <label for="root-item">
+                                            <input type="radio" name="revision" id="root-item" value="Action-Item">
+                                            Action Item
+                                        </label>
+                                    </div>
+                                    {{-- <div class="group-input">
+                                        <label for="root-item">
+                                         <input type="radio" name="revision" id="root-item" value="effectiveness-check">
+                                            Effectiveness check
+                                        </label>
+                                    </div> --}}
                                 </div>
-
+            
                                 <!-- Modal footer -->
                                 <!-- <div class="modal-footer">
                                     <button type="button" data-bs-dismiss="modal">Close</button>
@@ -536,27 +471,114 @@
                                 </div> -->
                                 <div class="modal-footer">
                                           <button type="submit">Submit</button>
-                                         <button type="button" data-bs-dismiss="modal">Close</button>
+                                         <button type="button" data-bs-dismiss="modal">Close</button>                         
                                </div>
-                            </form> --}}
-
+                            </form>
+            
                         </div>
                     </div>
                 </div>
 
+{{-- ==================================RCA and Action child=============================================== --}}
+                <div class="modal fade" id="child-modal1">
+                    <div class="modal-dialog modal-dialog-centered">
+                        <div class="modal-content">
+            
+                            <!-- Modal Header -->
+                            <div class="modal-header">
+                                <h4 class="modal-title">Child</h4>
+                            </div>
+                            <form action="{{ route('marketcomplaint.rca_action_child', $data->id) }}" method="POST">
+                                @csrf
+                                <!-- Modal body -->
+                                <div class="modal-body">
+                                    <div class="group-input">
+                                        <label for="capa-child">
+                                            <input type="radio" name="revision" id="capa-child" value="rca-child">
+                                           RCA
+                                        </label>
+                                    </div>
+                                    <div class="group-input">
+                                        <label for="root-item">
+                                            <input type="radio" name="revision" id="root-item" value="Action-Item">
+                                            Action Item
+                                        </label>
+                                    </div>
+                                   
+                                </div>
+            
+                               
+                                <div class="modal-footer">
+                                          <button type="submit">Submit</button>
+                                         <button type="button" data-bs-dismiss="modal">Close</button>                         
+                               </div>
+                            </form>
+            
+                        </div>
+                    </div>
+                </div>
+{{-- ==================================Regulatory  Reporting  and Effectiveness  Check child=============================================== --}}
+
+<div class="modal fade" id="child-modal3">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <h4 class="modal-title">Child</h4>
+            </div>
+            <form action="{{ route('marketcomplaint.Regu_Effec_child', $data->id) }}" method="POST">
+                @csrf
+                <!-- Modal body -->
+                <div class="modal-body">
+                    <div class="group-input">
+                        <label for="capa-child">
+                            <input type="radio" name="revision" id="rca-child" value="regulatory-child">
+                            Regulatory Reporting
+                        </label>
+                    </div>
+                    <div class="group-input">
+                        <label for="root-item">
+                            <input type="radio" name="revision" id="root-item" value="Effectiveness-child">
+                            Effectiveness Check
+                        </label>
+                    </div>
+                   
+                </div>
+
+               
+                <div class="modal-footer">
+                          <button type="submit">Submit</button>
+                         <button type="button" data-bs-dismiss="modal">Close</button>                         
+               </div>
+            </form>
+
+        </div>
+    </div>
+</div>
 
 
-
-
+               
                 <style>
                     #step-form>div {
                         display: none
                     }
-
+            
                     #step-form>div:nth-child(1) {
                         display: block;
                     }
+                    .input_full_width{
+                        width: 100%;
+                border-radius: 5px;
+                margin-bottom: 10px;
+                    }
                 </style>
+            
+
+
+
+
+               
 
                 <script>
                     function openCity(evt, cityName) {
@@ -845,14 +867,16 @@
                             </script>
 
                         <div class="col-md-12 mb-3">
-                            <div class="group-input">
-                                <label for="Description"> Short Description</label>
-                                <div><small class="text-primary">Please insert "NA" in the data field if it does
-                                        not require completion</small></div>
-                                <textarea class="summernote" name="description_gi" id="summernote-1">{{ $data->description_gi }}
-                                </textarea>
-                            </div>
-                        </div>
+                                    <div class="group-input">
+                                        <label for="Short Description">Short Description<span
+                                            class="text-danger">*</span></label>
+                                            <span id="rchars">255</span>
+                                        <div><small class="text-primary">Please insert "NA" in the data field if it does
+                                                not require completion</small></div>
+                                        <input  name="description_gi" id="summernote-1" required value="{{ $data->description_gi }}" >
+                                    
+                                    </div>
+                                </div>
 
 
                             <div class="col-lg-6">
@@ -1300,18 +1324,13 @@
                                     <label for="Initiator Group">Categorization of complaint</label>
                                     <select name="categorization_of_complaint_gi" onchange="">
                                         <option value="">-- select --</option>
-                                        <option
-                                            value="Critical"{{ $data->categorization_of_complaint_gi == 'Critical' ? 'selected' : '' }}>
-                                            Critical</option>
-                                        <option value="Major"
-                                            {{ $data->categorization_of_complaint_gi == 'Major' ? 'selected' : '' }}>Major
-                                        </option>
-                                        <option
-                                            value="Minor"{{ $data->categorization_of_complaint_gi == 'Major' ? 'selected' : '' }}>
-                                            Minor</option>
+                                        <option value="Critical" {{ $data->categorization_of_complaint_gi == 'Critical' ? 'selected' : '' }}>Critical</option>
+                                        <option value="Major" {{ $data->categorization_of_complaint_gi == 'Major' ? 'selected' : '' }}>Major</option>
+                                        <option value="Minor" {{ $data->categorization_of_complaint_gi == 'Minor' ? 'selected' : '' }}>Minor</option>
                                     </select>
                                 </div>
                             </div>
+
 
                             <div class="col-md-12 mb-3">
                                 <div class="group-input">
@@ -1801,8 +1820,7 @@
                                         </span>
                                     </label>
                                     <div class="table-responsive">
-                                        <table class="table table-bordered" id="report_approval_details"
-                                            style="width: %;">
+                                        <table class="table table-bordered" id="report_approval_details" style="width: 100%;">
                                             <thead>
                                                 <tr>
                                                     <th style="width: 100px;">Row #</th>
@@ -1810,88 +1828,88 @@
                                                     <th>Department</th>
                                                     <th>Sign</th>
                                                     <th>Date</th>
-                                                 <th>Action</th>
-
-
-
+                                                    <th>Action</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
                                                 @php
-                                                $reportindex = 1;
-                                            @endphp
-                                                @if (!empty($report_approval) && is_array($report_approval))
+                                                    $reportindex = 1;
+                                                @endphp
+                                                @if (!empty($report_approval) && is_array($report_approval->data))
                                                     @foreach ($report_approval->data as $index => $rep_ap)
-                                                    <tr>
-                                                        <td><input disabled type="text" name="serial_number[{{ $index }}]"value="{{  $reportindex++}}"></td>
-                                                        <td><input type="text" name="Report_Approval[{{ $index }}][names_rrv]" value="{{ $rep_ap['names_rrv'] }}"></td>
-                                                        <td><input type="text" name="Report_Approval[{{ $index }}][department_rrv]"value="{{ $rep_ap['department_rrv'] }}"></td>
-                                                        <td><input type="text" name="Report_Approval[{{ $index }}][sign_rrv]" value="{{ $rep_ap['sign_rrv'] }}"></td>
-                                                        <td>
-                                                            <div class="new-date-data-field">
-                                                                <div class="group-input input-date">
-                                                                    <div class="calenderauditee">
-                                                                        <input
-                                                                        class="click_date"
-                                                                        id="date_{{ $index }}_date_rrv" type="text" 
-                                                                        name="Report_Approval[{{ $index }}][date_rrv]" 
-                                                                        placeholder="DD-MMM-YYYY" 
-                                                                        value="{{ !empty($detail['date_rrv']) ? \Carbon\Carbon::parse($detail['date_rrv'])->format('d-M-Y') : '' }}"
-                                                                         />
-                                                                        <input type="date" 
-                                                                        name="Report_Approval[{{ $index }}][date_rrv]"
-                                                                        value="{{ !empty($detail['date_rrv']) ? \Carbon\Carbon::parse($detail['date_rrv'])->format('d-M-Y') : '' }}"
-                                                                        id="date_{{ $index }}_date_rrv"
-                                                                        class="hide-input show_date"
-                                                                         style="position: absolute; top: 0; left: 0; opacity: 0;" 
-                                                                         onchange="handleDateInput(this, 'date_{{ $index }}_date_rrv')"
-                                                                         />
+                                                        <tr>
+                                                            <td><input disabled type="text" name="Report_Approval[{{ $index }}][serial]" value="{{ $reportindex++ }}"></td>
+                                                            <td><input type="text" name="Report_Approval[{{ $index }}][names_rrv]" value="{{ $rep_ap['names_rrv'] }}"></td>
+                                                            <td><input type="text" name="Report_Approval[{{ $index }}][department_rrv]" value="{{ $rep_ap['department_rrv'] }}"></td>
+                                                            <td><input type="text" name="Report_Approval[{{ $index }}][sign_rrv]" value="{{ $rep_ap['sign_rrv'] }}"></td>
+                                                            <td>
+                                                                <div class="new-date-data-field">
+                                                                    <div class="group-input input-date">
+                                                                        <div class="calenderauditee">
+                                                                            <input
+                                                                                class="click_date"
+                                                                                id="date_{{ $index }}_date_rrv"
+                                                                                type="text"
+                                                                                name="Report_Approval[{{ $index }}][date_rrv]"
+                                                                                placeholder="DD-MMM-YYYY"
+                                                                                value="{{ !empty($rep_ap['date_rrv']) ? \Carbon\Carbon::parse($rep_ap['date_rrv'])->format('d-M-Y') : '' }}"
+                                                                            />
+                                                                            <input
+                                                                                type="date"
+                                                                                name="Report_Approval[{{ $index }}][date_rrv]"
+                                                                                value="{{ !empty($rep_ap['date_rrv']) ? \Carbon\Carbon::parse($rep_ap['date_rrv'])->format('Y-m-d') : '' }}"
+                                                                                id="date_{{ $index }}_date_rrv"
+                                                                                class="hide-input show_date"
+                                                                                style="position: absolute; top: 0; left: 0; opacity: 0;"
+                                                                                onchange="handleDateInput(this, 'date_{{ $index }}_date_rrv')"
+                                                                            />
+                                                                        </div>
                                                                     </div>
                                                                 </div>
-                                                            </div>
-                                                        </td>
-                                                        <td><button type="text" class="removeRowBtn" >Remove</button></td>
-
-                                                    </tr>
+                                                            </td>
+                                                            <td><button type="button" class="removeRowBtn">Remove</button></td>
+                                                        </tr>
                                                     @endforeach
-
                                                 @endif
-
                                             </tbody>
                                         </table>
                                     </div>
                                 </div>
                             </div>
+                            
                             <script>
                                 $(document).ready(function() {
                                     let indexReaprovel = {{ ($report_approval && is_array($report_approval->data)) ? count($report_approval->data) : 0 }};
+                                    
                                     $('#report_approval').click(function(e) {
                                         e.preventDefault();
-
+                            
                                         function generateTableRow(serialNumber) {
                                             var html =
                                                 '<tr>' +
                                                 '<td><input disabled type="text" name="Report_Approval[' + serialNumber + '][serial]" value="' + (serialNumber + 1) + '"></td>' +
-                                                '<td><input type="text" name="Report_Approval[' + indexReaprovel + '][names_rrv]"></td>' +
-                                                '<td><input type="text" name="Report_Approval[' + indexReaprovel + '][department_rrv]"></td>' +
-                                                '<td><input type="text" name="Report_Approval[' + indexReaprovel + '][sign_rrv]"></td>' +
-                                                '<td>  <div class="new-date-data-field"><div class="group-input input-date"><div class="calenderauditee"><input id="date_'+ indexReaprovel +'_date_rrv" type="text" name="Report_Approval[' + indexReaprovel + '][date_rrv]" placeholder="DD-MMM-YYYY" /> <input type="date" name="Report_Approval[' + indexReaprovel + '][date_rrv]" min="{{ \Carbon\Carbon::now()->format("Y-m-d") }}" value="{{ \Carbon\Carbon::now()->format("Y-m-d") }}" id="date_'+ indexReaprovel +'_date_rrv" class="hide-input show_date" style="position: absolute; top: 0; left: 0; opacity: 0;" oninput="handleDateInput(this, \'date_'+ indexReaprovel +'_date_rrv\')" /> </div> </div></td>' +
-                                                '<td><button type="text" class="removeRowBtn" ">Remove</button></td>' +
-
+                                                '<td><input type="text" name="Report_Approval[' + serialNumber + '][names_rrv]"></td>' +
+                                                '<td><input type="text" name="Report_Approval[' + serialNumber + '][department_rrv]"></td>' +
+                                                '<td><input type="text" name="Report_Approval[' + serialNumber + '][sign_rrv]"></td>' +
+                                                '<td><div class="new-date-data-field"><div class="group-input input-date"><div class="calenderauditee"><input id="date_'+ serialNumber +'_date_rrv" type="text" name="Report_Approval[' + serialNumber + '][date_rrv]" placeholder="DD-MMM-YYYY" /> <input type="date" name="Report_Approval[' + serialNumber + '][date_rrv]" min="{{ \Carbon\Carbon::now()->format("Y-m-d") }}" value="{{ \Carbon\Carbon::now()->format("Y-m-d") }}" id="date_'+ serialNumber +'_date_rrv" class="hide-input show_date" style="position: absolute; top: 0; left: 0; opacity: 0;" oninput="handleDateInput(this, \'date_'+ serialNumber +'_date_rrv\')" /> </div></div></div></td>' +
+                                                '<td><button type="button" class="removeRowBtn">Remove</button></td>' +
                                                 '</tr>';
-                                                indexReaprovel++;
+                                            indexReaprovel++;
                                             return html;
                                         }
-
+                            
                                         var tableBody = $('#report_approval_details tbody');
                                         var rowCount = tableBody.children('tr').length;
                                         var newRow = generateTableRow(rowCount);
                                         tableBody.append(newRow);
                                     });
+                            
+                                    $(document).on('click', '.removeRowBtn', function() {
+                                        $(this).closest('tr').remove();
+                                    });
                                 });
                             </script>
-
-
+                            
 
 
                             <div class="col-12">
@@ -2129,15 +2147,11 @@
                         <div class="col-lg-12">
                             <div class="group-input">
                                 <label for="Complaint Sample Required">Complaint Sample Required</label>
-                                <select name="complaint_sample_required_ca" onchange="">
+                                <select name="complaint_sample_required_ca">
                                     <option value="">-- select --</option>
-                                    <option value="yes"
-                                        {{ $data->complaint_sample_required_ca == 'yes' ? 'selected' : '' }}>Yes</option>
-                                    <option value="no"
-                                        {{ $data->complaint_sample_required_ca == 'no' ? 'selected' : '' }}>No</option>
-                                    <option value="na"
-                                        {{ $data->complaint_sample_required_ca == 'na' ? 'selected' : '' }}>NA</option>
-
+                                    <option value="yes" {{ isset($data) && $data->complaint_sample_required_ca == 'yes' ? 'selected' : '' }}>Yes</option>
+                                    <option value="no" {{ isset($data) && $data->complaint_sample_required_ca == 'no' ? 'selected' : '' }}>No</option>
+                                    <option value="na" {{ isset($data) && $data->complaint_sample_required_ca == 'na' ? 'selected' : '' }}>NA</option>
                                 </select>
                             </div>
                         </div>
@@ -2792,4 +2806,30 @@
             $('#rchars').text(textlen);
         });
     </script>
+    {{-- ====================script for record number and intir--code ===================== --}}
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+var originalRecordNumber = document.getElementById('record_number').value;
+var initialPlaceholder = '---';
+
+document.getElementById('initiator_group').addEventListener('change', function() {
+    var selectedValue = this.value;
+    var recordNumberElement = document.getElementById('record_number');
+    var initiatorGroupCodeElement = document.getElementById('initiator_group_code');
+
+    // Update the initiator group code
+    initiatorGroupCodeElement.value = selectedValue;
+
+    // Update the record number by replacing the initial placeholder with the selected initiator group code
+    var newRecordNumber = originalRecordNumber.replace(initialPlaceholder, selectedValue);
+    recordNumberElement.value = newRecordNumber;
+
+    // Update the original record number to keep track of changes
+    originalRecordNumber = newRecordNumber;
+    initialPlaceholder = selectedValue;
+});
+});
+
+</script>
+
 @endsection
