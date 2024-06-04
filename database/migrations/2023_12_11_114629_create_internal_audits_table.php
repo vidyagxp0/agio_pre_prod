@@ -108,11 +108,11 @@ return new class extends Migration
 
                // $table->bigIncrements('id');
 
-                for ($i = 1; $i <= 64; $i++) {
-                    $table->text("response_$i")->nullable();
+                // for ($i = 1; $i <= 64; $i++) {
+                //     $table->text("response_$i")->nullable();
 
-                    $table->text("remark_$i")->nullable();
-                }
+                //     $table->text("remark_$i")->nullable();
+                // }
 
 
                 $table->string('Description_Deviation')->nullable();

@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Api\ChartController;
 use App\Http\Controllers\Api\HelperController;
 use App\Http\Controllers\ApiController;
 use App\Http\Controllers\UserLoginController;
@@ -30,5 +31,12 @@ Route::get('capaStatus', [ApiController::class, 'capaStatus']);
 Route::post('/filter-records', [DocumentController::class, 'filterRecord'])->name('record.filter');
 
 Route::post('upload-files', [HelperController::class, 'upload_file'])->name('api.upload.file');
+
+/**
+ * CHARTS ROUTES
+ */
+
+ Route::get('/charts/process-charts', [ChartController::class, 'process_charts'])->name('api.process.chart');
+ Route::get('/charts/record-by_division', [ChartController::class, 'record_by_divisions'])->name('api.record_by_division.chart');
 
 
