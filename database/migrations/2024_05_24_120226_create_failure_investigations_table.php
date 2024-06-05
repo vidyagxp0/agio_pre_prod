@@ -101,21 +101,21 @@ return new class extends Migration
              
             $table->string('qa_more_info_required_by')->nullable();
             $table->string('qa_more_info_required_on')->nullable();
-            $table->string('Approved_By')->nullable();
-            $table->string('Approved_On')->nullable();
+            $table->string('Approved_By')->nullable()->nullable();
+            $table->string('Approved_On')->nullable()->nullable();
             $table->longText('Approved_Comments')->nullable();
 
             $table->text('QA_head_approved_by')->nullable();
             $table->text('QA_head_approved_on')->nullable();
-            $table->longText('QA_head_approved_comment');
+            $table->longText('QA_head_approved_comment')->nullable();
             
-            $table->text('pending_initiator_approved_by');
-            $table->text('pending_initiator_approved_on');
+            $table->text('pending_initiator_approved_by')->nullable();
+            $table->text('pending_initiator_approved_on')->nullable();
             $table->longText('pending_initiator_approved_comment');
             
             $table->text('QA_final_approved_by')->nullable();
             $table->text('QA_final_approved_on')->nullable();
-            $table->longText('QA_final_approved_comment');
+            $table->longText('QA_final_approved_comment')->nullable();
 
             $table->string('capa_required')->nullable();
             $table->string('qrm_required')->nullable();
