@@ -34,9 +34,6 @@ class OOSController extends Controller
         
         $record_number = ((RecordNumber::first()->value('counter')) + 1);
         $record_number = str_pad($record_number, 4, '0', STR_PAD_LEFT);
-
-        // dd($record_number);
-
         $division = QMSDivision::where('name', Helpers::getDivisionName(session()->get('division')))->first();
         
         if ($division) {
@@ -60,7 +57,7 @@ class OOSController extends Controller
     
     public function store(Request $request)
     { 
-
+        // dd($request->all());
         $res = Helpers::getDefaultResponse();
 
         try {
@@ -966,16 +963,16 @@ class OOSController extends Controller
             $data->info_product_materials = $data->grids()->where('identifier', 'info_product_material')->first();
             $data->details_stabilities = $data->grids()->where('identifier', 'details_stability')->first();
             $data->oos_details = $data->grids()->where('identifier', 'oos_detail')->first();
-            $data->checklist_lab_invs = $data->grids()->where('identifier', 'checklist_lab_inv')->first();
-            $data->oos_capas = $data->grids()->where('identifier', 'oos_capa')->first();
-            $data->phase_two_invs = $data->grids()->where('identifier', 'phase_two_inv')->first();
+            $checklist_lab_invs = $data->grids()->where('identifier', 'checklist_lab_inv')->first();
+            $oos_capas = $data->grids()->where('identifier', 'oos_capa')->first();
+            $phase_two_invs = $data->grids()->where('identifier', 'phase_two_inv')->first();
             $data->oos_conclusions = $data->grids()->where('identifier', 'oos_conclusion')->first();
             $data->oos_conclusion_reviews = $data->grids()->where('identifier', 'oos_conclusion_review')->first();
     
             $data->originator = User::where('id', $data->initiator_id)->value('name');
             $pdf = App::make('dompdf.wrapper');
             $time = Carbon::now();
-            $pdf = PDF::loadview('frontend.OOS.comps.singleReport', compact('data'))
+            $pdf = PDF::loadview('frontend.OOS.comps.singleReport', compact('data','checklist_lab_invs','phase_two_invs','oos_capas'))
                 ->setOptions([
                     'defaultFont' => 'sans-serif',
                     'isHtml5ParserEnabled' => true,
