@@ -1808,108 +1808,108 @@
 
 
 
-                            <div class="col-12">
-                                <div class="group-input">
-                                    <label for="root_cause">
-                                        Report Approval
-                                        <button type="button" id="report_approval">+</button>
-                                        <span class="text-primary" data-bs-toggle="modal"
-                                            data-bs-target="#document-details-field-instruction-modal"
-                                            style="font-size: 0.8rem; font-weight: 400; cursor: pointer;">
-                                            (Launch Instruction)
-                                        </span>
-                                    </label>
-                                    <div class="table-responsive">
-                                        <table class="table table-bordered" id="report_approval_details" style="width: 100%;">
-                                            <thead>
-                                                <tr>
-                                                    <th style="width: 100px;">Row #</th>
-                                                    <th>Names</th>
-                                                    <th>Department</th>
-                                                    <th>Sign</th>
-                                                    <th>Date</th>
-                                                    <th>Action</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                @php
-                                                    $reportindex = 1;
-                                                @endphp
-                                                @if (!empty($report_approval) && is_array($report_approval->data))
-                                                    @foreach ($report_approval->data as $index => $rep_ap)
-                                                        <tr>
-                                                            <td><input disabled type="text" name="Report_Approval[{{ $index }}][serial]" value="{{ $reportindex++ }}"></td>
-                                                            <td><input type="text" name="Report_Approval[{{ $index }}][names_rrv]" value="{{ $rep_ap['names_rrv'] }}"></td>
-                                                            <td><input type="text" name="Report_Approval[{{ $index }}][department_rrv]" value="{{ $rep_ap['department_rrv'] }}"></td>
-                                                            <td><input type="text" name="Report_Approval[{{ $index }}][sign_rrv]" value="{{ $rep_ap['sign_rrv'] }}"></td>
-                                                            <td>
-                                                                <div class="new-date-data-field">
-                                                                    <div class="group-input input-date">
-                                                                        <div class="calenderauditee">
-                                                                            <input
-                                                                                class="click_date"
-                                                                                id="date_{{ $index }}_date_rrv"
-                                                                                type="text"
-                                                                                name="Report_Approval[{{ $index }}][date_rrv]"
-                                                                                placeholder="DD-MMM-YYYY"
-                                                                                value="{{ !empty($rep_ap['date_rrv']) ? \Carbon\Carbon::parse($rep_ap['date_rrv'])->format('d-M-Y') : '' }}"
-                                                                            />
-                                                                            <input
-                                                                                type="date"
-                                                                                name="Report_Approval[{{ $index }}][date_rrv]"
-                                                                                value="{{ !empty($rep_ap['date_rrv']) ? \Carbon\Carbon::parse($rep_ap['date_rrv'])->format('Y-m-d') : '' }}"
-                                                                                id="date_{{ $index }}_date_rrv"
-                                                                                class="hide-input show_date"
-                                                                                style="position: absolute; top: 0; left: 0; opacity: 0;"
-                                                                                onchange="handleDateInput(this, 'date_{{ $index }}_date_rrv')"
-                                                                            />
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </td>
-                                                            <td><button type="button" class="removeRowBtn">Remove</button></td>
-                                                        </tr>
-                                                    @endforeach
-                                                @endif
-                                            </tbody>
-                                        </table>
+                           <div class="col-12">
+    <div class="group-input">
+        <label for="root_cause">
+            Report Approval
+            <button type="button" id="report_approval">+</button>
+            <span class="text-primary" data-bs-toggle="modal"
+                data-bs-target="#document-details-field-instruction-modal"
+                style="font-size: 0.8rem; font-weight: 400; cursor: pointer;">
+                (Launch Instruction)
+            </span>
+        </label>
+        <div class="table-responsive">
+            <table class="table table-bordered" id="report_approval_details" style="width: 100%;">
+                <thead>
+                    <tr>
+                        <th style="width: 100px;">Row #</th>
+                        <th>Names</th>
+                        <th>Department</th>
+                        <th>Sign</th>
+                        <th>Date</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @php
+                        $reportindex = 1;
+                    @endphp
+                    @if (!empty($report_approval) && is_array($report_approval->data))
+                        @foreach ($report_approval->data as $index => $rep_ap)
+                            <tr>
+                                <td><input disabled type="text" name="Report_Approval[{{ $index }}][serial]" value="{{ $reportindex++ }}"></td>
+                                <td><input type="text" name="Report_Approval[{{ $index }}][names_rrv]" value="{{ $rep_ap['names_rrv'] }}"></td>
+                                <td><input type="text" name="Report_Approval[{{ $index }}][department_rrv]" value="{{ $rep_ap['department_rrv'] }}"></td>
+                                <td><input type="text" name="Report_Approval[{{ $index }}][sign_rrv]" value="{{ $rep_ap['sign_rrv'] }}"></td>
+                                <td>
+                                    <div class="new-date-data-field">
+                                        <div class="group-input input-date">
+                                            <div class="calenderauditee">
+                                                <input
+                                                    class="click_date"
+                                                    id="date_{{ $index }}_date_rrv"
+                                                    type="text"
+                                                    name="Report_Approval[{{ $index }}][date_rrv]"
+                                                    placeholder="DD-MMM-YYYY"
+                                                    value="{{ !empty($rep_ap['date_rrv']) ? \Carbon\Carbon::parse($rep_ap['date_rrv'])->format('d-M-Y') : '' }}"
+                                                />
+                                                <input
+                                                    type="date"
+                                                    name="Report_Approval[{{ $index }}][date_rrv]"
+                                                    value="{{ !empty($rep_ap['date_rrv']) ? \Carbon\Carbon::parse($rep_ap['date_rrv'])->format('Y-m-d') : '' }}"
+                                                    id="date_{{ $index }}_date_rrv"
+                                                    class="hide-input show_date"
+                                                    style="position: absolute; top: 0; left: 0; opacity: 0;"
+                                                    onchange="handleDateInput(this, 'date_{{ $index }}_date_rrv')"
+                                                />
+                                            </div>
+                                        </div>
                                     </div>
-                                </div>
-                            </div>
-                            
-                            <script>
-                                $(document).ready(function() {
-                                    let indexReaprovel = {{ ($report_approval && is_array($report_approval->data)) ? count($report_approval->data) : 0 }};
-                                    
-                                    $('#report_approval').click(function(e) {
-                                        e.preventDefault();
-                            
-                                        function generateTableRow(serialNumber) {
-                                            var html =
-                                                '<tr>' +
-                                                '<td><input disabled type="text" name="Report_Approval[' + serialNumber + '][serial]" value="' + (serialNumber + 1) + '"></td>' +
-                                                '<td><input type="text" name="Report_Approval[' + serialNumber + '][names_rrv]"></td>' +
-                                                '<td><input type="text" name="Report_Approval[' + serialNumber + '][department_rrv]"></td>' +
-                                                '<td><input type="text" name="Report_Approval[' + serialNumber + '][sign_rrv]"></td>' +
-                                                '<td><div class="new-date-data-field"><div class="group-input input-date"><div class="calenderauditee"><input id="date_'+ serialNumber +'_date_rrv" type="text" name="Report_Approval[' + serialNumber + '][date_rrv]" placeholder="DD-MMM-YYYY" /> <input type="date" name="Report_Approval[' + serialNumber + '][date_rrv]" min="{{ \Carbon\Carbon::now()->format("Y-m-d") }}" value="{{ \Carbon\Carbon::now()->format("Y-m-d") }}" id="date_'+ serialNumber +'_date_rrv" class="hide-input show_date" style="position: absolute; top: 0; left: 0; opacity: 0;" oninput="handleDateInput(this, \'date_'+ serialNumber +'_date_rrv\')" /> </div></div></div></td>' +
-                                                '<td><button type="button" class="removeRowBtn">Remove</button></td>' +
-                                                '</tr>';
-                                            indexReaprovel++;
-                                            return html;
-                                        }
-                            
-                                        var tableBody = $('#report_approval_details tbody');
-                                        var rowCount = tableBody.children('tr').length;
-                                        var newRow = generateTableRow(rowCount);
-                                        tableBody.append(newRow);
-                                    });
-                            
-                                    $(document).on('click', '.removeRowBtn', function() {
-                                        $(this).closest('tr').remove();
-                                    });
-                                });
-                            </script>
-                            
+                                </td>
+                                <td><button type="button" class="removeRowBtn">Remove</button></td>
+                            </tr>
+                        @endforeach
+                    @endif
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(document).ready(function() {
+        let indexReaprovel = {{ ($report_approval && is_array($report_approval->data)) ? count($report_approval->data) : 0 }};
+        
+        $('#report_approval').click(function(e) {
+            e.preventDefault();
+
+            function generateTableRow(serialNumber) {
+                var html =
+                    '<tr>' +
+                    '<td><input disabled type="text" name="Report_Approval[' + serialNumber + '][serial]" value="' + (serialNumber + 1) + '"></td>' +
+                    '<td><input type="text" name="Report_Approval[' + serialNumber + '][names_rrv]"></td>' +
+                    '<td><input type="text" name="Report_Approval[' + serialNumber + '][department_rrv]"></td>' +
+                    '<td><input type="text" name="Report_Approval[' + serialNumber + '][sign_rrv]"></td>' +
+                    '<td><div class="new-date-data-field"><div class="group-input input-date"><div class="calenderauditee"><input id="date_'+ serialNumber +'_date_rrv" type="text" name="Report_Approval[' + serialNumber + '][date_rrv]" placeholder="DD-MMM-YYYY" /> <input type="date" name="Report_Approval[' + serialNumber + '][date_rrv]" min="{{ \Carbon\Carbon::now()->format("Y-m-d") }}" value="{{ \Carbon\Carbon::now()->format("Y-m-d") }}" id="date_'+ serialNumber +'_date_rrv" class="hide-input show_date" style="position: absolute; top: 0; left: 0; opacity: 0;" oninput="handleDateInput(this, \'date_'+ serialNumber +'_date_rrv\')" /> </div></div></div></td>' +
+                    '<td><button type="button" class="removeRowBtn">Remove</button></td>' +
+                    '</tr>';
+                indexReaprovel++;
+                return html;
+            }
+
+            var tableBody = $('#report_approval_details tbody');
+            var rowCount = tableBody.children('tr').length;
+            var newRow = generateTableRow(rowCount);
+            tableBody.append(newRow);
+        });
+
+        $(document).on('click', '.removeRowBtn', function() {
+            $(this).closest('tr').remove();
+        });
+    });
+</script>
+
 
 
                             <div class="col-12">
