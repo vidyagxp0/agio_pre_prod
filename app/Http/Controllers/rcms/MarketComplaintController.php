@@ -22,7 +22,14 @@ class MarketComplaintController extends Controller
 {
     public function index()
     {
-        return view('frontend.market_complaint.market_complaint_new');
+        $record_number = ((RecordNumber::first()->value('counter')) + 1);
+        $record_number = str_pad($record_number, 4, '0', STR_PAD_LEFT);
+        $currentDate = Carbon::now();
+        $formattedDate = $currentDate->addDays(30);
+        $due_date = $formattedDate->format('Y-m-d');
+        
+
+        return view('frontend.market_complaint.market_complaint_new',compact('due_date', 'record_number'));
     }
 
 
@@ -803,19 +810,19 @@ return redirect()->to('rcms/qms-dashboard')->with('success', 'Market Complaint c
     public function show($id)
 {
                 $data = MarketComplaint::find($id);
-            $productsgi = MarketComplaintGrids::where('mc_id',$id)->where('identifer','ProductDetails')->first();
-            $traceability_gi = MarketComplaintGrids::where('mc_id',$id)->where('identifer','Traceability')->first();
-            $investing_team = MarketComplaintGrids::where('mc_id',$id)->where('identifer','Investing_team')->first();
-            $brain_stroming_details = MarketComplaintGrids::where('mc_id',$id)->where('identifer','brain_stroming_details')->first();
-            $team_members = MarketComplaintGrids::where('mc_id',$id)->where('identifer','Team_Members')->first();
-            $report_approval = MarketComplaintGrids::where('mc_id',$id)->where('identifer','Report_Approval')->first();
-            $product_materialDetails = MarketComplaintGrids::where('mc_id',$id)->where('identifer','Product_MaterialDetails')->first();
+            $productsgi = MarketComplaintGrids::where('mc_id',$id)->where('identifier','ProductDetails')->first();
+            $traceability_gi = MarketComplaintGrids::where('mc_id',$id)->where('identifier','Traceability')->first();
+            $investing_team = MarketComplaintGrids::where('mc_id',$id)->where('identifier','Investing_team')->first();
+            $brain_stroming_details = MarketComplaintGrids::where('mc_id',$id)->where('identifier','brain_stroming_details')->first();
+            $team_members = MarketComplaintGrids::where('mc_id',$id)->where('identifier','Team_Members')->first();
+            $report_approval = MarketComplaintGrids::where('mc_id',$id)->where('identifier','Report_Approval')->first();
+            $product_materialDetails = MarketComplaintGrids::where('mc_id',$id)->where('identifier','Product_MaterialDetails')->first();
             // dd($product_materialDetails->data);
             // dd($product_materialDetails);
             // dd($data);
-            // $productsgi = MarketComplaintGrids::where('mc_id',$id)->where('identifer','ProductDetails')->first();
+            // $productsgi = MarketComplaintGrids::where('mc_id',$id)->where('identifier','ProductDetails')->first();
 
-            $proposal_to_accomplish_investigation = MarketComplaintGrids::where('mc_id', $id)->where('identifer', 'Proposal_to_accomplish_investigation')->first();
+            $proposal_to_accomplish_investigation = MarketComplaintGrids::where('mc_id', $id)->where('identifier', 'Proposal_to_accomplish_investigation')->first();
             $proposalData = $proposal_to_accomplish_investigation ? json_decode($proposal_to_accomplish_investigation->data, true) : [];
 
 
@@ -2067,7 +2074,7 @@ public function MarketComplaintRca_actionChild(Request $request,$id)
     {
 
 
-        $audit = MarketComplaintAuditTrial::where('market_id', $id)->orderByDESC('id')->get()->unique('activity_type');
+        $audit = MarketComplaintAuditTrial::where('market_id', $id)->orderByDESC('id')->paginate(5);
         $today = Carbon::now()->format('d-m-y');
         $document = MarketComplaint::where('id', $id)->first();
         $document->initiator = User::where('id', $document->initiator_id)->value('name');

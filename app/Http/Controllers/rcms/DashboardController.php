@@ -387,6 +387,7 @@ class DashboardController extends Controller
                 "initiated_through" => $data->initiated_through,
                 "date_open" => $data->create,
                 "date_close" => $data->updated_at,
+                // "due_date" => $data->due_date,
             ]);
         }
         foreach ($ooc as $data) {
