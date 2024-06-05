@@ -310,7 +310,7 @@
                                                         </a>
                                                     @endif
 
-                                                    @elseif ($datas->type == 'Out_Of_Calibration')
+                                                    @elseif ($datas->type == 'Out Of Calibration')
                                                     <a href="{{ route('ShowOutofCalibration', $datas->id) }}" style="color: blue">
                                                         {{ str_pad($datas->record, 4, '0', STR_PAD_LEFT) }}
                                                     </a>

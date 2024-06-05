@@ -352,7 +352,6 @@ class DashboardController extends Controller
                 "date_close" => $data->updated_at,
             ]);
         }
-        // datas13
         foreach ($datas13 as $data) {
             $data->create = Carbon::parse($data->created_at)->format('d-M-Y h:i A');
             array_push($table, [
@@ -478,7 +477,7 @@ class DashboardController extends Controller
                 "id" => $data->id,
                 "due_date" => $data->due_date,
                 "parent" => $data->parent_record ? $data->parent_record : "-",
-                "record" => $data->id,
+                "record" => $data->record,
                 "type" => "Out Of Calibration",
                 "parent_id" => $data->parent_id,
                 "parent_type" => $data->parent_type,

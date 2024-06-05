@@ -1009,6 +1009,10 @@ $oocevaluation->save();
 
 
         }
+        else {
+            toastr()->error('E-signature Not match');
+            return back();
+        }
 
             }
 public function OOCStateChangetwo(Request $request , $id){
@@ -1159,6 +1163,10 @@ public function OOCStateChangetwo(Request $request , $id){
 
 
     }
+    else {
+        toastr()->error('E-signature Not match');
+        return back();
+    }
 
 }
 public function RejectoocStateChange(Request $request, $id)
@@ -1189,6 +1197,10 @@ public function RejectoocStateChange(Request $request, $id)
             toastr()->success('Document Sent');
             return back();
         }
+}
+else {
+    toastr()->error('E-signature Not match');
+    return back();
 }
 }
 
