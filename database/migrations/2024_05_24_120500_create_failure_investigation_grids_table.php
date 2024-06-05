@@ -14,7 +14,6 @@ return new class extends Migration
     public function up()
     {
         Schema::create('failure_investigation_grids', function (Blueprint $table) {
-            $table->id();
             $table->string('type')->nullable();
             $table->longText('IDnumber')->nullable();
             $table->longText('facility_name')->nullable();
@@ -95,8 +94,6 @@ return new class extends Migration
             $table->longText('Any_Comments')->nullable();
             $table->longText('Any_signdate')->nullable();
             $table->longText('Any_Remarks')->nullable();
-
-            $table->timestamps();
         });
     }
 

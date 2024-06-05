@@ -148,26 +148,24 @@
                                     </thead>
 
                                     <tbody>
-                                        @foreach ($deviations as $deviation)
-                                            <tr>
+                                        <tr>
 
-                                                
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
+                                            
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
 
-                                            </tr>
-                                        @endforeach
+                                        </tr>
 
                                     </tbody>
                                 </table>

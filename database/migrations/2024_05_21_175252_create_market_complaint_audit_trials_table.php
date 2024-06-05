@@ -17,10 +17,10 @@ return new class extends Migration
             $table->id();
             $table->string('market_id');
             $table->string('activity_type');
-            $table->longText('previous')->nullable();
-            $table->string('stage')->nullable();
-            $table->longText('current')->nullable();
-            $table->longText('comment')->nullable();
+            $table->longText('previous');
+            $table->string('stage');
+            $table->longText('current');
+            $table->longText('comment');
             $table->string('user_id');
             $table->string('user_name');
             $table->string('origin_state');

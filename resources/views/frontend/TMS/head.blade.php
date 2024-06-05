@@ -27,9 +27,6 @@
                 <div class="drop-list">
                     <a href="{{ route('TMS.create') }}">Create Training Plan</a>
                     <a href="{{ url('TMS/show') }}">Manage Training Plan</a>
-                    <a href="{{ url('induction_training') }}">Induction Training</a>
-                    <a href="{{ url('job_training') }}">On The Job Training</a>
-
                 </div>
             </div>
         </div>

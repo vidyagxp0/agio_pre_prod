@@ -169,7 +169,7 @@
                     <button class="cctablinks" onclick="openCity(event, 'CCForm4')">Risk/Opportunity Analysis</button>
                     <button class="cctablinks" onclick="openCity(event, 'CCForm5')">Residual Risk</button>
                     <button class="cctablinks" onclick="openCity(event, 'CCForm6')">Risk Mitigation</button>
-                    <button class="cctablinks" onclick="openCity(event, 'CCForm7')">Activity Log</button>
+                    <button class="cctablinks" onclick="openCity(event, 'CCForm7')">Signatures</button>
                 </div>
 
                 <form action="{{ route('risk_store') }}" method="post" enctype="multipart/form-data">

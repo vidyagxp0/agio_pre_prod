@@ -200,7 +200,47 @@
                     </tr>
                     <tr>
                         <th class="w-20">Initiator Group</th>
-                        <td class="w-30">@if($data->Inititator_Group){{ $data->Inititator_Group }} @else Not Applicable @endif</td>
+                        <td class="w-30">
+                            @if($data->Initiator_Group)
+                                @if($data->Initiator_Group == "CQA")
+                                    <p>Corporate Quality Assurance</p>
+                                @elseif($data->Initiator_Group == "QAB")
+                                    <p>Quality Assurance Biopharma</p>
+                                @elseif($data->Initiator_Group == "CQC")
+                                    <p>Central Quality Control</p>
+                                @elseif($data->Initiator_Group == "MANU")
+                                    <p>Manufacturing</p>
+                                @elseif($data->Initiator_Group == "PSG")
+                                    <p>Plasma Sourcing Group</p>
+                                @elseif($data->Initiator_Group == "CS")
+                                    <p>Central Store</p>
+                                @elseif($data->Initiator_Group == "ITG")
+                                    <p>Information Technology Group</p>
+                                @elseif($data->Initiator_Group == "MM")
+                                    <p>Molecular Medicine</p>
+                                @elseif($data->Initiator_Group == "CL")
+                                    <p>Central Laboratory</p>
+                                @elseif($data->Initiator_Group == "TT")
+                                    <p>Tech Team</p>
+                                @elseif($data->Initiator_Group == "QA")
+                                    <p>Quality Assurance</p>
+                                @elseif($data->Initiator_Group == "QM")
+                                    <p>Quality Management</p>
+                                @elseif($data->Initiator_Group == "IA")
+                                    <p>IT Administration</p>
+                                @elseif($data->Initiator_Group == "ACC")
+                                    <p>Accounting</p>
+                                @elseif($data->Initiator_Group == "LOG")
+                                    <p>Logistics</p>
+                                @elseif($data->Initiator_Group == "SM")
+                                    <p>Senior Management</p>
+                                @elseif($data->Initiator_Group == "BA")
+                                    <p>Bussiness Administration</p>
+                                @endif
+                            @else 
+                                Not Applicable 
+                            @endif
+                        </td>
                         <th class="w-20">Due Date</th>
                         <td class="w-30" colspan="3"> @if($data->due_date){{ $data->due_date }} @else Not Applicable @endif</td>
                     </tr>
@@ -210,12 +250,12 @@
                         <th class="w-20">Initiator Group Code</th>
                         <td class="w-30" colspan="3"> @if($data->initiator_group_code){{ $data-> initiator_group_code}} @else Not Applicable @endif</td>
                     </tr>
-                    <tr>
+                    <!-- <tr>
                         <th class="w-20">CFT</th>
                         <td class="w-30">{{ $info->Microbiology }}</td>
                         <th class="w-20">CFT Person</th>
                         <td class="w-30">{{ $info->Microbiology_Person }}</td>
-                    </tr>
+                    </tr> -->
                     <tr>
                         <th class="w-20">Severity Level</th>
                         <td class="w-30">@if($data->severity_level1){{ $data-> severity_level1}} @else Not Applicable @endif</td>
@@ -369,9 +409,10 @@
                                 </div>
                             </td>
                         </tr>
+                        
                         <tr>
                             <th class="w-20">Related Records</th>
-                            <td class="w-80">{{ $review->related_records }}</td>
+                            <td class="w-80">{{ Helpers::getDivisionName($data->division_id) }}/CC/{{ date('Y') }}/{{ str_pad($review->related_records, 4, '0', STR_PAD_LEFT) }}</td> 
                         </tr>
                         <tr>
                             <th class="w-20">QA Attachments</th>
@@ -2521,12 +2562,12 @@
                         <th class="w-20">Quality Approver Person</th>
                         <td class="w-30">{{ $info->Quality_Approver_Person }}</td>
                     </tr>
-                    <tr>
+                    <!-- <tr>
                         <th class="w-20">CFT</th>
                         <td class="w-30">{{ $info->Microbiology }}</td>
                         <th class="w-20">CFT Person</th>
                         <td class="w-30">{{ $info->Microbiology_Person }}</td>
-                    </tr>
+                    </tr> -->
                     <tr>
                         <th class="w-20">Others</th>
                         <td class="w-30">{{ $info->bd_domestic }}</td>
@@ -2568,7 +2609,9 @@
                     </table>
                 </div>
             </div> --}}
-            <div class="block">
+
+
+            <!-- <div class="block">
                 <div class="head">
                     <div class="block-head">
                       Comments
@@ -2583,18 +2626,12 @@
                         <tr>
                             <th class="w-20">QA Comments</th>
                             <td class="w-80">
-                                <div><strong>On {{ Helpers:: getDateFormat($comments->created_at) }} added by {{ $data->originator }}</strong>
-                                </div>
-                                <div>
-                                    {{ $comments->qa_comments }}
-                                </div>
+                                <div> @if($comments->qa_comments){{ $comments->qa_comments}} @else Not Applicable @endif </div>
                             </td>
                         </tr>
                         <tr>
                             <th class="w-20">QA Head Designee Comments</th>
                             <td class="w-80">
-                                <div><strong>On {{ Helpers:: getDateFormat($comments->created_at) }} added by {{ $data->originator }}</strong>
-                                </div>
                                 <div>
                                     {{ $comments->designee_comments }}
                                 </div>
@@ -2603,8 +2640,6 @@
                         <tr>
                             <th class="w-20">Warehouse Comments</th>
                             <td class="w-80">
-                                <div><strong>On {{ Helpers:: getDateFormat($comments->created_at) }} added by {{ $data->originator }}</strong>
-                                </div>
                                 <div>
                                     {{ $comments->Warehouse_comments }}
                                 </div>
@@ -2613,8 +2648,6 @@
                         <tr>
                             <th class="w-20">Engineering Comments</th>
                             <td class="w-80">
-                                <div><strong>On {{ Helpers:: getDateFormat($comments->created_at) }} added by {{ $data->originator }}</strong>
-                                </div>
                                 <div>
                                     {{ $comments->Engineering_comments }}
                                 </div>
@@ -2623,8 +2656,6 @@
                         <tr>
                             <th class="w-20">Instrumentation Comments</th>
                             <td class="w-80">
-                                <div><strong>On {{ Helpers:: getDateFormat($comments->created_at) }} added by {{ $data->originator }}</strong>
-                                </div>
                                 <div>
                                     {{ $comments->Instrumentation_comments }}
                                 </div>
@@ -2633,8 +2664,6 @@
                         <tr>
                             <th class="w-20">Validation Comments</th>
                             <td class="w-80">
-                                <div><strong>On {{ Helpers:: getDateFormat($comments->created_at) }} added by {{ $data->originator }}</strong>
-                                </div>
                                 <div>
                                     {{ $comments->Validation_comments }}
                                 </div>
@@ -2643,8 +2672,6 @@
                         <tr>
                             <th class="w-20">Others Comments</th>
                             <td class="w-80">
-                                <div><strong>On {{ Helpers:: getDateFormat($comments->created_at) }} added by {{ $data->originator }}</strong>
-                                </div>
                                 <div>
                                     {{ $comments->Others_comments }}
                                 </div>
@@ -2653,8 +2680,6 @@
                         <tr>
                             <th class="w-20">Comments</th>
                             <td class="w-80">
-                                <div><strong>On {{ Helpers:: getDateFormat($comments->created_at) }} added by {{ $data->originator }}</strong>
-                                </div>
                                 <div>
                                     {{ $comments->Group_comments }}
                                 </div>
@@ -2690,7 +2715,9 @@
                         </table>
                     </div>
                 </div>
-            </div>
+            </div> -->
+
+
             <div class="block">
                 <div class="block-head">
                     Risk Assessment
@@ -2847,262 +2874,71 @@
 
              <div class="block">
                 <div class="block-head">
-                    Activity Log
+                   Activity Log 
                 </div>
                 <table>
                     <tr>
                         <th class="w-20">Submitted By</th>
-                        <td class="w-30">
-                        @php
-                            $submit = DB::table('c_c_stage_histories')
-                                ->where('type', 'Change-Control')
-                                ->where('doc_id', $data->id)
-                                ->where('stage_id', 2)
-                                ->get();
-                        @endphp
-                        @foreach ($submit as $temp)
-                            <div class="static">{{ $temp->user_name }}</div>
-                        @endforeach</td>
-
+                        <td class="w-30"><div class="static">{{ $data->submit_by }}</div></td>
                         <th class="w-20">Submitted On</th>
-                        <td class="w-30">
-                            @php
-                            $submit = DB::table('c_c_stage_histories')
-                                ->where('type', 'Change-Control')
-                                ->where('doc_id', $data->id)
-                                ->where('stage_id', 2)
-                                ->get();
-                        @endphp
-                        @foreach ($submit as $temp)
-                            <div class="static">{{ $temp->created_at }}</div>
-                        @endforeach
-                        </td>
+                        <td class="w-30"><div class="static">{{ $data->submit_on }}</div></td>
+                        <th class="w-20">Submitted Comment</th>
+                        <td class="w-30"><div class="static">{{ $data->submit_comment }}</div></td>
                     </tr>
-                    
+
                     <tr>
-                        <th class="w-20">Cancelled By</th>
-                        <td class="w-30">
-                            @php
-                            $submit = DB::table('c_c_stage_histories')
-                                ->where('type', 'Change-Control')
-                                ->where('doc_id', $data->id)
-                                ->where('stage_id', 0)
-                                ->get();
-                        @endphp
-                        @foreach ($submit as $temp)
-                            <div class="static">{{ $temp->user_name }}</div>
-                        @endforeach
-                        </td>
-                        <th class="w-20">Cancelled On</th>
-                        <td class="w-30">
-                            @php
-                            $submit = DB::table('c_c_stage_histories')
-                                ->where('type', 'Change-Control')
-                                ->where('doc_id', $data->id)
-                                ->where('stage_id', 0)
-                                ->get();
-                        @endphp
-                        @foreach ($submit as $temp)
-                            <div class="static">{{ $temp->created_at }}</div>
-                        @endforeach
-                        </td>
+                        <th class="w-20">HOD Review By</th>
+                        <td class="w-30"><div class="static">{{ $data->hod_review_by }}</div></td>
+                        <th class="w-20">HOD Review On</th>
+                        <td class="w-30"><div class="static">{{ $data->hod_review_on }}</div></td>
+                        <th class="w-20">HOD Comment</th>
+                        <td class="w-30"><div class="static">{{ $data->hod_review_comment }}</div></td>
                     </tr>
-                    {{-- <tr>
-                        <th class="w-20">More Information Required By</th>
-                        <td class="w-30">
-                            @php
-                            $submit = DB::table('c_c_stage_histories')
-                                ->where('type', 'Change-Control')
-                                ->where('doc_id', $data->id)
-                                ->where('status', 'More-info Required')
-                                ->get();
-                        @endphp
-                        @foreach ($submit as $temp)
-                            <div class="static">{{ $temp->user_name }}</div>
-                        @endforeach
-                        </td>
-                        <th class="w-20">More Information Required On</th>
-                        <td class="w-30">
-                            @php
-                            $submit = DB::table('c_c_stage_histories')
-                                ->where('type', 'Change-Control')
-                                ->where('doc_id', $data->id)
-                                ->where('status', 'More-info Required')
-                                ->get();
-                        @endphp
-                        @foreach ($submit as $temp)
-                            <div class="static">{{ $temp->created_at }}</div>
-                        @endforeach
-                        </td>
-                    </tr> --}}
+
                     <tr>
-                        <th class="w-20">HOD Review Complete By</th>
-                        <td class="w-30"> @php
-                            $submit = DB::table('c_c_stage_histories')
-                                ->where('type', 'Change-Control')
-                                ->where('doc_id', $data->id)
-                                ->where('stage_id', 3)
-                                ->get();
-                            @endphp
-                        @foreach ($submit as $temp)
-                            <div class="static">{{ $temp->user_name }}</div>
-                        @endforeach </td>
-                        <th class="w-20">HOD Review Complete On</th>
-                        <td class="w-30">
-                            @php
-                            $submit = DB::table('c_c_stage_histories')
-                                ->where('type', 'Change-Control')
-                                ->where('doc_id', $data->id)
-                                ->where('stage_id', 3)
-                                ->get();
-                        @endphp
-                        @foreach ($submit as $temp)
-                            <div class="static">{{ $temp->created_at }}</div>
-                        @endforeach
-                        </td>
+                        <th class="w-20">QA Initial</th>
+                        <td class="w-30"><div class="static">{{ $data->QA_initial_review_by }}</div></td>
+                        <th class="w-20">QA Initial</th>
+                        <td class="w-30"><div class="static">{{ $data->QA_initial_review_on }}</div></td>
+                        <th class="w-20">QA Initial Comment</th>
+                        <td class="w-30"><div class="static">{{ $data->QA_initial_review_comment }}</div></td>
                     </tr>
-                    {{-- <tr>
-                        <th class="w-20">More Information Req. By</th>
-                        <td class="w-30">Piyush Sahu</td>
-                        <th class="w-20">More Information Req. On</th>
-                        <td class="w-30">12-12-2203</td>
-                    </tr> --}}
+
                     <tr>
-                        <th class="w-20">Send to CFT/SME/QA Review By</th>
-                        <td class="w-30">
-                            @php
-                            $submit = DB::table('c_c_stage_histories')
-                                ->where('type', 'Change-Control')
-                                ->where('doc_id',$data->id)
-                                ->where('stage_id', 4)
-                                ->get();
-                        @endphp
-                        @foreach ($submit as $temp)
-                            <div class="static">{{ $temp->user_name }}</div>
-                        @endforeach
-                        </td>
-                        <th class="w-20">Send to CFT/SME/QA Review On</th>
-                        <td class="w-30">
-                            @php
-                            $submit = DB::table('c_c_stage_histories')
-                                ->where('type', 'Change-Control')
-                                ->where('doc_id', $data->id)
-                                ->where('stage_id', 4)
-                                ->get();
-                        @endphp
-                        @foreach ($submit as $temp)
-                            <div class="static">{{ $temp->created_at }}</div>
-                        @endforeach
-                        </td>
+                        <th class="w-20">Pending RA</th>
+                        <td class="w-30"><div class="static">{{ $data->pending_RA_review_by }}</div></td>
+                        <th class="w-20">Pending RA</th>
+                        <td class="w-30"><div class="static">{{ $data->pending_RA_review_on }}</div></td>
+                        <th class="w-20">Pending RA Comment</th>
+                        <td class="w-30"><div class="static">{{ $data->pending_RA_review_comment }}</div></td>
                     </tr>
-                    <!-- <tr>
-                        <th class="w-20">More Info Req. By</th>
-                        <td class="w-30">Piyush Sahu</td>
-                        <th class="w-20">More Info Req. On</th>
-                        <td class="w-30">12-12-2203</td>
-                    </tr> -->
+
                     <tr>
-                        <th class="w-20">CFT/SME/QA Review Not required By</th>
-                        <td class="w-30">
-                            @php
-                            $submit = DB::table('c_c_stage_histories')
-                                ->where('type', 'Change-Control')
-                                ->where('doc_id', $data->id)
-                                ->where('stage_id', 6)
-                                ->get();
-                        @endphp
-                        @foreach ($submit as $temp)
-                            <div class="static">{{ $temp->user_name }}</div>
-                        @endforeach
-                        </td>
-                        <th class="w-20">CFT/SME/QA Review Not required On</th>
-                        <td class="w-30">
-                            @php
-                            $submit = DB::table('c_c_stage_histories')
-                                ->where('type', 'Change-Control')
-                                ->where('doc_id', $data->id)
-                                ->where('stage_id', 6)
-                                ->get();
-                        @endphp
-                        @foreach ($submit as $temp)
-                            <div class="static">{{ $temp->created_at }}</div>
-                        @endforeach
-                        </td>
+                        <th class="w-20">CFT By</th>
+                        <td class="w-30"><div class="static">{{ $data->cft_review_by }}</div></td>
+                        <th class="w-20">CFT On</th>
+                        <td class="w-30"><div class="static">{{ $data->cft_review_on }}</div></td>
+                        <th class="w-20">CFT Comment</th>
+                        <td class="w-30"><div class="static">{{ $data->cft_review_comment }}</div></td>
                     </tr>
+
                     <tr>
-                        <th class="w-20">Review Completed By</th>
-                        <td class="w-30">
-                            @php
-                                $submit = DB::table('c_c_stage_histories')
-                                      ->where('type', 'Change-Control')
-                                      ->where('doc_id', $data->id)
-                                      ->where('stage_id', 7)
-                                      ->get();
-                            @endphp
-                            @foreach ($submit as $temp)
-                                <div class="static">{{ $temp->user_name }}</div>
-                            @endforeach 
-                        </td>
-                        <th class="w-20">Review Completed On</th>
-                        <td class="w-30">
-                            @php
-                            $submit = DB::table('c_c_stage_histories')
-                                ->where('type', 'Change-Control')
-                                ->where('doc_id', $data->id)
-                                ->where('stage_id', 7)
-                                ->get();
-                        @endphp
-                        @foreach ($submit as $temp)
-                            <div class="static">{{ $temp->created_at }}</div>
-                        @endforeach
-                        </td>
+                        <th class="w-20">QA Final</th>
+                        <td class="w-30"><div class="static">{{ $data->QA_final_review_by }}</div></td>
+                        <th class="w-20">QA Final</th>
+                        <td class="w-30"><div class="static">{{ $data->QA_final_review_on }}</div></td>
+                        <th class="w-20">QA Final Comment</th>
+                        <td class="w-30"><div class="static">{{ $data->QA_final_review_comment }}</div></td>
                     </tr>
+
                     <tr>
-                        <th class="w-20">Implemented By</th>
-                        <td class="w-30">
-                            @php
-                            $submit = DB::table('c_c_stage_histories')
-                                ->where('type', 'Change-Control')
-                                ->where('doc_id', $data->id)
-                                ->where('stage_id', 9)
-                                ->get();
-                        @endphp
-                        @foreach ($submit as $temp)
-                            <div class="static">{{ $temp->user_name }}</div>
-                        @endforeach
-                        </td>
-                        <th class="w-20">Implemented On</th>
-                        <td class="w-30">
-                            @php
-                            $submit = DB::table('c_c_stage_histories')
-                                ->where('type', 'Change-Control')
-                                ->where('doc_id', $data->id)
-                                ->where('stage_id', 9)
-                                ->get();
-                        @endphp
-                        @foreach ($submit as $temp)
-                            <div class="static">{{ $temp->created_at }}</div>
-                        @endforeach
-                        </td>
+                        <th class="w-20">QA Head By</th>
+                        <td class="w-30"><div class="static">{{ $data->QA_head_approval_by }}</div></td>
+                        <th class="w-20">QA Head On</th>
+                        <td class="w-30"><div class="static">{{ $data->QA_head_approval_on }}</div></td>
+                        <th class="w-20">QA Head Comment</th>
+                        <td class="w-30"><div class="static">{{ $data->QA_head_approval_comment }}</div></td>
                     </tr>
-                    {{-- <tr>
-                        <th class="w-20">Change Implemented By</th>
-                        <td class="w-30">Piyush Sahu</td>
-                        <th class="w-20">Change Implemented On</th>
-                        <td class="w-30">12-12-2203</td>
-                    </tr> --}}
-                    <!-- <tr>
-                        <th class="w-20">QA More Information Required By</th>
-                        <td class="w-30">Piyush Sahu</td>
-                        <th class="w-20">QA More Information Required On</th>
-                        <td class="w-30">12-12-2203</td>
-                    </tr> -->
-                    {{-- <tr>
-                        <th class="w-20">QA Final Review Completed By</th>
-                        <td class="w-30">Piyush Sahu</td>
-                        <th class="w-20">QA Final Review Completed On</th>
-                        <td class="w-30">12-12-2203</td>
-                    </tr> --}}
                 </table>
             </div> 
         </div>

@@ -19,9 +19,7 @@ return new class extends Migration
             $table->unsignedBigInteger('user_id');
             $table->longText('reviewer_comment')->nullable();
             $table->longText('reviewer_comment_by')->nullable();
-            $table->text('reviewer_comment_on')->nullable();
-            $table->text('type')->nullable();
-
+            $table->date('reviewer_comment_on')->nullable();
 
             $table->timestamps();
             $table->softDeletes();

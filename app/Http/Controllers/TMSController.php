@@ -18,12 +18,10 @@ use App\Models\DocumentHistory;
 use App\Models\Question;
 use App\Models\Quize;
 use App\Models\RoleGroup;
-use App\Models\JobTraining;
 use App\Models\TrainingAudit;
 use App\Models\TrainingHistory;
 use App\Models\TrainingStatus;
 use App\Models\Employee;
-use App\Models\Induction_training;
 use App\Models\TrainerQualification;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -34,8 +32,7 @@ class TMSController extends Controller
     public function index(){
 
         // return dd(Helpers::checkRoles(6));
-        $inductionTraining = Induction_training::get();        
-        $jobTrainings = JobTraining::get();
+
         if(Helpers::checkRoles(6)){
             $documents = DocumentTraining::where('trainer', Auth::user()->id)->with('root_document')->orderByDesc('id')->get();
            if($documents){
@@ -143,7 +140,8 @@ class TMSController extends Controller
             // dd($employees);
 
             $trainers = TrainerQualification::get();
-            return view('frontend.TMS.dashboard', compact('documents2','documents','due','pending','complete', 'employees', 'trainers', 'inductionTraining', 'jobTrainings'));
+            // dd($trainers);
+            return view('frontend.TMS.dashboard', compact('documents2','documents','due','pending','complete', 'employees', 'trainers'));
         }
         else{
             $train = [];

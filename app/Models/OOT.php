@@ -150,8 +150,7 @@ class OOT extends Model
 
     protected $casts =
     [
-    
-        
+
         'reference_record'=>'array',
         'sample_type'=>'array',
         'stability_for'=>'array',
@@ -197,12 +196,6 @@ class OOT extends Model
         'any_attachment_uae'=>'array',
         'required_attachment_uar'=>'array',
         'verification_attachment_uav'=>'array',
-
-
-
-
-
-
 
     ];
     

@@ -207,7 +207,7 @@
                                                 <label for="Division Code"><b>Division Code</b></label>
                                                 <input disabled type="text" name="division_code"
                                                     value="{{ Helpers::getDivisionName($data->division_id) }}">
-                                                {{-- <div class="static">{{ Helpers::getDivisionName(session()->get('division')) }}</div> --}}
+                                                {{-- <div class="static">QMS-North America</div> --}}
                                             </div>
                                         </div>
                                         <div class="col-lg-6">
