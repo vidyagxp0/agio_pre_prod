@@ -228,9 +228,8 @@
             var selectedValues = Array.from(this.selectedOptions).map(option => option.value);
             var infoTag = document.getElementById('infoQuestion');
             var answerInput = document.getElementById('answer');
-            console.log(selectedValues.includes('Multi Selection Questions'));
             if (selectedValues.includes('Multi Selection Questions')) {
-                // answerInput.setAttribute('readonly', false);
+                answerInput.setAttribute('readonly');
                 infoTag.textContent = "You need to write down the correct value answer in the below answer field and click the + button to add more correct answers.";
             } else if (selectedValues.includes('Single Selection Questions')) {
                 infoTag.textContent = "Info: Value auto-populates upon selecting correct answer above.";

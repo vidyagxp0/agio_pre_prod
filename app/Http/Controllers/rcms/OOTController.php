@@ -10,21 +10,57 @@ use App\Models\ProductGridOot;
 use App\Models\OotChecklist;
 use App\Models\OotAuditTrial;
 use App\Models\RoleGroup;
+use App\Models\QMSDivision;
 use Carbon\Carbon;
 use App\Models\User;
+use App\Models\OpenStage;
 use App\Models\RcmsDashboardController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\App;
 use PDF;
+use Helpers;
 use Illuminate\Support\Facades\Hash;
 
 class OOTController extends Controller
 {
     public function index(Request $request)
     {
+        $cft = [];
+        $old_record = Ootc::select('id', 'division_id', 'record_number')->get();
+        $data = ((RecordNumber::first()->value('counter')) + 1);
+        $data = str_pad($data, 4, '0', STR_PAD_LEFT);
+
+        $division = QMSDivision::where('name', Helpers::getDivisionName(session()->get('division')))->first();
+
+        if ($division) {
+            $ootData = Ootc::where('division_id', $division->id)->latest()->first();
+
+            // if ($ootData) {
+            //     $record_number = $ootData->record_number ? str_pad($ootData->record_number->record_number + 1, 4, '0', STR_PAD_LEFT) : '0001';
+            // } else {
+            //     $record_number = '0001';
+            // }
+
+            if (is_object($ootData) && isset($ootData->record_number)) {
+                // Ensure $ootData->record_number is an object and has the property record_number
+                if (is_object($ootData->record_number) && isset($ootData->record_number->record_number)) {
+                    $record_number = str_pad($ootData->record_number->record_number + 1, 4, '0', STR_PAD_LEFT);
+                } else {
+                    $record_number = '0001'; // Default value if the structure is not as expected
+                }
+            } else {
+                $record_number = '0001'; // Default value if $ootData is not an object or doesn't have record_number
+            }
+        }
+
+        $currentDate = Carbon::now();
+        $formattedDate = $currentDate->addDays(30);
+        $due_date= $formattedDate->format('Y-m-d');
+        $changeControl = OpenStage::find(1);
+         if(!empty($changeControl->cft)) $cft = explode(',', $changeControl->cft);
     
-        return view('frontend.OOT.OOT_form');
+        return view('frontend.OOT.OOT_form', compact('old_record', 'data','division', 'due_date'));
     }
 
     public function store(Request $request)
@@ -34,15 +70,16 @@ class OOTController extends Controller
         // return dd($request->all());
          
         $data = new Ootc();
-        $data->initiator_id   = Auth::user()->id;
-        $data->record_number   = ((RecordNumber::first()->value('counter')) + 1);
-        $data->intiation_date = $request->intiation_date;
-        $data->due_date       = $request->due_date;
-        $data->division_id        = $request->division_id;  
+        $data->initiator_id          = Auth::user()->id;
+        $data->record_number         = ((RecordNumber::first()->value('counter')) + 1);
+        $data->intiation_date        = $request->intiation_date;
+        $data->due_date              = $request->due_date;
+        $data->division_id           = $request->division_id;  
         $data->severity_level        = $request->severity_level;
         $data->initiator_group       = $request->initiator_group;
         $data->initiator_group_code  = $request->initiator_group_code;
         $data->initiated_through     = $request->initiated_through;
+        $data->short_description     = $request->short_description;
         $data->if_others	         = $request->if_others;
         $data->is_repeat             = $request->is_repeat;
         $data->repeat_nature         = $request->repeat_nature;
@@ -52,16 +89,16 @@ class OOTController extends Controller
         $data->producct_history      = $request->producct_history;
         $data->probble_cause         = $request->probble_cause;
         $data->investigation_details = $request->investigation_details;
-        $data->comments               = $request->comments;
-        $data->reference             = $request->reference;
-        // dd($request->investigation_details);
+        $data->comments              = $request->comments;
+        // $data->reference             = $request->reference;
+        $data->reference             = implode(',', $request->reference);
          $data->productmaterialname   = $request->productmaterialname;
-        $data->grade_typeofwater     = $request->grade_typeofwater;
-        $data->sampleLocation_Point  = $request->sampleLocation_Point;
-        $data->market                = $request->market;
-        $data->customer              = $request->customer;
-        $data->analyst_name          = $request->analyst_name;
-        $data->others                = $request->others;
+        $data->grade_typeofwater      = $request->grade_typeofwater;
+        $data->sampleLocation_Point   = $request->sampleLocation_Point;
+        $data->market                 = $request->market;
+        $data->customer               = $request->customer;
+        $data->analyst_name           = $request->analyst_name;
+        $data->others                 = $request->others;
         
         if (is_array($request->reference_record )) {
             $data->reference_record = implode(',', $request->reference_record);
@@ -82,6 +119,8 @@ class OOTController extends Controller
             $data->Attachment = json_encode($files);
         }   
 
+        $data->pli_finaly_validity_check          = $request->pli_finaly_validity_check;
+        $data->finaly_validity_check              = $request->finaly_validity_check;  
         $data->corrective_action                  = $request->corrective_action;
         $data->preventive_action                  = $request->preventive_action;
         $data->inv_comments                       = $request->inv_comments;
@@ -164,8 +203,12 @@ class OOTController extends Controller
 
         $data->status = 'Opened';                 
         $data->stage = 1;
-        //  dd($data);
+    //   dd($data);
         $data->save();
+
+        $record = RecordNumber::first();
+        $record->counter = ((RecordNumber::first()->value('counter'))+1);
+        $record->update();
 
          $checkList = new OotChecklist();
         //  $checkList->ootcs_id = $data->id;
@@ -241,11 +284,12 @@ class OOTController extends Controller
          $checkList->remark_thirty_four          = $request->remark_thirty_four;
          $checkList->l_e_i_oot                   = $request->l_e_i_oot;
          $checkList->elaborate_the_reson         = $request->elaborate_the_reson;
-         $checkList->in_charge = $request->in_charge;
-         $checkList->pli_head_designee = $request->pli_head_designee;	 
-
-        //  dd($checkList);
+         $checkList->in_charge                   = $request->in_charge;
+         $checkList->pli_head_designee           = $request->pli_head_designee;	
+         $checkList->data                        = $request->data;
+        //   dd($checkList->data);
         $checkList->save();
+
         $productGrid = ProductGridOot::where(['ootcs_id' => $data->id, 'identifier' =>'product_materiel'])->firstOrCreate();
         $productGrid->ootcs_id = $data->id;
         $productGrid->identifier = 'product_materiel';
@@ -688,9 +732,18 @@ class OOTController extends Controller
 
     public function ootShow($id){
 
-       $data = Ootc::where('id',$id)->first();      
+        $cft = [];
+        $revised_date = "";
+        
+        //dd($data);
+        
+        $data = Ootc::where('id',$id)->first(); 
+        
+        $old_record = Ootc::select('id', 'division_id', 'record_number')->get();
+       $formattedDate = Helpers::getdateFormat($data->due_date);    
+       $occuredDate = Helpers::getdateFormat($data->oot_occured_on); 
        $grid_product_mat = ProductGridOot::where(['ootcs_id' => $id, 'identifier' => 'product_materiel'])->first();
-    //    dd($grid_product_mat);
+    //    dd($grid_product_mat); 
        $gridStability = ProductGridOot::where(['ootcs_id' => $id, 'identifier' => 'details_of_stability'])->first();
        $GridOotRes = ProductGridOot::where(['ootcs_id' => $id, 'identifier' => 'oot_result'])->first();
     // dd($GridOotRes);
@@ -701,7 +754,7 @@ class OOTController extends Controller
     //   dd($checkList);
        $record_number = ((RecordNumber::first()->value('counter')) + 1);
        $record_number = str_pad($record_number, 4, '0', STR_PAD_LEFT);
-        return view('frontend.OOT.ootView',compact('data','record_number','grid_product_mat','checkList','gridStability','GridOotRes','InfoProductMat'));
+        return view('frontend.OOT.ootView',compact('data','record_number','grid_product_mat','checkList','gridStability','GridOotRes','InfoProductMat','formattedDate','occuredDate','old_record'));
 
     }
 
@@ -717,6 +770,7 @@ class OOTController extends Controller
         $data->initiator_group       = $request->initiator_group;
         $data->initiator_group_code  =$request->initiator_group_code;
         $data->initiated_through     = $request->initiated_through;
+        $data->short_description     = $request->short_description;
         $data->if_others	         = $request->if_others;
         $data->is_repeat             = $request->is_repeat;
         $data->repeat_nature         = $request->repeat_nature;
@@ -727,7 +781,7 @@ class OOTController extends Controller
         $data->probble_cause         = $request->probble_cause;
         $data->investigation_details = $request->investigation_details;
         $data->comments              = $request->comments;
-        $data->reference             = $request->reference;
+        $data->reference             = implode('',$request->reference );
         $data->productmaterialname   = $request->productmaterialname;
         $data->grade_typeofwater     = $request->grade_typeofwater;
         $data->sampleLocation_Point  = $request->sampleLocation_Point;
@@ -753,6 +807,9 @@ class OOTController extends Controller
             // Save the file paths in the database
             $data->Attachment = json_encode($files);
         }  
+        
+        $data->pli_finaly_validity_check             = $request->pli_finaly_validity_check;
+        $data->finaly_validity_check                 = $request->finaly_validity_check; 
         $data->corrective_action                     = $request->corrective_action;
         $data->preventive_action                     = $request->preventive_action;
         $data->inv_comments                          = $request->inv_comments;
@@ -887,15 +944,15 @@ class OOTController extends Controller
          $checkList->responce_eleven    = $request->responce_eleven;
          $checkList->responce_twele     = $request->responce_twele;
          $checkList->responce_thrteen   = $request->responce_thrteen;
-         $checkList->responce_fourteen  = $request->responce_fourteen;
-         $checkList->responce_fifteen   = $request->responce_fifteen;
-         $checkList->responce_sixteen   = $request->responce_sixteen;
-         $checkList->responce_seventeen = $request->responce_seventeen;
-         $checkList->responce_eighteen  = $request->responce_eighteen;
-         $checkList->responce_ninteen   = $request->responce_ninteen;
-         $checkList->responce_twenty    = $request->responce_twenty;
-         $checkList->responce_twenty_one = $request->responce_twenty_one;
-         $checkList->responce_twenty_two = $request->responce_twenty_two;
+         $checkList->responce_fourteen      = $request->responce_fourteen;
+         $checkList->responce_fifteen       = $request->responce_fifteen;
+         $checkList->responce_sixteen       = $request->responce_sixteen;
+         $checkList->responce_seventeen     = $request->responce_seventeen;
+         $checkList->responce_eighteen      = $request->responce_eighteen;
+         $checkList->responce_ninteen       = $request->responce_ninteen;
+         $checkList->responce_twenty        = $request->responce_twenty;
+         $checkList->responce_twenty_one    = $request->responce_twenty_one;
+         $checkList->responce_twenty_two    = $request->responce_twenty_two;
          $checkList->responce_twenty_three  =  $request->responce_twenty_three;
          $checkList->responce_twenty_four   =  $request->responce_twenty_four;
          $checkList->responce_twenty_five   =  $request->responce_twenty_five;
@@ -946,6 +1003,7 @@ class OOTController extends Controller
          $checkList->elaborate_the_reson    = $request->elaborate_the_reson;
          $checkList->in_charge              = $request->in_charge;
          $checkList->pli_head_designee      = $request->pli_head_designee;
+         $checkList->data                        = $request->data;
         $checkList->update();
 
 

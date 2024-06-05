@@ -21,7 +21,7 @@
             <div style="padding-bottom: 10px">
                 <div style="    font-size: 18px;
                 font-weight: 600;
-            ">Documents</div>
+            ">SOPs</div>
                 @foreach ($sops as $index => $sop)
                     <div>{{ $index + 1 }}. {{ $sop->document_name }}</div>
                 @endforeach

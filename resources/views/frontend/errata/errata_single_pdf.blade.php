@@ -179,11 +179,27 @@
                     {{ Helpers::divisionNameForQMS($data->division_id) }}/{{ Helpers::year($data->created_at) }}/{{ $data->record_number ? str_pad($data->record_number->record_number, 4, '0', STR_PAD_LEFT) : '' }}
                 </td>
                 <td class="w-30">
-                    <strong>Record No.</strong> {{ str_pad($data->record, 4, '0', STR_PAD_LEFT) }}
+                    <strong>Record No.</strong> {{ str_pad($data->id, 4, '0', STR_PAD_LEFT) }}
                 </td>
             </tr>
         </table>
     </header>
+
+    <footer>
+        <table>
+            <tr>
+                <td class="w-30">
+                    <strong>Printed On :</strong> {{ date('d-M-Y') }}
+                </td>
+                <td class="w-40">
+                    <strong>Printed By :</strong> {{ Auth::user()->name }}
+                </td>
+                {{-- <td class="w-30">
+                    <strong>Page :</strong> 1 of 1
+                </td> --}}
+            </tr>
+        </table>
+    </footer>
 
     <div class="inner-block">
         <div class="content-table">
@@ -196,8 +212,8 @@
                     <tr>
                         <th class="w-20">Record Number</th>
                         <td class="w-30">
-                            @if ($data->record_number)
-                                {{ str_pad($data->record_number->record_number, 4, '0', STR_PAD_LEFT) }}
+                            @if ($data->id)
+                                {{ str_pad($data->id, 4, '0', STR_PAD_LEFT) }}
                             @else
                                 Not Applicable
                             @endif
@@ -205,8 +221,8 @@
 
                         <th class="w-20">Site/Location Code</th>
                         <td class="w-30">
-                            @if ( Helpers::getDivisionName(session()->get('division')) )
-                            {{ Helpers::getDivisionName(session()->get('division')) }}
+                            @if (Helpers::getDivisionName(session()->get('division')))
+                                {{ Helpers::getDivisionName(session()->get('division')) }}
                             @else
                                 Not Applicable
                             @endif
@@ -220,7 +236,7 @@
                         <td class="w-30">{{ Helpers::getdateFormat($data->created_at) }}</td>
                     </tr>
                     <tr>
-                        <th class="w-20">Initiated By</th>
+                        <th class="w-20">Initiated Through</th>
                         <td class="w-30">
                             @if ($data->initiated_by)
                                 {{ $data->initiated_by }}
@@ -230,8 +246,27 @@
                         </td>
 
                         <th class="w-20">Department</th>
-                        <td class="w-80">{{ $data->Department }}</td>
-
+                        @php
+                            $departments = [
+                                'CQA' => 'Corporate Quality Assurance',
+                                'QAB' => 'Quality Assurance Biopharma',
+                                'CQC' => 'Central Quality Control',
+                                'PSG' => 'Plasma Sourcing Group',
+                                'CS' => 'Central Stores',
+                                'ITG' => 'Information Technology Group',
+                                'MM' => 'Molecular Medicine',
+                                'CL' => 'Central Laboratory',
+                                'TT' => 'Tech Team',
+                                'QA' => 'Quality Assurance',
+                                'QM' => 'Quality Management',
+                                'IA' => 'IT Administration',
+                                'ACC' => 'Accounting',
+                                'LOG' => 'Logistics',
+                                'SM' => 'Senior Management',
+                                'BA' => 'Business Administration',
+                            ];
+                        @endphp
+                        <td class="w-80">{{ $departments[$data->Department] ?? 'Unknown Department' }}</td>
                     </tr>
                     <tr>
                         <th class="w-20">Department Code</th>
@@ -427,7 +462,7 @@
                         </td>
                     </tr>
                     <tr>
-                        <th class="w-20">Remarks (If Any)   </th>
+                        <th class="w-20">Remarks (If Any) </th>
                         <td class="w-80">
                             @if ($data->Remarks)
                                 {!! $data->Remarks !!}
@@ -461,7 +496,7 @@
                         <th class="w-20">Submitted By</th>
                         <td class="w-80">
                             @if ($data->submitted_by)
-                            {{ $data->submitted_by }}
+                                {{ $data->submitted_by }}
                             @else
                                 Not Applicable
                             @endif
@@ -697,22 +732,6 @@
 
         </div>
     </div>
-
-    <footer>
-        <table>
-            <tr>
-                <td class="w-30">
-                    <strong>Printed On :</strong> {{ date('d-M-Y') }}
-                </td>
-                <td class="w-40">
-                    <strong>Printed By :</strong> {{ Auth::user()->name }}
-                </td>
-                {{-- <td class="w-30">
-                    <strong>Page :</strong> 1 of 1
-                </td> --}}
-            </tr>
-        </table>
-    </footer>
 
 </body>
 

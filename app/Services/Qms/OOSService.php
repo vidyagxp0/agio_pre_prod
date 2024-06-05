@@ -6,6 +6,7 @@ use App\Models\OOS;
 use App\Models\Oosgrids;
 use App\Models\OosAuditTrial;
 use App\Models\RoleGroup;
+use App\Models\RecordNumber;
 use Helpers;
 use App\Services\FileService;
 use Illuminate\Http\Request;
@@ -30,7 +31,7 @@ class OOSService
             $input['form_type'] = "OOS Chemical";
             $input['status'] = 'Opened';
             $input['stage'] = 1;
-           
+            $input['record_number'] = ((RecordNumber::first()->value('counter')) + 1);
 
             $file_input_names = [
                 'initial_attachment_gi',
@@ -56,6 +57,9 @@ class OOSService
             }
 
             $oos = OOS::create($input);
+            $record = RecordNumber::first();
+            $record->counter = ((RecordNumber::first()->value('counter')) + 1);
+            $record->update();
 
             $grid_inputs = [
                 'info_product_material',
@@ -871,8 +875,6 @@ class OOSService
         try {
 
             $input = $request->all();
-            // $input['status'] = 'Opened';
-            // $input['stage'] = 1;
 
             $file_input_names = [
                 'initial_attachment_gi',
@@ -892,14 +894,21 @@ class OOSService
                 'required_attachment_uar',
                 'verification_attachment_uar',
             ];
-
+            $oos = OOS::findOrFail($id);
             foreach ($file_input_names as $file_input_name)
             {
-                $input[$file_input_name] = FileService::uploadMultipleFiles($request, $file_input_name);
+                // dd($input[$file_input_name]);
+                if (empty($request->file($file_input_name)) && !empty($oos[$file_input_name])) {
+                    // If the request does not contain file data but existing data is present, retain the existing data
+                    $input[$file_input_name] = $oos[$file_input_name];
+                } else {
+                    // If the request contains file data or existing data is not present, upload new files
+                    $input[$file_input_name] = FileService::uploadMultipleFiles($request, $file_input_name);
+                }
+            
             }
 
-            
-            $oos = OOS::findOrFail($id); // Find the OOS record by ID
+             // Find the OOS record by ID
 
             $oos->update($input);
 
@@ -926,7 +935,7 @@ class OOSService
             if(!empty($request->description_gi)){
                 $history = new OosAuditTrial();
                 $history->oos_id = $oos->id;
-                $history->previous = "Null";
+                $history->previous = $lastOosRecod->description_gi;
                 $history->comment = "Not Applicable";
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;

@@ -18,18 +18,16 @@ use App\Http\Controllers\MytaskController;
 use App\Http\Controllers\CabinateController;
 use App\Http\Controllers\rcms\{CCController,DeviationController};
 use App\Http\Controllers\rcms\EffectivenessCheckController;
+use App\Http\Controllers\rcms\FailureInvestigationController;
 use App\Http\Controllers\rcms\ObservationController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\DocumentContentController;
 use App\Http\Controllers\ErrataController;
+use App\Http\Controllers\ExtensionNewController;
 use App\Http\Controllers\ImportController;
-// use App\Http\Controllers\tms\JobTrainingController;
-use App\Http\Controllers\InductionTrainingController;
 use App\Http\Controllers\OOSMicroController;
 use App\Http\Controllers\rcms\AuditeeController;
-use App\Http\Controllers\rcms\NonConformaceController;
 use App\Http\Controllers\rcms\CapaController;
-use App\Http\Controllers\rcms\FailureInvestigationController;
 use App\Http\Controllers\rcms\LabIncidentController;
 use App\Http\Controllers\rcms\AuditProgramController;
 use App\Http\Controllers\rcms\ExtensionController;
@@ -38,16 +36,14 @@ use App\Http\Controllers\rcms\OOCController;
 use App\Http\Controllers\rcms\OOSController;
 use App\Http\Controllers\rcms\RcmsDashboardController;
 use App\Http\Controllers\tms\EmployeeController;
-// use App\Http\Controllers\tms\JobTrainingController;
-
 use App\Http\Controllers\tms\QuestionBankController;
 use App\Http\Controllers\tms\QuestionController;
 use App\Http\Controllers\tms\QuizeController;
-use App\Http\Controllers\rcms\OOTController;
 use App\Http\Controllers\tms\TrainerController;
+use App\Http\Controllers\rcms\OOTController;
 use App\Imports\DocumentsImport;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\tms\JobTrainingController;
+
 use Maatwebsite\Excel\Facades\Excel;
 
 /*
@@ -76,7 +72,6 @@ Route::get('/error', function () {
 Route::get('/', [UserLoginController::class, 'userlogin']);
 Route::view('forgot-password', 'frontend.forgot-password');
 // Route::view('dashboard', 'frontend.dashboard');
-
 
 Route::get('data-fields', function () {
     return view('frontend.change-control.data-fields');
@@ -182,15 +177,10 @@ Route::get('ManagementReviewAuditDetails/{id}', [ManagementReviewController::cla
 
 Route::post('deviation_child/{id}', [DeviationController::class, 'deviation_child_1'])->name('deviation_child_1');
 
+Route::post('failure_investigation_child_1/{id}', [FailureInvestigationController::class, 'failure_investigation_child_1'])->name('failure_investigation_child_1');
+
 Route::get('DeviationAuditTrial/{id}', [DeviationController::class, 'DeviationAuditTrial']);
 Route::post('DeviationAuditTrial/{id}', [DeviationController::class, 'store_audit_review'])->name('store_audit_review');
-
-/********************************************* Deviation Ends *******************************************/
-
-/********************************************* Deviation Starts *******************************************/
-
-Route::post('failure_investigation_child_1/{id}', [FailureInvestigationController::class, 'failure_investigation_child_1'])->name('failure_investigation_child_1');
-Route::post('non_conformances_child_1/{id}', [NonConformaceController::class, 'non_conformances_child_1'])->name('non_conformances_child_1');
 
 /********************************************* Deviation Ends *******************************************/
 
@@ -324,25 +314,6 @@ Route::view('audit-pdf', 'frontend.documents.audit-pdf');
 Route::view('employee_new', 'frontend.TMS.Employee.employee_new')->name('employee_new');
 Route::view('trainer_qualification', 'frontend.TMS.Trainer_qualification.trainer_qualification')->name('trainer_qualification');
 
-// ====================induction training =================
-
-// // Route::view('induction_training', 'frontend.TMS.Induction_training.induction_training')->name('induction_training');
-// Route::view('job_training', 'frontend.TMS.Job_Training.job_training')->name('job_training');
-Route::get('job_training',[JobTrainingController::class ,'index'])->name('job_training');
-Route::get('job_training/show/{id}',[JobTrainingController::class ,'edit'])->name('job_training_view');
-
-Route::post('job_trainingcreate', [JobTrainingController::class, 'store'])->name('job_trainingcreate');
-Route::put('job_trainingupdate/{id}', [JobTrainingController::class, 'update'])->name('job_trainingupdate');
-
-
-
-
-
-Route::get('induction_training', [InductionTrainingController::class, 'index'])->name('induction_training.index');
-Route::get('induction_training/show/{id}', [InductionTrainingController::class, 'edit'])->name('induction_training_view');
-Route::post('induction_training', [InductionTrainingController::class, 'store'])->name('induction_training.store');
-Route::put('induction_training/{id}', [InductionTrainingController::class, 'update'])->name('induction_training.update');
-
 
 //! ============================================
 //!                    RCMS
@@ -457,54 +428,19 @@ Route::view('OOT_form', 'frontend.OOT.OOT_form');
 Route::get('out_of_calibration', [OOCController::class, 'index'])->name('ooc.index');
 Route::get('OOC/view', [OOCController::class, 'edit'])->name('ooc.edit');
 Route::post('ooccreate', [OOCController::class, 'create'])->name('oocCreate');
-Route::get('OutofCalibrationShow/{id}', [OOCController::class, 'OutofCalibrationShow'])->name('ShowOutofCalibration');
-Route::post('updateOutOfCalibration/{id}', [OOCController::class, 'updateOutOfCalibration'])->name('OutOfCalibrationUpdate');
-Route::post('OOCStateChange/{id}', [OOCController::class, 'OOCStateChange'])->name('StageChangeOOC');
-Route::post('OOCStateChangetwo/{id}', [OOCController::class, 'OOCStateChangetwo'])->name('StageChangeOOCtwo');
-Route::post('OOCStateCancel/{id}', [OOCController::class, 'OOCStateCancel'])->name('OOCCancel');
-Route::post('RejectoocStateChange/{id}', [OOCController::class, 'RejectoocStateChange'])->name('RejectStateChangeOOC');
-Route::post('OOCChildRoot/{id}', [OOCController::class, 'OOCChildRoot'])->name('o_o_c_root_child');
-Route::post('OOCChildCapa/{id}', [OOCController::class, 'oo_c_capa_child'])->name('oo_c_capa_child');
-Route::get('OOCAuditTrial/{id}', [OOCController::class, 'OOCAuditTrial'])->name('audittrialooc');
-Route::get('auditDetailsooc/{id}', [OOCController::class, 'auditDetailsooc'])->name('OOCauditDetails');
-Route::get('/rcms/ooc_Audit_Report/{id}', [OOCController::class, 'auditReportooc'])->name('ooc_Audit_Report');
-
-
-
-
-
 Route::get('out_of_calibration_ooc', [OOCController::class, 'ooc']);
 
 
 // Route::get('oos_form', [OOSController::class, 'index'])->name('oos.index');
 // Route::get('oos_micro', [OOSMicroController::class, 'index'])->name('oos_micro.index');
-
-//============================================OOS MICRO===================================
-
 Route::get('oos_micro', [OOSMicroController::class, 'index'])->name('oos_micro.index');
-Route::post('oos_micro_store', [OOSMicroController::class, 'store'])->name('oos_micro.store');
-Route::get('oos_micro_edit/{id}',[OOSMicroController::class, 'edit'])->name('oos_micro.edit');
-Route::post('oos_micro_update/{id}',[OOSMicroController::class, 'update'])->name('oos_micro.update');
 
-Route::post('oos_micro/sendstage/{id}',[OOSMicroController::class,'send_stage'])->name('send_stage');
-Route::post('oos_micro/requestmoreinfo_back_stage/{id}',[OOSMicroController::class,'requestmoreinfo_back_stage'])->name('requestmoreinfo_back_stage');
-Route::post('oos_micro/assignable_send_stage/{id}',[OOSMicroController::class,'assignable_send_stage'])->name('assignable_send_stage');
-Route::post('oos_micro/cancel_stage/{id}', [OOSMicroController::class, 'cancel_stage'])->name('cancel_stage');;
-Route::post('oos_micro/thirdStage/{id}', [OOSMicroController::class, 'stageChange'])->name('thirdStage');
-Route::post('oos_micro/reject_stage/{id}', [OOSMicroController::class, 'reject_stage'])->name('reject_stage');
-// Route::post('capa_child/{id}', [CapaController::class, 'child_change_control'])->name('capa_child_changecontrol');
-
-Route::get('oos_micro/AuditTrial/{id}', [OOSMicroController::class, 'AuditTrial'])->name('audit_trial');
-Route::get('oos_micro/auditDetails/{id}', [OOSMicroController::class, 'auditDetails'])->name('audit_details');
-
-//============================================ OOS MICRO ROUTE CLOSE ===================================
 // Route::view('market_complaint_new', 'frontend.market_complaint.market_complaint_new')->name('market_complaint_new');
 
 
 // ====================OOS/OOT======================================
 Route::view('oos_oot_form', 'frontend.forms.OOS\OOT.oos_oot');
 // ====================OOS/OOT======================================
-
 
 
 // =================LOGS=========================================
@@ -550,13 +486,6 @@ Route::view('errata_view', 'frontend.errata.errata_view');
 
 Route::post('/tms/employee', [EmployeeController::class, 'store'])->name('employee.store');
 Route::post('/tms/trainer', [TrainerController::class, 'store'])->name('trainer.store');
-Route::post('/tms/employee/{id}', [EmployeeController::class, 'update'])->name('employee.update');
-Route::post('/tms/trainer/{id}', [TrainerController::class, 'update'])->name('trainer.update');
-Route::get('employee_view/{id}', [EmployeeController::class, 'show']);
-Route::get('trainer_qualification_view/{id}', [TrainerController::class, 'show']);
-Route::post('/tms/employee/sendstage/{id}', [EmployeeController::class, 'sendStage']);
-Route::post('/tms/trainer/sendstage/{id}', [TrainerController::class, 'sendStage']);
-Route::post('/tms/trainer/rejectStage/{id}', [TrainerController::class, 'rejectStage']);
 // =======
 Route::post('errata/create{id}', [ErrataController::class, 'create'])->name('errata.create');
 Route::post('errata/store', [ErrataController::class, 'store'])->name('errata.store');
@@ -568,6 +497,17 @@ Route::get('errataAuditInner/{id}', [ErrataController::class, 'auditDetailsErrat
 Route::post('/errata/cancel/{id}', [ErrataController::class, 'erratacancelstage'])->name('errata.cancel');
 
 // ----------------------Stages----------------------------------------
+
+
+// extensionchild========================
+// Route::view('extension_new', 'frontend.extension.extension_new');
+// Route::view('extension_view', 'frontend.extension.extension_view');
+Route::get('extension-new', [ExtensionNewController::class, 'index']);
+Route::post('extension_new', [ExtensionNewController::class, 'store'])->name('extension_new.store');
+Route::get('extension_newshow/{id}', [ExtensionNewController::class, 'show']);
+
+Route::put('extension_new/{id}', [ExtensionNewController::class, 'update'])->name('extension_new.update');
+Route::post('extension_send_stage/{id}', [ExtensionNewController::class, 'sendstage'])->name('extension_send_stage');
 
 
 
