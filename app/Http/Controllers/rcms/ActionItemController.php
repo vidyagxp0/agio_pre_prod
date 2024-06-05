@@ -37,7 +37,7 @@ class ActionItemController extends Controller
         $currentDate = Carbon::now();
         $formattedDate = $currentDate->addDays(30);
         $due_date = $formattedDate->format('Y-m-d');
-        return view('frontend.forms.action-item', compact('due_date', 'record_number','old_record'));
+        return view('frontend.action-item.action-item', compact('due_date', 'record_number','old_record'));
     }
     public function index()
     {
@@ -48,7 +48,7 @@ class ActionItemController extends Controller
             $cc = CC::find($data->cc_id);
             $data->originator = User::where('id', $cc->initiator_id)->value('name');
         }
-        return view('frontend.action-item.at', compact('document', 'record_number','old_record'));
+        return view('frontend.action-item.action-item.at', compact('document', 'record_number','old_record'));
     }
 
     public function create()
@@ -701,7 +701,9 @@ class ActionItemController extends Controller
                     $changeControl->stage = '2';
                     $changeControl->status = 'Work In Progress';
                     $changeControl->submitted_by = Auth::user()->name;
-                    $changeControl->submitted_on = Carbon::now()->format('d-M-Y');;
+                    $changeControl->submitted_on = Carbon::now()->format('d-M-Y');
+                    $changeControl->submitted_comment = $request->comment;
+
                         $history = new ActionItemHistory;
                         $history->cc_id = $id;
                         $history->activity_type = 'Activity Log';
@@ -749,6 +751,8 @@ class ActionItemController extends Controller
                 $changeControl->status = 'Closed-Done';
                 $changeControl->completed_by = Auth::user()->name;
                 $changeControl->completed_on = Carbon::now()->format('d-M-Y');
+                $changeControl->completed_comment = $request->comment;
+
                       $history = new ActionItemHistory;
                         $history->cc_id = $id;
                         $history->activity_type = 'Activity Log';
@@ -836,6 +840,8 @@ public function actionStageCancel(Request $request, $id)
             $changeControl->status = "Closed-Cancelled";
             $changeControl->cancelled_by = Auth::user()->name;
             $changeControl->cancelled_on = Carbon::now()->format('d-M-Y');
+            $changeControl->cancelled_comment =$request->comment;
+
                         $history = new ActionItemHistory;
                         $history->cc_id = $id;
                         $history->activity_type = 'Activity Log';
@@ -882,6 +888,8 @@ public function actionStageCancel(Request $request, $id)
             $changeControl->status = "Opened";
             $changeControl->more_information_required_by = (string)Auth::user()->name;
             $changeControl->more_information_required_on = Carbon::now()->format('d-M-Y');
+            $changeControl->more_info_requ_comment =$request->comment;
+
                         $history = new ActionItemHistory;
                         $history->cc_id = $id;
                         $history->activity_type = 'Activity Log';
