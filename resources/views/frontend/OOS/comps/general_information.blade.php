@@ -264,7 +264,7 @@
             <div class="group-input">
                 <label for="audit-agenda-grid">
                     Info. On Product/ Material
-                    <button type="button" name="audit-agenda-grid" id="Info_Product_Material">+</button>
+                    <button type="button" name="audit-agenda-grid" id="info_product_material">+</button>
                     <span class="text-primary" data-bs-toggle="modal"
                         data-bs-target="#document-details-field-instruction-modal"
                         style="font-size: 0.8rem; font-weight: 400; cursor: pointer;">
@@ -272,7 +272,7 @@
                     </span>
                 </label>
                 <div class="table-responsive">
-                    <table class="table table-bordered" id="Info_Product_Material_details"
+                    <table class="table table-bordered" id="info_product_material_details"
                         style="width: 100%;">
                         <thead>
                             <tr>
@@ -351,7 +351,7 @@
             <div class="group-input">
                 <label for="audit-agenda-grid">
                     Details of Stability Study
-                    <button type="button" name="audit-agenda-grid" id="Details_Stability">+</button>
+                    <button type="button" name="audit-agenda-grid" id="details_stability">+</button>
                     <span class="text-primary" data-bs-toggle="modal"
                         data-bs-target="#document-details-field-instruction-modal"
                         style="font-size: 0.8rem; font-weight: 400; cursor: pointer;">
@@ -359,7 +359,7 @@
                     </span>
                 </label>
                 <div class="table-responsive">
-                    <table class="table table-bordered" id="Details_Stability_details"
+                    <table class="table table-bordered" id="details_stability_details"
                         style="width: 100%;">
                         <thead>
                             <tr>
@@ -395,7 +395,7 @@
             <div class="group-input">
                 <label for="audit-agenda-grid">
                     OOS Details
-                    <button type="button" name="audit-agenda-grid" id="OOS_Details">+</button>
+                    <button type="button" name="audit-agenda-grid" id="oos_details">+</button>
                     <span class="text-primary" data-bs-toggle="modal"
                         data-bs-target="#document-details-field-instruction-modal"
                         style="font-size: 0.8rem; font-weight: 400; cursor: pointer;">
@@ -403,7 +403,7 @@
                     </span>
                 </label>
                 <div class="table-responsive">
-                    <table class="table table-bordered" id="OOS_Details_details" style="width: 100%;">
+                    <table class="table table-bordered" id="oos_details_details" style="width: 100%;">
                         <thead>
                             <tr>
                                 <th style="width: 4%">Row#</th>
@@ -411,10 +411,11 @@
                                 <th style="width: 8%">Test Name of OOS</th>
                                 <th style="width: 12%">Results Obtained</th>
                                 <th style="width: 16%">Specification Limit</th>
-                                <th style="width: 16%">Details of Obvious Error</th>
-                                <th style="width: 16%">File Attachment</th>
-                                <th style="width: 16%">Submit By</th>
+                                <th style="width: 10%">Details of Obvious Error</th>
+                                <th style="width: 14%">File Attachment</th>
                                 <th style="width: 16%">Submit On</th>
+                                <th style="width: 8%">Submit By</th>
+                                
                             </tr>
                         </thead>
                         <tbody>
@@ -428,8 +429,18 @@
                                         <td><input type="text" name="oos_detail[{{ $loop->index }}][oos_specification_limit]" value="{{ Helpers::getArrayKey($oos_detail, 'oos_specification_limit') }}"></td>
                                         <td><input type="text" name="oos_detail[{{ $loop->index }}][oos_details_obvious_error]" value="{{ Helpers::getArrayKey($oos_detail, 'oos_details_obvious_error') }}"></td>
                                         <td><input type="file" name="oos_detail[{{ $loop->index }}][oos_file_attachment]"></td>
-                                        <td><input type="text" name="oos_detail[{{ $loop->index }}][oos_submit_by]" value="{{ Helpers::getArrayKey($oos_detail, 'oos_submit_by') }}"></td>
-                                        <td><input type="date" name="oos_detail[{{ $loop->index }}][oos_submit_on]" value="{{ Helpers::getArrayKey($oos_detail, 'oos_submit_on') }}"></td>
+                                        <td>
+                                          <div class="col-lg-6 new-date-data-field">
+                                            <div class="group-input input-date">
+                                                <div class="calenderauditee">
+                                                    <input type="text" id="oos_submit_on_{{ $loop->index }}" value="{{ Helpers::getdateFormat($oos_detail['oos_submit_on'] ?? '') }}" readonly placeholder="DD-MMM-YYYY" />
+                                                    <input type="date" name="oos_detail[{{ $loop->index }}][oos_submit_on]" value="{{ $oos_detail['oos_submit_on'] ?? '' }}" 
+                                                    min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input" oninput="handleDateInput(this, 'oos_submit_on_{{ $loop->index }}')">
+                                                </div>
+                                            </div>
+                                          </div>
+                                       </td>
+                                       <td><input type="text" name="oos_detail[{{ $loop->index }}][oos_submit_by]" value="{{ Helpers::getArrayKey($oos_detail, 'oos_submit_by') }}"></td>
                                     </tr>
                                 @endforeach
                             @endif
