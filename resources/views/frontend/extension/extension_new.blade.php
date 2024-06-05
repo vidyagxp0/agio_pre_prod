@@ -187,8 +187,8 @@
                                         name="approvers" placeholder="Select Approvers" >
                                         <option value="">-- Select --</option>
 
-                                        @if (!empty($approvers))
-                                            @foreach ($approvers as $lan)
+                                        @if (!empty($users))
+                                            @foreach ($users as $lan)
                                                 @if(Helpers::checkUserRolesApprovers($lan))
                                                     <option value="{{ $lan->id }}">
                                                         {{ $lan->name }}
