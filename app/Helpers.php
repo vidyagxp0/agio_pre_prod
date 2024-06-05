@@ -619,4 +619,51 @@ class Helpers
 
     }
 
+    public static function getDocStatusByStage($stage, $document_training = 'no')
+    {
+        $status = '';
+        $training_required = $document_training == 'yes' ? true : false;
+        switch ($stage) {
+            case '1':
+                $status = 'Draft';
+                break;
+            case '2':
+                $status = 'In-HOD Review';
+                break;
+            case '3':
+                $status = 'HOD Review Complete';
+                break;
+            case '4':
+                $status = 'In-Review';
+                break;
+            case '5':
+                $status = 'Reviewed';
+                break;
+            case '6':
+                $status = 'For-Approval';
+                break;
+            case '7':
+                $status = 'Approved';
+                break;
+            case '8':
+                $status = $training_required ? 'Pending-Traning' : 'Effective';
+                break;
+            case '9':
+                $status = $training_required ? 'Traning-Complete' : 'Obsolete';
+                break;
+            case '10':
+                $status = $training_required ? 'Effective' : 'Obsolete';
+                break;
+            case '11':
+                $status = 'Obsolete';
+                break;
+            
+            default:
+                # code...
+                break;
+        }
+
+        return $status;
+    }
+
 }

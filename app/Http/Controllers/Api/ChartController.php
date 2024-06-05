@@ -262,6 +262,26 @@ class ChartController extends Controller
 
         return response()->json($res);
     }
+    
+    public function documents_stage_charts($stage)
+    {
+        $res = Helpers::getDefaultResponse();
+
+        try {
+
+            // $data = Document::where('next_review_date', '>=', $today)
+            //     ->where('next_review_date', '<=', $monthsLater)
+            //     ->get();
+
+            $res['body'] = $data;
+
+        } catch (\Exception $e) {
+            $res['status'] = 'error';
+            $res['message'] = $e->getMessage();
+        }
+
+        return response()->json($res);
+    }
 
     
 

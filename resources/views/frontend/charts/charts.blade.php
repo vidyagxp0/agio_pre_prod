@@ -79,6 +79,35 @@
 </div>
 
 <div class="my-4 row">
+  <div class="col-sm-6">
+    <div class="card border-0" style="width: 26rem;">
+        <div class="card-body">
+          <h5 class="card-title">Review in Next 1 Year</h5>
+          
+            <div class="card-text d-flex justify-content-center d-flex justify-content-center align-items-center h-100" id="documentReviewOne">
+                <div class="spinner-border" role="status">
+                    <span class="visually-hidden">Loading...</span>
+                </div>
+            </div>
+        </div>
+    </div>
+  </div>
+  <div class="col-sm-6">
+    <div class="card border-0" style="width: 26rem;">
+        <div class="card-body">
+          <h5 class="card-title">Review in Next 2 Years</h5>
+          
+            <div class="card-text d-flex justify-content-center d-flex justify-content-center align-items-center h-100" id="documentReviewTwo">
+                <div class="spinner-border" role="status">
+                    <span class="visually-hidden">Loading...</span>
+                </div>
+            </div>
+        </div>
+    </div>
+  </div>
+</div>
+
+<div class="my-4 row">
 
     <div class="col-sm-6">
         <div class="card border-0" style="width: 26rem;">
@@ -590,7 +619,7 @@
     }
     // Type distribution end
     
-    // Type Distribution start
+    // Review six month start
     function renderDocumentSixChart(seriesData, labels)
     {
       var options = {
@@ -674,7 +703,179 @@
 
         $('#documentReviewSix > .spinner-border').hide();
     }
-    // Type distribution end
+    // Review six month end
+
+    // Review one year start
+    function renderDocumentOneChart(seriesData, labels)
+    {
+      var options = {
+          series: [
+          {
+            name: 'Documents',
+            data: seriesData
+          }
+        ],
+          chart: {
+          type: 'bar',
+          height: 350
+        },
+        plotOptions: {
+          bar: {
+            distributed: true,
+            horizontal: false,
+            columnWidth: '55%',
+            endingShape: 'rounded'
+          },
+        },
+        dataLabels: {
+          enabled: false
+        },
+        stroke: {
+          show: true,
+          width: 2,
+          colors: ['transparent']
+        },
+        xaxis: {
+          categories: labels,
+        },
+        yaxis: {
+          title: {
+            text: '# (documents)'
+          }
+        },
+        fill: {
+          opacity: 1
+        },
+        tooltip: {
+          y: {
+            formatter: function (val) {
+              return val + " documents to be reviewed by this date"
+            }
+          }
+        }
+        };
+
+        var documentReviewOne = new ApexCharts(document.querySelector("#documentReviewOne"), options);
+        documentReviewOne.render();
+    }
+
+    async function prepareDocumentOneChart()
+    {
+        $('#documentReviewOne > .spinner-border').show();
+
+        try {
+            const url = "{{ route('api.document.review.chart', 12) }}"
+            const res = await axios.get(url);
+
+            console.log('res', res.data)
+
+
+            if (res.data.status == 'ok') {
+                let bodyData = res.data.body;
+                let labels = []
+                let seriesData = []
+
+                bodyData.forEach(data => {
+                    seriesData.push(1);
+                    labels.push(data.next_review_date)
+                });
+
+                renderDocumentOneChart(seriesData, labels)
+            }
+
+        } catch (err) {
+            console.log('Error in document one', err.message);
+        }
+
+        $('#documentReviewOne > .spinner-border').hide();
+    }
+    // Review one year end
+
+    // Review two year start
+    function renderDocumentTwoChart(seriesData, labels)
+    {
+      var options = {
+          series: [
+          {
+            name: 'Documents',
+            data: seriesData
+          }
+        ],
+          chart: {
+          type: 'bar',
+          height: 350
+        },
+        plotOptions: {
+          bar: {
+            distributed: true,
+            horizontal: false,
+            columnWidth: '55%',
+            endingShape: 'rounded'
+          },
+        },
+        dataLabels: {
+          enabled: false
+        },
+        stroke: {
+          show: true,
+          width: 2,
+          colors: ['transparent']
+        },
+        xaxis: {
+          categories: labels,
+        },
+        yaxis: {
+          title: {
+            text: '# (documents)'
+          }
+        },
+        fill: {
+          opacity: 1
+        },
+        tooltip: {
+          y: {
+            formatter: function (val) {
+              return val + " documents to be reviewed by this date"
+            }
+          }
+        }
+        };
+
+        var documentReviewTwo = new ApexCharts(document.querySelector("#documentReviewTwo"), options);
+        documentReviewTwo.render();
+    }
+
+    async function prepareDocumentTwoChart()
+    {
+        $('#documentReviewTwo > .spinner-border').show();
+
+        try {
+            const url = "{{ route('api.document.review.chart', 24) }}"
+            const res = await axios.get(url);
+
+            console.log('res', res.data)
+
+
+            if (res.data.status == 'ok') {
+                let bodyData = res.data.body;
+                let labels = []
+                let seriesData = []
+
+                bodyData.forEach(data => {
+                    seriesData.push(1);
+                    labels.push(data.next_review_date)
+                });
+
+                renderDocumentTwoChart(seriesData, labels)
+            }
+
+        } catch (err) {
+            console.log('Error in document one', err.message);
+        }
+
+        $('#documentReviewTwo > .spinner-border').hide();
+    }
+    // Review two year end
 
     prepareProcessChart()
     prepareDocumentCategoryChart()
@@ -683,5 +884,7 @@
     prepareDocumentOriginatorChart()
     prepareDocumentTypeChart()
     prepareDocumentSixChart()
+    prepareDocumentOneChart()
+    prepareDocumentTwoChart()
       
 </script>
