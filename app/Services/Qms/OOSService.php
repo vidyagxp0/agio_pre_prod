@@ -6,6 +6,7 @@ use App\Models\OOS;
 use App\Models\Oosgrids;
 use App\Models\OosAuditTrial;
 use App\Models\RoleGroup;
+use App\Models\RecordNumber;
 use Helpers;
 use App\Services\FileService;
 use Illuminate\Http\Request;
@@ -30,7 +31,7 @@ class OOSService
             $input['form_type'] = "OOS Chemical";
             $input['status'] = 'Opened';
             $input['stage'] = 1;
-           
+            $input['record_number'] = ((RecordNumber::first()->value('counter')) + 1);
 
             $file_input_names = [
                 'initial_attachment_gi',
@@ -56,6 +57,9 @@ class OOSService
             }
 
             $oos = OOS::create($input);
+            $record = RecordNumber::first();
+            $record->counter = ((RecordNumber::first()->value('counter')) + 1);
+            $record->update();
 
             $grid_inputs = [
                 'info_product_material',
@@ -931,7 +935,7 @@ class OOSService
             if(!empty($request->description_gi)){
                 $history = new OosAuditTrial();
                 $history->oos_id = $oos->id;
-                $history->previous = "Null";
+                $history->previous = $lastOosRecod->description_gi;
                 $history->comment = "Not Applicable";
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;

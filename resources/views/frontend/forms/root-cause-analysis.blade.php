@@ -44,8 +44,8 @@
 
                 <div id="step-form">
                     @if (!empty($parent_id))
-                        <input type="hidden" name="parent_id" value="{{ $parent_id }}">
-                        <input type="hidden" name="parent_type" value="{{ $parent_type }}">
+                        <input type="hidden" name="parent_id" id="parent_id" value="{{ $parent_id }}">
+                        <input type="hidden" name="parent_type" id="parent_type" value="{{ $parent_type }}">
                     @endif
 
                     <div id="CCForm1" class="inner-block cctabcontent">
@@ -68,7 +68,7 @@
                                 <input readonly type="text" name="division_code"
                                     value="{{ Helpers::getDivisionName(session()->get('division')) }}">
                                 <input type="hidden" name="division_id" value="{{ session()->get('division') }}">
-                                {{-- <div class="static">{{ Helpers::getDivisionName(session()->get('division')) }}</div> --}}
+                                {{-- <div class="static">QMS-North America</div> --}}
                             </div>
                         </div>
                         

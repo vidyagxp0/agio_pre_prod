@@ -15,7 +15,8 @@
             New Child
         </div> --}}
         <div class="division-bar">
-            <strong>Site Division/Project</strong> : {{ Helpers::getDivisionName(session()->get('division')) }}/ERRATA
+            <strong>Site Division/Project</strong> :
+            / ERRATA
         </div>
     </div>
 
@@ -64,7 +65,7 @@
                                         <input readonly type="text" name="division_code"
                                             value="{{ Helpers::getDivisionName(session()->get('division')) }}">
                                         <input type="hidden" name="division_id" value="{{ session()->get('division') }}">
-                                        {{-- <div class="static">{{ Helpers::getDivisionName(session()->get('division')) }}</div> --}}
+                                        {{-- <div class="static">QMS-North America</div> --}}
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
@@ -93,14 +94,6 @@
                                             {{-- <option value="Pankaj Jat">Pankaj Jat</option>
                                             <option value="Gaurav">Gaurav</option>
                                             <option value="Manish">Manish</option> --}}
-                                            <option value="Recall ">Recall </option>
-                                            <option value="Return ">Return </option>
-                                            <option value="Deviation">Deviation</option>
-                                            <option value="Complaint">Complaint</option>
-                                            <option value="Regulatory">Regulatory</option>
-                                            <option value="Lab Incident">Lab Incident</option>
-                                            <option value="Improvement">Improvement</option>
-                                            <option value="Others">Others</option>
                                         </select>
                                     </div>
                                 </div>
@@ -198,18 +191,9 @@
                                         </label>
                                         <select id="select-state" placeholder="Select..." name="document_type">
                                             <option value="">Select a value</option>
-                                            {{-- <option value="D01">D01</option>
+                                            <option value="D01">D01</option>
                                             <option value="D02">D02</option>
-                                            <option value="D03">D03</option> --}}
-                                            <option value="Procedure Document">Procedure Document</option>
-                                            <option value="Work Instruction">Work Instruction</option>
-                                            <option value="Form">Form</option>
-                                            <option value="Template">Template</option>
-                                            <option value="Policy Document">Policy Document</option>
-                                            <option value="Quality Record">Quality Record</option>
-                                            <option value="Specification Document">Specification Document</option>
-                                            <option value="Training Material">Training Material</option>
-                                            <option value="Other">Other</option>
+                                            <option value="D03">D03</option>
                                         </select>
                                     </div>
                                 </div>
@@ -236,7 +220,7 @@
                                         <label for="Reference Recores">Refrence Documents </label>
                                         <select multiple id="reference_record" name="reference_document[]"
                                             id="">
-                                            {{-- <option value="">--Select---</option> --}}
+                                            <option value="">--Select---</option>
                                             @foreach ($old_record as $new)
                                                 <option value="{{ $new->id }}">
                                                     {{ Helpers::getDivisionName($new->division_id) }}/ERRATA/{{ date('Y') }}/{{ $new->id }}
@@ -318,10 +302,10 @@
                                     </div>
                                 </div>
 
-                                <div class="new-date-data-field">
-                                    <div class="group-input input-date">
-                                        <label for="Errata_date">Date And Time of Correction</label>
-                                        <div class="calenderauditee">
+                                <div class="">
+                                    <div class="group-input">
+                                        <label for="dateandtime"><b>Date And Time of Correction </b></label>
+                                        <input type="date" name="Date_and_time_of_correction" value="">
 
                                             <input type="text" id="displayErrataDate"
                                                 nmae="Date_and_time_of_correction" readonly
@@ -333,17 +317,8 @@
                                                 onchange="updateDisplayDateTime(this)" class="hide-input" />
                                         </div>
                                     </div>
-                                    @error('Errata_date')
-                                        <div class="text-danger">{{ $message }}</div>
-                                    @enderror
                                 </div>
 
-                                <script>
-                                    function updateDisplayDateTime(input) {
-                                        const selectedDateTime = new Date(input.value);
-                                        const formattedDateTime = formatDate(selectedDateTime);
-                                        document.getElementById('displayErrataDate').value = formattedDateTime;
-                                    }
 
                                     function formatDate(date) {
                                         const day = String(date.getDate()).padStart(2, '0');
@@ -1684,19 +1659,12 @@
                         <div class="inner-block-content">
                             <div class="row">
 
-                                <div class="col-12">
-                                    <div class="group-input">
-                                        <label class="mt-4" for="Audit Comments">Closure Comments</label>
-                                        <textarea class="summernote" name="Closure_Comments" id="summernote-16"></textarea>
-                                    </div>
-                                </div>
-
-                                {{-- <div class="col-6">
+                                <div class="col-6">
                                     <div class="group-input">
                                         <label class="" for="Audit Comments">Closure Comments</label>
                                         <input type="text" name="Closure_Comments" />
                                     </div>
-                                </div> --}}
+                                </div>
 
                                 <div class="col-md-6">
                                     <div class="group-input">

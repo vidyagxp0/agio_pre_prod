@@ -186,7 +186,7 @@
                             ->get();
                         $userRoleIds = $userRoles->pluck('q_m_s_roles_id')->toArray();
                         $auditCollect = DB::table('audit_reviewers_details')
-                            ->where(['doc_id' => $document->id, 'user_id' => Auth::user()->id])
+                            ->where(['deviation_id' => $document->id, 'user_id' => Auth::user()->id])
                             ->latest()
                             ->first();
                     @endphp
@@ -233,7 +233,7 @@
 
                                 @php
                                     $reviewer = DB::table('audit_reviewers_details')
-                                        ->where(['doc_id' => $document->id, 'type' => 'Deviation'])
+                                        ->where(['deviation_id' => $document->id, 'type' => 'Deviation'])
                                         ->get();
                                 @endphp
                                 <!-- Customer grid view -->
@@ -365,7 +365,6 @@
                         @endphp
 
                         @foreach ($audit as $audits => $dataDemo)
-                                    
                             <td>{{ $dataDemo ? ($audit->currentPage() - 1) * $audit->perPage() + $audits + 1 : 'Not Applicable' }}
                             </td>
 

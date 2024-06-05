@@ -326,7 +326,7 @@
                                                 <label for="Division Code"><b>Site/Location Code</b></label>
                                                 <input readonly type="text" name="division_code"{{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}
                                                     value="{{ Helpers::getDivisionName($data->division_id) }}">
-                                                {{-- <div class="static">{{ Helpers::getDivisionName(session()->get('division')) }}</div> --}}
+                                                {{-- <div class="static">QMS-North America</div> --}}
                                             </div>
                                         </div>
                                         <div class="col-lg-6">

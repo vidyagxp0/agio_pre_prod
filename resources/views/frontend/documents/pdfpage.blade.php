@@ -9,8 +9,8 @@
     <title>DMS Document</title>
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
-    {{-- <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin> --}}
-    {{-- <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100..900&family=Open+Sans:ital,wght@0,300..800;1,300..800&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet"> --}}
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100..900&family=Open+Sans:ital,wght@0,300..800;1,300..800&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet">
 
     <style>
         * {
@@ -485,26 +485,12 @@
 
     <section  class="main-section" id="pdf-page">
         <section style="page-break-after: never;">
-            <div class="other-container" style="margin-bottom: 15px;">
-                <table>
-                    <thead>
-                        <tr>
-                            <th class="text-right">
-                                <div> <span class="bold">Legacy Document Number:</span> {{ !empty($document->legacy_number) ? $document->legacy_number : 'NA' }}</div>
-                            </th>
-                        </tr>
-                    </thead>
-                </table>
-            </div>
-
             <div class="other-container">
                 <table>
                     <thead>
                         <tr>
                             <th class="w-5">1.</th>
-                            <th class="text-left">
-                                <div class="bold">Objective</div>
-                            </th>
+                            <th class="text-left">Purpose</th>
                         </tr>
                     </thead>
                 </table>
@@ -526,9 +512,7 @@
                     <thead>
                         <tr>
                             <th class="w-5">2.</th>
-                            <th class="text-left">
-                                <div class="bold">Scope</div>
-                            </th>
+                            <th class="text-left">Scope</th>
                         </tr>
                     </thead>
                 </table>
@@ -550,7 +534,7 @@
                     <tr>
                         <th class="w-5 vertical-baseline">3.</th>
                         <th class="w-95 text-left">
-                            <div class="bold">Responsibility</div>
+                            <div class="">Responsibility</div>
                         </th>
                     </tr>
                 </tbody>
@@ -591,104 +575,13 @@
                     </div>
                 </div>
             </div>
-            
+
             <table class="mb-20">
                 <tbody>
                     <tr>
                         <th class="w-5 vertical-baseline">4.</th>
                         <th class="w-95 text-left">
-                            <div class="bold">Accountability</div>
-                        </th>
-                    </tr>
-                </tbody>
-            </table>
-
-            <div class="procedure-block">
-                <div class="w-100">
-                    <div class="w-100" style="display:inline-block;">
-                        <div class="w-100">
-                            <div style="height:auto; overflow-x:hidden; width:650px; margin-left: 2.5rem;">
-                                @php
-                                    $i = 1;
-                                @endphp
-                                @if ($data->document_content && !empty($data->document_content->accountability) && is_array(unserialize($data->document_content->accountability)))
-                                    @foreach (unserialize($data->document_content->accountability) as $key => $res)
-                                        @php
-                                            $isSub = str_contains($key, 'sub');
-                                        @endphp
-                                        @if (!empty($res))
-                                            <div style="position: relative;">
-                                                <span style="position: absolute; left: -2.5rem; top: 0;">4.{{ $isSub ? $i - 1 . '.' . $sub_index : $i }}</span> {!! nl2br($res) !!} <br>
-                                            </div>
-                                        @endif
-                                        @php
-                                            if (!$isSub) {
-                                                $i++;  
-                                                $sub_index = 1; 
-                                            } else {
-                                                $sub_index++;
-                                            } 
-                                        @endphp
-                                    @endforeach
-                                @endif    
-
-                                
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            {{-- REFERENCES START --}}
-            <table class="mb-20">
-                <tbody>
-                    <tr>
-                        <th class="w-5 vertical-baseline">5.</th>
-                        <th class="w-95 text-left">
-                            <div class="bold"> References</div>
-                        </th>
-                    </tr>
-                </tbody>
-            </table>
-            <div class="procedure-block">
-                <div class="w-100">
-                    <div class="w-100" style="display:inline-block;">
-                        <div class="w-100">
-                            <div style="height:auto; overflow-x:hidden; width:650px; margin-left: 2.5rem;">
-                                @php $i = 1; @endphp
-                                @if ($data->document_content && !empty($data->document_content->references) && is_array(unserialize($data->document_content->references)))
-                                    @foreach (unserialize($data->document_content->references) as $key => $res)
-                                        @php
-                                            $isSub = str_contains($key, 'sub');
-                                        @endphp
-                                        @if (!empty($res))
-                                            <div style="position: relative;">
-                                                <span style="position: absolute; left: -2.5rem; top: 0;">5.{{ $isSub ? $i - 1 . '.' . $sub_index : $i }}</span> {!! nl2br($res) !!} <br>
-                                            </div>
-                                        @endif
-                                        @php
-                                            if (!$isSub) {
-                                                $i++;  
-                                                $sub_index = 1; 
-                                            } else {
-                                                $sub_index++;
-                                            } 
-                                        @endphp
-                                    @endforeach
-                                @endif
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        {{-- REFERENCES END --}}
-
-            <table class="mb-20">
-                <tbody>
-                    <tr>
-                        <th class="w-5 vertical-baseline">6.</th>
-                        <th class="w-95 text-left">
-                            <div class="bold">Abbreviation</div>
+                            <div class="">Abbreviation</div>
                         </th>
                     </tr>
                 </tbody>
@@ -709,7 +602,7 @@
                                         @endphp
                                         @if (!empty($res))
                                             <div style="position: relative;">
-                                                <span style="position: absolute; left: -2.5rem; top: 0;">6.{{ $isSub ? $i - 1 . '.' . $sub_index : $i }}</span> {!! nl2br($res) !!} <br>
+                                                <span style="position: absolute; left: -2.5rem; top: 0;">4.{{ $isSub ? $i - 1 . '.' . $sub_index : $i }}</span> {!! nl2br($res) !!} <br>
                                             </div>
                                         @endif
                                         @php
@@ -732,7 +625,7 @@
                 <table class="mb-20">
                     <tbody>
                         <tr>
-                            <th class="w-5 vertical-baseline">7.</th>
+                            <th class="w-5 vertical-baseline">5.</th>
                             <th class="w-95 text-left">
                                 <div class="bold">Definitions</div>
                             </th>
@@ -756,7 +649,7 @@
                                             @endphp
                                             @if (!empty($res))
                                                 <div style="position: relative;">
-                                                    <span style="position: absolute; left: -2.5rem; top: 0;">7.{{ $isSub ? $i - 1 . '.' . $sub_index : $i }}</span> {!! nl2br($definition) !!} <br>
+                                                    <span style="position: absolute; left: -2.5rem; top: 0;">5.{{ $isSub ? $i - 1 . '.' . $sub_index : $i }}</span> {!! nl2br($definition) !!} <br>
                                                 </div>
                                             @endif
                                             @php
@@ -780,9 +673,9 @@
                 <table class="mb-20">
                     <tbody>
                         <tr>
-                            <th class="w-5 vertical-baseline">8.</th>
+                            <th class="w-5 vertical-baseline">6.</th>
                             <th class="w-95 text-left">
-                                <div class="bold">General Instructions</div>
+                                <div class="bold">Materials & Equipments</div>
                             </th>
                         </tr>
                         <tr>
@@ -801,7 +694,7 @@
                                             @endphp
                                             @if (!empty($res))
                                                 <div style="position: relative;">
-                                                    <span style="position: absolute; left: -2.5rem; top: 0;">8.{{ $isSub ? $i - 1 . '.' . $sub_index : $i }}</span> {!! nl2br($res) !!} <br>
+                                                    <span style="position: absolute; left: -2.5rem; top: 0;">6.{{ $isSub ? $i - 1 . '.' . $sub_index : $i }}</span> {!! nl2br($res) !!} <br>
                                                 </div>
                                             @endif
                                             @php
@@ -821,16 +714,40 @@
                 </div>
             {{-- MATERIALS AND EQUIPMENTS END --}}
 
+            {{-- SAFETY START --}}
+            <div class="other-container ">
+                <table>
+                    <thead>
+                        <tr>
+                            <th class="w-5">7.</th>
+                            <th class="text-left">Safety & Precautions</th>
+                        </tr>
+                    </thead>
+                </table>
+                <div class="procedure-block">
+                    <div class="w-100">
+                        <div class="w-100" style="display:inline-block;">
+                            <div class="w-100">
+                                <div style="height:auto; overflow-x:hidden; width:650px; margin-left: 2.5rem;" class="symbol-support">
+                                    @if ($data->document_content)
+                                        {{-- {!! $data->document_content->safety_precautions !!} --}}
+                                        {!! strip_tags($data->document_content->safety_precautions, '<br><table><th><td><tbody><tr><p><img><a><img><span><h1><h2><h3><h4><h5><h6><div><b><ol><li>') !!}
+                                    @endif
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {{-- SAFETY END --}}
 
             {{-- PROCEDURE START --}}
                 <div class="other-container ">
                     <table>
                         <thead>
                             <tr>
-                                <th class="w-5">9.</th>
-                                <th class="text-left">
-                                    <div class="bold">Procedure</div>
-                                </th>
+                                <th class="w-5">8.</th>
+                                <th class="text-left">Procedure</th>
                             </tr>
                         </thead>
                     </table>
@@ -854,9 +771,9 @@
                 <table class="mb-20 ">
                     <tbody>
                         <tr>
-                            <th class="w-5 vertical-baseline">10.</th>
+                            <th class="w-5 vertical-baseline">9.</th>
                             <th class="w-95 text-left">
-                                <div class="bold">Cross References</div>
+                                <div class="bold">Reporting</div>
                             </th>
                         </tr>
                     </tbody>
@@ -874,7 +791,7 @@
                                             @endphp
                                             @if (!empty($res))
                                                 <div style="position: relative;">
-                                                    <span style="position: absolute; left: -3rem; top: 0;">10.{{ $isSub ? $i - 1 . '.' . $sub_index : $i }}</span> {!! nl2br($res) !!} <br>
+                                                    <span style="position: absolute; left: -2.5rem; top: 0;">9.{{ $isSub ? $i - 1 . '.' . $sub_index : $i }}</span> {!! nl2br($res) !!} <br>
                                                 </div>
                                             @endif
                                             @php
@@ -894,7 +811,49 @@
                 </div>
             {{-- REPORTING END --}}
 
-            
+            {{-- REFERENCES START --}}
+                <table class="mb-20">
+                    <tbody>
+                        <tr>
+                            <th class="w-5 vertical-baseline">10.</th>
+                            <th class="w-95 text-left">
+                                <div class="bold"> References</div>
+                            </th>
+                        </tr>
+                    </tbody>
+                </table>
+                <div class="procedure-block">
+                    <div class="w-100">
+                        <div class="w-100" style="display:inline-block;">
+                            <div class="w-100">
+                                <div style="height:auto; overflow-x:hidden; width:650px; margin-left: 2.5rem;">
+                                    @php $i = 1; @endphp
+                                    @if ($data->document_content && !empty($data->document_content->references) && is_array(unserialize($data->document_content->references)))
+                                        @foreach (unserialize($data->document_content->references) as $key => $res)
+                                            @php
+                                                $isSub = str_contains($key, 'sub');
+                                            @endphp
+                                            @if (!empty($res))
+                                                <div style="position: relative;">
+                                                    <span style="position: absolute; left: -2.5rem; top: 0;">10.{{ $isSub ? $i - 1 . '.' . $sub_index : $i }}</span> {!! nl2br($res) !!} <br>
+                                                </div>
+                                            @endif
+                                            @php
+                                                if (!$isSub) {
+                                                    $i++;  
+                                                    $sub_index = 1; 
+                                                } else {
+                                                    $sub_index++;
+                                                } 
+                                            @endphp
+                                        @endforeach
+                                    @endif
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {{-- REFERENCES END --}}
             
             {{-- ANNEXSURE START --}}
             <table class="mb-20">
@@ -921,7 +880,7 @@
                                         @endphp
                                         @if (!empty($res))
                                             <div style="position: relative;">
-                                                <span style="position: absolute; left: -3rem; top: 0;">11.{{ $isSub ? $i - 1 . '.' . $sub_index : $i }}</span> {!! nl2br($res) !!} <br>
+                                                <span style="position: absolute; left: -2.5rem; top: 0;">11.{{ $isSub ? $i - 1 . '.' . $sub_index : $i }}</span> {!! nl2br($res) !!} <br>
                                             </div>
                                         @endif
                                         @php
@@ -1102,139 +1061,6 @@
                 </div>
                 <div class="block mb-40">
                     <div class="block-head">
-                        HOD
-                    </div>
-                    <div class="block-content">
-                        <table class="table-bordered">
-                            <thead>
-                                <tr>
-                                    <th class="text-left w-25">HOD</th>
-                                    <th class="text-left w-25">Department</th>
-                                    <th class="text-left w-25">Status</th>
-                                    <th class="text-left w-25">E-Signature</th>
-                                    <th class="text-left w-25">Comments</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @if ($data->hods)
-                                    @php
-                                        $hod = explode(',', $data->hods);
-                                        $i = 0;
-                                    @endphp
-                                    @for ($i = 0; $i < count($hod); $i++)
-                                        @php
-                                            $user = DB::table('users')
-                                                ->where('id', $hod[$i])
-                                                ->first();
-                                            $dept = DB::table('departments')
-                                                ->where('id', $user->departmentid)
-                                                ->value('name');
-                                            $date = DB::table('stage_manages')
-                                                ->where('document_id', $data->id)
-                                                ->where('user_id', $hod[$i])
-                                                ->where('stage', 'HOD Review Complete')
-                                                ->where('deleted_at', null)
-                                                ->latest()
-                                                ->first();
-                                                $comment = DB::table('stage_manages')
-                                                ->where('document_id', $data->id)
-                                                ->where('user_id', $hod[$i])
-                                                ->where('stage', 'HOD Review Complete')
-                                                ->latest()
-                                                ->first();
-                                            $reject = DB::table('stage_manages')
-                                                ->where('document_id', $data->id)
-                                                ->where('user_id', $hod[$i])
-                                                ->where('stage', 'Cancel-by-HOD')
-                                                ->where('deleted_at', null)
-                                                ->latest()
-                                                ->first();
-                                                
-                                        @endphp
-                                        <tr>
-                                            <td class="text-left w-25">{{ $user->name }}</td>
-                                            <td class="text-left w-25">{{ $dept }}</td>
-                                            @if ($date)
-                                                <td class="text-left w-25">HOD Review Complete</td>
-                                            @elseif(!empty($reject))
-                                                <td>HOD Rejected</td>
-                                            @else
-                                                <td class="text-left w-25">HOD Review Pending</td>
-                                            @endif
-
-                                            <td class="text-left w-25">{{ $user->email }}</td>
-                                            <td class="text-left w-25">
-                                                @if($comment)
-                                                {{ $comment->comment }}
-                                            @endif
-                                            </td>
-                                        </tr>
-                                    @endfor
-                                @endif
-                                @if ($data->approver_group)
-                                    @php
-                                        $group = explode(',', $data->approver_group);
-                                        $i = 0;
-
-                                    @endphp
-                                    @for ($i = 0; $i < count($group); $i++)
-                                        @php
-
-                                            $users_id = DB::table('group_permissions')
-                                                ->where('id', $group[$i])
-                                                ->value('user_ids');
-                                            $reviewer = explode(',', $users_id);
-                                            $i = 0;
-                                        @endphp
-                                        @if ($users_id)
-                                            @for ($i = 0; $i < count($reviewer); $i++)
-                                                @php
-                                                    $user = DB::table('users')
-                                                        ->where('id', $reviewer[$i])
-                                                        ->first();
-                                                    $dept = DB::table('departments')
-                                                        ->where('id', $user->departmentid)
-                                                        ->value('name');
-                                                    $date = DB::table('stage_manages')
-                                                        ->where('document_id', $data->id)
-                                                        ->where('user_id', $reviewer[$i])
-                                                        ->where('stage', 'Approval-Submit')
-                                                        ->latest()
-                                                        ->first();
-                                                    $reject = DB::table('stage_manages')
-                                                        ->where('document_id', $data->id)
-                                                        ->where('user_id', $reviewer[$i])
-                                                        ->where('stage', 'Cancel-by-Approver')
-                                                        ->latest()
-                                                        ->first();
-
-                                                @endphp
-                                                <tr>
-                                                    <td class="text-left w-25">{{ $user->name }}</td>
-                                                    <td class="text-left w-25">{{ $dept }}</td>
-                                                    @if ($date)
-                                                        <td class="text-left w-25">Approval Completed</td>
-                                                    @elseif(!empty($reject))
-                                                        <td class="text-left w-25">Approval Rejected </td>
-                                                    @else
-                                                        <td class="text-left w-25">Approval Pending</td>
-                                                    @endif
-
-                                                    <td class="text-left w-25">{{ $user->email }}</td>                                  
-                                                </tr>
-                                            @endfor
-                                        @endif
-                                    @endfor
-
-
-                                @endif
-
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-                <div class="block mb-40">
-                    <div class="block-head">
                         Reviews
                     </div>
                     <div class="block-content">
@@ -1274,7 +1100,6 @@
                                                 $comment = DB::table('stage_manages')
                                                 ->where('document_id', $data->id)
                                                 ->where('user_id', $reviewer[$i])
-                                                ->where('stage', 'Reviewed')
                                                 ->latest()
                                                 ->first();
 
@@ -1420,7 +1245,6 @@
                                                 $comment = DB::table('stage_manages')
                                                 ->where('document_id', $data->id)
                                                 ->where('user_id', $reviewer[$i])
-                                                ->where('stage', 'Approved')
                                                 ->latest()
                                                 ->first();
                                             $reject = DB::table('stage_manages')
