@@ -31,6 +31,7 @@ use App\Http\Controllers\rcms\NonConformaceController;
 use App\Http\Controllers\rcms\CapaController;
 use App\Http\Controllers\rcms\FailureInvestigationController;
 use App\Http\Controllers\rcms\LabIncidentController;
+use App\Http\Controllers\rcms\IncidentController;
 use App\Http\Controllers\rcms\AuditProgramController;
 use App\Http\Controllers\rcms\ExtensionController;
 use App\Http\Controllers\rcms\ManagementReviewController;
@@ -193,6 +194,15 @@ Route::post('failure_investigation_child_1/{id}', [FailureInvestigationControlle
 Route::post('non_conformances_child_1/{id}', [NonConformaceController::class, 'non_conformances_child_1'])->name('non_conformances_child_1');
 
 /********************************************* Deviation Ends *******************************************/
+
+/********************************************* Deviation Starts *******************************************/
+
+Route::post('failure_investigation_child_1/{id}', [FailureInvestigationController::class, 'failure_investigation_child_1'])->name('failure_investigation_child_1');
+Route::post('non_conformances_child_1/{id}', [NonConformaceController::class, 'non_conformances_child_1'])->name('non_conformances_child_1');
+
+/********************************************* Deviation Ends *******************************************/
+
+Route::post('incident_child_1/{id}', [IncidentController::class, 'incident_child_1'])->name('incident_child_1');
 
 // ==============================end ==============================
 //! ============================================

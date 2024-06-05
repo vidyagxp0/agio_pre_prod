@@ -4,16 +4,11 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
-class OotChecklist extends Model
+class IncidentCftResponse extends Model
 {
     use HasFactory;
-    protected $table = 'oot_checklists';
-
-
-    protected $casts = [
-        'data' => 'array'
-    ];
-
+    use SoftDeletes;
 
 }

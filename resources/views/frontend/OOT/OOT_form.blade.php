@@ -1,5 +1,10 @@
 @extends('frontend.layout.main')
 @section('container')
+
+@php
+$users = DB::table('users')->get();
+@endphp
+
     <style>
         textarea.note-codable {
             display: none !important;
@@ -115,28 +120,34 @@
                                     </div>
                                 </div>
 
-                                <div class="col-md-6 ">
+                                {{-- <div class="col-md-6 ">
                                     <div class="group-input ">
                                         <label for="due-date">Due Date <span class="text-danger"></span></label>
                                         <input type="date" name="due_date">
+                                    </div>
+                                </div> --}}
+
+                                <div class="col-lg-12 new-date-data-field">
+                                    <div class="group-input input-date">
+                                        <label for="Due Date">Due Date</label>
+                                        <div><small class="text-primary">If revising Due Date, kindly mention revision
+                                                reason in "Due Date Extension Justification" data field.</small></div>
+                                        <div class="calenderauditee">
+                                            <input type="text" id="due_date" readonly placeholder="DD-MM-YYYY" />
+                                            <input type="date" name="due_date"
+                                                min="{{ \Carbon\Carbon::now()->format('d-M-Y') }}" class="hide-input"
+                                                oninput="handleDateInput(this, 'due_date')" />
+                                        </div>
                                     </div>
                                 </div>
 
                             <div class="col-lg-6">
                                 <div class="group-input">
                                     <label for="Short Description">Severity Level <span class="text-danger"></span></label>
-<<<<<<<<< Temporary merge branch 1
                                     <select name="severity_level">
                                         <option value="0">---select---</option>
                                         <option  value="20">20</option>
                                         <option  value="50">50 </option>
-=========
-                                    <select>
-                                        <option>---select---</option>
-                                        <option>20</option>
-                                        <option>50 </option>
->>>>>>>>> Temporary merge branch 2
-                                    </select>
                                 </div>
                             </div>
 
@@ -161,52 +172,42 @@
                                 </div>
                             </div>
 
-                            <div class="col-4">
-                                <div class="group-input">
-                                    <label class="mt-4" for="Audit Comments">Initiated Through</label>
-<<<<<<<<< Temporary merge branch 1
-                                    <select name="severity_level">
-                                        <option value="0">---select---</option>
-                                        <option value="yes">yes</option>
-                                        <option value="no">No</option>
-=========
-                                    <textarea class="summernote" name="Disposition_Batch" id="summernote-16"></textarea>
+                                <div class="col-lg-12">
+                                    <div class="group-input">
+                                        <label for="Short Description">Initiated Through<span
+                                                class="text-danger"></span></label>
+                                        <select name="initiated_through" id="initiated_through">
+                                            <option>---select---</option>
+                                            <option value="oos_micro">OOS Micro </option>
+                                            <option value="oos_chemical">OOS Chemical </option>
+                                            <option value="lab_incident">Lab Incident</option>
+                                            <option value="others">Others </option>
+                                        </select>
+                                    </div>
                                 </div>
-                            </div>
-
-                            <div class="col-lg-12">
-                                <div class="group-input">
-                                    <label for="Short Description">If Others <span class="text-danger"></span></label>
-                                    <select>
-                                        <option>---select---</option>
-                                        <option>ABC </option>
-                                        <option>ABCd </option>
->>>>>>>>> Temporary merge branch 2
-                                    </select>
+                                <div class="col-lg-6">
+                                    <div class="group-input">
+                                        <label for="Initiator Group"> Short Description</label>
+                                        <textarea  name="short_description" value="" required></textarea>
+                                    </div>
                                 </div>
-                            </div>
-
-                            <div class="col-lg-4">
-                                <div class="group-input">
-                                    <label class="mt-4" for="Short Description">If Others <span class="text-danger"></span></label>
-                                     <input type="text" name="product_material_name" />
+                                <div class="col-12">
+                                    <div class="group-input">
+                                        <label class="mt-4" for="Audit Comments">If Others </label>
+                                        <textarea class="summernote" name="if_others" id="summernote-16"></textarea>
+                                    </div>
                                 </div>
-                            </div>
 
 
 
                             <div class="col-4">
                                 <div class="group-input">
                                     <label class="mt-4" for="Audit Comments">Is Repeat?</label>
-<<<<<<<<< Temporary merge branch 1
                                     <select name="severity_level">
                                         <option value="0">---select---</option>
                                         <option value="yes">yes</option>
                                         <option value="no">No</option>
                                     </select>
-=========
-                                    <textarea class="summernote" name="Disposition_Batch" id="summernote-16"></textarea>
->>>>>>>>> Temporary merge branch 2
                                 </div>
                             </div>
 
@@ -259,9 +260,6 @@
                                     </div>
                                 </div>
                             </div>
-
-<<<<<<<<< Temporary merge branch 1
-=========
                             <div class="col-lg-12">
                                 <div class="group-input">
                                     <label>OOT Occured On</label>
@@ -300,60 +298,17 @@
                                     </div>
                                 </div>
 
->>>>>>>>> Temporary merge branch 2
-                            <div class="col-lg-6">
-                                <div class="group-input">
-                                    <label for="Short Description">Initial Attachment <span class="text-danger"></span></label>
-                                    <select>
-                                        <option>---select---</option>
-                                        <option>Pdf </option>
-                                        <option>Document </option>
-                                    </select>
-                                </div>
-                            </div>
-
-                            <div class="col-lg-6">
-                                <div class="group-input">
-                                    <label for="Short Description">Source Document Type <span class="text-danger"></span></label>
-<<<<<<<<< Temporary merge branch 1
-                                    <select name="source_document">
-                                        <option value="0">---select---</option>
-                                        <option value="Deviation">Deviation</option>
-                                        <option value="SelfInspection">Self inspection</option>
-                                        <option value="PQR">PQR</option>
-                                        <option value="QRM">QRM</option>
-                                        <option value="OOS">OOS</option>
-                                        <option value="LabIncident">Lab Incident</option>
-                                        <option value="NonConformance">Non-conformance</option>
-                                        <option value="InspectionalObservation">Inspectional observation</option>
-                                        <option value="Others">Others</option>
-=========
-                                    <select>
-                                        <option>---select---</option>
-                                        <option>PDF </option>
-                                        <option>Document </option>
->>>>>>>>> Temporary merge branch 2
-                                    </select>
-                                </div>
-                            </div>
-
-                            <div class="col-lg-6">
-                                <div class="group-input">
-                                    <label for="Reference Recores">Reference Record</label>
-<<<<<<<<< Temporary merge branch 1
-                                    <select multiple id="reference_record" name="reference_record[]" id="">
-                                        <option value="0">--Select---</option>
-                                        <option value="1">1</option>
-                                        <option value="2">2</option>
-=========
-                                    <select multiple id="reference_record" name="refrence_record[]" id="">
-                                        <option value="">--Select---</option>
-                                        <option value="">1</option>
-                                        <option value="">2</option>
->>>>>>>>> Temporary merge branch 2
-                                    </select>
-                                </div>
-                            </div>
+                                {{-- <div class="col-lg-6">
+                                    <div class="group-input">
+                                        <label for="Reference Recored">Refrence Record<span
+                                                class="text-danger"></span></label>
+                                        <select id="reference" name="reference">
+                                            <option>---select---</option>
+                                            <option value="1">1</option>
+                                            <option value="2">2</option>
+                                        </select>
+                                    </div>
+                                </div> --}}
 
                             <div class="col-lg-12">
                                 <div class="group-input">
@@ -450,7 +405,6 @@
                             <div class="col-lg-6">
                                 <div class="group-input">
                                     <label for="Reference Recores">Sample Type </label>
-<<<<<<<<< Temporary merge branch 1
                                     <select multiple id="reference_record" name="sample_type[]" id="">
                                         <option value="0">--Select---</option>
                                         <option value="RawMaterial">Raw Material</option>
@@ -460,12 +414,6 @@
                                         <option value="EnvironmentalMonitoring">Environmental Monitoring</option>
                                         <option value="Water">Water</option>
                                         <option value="Others">Others (Specify)</option>
-=========
-                                    <select multiple id="reference_record" name="PhaseIIQCReviewProposedBy[]" id="">
-                                        <option value="">--Select---</option>
-                                        <option value="">Pankaj</option>
-                                        <option value="">Gourav</option>
->>>>>>>>> Temporary merge branch 2
                                     </select>
                                 </div>
                             </div>
@@ -481,20 +429,12 @@
                             <div class="col-lg-6">
                                 <div class="group-input">
                                     <label for="Reference Recores">Stability For </label>
-<<<<<<<<< Temporary merge branch 1
                                     <select multiple id="reference_record" name="stability_for[]" id="">
                                         <option value="0">--Select---</option>
                                         <option value="Submission">Submission</option>
                                         <option value="Commercial">Commercial</option>
                                         <option value="PackEvaluation">Pack Evaluation</option>
                                         <option value="NotApplicable">Not Applicable</option>
-=========
-                                    <select multiple id="reference_record" name="PhaseIIQCReviewProposedBy[]" id="">
-                                        <option value="">--Select---</option>
-                                        <option value="">Pankaj</option>
-                                        <option value="">Gourav</option>
->>>>>>>>> Temporary merge branch 2
-                                    </select>
                                 </div>
                             </div>
 
@@ -589,31 +529,70 @@
                                             <td><input type="text" name="DifferenceOfResults[]"></td>
                                             <td><input type="text" name="TrendLimit[]"></td> --}}
 
-
-                                        {{-- </tbody>
-                                    </table>
+                                            </tbody>
+                                        </table>
+                                    </div>
                                 </div>
-                            </div> --}}
 
-                            <div class="col-12">
-                                <div class="group-input">
-                                    <label for="Guideline Attachment">File Attachment</label>
-                                    <div><small class="text-primary">Please Attach all relevant or supporting
-                                            documents</small></div>
-                                    <div class="file-attachment-field">
-                                        <div class="file-attachment-list" id="file_attachment_guideline"></div>
-                                        <div class="add-btn">
-                                            <div>Add</div>
-<<<<<<<<< Temporary merge branch 1
-                                            <input type="file" id="myfile" name="file_attachment_guideline[]"
-                                                oninput="addMultipleFiles(this, 'file_attachment_guideline')" multiple>
-=========
-                                            <input type="file" id="myfile" name="Attachment[]" oninput="addMultipleFiles(this, 'Attachment')" multiple>
->>>>>>>>> Temporary merge branch 2
+
+                                <script>
+                                    $(document).ready(function () {
+                                        $(".add_training_attachment").click(function(){
+                                            $("#myfile").trigger("click");
+                                        });
+                                    });
+    
+                                    function addAttachmentFiles(input, block_id) {
+                                        console.log('test')
+                                            let block = document.getElementById(block_id);
+                                            let files = input.files;
+                                            for (let i = 0; i < files.length; i++) {
+                                                let div = document.createElement('div');
+                                                div.className = 'attachment-item'; 
+                                                div.innerHTML = files[i].name;
+                                
+                                                let viewLink = document.createElement("a");
+                                                viewLink.href = URL.createObjectURL(files[i]);
+                                                viewLink.textContent = "</View>";
+                                                viewLink.addEventListener('click', function(e){
+                                                    e.preventDefault();
+                                                    window.open(viewLink.href,'_blank');
+                                                });
+                                
+                                              
+                                                let removeButton = document.createElement("a");
+                                                removeButton.className = 'remove-button';
+                                                removeButton.textContent = "</Remove>";
+                                                removeButton.addEventListener('click', function() {
+                                                    div.remove();
+                                                    input.value = ''; 
+                                                });
+    
+                                                console.log(removeButton)
+                                
+                                                div.appendChild(viewLink);
+                                                div.appendChild(removeButton);
+                                                block.appendChild(div);
+                                            }
+                                        }
+                                        
+                                </script>
+
+                                <div class="col-lg-12">
+                                    <div class="group-input">
+                                        <label for="closure attachment">File Attachment </label>
+                                        <div><small class="text-primary">
+                                            </small>
+                                        </div>
+                                        <div class="file-attachment-field">
+                                            <div class="file-attachment-list" id="Attachment"></div>
+                                            <div class="add-btn">
+                                                <div>Add</div>
+                                                <input type="file" id="myfile" name="Attachment[]" oninput="addMultipleFiles(this, 'Attachment')" multiple>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
 
 
 
@@ -636,6 +615,19 @@
                         <div class="inner-block-content">
                             <div class="row">
 
+                                <div class="col-6">
+                                    <div class="group-input">
+                                        <label for="Short Description"> Validity Check After Preliminary Lab Investigation <span class="text-danger"></span></label>
+                                        <select name="pli_finaly_validity_check">
+                                            <option>Enter Your Selection Here</option>
+                                            <option value="valid">Valid</option>
+                                            <option value="invalid">Invalid </option>
+                                            <option value="na">N/A</option>
+                                        </select>
+                                    </div>
+                                </div>
+                               
+
                                 <div class="col-12">
                                     <div class="group-input">
                                         <label class="mt-4" for="Audit Comments">Corrective Action</label>
@@ -646,15 +638,10 @@
                             <div class="col-lg-6">
                                 <div class="group-input">
                                     <label for="Short Description"> Verification Analysis Required<span class="text-danger"></span></label>
-<<<<<<<<< Temporary merge branch 1
+
                                     <select name="verification_analysis_required">
                                         <option value="Yes">Yes</option>
                                         <option value="No">No</option>
-=========
-                                    <select>
-                                        <option>Yes</option>
-                                        <option>No</option>
->>>>>>>>> Temporary merge branch 2
                                     </select>
                                 </div>
                             </div>
@@ -662,17 +649,10 @@
                             <div class="col-lg-6">
                                 <div class="group-input">
                                     <label for="Reference Recores">Verification Analysis Ref.</label>
-<<<<<<<<< Temporary merge branch 1
                                     <select multiple id="reference_record" name="upl_refrence_record[]" id="">
                                         <option value="0">--Select---</option>
                                         <option value="1">1</option>
                                         <option value="2">2</option>
-=========
-                                    <select multiple id="reference_record" name="refrence_record[]" id="">
-                                        <option value="">--Select---</option>
-                                        <option value="">1</option>
-                                        <option value="">2</option>
->>>>>>>>> Temporary merge branch 2
                                     </select>
                                 </div>
                             </div>
@@ -682,15 +662,9 @@
                             <div class="col-lg-6">
                                 <div class="group-input">
                                     <label for="Short Description"> Analyst Interview Request<span class="text-danger"></span></label>
-<<<<<<<<< Temporary merge branch 1
                                     <select name="upl_anlyst_interview">
                                         <option value="Yes">Yes</option>
                                         <option value="No" >No</option>
-=========
-                                    <select>
-                                        <option>Yes</option>
-                                        <option>No</option>
->>>>>>>>> Temporary merge branch 2
                                     </select>
                                 </div>
                             </div>
@@ -698,17 +672,10 @@
                             <div class="col-lg-6">
                                 <div class="group-input">
                                     <label for="Reference Recores"> Analyst Interview Ref.</label>
-<<<<<<<<< Temporary merge branch 1
                                     <select multiple id="reference_record" name="analyst_interview_ref[]" id="">
                                         <option value="0">--Select---</option>
                                         <option value="1">1</option>
                                         <option value="2">2</option>
-=========
-                                    <select multiple id="reference_record" name="refrence_record[]" id="">
-                                        <option value="">--Select---</option>
-                                        <option value="">1</option>
-                                        <option value="">2</option>
->>>>>>>>> Temporary merge branch 2
                                     </select>
                                 </div>
                             </div>
@@ -1567,16 +1534,20 @@
 
                                 <div class="col-lg-6">
                                     <div class="group-input">
-                                        <label for="search">
-                                            Head QA/Designee <span class="text-danger"></span>
-                                        </label>
-                                        <select name="inv_head_designee" id="">
-                                            <option value="">Person Name</option>
-                                            <option value="test">test</option>
-
+                                        <label for="search"> Head QA/Designee <span class="text-danger"></span> </label>
+                                        <select id="select-state" placeholder="Select..." name="inv_head_designee">
+                                            <option value="">Select a value</option>
+                                            @foreach ($users as $data)
+                                                <option value="{{ $data->id }}">{{ $data->name }}</option>
+                                            @endforeach
                                         </select>
+                                        @error('inv_head_designee')
+                                         <p class="text-danger">{{ $message }}</p>
+                                         @enderror
+                                       
                                     </div>
                                 </div>
+
                             </div>
                             <div class="button-block">
                                 <button type="submit" class="saveButton">Save</button>
@@ -1663,18 +1634,30 @@
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="search"> Analyst Name <span class="text-danger"></span> </label>
-                                        <select name="sta_bat_analyst_name" id="">
-                                            <option value="">Person Name</option>
+                                        <select id="select-state" placeholder="Select..." name="sta_bat_analyst_name">
+                                            <option value="">Select a value</option>
+                                            @foreach ($users as $data)
+                                                <option value="{{ $data->id }}">{{ $data->name }}</option>
+                                            @endforeach
                                         </select>
+                                        @error('sta_bat_analyst_name')
+                                         <p class="text-danger">{{ $message }}</p>
+                                         @enderror
+                                        
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="search"> QC/QA Head/Designee <span class="text-danger"></span> </label>
-                                        <select name="qa_head_designee" id="">
-                                            <option value="">Person Name</option>
-                                            <option value="test">test</option>
+                                        <select id="select-state" placeholder="Select..." name="qa_head_designee">
+                                            <option value="">Select a value</option>
+                                            @foreach ($users as $data)
+                                                <option value="{{ $data->id }}">{{ $data->name }}</option>
+                                            @endforeach
                                         </select>
+                                        @error('qa_head_designee')
+                                         <p class="text-danger">{{ $message }}</p>
+                                         @enderror
                                     </div>
                                 </div>
 
@@ -1706,20 +1689,27 @@
                                 </div>
                                 {{-- Table --}}
                                 <div class="col-12">
-                                    <center>
-                                        <label style="font-weight: bold; for="Audit Attachments">Preliminary Laboratory Investigation</label>
-                                    </center>
+                                        {{-- <label style="font-weight: bold; for=Audit Attachments">Preliminary Laboratory Investigation</label> --}}
+
+                                        <label for="audit-agenda-grid">  Preliminary Laboratory Investigation <button type="button" name="audit-agenda-grid" id="pliAdd">+</button>
+                                            <span class="text-primary" data-bs-toggle="modal" data-bs-target="#observation-field-instruction-modal" style="font-size: 0.8rem; font-weight: 400; cursor: pointer;"> </span>
+                                        </label>
+                                  
                                     <div class="group-input">
                                         <div class="why-why-chart">
-                                            <table class="table table-bordered">
+                                            <table class="table table-bordered" id="pliAdddetails">
                                                 <thead>
                                                     <tr>
                                                         <th style="width: 5%;">Sr.No.</th>
                                                         <th style="width: 40%;">Question</th>
                                                         <th style="width: 20%;">Response</th>
                                                         <th>Remarks</th>
+                                                        <th style="width: 4%;">Remove</th>
+
                                                     </tr>
                                                 </thead>
+
+                                                
                                                 <tbody>
                                                     <tr>
                                                         <td class="flex text-center">1</td>
@@ -1743,9 +1733,6 @@
                                                                 <textarea name="remark_one" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                             </div>
                                                         </td>
-
-
-
                                                     </tr>
                                                     <tr>
                                                         <td class="flex text-center">2</td>
@@ -2574,8 +2561,7 @@
                                                                 <textarea name="remark_thirty_four" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                             </div>
                                                         </td>
-
-                                                    </tr>
+                                                    </tr>                                                   
                                                 </tbody>
                                             </table>
                                         </div>
@@ -2599,12 +2585,13 @@
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="group-input">
-                                        <label for="search">
-                                            In-Charge <span class="text-danger"></span>   </label>
-                                        <select name="in_charge" id="">
-                                            <option value="">Select</option>
-                                            <option value="test">test</option>
-
+                                        <label for="search">Lab-Charge <span class="text-danger"></span>   </label>
+                   
+                                        <select id="select-state" placeholder="Select..." name="in_charge">
+                                            <option value="">Select a value</option>
+                                            @foreach ($users as $data)
+                                                <option value="{{ $data->id }}">{{ $data->name }}</option>
+                                            @endforeach
                                         </select>
                                     </div>
                                 </div>
@@ -2612,11 +2599,13 @@
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="search"> QC Head/Designee <span class="text-danger"></span>  </label>
-                                        <select name="pli_head_designee" id="">
-                                            <option value="">Select</option>
-                                            <option value="test">test</option>
-
+                                        <select id="select-state" placeholder="Select..." name="pli_head_designee">
+                                            <option value="">Select a value</option>
+                                            @foreach ($users as $data)
+                                                <option value="{{ $data->id }}">{{ $data->name }}</option>
+                                            @endforeach
                                         </select>
+                                    
                                     </div>
                                 </div>
 
@@ -2968,24 +2957,14 @@
                                     </div>
                                 </div>
 
-
-
-
-
-                            <div class="col-lg-6">
-                                <div class="group-input">
-                                    <label> Recommended Action Required<span class="text-danger"></span></label>
-<<<<<<<<< Temporary merge branch 1
-                                    <select name="recommended_action_req">
-                                        <option value="Yes">Yes</option>
-                                        <option value="No">No</option>
-=========
-                                    <select>
-                                        <option>Yes</option>
-                                        <option>No</option>
->>>>>>>>> Temporary merge branch 2
-                                    </select>
-                                </div>
+                            </div>
+                            <div class="button-block">
+                                <button type="submit" class="saveButton">Save</button>
+                                <button type="button" class="backButton" onclick="previousStep()">Back</button>
+                                <button type="button" class="nextButton" onclick="nextStep()">Next</button>
+                                <button type="button"> <a class="text-white"
+                                        href="{{ url('rcms/qms-dashboard') }}">Exit
+                                    </a> </button>
                             </div>
 
                             <div class="col-lg-6">
@@ -3007,41 +2986,24 @@
                                 </div>
                             </div>
 
-                            <div class="col-lg-6">
-                                <div class="group-input">
-                                    <label> CAPA Required<span class="text-danger"></span></label>
-<<<<<<<<< Temporary merge branch 1
-                                    <select name="capa_required">
-                                        <option value="Yes">Yes</option>
-                                        <option value="No">No</option>
-=========
-                                    <select>
-                                        <option>Yes</option>
-                                        <option>No</option>
->>>>>>>>> Temporary merge branch 2
-                                    </select>
+                    <!------------------- Tab -8 Start ----------------- -->
+
+                    <div id="CCForm4" class="inner-block cctabcontent">
+                        <div class="inner-block-content">
+                            <div class="row">
+
+                                <div class="col-6">
+                                    <div class="group-input">
+                                        <label for="Short Description"> Finaly Validity Check <span class="text-danger"></span></label>
+                                        <select name="finaly_validity_check">
+                                            <option>Enter Your Selection Here</option>
+                                            <option value="valid">Valid</option>
+                                            <option value="invalid">Invalid </option>
+                                            <option value="na">N/A</option>
+                                        </select>
+                                    </div>
                                 </div>
-                            </div>
-
-                            <div class="col-lg-6">
-                                <div class="group-input">
-                                    <label for="Reference Recores"> CAPA Refrence Number</label>
-<<<<<<<<< Temporary merge branch 1
-                                    <select multiple id="reference_record" name="capa_refrence_no[]" id="">
-                                        <option value="0">--Select---</option>
-                                        <option value="1">1</option>
-                                        <option value="2">2</option>
-=========
-                                    <select multiple id="reference_record" name="PreliminaryLabInvestigationdoneBy[]" id="">
-                                        <option value="">--Select---</option>
-                                        <option value="">1</option>
-                                        <option value="">2</option>
->>>>>>>>> Temporary merge branch 2
-                                    </select>
-                                </div>
-                            </div>
-
-
+                            
 
                                 <div class="col-12">
                                     <div class="group-input">
@@ -4872,8 +4834,6 @@
         });
     </script>
 
-
-
     <script>
         $(document).ready(function() {
 
@@ -5019,39 +4979,50 @@
                     return html;
                 }
 
-            var tableBody = $('#impacted-Table tbody');
+                var tableBody = $('#impacted-Table tbody');
+                var rowCount = tableBody.children('tr').length;
+                var newRow = generateTableRow(rowCount + 1);
+                tableBody.append(newRow);
+            });
+        });
+    </script>
+ <script>
+    $(document).ready(function() {
+        let indexDetail = 1;
+        $('#pliAdd').click(function(e) {
+            function generateTableRow(serialNumber) {
+                var html =
+                    '<tr>' +
+                    '<td style=""><input style="margin-left: 25px;" disabled type="text" name="serial[]" value="' + serialNumber +
+                    '"></td>' +
+                    '<td><input type="text" name="data['+ indexDetail +'][questions]"></td>' +
+                    '<td><select name="data['+ indexDetail +'][response]" id="" style="margin-top: 10px;margin-left: 28px; padding: 3px; width: 81%; border: 1px solid rgb(125, 125, 125);  background-color: #f0f0f0;"> <option value="">Select an Option</option> <option value="yes">Yes</option> <option value="no">No</option><option value="n/a">N/A</option></select></td>' +
+                    ' <td> <textarea name="data['+ indexDetail +'][remarks]" style="border-radius: 7px; border: 1.5px solid black;"></textarea></td>' +
+                    '<td><button type="text" class="removeRowBtn">Remove</button></td>' +
+                    '</tr>';
+                '</tr>';
+                indexDetail++;
+                return html;
+            }
+
+            var tableBody = $('#pliAdddetails tbody');
             var rowCount = tableBody.children('tr').length;
             var newRow = generateTableRow(rowCount + 1);
             tableBody.append(newRow);
         });
     });
 </script>
-<script>
-     VirtualSelect.init({
-        ele: '#myfile_mf'
-    });
-    function addMultipleFiles(inputElement) {
-    var fileList = inputElement.files;
-    var containerId = inputElement.getAttribute('data-container-id');
-    var container = document.getElementById(containerId);
 
-    // Clear the existing files
-    container.innerHTML = '';
-
-    // Loop through each file and display its name
-    for (var i = 0; i < fileList.length; i++) {
-        var file = fileList[i];
-        var fileName = document.createElement('div');
-        fileName.textContent = file.name;
-        container.appendChild(fileName);
-    }
-}
-</script>
-<script>
-    var maxLength = 255;
-    $('#docname').keyup(function() {
-        var textlen = maxLength - $(this).val().length;
-        $('#rchars').text(textlen);
-    });
-</script>
+    <script>
+        var maxLength = 255;
+        $('#docname').keyup(function() {
+            var textlen = maxLength - $(this).val().length;
+            $('#rchars').text(textlen);
+        });
+    </script>
+    <script>
+        $(document).on('click', '.removeRowBtn', function() {
+            $(this).closest('tr').remove();
+        })
+    </script>
 @endsection
