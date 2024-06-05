@@ -46,7 +46,7 @@
                                 </div>
                             </div>
 
-                            <div id="rootApp"></div>
+                            {{-- <div id="rootApp"></div> --}}
                             
                             <div class="inner-block">
                                 <h2>Analytics</h2>
@@ -4801,6 +4801,5 @@ var options = {
     <script>
 
     </script>
-    <script src="{{ asset('js/react/app.js') }}"></script>
 
 @endsection

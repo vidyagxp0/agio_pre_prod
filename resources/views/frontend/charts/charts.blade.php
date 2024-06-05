@@ -1,7 +1,7 @@
 <div class="my-4 row">
 
     <div class="col-sm-6">
-        <div class="card" style="width: 26rem;">
+        <div class="card border-0" style="width: 26rem;">
             <div class="card-body">
               <h5 class="card-title">Deviation by classification</h5>
               
@@ -15,7 +15,7 @@
     </div>
 
     <div class="col-sm-6">
-        <div class="card" style="width: 26rem;">
+        <div class="card border-0" style="width: 26rem;">
             <div class="card-body">
               <h5 class="card-title">Deviation by departments</h5>
               
@@ -31,7 +31,7 @@
 
 <div class="my-4 row">
     <div class="col-sm-6">
-        <div class="card" style="width: 26rem;">
+        <div class="card border-0" style="width: 26rem;">
             <div class="card-body">
               <h5 class="card-title">Processes</h5>
               
@@ -44,10 +44,58 @@
         </div>
     </div>
 </div>
+
+<hr>
+<h4>Documents Analytics</h4>
+
+<div class="my-4 row">
+  <div class="col-sm-6">
+      <div class="card border-0" style="width: 26rem;">
+          <div class="card-body">
+            <h5 class="card-title">Document Type Distribution</h5>
+            
+              <div class="card-text d-flex justify-content-center d-flex justify-content-center align-items-center h-100" id="documentTypeDistribution">
+                  <div class="spinner-border" role="status">
+                      <span class="visually-hidden">Loading...</span>
+                  </div>
+              </div>
+          </div>
+      </div>
+  </div>
+  <div class="col-sm-6">
+      <div class="card border-0" style="width: 26rem;">
+          <div class="card-body">
+            <h5 class="card-title">Review in Next 6 Months</h5>
+            
+              <div class="card-text d-flex justify-content-center d-flex justify-content-center align-items-center h-100" id="documentReviewSix">
+                  <div class="spinner-border" role="status">
+                      <span class="visually-hidden">Loading...</span>
+                  </div>
+              </div>
+          </div>
+      </div>
+  </div>
+
+</div>
+
 <div class="my-4 row">
 
     <div class="col-sm-6">
-        <div class="card" style="width: 26rem;">
+        <div class="card border-0" style="width: 26rem;">
+            <div class="card-body">
+              <h5 class="card-title">Originator Distribution</h5>
+              
+                <div class="card-text d-flex justify-content-center d-flex justify-content-center align-items-center h-100" id="documentOriginatorDistribution">
+                    <div class="spinner-border" role="status">
+                        <span class="visually-hidden">Loading...</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-sm-6">
+        <div class="card border-0" style="width: 26rem;">
             <div class="card-body">
               <h5 class="card-title">Documents by status</h5>
               
@@ -64,6 +112,7 @@
 <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.7.2/axios.min.js" integrity="sha512-JSCFHhKDilTRRXe9ak/FJ28dcpOJxzQaCd3Xg8MyF6XFjODhy/YMCM8HW0TFDckNHWUewW+kfvhin43hKtJxAw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 <script>
+
 
     // Processes Charts start 
     function renderProcessChart(series, labels)
@@ -130,6 +179,7 @@
         var options = {
           series: [
                 {
+                    name: 'Documents',
                     data: series
                 }
             ],
@@ -139,6 +189,7 @@
                 },
                 plotOptions: {
                 bar: {
+                    distributed: true,
                     borderRadius: 4,
                     borderRadiusApplication: 'end',
                     horizontal: true,
@@ -297,6 +348,7 @@
         },
         plotOptions: {
           bar: {
+            distributed: true,
             horizontal: false,
             columnWidth: '55%',
             endingShape: 'rounded'
@@ -365,10 +417,271 @@
         $('#deviationDepartmentChart > .spinner-border').hide();
     }
     // Departments wise deviation end
+    
+    // Originator Distribution start
+    function renderDocumentOriginatorChart(seriesData, labels)
+    {
+      var options = {
+          series: [
+          {
+            name: 'Documents',
+            data: seriesData
+          }
+        ],
+          chart: {
+          type: 'bar',
+          height: 350
+        },
+        plotOptions: {
+          bar: {
+            distributed: true,
+            horizontal: false,
+            columnWidth: '55%',
+            endingShape: 'rounded'
+          },
+        },
+        dataLabels: {
+          enabled: false
+        },
+        stroke: {
+          show: true,
+          width: 2,
+          colors: ['transparent']
+        },
+        xaxis: {
+          categories: labels,
+        },
+        yaxis: {
+          title: {
+            text: '# (documents)'
+          }
+        },
+        fill: {
+          opacity: 1
+        },
+        tooltip: {
+          y: {
+            formatter: function (val) {
+              return val + " documents"
+            }
+          }
+        }
+        };
+
+        var documentOriginatorDistribution = new ApexCharts(document.querySelector("#documentOriginatorDistribution"), options);
+        documentOriginatorDistribution.render();
+    }
+
+    async function prepareDocumentOriginatorChart()
+    {
+        $('#documentOriginatorDistribution > .spinner-border').show();
+
+        try {
+            const url = "{{ route('api.document.originator.chart') }}"
+            const res = await axios.get(url);
+
+            console.log('res', res.data)
+
+
+            if (res.data.status == 'ok') {
+                let bodyData = res.data.body;
+                let labels = []
+                let seriesData = []
+
+                for (const key in bodyData) {
+                    labels.push(bodyData[key]['originator_name'])
+                    seriesData.push(bodyData[key]['document_count'])
+                }
+
+                renderDocumentOriginatorChart(seriesData, labels)
+            }
+
+        } catch (err) {
+            console.log('Error in document originator', err.message);
+        }
+
+        $('#documentOriginatorDistribution > .spinner-border').hide();
+    }
+    // Originator distribution end
+    
+    // Type Distribution start
+    function renderDocumentTypeChart(seriesData, labels)
+    {
+      var options = {
+          series: [
+          {
+            name: 'Documents',
+            data: seriesData
+          }
+        ],
+          chart: {
+          type: 'bar',
+          height: 350
+        },
+        plotOptions: {
+          bar: {
+            distributed: true,
+            horizontal: false,
+            columnWidth: '55%',
+            endingShape: 'rounded'
+          },
+        },
+        dataLabels: {
+          enabled: false
+        },
+        stroke: {
+          show: true,
+          width: 2,
+          colors: ['transparent']
+        },
+        xaxis: {
+          categories: labels,
+        },
+        yaxis: {
+          title: {
+            text: '# (documents)'
+          }
+        },
+        fill: {
+          opacity: 1
+        },
+        tooltip: {
+          y: {
+            formatter: function (val) {
+              return val + " documents"
+            }
+          }
+        }
+        };
+
+        var documentTypeDistribution = new ApexCharts(document.querySelector("#documentTypeDistribution"), options);
+        documentTypeDistribution.render();
+    }
+
+    async function prepareDocumentTypeChart()
+    {
+        $('#documentTypeDistribution > .spinner-border').show();
+
+        try {
+            const url = "{{ route('api.document.type.chart') }}"
+            const res = await axios.get(url);
+
+            console.log('res', res.data)
+
+
+            if (res.data.status == 'ok') {
+                let bodyData = res.data.body;
+                let labels = []
+                let seriesData = []
+
+                for (const key in bodyData) {
+                    labels.push(bodyData[key]['document_type_name'])
+                    seriesData.push(bodyData[key]['document_count'])
+                }
+
+                renderDocumentTypeChart(seriesData, labels)
+            }
+
+        } catch (err) {
+            console.log('Error in document originator', err.message);
+        }
+
+        $('#documentTypeDistribution > .spinner-border').hide();
+    }
+    // Type distribution end
+    
+    // Type Distribution start
+    function renderDocumentSixChart(seriesData, labels)
+    {
+      var options = {
+          series: [
+          {
+            name: 'Documents',
+            data: seriesData
+          }
+        ],
+          chart: {
+          type: 'bar',
+          height: 350
+        },
+        plotOptions: {
+          bar: {
+            distributed: true,
+            horizontal: false,
+            columnWidth: '55%',
+            endingShape: 'rounded'
+          },
+        },
+        dataLabels: {
+          enabled: false
+        },
+        stroke: {
+          show: true,
+          width: 2,
+          colors: ['transparent']
+        },
+        xaxis: {
+          categories: labels,
+        },
+        yaxis: {
+          title: {
+            text: '# (documents)'
+          }
+        },
+        fill: {
+          opacity: 1
+        },
+        tooltip: {
+          y: {
+            formatter: function (val) {
+              return val + " documents to be reviewed by this date"
+            }
+          }
+        }
+        };
+
+        var documentReviewSix = new ApexCharts(document.querySelector("#documentReviewSix"), options);
+        documentReviewSix.render();
+    }
+
+    async function prepareDocumentSixChart()
+    {
+        $('#documentReviewSix > .spinner-border').show();
+
+        try {
+            const url = "{{ route('api.document.review.chart', 6) }}"
+            const res = await axios.get(url);
+
+            console.log('res', res.data)
+
+
+            if (res.data.status == 'ok') {
+                let bodyData = res.data.body;
+                let labels = []
+                let seriesData = []
+
+                bodyData.forEach(data => {
+                    seriesData.push(1);
+                    labels.push(data.next_review_date)
+                });
+
+                renderDocumentSixChart(seriesData, labels)
+            }
+
+        } catch (err) {
+            console.log('Error in document originator', err.message);
+        }
+
+        $('#documentReviewSix > .spinner-border').hide();
+    }
+    // Type distribution end
 
     prepareProcessChart()
     prepareDocumentCategoryChart()
     prepareClassificationDeviationChart()
     prepareDeviationDepartmentChart()
+    prepareDocumentOriginatorChart()
+    prepareDocumentTypeChart()
+    prepareDocumentSixChart()
       
 </script>

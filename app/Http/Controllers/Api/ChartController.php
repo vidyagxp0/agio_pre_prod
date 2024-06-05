@@ -9,6 +9,7 @@ use App\Models\QMSDivision;
 use Carbon\Carbon;
 use Helpers;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class ChartController extends Controller
 {
@@ -186,6 +187,71 @@ class ChartController extends Controller
 
             //     $data[$department] = $collection->flatten()->all();
             // }
+
+            $res['body'] = $data;
+
+        } catch (\Exception $e) {
+            $res['status'] = 'error';
+            $res['message'] = $e->getMessage();
+        }
+
+        return response()->json($res);
+    }
+    
+    public function documents_originator_charts()
+    {
+        $res = Helpers::getDefaultResponse();
+
+        try {
+
+            $data = Document::join('users', 'documents.originator_id', '=', 'users.id')
+                    ->select('documents.originator_id', 'users.name as originator_name', DB::raw('count(*) as document_count'))
+                    ->groupBy('documents.originator_id', 'users.name')
+                    ->get();
+
+            $res['body'] = $data;
+
+        } catch (\Exception $e) {
+            $res['status'] = 'error';
+            $res['message'] = $e->getMessage();
+        }
+
+        return response()->json($res);
+    }
+   
+    public function documents_type_charts()
+    {
+        $res = Helpers::getDefaultResponse();
+
+        try {
+
+            $data = Document::join('document_types', 'documents.document_type_id', '=', 'document_types.id')
+                ->select('document_types.name as document_type_name', DB::raw('count(documents.id) as document_count'))
+                ->groupBy('document_types.id', 'document_types.name')
+                ->get();
+
+            $res['body'] = $data;
+
+        } catch (\Exception $e) {
+            $res['status'] = 'error';
+            $res['message'] = $e->getMessage();
+        }
+
+        return response()->json($res);
+    }
+    
+    public function documents_review_charts($months)
+    {
+        $res = Helpers::getDefaultResponse();
+
+        try {
+
+            $today = Carbon::today();
+            $monthsLater = $today->copy()->addMonths($months);
+
+            $data = Document::where('next_review_date', '>=', $today)
+                ->where('next_review_date', '<=', $monthsLater)
+                ->get();
 
             $res['body'] = $data;
 
