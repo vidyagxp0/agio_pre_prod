@@ -78,6 +78,50 @@ return new class extends Migration
             $table->longText('Capa_attachment')->nullable();
             $table->longText('QA_attachments')->nullable();
             $table->longText('closure_attachment')->nullable();
+            $table->longText('Delay_Justification')->nullable();
+            $table->longText('initial_file')->nullable();
+            $table->string('Discription_Event')->nullable();
+            $table->string('objective')->nullable();
+            $table->string('scope')->nullable();
+            $table->string('imidiate_action')->nullable();
+            $table->string('investigation_approach')->nullable();
+
+            $table->longtext('attention_issues')->nullable();
+            $table->longtext('attention_actions')->nullable();
+            $table->longtext('attention_remarks')->nullable();
+
+            $table->longtext('understanding_issues')->nullable();
+            $table->longtext('understanding_actions')->nullable();
+            $table->longtext('understanding_remarks')->nullable();
+
+            $table->longtext('procedural_issues')->nullable();
+            $table->longtext('procedural_actions')->nullable();
+            $table->longtext('procedural_remarks')->nullable();
+
+            $table->longtext('behavioiral_issues')->nullable();
+            $table->longtext('behavioiral_actions')->nullable();
+            $table->longtext('behavioiral_remarks')->nullable();
+
+            $table->longtext('skill_issues')->nullable();
+            $table->longtext('skill_actions')->nullable();
+            $table->longtext('skill_remarks')->nullable();
+
+            $table->longtext('what_will_be')->nullable();
+            $table->longtext('what_will_not_be')->nullable();
+            $table->longtext('what_rationable')->nullable();
+            $table->longtext('where_will_be')->nullable();
+            $table->longtext('where_will_not_be')->nullable();
+            $table->longtext('where_rationable')->nullable();
+            $table->longtext('when_will_be')->nullable();
+            $table->longtext('when_will_not_be')->nullable();
+            $table->longtext('when_rationable')->nullable();
+            $table->longtext('coverage_will_be')->nullable();
+            $table->longtext('coverage_will_not_be')->nullable();
+            $table->longtext('coverage_rationable')->nullable();
+            $table->longtext('who_will_be')->nullable();
+            $table->longtext('who_will_not_be')->nullable();
+            $table->longtext('who_rationable')->nullable();
+
 
             $table->string('submit_on')->nullable();
             $table->string('submit_by')->nullable();
@@ -101,8 +145,8 @@ return new class extends Migration
              
             $table->string('qa_more_info_required_by')->nullable();
             $table->string('qa_more_info_required_on')->nullable();
-            $table->string('Approved_By')->nullable()->nullable();
-            $table->string('Approved_On')->nullable()->nullable();
+            $table->string('Approved_By')->nullable();
+            $table->string('Approved_On')->nullable();
             $table->longText('Approved_Comments')->nullable();
 
             $table->text('QA_head_approved_by')->nullable();
@@ -111,7 +155,7 @@ return new class extends Migration
             
             $table->text('pending_initiator_approved_by')->nullable();
             $table->text('pending_initiator_approved_on')->nullable();
-            $table->longText('pending_initiator_approved_comment');
+            $table->longText('pending_initiator_approved_comment')->nullable();
             
             $table->text('QA_final_approved_by')->nullable();
             $table->text('QA_final_approved_on')->nullable();

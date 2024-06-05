@@ -425,13 +425,14 @@ class DashboardController extends Controller
                 "type" => "Deviation",
                 "parent_id" => $data->parent_id,
                 "parent_type" => $data->parent_type,
-                "short_description" => $data->description_gi ? $data->description_gi : "-",
+                "short_description" => $data->short_description ? $data->short_description : "-",
                 "initiator_id" => $data->initiator_id,
                 "intiation_date" => $data->intiation_date,
                 "stage" => $data->status,
                 "initiated_through" => $data->initiated_through,
                 "date_open" => $data->create,
                 "date_close" => $data->updated_at,
+                "due_date" => $data->due_date,
             ]);
         }
 
