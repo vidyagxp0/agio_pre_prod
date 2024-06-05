@@ -236,7 +236,7 @@
                                 </div>
                                 <div class="col-md-6 new-date-data-field">
                                     <div class="group-input input-date">
-                                        <label for="due-date">Due Date <span class="text-danger"></span></label>
+                                        <label for="due-date">Due Date <span class="text-danger">*</span></label>
                                         <p class="text-primary"> last date this record should be closed by</p>
 
                                         <div class="calenderauditee">
@@ -250,10 +250,8 @@
                                 <div class="col-md-12 mb-3">
                                     <div class="group-input">
                                         <label for="Short Description">Short Description<span
-                                            class="text-danger">*</span></label>
-                                            <span id="rchars">255</span>
-                                        <div><small class="text-primary">Please insert "NA" in the data field if it does
-                                                not require completion</small></div>
+                                            class="text-danger">*</span></label><span id="rchars">255</span>
+                                    Characters remaining
                                         <input  name="description_gi" id="summernote-1" required >
                                     
                                     </div>
