@@ -25,7 +25,7 @@ class FormDivisionController extends Controller
         } elseif ($request->process_name == "Risk Assessment") {
             return redirect('risk-management');
         } elseif ($request->process_name == "Extension") {
-            return redirect('extension');
+            return redirect('extension-new');
         } elseif ($request->process_name == "Effectiveness Check") {
             return redirect('effectiveness-check');            
         } elseif ($request->process_name == "Root Cause Analysis") {

@@ -22,6 +22,7 @@ use App\Http\Controllers\rcms\ObservationController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\DocumentContentController;
 use App\Http\Controllers\ErrataController;
+use App\Http\Controllers\ExtensionNewController;
 use App\Http\Controllers\ImportController;
 use App\Http\Controllers\OOSMicroController;
 use App\Http\Controllers\rcms\AuditeeController;
@@ -493,6 +494,17 @@ Route::get('errataAuditInner/{id}', [ErrataController::class, 'auditDetailsErrat
 Route::post('/errata/cancel/{id}', [ErrataController::class, 'erratacancelstage'])->name('errata.cancel');
 
 // ----------------------Stages----------------------------------------
+
+
+// extensionchild========================
+// Route::view('extension_new', 'frontend.extension.extension_new');
+// Route::view('extension_view', 'frontend.extension.extension_view');
+Route::get('extension-new', [ExtensionNewController::class, 'index']);
+Route::post('extension_new', [ExtensionNewController::class, 'store'])->name('extension_new.store');
+Route::get('extension_newshow/{id}', [ExtensionNewController::class, 'show']);
+
+Route::put('extension_new/{id}', [ExtensionNewController::class, 'update'])->name('extension_new.update');
+Route::post('extension_send_stage/{id}', [ExtensionNewController::class, 'sendstage'])->name('extension_send_stage');
 
 
 
