@@ -374,7 +374,7 @@
                     </div>
                     <div class="copyright-bar">
                         <i class="fa-regular fa-copyright"></i>&nbsp;
-                        Copyright 2023 vidyaGxP Asia Limited
+                        Copyright 2024 VidyaGxP Private Limited
                     </div>
                 </div>
 
