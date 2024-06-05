@@ -147,6 +147,12 @@ class LabIncidentController extends Controller
         $data->extension_date__tc=$request->extension_date__tc;
         $data->extension_date_idtc=$request->extension_date_idtc;
         $data->immediate_date_ia =$request->immediate_date_ia;
+        $data->capa_capa =$request->capa_capa;
+        $data->investigator_qc = $request->investigator_qc;
+        $data->qc_approved_to = $request->qc_approved_to;
+        $data->qc_review_to = $request->qc_review_to;
+        $data->suit_qc_review_to =$request->suit_qc_review_to;
+
         // $data->assign_to_qc_reviewer = $request->assign_to_qc_reviewer;
 
 
@@ -176,13 +182,19 @@ class LabIncidentController extends Controller
         }
         if (!empty($request->attachments_gi)) {
             $files = [];
-            if ($request->hasfile('attachments_gi')) {
+            if ($request->hasFile('attachments_gi')) {
                 foreach ($request->file('attachments_gi') as $file) {
-                    $name = $request->name . 'attachments_gi' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
-                    $file->move('upload/', $name);
+                    // Generate a unique name for the file
+                    $name = $request->name . 'attachments_gi' . uniqid() . '.' . $file->getClientOriginalExtension();
+                    
+                    // Move the file to the upload directory
+                    $file->move(public_path('upload/'), $name);
+                    
+                    // Add the file name to the array
                     $files[] = $name;
                 }
             }
+            // Encode the file names array to JSON and assign it to the model
             $data->attachments_gi = json_encode($files);
         }
 
@@ -281,7 +293,10 @@ class LabIncidentController extends Controller
          $labnew->Incident_interval_ssfi  = $request->Incident_interval_ssfi;
          $labnew->Incident_date_analysis_ssfi = $request->Incident_date_analysis_ssfi;
          $labnew->Incident_specification_ssfi = $request->Incident_specification_ssfi;
-         $labnew->Incident_date_incidence_ssfi = $request->Incident_date_incidence_ssfi;
+         if($request->has('Incident_date_incidence_ssfi')&& $request->Incident_date_incidence_ssfi!==null){
+
+             $labnew->Incident_date_incidence_ssfi = $request->Incident_date_incidence_ssfi;
+         }
          $labnew->Incident_stp_ssfi = $request->Incident_stp_ssfi;
          $labnew->Description_incidence_ssfi = $request->Description_incidence_ssfi;
          $labnew->Detail_investigation_ssfi = $request->Detail_investigation_ssfi;
@@ -1113,7 +1128,12 @@ class LabIncidentController extends Controller
         $data->Initiator_Group= $request->Initiator_Group;
         $data->initiator_group_code= $request->initiator_group_code;
         $data->Other_Ref= $request->Other_Ref;
-        $data->due_date = $request->due_date;
+        // $data->due_date = $request->due_date;
+        if($request->has('due_date')&& $request->due_date!==null)
+        {
+            $data->due_date = $request->due_date;
+        }
+
         $data->assign_to = $request->assign_to;
         $data->Incident_Category= $request->Incident_Category;
         $data->Invocation_Type = $request->Invocation_Type;
@@ -1141,6 +1161,12 @@ class LabIncidentController extends Controller
         $data->Incident_Category_others = $request->Incident_Category_others;
         $data->due_date_extension= $request->due_date_extension;
         $data->severity_level2= $request->severity_level2;
+        $data->capa_capa =$request->capa_capa;
+        $data->investigator_qc = $request->investigator_qc;
+        $data->qc_approved_to = $request->qc_approved_to;
+        $data->qc_review_to = $request->qc_review_to;
+
+
 
         // new added
         $data->incident_involved_others_gi =$request->incident_involved_others_gi;
@@ -1150,11 +1176,17 @@ class LabIncidentController extends Controller
         $data->incident_interval_others_gi =$request->incident_interval_others_gi;
         $data->test_gi =$request->test_gi;
         $data->date_gi =$request->date_gi;
-        $data->incident_date_analysis_gi =$request->incident_date_analysis_gi;
+        // $data->incident_date_analysis_gi =$request->incident_date_analysis_gi;
+        if ($request->has('incident_date_analysis_gi') && $request->incident_date_analysis_gi !== null) {
+            $data->incident_date_analysis_gi = $request->incident_date_analysis_gi;
+        }
         $data->incident_specification_no_gi =$request->incident_specification_no_gi;
         $data->incident_stp_no_gi =$request->incident_stp_no_gi;
         $data->Incident_name_analyst_no_gi =$request->Incident_name_analyst_no_gi;
-        $data->incident_date_incidence_gi =$request->incident_date_incidence_gi;
+        if($request->has('incident_date_incidence_gi')&& $request->incident_date_incidence_gi !== null){
+            
+            $data->incident_date_incidence_gi =$request->incident_date_incidence_gi;
+        }
         $data->analyst_sign_date_gi =$request->analyst_sign_date_gi;
         $data->section_sign_date_gi =$request->section_sign_date_gi;
         $data->immediate_action_ia =$request->immediate_action_ia;
@@ -1170,15 +1202,36 @@ class LabIncidentController extends Controller
         $data->type_incidence_ia =$request->type_incidence_ia;
         // extension
         $data->reasoon_for_extension_e=$request->reasoon_for_extension_e;
-        $data->extension_date_e=$request->extension_date_e;
-        $data->extension_date_initiator=$request->extension_date_initiator;
+        if($request->has('extension_date_e')&& $request->extension_date_e !==null){
+            
+            $data->extension_date_e=$request->extension_date_e;
+        }
+        if($request->has('extension_date_initiator')&& $request->extension_date_initiator !== null){
+            
+            $data->extension_date_initiator=$request->extension_date_initiator;
+        }
         $data->reasoon_for_extension_esc=$request->reasoon_for_extension_esc;
-        $data->extension_date_esc=$request->extension_date_esc;
-        $data->extension_date_idsc=$request->extension_date_idsc;
-        $data->reasoon_for_extension_tc=$request->reasoon_for_extension_tc;
-        $data->extension_date__tc=$request->extension_date__tc;
-        $data->extension_date_idtc=$request->extension_date_idtc;
+       if($request->has('extension_date_esc')&& $request->extension_date_esc !== null)
+       {
+           $data->extension_date_esc=$request->extension_date_esc;
 
+       }
+       
+       if($request->has('extension_date_idsc')&& $request->extension_date_idsc!==null){
+           
+           $data->extension_date_idsc=$request->extension_date_idsc;
+        }
+        $data->reasoon_for_extension_tc=$request->reasoon_for_extension_tc;
+        
+        if($request->has('extension_date__tc')&& $request->extension_date__tc!==null){
+
+            $data->extension_date__tc=$request->extension_date__tc;
+        }
+        if($request->has('extension_date_idtc')&& $request->extension_date_idtc!== null){
+
+            $data->extension_date_idtc=$request->extension_date_idtc;
+        }
+        
 
         if (!empty($request->extension_attachments_e)) {
             $files = [];
@@ -1191,6 +1244,26 @@ class LabIncidentController extends Controller
             }
             $data->extension_attachments_e = json_encode($files);
         }
+
+
+        if (!empty($request->attachments_gi)) {
+            $files = [];
+            if ($request->hasFile('attachments_gi')) {
+                foreach ($request->file('attachments_gi') as $file) {
+                    // Generate a unique name for the file
+                    $name = $request->name . 'attachments_gi' . uniqid() . '.' . $file->getClientOriginalExtension();
+                    
+                    // Move the file to the upload directory
+                    $file->move(public_path('upload/'), $name);
+                    
+                    // Add the file name to the array
+                    $files[] = $name;
+                }
+            }
+            // Encode the file names array to JSON and assign it to the model
+            $data->attachments_gi = json_encode($files);
+        }
+
         if (!empty($request->attachments_ia)) {
             $files = [];
             if ($request->hasfile('attachments_ia')) {
@@ -1472,13 +1545,14 @@ class LabIncidentController extends Controller
             $history->save();
         }
 
-
-
-
+       
+      
+        
 
 
         $data->update();
-
+        
+        
 
 
 
@@ -1492,7 +1566,10 @@ class LabIncidentController extends Controller
         $labtab->stage_stage_ssfi = $request->stage_stage_ssfi;
         $labtab->Incident_stability_cond_ssfi   = $request->Incident_stability_cond_ssfi;
         $labtab->Incident_interval_ssfi  = $request->Incident_interval_ssfi;
-        $labtab->Incident_date_analysis_ssfi = $request->Incident_date_analysis_ssfi;
+        if($request->has('Incident_date_analysis_ssfi')&& $request->Incident_date_analysis_ssfi!==null){
+
+            $labtab->Incident_date_analysis_ssfi = $request->Incident_date_analysis_ssfi;
+        }
         $labtab->Incident_specification_ssfi = $request->Incident_specification_ssfi;
         $labtab->Incident_date_incidence_ssfi = $request->Incident_date_incidence_ssfi;
         $labtab->Incident_stp_ssfi = $request->Incident_stp_ssfi;
@@ -2115,20 +2192,25 @@ class LabIncidentController extends Controller
                $currentDate = Carbon::now();
                $formattedDate = $currentDate->addDays(30);
                $due_date = $formattedDate->format('d-M-Y');
+               $parent_intiation_date = Capa::where('id', $id)->value('intiation_date');
+               $parent_record =  ((RecordNumber::first()->value('counter')) + 1);
+               $parent_record = str_pad($parent_record, 4, '0', STR_PAD_LEFT);
+               $parent_initiator_id = $id;
                $changeControl = OpenStage::find(1);
                if (!empty($changeControl->cft)) $cft = explode(',', $changeControl->cft);
 
                // Debugging to check the revision value
                \Log::info('Revision value: ' . $request->revision);
-
-               if ($request->revision == "Root-Item") {
+           
+               if ($request->revision == "Action-Item") {
                    $cc->originator = User::where('id', $cc->initiator_id)->value('name');
-                   return view('frontend.forms.root-cause-analysis', compact('record_number', 'due_date', 'parent_id', 'parent_type'));
+                   return view('frontend.forms.action-item', compact('record_number', 'due_date', 'parent_id', 'parent_type','parent_intiation_date','parent_record','parent_initiator_id'));
+               
                }
 
                if ($request->revision == "capa-child") {
                    $cc->originator = User::where('id', $cc->initiator_id)->value('name');
-                   return view('frontend.forms.capa', compact('record_number', 'due_date', 'parent_id', 'parent_type', 'old_record', 'cft'));
+                  return view('frontend.forms.capa', compact('record_number', 'due_date', 'parent_id', 'parent_type', 'old_record', 'cft'));
                }
 
            }
@@ -2145,10 +2227,16 @@ class LabIncidentController extends Controller
         $currentDate = Carbon::now();
         $formattedDate = $currentDate->addDays(30);
         $due_date = $formattedDate->format('d-M-Y');
-
-        if ($request->revision == "Root-Item") {
+        $parent_intiation_date = Capa::where('id', $id)->value('intiation_date');
+        $parent_record =  ((RecordNumber::first()->value('counter')) + 1);
+        $parent_record = str_pad($parent_record, 4, '0', STR_PAD_LEFT);
+        $parent_initiator_id = $id;
+       
+        if ($request->revision == "Action-Item") {
             $cc->originator = User::where('id', $cc->initiator_id)->value('name');
-            return view('frontend.forms.root-cause-analysis', compact('record_number', 'due_date', 'parent_id', 'parent_type'));
+            return view('frontend.forms.action-item', compact('record_number', 'due_date', 'parent_id', 'parent_type','parent_intiation_date','parent_record','parent_initiator_id'));
+               
+            // return view('frontend.forms.root-cause-analysis', compact('record_number', 'due_date', 'parent_id', 'parent_type'));
         }
 
         if ($request->revision == "capa-child") {
@@ -2160,6 +2248,31 @@ class LabIncidentController extends Controller
            return view('frontend.forms.effectiveness-check', compact( 'parent_id', 'parent_type','record_number','currentDate','formattedDate','due_date'));
         // return view('frontend.forms.root-cause-analysis', compact('record_number', 'due_date', 'parent_id', 'parent_type'));
     };}
+
+    public function labincidentRiskChild(Request $request,$id)
+    {
+        $cc = LabIncident::find($id);
+        $cft = [];
+        $parent_id = $id;
+        $parent_type = "Capa";
+        $old_record = Capa::select('id', 'division_id', 'record')->get();
+        $record_number = ((RecordNumber::first()->value('counter')) + 1);
+        $record_number = str_pad($record_number, 4, '0', STR_PAD_LEFT);
+        $currentDate = Carbon::now();
+        $formattedDate = $currentDate->addDays(30);
+        $due_date = $formattedDate->format('d-M-Y');
+        $parent_intiation_date = Capa::where('id', $id)->value('intiation_date');
+        $parent_record =  ((RecordNumber::first()->value('counter')) + 1);
+        $parent_record = str_pad($parent_record, 4, '0', STR_PAD_LEFT);
+        $parent_initiator_id = $id;
+       
+        if ($request->revision == "risk-Item") {
+            $cc->originator = User::where('id', $cc->initiator_id)->value('name');
+            return view('frontend.forms.risk-management', compact('record_number', 'due_date', 'parent_id','old_record', 'parent_type','parent_intiation_date','parent_record','parent_initiator_id'));
+
+        }
+
+    }
     public function LabIncidentStateTwo(Request $request,$id)
     {
         if ($request->username == Auth::user()->email && Hash::check($request->password, Auth::user()->password)) {

@@ -22,6 +22,7 @@ use App\Models\Observation;
 use App\Models\QMSDivision;
 use App\Models\FailureInvestigation;
 use App\Models\Ootc;
+use App\Models\RecordNumber;
 use Helpers;
 use App\Models\User;
 use Carbon\Carbon;
@@ -914,6 +915,7 @@ class DashboardController extends Controller
             $division_name = $division->name;
         } elseif ($type == "Out_Of_Calibration") {
             $data = OutOfCalibration::find($id);
+            $recordno = ((RecordNumber::first()->value('counter')) + 1);
             $single = "OOCSingleReport/" . $data->id;
             $audit = "ooc_Audit_Report/" . $data->id;
             $division = QMSDivision::find($data->division_id);

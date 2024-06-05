@@ -145,27 +145,61 @@
                                             <th>Status</th>
                                         </tr>
                                     </thead>
-
+{{-- 
                                     <tbody>
-                                        <tr>
+                                        @foreach ($labincident as $index => $lablog)   
+                                            <tr>
+                                                <td>{{ $index + 1 }}</td>
+                                                <td>{{ $lablog->intiation_date }}</td>
+                                                <td>{{ Helpers::getDivisionName($lablog->division_id) }}/CC/{{ date('Y') }}/{{ str_pad($lablog->record, 4, '0', STR_PAD_LEFT) }}</td>
+                                                <td>{{ Auth::user()->name }}</td>
+                                                <td>{{ $lablog->Initiator_Group }}</td>
+                                                <td>{{ Helpers::getDivisionName(session()->get('division')) }}</td>
+                                                <td>{{ $lablog->short_desc }}</td>
+                                                
+                                                @if(isset($labgrid[$index]))
+                                                    <td>{{ $labgrid[$index]['name_of_product'] }}</td>
+                                                @else
+                                                    <td></td>
+                                                @endif
+                                                
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                            </tr>
+                                        @endforeach
 
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
 
-                                        </tr>
-
-                                    </tbody>
+                                    </tbody> --}}
+                                    <tbody>
+                                        @foreach ($labincident as $index => $lablog)
+                                            <tr>
+                                                <td>{{ $index + 1 }}</td>
+                                                <td>{{ $lablog->intiation_date }}</td>
+                                                <td>{{ Helpers::getDivisionName($lablog->division_id) }}/CC/{{ date('Y') }}/{{ str_pad($lablog->record, 4, '0', STR_PAD_LEFT) }}</td>
+                                                <td>{{ Auth::user()->name }}</td>
+                                                <td>{{ $lablog->Initiator_Group }}</td>
+                                                <td>{{ Helpers::getDivisionName(session()->get('division')) }}</td>
+                                                <td>{{ $lablog->short_desc }}</td>
+                                                
+                                                @if(isset($labgrid[$lablog->id]))
+                                                    <td>{{ $labgrid[$lablog->id]->name_of_product }}</td>
+                                                @else
+                                                    <td></td>
+                                                @endif
+                                                
+                                                <td></td>
+                                                <td>{{$lablog->Incident_Type}}</td>
+                                                <td>{{$lablog->Incident_name_analyst_no_gi}}</td>
+                                                <td>{{$lablog->due_date}}</td>
+                                                <td>{{$lablog->closure_comment}}</td>
+                                                <td>{{$lablog->status}}</td>
+                                            </tr>
+                                        @endforeach
+                                        </tbody>
+                                        
                                 </table>
                             </div>
                         </div>

@@ -136,7 +136,7 @@
                                             <th>Description of Deviation</th>
                                             <th>Division</th>
                                             <th>Department</th>
-                                            <th>Classification of Deviation</th>
+                                            <th>Initial Deviation Category</th>
                                             <th>Deviation Related to</th>
                                             <th>No. of Extension</th>
                                             <th>Closing Date</th>
@@ -148,23 +148,23 @@
                                     </thead>
 
                                     <tbody>
-                                        @foreach ($deviations as $deviation)
+                                        @foreach ($deviation as $deviations)
                                             <tr>
 
                                                 
+                                                <td>{{$loop->index+1}}</td>
+                                                <td>{{$deviations->initiation_date}}</td>
+                                                <td>{{ Helpers::getDivisionName($deviations->division_id) }}/CC/{{ date('Y') }}/{{ str_pad($deviations->record, 4, '0', STR_PAD_LEFT) }}</td>
+                                                <td>{{$deviations->short_description}}</td>
+                                                <td>{{$deviations->division_id}}</td>
+                                                <td>{{$deviations->Initiator_Group}}</td>
+                                                <td>{{$deviations->Deviation_category}}</td>
+                                                <td>{{$deviations->audit_type}}</td>
                                                 <td></td>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
+                                                <td>{{$deviations->QA_final_approved_on}}</td>
+                                                <td>{{$deviations->due_date}}</td>
+                                                <td>{{$deviations->QA_final_approved_by}}</td>
+                                                <td>{{$deviations->status}}</td>
 
                                             </tr>
                                         @endforeach
