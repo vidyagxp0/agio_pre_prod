@@ -462,37 +462,37 @@
                         <div class="col-lg-6">
                             <div class="group-input">
                                 <label for="Activated By">Initiated By</label>
-                                <div class="static"></div>
+                                <div class="static">{{ $extensionNew->submit_by }}</div>
                             </div>
                         </div>
                         <div class="col-lg-6">
                             <div class="group-input">
                                 <label for="Activated On">Initiated On</label>
-                                <div class="static"></div>
+                                <div class="static">{{ $extensionNew->submit_on }}</div>
                             </div>
                         </div>
                         <div class="col-lg-6">
                             <div class="group-input">
                                 <label for=" Rejected By">Reviewed By</label>
-                                <div class="static"></div>
+                                <div class="static">{{ $extensionNew->submit_by_review }}</div>
                             </div>
                         </div>
                         <div class="col-lg-6">
                             <div class="group-input">
                                 <label for="Rejected On">Reviewed On</label>
-                                <div class="static"></div>
+                                <div class="static">{{ $extensionNew->submit_on_review }}</div>
                             </div>
                         </div>
                         <div class="col-lg-6">
                             <div class="group-input">
                                 <label for=" Rejected By">Approved By</label>
-                                <div class="static"></div>
+                                <div class="static">{{ $extensionNew->submit_by_approved }}</div>
                             </div>
                         </div>
                         <div class="col-lg-6">
                             <div class="group-input">
                                 <label for="Rejected On">Approved On</label>
-                                <div class="static"></div>
+                                <div class="static">{{ $extensionNew->submit_on_approved }}</div>
                             </div>
                         </div>
 
