@@ -10,6 +10,7 @@ class FormDivisionController extends Controller
 {
     public function formDivision(Request $request)
     {
+        // dd($request->process_name);
         $request->session()->forget('division');
         $request->session()->put('division', $request->division_id);
         if ($request->process_name == "Internal Audit") {
@@ -46,7 +47,7 @@ class FormDivisionController extends Controller
         elseif ($request->process_name == 'OOC') {
             return redirect()->route('ooc.index');
         }
-        elseif ($request->process_name == 'OOS-Microbiology') {
+        elseif ($request->process_name == 'OOS Microbiology') {
             return redirect()->route('oos_micro.index');
         }
         elseif ($request->process_name == 'ERRATA') {
