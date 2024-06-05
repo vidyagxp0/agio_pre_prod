@@ -18,6 +18,7 @@ use App\Http\Controllers\MytaskController;
 use App\Http\Controllers\CabinateController;
 use App\Http\Controllers\rcms\{CCController,DeviationController};
 use App\Http\Controllers\rcms\EffectivenessCheckController;
+use App\Http\Controllers\rcms\FailureInvestigationController;
 use App\Http\Controllers\rcms\ObservationController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\DocumentContentController;
@@ -174,6 +175,8 @@ Route::get('ManagementReviewAuditDetails/{id}', [ManagementReviewController::cla
 /********************************************* Deviation Starts *******************************************/
 
 Route::post('deviation_child/{id}', [DeviationController::class, 'deviation_child_1'])->name('deviation_child_1');
+
+Route::post('failure_investigation_child_1/{id}', [FailureInvestigationController::class, 'failure_investigation_child_1'])->name('failure_investigation_child_1');
 
 Route::get('DeviationAuditTrial/{id}', [DeviationController::class, 'DeviationAuditTrial']);
 Route::post('DeviationAuditTrial/{id}', [DeviationController::class, 'store_audit_review'])->name('store_audit_review');

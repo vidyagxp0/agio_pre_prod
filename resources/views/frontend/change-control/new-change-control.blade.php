@@ -125,7 +125,8 @@
                                         <input type="hidden" value="{{ date('Y-m-d') }}" name="intiation_date">
                                     </div>
                                 </div>
-                                <div class="col-md-6">
+
+                                <!-- <div class="col-md-6">
                                     <div class="group-input">
                                         <label for="search">
                                             Assigned To <span class="text-danger">*</span>
@@ -153,7 +154,8 @@
                                             <option value="no">No</option>
                                         </select>
                                     </div>
-                                </div>
+                                </div> -->
+
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Microbiology-Person">CFT Reviewer Person</label>
@@ -350,7 +352,7 @@
                                         <textarea name="others"></textarea>
                                     </div>
                                 </div>
-                                <div class="col-md-6">
+                                <!-- <div class="col-md-6">
                                     <div class="group-input">
                                         <label for="div_code">Division Code</label>
                                         <select name="div_code">
@@ -361,12 +363,11 @@
                                             <option value="Physical Lab">Physical Lab</option>
                                             <option value="Stability Lab">Stability Lab</option>
                                             <option value="Wet Chemistry">Wet Chemistry</option>
-                                            {{-- <option value="IPQA Lab">IPQA Lab</option> --}}
                                             <option value="Quality Department">Quality Department</option>
                                             <option value="Administration Department">Administration Department</option>
                                         </select>
                                     </div>
-                                </div>
+                                </div> -->
                                 <div class="col-lg-12">
                                     <div class="group-input">
                                         <label for="others">Initial attachment</label>
@@ -3136,6 +3137,114 @@
         <div id="CCForm12" class="inner-block cctabcontent">
                         <div class="inner-block-content">
                             <div class="row">
+
+                            <div class="sub-head">
+                                    RA Comments
+                                </div>
+                                <script>
+                                    $(document).ready(function() {
+                                        $('.ra_comments').hide();
+
+                                        $('[name="RA_comments"]').change(function() {
+                                            if ($(this).val() === 'yes') {
+                                                $('.ra_comments').show();
+                                                $('.ra_comments span').show();
+                                            } else {
+                                                $('.ra_comments').hide();
+                                                $('.ra_comments span').hide();
+                                            }
+                                        });
+                                    });
+                                </script>
+                                <div class="col-lg-6">
+                                    <div class="group-input">
+                                        <label for="RA Comments">RA Comment Required ?</label>
+                                        <select name="RA_comments" id="RA_comments" disabled>
+                                            <option value="">-- Select --</option>
+                                            <option value="yes">Yes</option>
+                                            <option value="no">No</option>
+                                            <option value="na">NA</option>
+
+                                        </select>
+
+                                    </div>
+                                </div>
+                                @php
+                                    $division = DB::table('q_m_s_divisions')
+                                        ->where('name', Helpers::getDivisionName(session()->get('division')))
+                                        ->first();
+                                    $userRoles = DB::table('user_roles')
+                                        ->where(['q_m_s_roles_id' => 22, 'q_m_s_divisions_id' => $division->id])
+                                        ->get();
+                                    $userRoleIds = $userRoles->pluck('user_id')->toArray();
+                                    $users = DB::table('users')->whereIn('id', $userRoleIds)->get(); // Fetch user data based on user IDs
+                                @endphp
+
+                                <div class="col-lg-6 ra_comments">
+                                    <div class="group-input">
+                                        <label for="RA Person">RA Person</label>
+                                        <select name="RA_person" id="RA_person">
+                                            <option value="">-- Select --</option>
+                                            @foreach ($users as $user)
+                                                <option value="{{ $user->id }}">{{ $user->name }}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-12 mb-3 ra_comments" >
+                                    <div class="group-input">
+                                        <label for="RA assessment">Impact Assessment (By RA)</label>
+                                        <div><small class="text-primary">Please insert "NA" in the data field if it does
+                                                not require completion</small></div>
+                                        <textarea class="" name="RA_assessment" id="summernote-17">
+                                    </textarea>
+                                    </div>
+                                </div>
+                                <div class="col-md-12 mb-3 ra_comments">
+                                    <div class="group-input">
+                                        <label for="RA feedback">RA Feedback</label>
+                                        <div><small class="text-primary">Please insert "NA" in the data field if it does
+                                                not require completion</small></div>
+                                        <textarea class="" name="RA_feedback" id="summernote-18">
+                                    </textarea>
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-12 ra_comments">
+                                    <div class="group-input">
+                                        <label for="RA attachment"> RA Attachments</label>
+                                        <div><small class="text-primary">Please Attach all relevant or supporting
+                                                documents</small></div>
+                                        <div class="file-attachment-field">
+                                            <div class="file-attachment-list" id="RA_attachment"></div>
+                                            <div class="add-btn">
+                                                <div>Add</div>
+                                                <input type="file" id="myfile" name="RA_attachment[]"
+                                                    oninput="addMultipleFiles(this, 'RA_attachment')" multiple>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 mb-3 ra_comments">
+                                    <div class="group-input">
+                                        <label for="RA Review Completed By">RA Review Completed By</label>
+                                        <input disabled type="text" name="RA_by" id="RA_by">
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 new-date-data-field ra_comments">
+                                    <div class="group-input input-date">
+                                        <label for="RA Review Completed On">RA Review Completed On</label>
+                                        <div class="calenderauditee">
+                                            <input type="text" id="RA_on" readonly
+                                                placeholder="DD-MMM-YYYY" />
+                                            <input type="date" name="RA_on"
+                                                min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input"
+                                                oninput="handleDateInput(this, 'RA_on')" />
+                                        </div>
+                                    </div>
+                                </div>
+
+                                
                                 <div class="sub-head">
                                     Production
                                 </div>
@@ -3241,6 +3350,8 @@
                                         </div>
                                     </div>
                                 </div>
+
+
                                 <script>
                                     $(document).ready(function() {
                                         $('.warehouse').hide();
@@ -5382,5 +5493,32 @@
             var textlen = maxLength - $(this).val().length;
             $('#rchars').text(textlen);
         });
+    </script>
+                                        <script>
+                                        $(document).ready(function() {
+                                            // Event listener for the remove file button
+                                            $(document).on('click', '.remove-file', function() {
+                                                $(this).closest('.file-container').remove();
+                                            });
+                                        });
+                                    </script>
+                                    
+    <script>
+
+        document.addEventListener('DOMContentLoaded', function() {
+        const removeButtons = document.querySelectorAll('.remove-file');
+
+        removeButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                const fileName = this.getAttribute('data-file-name');
+                const fileContainer = this.parentElement;
+
+                // Hide the file container
+                if (fileContainer) {
+                    fileContainer.style.display = 'none';
+                }
+            });
+        });
+    });
     </script>
 @endsection

@@ -64,8 +64,11 @@
 
 
                 <div class="slogan">
+                    @php 
+                        $name = DB::table('q_m_s_divisions')->where('id', $data->id)->value('name');
+                    @endphp
                     <strong>Site Division / Project </strong>:
-                    {{ Helpers::getDivisionName(session()->get('division')) }} / Change Control
+                    {{$division->name}} / Change Control
                 </div>
             </div>
         </div>
@@ -236,12 +239,11 @@
                                 Information</button>
                             <button class="cctablinks" onclick="openCity(event, 'CCForm2')">Change Details</button>
                             <button class="cctablinks" onclick="openCity(event, 'CCForm3')">QA Review</button>
+                            <!-- <button class="cctablinks" onclick="openCity(event, 'CCForm12')">RA Comment</button> -->
                             <button class="cctablinks" onclick="openCity(event, 'CCForm11')">CFT</button>
                             <button class="cctablinks" onclick="openCity(event, 'CCForm4')">Evaluation</button>
-                            <button class="cctablinks" onclick="openCity(event, 'CCForm5')">Impact Assessment</button>
-
-                            {{-- <button class="cctablinks" onclick="openCity(event, 'CCForm5')">Additional Information</button> --}}
-                            <button class="cctablinks" onclick="openCity(event, 'CCForm6')">Comments</button>
+                            <!-- <button class="cctablinks" onclick="openCity(event, 'CCForm5')">Impact Assessment</button>
+                            <button class="cctablinks" onclick="openCity(event, 'CCForm6')">Comments</button> -->
                             <button class="cctablinks" onclick="openCity(event, 'CCForm7')">Risk Assessment</button>
                             <button class="cctablinks" onclick="openCity(event, 'CCForm8')">QA Approval Comments</button>
                             <button class="cctablinks" onclick="openCity(event, 'CCForm9')">Change Closure</button>
@@ -292,7 +294,8 @@
                                                             value="{{ date('d-M-Y') }}"></div>
                                                 </div>
                                             </div>
-                                            <div class="col-md-6">
+
+                                            <!-- <div class="col-md-6">
                                                 <div class="group-input">
                                                     <label for="search">
                                                         Assigned To
@@ -320,7 +323,8 @@
                                                         <option value="no">No</option>
                                                     </select>
                                                 </div>
-                                            </div>
+                                            </div> -->
+
                                             <div class="col-lg-6">
                                                 <div class="group-input">
                                                     <label for="Microbiology-Person">CFT Reviewer Person</label>
@@ -545,7 +549,7 @@
                                                 </div>
                                             </div>
 
-                                            <div class="col-md-6">
+                                            <!-- <div class="col-md-6">
                                                 <div class="group-input">
                                                     <label for="div_code">Division Code</label>
                                                     <select name="div_code">
@@ -579,7 +583,7 @@
                                                         </option>
                                                     </select>
                                                 </div>
-                                            </div>
+                                            </div> -->
                                             <div class="col-lg-12">
                                                 <div class="group-input">
                                                     <label for="others">Initial attachment</label>
@@ -645,27 +649,30 @@
                                                                 <th>Current Version No.</th>
                                                                 <th>New Document No.</th>
                                                                 <th>New Version No.</th>
+                                                                <th>Action</th>
                                                             </tr>
                                                         </thead>
                                                         <tbody>
                                                             @if (!empty($docdetail->sno))
                                                                 @foreach (unserialize($docdetail->current_doc_no) as $key => $datas)
                                                                     <tr>
-                                                                        <td><input type="text" name="serial_number[]"
+                                                                        <td><input type="text" name="serial_number[]" readonly
                                                                                 value="{{ $key ? $key + 1 : '1' }}"></td>
                                                                         <td><input type="text"
                                                                                 name="current_doc_number[]"
-                                                                                value="{{ unserialize($docdetail->current_doc_no)[$key] ? unserialize($docdetail->current_doc_no)[$key] : 'Not Applicable' }}">
+                                                                                value="{{ unserialize($docdetail->current_doc_no)[$key] }}">
                                                                         </td>
                                                                         <td><input type="text" name="current_version[]"
-                                                                                value="{{ unserialize($docdetail->current_version_no)[$key] ? unserialize($docdetail->current_version_no)[$key] : 'Not Applicale' }}">
+                                                                                value="{{ unserialize($docdetail->current_version_no)[$key] }}">
                                                                         </td>
                                                                         <td><input type="text" name="new_doc_number[]"
-                                                                                value="{{ unserialize($docdetail->new_doc_no)[$key] ? unserialize($docdetail->new_doc_no)[$key] : 'Not Applicable' }}">
+                                                                                value="{{ unserialize($docdetail->new_doc_no)[$key] }}">
                                                                         </td>
                                                                         <td><input type="text" name="new_version[]"
-                                                                                value="{{ unserialize($docdetail->new_version_no)[$key] ? unserialize($docdetail->new_version_no)[$key] : 'Not Applicable' }}">
+                                                                                value="{{ unserialize($docdetail->new_version_no)[$key] }}">
                                                                         </td>
+                                                                        <td><input type="text" class="Removebtn"
+                                                                            name="Action[]" readonly></td>
 
                                                                     </tr>
                                                                 @endforeach
@@ -728,7 +735,7 @@
                                 <div id="CCForm3" class="inner-block cctabcontent">
                                     <div class="inner-block-content">
                                         <div class="row">
-                                            <div class="col-lg-12">
+                                            <!-- <div class="col-lg-12">
                                                 <div class="group-input">
                                                     <label for="type_change">Type of Change</label>
                                                     <select name="type_chnage">
@@ -745,7 +752,7 @@
 
 
 
-                                            </div>
+                                            </div> -->
 
                                             <div class="col-12">
                                                 <div class="group-input">
@@ -849,7 +856,7 @@
                                             </div>
 
                                         </div>
-                                        <div class="sub-head">
+                                        <!-- <div class="sub-head">
                                             Training Information
                                         </div>
                                         <div class="group-input">
@@ -865,7 +872,7 @@
                                         <div class="group-input">
                                             <label for="train-comments">Training Comments</label>
                                             <textarea name="train_comments">{{ $evaluation->train_comments }}</textarea>
-                                        </div>
+                                        </div> -->
                                         <div class="button-block">
                                             <button type="submit" class="saveButton">Save</button>
                                             <button type="button" class="backButton"
@@ -875,3162 +882,6 @@
                                     </div>
                                 </div>
 
-                                <div id="CCForm5" class="inner-block cctabcontent">
-                                    <div class="col-12">
-                                        <div class="group-input">
-                                            <div class="why-why-chart">
-                                                <table class="table table-bordered">
-
-                                                    <thead>
-                                                        <tr>
-                                                            <th style="width: 5%;">Sr.No.</th>
-                                                            <th style="width: 40%;">Question</th>
-                                                            <th style="width: 20%;">Response</th>
-                                                            <th>Remarks</th>
-                                                        </tr>
-                                                    </thead>
-                                                    <tbody>
-
-
-                                                        @foreach ($impactassement as $item)
-                                                            <tr>
-                                                                <td class="flex text-center">1</td>
-                                                                <td>Availability of Product Permission </td>
-                                                                <td>
-
-
-                                                                    <div
-                                                                        style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                                        <select name="response_1" id="response"
-                                                                            style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                                            {{-- <option value="">{{ $item->response_1 }}</option> --}}
-                                                                            <option value="0">Select Option</option>
-                                                                            <option
-                                                                                {{ $item->response_1 == 'Yes' ? 'selected' : '' }}
-                                                                                value="Yes"> Yes</option>
-                                                                            <option
-                                                                                {{ $item->response_1 == 'No' ? 'selected' : '' }}
-                                                                                value="No">No</option>
-                                                                            <option
-                                                                                {{ $item->response_1 == 'N/A' ? 'selected' : '' }}
-                                                                                value="N/A">N/A</option>
-                                                                        </select>
-                                                                    </div>
-
-
-                                                                </td>
-                                                                <td>
-                                                                    {{-- <textarea name="where_will_not_be"></textarea> --}} <div
-                                                                        style="margin: auto; display: flex; justify-content: center;">
-                                                                        <textarea name="remark_1" style="border-radius: 7px; border: 1.5px solid black; black; height:42px;">{{ $item->remark_1 }}</textarea>
-                                                                    </div>
-                                                                </td>
-
-
-                                                            </tr>
-                                                            <tr>
-                                                                <td class="flex text-center">2</td>
-                                                                <td>Availability of Manufacturing License</td>
-                                                                <td>
-                                                                    <div
-                                                                        style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                                        <select name="response_2" id="response"
-                                                                            style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                                            <option value="0">Select Option</option>
-
-                                                                            <option
-                                                                                {{ $item->response_2 == 'Yes' ? 'selected' : '' }}
-                                                                                value="Yes">Yes</option>
-                                                                            <option
-                                                                                {{ $item->response_2 == 'No' ? 'selected' : '' }}
-                                                                                value="No">No</option>
-                                                                            <option
-                                                                                {{ $item->response_2 == 'N/A' ? 'selected' : '' }}
-                                                                                value="N/A">N/A</option>
-
-                                                                    </div>
-                                                                </td>
-                                                                <td>
-                                                                    {{-- <textarea name="where_will_not_be"></textarea> --}} <div
-                                                                        style="margin: auto; display: flex; justify-content: center;">
-                                                                        <textarea name="remark_2" style="border-radius: 7px; border: 1.5px solid black; black; height:42px;">{{ $item->remark_2 }}</textarea>
-                                                                    </div>
-                                                                </td>
-
-                                                            </tr>
-                                                            <tr>
-                                                                <td class="flex text-center">3</td>
-                                                                <td>Availability of Marketing Authorization</td>
-                                                                <td>
-                                                                    <div
-                                                                        style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                                        <select name="response_3" id="response"
-                                                                            style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                                            {{--   <option value="">{{ $item->response_3 }}</option> --}}
-                                                                            <option value="0">Select Option</option>
-
-                                                                            <option
-                                                                                {{ $item->response_3 == 'Yes' ? 'selected' : '' }}
-                                                                                value="Yes">Yes</option>
-                                                                            <option
-                                                                                {{ $item->response_3 == 'No' ? 'selected' : '' }}
-                                                                                value="No">No</option>
-                                                                            <option
-                                                                                {{ $item->response_3 == 'N/A' ? 'selected' : '' }}
-                                                                                value="N/A">N/A</option>
-
-                                                                        </select>
-                                                                    </div>
-                                                                </td>
-                                                                <td>
-                                                                    {{-- <textarea name="when_will_not_be"></textarea> --}} <div
-                                                                        style="margin: auto; display: flex; justify-content: center;">
-                                                                        <textarea name="remark_3" style="border-radius: 7px; border: 1.5px solid black; black; height:42px;">{{ $item->remark_3 }}</textarea>
-                                                                    </div>
-                                                                </td>
-
-                                                            </tr>
-                                                            <tr>
-                                                                <td class="flex text-center">4</td>
-                                                                <td>Technical Agreement</td>
-                                                                <td>
-                                                                    <div
-                                                                        style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                                        <select name="response_4" id="response"
-                                                                            style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                                            <option value="0">Select Option</option>
-
-                                                                            <option
-                                                                                {{ $item->response_4 == 'Yes' ? 'selected' : '' }}
-                                                                                value="Yes">Yes</option>
-                                                                            <option
-                                                                                {{ $item->response_4 == 'No' ? 'selected' : '' }}
-                                                                                value="No">No</option>
-                                                                            <option
-                                                                                {{ $item->response_4 == 'N/A' ? 'selected' : '' }}
-                                                                                value="N/A">N/A</option>
-
-                                                                        </select>
-                                                                    </div>
-                                                                </td>
-                                                                <td>
-                                                                    {{-- <textarea name="coverage_will_not_be"></textarea> --}} <div
-                                                                        style="margin: auto; display: flex; justify-content: center;">
-                                                                        <textarea name="remark_4" style="border-radius: 7px; border: 1.5px solid black; black; height:42px;">{{ $item->remark_4 }}</textarea>
-                                                                    </div>
-                                                                </td>
-
-                                                            </tr>
-                                                            <tr>
-                                                                <td class="flex text-center">5</td>
-                                                                <td>Site Variation Filing (for New Site)</td>
-                                                                <td>
-                                                                    <div
-                                                                        style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                                        <select name="response_5" id="response"
-                                                                            style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                                            <option value="0">Select Optin</option>
-
-                                                                            <option
-                                                                                {{ $item->response_5 == 'Yes' ? 'selected' : '' }}
-                                                                                value="Yes">Yes</option>
-                                                                            <option
-                                                                                {{ $item->response_5 == 'No' ? 'selected' : '' }}
-                                                                                value="No">No</option>
-                                                                            <option
-                                                                                {{ $item->response_5 == 'N/A' ? 'selected' : '' }}
-                                                                                value="N/A">N/A</option>
-
-                                                                        </select>
-                                                                    </div>
-                                                                </td>
-                                                                <td>
-                                                                    {{-- <textarea name="who_will_not_be"></textarea> --}} <div
-                                                                        style="margin: auto; display: flex; justify-content: center;">
-                                                                        <textarea name="remark_5" style="border-radius: 7px; border: 1.5px solid black; black; height:42px;">{{ $item->remark_5 }}</textarea>
-                                                                    </div>
-                                                                </td>
-
-                                                            </tr>
-                                                            <tr>
-                                                                <td class="flex text-center">6</td>
-                                                                <td>New Product Code</td>
-                                                                <td>
-                                                                    <div
-                                                                        style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                                        <select name="response_6" id="response"
-                                                                            style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                                            <option value="0">Select Option</option>
-
-                                                                            <option
-                                                                                {{ $item->response_6 == 'Yes' ? 'selected' : '' }}
-                                                                                value="Yes">Yes</option>
-                                                                            <option
-                                                                                {{ $item->response_6 == 'No' ? 'selected' : '' }}
-                                                                                value="No">No</option>
-                                                                            <option
-                                                                                {{ $item->response_6 == 'N/A' ? 'selected' : '' }}
-                                                                                value="N/A">N/A</option>
-
-                                                                        </select>
-                                                                    </div>
-                                                                </td>
-                                                                <td>
-                                                                    {{-- <textarea name="who_will_not_be"></textarea> --}} <div
-                                                                        style="margin: auto; display: flex; justify-content: center;">
-                                                                        <textarea name="remark_6" style="border-radius: 7px; border: 1.5px solid black; black; height:42px;">{{ $item->remark_6 }}</textarea>
-                                                                    </div>
-                                                                </td>
-
-                                                            </tr>
-                                                            <tr>
-                                                                <td class="flex text-center">7</td>
-                                                                <td>Facility Qualification / Modification</td>
-                                                                <td>
-                                                                    <div
-                                                                        style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                                        <select name="response_7" id="response"
-                                                                            style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                                            <option value="0">Select Option</option>
-
-                                                                            <option
-                                                                                {{ $item->response_7 == 'Yes' ? 'selected' : '' }}
-                                                                                value="Yes">Yes</option>
-                                                                            <option
-                                                                                {{ $item->response_7 == 'No' ? 'selected' : '' }}
-                                                                                value="No">No</option>
-                                                                            <option
-                                                                                {{ $item->response_7 == 'N/A' ? 'selected' : '' }}
-                                                                                value="N/A">N/A</option>
-
-                                                                        </select>
-                                                                    </div>
-                                                                </td>
-                                                                <td>
-                                                                    {{-- <textarea name="who_will_not_be"></textarea> --}} <div
-                                                                        style="margin: auto; display: flex; justify-content: center;">
-                                                                        <textarea name="remark_7" style="border-radius: 7px; border: 1.5px solid black; black; height:42px;">{{ $item->remark_7 }}</textarea>
-                                                                    </div>
-                                                                </td>
-
-                                                            </tr>
-                                                            <tr>
-                                                                <td class="flex text-center">8</td>
-                                                                <td>Utility Requirements / Qualification</td>
-                                                                <td>
-                                                                    <div
-                                                                        style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                                        <select name="response_8" id="response"
-                                                                            style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                                            <option value="0">Select Option</option>
-
-                                                                            <option
-                                                                                {{ $item->response_8 == 'Yes' ? 'selected' : '' }}
-                                                                                value="Yes">Yes</option>
-                                                                            <option
-                                                                                {{ $item->response_8 == 'No' ? 'selected' : '' }}
-                                                                                value="No">No</option>
-                                                               <option
-                                                                                {{ $item->response_8 == 'N/A' ? 'selected' : '' }}
-                                                                                value="N/A">N/A</option>
-
-                                                                        </select>
-                                                                    </div>
-                                                                </td>
-                                                                <td>
-                                                                    {{-- <textarea name="who_will_not_be"></textarea> --}} <div
-                                                                        style="margin: auto; display: flex; justify-content: center;">
-                                                                        <textarea name="remark_8" style="border-radius: 7px; border: 1.5px solid black; black; height:42px;">{{ $item->remark_8 }}</textarea>
-                                                                    </div>
-                                                                </td>
-
-                                                            </tr>
-                                                            <tr>
-                                                                <td class="flex text-center">9</td>
-                                                                <td>Additional studies</td>
-                                                                <td>
-                                                                    <div
-                                                                        style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                                        <select name="response_9" id="response"
-                                                                            style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                                            <option value="0">Select Option</option>
-
-                                                                            <option
-                                                                                {{ $item->response_9 == 'Yes' ? 'selected' : '' }}
-                                                                                value="Yes">Yes</option>
-                                                                            <option
-                                                                                {{ $item->response_9 == 'No' ? 'selected' : '' }}
-                                                                                value="No">No</option>
-                                                                            <option
-                                                                                {{ $item->response_9 == 'N/A' ? 'selected' : '' }}
-                                                                                value="N/A">N/A</option>
-
-                                                                        </select>
-                                                                    </div>
-                                                                </td>
-                                                                <td>
-                                                                    {{-- <textarea name="who_will_not_be"></textarea> --}} <div
-                                                                        style="margin: auto; display: flex; justify-content: center;">
-                                                                        <textarea name="remark_9" style="border-radius: 7px; border: 1.5px solid black; black; height:42px;">{{ $item->remark_9 }}</textarea>
-                                                                    </div>
-                                                                </td>
-
-                                                            </tr>
-                                                            <tr>
-                                                                <td class="flex text-center">10</td>
-                                                                <td>Reagents/ Chemicals/ Solvents or any other Resources
-                                                                </td>
-                                                                <td>
-                                                                    <div
-                                                                        style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                                        <select name="response_10" id="response"
-                                                                            style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                                            <option value="0">Select Option</option>
-
-                                                                            <option
-                                                                                {{ $item->response_10 == 'Yes' ? 'selected' : '' }}
-                                                                                value="Yes">Yes</option>
-                                                                            <option
-                                                                                {{ $item->response_10 == 'No' ? 'selected' : '' }}
-                                                                                value="No">No</option>
-                                                                            <option
-                                                                                {{ $item->response_10 == 'N/A' ? 'selected' : '' }}
-                                                                                value="N/A">N/A</option>
-
-                                                                        </select>
-                                                                    </div>
-                                                                </td>
-                                                                <td>
-                                                                    {{-- <textarea name="who_will_not_be"></textarea> --}} <div
-                                                                        style="margin: auto; display: flex; justify-content: center;">
-                                                                        <textarea name="remark_10" style="border-radius: 7px; border: 1.5px solid black; black; height:42px;">{{ $item->remark_10 }}</textarea>
-                                                                    </div>
-                                                                </td>
-
-                                                            </tr>
-                                                            <tr>
-                                                                <td class="flex text-center">11</td>
-                                                                <td>Equipment/ Instrument Accessories/ Parts / Change Parts
-                                                                    & Layout</td>
-                                                                <td>
-                                                                    <div
-                                                                        style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                                        <select name="response_11" id="response"
-                                                                            style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                                            <option value="0">Select Option</option>
-
-                                                                            <option
-                                                                                {{ $item->response_11 == 'Yes' ? 'selected' : '' }}
-                                                                                value="Yes">Yes</option>
-                                                                            <option
-                                                                                {{ $item->response_11 == 'No' ? 'selected' : '' }}
-                                                                                value="No">No</option>
-                                                                            <option
-                                                                                {{ $item->response_11 == 'N/A' ? 'selected' : '' }}
-                                                                                value="N/A">N/A</option>
-
-                                                                        </select>
-                                                                    </div>
-                                                                </td>
-                                                                <td>
-                                                                    {{-- <textarea name="who_will_not_be"></textarea> --}} <div
-                                                                        style="margin: auto; display: flex; justify-content: center;">
-                                                                        <textarea name="remark_11" style="border-radius: 7px; border: 1.5px solid black; black; height:42px;">{{ $item->remark_11 }}</textarea>
-                                                                    </div>
-                                                                </td>
-
-                                                            </tr>
-                                                            <tr>
-                                                                <td class="flex text-center">12</td>
-                                                                <td>Analytical Method Validation</td>
-                                                                <td>
-                                                                    <div
-                                                                        style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                                        <select name="response_12" id="response"
-                                                                            style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                                            <option value="0">Select Option</option>
-
-                                                                            <option
-                                                                                {{ $item->response_12 == 'Yes' ? 'selected' : '' }}
-                                                                                value="Yes">Yes</option>
-                                                                            <option
-                                                                                {{ $item->response_12 == 'No' ? 'selected' : '' }}
-                                                                                value="No">No</option>
-                                                                            <option
-                                                                                {{ $item->response_12 == 'N/A' ? 'selected' : '' }}
-                                                                                value="N/A">N/A</option>
-
-                                                                        </select>
-                                                                    </div>
-                                                                </td>
-                                                                <td>
-                                                                    {{-- <textarea name="who_will_not_be"></textarea> --}} <div
-                                                                        style="margin: auto; display: flex; justify-content: center;">
-                                                                        <textarea name="remark_12" style="border-radius: 7px; border: 1.5px solid black; black; height:42px;">{{ $item->remark_12 }}</textarea>
-                                                                    </div>
-                                                                </td>
-
-                                                            </tr>
-                                                            <tr>
-                                                                <td class="flex text-center">13</td>
-                                                                <td>Storage Requirement</td>
-                                                                <td>
-                                                                    <div
-                                                                        style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                                        <select name="response_13" id="response"
-                                                                            style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                                            <option value="0">Select Option</option>
-
-                                                                            <option
-                                                                                {{ $item->response_13 == 'Yes' ? 'selected' : '' }}
-                                                                                value="Yes">Yes</option>
-                                                                            <option
-                                                                                {{ $item->response_13 == 'No' ? 'selected' : '' }}
-                                                                                value="No">No</option>
-                                                                            <option
-                                                                                {{ $item->response_13 == 'N/A' ? 'selected' : '' }}
-                                                                                value="N/A">N/A</option>
-
-                                                                        </select>
-                                                                    </div>
-                                                                </td>
-                                                                <td>
-                                                                    {{-- <textarea name="who_will_not_be"></textarea> --}} <div
-                                                                        style="margin: auto; display: flex; justify-content: center;">
-                                                                        <textarea name="remark_13" style="border-radius: 7px; border: 1.5px solid black; black; height:42px;">{{ $item->remark_13 }}</textarea>
-                                                                    </div>
-                                                                </td>
-
-                                                            </tr>
-                                                            <tr>
-                                                                <td class="flex text-center">14</td>
-                                                                <td>BMR</td>
-                                                                <td>
-                                                                    <div
-                                                                        style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                                        <select name="response_14" id="response"
-                                                                            style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                                            <option value="0">Select Option</option>
-
-                                                                            <option
-                                                                                {{ $item->response_14 == 'Yes' ? 'selected' : '' }}
-                                                                                value="Yes">Yes</option>
-                                                                            <option
-                                                                                {{ $item->response_14 == 'No' ? 'selected' : '' }}
-                                                                                value="No">No</option>
-                                                                            <option
-                                                                                {{ $item->response_14 == 'N/A' ? 'selected' : '' }}
-                                                                                value="N/A">N/A</option>
-
-                                                                        </select>
-                                                                    </div>
-                                                                </td>
-                                                                <td>
-                                                                    {{-- <textarea name="who_will_not_be"></textarea> --}} <div
-                                                                        style="margin: auto; display: flex; justify-content: center;">
-                                                                        <textarea name="remark_14" style="border-radius: 7px; border: 1.5px solid black; black; height:42px;"> {{ $item->remark_14 }}</textarea>
-                                                                    </div>
-                                                                </td>
-
-                                                            </tr>
-                                                            <tr>
-                                                                <td class="flex text-center">15</td>
-                                                                <td>BPR</td>
-                                                                <td>
-                                                                    <div
-                                                                        style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                                        <select name="response_15" id="response"
-                                                                            style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                                            <option value="0">Select Option</option>
-
-                                                                            <option
-                                                                                {{ $item->response_15 == 'Yes' ? 'selected' : '' }}
-                                                                                value="Yes">Yes</option>
-                                                                            <option
-                                                                                {{ $item->response_15 == 'No' ? 'selected' : '' }}
-                                                                                value="No">No</option>
-                                                                            <option
-                                                                                {{ $item->response_15 == 'N/A' ? 'selected' : '' }}
-                                                                                value="N/A">N/A</option>
-
-                                                                        </select>
-                                                                    </div>
-                                                                </td>
-                                                                <td>
-                                                                    {{-- <textarea name="who_will_not_be"></textarea> --}} <div
-                                                                        style="margin: auto; display: flex; justify-content: center;">
-                                                                        <textarea name="remark_15" style="border-radius: 7px; border: 1.5px solid black; black; height:42px;"> {{ $item->remark_15 }}</textarea>
-                                                                    </div>
-                                                                </td>
-
-                                                            </tr>
-                                                            <tr>
-                                                                <td class="flex text-center">16</td>
-                                                                <td>Hold Time Study</td>
-                                                                <td>
-                                                                    <div
-                                                                        style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                                        <select name="response_16" id="response"
-                                                                            style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                                            <option value="0">Select Option</option>
-
-                                                                            <option
-                                                                                {{ $item->response_16 == 'Yes' ? 'selected' : '' }}
-                                                                                value="Yes">Yes</option>
-                                                                            <option
-                                                                                {{ $item->response_16 == 'No' ? 'selected' : '' }}
-                                                                                value="No">No</option>
-                                                                            <option
-                                                                                {{ $item->response_16 == 'N/A' ? 'selected' : '' }}
-                                                                                value="N/A">N/A</option>
-
-                                                                        </select>
-                                                                    </div>
-                                                                </td>
-                                                                <td>
-                                                                    {{-- <textarea name="who_will_not_be"></textarea> --}} <div
-                                                                        style="margin: auto; display: flex; justify-content: center;">
-                                                                        <textarea name="remark_16" style="border-radius: 7px; border: 1.5px solid black; black; height:42px;"> {{ $item->remark_16 }}</textarea>
-                                                                    </div>
-                                                                </td>
-
-                                                            </tr>
-                                                            <tr>
-                                                                <td class="flex text-center">17</td>
-                                                                <td>Testing Feasibility</td>
-                                                                <td>
-                                                                    <div
-                                                                        style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                                        <select name="response_17" id="response"
-                                                                            style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                                            <option value="0">Select Option</option>
-
-                                                                            <option
-                                                                                {{ $item->response_17 == 'Yes' ? 'selected' : '' }}
-                                                                                value="Yes">Yes</option>
-                                                                            <option
-                                                                                {{ $item->response_17 == 'No' ? 'selected' : '' }}
-                                                                                value="No">No</option>
-                                                                            <option
-                                                                                {{ $item->response_17 == 'N/A' ? 'selected' : '' }}
-                                                                                value="N/A">N/A</option>
-
-                                                                        </select>
-                                                                    </div>
-                                                                </td>
-                                                                <td>
-                                                                    {{-- <textarea name="who_will_not_be"></textarea> --}} <div
-                                                                        style="margin: auto; display: flex; justify-content: center;">
-                                                                        <textarea name="remark_17" style="border-radius: 7px; border: 1.5px solid black; black; height:42px;"> {{ $item->remark_17 }} </textarea>
-                                                                    </div>
-                                                                </td>
-
-                                                            </tr>
-                                                            <tr>
-                                                                <td class="flex text-center">18</td>
-                                                                <td>Annual Product Review</td>
-                                                                <td>
-                                                                    <div
-                                                                        style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                                        <select name="response_18" id="response"
-                                                                            style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                                            <option value="0">Select Option</option>
-
-                                                                            <option
-                                                                                {{ $item->response_18 == 'Yes' ? 'selected' : '' }}
-                                                                                value="Yes">Yes</option>
-                                                                            <option
-                                                                                {{ $item->response_18 == 'No' ? 'selected' : '' }}
-                                                                                value="No">No</option>
-                                                                            <option
-                                                                                {{ $item->response_18 == 'N/A' ? 'selected' : '' }}
-                                                                                value="N/A">N/A</option>
-
-                                                                        </select>
-                                                                    </div>
-                                                                </td>
-                                                                <td>
-                                                                    {{-- <textarea name="who_will_not_be"></textarea> --}} <div
-                                                                        style="margin: auto; display: flex; justify-content: center;">
-                                                                        <textarea name="remark_18" style="border-radius: 7px; border: 1.5px solid black; black; height:42px;"> {{ $item->remark_18 }}</textarea>
-                                                                    </div>
-                                                                </td>
-
-                                                            </tr>
-                                                            <tr>
-                                                                <td class="flex text-center">19</td>
-                                                                <td>New Source/ Vendor Requirement</td>
-                                                                <td>
-                                                                    <div
-                                                                        style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                                        <select name="response_19" id="response"
-                                                                            style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                                            <option value="0">Select Option</option>
-
-                                                                            <option
-                                                                                {{ $item->response_19 == 'Yes' ? 'selected' : '' }}
-                                                                                value="Yes">Yes</option>
-                                                                            <option
-                                                                                {{ $item->response_19 == 'No' ? 'selected' : '' }}
-                                                                                value="No">No</option>
-                                                                            <option
-                                                                                {{ $item->response_19 == 'N/A' ? 'selected' : '' }}
-                                                                                value="N/A">N/A</option>
-
-                                                                        </select>
-                                                                    </div>
-                                                                </td>
-                                                                <td>
-                                                                    {{-- <textarea name="who_will_not_be"></textarea> --}} <div
-                                                                        style="margin: auto; display: flex; justify-content: center;">
-                                                                        <textarea name="remark_19" style="border-radius: 7px; border: 1.5px solid black; black; height:42px;">{{ $item->remark_19 }}</textarea>
-                                                                    </div>
-                                                                </td>
-
-                                                            </tr>
-                                                            <tr>
-                                                                <td class="flex text-center">20</td>
-                                                                <td>Vendor Qualification</td>
-                                                                <td>
-                                                                    <div
-                                                                        style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                                        <select name="response_20" id="response"
-                                                                            style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                                            <option value="0">Select Option</option>
-
-                                                                            <option
-                                                                                {{ $item->response_20 == 'Yes' ? 'selected' : '' }}
-                                                                                value="Yes">Yes</option>
-                                                                            <option
-                                                                                {{ $item->response_20 == 'No' ? 'selected' : '' }}
-                                                                                value="No">No</option>
-                                                                            <option
-                                                                                {{ $item->response_20 == 'N/A' ? 'selected' : '' }}
-                                                                                value="N/A">N/A</option>
-
-                                                                        </select>
-                                                                    </div>
-                                                                </td>
-                                                                <td>
-                                                                    {{-- <textarea name="who_will_not_be"></textarea> --}} <div
-                                                                        style="margin: auto; display: flex; justify-content: center;">
-                                                                        <textarea name="remark_20" style="border-radius: 7px; border: 1.5px solid black; black; height:42px;">{{ $item->remark_20 }}</textarea>
-                                                                    </div>
-                                                                </td>
-
-                                                            </tr>
-                                                            <tr>
-                                                                <td class="flex text-center">21</td>
-                                                                <td>Approved Vendor List Updation</td>
-                                                                <td>
-                                                                    <div
-                                                                        style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                                        <select name="response_21" id="response"
-                                                                            style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                                            <option value="0">Select Option</option>
-
-                                                                            <option
-                                                                                {{ $item->response_21 == 'Yes' ? 'selected' : '' }}
-                                                                                value="Yes">Yes</option>
-                                                                            <option
-                                                                                {{ $item->response_21 == 'No' ? 'selected' : '' }}
-                                                                                value="No">No</option>
-                                                                            <option
-                                                                                {{ $item->response_21 == 'N/A' ? 'selected' : '' }}
-                                                                                value="N/A">N/A</option>
-
-                                                                        </select>
-                                                                    </div>
-                                                                </td>
-                                                                <td>
-                                                                    {{-- <textarea name="who_will_not_be"></textarea> --}} <div
-                                                                        style="margin: auto; display: flex; justify-content: center;">
-                                                                        <textarea name="remark_21" style="border-radius: 7px; border: 1.5px solid black; black; height:42px;">{{ $item->remark_21 }}</textarea>
-                                                                    </div>
-                                                                </td>
-
-                                                            </tr>
-                                                            <tr>
-                                                                <td class="flex text-center">21</td>
-                                                                <td>New Code Generation/ Item Codification</td>
-                                                                <td>
-                                                                    <div
-                                                                        style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                                        <select name="response_21" id="response"
-                                                                            style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                                            <option value="0">Select Option</option>
-
-                                                                            <option
-                                                                                {{ $item->response_21 == 'Yes' ? 'selected' : '' }}
-                                                                                value="Yes">Yes</option>
-                                                                            <option
-                                                                                {{ $item->response_21 == 'No' ? 'selected' : '' }}
-                                                                                value="No">No</option>
-                                                                            <option
-                                                                                {{ $item->response_21 == 'N/A' ? 'selected' : '' }}
-                                                                                value="N/A">N/A</option>
-
-                                                                        </select>
-                                                                    </div>
-                                                                </td>
-                                                                <td>
-                                                                    {{-- <textarea name="who_will_not_be"></textarea> --}} <div
-                                                                        style="margin: auto; display: flex; justify-content: center;">
-                                                                        <textarea name="remark_21" style="border-radius: 7px; border: 1.5px solid black; black; height:42px;"> {{ $item->remark_21 }}</textarea>
-                                                                    </div>
-                                                                </td>
-
-                                                            </tr>
-                                                            <tr>
-                                                                <td class="flex text-center">22</td>
-                                                                <td>List of Item Codes</td>
-                                                                <td>
-                                                                    <div
-                                                                        style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                                        <select name="response_22" id="response"
-                                                                            style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                                            <option value="0">Select Option</option>
-
-                                                                            <option
-                                                                                {{ $item->response_22 == 'Yes' ? 'selected' : '' }}
-                                                                                value="Yes">Yes</option>
-                                                                            <option
-                                                                                {{ $item->response_22 == 'No' ? 'selected' : '' }}
-                                                                                value="No">No</option>
-                                                                            <option
-                                                                                {{ $item->response_22 == 'N/A' ? 'selected' : '' }}
-                                                                                value="N/A">N/A</option>
-                                                                        </select>
-                                                                    </div>
-                                                                </td>
-                                                                <td>
-                                                                    {{-- <textarea name="who_will_not_be"></textarea> --}} <div
-                                                                        style="margin: auto; display: flex; justify-content: center;">
-                                                                        <textarea name="remark_22" style="border-radius: 7px; border: 1.5px solid black; black; height:42px;"> {{ $item->remark_22 }}</textarea>
-                                                                    </div>
-                                                                </td>
-
-                                                            </tr>
-                                                            <tr>
-                                                                <td class="flex text-center">23</td>
-                                                                <td>Approved Specimen/ Shade Card</td>
-                                                                <td>
-                                                                    <div
-                                                                        style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                                        <select name="response_23" id="response"
-                                                                            style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                                            <option value="0">Select Option</option>
-
-                                                                            <option
-                                                                                {{ $item->response_23 == 'Yes' ? 'selected' : '' }}
-                                                                                value="Yes">Yes</option>
-                                                                            <option
-                                                                                {{ $item->response_23 == 'No' ? 'selected' : '' }}
-                                                                                value="No">No</option>
-                                                                            <option
-                                                                                {{ $item->response_23 == 'N/A' ? 'selected' : '' }}
-                                                                                value="N/A">N/A</option>
-                                                                        </select>
-                                                                    </div>
-                                                                </td>
-                                                                <td>
-                                                                    {{-- <textarea name="who_will_not_be"></textarea> --}} <div
-                                                                        style="margin: auto; display: flex; justify-content: center;">
-                                                                        <textarea name="remark_23" style="border-radius: 7px; border: 1.5px solid black; black; height:42px;"> {{ $item->remark_23 }}</textarea>
-                                                                    </div>
-                                                                </td>
-
-                                                            </tr>
-                                                            <tr>
-                                                                <td class="flex text-center">24</td>
-                                                                <td>MOC Requirements</td>
-                                                                <td>
-                                                                    <div
-                                                                        style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                                        <select name="response_24" id="response"
-                                                                            style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                                            <option value="0">Select Option</option>
-
-                                                                            <option
-                                                                                {{ $item->response_24 == 'Yes' ? 'selected' : '' }}
-                                                                                value="Yes">Yes</option>
-                                                                            <option
-                                                                                {{ $item->response_24 == 'No' ? 'selected' : '' }}
-                                                                                value="No">No</option>
-                                                                            <option
-                                                                                {{ $item->response_24 == 'N/A' ? 'selected' : '' }}
-                                                                                value="N/A">N/A</option>
-                                                                        </select>
-                                                                    </div>
-                                                                </td>
-                                                                <td>
-                                                                    {{-- <textarea name="who_will_not_be"></textarea> --}} <div
-                                                                        style="margin: auto; display: flex; justify-content: center;">
-                                                                        <textarea name="remark_24" style="border-radius: 7px; border: 1.5px solid black; black; height:42px;"> {{ $item->remark_24 }}</textarea>
-                                                                    </div>
-                                                                </td>
-
-                                                            </tr>
-                                                            <tr>
-                                                                <td class="flex text-center">25</td>
-                                                                <td>List of Equipment / instruments</td>
-                                                                <td>
-                                                                    <div
-                                                                        style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                                        <select name="response_25" id="response"
-                                                                            style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                                            <option value="0">Select Option</option>
-
-                                                                            <option
-                                                                                {{ $item->response_25 == 'Yes' ? 'selected' : '' }}
-                                                                                value="Yes">Yes</option>
-                                                                            <option
-                                                                                {{ $item->response_25 == 'No' ? 'selected' : '' }}
-                                                                                value="No">No</option>
-                                                                            <option
-                                                                                {{ $item->response_25 == 'N/A' ? 'selected' : '' }}
-                                                                                value="N/A">N/A</option>
-                                                                        </select>
-                                                                    </div>
-                                                                </td>
-                                                                <td>
-                                                                    {{-- <textarea name="who_will_not_be"></textarea> --}} <div
-                                                                        style="margin: auto; display: flex; justify-content: center;">
-                                                                        <textarea name="remark_25" style="border-radius: 7px; border: 1.5px solid black; black; height:42px;"> {{ $item->remark_25 }}</textarea>
-                                                                    </div>
-                                                                </td>
-
-                                                            </tr>
-                                                            <tr>
-                                                                <td class="flex text-center">26</td>
-                                                                <td>New Utility Connections / Modifications</td>
-                                                                <td>
-                                                                    <div
-                                                                        style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                                        <select name="response_26" id="response"
-                                                                            style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                                            <option value="0">Select Option</option>
-
-                                                                            <option
-                                                                                {{ $item->response_26 == 'Yes' ? 'selected' : '' }}
-                                                                                value="Yes">Yes</option>
-                                                                            <option
-                                                                                {{ $item->response_26 == 'No' ? 'selected' : '' }}
-                                                                                value="No">No</option>
-                                                                            <option
-                                                                                {{ $item->response_26 == 'N/A' ? 'selected' : '' }}
-                                                                                value="N/A">N/A</option>
-                                                                        </select>
-                                                                    </div>
-                                                                </td>
-                                                                <td>
-                                                                    {{-- <textarea name="who_will_not_be"></textarea> --}} <div
-                                                                        style="margin: auto; display: flex; justify-content: center;">
-                                                                        <textarea name="remark_26" style="border-radius: 7px; border: 1.5px solid black; black; height:42px;"> {{ $item->remark_26 }}</textarea>
-                                                                    </div>
-                                                                </td>
-
-                                                            </tr>
-                                                            <tr>
-                                                                <td class="flex text-center">27</td>
-                                                                <td>Drawings / layouts</td>
-                                                                <td>
-                                                                    <div
-                                                                        style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                                        <select name="response_27" id="response"
-                                                                            style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                                            <option value="0">Select Option</option>
-
-                                                                            <option
-                                                                                {{ $item->response_27 == 'Yes' ? 'selected' : '' }}
-                                                                                value="Yes">Yes</option>
-                                                                            <option
-                                                                                {{ $item->response_27 == 'No' ? 'selected' : '' }}
-                                                                                value="No">No</option>
-                                                                            <option
-                                                                                {{ $item->response_27 == 'N/A' ? 'selected' : '' }}
-                                                                                value="N/A">N/A</option>
-                                                                        </select>
-                                                                    </div>
-                                                                </td>
-                                                                <td>
-                                                                    {{-- <textarea name="who_will_not_be"></textarea> --}} <div
-                                                                        style="margin: auto; display: flex; justify-content: center;">
-                                                                        <textarea name="remark_27" style="border-radius: 7px; border: 1.5px solid black; black; height:42px;"> {{ $item->remark_27 }}</textarea>
-                                                                    </div>
-                                                                </td>
-
-                                                            </tr>
-                                                            <tr>
-                                                                <td class="flex text-center">28</td>
-                                                                <td>Equipment P & I Diagram</td>
-                                                                <td>
-                                                                    <div
-                                                                        style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                                        <select name="response_28" id="response"
-                                                                            style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                                            <option value="0">Select Option</option>
-
-                                                                            <option
-                                                                                {{ $item->response_28 == 'Yes' ? 'selected' : '' }}
-                                                                                value="Yes">Yes</option>
-                                                                            <option
-                                                                                {{ $item->response_28 == 'No' ? 'selected' : '' }}
-                                                                                value="No">No</option>
-                                                                            <option
-                                                                                {{ $item->response_28 == 'N/A' ? 'selected' : '' }}
-                                                                                value="N/A">N/A</option>
-                                                                        </select>
-                                                                    </div>
-                                                                </td>
-                                                                <td>
-                                                                    {{-- <textarea name="who_will_not_be"></textarea> --}} <div
-                                                                        style="margin: auto; display: flex; justify-content: center;">
-                                                                        <textarea name="remark_28" style="border-radius: 7px; border: 1.5px solid black; black; height:42px;"> {{ $item->remark_28 }}</textarea>
-                                                                    </div>
-                                                                </td>
-
-                                                            </tr>
-                                                            <tr>
-                                                                <td class="flex text-center">29</td>
-                                                                <td>Regulatory Submissions</td>
-                                                                <td>
-                                                                    <div
-                                                                        style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                                        <select name="response_29" id="response"
-                                                                            style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                                            <option value="0">Select Option</option>
-
-                                                                            <option value="">
-                                                                                {{ $item->response_29 }}</option>
-                                                                            <option
-                                                                                {{ $item->response_29 == 'Yes' ? 'selected' : '' }}
-                                                                                value="Yes">Yes</option>
-                                                                            <option
-                                                                                {{ $item->response_29 == 'No' ? 'selected' : '' }}
-                                                                                value="No">No</option>
-                                                                            <option
-                                                                                {{ $item->response_29 == 'N/A' ? 'selected' : '' }}
-                                                                                value="N/A">N/A</option>
-                                                                        </select>
-                                                                    </div>
-                                                                </td>
-                                                                <td>
-                                                                    {{-- <textarea name="who_will_not_be"></textarea> --}} <div
-                                                                        style="margin: auto; display: flex; justify-content: center;">
-                                                                        <textarea name="remark_29" style="border-radius: 7px; border: 1.5px solid black; black; height:42px;"> {{ $item->remark_29 }}</textarea>
-                                                                    </div>
-                                                                </td>
-
-                                                            </tr>
-                                                            <tr>
-                                                                <td class="flex text-center">30</td>
-                                                                <td>Validation Activity (Other)</td>
-                                                                <td>
-                                                                    <div
-                                                                        style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                                        <select name="response_30" id="response"
-                                                                            style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                                            <option value="0">Select Option</option>
-
-                                                                            <option value="">
-                                                                                {{ $item->response_30 }}</option>
-                                                                            <option
-                                                                                {{ $item->response_30 == 'Yes' ? 'selected' : '' }}
-                                                                                value="Yes">Yes</option>
-                                                                            <option
-                                                                                {{ $item->response_30 == 'No' ? 'selected' : '' }}
-                                                                                value="No">No</option>
-                                                                            <option
-                                                                                {{ $item->response_30 == 'N/A' ? 'selected' : '' }}
-                                                                                value="N/A">N/A</option>
-                                                                        </select>
-                                                                    </div>
-                                                                </td>
-                                                                <td>
-                                                                    {{-- <textarea name="who_will_not_be"></textarea> --}} <div
-                                                                        style="margin: auto; display: flex; justify-content: center;">
-                                                                        <textarea name="remark_30" style="border-radius: 7px; border: 1.5px solid black; black; height:42px;"> {{ $item->remark_30 }}</textarea>
-                                                                    </div>
-                                                                </td>
-
-                                                            </tr>
-                                                            <tr>
-                                                                <td class="flex text-center">31</td>
-                                                                <td>Equipment Location Layout</td>
-                                                                <td>
-                                                                    <div
-                                                                        style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                                        <select name="response_31" id="response"
-                                                                            style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                                            <option value="0">Select Option</option>
-
-                                                                            <option value="">
-                                                                                {{ $item->response_31 }}</option>
-                                                                            <option
-                                                                                {{ $item->response_31 == 'Yes' ? 'selected' : '' }}
-                                                                                value="Yes">Yes</option>
-                                                                            <option
-                                                                                {{ $item->response_31 == 'No' ? 'selected' : '' }}
-                                                                                value="No">No</option>
-                                                                            <option
-                                                                                {{ $item->response_31 == 'N/A' ? 'selected' : '' }}
-                                                                                value="N/A">N/A</option>
-                                                                        </select>
-                                                                    </div>
-                                                                </td>
-                                                                <td>
-                                                                    {{-- <textarea name="who_will_not_be"></textarea> --}} <div
-                                                                        style="margin: auto; display: flex; justify-content: center;">
-                                                                        <textarea name="remark_31" style="border-radius: 7px; border: 1.5px solid black; black; height:42px;"> {{ $item->remark_31 }}</textarea>
-                                                                    </div>
-                                                                </td>
-
-                                                            </tr>
-                                                            <tr>
-                                                                <td class="flex text-center">32</td>
-                                                                <td>New Equipment Req. or Modifications</td>
-                                                                <td>
-                                                                    <div
-                                                                        style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                                        <select name="response_32" id="response"
-                                                                            style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                                            <option value="0">Select Option</option>
-
-                                                                            <option value="">
-                                                                                {{ $item->response_32 }}</option>
-                                                                            <option
-                                                                                {{ $item->response_32 == 'Yes' ? 'selected' : '' }}
-                                                                                value="Yes">Yes</option>
-                                                                            <option
-                                                                                {{ $item->response_32 == 'No' ? 'selected' : '' }}
-                                                                                value="No">No</option>
-                                                                            <option
-                                                                                {{ $item->response_32 == 'N/A' ? 'selected' : '' }}
-                                                                                value="N/A">N/A</option>
-                                                                        </select>
-                                                                    </div>
-                                                                </td>
-                                                                <td>
-                                                                    {{-- <textarea name="who_will_not_be"></textarea> --}} <div
-                                                                        style="margin: auto; display: flex; justify-content: center;">
-                                                                        <textarea name="remark_32" style="border-radius: 7px; border: 1.5px solid black; black; height:42px;"> {{ $item->remark_32 }}</textarea>
-                                                                    </div>
-                                                                </td>
-
-                                                            </tr>
-                                                            <tr>
-                                                                <td class="flex text-center">33</td>
-                                                                <td>Process Validation</td>
-                                                                <td>
-                                                                    <div
-                                                                        style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                                        <select name="response_33" id="response"
-                                                                            style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                                            <option value="0">Select Option</option>
-
-                                                                            <option value="">
-                                                                                {{ $item->response_33 }}</option>
-                                                                            <option
-                                                                                {{ $item->response_33 == 'Yes' ? 'selected' : '' }}
-                                                                                value="Yes">Yes</option>
-                                                                            <option
-                                                                                {{ $item->response_33 == 'No' ? 'selected' : '' }}
-                                                                                value="No">No</option>
-                                                                            <option
-                                                                                {{ $item->response_33 == 'N/A' ? 'selected' : '' }}
-                                                                                value="N/A">N/A</option>
-                                                                        </select>
-                                                                    </div>
-                                                                </td>
-                                                                <td>
-                                                                    {{-- <textarea name="who_will_not_be"></textarea> --}} <div
-                                                                        style="margin: auto; display: flex; justify-content: center;">
-                                                                        <textarea name="remark_33" style="border-radius: 7px; border: 1.5px solid black; black; height:42px;">{{ $item->remark_33 }}</textarea>
-                                                                    </div>
-                                                                </td>
-
-                                                            </tr>
-                                                            <tr>
-                                                                <td class="flex text-center">34</td>
-                                                                <td>Cleaning Validation / Stability studies</td>
-                                                                <td>
-                                                                    <div
-                                                                        style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                                        <select name="response_34" id="response"
-                                                                            style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                                            <option value="0">Select Option</option>
-
-                                                                            <option value="">
-                                                                                {{ $item->response_34 }}</option>
-                                                                            <option
-                                                                                {{ $item->response_34 == 'Yes' ? 'selected' : '' }}
-                                                                                value="Yes">Yes</option>
-                                                                            <option
-                                                                                {{ $item->response_34 == 'No' ? 'selected' : '' }}
-                                                                                value="No">No</option>
-                                                                            <option
-                                                                                {{ $item->response_34 == 'N/A' ? 'selected' : '' }}
-                                                                                value="N/A">N/A</option>
-                                                                        </select>
-                                                                    </div>
-                                                                </td>
-                                                                <td>
-                                                                    {{-- <textarea name="who_will_not_be"></textarea> --}} <div
-                                                                        style="margin: auto; display: flex; justify-content: center;">
-                                                                        <textarea name="remark_34" style="border-radius: 7px; border: 1.5px solid black; black; height:42px;">{{ $item->remark_34 }}</textarea>
-                                                                    </div>
-                                                                </td>
-
-                                                            </tr>
-                                                            <tr>
-                                                                <td class="flex text-center">35</td>
-                                                                <td>Master Formula Record</td>
-                                                                <td>
-                                                                    <div
-                                                                        style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                                        <select name="response_35" id="response"
-                                                                            style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                                            <option value="0">Select Option</option>
-
-                                                                            <option value="">
-                                                                                {{ $item->response_35 }}</option>
-                                                                            <option
-                                                                                {{ $item->response_35 == 'Yes' ? 'selected' : '' }}
-                                                                                value="Yes">Yes</option>
-                                                                            <option
-                                                                                {{ $item->response_35 == 'No' ? 'selected' : '' }}
-                                                                                value="No">No</option>
-                                                                            <option
-                                                                                {{ $item->response_35 == 'N/A' ? 'selected' : '' }}
-                                                                                value="N/A">N/A</option>
-                                                                        </select>
-                                                                    </div>
-                                                                </td>
-                                                                <td>
-                                                                    {{-- <textarea name="who_will_not_be"></textarea> --}} <div
-                                                                        style="margin: auto; display: flex; justify-content: center;">
-                                                                        <textarea name="remark_35" style="border-radius: 7px; border: 1.5px solid black; black; height:42px;">{{ $item->remark_35 }}</textarea>
-                                                                    </div>
-                                                                </td>
-
-                                                            </tr>
-                                                            <tr>
-                                                                <td class="flex text-center">36</td>
-                                                                <td>Master Packing Record</td>
-                                                                <td>
-                                                                    <div
-                                                                        style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                                        <select name="response_36" id="response"
-                                                                            style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                                            <option value="0">Select Option</option>
-
-
-                                                                            <option
-                                                                                {{ $item->response_36 == 'Yes' ? 'selected' : '' }}
-                                                                                value="Yes">Yes</option>
-                                                                            <option
-                                                                                {{ $item->response_36 == 'No' ? 'selected' : '' }}
-                                                                                value="No">No</option>
-                                                                            <option
-                                                                                {{ $item->response_36 == 'N/A' ? 'selected' : '' }}
-                                                                                value="N/A">N/A</option>
-                                                                        </select>
-                                                                    </div>
-                                                                </td>
-                                                                <td>
-                                                                    {{-- <textarea name="who_will_not_be"></textarea> --}} <div
-                                                                        style="margin: auto; display: flex; justify-content: center;">
-                                                                        <textarea name="remark_36" style="border-radius: 7px; border: 1.5px solid black; black; height:42px;">{{ $item->remark_36 }}</textarea>
-                                                                    </div>
-                                                                </td>
-
-                                                            </tr>
-                                                            <tr>
-                                                                <td class="flex text-center">37</td>
-                                                                <td>Raw Material Specifications</td>
-                                                                <td>
-                                                                    <div
-                                                                        style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                                        <select name="response_37" id="response"
-                                                                            style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                                            <option value="0">Select Option</option>
-
-                                                                            <option value="">
-                                                                                {{ $item->response_37 }}</option>
-                                                                            <option
-                                                                                {{ $item->response_37 == 'Yes' ? 'selected' : '' }}
-                                                                                value="Yes">Yes</option>
-                                                                            <option
-                                                                                {{ $item->response_37 == 'No' ? 'selected' : '' }}
-                                                                                value="No">No</option>
-                                                                            <option
-                                                                                {{ $item->response_37 == 'N/A' ? 'selected' : '' }}
-                                                                                value="N/A">N/A</option>
-                                                                        </select>
-                                                                    </div>
-                                                                </td>
-                                                                <td>
-                                                                    {{-- <textarea name="who_will_not_be"></textarea> --}} <div
-                                                                        style="margin: auto; display: flex; justify-content: center;">
-                                                                        <textarea name="remark_37" style="border-radius: 7px; border: 1.5px solid black; black; height:42px;">{{ $item->remark_37 }}</textarea>
-                                                                    </div>
-                                                                </td>
-
-                                                            </tr>
-                                                            <tr>
-                                                                <td class="flex text-center">38</td>
-                                                                <td>Packing Material Specification</td>
-                                                                <td>
-                                                                    <div
-                                                                        style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                                        <select name="response_38" id="response"
-                                                                            style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                                            <option value="0">Select Option</option>
-
-
-                                                                            <option
-                                                                                {{ $item->response_38 == 'Yes' ? 'selected' : '' }}
-                                                                                value="Yes">Yes</option>
-                                                                            <option
-                                                                                {{ $item->response_38 == 'No' ? 'selected' : '' }}
-                                                                                value="No">No</option>
-                                                                            <option
-                                                                                {{ $item->response_38 == 'N/A' ? 'selected' : '' }}
-                                                                                value="N/A">N/A</option>
-                                                                        </select>
-                                                                    </div>
-                                                                </td>
-                                                                <td>
-                                                                    {{-- <textarea name="who_will_not_be"></textarea> --}} <div
-                                                                        style="margin: auto; display: flex; justify-content: center;">
-                                                                        <textarea name="38" style="border-radius: 7px; border: 1.5px solid black; black; height:42px;">{{ $item->remark_38 }}</textarea>
-                                                                    </div>
-                                                                </td>
-
-                                                            </tr>
-                                                            <tr>
-                                                                <td class="flex text-center">39</td>
-                                                                <td>In process Specification</td>
-                                                                <td>
-                                                                    <div
-                                                                        style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                                        <select name="response_39" id="response"
-                                                                            style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                                            <option value="0">Select Option</option>
-
-
-                                                                            <option
-                                                                                {{ $item->response_39 == 'Yes' ? 'selected' : '' }}
-                                                                                value="Yes">Yes</option>
-                                                                            <option
-                                                                                {{ $item->response_39 == 'No' ? 'selected' : '' }}
-                                                                                value="No">No</option>
-                                                                            <option
-                                                                                {{ $item->response_39 == 'N/A' ? 'selected' : '' }}
-                                                                                value="N/A">N/A</option>
-                                                                        </select>
-                                                                    </div>
-                                                                </td>
-                                                                <td>
-                                                                    {{-- <textarea name="who_will_not_be"></textarea> --}} <div
-                                                                        style="margin: auto; display: flex; justify-content: center;">
-                                                                        <textarea name="remark_39" style="border-radius: 7px; border: 1.5px solid black; black; height:42px;">{{ $item->remark_39 }}</textarea>
-                                                                    </div>
-                                                                </td>
-
-                                                            </tr>
-                                                            <tr>
-                                                                <td class="flex text-center">40</td>
-                                                                <td>Finished Product Specification</td>
-                                                                <td>
-                                                                    <div
-                                                                        style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                                        <select name="response_40" id="response"
-                                                                            style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                                            <option value="0">Select Option</option>
-
-                                                                            <option value="">
-                                                                                {{ $item->response_40 }}</option>
-                                                                            <option
-                                                                                {{ $item->response_40 == 'Yes' ? 'selected' : '' }}
-                                                                                value="Yes">Yes</option>
-                                                                            <option
-                                                                                {{ $item->response_40 == 'No' ? 'selected' : '' }}
-                                                                                value="No">No</option>
-                                                                            <option
-                                                                                {{ $item->response_40 == 'N/A' ? 'selected' : '' }}
-                                                                                value="N/A">N/A</option>
-                                                                        </select>
-                                                                    </div>
-                                                                </td>
-                                                                <td>
-                                                                    {{-- <textarea name="who_will_not_be"></textarea> --}} <div
-                                                                        style="margin: auto; display: flex; justify-content: center;">
-                                                                        <textarea name="remark_40" style="border-radius: 7px; border: 1.5px solid black; black; height:42px;">{{ $item->remark_40 }}</textarea>
-                                                                    </div>
-                                                                </td>
-
-                                                            </tr>
-                                                            <tr>
-                                                                <td class="flex text-center">41</td>
-                                                                <td>Approved Art works/ Proofs</td>
-                                                                <td>
-                                                                    <div
-                                                                        style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                                        <select name="response_41" id="response"
-                                                                            style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                                            <option value="0">Select Option</option>
-
-                                                                            <option value="">
-                                                                                {{ $item->response_41 }}</option>
-                                                                            <option
-                                                                                {{ $item->response_41 == 'Yes' ? 'selected' : '' }}
-                                                                                value="Yes">Yes</option>
-                                                                            <option
-                                                                                {{ $item->response_41 == 'No' ? 'selected' : '' }}
-                                                                                value="No">No</option>
-                                                                            <option
-                                                                                {{ $item->response_41 == 'N/A' ? 'selected' : '' }}
-                                                                                value="N/A">N/A</option>
-                                                                        </select>
-                                                                    </div>
-                                                                </td>
-                                                                <td>
-                                                                    {{-- <textarea name="who_will_not_be"></textarea> --}} <div
-                                                                        style="margin: auto; display: flex; justify-content: center;">
-                                                                        <textarea name="remark_41" style="border-radius: 7px; border: 1.5px solid black; black; height:42px;">{{ $item->remark_41 }}</textarea>
-                                                                    </div>
-                                                                </td>
-
-                                                            </tr>
-                                                            <tr>
-                                                                <td class="flex text-center">42</td>
-                                                                <td>Packaging Specification / configuration</td>
-                                                                <td>
-                                                                    <div
-                                                                        style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                                        <select name="response_42" id="response"
-                                                                            style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                                            <option value="0">Select Option</option>
-
-                                                                            <option value="">
-                                                                                {{ $item->response_42 }}</option>
-                                                                            <option
-                                                                                {{ $item->response_42 == 'Yes' ? 'selected' : '' }}
-                                                                                value="Yes">Yes</option>
-                                                                            <option
-                                                                                {{ $item->response_42 == 'No' ? 'selected' : '' }}
-                                                                                value="No">No</option>
-                                                                            <option
-                                                                                {{ $item->response_42 == 'N/A' ? 'selected' : '' }}
-                                                                                value="N/A">N/A</option>
-                                                                        </select>
-                                                                    </div>
-                                                                </td>
-                                                                <td>
-                                                                    {{-- <textarea name="who_will_not_be"></textarea> --}} <div
-                                                                        style="margin: auto; display: flex; justify-content: center;">
-                                                                        <textarea name="remark_42" style="border-radius: 7px; border: 1.5px solid black; black; height:42px;">{{ $item->remark_42 }}</textarea>
-                                                                    </div>
-                                                                </td>
-
-                                                            </tr>
-                                                            <tr>
-                                                                <td class="flex text-center">43</td>
-                                                                <td>Site Master File</td>
-                                                                <td>
-                                                                    <div
-                                                                        style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                                        <select name="response_43" id="response"
-                                                                            style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                                            <option value="0">Select Option</option>
-
-                                                                            <option value="">
-                                                                                {{ $item->response_43 }}</option>
-                                                                            <option
-                                                                                {{ $item->response_43 == 'Yes' ? 'selected' : '' }}
-                                                                                value="Yes">Yes</option>
-                                                                            <option
-                                                                                {{ $item->response_43 == 'No' ? 'selected' : '' }}
-                                                                                value="No">No</option>
-                                                                            <option
-                                                                                {{ $item->response_43 == 'N/A' ? 'selected' : '' }}
-                                                                                value="N/A">N/A</option>
-                                                                        </select>
-                                                                    </div>
-                                                                </td>
-                                                                <td>
-                                                                    {{-- <textarea name="who_will_not_be"></textarea> --}} <div
-                                                                        style="margin: auto; display: flex; justify-content: center;">
-                                                                        <textarea name="remark_43" style="border-radius: 7px; border: 1.5px solid black; black; height:42px;">{{ $item->remark_43 }}</textarea>
-                                                                    </div>
-                                                                </td>
-
-                                                            </tr>
-                                                            <tr>
-                                                                <td class="flex text-center">44</td>
-                                                                <td>Validation Master Plan</td>
-                                                                <td>
-                                                                    <div
-                                                                        style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                                        <select name="response_44" id="response"
-                                                                            style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                                            <option value="0">Select Option</option>
-
-                                                                            <option value="">
-                                                                                {{ $item->response_44 }}</option>
-                                                                            <option
-                                                                                {{ $item->response_44 == 'Yes' ? 'selected' : '' }}
-                                                                                value="Yes">Yes</option>
-                                                                            <option
-                                                                                {{ $item->response_44 == 'No' ? 'selected' : '' }}
-                                                                                value="No">No</option>
-                                                                            <option
-                                                                                {{ $item->response_44 == 'N/A' ? 'selected' : '' }}
-                                                                                value="N/A">N/A</option>
-                                                                        </select>
-                                                                    </div>
-                                                                </td>
-                                                                <td>
-                                                                    {{-- <textarea name="who_will_not_be"></textarea> --}} <div
-                                                                        style="margin: auto; display: flex; justify-content: center;">
-                                                                        <textarea name="remark_44" style="border-radius: 7px; border: 1.5px solid black; black; height:42px;">{{ $item->remark_44 }}</textarea>
-                                                                    </div>
-                                                                </td>
-
-                                                            </tr>
-                                                            <tr>
-                                                                <td class="flex text-center">45</td>
-                                                                <td>Requirement of outside test</td>
-                                                                <td>
-                                                                    <div
-                                                                        style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                                        <select name="response_45" id="response"
-                                                                            style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                                            <option value="0">Select Option</option>
-
-                                                                            <option value="">
-                                                                                {{ $item->response_45 }}</option>
-                                                                            <option
-                                                                                {{ $item->response_45 == 'Yes' ? 'selected' : '' }}
-                                                                                value="Yes">Yes</option>
-                                                                            <option
-                                                                                {{ $item->response_45 == 'No' ? 'selected' : '' }}
-                                                                                value="No">No</option>
-                                                                            <option
-                                                                                {{ $item->response_45 == 'N/A' ? 'selected' : '' }}
-                                                                                value="N/A">N/A</option>
-                                                                        </select>
-                                                                    </div>
-                                                                </td>
-                                                                <td>
-                                                                    {{-- <textarea name="who_will_not_be"></textarea> --}} <div
-                                                                        style="margin: auto; display: flex; justify-content: center;">
-                                                                        <textarea name="45" style="border-radius: 7px; border: 1.5px solid black; black; height:42px;">{{ $item->remark_45 }}</textarea>
-                                                                    </div>
-                                                                </td>
-
-                                                            </tr>
-                                                            <tr>
-                                                                <td class="flex text-center">46</td>
-                                                                <td>Additional Equipment / Instruments</td>
-                                                                <td>
-                                                                    <div
-                                                                        style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                                        <select name="response_46" id="response"
-                                                                            style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                                            <option value="0">Select Option</option>
-
-                                                                            <option value="">
-                                                                                {{ $item->response_46 }}</option>
-                                                                            <option
-                                                                                {{ $item->response_46 == 'Yes' ? 'selected' : '' }}
-                                                                                value="Yes">Yes</option>
-                                                                            <option
-                                                                                {{ $item->response_46 == 'No' ? 'selected' : '' }}
-                                                                                value="No">No</option>
-                                                                            <option
-                                                                                {{ $item->response_46 == 'N/A' ? 'selected' : '' }}
-                                                                                value="N/A">N/A</option>
-                                                                        </select>
-                                                                    </div>
-                                                                </td>
-                                                                <td>
-                                                                    {{-- <textarea name="who_will_not_be"></textarea> --}} <div
-                                                                        style="margin: auto; display: flex; justify-content: center;">
-                                                                        <textarea name="remark_46" style="border-radius: 7px; border: 1.5px solid black; black; height:42px;">{{ $item->remark_46 }}</textarea>
-                                                                    </div>
-                                                                </td>
-
-                                                            </tr>
-                                                            <tr>
-                                                                <td class="flex text-center">47</td>
-                                                                <td>Environmental Condition</td>
-                                                                <td>
-                                                                    <div
-                                                                        style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                                        <select name="response_47" id="response"
-                                                                            style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                                            <option value="0">Select Option</option>
-
-                                                                            <option value="">
-                                                                                {{ $item->response_47 }}</option>
-                                                                            <option
-                                                                                {{ $item->response_47 == 'Yes' ? 'selected' : '' }}
-                                                                                value="Yes">Yes</option>
-                                                                            <option
-                                                                                {{ $item->response_47 == 'No' ? 'selected' : '' }}
-                                                                                value="No">No</option>
-                                                                            <option
-                                                                                {{ $item->response_47 == 'N/A' ? 'selected' : '' }}
-                                                                                value="N/A">N/A</option>
-                                                                        </select>
-                                                                    </div>
-                                                                </td>
-                                                                <td>
-                                                                    {{-- <textarea name="who_will_not_be"></textarea> --}} <div
-                                                                        style="margin: auto; display: flex; justify-content: center;">
-                                                                        <textarea name="remark_47" style="border-radius: 7px; border: 1.5px solid black; black; height:42px;">{{ $item->remark_47 }}</textarea>
-                                                                    </div>
-                                                                </td>
-
-                                                            </tr>
-                                                            <tr>
-                                                                <td class="flex text-center">48</td>
-                                                                <td>Stability Protocol / Report</td>
-                                                                <td>
-                                                                    <div
-                                                                        style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                                        <select name="response_48" id="response"
-                                                                            style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                                            <option value="0">Select Option</option>
-
-                                                                            <option value="">
-                                                                                {{ $item->response_48 }}</option>
-                                                                            <option
-                                                                                {{ $item->response_48 == 'Yes' ? 'selected' : '' }}
-                                                                                value="Yes">Yes</option>
-                                                                            <option
-                                                                                {{ $item->response_48 == 'No' ? 'selected' : '' }}
-                                                                                value="No">No</option>
-                                                                            <option
-                                                                                {{ $item->response_48 == 'N/A' ? 'selected' : '' }}
-                                                                                value="N/A">N/A</option>
-                                                                        </select>
-                                                                    </div>
-                                                                </td>
-                                                                <td>
-                                                                    {{-- <textarea name="who_will_not_be"></textarea> --}} <div
-                                                                        style="margin: auto; display: flex; justify-content: center;">
-                                                                        <textarea name="remark_48" style="border-radius: 7px; border: 1.5px solid black; black; height:42px;">{{ $item->remark_48 }}</textarea>
-                                                                    </div>
-                                                                </td>
-
-                                                            </tr>
-                                                            <tr>
-                                                                <td class="flex text-center">49</td>
-                                                                <td>Stability Specification</td>
-                                                                <td>
-                                                                    <div
-                                                                        style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                                        <select name="response_49" id="response"
-                                                                            style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                                            <option value="0">Select Option</option>
-
-                                                                            <option value="">
-                                                                                {{ $item->response_49 }}</option>
-                                                                            <option
-                                                                                {{ $item->response_49 == 'Yes' ? 'selected' : '' }}
-                                                                                value="Yes">Yes</option>
-                                                                            <option
-                                                                                {{ $item->response_49 == 'No' ? 'selected' : '' }}
-                                                                                value="No">No</option>
-                                                                            <option
-                                                                                {{ $item->response_49 == 'N/A' ? 'selected' : '' }}
-                                                                                value="N/A">N/A</option>
-                                                                        </select>
-                                                                    </div>
-                                                                </td>
-                                                                <td>
-                                                                    {{-- <textarea name="who_will_not_be"></textarea> --}} <div
-                                                                        style="margin: auto; display: flex; justify-content: center;">
-                                                                        <textarea name="remark_49" style="border-radius: 7px; border: 1.5px solid black; black; height:42px;">{{ $item->remark_49 }}</textarea>
-                                                                    </div>
-                                                                </td>
-
-                                                            </tr>
-                                                            <tr>
-                                                                <td class="flex text-center">50</td>
-                                                                <td>Updating of Product Lists</td>
-                                                                <td>
-                                                                    <div
-                                                                        style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                                        <select name="response_50" id="response"
-                                                                            style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                                            <option value="0">Select Option</option>
-
-                                                                            <option value="">
-                                                                                {{ $item->response_50 }}</option>
-                                                                            <option
-                                                                                {{ $item->response_50 == 'Yes' ? 'selected' : '' }}
-                                                                                value="Yes">Yes</option>
-                                                                            <option
-                                                                                {{ $item->response_50 == 'No' ? 'selected' : '' }}
-                                                                                value="No">No</option>
-                                                                            <option
-                                                                                {{ $item->response_50 == 'N/A' ? 'selected' : '' }}
-                                                                                value="N/A">N/A</option>
-                                                                        </select>
-                                                                    </div>
-                                                                </td>
-                                                                <td>
-                                                                    {{-- <textarea name="who_will_not_be"></textarea> --}} <div
-                                                                        style="margin: auto; display: flex; justify-content: center;">
-                                                                        <textarea name="remark_50" style="border-radius: 7px; border: 1.5px solid black; black; height:42px;">{{ $item->remark_50 }}</textarea>
-                                                                    </div>
-                                                                </td>
-
-                                                            </tr>
-                                                            <tr>
-                                                                <td class="flex text-center">51</td>
-                                                                <td>HPLC Column</td>
-                                                                <td>
-                                                                    <div
-                                                                        style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                                        <select name="response_51" id="response"
-                                                                            style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                                            <option value="0">Select Option</option>
-
-                                                                            <option value="">
-                                                                                {{ $item->response_51 }}</option>
-                                                                            <option
-                                                                                {{ $item->response_51 == 'Yes' ? 'selected' : '' }}
-                                                                                value="Yes">Yes</option>
-                                                                            <option
-                                                                                {{ $item->response_51 == 'No' ? 'selected' : '' }}
-                                                                                value="No">No</option>
-                                                                            <option
-                                                                                {{ $item->response_51 == 'N/A' ? 'selected' : '' }}
-                                                                                value="N/A">N/A</option>
-                                                                        </select>
-                                                                    </div>
-                                                                </td>
-                                                                <td>
-                                                                    {{-- <textarea name="who_will_not_be"></textarea> --}} <div
-                                                                        style="margin: auto; display: flex; justify-content: center;">
-                                                                        <textarea name="remark_51" style="border-radius: 7px; border: 1.5px solid black; black; height:42px;">{{ $item->remark_51 }}</textarea>
-                                                                    </div>
-                                                                </td>
-
-                                                            </tr>
-                                                            <tr>
-                                                                <td class="flex text-center">52</td>
-                                                                <td>Placebo</td>
-                                                                <td>
-                                                                    <div
-                                                                        style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                                        <select name="response_52" id="response"
-                                                                            style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                                            <option value="0">Select Option</option>
-
-                                                                            <option value="">
-                                                                                {{ $item->response_52 }}</option>
-                                                                            <option
-                                                                                {{ $item->response_52 == 'Yes' ? 'selected' : '' }}
-                                                                                value="Yes">Yes</option>
-                                                                            <option
-                                                                                {{ $item->response_52 == 'No' ? 'selected' : '' }}
-                                                                                value="No">No</option>
-                                                                            <option
-                                                                                {{ $item->response_52 == 'N/A' ? 'selected' : '' }}
-                                                                                value="N/A">N/A</option>
-                                                                        </select>
-                                                                    </div>
-                                                                </td>
-                                                                <td>
-                                                                    {{-- <textarea name="who_will_not_be"></textarea> --}} <div
-                                                                        style="margin: auto; display: flex; justify-content: center;">
-                                                                        <textarea name="remark_52" style="border-radius: 7px; border: 1.5px solid black; black; height:42px;">{{ $item->remark_52 }}</textarea>
-                                                                    </div>
-                                                                </td>
-
-                                                            </tr>
-                                                            <tr>
-                                                                <td class="flex text-center">53</td>
-                                                                <td>Impurity standards</td>
-                                                                <td>
-                                                                    <div
-                                                                        style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                                        <select name="response_53 id="response"
-                                                                            style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                                            <option value="0">Select Option</option>
-
-                                                                            <option value="">
-                                                                                {{ $item->response_53 }}</option>
-                                                                            <option
-                                                                                {{ $item->response_53 == 'Yes' ? 'selected' : '' }}
-                                                                                value="Yes">Yes</option>
-                                                                            <option
-                                                                                {{ $item->response_53 == 'No' ? 'selected' : '' }}
-                                                                                value="No">No</option>
-                                                                            <option
-                                                                                {{ $item->response_53 == 'N/A' ? 'selected' : '' }}
-                                                                                value="N/A">N/A</option>
-                                                                        </select>
-                                                                    </div>
-                                                                </td>
-                                                                <td>
-                                                                    {{-- <textarea name="who_will_not_be"></textarea> --}} <div
-                                                                        style="margin: auto; display: flex; justify-content: center;">
-                                                                        <textarea name="remark_53" style="border-radius: 7px; border: 1.5px solid black; black; height:42px;">{{ $item->remark_53 }}</textarea>
-                                                                    </div>
-                                                                </td>
-
-                                                            </tr>
-                                                            <tr>
-                                                                <td class="flex text-center">54</td>
-                                                                <td>Status of Old Stocks (for Usage I Destruction)</td>
-                                                                <td>
-                                                                    <div
-                                                                        style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                                        <select name="response_54" id="response"
-                                                                            style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                                            <option value="0">Select Option</option>
-
-                                                                            <option value="">
-                                                                                {{ $item->response_54 }}</option>
-                                                                            <option
-                                                                                {{ $item->response_54 == 'Yes' ? 'selected' : '' }}
-                                                                                value="Yes">Yes</option>
-                                                                            <option
-                                                                                {{ $item->response_54 == 'No' ? 'selected' : '' }}
-                                                                                value="No">No</option>
-                                                                            <option
-                                                                                {{ $item->response_54 == 'N/A' ? 'selected' : '' }}
-                                                                                value="N/A">N/A</option>
-                                                                        </select>
-                                                                    </div>
-                                                                </td>
-                                                                <td>
-                                                                    {{-- <textarea name="who_will_not_be"></textarea> --}} <div
-                                                                        style="margin: auto; display: flex; justify-content: center;">
-                                                                        <textarea name="remark_54" style="border-radius: 7px; border: 1.5px solid black; black; height:42px;">{{ $item->remark_54 }}</textarea>
-                                                                    </div>
-                                                                </td>
-
-                                                            </tr>
-                                                            <tr>
-                                                                <td class="flex text-center">55</td>
-                                                                <td>Customer/ Contract Giver Approval</td>
-                                                                <td>
-                                                                    <div
-                                                                        style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                                        <select name="response_55" id="response"
-                                                                            style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                                            <option value="0">Select Option</option>
-
-                                                                            <option value="">
-                                                                                {{ $item->response_55 }}</option>
-                                                                            <option
-                                                                                {{ $item->response_55 == 'Yes' ? 'selected' : '' }}
-                                                                                value="Yes">Yes</option>
-                                                                            <option
-                                                                                {{ $item->response_55 == 'No' ? 'selected' : '' }}
-                                                                                value="No">No</option>
-                                                                            <option
-                                                                                {{ $item->response_55 == 'N/A' ? 'selected' : '' }}
-                                                                                value="N/A">N/A</option>
-                                                                        </select>
-                                                                    </div>
-                                                                </td>
-                                                                <td>
-                                                                    {{-- <textarea name="who_will_not_be"></textarea> --}} <div
-                                                                        style="margin: auto; display: flex; justify-content: center;">
-                                                                        <textarea name="remark_55" style="border-radius: 7px; border: 1.5px solid black; black; height:42px;">{{ $item->remark_55 }}</textarea>
-                                                                    </div>
-                                                                </td>
-
-                                                            </tr>
-                                                            <tr>
-                                                                <td class="flex text-center">56</td>
-                                                                <td>Process Parameters</td>
-                                                                <td>
-                                                                    <div
-                                                                        style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                                        <select name="response_56" id="response"
-                                                                            style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                                            <option value="0">Select Option</option>
-
-                                                                            <option value="">
-                                                                                {{ $item->response_56 }}</option>
-                                                                            <option
-                                                                                {{ $item->response_56 == 'Yes' ? 'selected' : '' }}
-                                                                                value="Yes">Yes</option>
-                                                                            <option
-                                                                                {{ $item->response_56 == 'No' ? 'selected' : '' }}
-                                                                                value="No">No</option>
-                                                                            <option
-                                                                                {{ $item->response_56 == 'N/A' ? 'selected' : '' }}
-                                                                                value="N/A">N/A</option>
-                                                                        </select>
-                                                                    </div>
-                                                                </td>
-                                                                <td>
-                                                                    {{-- <textarea name="who_will_not_be"></textarea> --}} <div
-                                                                        style="margin: auto; display: flex; justify-content: center;">
-                                                                        <textarea name="remark_56" style="border-radius: 7px; border: 1.5px solid black; black; height:42px;">{{ $item->remark_56 }}</textarea>
-                                                                    </div>
-                                                                </td>
-
-                                                            </tr>
-                                                            <tr>
-                                                                <td class="flex text-center">57</td>
-                                                                <td>Training</td>
-                                                                <td>
-                                                                    <div
-                                                                        style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                                        <select name="response_57" id="response"
-                                                                            style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                                            <option value="0">Select Option</option>
-
-
-                                                                            <option
-                                                                                {{ $item->response_57 == 'Yes' ? 'selected' : '' }}
-                                                                                value="Yes">Yes</option>
-                                                                            <option
-                                                                                {{ $item->response_57 == 'No' ? 'selected' : '' }}
-                                                                                value="No">No</option>
-                                                                            <option
-                                                                                {{ $item->response_57 == 'N/A' ? 'selected' : '' }}
-                                                                                value="N/A">N/A</option>
-                                                                        </select>
-                                                                    </div>
-                                                                </td>
-                                                                <td>
-                                                                    {{-- <textarea name="who_will_not_be"></textarea> --}} <div
-                                                                        style="margin: auto; display: flex; justify-content: center;">
-                                                                        <textarea name="remark_57" style="border-radius: 7px; border: 1.5px solid black; black; height:42px;">{{ $item->remark_57 }}</textarea>
-                                                                    </div>
-                                                                </td>
-
-                                                            </tr>
-                                                            <tr>
-                                                                <td class="flex text-center">58</td>
-                                                                <td>GMP / GLP Requirements</td>
-                                                                <td>
-                                                                    <div
-                                                                        style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                                        <select name="response_58" id="response"
-                                                                            style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                                            <option value="0">Select Option</option>
-
-
-                                                                            <option
-                                                                                {{ $item->response_58 == 'Yes' ? 'selected' : '' }}
-                                                                                value="Yes">Yes</option>
-                                                                            <option
-                                                                                {{ $item->response_58 == 'No' ? 'selected' : '' }}
-                                                                                value="No">No</option>
-                                                                            <option
-                                                                                {{ $item->response_58 == 'N/A' ? 'selected' : '' }}
-                                                                                value="N/A">N/A</option>
-                                                                        </select>
-                                                                    </div>
-                                                                </td>
-                                                                <td>
-                                                                    {{-- <textarea name="who_will_not_be"></textarea> --}} <div
-                                                                        style="margin: auto; display: flex; justify-content: center;">
-                                                                        <textarea name="remark_58" style="border-radius: 7px; border: 1.5px solid black; black; height:42px;">{{ $item->remark_58 }}</textarea>
-                                                                    </div>
-                                                                </td>
-
-                                                            </tr>
-                                                            <tr>
-                                                                <td class="flex text-center">59</td>
-                                                                <td>Safety</td>
-                                                                <td>
-                                                                    <div
-                                                                        style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                                        <select name="response_59" id="response"
-                                                                            style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                                            <option value="0">Select Option</option>
-
-
-                                                                            <option
-                                                                                {{ $item->response_59 == 'Yes' ? 'selected' : '' }}
-                                                                                value="Yes">Yes</option>
-                                                                            <option
-                                                                                {{ $item->response_59 == 'No' ? 'selected' : '' }}
-                                                                                value="No">No</option>
-                                                                            <option
-                                                                                {{ $item->response_59 == 'N/A' ? 'selected' : '' }}
-                                                                                value="N/A">N/A</option>
-                                                                        </select>
-                                                                    </div>
-                                                                </td>
-                                                                <td>
-                                                                    {{-- <textarea name="who_will_not_be"></textarea> --}} <div
-                                                                        style="margin: auto; display: flex; justify-content: center;">
-                                                                        <textarea name="remark_59" style="border-radius: 7px; border: 1.5px solid black; black; height:42px;">{{ $item->remark_59 }}</textarea>
-                                                                    </div>
-                                                                </td>
-
-                                                            </tr>
-                                                            <tr>
-                                                                <td class="flex text-center">60</td>
-                                                                <td>Annual Maintenance Contract</td>
-                                                                <td>
-                                                                    <div
-                                                                        style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                                        <select name="response_60" id="response"
-                                                                            style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                                            <option value="0">Select Option</option>
-
-
-                                                                            <option
-                                                                                {{ $item->response_60 == 'Yes' ? 'selected' : '' }}
-                                                                                value="Yes">Yes</option>
-                                                                            <option
-                                                                                {{ $item->response_60 == 'No' ? 'selected' : '' }}
-                                                                                value="No">No</option>
-                                                                            <option
-                                                                                {{ $item->response_60 == 'N/A' ? 'selected' : '' }}
-                                                                                value="N/A">N/A</option>
-                                                                        </select>
-                                                                    </div>
-                                                                </td>
-                                                                <td>
-                                                                    {{-- <textarea name="who_will_not_be"></textarea> --}} <div
-                                                                        style="margin: auto; display: flex; justify-content: center;">
-                                                                        <textarea name="60" style="border-radius: 7px; border: 1.5px solid black; black; height:42px;">{{ $item->remark_60 }}</textarea>
-                                                                    </div>
-                                                                </td>
-
-                                                            </tr>
-                                                            <tr>
-                                                                <td class="flex text-center">61</td>
-                                                                <td>Service agreement</td>
-                                                                <td>
-                                                                    <div
-                                                                        style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                                        <select name="response_61" id="response"
-                                                                            style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                                            <option value="0">Select Option</option>
-
-
-                                                                            <option
-                                                                                {{ $item->response_61 == 'Yes' ? 'selected' : '' }}
-                                                                                value="Yes">Yes</option>
-                                                                            <option
-                                                                                {{ $item->response_61 == 'No' ? 'selected' : '' }}
-                                                                                value="No">No</option>
-                                                                            <option
-                                                                                {{ $item->response_61 == 'N/A' ? 'selected' : '' }}
-                                                                                value="N/A">N/A</option>
-                                                                        </select>
-                                                                    </div>
-                                                                </td>
-                                                                <td>
-                                                                    {{-- <textarea name="who_will_not_be"></textarea> --}} <div
-                                                                        style="margin: auto; display: flex; justify-content: center;">
-                                                                        <textarea name="remark_61" style="border-radius: 7px; border: 1.5px solid black; black; height:42px;">{{ $item->remark_61 }}</textarea>
-                                                                    </div>
-                                                                </td>
-
-                                                            </tr>
-                                                            <tr>
-                                                                <td class="flex text-center">62</td>
-                                                                <td>Qualification / Re-qualification</td>
-                                                                <td>
-                                                                    <div
-                                                                        style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                                        <select name="response_62" id="response"
-                                                                            style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                                            <option value="0">Select Option</option>
-
-
-                                                                            <option
-                                                                                {{ $item->response_62 == 'Yes' ? 'selected' : '' }}
-                                                                                value="Yes">Yes</option>
-                                                                            <option
-                                                                                {{ $item->response_62 == 'No' ? 'selected' : '' }}
-                                                                                value="No">No</option>
-                                                                            <option
-                                                                                {{ $item->response_62 == 'N/A' ? 'selected' : '' }}
-                                                                                value="N/A">N/A</option>
-                                                                        </select>
-                                                                    </div>
-                                                                </td>
-                                                                <td>
-                                                                    {{-- <textarea name="who_will_not_be"></textarea> --}} <div
-                                                                        style="margin: auto; display: flex; justify-content: center;">
-                                                                        <textarea name="remark_62" style="border-radius: 7px; border: 1.5px solid black; black; height:42px;">{{ $item->remark_62 }}</textarea>
-                                                                    </div>
-                                                                </td>
-
-                                                            </tr>
-                                                            <tr>
-                                                                <td class="flex text-center">63</td>
-                                                                <td>SOP</td>
-                                                                <td>
-                                                                    <div
-                                                                        style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                                        <select name="response_63" id="response"
-                                                                            style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                                            <option value="0">Select Option</option>
-
-
-                                                                            <option
-                                                                                {{ $item->response_63 == 'Yes' ? 'selected' : '' }}
-                                                                                value="Yes">Yes</option>
-                                                                            <option
-                                                                                {{ $item->response_63 == 'No' ? 'selected' : '' }}
-                                                                                value="No">No</option>
-                                                                            <option
-                                                                                {{ $item->response_63 == 'N/A' ? 'selected' : '' }}
-                                                                                value="N/A">N/A</option>
-                                                                        </select>
-                                                                    </div>
-                                                                </td>
-                                                                <td>
-                                                                    {{-- <textarea name="who_will_not_be"></textarea> --}} <div
-                                                                        style="margin: auto; display: flex; justify-content: center;">
-                                                                        <textarea name="remark_63" style="border-radius: 7px; border: 1.5px solid black; black; height:42px;">{{ $item->remark_63 }}</textarea>
-                                                                    </div>
-                                                                </td>
-
-                                                            </tr>
-                                                            <tr>
-                                                                <td class="flex text-center">64</td>
-                                                                <td>STPs</td>
-                                                                <td>
-                                                                    <div
-                                                                        style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                                        <select name="response_64" id="response"
-                                                                            style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                                            <option value="0">Select Option</option>
-
-
-                                                                            <option
-                                                                                {{ $item->response_64 == 'Yes' ? 'selected' : '' }}
-                                                                                value="Yes">Yes</option>
-                                                                            <option
-                                                                                {{ $item->response_64 == 'No' ? 'selected' : '' }}
-                                                                                value="No">No</option>
-                                                                            <option
-                                                                                {{ $item->response_64 == 'N/A' ? 'selected' : '' }}
-                                                                                value="N/A">N/A</option>
-                                                                        </select>
-                                                                    </div>
-                                                                </td>
-                                                                <td>
-                                                                    {{-- <textarea name="who_will_not_be"></textarea> --}} <div
-                                                                        style="margin: auto; display: flex; justify-content: center;">
-                                                                        <textarea name="remark_64" style="border-radius: 7px; border: 1.5px solid black; black; height:42px;">{{ $item->remark_64 }}</textarea>
-                                                                    </div>
-                                                                </td>
-
-                                                            </tr>
-                                                            <tr>
-                                                                <td class="flex text-center">65</td>
-                                                                <td>Responsibilities</td>
-                                                                <td>
-                                                                    <div
-                                                                        style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                                        <select name="response_65" id="response"
-                                                                            style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                                            <option value="0">Select Option</option>
-
-
-                                                                            <option
-                                                                                {{ $item->response_65 == 'Yes' ? 'selected' : '' }}
-                                                                                value="Yes">Yes</option>
-                                                                            <option
-                                                                                {{ $item->response_65 == 'No' ? 'selected' : '' }}
-                                                                                value="No">No</option>
-                                                                            <option
-                                                                                {{ $item->response_65 == 'N/A' ? 'selected' : '' }}
-                                                                                value="N/A">N/A</option>
-                                                                        </select>
-                                                                    </div>
-                                                                </td>
-                                                                <td>
-                                                                    {{-- <textarea name="who_will_not_be"></textarea> --}} <div
-                                                                        style="margin: auto; display: flex; justify-content: center;">
-                                                                        <textarea name="remark_65" style="border-radius: 7px; border: 1.5px solid black; black; height:42px;">{{ $item->remark_65 }}</textarea>
-                                                                    </div>
-                                                                </td>
-
-                                                            </tr>
-                                                            <tr>
-                                                                <td class="flex text-center">66</td>
-                                                                <td>Intimation/ Notification to Regulatory Bodies</td>
-                                                                <td>
-                                                                    <div
-                                                                        style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                                        <select name="response_66" id="response"
-                                                                            style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                                            <option value="0">Select Option</option>
-
-
-                                                                            <option
-                                                                                {{ $item->response_66 == 'Yes' ? 'selected' : '' }}
-                                                                                value="Yes">Yes</option>
-                                                                            <option
-                                                                                {{ $item->response_66 == 'No' ? 'selected' : '' }}
-                                                                                value="No">No</option>
-                                                                            <option
-                                                                                {{ $item->response_66 == 'N/A' ? 'selected' : '' }}
-                                                                                value="N/A">N/A</option>
-                                                                        </select>
-                                                                    </div>
-                                                                </td>
-                                                                <td>
-                                                                    {{-- <textarea name="who_will_not_be"></textarea> --}} <div
-                                                                        style="margin: auto; display: flex; justify-content: center;">
-                                                                        <textarea name="remark_66" style="border-radius: 7px; border: 1.5px solid black; black; height:42px;">{{ $item->remark_66 }}</textarea>
-                                                                    </div>
-                                                                </td>
-
-                                                            </tr>
-                                                            <tr>
-                                                                <td class="flex text-center">67</td>
-                                                                <td>Quality Management System</td>
-                                                                <td>
-                                                                    <div
-                                                                        style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                                        <select name="response_67" id="response"
-                                                                            style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                                            <option value="0">Select Option</option>
-
-
-                                                                            <option
-                                                                                {{ $item->response_67 == 'Yes' ? 'selected' : '' }}
-                                                                                value="Yes">Yes</option>
-                                                                            <option
-                                                                                {{ $item->response_67 == 'No' ? 'selected' : '' }}
-                                                                                value="No">No</option>
-                                                                            <option
-                                                                                {{ $item->response_67 == 'N/A' ? 'selected' : '' }}
-                                                                                value="N/A">N/A</option>
-                                                                        </select>
-                                                                    </div>
-                                                                </td>
-                                                                <td>
-                                                                    {{-- <textarea name="who_will_not_be"></textarea> --}} <div
-                                                                        style="margin: auto; display: flex; justify-content: center;">
-                                                                        <textarea name="remark_67" style="border-radius: 7px; border: 1.5px solid black; black; height:42px;">{{ $item->remark_67 }}</textarea>
-                                                                    </div>
-                                                                </td>
-
-                                                            </tr>
-                                                            <tr>
-                                                                <td class="flex text-center">68</td>
-                                                                <td>Facility and Other Layouts</td>
-                                                                <td>
-                                                                    <div
-                                                                        style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                                        <select name="response_68" id="response"
-                                                                            style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                                            <option value="0">Select Option</option>
-
-                                                                            <option
-                                                                                {{ $item->response_68 == 'Yes' ? 'selected' : '' }}
-                                                                                value="Yes">Yes</option>
-                                                                            <option
-                                                                                {{ $item->response_68 == 'No' ? 'selected' : '' }}
-                                                                                value="No">No</option>
-                                                                            <option
-                                                                                {{ $item->response_68 == 'N/A' ? 'selected' : '' }}
-                                                                                value="N/A">N/A</option>
-                                                                        </select>
-                                                                    </div>
-                                                                </td>
-                                                                <td>
-                                                                    {{-- <textarea name="who_will_not_be"></textarea> --}} <div
-                                                                        style="margin: auto; display: flex; justify-content: center;">
-                                                                        <textarea name="remark_68" style="border-radius: 7px; border: 1.5px solid black; black; height:42px;">{{ $item->remark_68 }}</textarea>
-                                                                    </div>
-                                                                </td>
-
-                                                            </tr>
-                                                            <tr>
-                                                                <td class="flex text-center">69</td>
-                                                                <td>Pharmacopeia Requirements</td>
-                                                                <td>
-                                                                    <div
-                                                                        style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                                        <select name="response_69" id="response"
-                                                                            style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                                            <option value="0">Select Option</option>
-
-                                                                            <option
-                                                                                {{ $item->response_69 == 'Yes' ? 'selected' : '' }}
-                                                                                value="Yes">Yes</option>
-                                                                            <option
-                                                                                {{ $item->response_69 == 'No' ? 'selected' : '' }}
-                                                                                value="No">No</option>
-                                                                            <option
-                                                                                {{ $item->response_69 == 'N/A' ? 'selected' : '' }}
-                                                                                value="N/A">N/A</option>
-                                                                        </select>
-                                                                    </div>
-                                                                </td>
-                                                                <td>
-                                                                    {{-- <textarea name="who_will_not_be"></textarea> --}} <div
-                                                                        style="margin: auto; display: flex; justify-content: center;">
-                                                                        <textarea name="remark_69" style="border-radius: 7px; border: 1.5px solid black; black; height:42px;">{{ $item->remark_69 }}</textarea>
-                                                                    </div>
-                                                                </td>
-
-                                                            </tr>
-                                                            <tr>
-                                                                <td class="flex text-center">70</td>
-                                                                <td>Regulatory Requirements</td>
-                                                                <td>
-                                                                    <div
-                                                                        style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                                        <select name="response_70" id="response"
-                                                                            style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                                            <option value="0">Select Option</option>
-
-                                                                            <option
-                                                                                {{ $item->response_70 == 'Yes' ? 'selected' : '' }}
-                                                                                value="Yes">Yes</option>
-                                                                            <option
-                                                                                {{ $item->response_70 == 'No' ? 'selected' : '' }}
-                                                                                value="No">No</option>
-                                                                            <option
-                                                                                {{ $item->response_70 == 'N/A' ? 'selected' : '' }}
-                                                                                value="N/A">N/A</option>
-                                                                        </select>
-                                                                    </div>
-                                                                </td>
-                                                                <td>
-                                                                    {{-- <textarea name="who_will_not_be"></textarea> --}} <div
-                                                                        style="margin: auto; display: flex; justify-content: center;">
-                                                                        <textarea name="remark_70" style="border-radius: 7px; border: 1.5px solid black; black; height:42px;">{{ $item->remark_70 }}</textarea>
-                                                                    </div>
-                                                                </td>
-
-                                                            </tr>
-                                                            <tr>
-                                                                <td class="flex text-center">71</td>
-                                                                <td>Tech Transfer</td>
-                                                                <td>
-                                                                    <div
-                                                                        style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                                        <select name="response_71" id="response"
-                                                                            style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                                            <option value="0">Select Option</option>
-
-                                                                            <option
-                                                                                {{ $item->response_71 == 'Yes' ? 'selected' : '' }}
-                                                                                value="Yes">Yes</option>
-                                                                            <option
-                                                                                {{ $item->response_71 == 'No' ? 'selected' : '' }}
-                                                                                value="No">No</option>
-                                                                            <option
-                                                                                {{ $item->response_71 == 'N/A' ? 'selected' : '' }}
-                                                                                value="N/A">N/A</option>
-                                                                        </select>
-                                                                    </div>
-                                                                </td>
-                                                                <td>
-                                                                    {{-- <textarea name="who_will_not_be"></textarea> --}} <div
-                                                                        style="margin: auto; display: flex; justify-content: center;">
-                                                                        <textarea name="remark_71" style="border-radius: 7px; border: 1.5px solid black; black; height:42px;">{{ $item->remark_71 }}</textarea>
-                                                                    </div>
-                                                                </td>
-
-                                                            </tr>
-                                                            <tr>
-                                                                <td class="flex text-center">72</td>
-                                                                <td>Man & Material Movement</td>
-                                                                <td>
-                                                                    <div
-                                                                        style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                                        <select name="response_72" id="response"
-                                                                            style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                                            <option value="0">Select Option</option>
-
-                                                                            <option
-                                                                                {{ $item->response_72 == 'Yes' ? 'selected' : '' }}
-                                                                                value="Yes">Yes</option>
-                                                                            <option
-                                                                                {{ $item->response_72 == 'No' ? 'selected' : '' }}
-                                                                                value="No">No</option>
-                                                                            <option
-                                                                                {{ $item->response_72 == 'N/A' ? 'selected' : '' }}
-                                                                                value="N/A">N/A</option>
-                                                                        </select>
-                                                                    </div>
-                                                                </td>
-                                                                <td>
-                                                                    {{-- <textarea name="who_will_not_be"></textarea> --}} <div
-                                                                        style="margin: auto; display: flex; justify-content: center;">
-                                                                        <textarea name="remark_72" style="border-radius: 7px; border: 1.5px solid black; black; height:42px;">{{ $item->remark_72 }}</textarea>
-                                                                    </div>
-                                                                </td>
-
-                                                            </tr>
-                                                            <tr>
-                                                                <td class="flex text-center">73</td>
-                                                                <td>Temperature / RH/ Differential Pressures</td>
-                                                                <td>
-                                                                    <div
-                                                                        style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                                        <select name="response_73" id="response"
-                                                                            style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                                            <option value="0">Select Option</option>
-
-                                                                            <option
-                                                                                {{ $item->response_73 == 'Yes' ? 'selected' : '' }}
-                                                                                value="Yes">Yes</option>
-                                                                            <option
-                                                                                {{ $item->response_73 == 'No' ? 'selected' : '' }}
-                                                                                value="No">No</option>
-                                                                            <option
-                                                                                {{ $item->response_73 == 'N/A' ? 'selected' : '' }}
-                                                                                value="N/A">N/A</option>
-                                                                        </select>
-                                                                    </div>
-                                                                </td>
-                                                                <td>
-                                                                    {{-- <textarea name="who_will_not_be"></textarea> --}} <div
-                                                                        style="margin: auto; display: flex; justify-content: center;">
-                                                                        <textarea name="remark_73" style="border-radius: 7px; border: 1.5px solid black; black; height:42px;">{{ $item->remark_73 }}</textarea>
-                                                                    </div>
-                                                                </td>
-
-                                                            </tr>
-                                                            <tr>
-                                                                <td class="flex text-center">74</td>
-                                                                <td>Temperature Mapping</td>
-                                                                <td>
-                                                                    <div
-                                                                        style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                                        <select name="response_74" id="response"
-                                                                            style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                                            <option value="0">Select Option</option>
-
-                                                                            <option
-                                                                                {{ $item->response_74 == 'Yes' ? 'selected' : '' }}
-                                                                                value="Yes">Yes</option>
-                                                                            <option
-                                                                                {{ $item->response_74 == 'No' ? 'selected' : '' }}
-                                                                                value="No">No</option>
-                                                                            <option
-                                                                                {{ $item->response_74 == 'N/A' ? 'selected' : '' }}
-                                                                                value="N/A">N/A</option>
-                                                                        </select>
-                                                                    </div>
-                                                                </td>
-                                                                <td>
-                                                                    {{-- <textarea name="who_will_not_be"></textarea> --}} <div
-                                                                        style="margin: auto; display: flex; justify-content: center;">
-                                                                        <textarea name="remark_74" style="border-radius: 7px; border: 1.5px solid black; black; height:42px;">{{ $item->remark_74 }}</textarea>
-                                                                    </div>
-                                                                </td>
-
-                                                            </tr>
-                                                            <tr>
-                                                                <td class="flex text-center">75</td>
-                                                                <td>HVAC Validation</td>
-                                                                <td>
-                                                                    <div
-                                                                        style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                                        <select name="response_75" id="response"
-                                                                            style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                                            <option value="0">Select Option</option>
-
-                                                                            <option
-                                                                                {{ $item->response_75 == 'Yes' ? 'selected' : '' }}
-                                                                                value="Yes">Yes</option>
-                                                                            <option
-                                                                                {{ $item->response_75 == 'No' ? 'selected' : '' }}
-                                                                                value="No">No</option>
-                                                                            <option
-                                                                                {{ $item->response_75 == 'N/A' ? 'selected' : '' }}
-                                                                                value="N/A">N/A</option>
-                                                                        </select>
-                                                                    </div>
-                                                                </td>
-                                                                <td>
-                                                                    {{-- <textarea name="who_will_not_be"></textarea> --}} <div
-                                                                        style="margin: auto; display: flex; justify-content: center;">
-                                                                        <textarea name="remark_75" style="border-radius: 7px; border: 1.5px solid black; black; height:42px;">{{ $item->remark_75 }}</textarea>
-                                                                    </div>
-                                                                </td>
-
-                                                            </tr>
-                                                            <tr>
-                                                                <td class="flex text-center">76</td>
-                                                                <td>Status of Existing stock in case of Artwork/ packing
-                                                                    material related
-                                                                    changes</td>
-                                                                <td>
-                                                                    <div
-                                                                        style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                                        <select name="response_76" id="response"
-                                                                            style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                                            <option value="0">Select Option</option>
-
-                                                                            <option
-                                                                                {{ $item->response_76 == 'Yes' ? 'selected' : '' }}
-                                                                                value="Yes">Yes</option>
-                                                                            <option
-                                                                                {{ $item->response_76 == 'No' ? 'selected' : '' }}
-                                                                                value="No">No</option>
-                                                                            <option
-                                                                                {{ $item->response_76 == 'N/A' ? 'selected' : '' }}
-                                                                                value="N/A">N/A</option>
-                                                                        </select>
-                                                                    </div>
-                                                                </td>
-                                                                <td>
-                                                                    {{-- <textarea name="who_will_not_be"></textarea> --}} <div
-                                                                        style="margin: auto; display: flex; justify-content: center;">
-                                                                        <textarea name="76" style="border-radius: 7px; border: 1.5px solid black; black; height:42px;">{{ $item->remark_76 }}</textarea>
-                                                                    </div>
-                                                                </td>
-
-                                                            </tr>
-                                                            <tr>
-                                                                <td class="flex text-center">77</td>
-                                                                <td>Primary standards</td>
-                                                                <td>
-                                                                    <div
-                                                                        style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                                        <select name="response_77" id="response"
-                                                                            style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                                            <option value="0">Select Option</option>
-
-                                                                            <option
-                                                                                {{ $item->response_77 == 'Yes' ? 'selected' : '' }}
-                                                                                value="Yes">Yes</option>
-                                                                            <option
-                                                                                {{ $item->response_77 == 'No' ? 'selected' : '' }}
-                                                                                value="No">No</option>
-                                                                            <option
-                                                                                {{ $item->response_77 == 'N/A' ? 'selected' : '' }}
-                                                                                value="N/A">N/A</option>
-                                                                        </select>
-                                                                    </div>
-                                                                </td>
-                                                                <td>
-                                                                    {{-- <textarea name="who_will_not_be"></textarea> --}}
-                                                                    <div
-                                                                        style="margin: auto; display: flex; justify-content: center;">
-                                                                        <textarea name="remark_77" style="border-radius: 7px; border: 1.5px solid black; black; height:42px;">{{ $item->remark_77 }}</textarea>
-                                                                    </div>
-                                                                </td>
-
-                                                            </tr>
-                                                            <tr>
-                                                                <td class="flex text-center">78</td>
-                                                                <td>Logbooks</td>
-                                                                <td>
-                                                                    <div
-                                                                        style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                                        <select name="response_78" id="response"
-                                                                            style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                                            <option value="0">Select Option</option>
-
-                                                                            <option
-                                                                                {{ $item->response_78 == 'Yes' ? 'selected' : '' }}
-                                                                                value="Yes">Yes</option>
-                                                                            <option
-                                                                                {{ $item->response_78 == 'No' ? 'selected' : '' }}
-                                                                                value="No">No</option>
-                                                                            <option
-                                                                                {{ $item->response_78 == 'N/A' ? 'selected' : '' }}
-                                                                                value="N/A">N/A</option>
-                                                                        </select>
-                                                                    </div>
-                                                                </td>
-                                                                <td>
-                                                                    {{-- <textarea name="who_will_not_be"></textarea> --}} <div
-                                                                        style="margin: auto; display: flex; justify-content: center;">
-                                                                        <textarea name="remark_78" style="border-radius: 7px; border: 1.5px solid black; black; height:42px;">{{ $item->remark_78 }}</textarea>
-                                                                    </div>
-                                                                </td>
-
-                                                            </tr>
-                                                            <tr>
-                                                                <td class="flex text-center">79</td>
-                                                                <td>Water System Validation</td>
-                                                                <td>
-                                                                    <div
-                                                                        style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                                        <select name="response_79" id="response"
-                                                                            style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                                            <option value="0">Select Option</option>
-
-                                                                            <option
-                                                                                {{ $item->response_79 == 'Yes' ? 'selected' : '' }}
-                                                                                value="Yes">Yes</option>
-                                                                            <option
-                                                                                {{ $item->response_79 == 'No' ? 'selected' : '' }}
-                                                                                value="No">No</option>
-                                                                            <option
-                                                                                {{ $item->response_79 == 'N/A' ? 'selected' : '' }}
-                                                                                value="N/A">N/A</option>
-                                                                        </select>
-                                                                    </div>
-                                                                </td>
-                                                                <td>
-                                                                    {{-- <textarea name="who_will_not_be"></textarea> --}} <div
-                                                                        style="margin: auto; display: flex; justify-content: center;">
-                                                                        <textarea name="remark_79" style="border-radius: 7px; border: 1.5px solid black; black; height:42px;">{{ $item->remark_79 }}</textarea>
-                                                                    </div>
-                                                                </td>
-
-                                                            </tr>
-                                                            <tr>
-                                                                <td class="flex text-center">80</td>
-                                                                <td>Quality Agreements with vendors</td>
-                                                                <td>
-                                                                    <div
-                                                                        style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                                        <select name="response_80" id="response"
-                                                                            style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                                            <option value="0">Select Option</option>
-
-                                                                            <option
-                                                                                {{ $item->response_80 == 'Yes' ? 'selected' : '' }}
-                                                                                value="Yes">Yes</option>
-                                                                            <option
-                                                                                {{ $item->response_80 == 'No' ? 'selected' : '' }}
-                                                                                value="No">No</option>
-                                                                            <option
-                                                                                {{ $item->response_80 == 'N/A' ? 'selected' : '' }}
-                                                                                value="N/A">N/A</option>
-                                                                        </select>
-                                                                    </div>
-                                                                </td>
-                                                                <td>
-                                                                    {{-- <textarea name="who_will_not_be"></textarea> --}} <div
-                                                                        style="margin: auto; display: flex; justify-content: center;">
-                                                                        <textarea name="remark_80" style="border-radius: 7px; border: 1.5px solid black; black; height:42px;">{{ $item->remark_80 }}</textarea>
-                                                                    </div>
-                                                                </td>
-
-                                                            </tr>
-                                                            <tr>
-                                                                <td class="flex text-center">81</td>
-                                                                <td>Mfg. Feasibility</td>
-                                                                <td>
-                                                                    <div
-                                                                        style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                                        <select name="response_81" id="response"
-                                                                            style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                                            <option value="0">Select Option</option>
-
-                                                                            <option
-                                                                                {{ $item->response_81 == 'Yes' ? 'selected' : '' }}
-                                                                                value="Yes">Yes</option>
-                                                                            <option
-                                                                                {{ $item->response_81 == 'No' ? 'selected' : '' }}
-                                                                                value="No">No</option>
-                                                                            <option
-                                                                                {{ $item->response_81 == 'N/A' ? 'selected' : '' }}
-                                                                                value="N/A">N/A</option>
-                                                                        </select>
-                                                                    </div>
-                                                                </td>
-                                                                <td>
-                                                                    {{-- <textarea name="who_will_not_be"></textarea> --}} <div
-                                                                        style="margin: auto; display: flex; justify-content: center;">
-                                                                        <textarea name="remark_81" style="border-radius: 7px; border: 1.5px solid black; black; height:42px;">{{ $item->remark_81 }}</textarea>
-                                                                    </div>
-                                                                </td>
-
-                                                            </tr>
-                                                            <tr>
-                                                                <td class="flex text-center">82</td>
-                                                                <td>Preventive Maintenance</td>
-                                                                <td>
-                                                                    <div
-                                                                        style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                                        <select name="response_82" id="response"
-                                                                            style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                                            <option value="0">Select Option</option>
-
-                                                                            <option
-                                                                                {{ $item->response_82 == 'Yes' ? 'selected' : '' }}
-                                                                                value="Yes">Yes</option>
-                                                                            <option
-                                                                                {{ $item->response_82 == 'No' ? 'selected' : '' }}
-                                                                                value="No">No</option>
-                                                                            <option
-                                                                                {{ $item->response_82 == 'N/A' ? 'selected' : '' }}
-                                                                                value="N/A">N/A</option>
-                                                                        </select>
-                                                                    </div>
-                                                                </td>
-                                                                <td>
-                                                                    {{-- <textarea name="who_will_not_be"></textarea> --}} <div
-                                                                        style="margin: auto; display: flex; justify-content: center;">
-                                                                        <textarea name="remark_82" style="border-radius: 7px; border: 1.5px solid black; black; height:42px;">{{ $item->remark_82 }}</textarea>
-                                                                    </div>
-                                                                </td>
-
-                                                            </tr>
-                                                            <tr>
-                                                                <td class="flex text-center">83</td>
-                                                                <td>Area Nomenclature</td>
-                                                                <td>
-                                                                    <div
-                                                                        style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                                        <select name="response_83" id="response"
-                                                                            style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                                            <option value="0">Select Option</option>
-
-                                                                            <option
-                                                                                {{ $item->response_83 == 'Yes' ? 'selected' : '' }}
-                                                                                value="Yes">Yes</option>
-                                                                            <option
-                                                                                {{ $item->response_83 == 'No' ? 'selected' : '' }}
-                                                                                value="No">No</option>
-                                                                            <option
-                                                                                {{ $item->response_83 == 'N/A' ? 'selected' : '' }}
-                                                                                value="N/A">N/A</option>
-                                                                        </select>
-                                                                    </div>
-                                                                </td>
-                                                                <td>
-                                                                    {{-- <textarea name="who_will_not_be"></textarea> --}} <div
-                                                                        style="margin: auto; display: flex; justify-content: center;">
-                                                                        <textarea name="remark_83" style="border-radius: 7px; border: 1.5px solid black; black; height:42px;">{{ $item->remark_83 }}</textarea>
-                                                                    </div>
-                                                                </td>
-
-                                                            </tr>
-                                                            <tr>
-                                                                <td class="flex text-center">84</td>
-                                                                <td>Calibration</td>
-                                                                <td>
-                                                                    <div
-                                                                        style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                                        <select name="response_84" id="response"
-                                                                            style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                                            <option value="0">Select option</option>
-
-                                                                            <option
-                                                                                {{ $item->response_84 == 'Yes' ? 'selected' : '' }}
-                                                                                value="Yes">Yes</option>
-                                                                            <option
-                                                                                {{ $item->response_84 == 'No' ? 'selected' : '' }}
-                                                                                value="No">No</option>
-                                                                            <option
-                                                                                {{ $item->response_84 == 'N/A' ? 'selected' : '' }}
-                                                                                value="N/A">N/A</option>
-                                                                        </select>
-                                                                    </div>
-                                                                </td>
-                                                                <td>
-                                                                    {{-- <textarea name="who_will_not_be"></textarea> --}} <div
-                                                                        style="margin: auto; display: flex; justify-content: center;">
-                                                                        <textarea name="remark_84" style="border-radius: 7px; border: 1.5px solid black; black; height:42px;">{{ $item->remark_84 }}</textarea>
-                                                                    </div>
-                                                                </td>
-
-                                                            </tr>
-                                                            <tr>
-                                                                <td class="flex text-center">85</td>
-                                                                <td>Qualification document (URS/DQ/IQ/OQ/PQ)</td>
-                                                                <td>
-                                                                    <div
-                                                                        style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                                        <select name="response_85" id="response"
-                                                                            style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                                            <option value="0">Select Option</option>
-
-                                                                            <option
-                                                                                {{ $item->response_85 == 'Yes' ? 'selected' : '' }}
-                                                                                value="Yes">Yes</option>
-                                                                            <option
-                                                                                {{ $item->response_85 == 'No' ? 'selected' : '' }}
-                                                                                value="No">No</option>
-                                                                            <option
-                                                                                {{ $item->response_85 == 'N/A' ? 'selected' : '' }}
-                                                                                value="N/A">N/A</option>
-                                                                        </select>
-                                                                    </div>
-                                                                </td>
-                                                                <td>
-                                                                    {{-- <textarea name="who_will_not_be"></textarea> --}} <div
-                                                                        style="margin: auto; display: flex; justify-content: center;">
-                                                                        <textarea name="remark_85" style="border-radius: 7px; border: 1.5px solid black; black; height:42px;">{{ $item->remark_85 }}</textarea>
-                                                                    </div>
-                                                                </td>
-
-                                                            </tr>
-                                                            <tr>
-                                                                <td class="flex text-center">86</td>
-                                                                <td>Planner for PM</td>
-                                                                <td>
-                                                                    <div
-                                                                        style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                                        <select name="response_86" id="response"
-                                                                            style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                                            <option value="0">Select Option</option>
-
-                                                                            <option
-                                                                                {{ $item->response_86 == 'Yes' ? 'selected' : '' }}
-                                                                                value="Yes">Yes</option>
-                                                                            <option
-                                                                                {{ $item->response_86 == 'No' ? 'selected' : '' }}
-                                                                                value="No">No</option>
-                                                                            <option
-                                                                                {{ $item->response_86 == 'N/A' ? 'selected' : '' }}
-                                                                                value="N/A">N/A</option>
-                                                                        </select>
-                                                                    </div>
-                                                                </td>
-                                                                <td>
-                                                                    {{-- <textarea name="who_will_not_be"></textarea> --}} <div
-                                                                        style="margin: auto; display: flex; justify-content: center;">
-                                                                        <textarea name="remark_86" style="border-radius: 7px; border: 1.5px solid black; black; height:42px;">{{ $item->remark_86 }}</textarea>
-                                                                    </div>
-                                                                </td>
-
-                                                            </tr>
-                                                            <tr>
-                                                                <td class="flex text-center">87</td>
-                                                                <td>Qualified Personnel</td>
-                                                                <td>
-                                                                    <div
-                                                                        style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                                        <select name="response_87" id="response"
-                                                                            style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                                            <option value="0">Select Option</option>
-
-                                                                            <option
-                                                                                {{ $item->response_87 == 'Yes' ? 'selected' : '' }}
-                                                                                value="Yes">Yes</option>
-                                                                            <option
-                                                                                {{ $item->response_87 == 'No' ? 'selected' : '' }}
-                                                                                value="No">No</option>
-                                                                            <option
-                                                                                {{ $item->response_87 == 'N/A' ? 'selected' : '' }}
-                                                                                value="N/A">N/A</option>
-                                                                        </select>
-                                                                    </div>
-                                                                </td>
-                                                                <td>
-                                                                    {{-- <textarea name="who_will_not_be"></textarea> --}} <div
-                                                                        style="margin: auto; display: flex; justify-content: center;">
-                                                                        <textarea name="87" style="border-radius: 7px; border: 1.5px solid black; black; height:42px;">{{ $item->remark_87 }}</textarea>
-                                                                    </div>
-                                                                </td>
-
-                                                            </tr>
-                                                            <tr>
-                                                                <td class="flex text-center">88</td>
-                                                                <td>Master Calibration Planner</td>
-                                                                <td>
-                                                                    <div
-                                                                        style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                                        <select name="response_88" id="response"
-                                                                            style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                                            <option value="0">Select Option</option>
-
-                                                                            <option
-                                                                                {{ $item->response_88 == 'Yes' ? 'selected' : '' }}
-                                                                                value="Yes">Yes</option>
-                                                                            <option
-                                                                                {{ $item->response_88 == 'No' ? 'selected' : '' }}
-                                                                                value="No">No</option>
-                                                                            <option
-                                                                                {{ $item->response_88 == 'N/A' ? 'selected' : '' }}
-                                                                                value="N/A">N/A</option>
-                                                                        </select>
-                                                                    </div>
-                                                                </td>
-                                                                <td>
-                                                                    {{-- <textarea name="who_will_not_be"></textarea> --}} <div
-                                                                        style="margin: auto; display: flex; justify-content: center;">
-                                                                        <textarea name="88" style="border-radius: 7px; border: 1.5px solid black; black; height:42px;">{{ $item->remark_88 }}</textarea>
-                                                                    </div>
-                                                                </td>
-
-                                                            </tr>
-                                                            <tr>
-                                                                <td class="flex text-center">89</td>
-                                                                <td>Any other</td>
-                                                                <td>
-                                                                    <div
-                                                                        style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                                        <select name="response_89" id="response"
-                                                                            style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                                            <option value="0">Select Option</option>
-
-                                                                            <option
-                                                                                {{ $item->response_89 == 'Yes' ? 'selected' : '' }}
-                                                                                value="Yes">Yes</option>
-                                                                            <option
-                                                                                {{ $item->response_89 == 'No' ? 'selected' : '' }}
-                                                                                value="No">No</option>
-                                                                            <option
-                                                                                {{ $item->response_89 == 'N/A' ? 'selected' : '' }}
-                                                                                value="N/A">N/A</option>
-                                                                        </select>
-                                                                    </div>
-
-
-                                                                    {{-- <div style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                                    <select name="response" id="response" style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                                        <option value="Yes">{{ $item->response_12 }}</option>
-                                                                        <option value="Yes">Yes</option>
-                                                                        <option value="No">No</option>
-                                                                        <option value="N/A">N/A</option>
-                                                                    </select>
-                                                                </div> --}}
-                                                                </td>
-                                                                <td>
-                                                                    {{-- <textarea name="who_will_not_be"></textarea> --}} <div
-                                                                        style="margin: auto; display: flex; justify-content: center;">
-                                                                        <textarea name="89" style="border-radius: 7px; border: 1.5px solid black; black; height:42px;">{{ $item->remark_89 }}</textarea>
-                                                                    </div>
-                                                                </td>
-
-                                                            </tr>
-
-                                                    </tbody>
-                                                    @endforeach
-                                                </table>
-                                            </div>
-                                        </div>
-                                        <div class="button-block">
-                                            <button type="submit" class="saveButton">Save</button>
-                                            <button type="button" class="backButton"
-                                                onclick="previousStep()">Back</button>
-                                            <button type="button" class="nextButton" onclick="nextStep()">Next</button>
-                                        </div>
-                                    </div>
-                                </div>
-
-
-                                {{-- <div id="
-
-                                Form5" class="inner-block cctabcontent">
-                                    <div class="inner-block-content">
-                                        <div class="sub-head">
-                                            CFT Information
-                                        </div>
-                                        <div class="row">
-
-                                            <div class="col-lg-6">
-                                                <div class="group-input">
-                                                    <label for="Microbiology">CFT Reviewer</label>
-                                                    <select name="Microbiology">
-                                                        <option value="0">-- Select --</option>
-                                                        <option value="yes" selected>Yes</option>
-                                                        <option value="no">No</option>
-                                                    </select>
-                                                </div>
-                                            </div>
-                                            <div class="col-lg-6">
-                                                <div class="group-input">
-                                                    <label for="Microbiology-Person">CFT Reviewer Person</label>
-                                                    <select multiple name="Microbiology_Person[]"
-                                                        placeholder="Select CFT Reviewers" data-search="false"
-                                                        data-silent-initial-value-set="true" id="cft_reviewer">
-                                                         <option value="0">-- Select --</option>
-                                                        @foreach ($cft as $data1)
-                                                            @if (in_array($data1->id, $cft_aff))
-                                                                <option value="{{ $data1->id }}" selected>{{ $data1->name }}</option>
-                                                            @else
-                                                                <option value="{{ $data1->id }}">{{ $data1->name }}</option>
-                                                            @endif
-                                                        @endforeach
-                                                    </select>
-
-                                                </div>
-                                            </div>
-
-
-                                        </div>
-                                        <div class="sub-head">
-                                            Concerned Information
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-12">
-                                                <div class="group-input">
-                                                    <label for="group_review">Is Concerned Group Review Required?</label>
-                                                    <select name="goup_review">
-                                                        <option value="0">-- Select --</option>
-                                                        <option {{ $info->goup_review == 'yes' ? 'selected' : '' }}
-                                                            value="yes">Yes</option>
-                                                        <option {{ $info->goup_review == 'no' ? 'selected' : '' }}
-                                                            value="no">No</option>
-                                                    </select>
-                                                </div>
-                                            </div>
-                                            <div class="col-lg-6">
-                                                <div class="group-input">
-                                                    <label for="Production">Production</label>
-                                                    <select name="Production">
-                                                        <option value="0">-- Select --</option>
-                                                        <option {{ $info->Production == 'yes' ? 'selected' : '' }}
-                                                            value="yes">Yes</option>
-                                                        <option {{ $info->Production == 'no' ? 'selected' : '' }}
-                                                            value="no">No</option>
-                                                    </select>
-                                                </div>
-                                            </div>
-                                            <div class="col-lg-6">
-                                                <div class="group-input">
-                                                    <label for="Production-Person">Production Person</label>
-                                                    <select name="Production_Person">
-                                                        <option value="0">-- Select --</option>
-                                                        @foreach ($users as $datas)
-                                                            <option
-                                                                {{ $info->Production_Person == $datas->id ? 'selected' : '' }}
-                                                                value="{{ $datas->id }}">{{ $datas->name }}</option>
-                                                        @endforeach
-
-                                                    </select>
-                                                </div>
-                                            </div>
-                                            <div class="col-lg-6">
-                                                <div class="group-input">
-                                                    <label for="Quality-Approver">Quality Approver</label>
-                                                    <select name="Quality_Approver">
-                                                        <option value="0">-- Select --</option>
-                                                        <option {{ $info->Quality_Approver == 'yes' ? 'selected' : '' }}
-                                                            value="yes">Yes</option>
-                                                        <option {{ $info->Quality_Approver == 'no' ? 'selected' : '' }}
-                                                            value="no">No</option>
-                                                    </select>
-                                                </div>
-                                            </div>
-                                            <div class="col-lg-6">
-                                                <div class="group-input">
-                                                    <label for="Quality-Approver-Person">Quality Approver Person</label>
-                                                    <select name="Quality_Approver_Person">
-                                                        <option value="0">-- Select --</option>
-                                                        @foreach ($users as $datas)
-                                                            <option {{ $info->Quality_Approver_Person == $datas->id ? 'selected' : '' }}
-                                                                value="{{ $datas->id }}">{{ $datas->name }}</option>
-                                                        @endforeach
-                                                    </select>
-                                                </div>
-                                            </div>
-
-
-                                            <div class="col-lg-6">
-                                                <div class="group-input">
-                                                    <label for="bd_domestic">Others</label>
-                                                    <select name="bd_domestic">
-                                                        <option value="0">-- Select --</option>
-                                                        <option {{ $info->bd_domestic == 'yes' ? 'selected' : '' }}
-                                                            value="yes">Yes</option>
-                                                        <option {{ $info->bd_domestic == 'no' ? 'selected' : '' }}
-                                                            value="no">No</option>
-                                                    </select>
-                                                </div>
-                                            </div>
-                                            <div class="col-lg-6">
-                                                <div class="group-input">
-                                                    <label for="bd_domestic-Person">Others Person</label>
-                                                    <select name="Bd_Person">
-                                                        <option value="0">-- Select --</option>
-
-                                                        @foreach ($users as $datas)
-                                                            <option {{ $info->Bd_Person == $datas->id ? 'selected' : '' }}
-                                                                value="{{ $datas->id }}">{{ $datas->name }}</option>
-                                                        @endforeach
-                                                    </select>
-                                                </div>
-                                            </div>
-                                            <div class="col-12">
-                                                <div class="group-input">
-                                                    <label for="additional_attachments">Additional Attachments</label>
-                                                    <div class="file-attachment-field">
-                                                        <div class="file-attachment-list" id="additional_attachments">
-                                                            @if ($info->additional_attachments)
-                                                                @foreach (json_decode($info->additional_attachments) as $file)
-                                                                    <h6 type="button" class="file-container text-dark"
-                                                                        style="background-color: rgb(243, 242, 240);">
-                                                                        <b>{{ $file }}</b>
-                                                                        <a href="{{ asset('upload/' . $file) }}"
-                                                                            target="_blank"><i
-                                                                                class="fa fa-eye text-primary"
-                                                                                style="font-size:20px; margin-right:-10px;"></i></a>
-                                                                        <a type="button" class="remove-file"
-                                                                            data-file-name="{{ $file }}"><i
-                                                                                class="fa-solid fa-circle-xmark"
-                                                                                style="color:red; font-size:20px;"></i></a>
-                                                                    </h6>
-                                                                @endforeach
-                                                            @endif
-                                                        </div>
-                                                        <div class="add-btn">
-                                                            <div>Add</div>
-                                                            <input type="file" id="myfile"
-                                                                name="additional_attachments[]"
-                                                                oninput="addMultipleFiles(this, 'additional_attachments')"
-                                                                multiple>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="button-block">
-                                            <button type="submit" class="saveButton">Save</button>
-                                            <button type="button" class="backButton"
-                                                onclick="previousStep()">Back</button>
-                                            <button type="button" class="nextButton" onclick="nextStep()">Next</button>
-                                        </div>
-                                    </div>
-                                </div> --}}
-
-                                <div id="CCForm6" class="inner-block cctabcontent">
-                                    <div class="inner-block-content">
-
-                                        <div class="sub-head">
-                                            Feedback
-                                        </div>
-                                        <div class="row">
-
-                                            <div class="col-lg-12">
-                                                <div class="group-input">
-                                                    <label for="comments">Comments</label>
-                                                    <textarea name="cft_comments">{{ $comments->cft_comments }}</textarea>
-                                                </div>
-                                            </div>
-                                            <div class="col-lg-12">
-                                                <div class="group-input">
-                                                    <label for="comments">Attachment</label>
-                                                    <div class="file-attachment-field">
-                                                        <div class="file-attachment-list" id="cft_attchament">
-                                                            @if ($comments->cft_attchament)
-                                                                @foreach (json_decode($comments->cft_attchament) as $file)
-                                                                    <h6 type="button" class="file-container text-dark"
-                                                                        style="background-color: rgb(243, 242, 240);">
-                                                                        <b>{{ $file }}</b>
-                                                                        <a href="{{ asset('upload/' . $file) }}"
-                                                                            target="_blank"><i
-                                                                                class="fa fa-eye text-primary"
-                                                                                style="font-size:20px; margin-right:-10px;"></i></a>
-                                                                        <a type="button" class="remove-file"
-                                                                            data-file-name="{{ $file }}"><i
-                                                                                class="fa-solid fa-circle-xmark"
-                                                                                style="color:red; font-size:20px;"></i></a>
-                                                                    </h6>
-                                                                @endforeach
-                                                            @endif
-                                                        </div>
-                                                        <div class="add-btn">
-                                                            <div>Add</div>
-                                                            <input type="file" id="myfile"
-                                                                name="cft_attchament[]"
-                                                                oninput="addMultipleFiles(this, 'cft_attchament')"
-                                                                multiple>
-                                                        </div>
-                                                    </div>
-
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="sub-head">
-                                                Concerned Feedback
-                                            </div>
-                                            <div class="col-lg-6">
-                                                <div class="group-input">
-                                                    <label for="comments">QA Comments</label>
-                                                    <textarea name="qa_commentss">{{ $comments->qa_commentss }}</textarea>
-                                                </div>
-                                            </div>
-                                            <div class="col-lg-6">
-                                                <div class="group-input">
-                                                    <label for="comments">QA Head Designee Comments</label>
-                                                    <textarea name="designee_comments">{{ $comments->designee_comments }}</textarea>
-                                                </div>
-                                            </div>
-                                            <div class="col-lg-6">
-                                                <div class="group-input">
-                                                    <label for="comments">Warehouse Comments</label>
-                                                    <textarea name="Warehouse_comments">{{ $comments->Warehouse_comments }}</textarea>
-                                                </div>
-                                            </div>
-                                            <div class="col-lg-6">
-                                                <div class="group-input">
-                                                    <label for="comments">Engineering Comments</label>
-                                                    <textarea name="Engineering_comments">{{ $comments->Engineering_comments }}</textarea>
-                                                </div>
-                                            </div>
-                                            <div class="col-lg-6">
-                                                <div class="group-input">
-                                                    <label for="comments">Instrumentation Comments</label>
-                                                    <textarea name="Instrumentation_comments">{{ $comments->Instrumentation_comments }}</textarea>
-                                                </div>
-                                            </div>
-                                            <div class="col-lg-6">
-                                                <div class="group-input">
-                                                    <label for="comments">Validation Comments</label>
-                                                    <textarea name="Validation_comments">{{ $comments->Validation_comments }}</textarea>
-                                                </div>
-                                            </div>
-                                            <div class="col-lg-6">
-                                                <div class="group-input">
-                                                    <label for="comments">Others Comments</label>
-                                                    <textarea name="Others_comments">{{ $comments->Others_comments }}</textarea>
-                                                </div>
-                                            </div>
-                                            <div class="col-lg-6">
-                                                <div class="group-input">
-                                                    <label for="comments">Comments</label>
-                                                    <textarea name="Group_comments">{{ $comments->Group_comments }}</textarea>
-                                                </div>
-                                            </div>
-                                            <div class="col-12">
-                                                <div class="group-input">
-                                                    <label for="group-attachments">Attachments</label>
-                                                    <div class="file-attachment-field">
-                                                        <div class="file-attachment-list" id="group_attachments">
-                                                            @if ($comments->group_attachments)
-                                                                @foreach (json_decode($comments->group_attachments) as $file)
-                                                                    <h6 type="button" class="file-container text-dark"
-                                                                        style="background-color: rgb(243, 242, 240);">
-                                                                        <b>{{ $file }}</b>
-                                                                        <a href="{{ asset('upload/' . $file) }}"
-                                                                            target="_blank"><i
-                                                                                class="fa fa-eye text-primary"
-                                                                                style="font-size:20px; margin-right:-10px;"></i></a>
-                                                                        <a type="button" class="remove-file"
-                                                                            data-file-name="{{ $file }}"><i
-                                                                                class="fa-solid fa-circle-xmark"
-                                                                                style="color:red; font-size:20px;"></i></a>
-                                                                    </h6>
-                                                                @endforeach
-                                                            @endif
-                                                        </div>
-                                                        <div class="add-btn">
-                                                            <div>Add</div>
-                                                            <input type="file" id="myfile"
-                                                                name="group_attachments[]"
-                                                                oninput="addMultipleFiles(this, 'group_attachments')"
-                                                                multiple>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="button-block">
-                                            <button type="submit" class="saveButton">Save</button>
-                                            <button type="button" class="backButton"
-                                                onclick="previousStep()">Back</button>
-                                            <button type="button" class="nextButton"
-                                                onclick="nextStep()">Next</button>
-                                        </div>
-                                    </div>
-                                </div>
 
                                 <div id="CCForm7" class="inner-block cctabcontent">
                                     <div class="inner-block-content">
@@ -4203,25 +1054,25 @@
                                                     @if (!empty($closure->sno))
                                                         @foreach (unserialize($closure->affected_document) as $key => $datas)
                                                             <tr>
-                                                                <td><input type="text" name="serial_number[]"
+                                                                <td><input type="text" name="serial_number[]" readonly
                                                                         value="{{ $key ? $key + 1 : '1' }}"></td>
                                                                 <td><input type="text" name="affected_documents[]"
-                                                                        value="{{ unserialize($closure->affected_document)[$key] ? unserialize($closure->affected_document)[$key] : 'Not Applicable' }}">
+                                                                        value="{{ unserialize($closure->affected_document)[$key] }}">
                                                                 </td>
                                                                 <td><input type="text" name="document_name[]"
-                                                                        value="{{ unserialize($closure->doc_name)[$key] ? unserialize($closure->doc_name)[$key] : 'Not Applicale' }}">
+                                                                        value="{{ unserialize($closure->doc_name)[$key] }}">
                                                                 </td>
                                                                 <td>
                                                                     <input type="number" name="document_no[]"
-                                                                        value="{{ unserialize($closure->doc_no)[$key] ? unserialize($closure->doc_no)[$key] : 'Not Applicable' }}">
+                                                                        value="{{ unserialize($closure->doc_no)[$key] }}">
                                                                 </td>
                                                                 <td>
                                                                     @if (!empty($closure->version_no))
                                                                         <input type="text" name="version_no[]"
-                                                                            value="{{ unserialize($closure->version_no)[$key] ? unserialize($closure->version_no)[$key] : 'Not Applicable' }}">
+                                                                            value="{{ unserialize($closure->version_no)[$key] }}">
                                                                     @else
                                                                         <input type="text" name="version_no[]"
-                                                                            value="Not Applicable">
+                                                                            value="">
                                                                     @endif
                                                                 </td>
 
@@ -4229,20 +1080,12 @@
                                                                     <div class="group-input new-date-data-field ">
                                                                         <div class="  input-date  ">
                                                                             <div class="calenderauditee">
-                                                                                {{-- <input type="text"  id="implementation_date{{$key}}" readonly placeholder="DD-MMM-YYYY"  value="{{  Helpers::getdateFormat(unserialize($closure->implementation_date)[$key]) ? Helpers::getdateFormat(unserialize($closure->implementation_date)[$key]) : 'Not Applicable' }}"/> --}}
-                                                                                {{-- <input type="date" class="hide-input" name="implementation_date[]"  value="{{ Helpers::getdateFormat(unserialize($closure->implementation_date)[$key]) ? Helpers::getdateFormat(unserialize($closure->implementation_date)[$key]) : 'Not Applicable' }}"  oninput="handleDateInput(this, `implementation_date{{$key}}`)" /> --}}
                                                                                 <input type="text"
                                                                                     id="implementation_date{{ $key }}"
-                                                                                    {{ $data->stage == 0 || $data->stage == 3 ? 'disabled' : '' }}
-                                                                                    readonly placeholder="DD-MMM-YYYY"
-                                                                                    value="{{ Helpers::getdateFormat(unserialize($closure->implementation_date)[$key]) }}" />
+                                                                                     />
                                                                                 <input type="date"
                                                                                     id="implementation_date{{ $key }}"
-                                                                                    {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}
-                                                                                    value="{{ unserialize($closure->implementation_date)[$key] }}"
                                                                                     name="implementation_date[]"
-                                                                                    min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
-                                                                                    value="{{ Helpers::getdateFormat(unserialize($closure->implementation_date)[$key]) }}"class="hide-input"
                                                                                     oninput="handleDateInput(this, `implementation_date{{ $key }}`)" />
                                                                             </div>
                                                                         </div>
@@ -4254,10 +1097,10 @@
                                 </td>
 
                                 <td><input type="text" name="new_document_no[]"
-                                        value="{{ unserialize($closure->new_doc_no)[$key] ? unserialize($closure->new_doc_no)[$key] : 'Not Applicable' }}">
+                                        value="{{ unserialize($closure->new_doc_no)[$key] }}">
                                 </td>
                                 <td><input type="text" name="new_version_no[]"
-                                        value="{{ unserialize($closure->new_version_no)[$key] ? unserialize($closure->new_version_no)[$key] : 'Not Applicable' }}">
+                                        value="{{ unserialize($closure->new_version_no)[$key] }}">
                                 </td>
                                 </tr>
                                 @endforeach
@@ -4525,7 +1368,7 @@
 
             <div id="CCForm11" class="inner-block cctabcontent">
                         <div class="inner-block-content">
-                            <div class="row">
+                            <div class="row">  
                                 <div class="sub-head">
                                     Production
                                 </div>
@@ -5488,9 +2331,6 @@
                                         <input type="date"id="QualityAssurance_on" name="QualityAssurance_on"
                                             value="{{ $data1->QualityAssurance_on }}">
                                     </div>
-                                </div>
-                                <div class="sub-head">
-                                    Engineering
                                 </div>
                                 <script>
                                     $(document).ready(function() {
@@ -7945,7 +4785,7 @@
                                     </div>
                                 </div>
                             @endif
-                            @if ($data->stage == 3 || $data->stage == 4)
+                            <!-- @if ($data->stage == 3 || $data->stage == 4)
                                 <div class="sub-head">
                                     Other's 1 ( Additional Person Review From Departments If Required)
                                 </div>
@@ -8051,10 +4891,6 @@
                                 <div class="col-md-12 mb-3 other1_reviews ">
                                     <div class="group-input">
                                         <label for="Impact Assessment12">Impact Assessment (By Other's 1)
-                                            <!-- <span
-                                                id=""
-                                                style="display: {{ $data1->Other1_review == 'yes' && $data->stage == 4 ? 'inline' : 'none' }}"
-                                                class="text-danger">*</span> -->
                                             </label>
                                         <textarea @if ($data1->Other1_review == 'yes' && $data->stage == 4) required @endif class="tiny" name="Other1_assessment"
                                             @if ($data->stage == 3 || Auth::user()->id != $data1->Other1_person) readonly @endif id="summernote-41">{{ $data1->Other1_assessment }}</textarea>
@@ -8063,9 +4899,6 @@
                                 <div class="col-md-12 mb-3 other1_reviews ">
                                     <div class="group-input">
                                         <label for="Feedback1"> Other's 1 Feedback
-                                            <!-- <span id=""
-                                                style="display: {{ $data1->Other1_review == 'yes' && $data->stage == 4 ? 'inline' : 'none' }}"
-                                                class="text-danger">*</span> -->
                                             </label>
                                         <textarea @if ($data1->Other1_review == 'yes' && $data->stage == 4) required @endif class="tiny" name="Other1_feedback"
                                             @if ($data->stage == 3 || Auth::user()->id != $data1->Other1_person) readonly @endif id="summernote-42">{{ $data1->Other1_feedback }}</textarea>
@@ -8076,7 +4909,6 @@
                                         var selectField = document.getElementById('Other1_review');
                                         var inputsToToggle = [];
 
-                                        // Add elements with class 'facility-name' to inputsToToggle
                                         var facilityNameInputs = document.getElementsByClassName('Other1_person');
                                         for (var i = 0; i < facilityNameInputs.length; i++) {
                                             inputsToToggle.push(facilityNameInputs[i]);
@@ -8093,7 +4925,6 @@
                                                 input.required = isRequired;
                                             });
 
-                                            // Show or hide the asterisk icon based on the selected value
                                             var asteriskIcon = document.getElementById('asterisko1');
                                             var asteriskIcon1 = document.getElementById('asteriskod1');
                                             asteriskIcon.style.display = isRequired ? 'inline' : 'none';
@@ -8253,7 +5084,6 @@
                                         var selectField = document.getElementById('Other2_review');
                                         var inputsToToggle = [];
 
-                                        // Add elements with class 'facility-name' to inputsToToggle
                                         var facilityNameInputs = document.getElementsByClassName('Other2_person');
                                         for (var i = 0; i < facilityNameInputs.length; i++) {
                                             inputsToToggle.push(facilityNameInputs[i]);
@@ -8270,7 +5100,6 @@
                                                 input.required = isRequired;
                                             });
 
-                                            // Show or hide the asterisk icon based on the selected value
                                             var asteriskIcon = document.getElementById('asterisko2');
                                             var asteriskIcon1 = document.getElementById('asteriskod2');
                                             asteriskIcon.style.display = isRequired ? 'inline' : 'none';
@@ -8281,10 +5110,6 @@
                                 <div class="col-md-12 mb-3 Other2_reviews">
                                     <div class="group-input">
                                         <label for="Impact Assessment13">Impact Assessment (By Other's 2)
-                                            <!-- <span
-                                                id=""
-                                                style="display: {{ $data1->Other2_review == 'yes' && $data->stage == 4 ? 'inline' : 'none' }}"
-                                                class="text-danger">*</span> -->
                                             </label>
                                         <textarea @if ($data->stage == 3 || Auth::user()->id != $data1->Other2_person) readonly @endif class="tiny" name="Other2_Assessment"
                                             @if ($data1->Other2_review == 'yes' && $data->stage == 4) required @endif id="summernote-43">{{ $data1->Other2_Assessment }}</textarea>
@@ -8293,9 +5118,6 @@
                                 <div class="col-md-12 mb-3 Other2_reviews">
                                     <div class="group-input">
                                         <label for="Feedback2"> Other's 2 Feedback
-                                            <!-- <span id=""
-                                                style="display: {{ $data1->Other2_review == 'yes' && $data->stage == 4 ? 'inline' : 'none' }}"
-                                                class="text-danger">*</span> -->
                                             </label>
                                         <textarea @if ($data->stage == 3 || Auth::user()->id != $data1->Other2_person) readonly @endif class="tiny" name="Other2_feedback"
                                             @if ($data1->Other2_review == 'yes' && $data->stage == 4) required @endif id="summernote-44">{{ $data1->Other2_feedback }}</textarea>
@@ -8455,7 +5277,6 @@
                                         var selectField = document.getElementById('Other3_review');
                                         var inputsToToggle = [];
 
-                                        // Add elements with class 'facility-name' to inputsToToggle
                                         var facilityNameInputs = document.getElementsByClassName('Other3_person');
                                         for (var i = 0; i < facilityNameInputs.length; i++) {
                                             inputsToToggle.push(facilityNameInputs[i]);
@@ -8472,7 +5293,6 @@
                                                 input.required = isRequired;
                                             });
 
-                                            // Show or hide the asterisk icon based on the selected value
                                             var asteriskIcon = document.getElementById('asterisko3');
                                             var asteriskIcon1 = document.getElementById('asteriskod3');
                                             asteriskIcon.style.display = isRequired ? 'inline' : 'none';
@@ -8483,10 +5303,6 @@
                                 <div class="col-md-12 mb-3 Other3_reviews">
                                     <div class="group-input">
                                         <label for="Impact Assessment14">Impact Assessment (By Other's 3)
-                                            <!-- <span
-                                                id=""
-                                                style="display: {{ $data1->Other3_review == 'yes' && $data->stage == 4 ? 'inline' : 'none' }}"
-                                                class="text-danger">*</span> -->
                                             </label>
                                         <textarea @if ($data->stage == 3 || Auth::user()->id != $data1->Other3_person) readonly @endif class="tiny" name="Other3_Assessment"
                                             @if ($data1->Other3_review == 'yes' && $data->stage == 4) required @endif id="summernote-45">{{ $data1->Other3_Assessment }}</textarea>
@@ -8495,9 +5311,6 @@
                                 <div class="col-md-12 mb-3 Other3_reviews">
                                     <div class="group-input">
                                         <label for="feedback3"> Other's 3 Feedback
-                                            <!-- <span id=""
-                                                style="display: {{ $data1->Other3_review == 'yes' && $data->stage == 4 ? 'inline' : 'none' }}"
-                                                class="text-danger">*</span> -->
                                             </label>
                                         <textarea @if ($data->stage == 3 || Auth::user()->id != $data1->Other3_person) readonly @endif class="tiny" name="Other3_feedback"
                                             @if ($data1->Other3_review == 'yes' && $data->stage == 4) required @endif id="summernote-46">{{ $data1->Other3_Assessment }}</textarea>
@@ -8654,7 +5467,6 @@
                                         var selectField = document.getElementById('Other4_review');
                                         var inputsToToggle = [];
 
-                                        // Add elements with class 'facility-name' to inputsToToggle
                                         var facilityNameInputs = document.getElementsByClassName('Other4_person');
                                         for (var i = 0; i < facilityNameInputs.length; i++) {
                                             inputsToToggle.push(facilityNameInputs[i]);
@@ -8671,7 +5483,6 @@
                                                 input.required = isRequired;
                                             });
 
-                                            // Show or hide the asterisk icon based on the selected value
                                             var asteriskIcon = document.getElementById('asterisko4');
                                             var asteriskIcon1 = document.getElementById('asteriskod4');
                                             asteriskIcon.style.display = isRequired ? 'inline' : 'none';
@@ -8682,10 +5493,6 @@
                                 <div class="col-md-12 mb-3 Other4_reviews">
                                     <div class="group-input">
                                         <label for="Impact Assessment15">Impact Assessment (By Other's 4)
-                                            <!-- <span
-                                                id=""
-                                                style="display: {{ $data1->Other4_review == 'yes' && $data->stage == 4 ? 'inline' : 'none' }}"
-                                                class="text-danger">*</span> -->
                                             </label>
                                         <textarea @if ($data->stage == 3 || Auth::user()->id != $data1->Other4_person) readonly @endif class="tiny" name="Other4_Assessment"
                                             @if ($data1->Other4_review == 'yes' && $data->stage == 4) required @endif id="summernote-47">{{ $data1->Other4_Assessment }}</textarea>
@@ -8694,9 +5501,6 @@
                                 <div class="col-md-12 mb-3 Other4_reviews">
                                     <div class="group-input">
                                         <label for="feedback4"> Other's 4 Feedback
-                                            <!-- <span id=""
-                                                style="display: {{ $data1->Other4_review == 'yes' && $data->stage == 4 ? 'inline' : 'none' }}"
-                                                class="text-danger">*</span> -->
                                             </label>
                                         <textarea @if ($data->stage == 3 || Auth::user()->id != $data1->Other4_person) readonly @endif class="tiny" name="Other4_feedback"
                                             @if ($data1->Other4_review == 'yes' && $data->stage == 4) required @endif id="summernote-48">{{ $data1->Other4_feedback }}</textarea>
@@ -8858,7 +5662,6 @@
                                         var selectField = document.getElementById('Other5_review');
                                         var inputsToToggle = [];
 
-                                        // Add elements with class 'facility-name' to inputsToToggle
                                         var facilityNameInputs = document.getElementsByClassName('Other5_person');
                                         for (var i = 0; i < facilityNameInputs.length; i++) {
                                             inputsToToggle.push(facilityNameInputs[i]);
@@ -8875,7 +5678,6 @@
                                                 input.required = isRequired;
                                             });
 
-                                            // Show or hide the asterisk icon based on the selected value
                                             var asteriskIcon = document.getElementById('asterisko5');
                                             var asteriskIcon1 = document.getElementById('asteriskod5');
                                             asteriskIcon.style.display = isRequired ? 'inline' : 'none';
@@ -8886,10 +5688,6 @@
                                 <div class="col-md-12 mb-3 Other5_reviews">
                                     <div class="group-input">
                                         <label for="Impact Assessment16">Impact Assessment (By Other's 5)
-                                            <!-- <span
-                                                id=""
-                                                style="display: {{ $data1->Other5_review == 'yes' && $data->stage == 4 ? 'inline' : 'none' }}"
-                                                class="text-danger">*</span> -->
                                             </label>
                                         <textarea @if ($data->stage == 3 || Auth::user()->id != $data1->Other5_person) readonly @endif class="tiny"
                                             name="Other5_Assessment"@if ($data1->Other5_review == 'yes' && $data->stage == 4) required @endif id="summernote-49">{{ $data1->Other5_Assessment }}</textarea>
@@ -8898,9 +5696,6 @@
                                 <div class="col-md-12 mb-3 Other5_reviews">
                                     <div class="group-input">
                                         <label for="productionfeedback"> Other's 5 Feedback
-                                            <!-- <span id=""
-                                                style="display: {{ $data1->Other5_review == 'yes' && $data->stage == 4 ? 'inline' : 'none' }}"
-                                                class="text-danger">*</span> -->
                                             </label>
                                         <textarea @if ($data->stage == 3 || Auth::user()->id != $data1->Other5_person) readonly @endif class="tiny"
                                             name="Other5_feedback"@if ($data1->Other5_review == 'yes' && $data->stage == 4) required @endif id="summernote-50">{{ $data1->Other5_feedback }}</textarea>
@@ -9682,7 +6477,7 @@
                                             value="{{ $data1->Other5_on }}">
                                     </div>
                                 </div>
-                            @endif
+                            @endif -->
                         </div>
                         <div class="button-block">
                             <button style=" justify-content: center; width: 4rem; margin-left: 1px;;" type="submit"{{ $data->stage == 0 || $data->stage == 7 || $data->stage == 9 ? 'disabled' : '' }}
@@ -9705,10 +6500,6 @@
                                             Launch Extension
                                         </a>
                                         @endif
-                                        <!-- <a type="button" class="button  launch_extension" data-bs-toggle="modal"
-                                            data-bs-target="#effectivenss_extension">
-                                            Launch Effectiveness Check
-                                        </a> -->
                         </div>
                     </div>
 
@@ -9872,10 +6663,12 @@
                                 <input type="radio" name="revision" id="minor" value="Extension">
                                 Extension
                             </label>
-                            <label for="minor">
-                                <input type="radio" name="revision" id="minor" value="RCA">
-                                RCA
-                            </label>
+                            @if($data->stage == 3)
+                                <label for="minor">
+                                    <input type="radio" name="revision" id="minor" value="RCA">
+                                    RCA
+                                </label>
+                            @endif
                             @if($data->stage == 6)
                                 <label for="minor">
                                     <input type="radio" name="revision" id="minor" value="Capa">
@@ -10359,22 +7152,33 @@
         });
     </script>
 
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+                                    <script>
+                                        $(document).ready(function() {
+                                            // Event listener for the remove file button
+                                            $(document).on('click', '.remove-file', function() {
+                                                $(this).closest('.file-container').remove();
+                                            });
+                                        });
+                                    </script>
+                                    
     <script>
+
         document.addEventListener('DOMContentLoaded', function() {
-            const removeButtons = document.querySelectorAll('.remove-file');
+        const removeButtons = document.querySelectorAll('.remove-file');
 
-            removeButtons.forEach(button => {
-                button.addEventListener('click', function() {
-                    const fileName = this.getAttribute('data-file-name');
-                    const fileContainer = this.closest('.file-container');
+        removeButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                const fileName = this.getAttribute('data-file-name');
+                const fileContainer = this.parentElement;
 
-                    // Hide the file container
-                    if (fileContainer) {
-                        fileContainer.style.display = 'none';
-                    }
-                });
+                // Hide the file container
+                if (fileContainer) {
+                    fileContainer.style.display = 'none';
+                }
             });
         });
+    });
     </script>
     <script>
         function calculateRiskAnalysis(selectElement) {

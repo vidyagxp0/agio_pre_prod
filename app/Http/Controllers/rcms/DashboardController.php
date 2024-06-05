@@ -494,6 +494,7 @@ class DashboardController extends Controller
                 "stage" => $data->status,
                 "date_open" => $data->create,
                 "date_close" => $data->updated_at,
+                "due_date" => $data->due_date,
             ]);
         }
 

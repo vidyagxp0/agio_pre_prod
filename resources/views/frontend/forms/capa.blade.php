@@ -842,10 +842,12 @@
                                     <label for="Microbiology-Person">CFT Reviewer Person</label>
                                     <select name="Microbiology_Person[]" placeholder="Select CFT Reviewers"
                                         data-search="false" data-silent-initial-value-set="true" id="cft_reviewer">
-                                        <option value="0">-- Select --</option>
-                                        @foreach ($cft as $data)
-                                            <option value="{{ $data->id }}" selected>{{ $data->name }}</option>
-                                        @endforeach
+                                        <option value="">-- Select --</option>
+                                        @if(!empty($cft))
+                                            @foreach ($cft as $data)
+                                                <option value="{{ $data->id }}" selected>{{ $data->name }}</option>
+                                            @endforeach
+                                        @endif
                                     </select>
                                 </div>
                             </div>

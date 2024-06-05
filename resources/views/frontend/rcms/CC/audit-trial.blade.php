@@ -186,7 +186,7 @@
                             ->get();
                         $userRoleIds = $userRoles->pluck('q_m_s_roles_id')->toArray();
                         $auditCollect = DB::table('audit_reviewers_details')
-                            ->where(['deviation_id' => $document->id, 'user_id' => Auth::user()->id])
+                            ->where(['doc_id' => $document->id, 'user_id' => Auth::user()->id])
                             ->latest()
                             ->first();
                     @endphp
@@ -198,7 +198,12 @@
                             <div style="color: red; font-weight: 600">The Audit Trail has is yet to be reviewed.</div>
                         @endif
                         <div class="buttons-new">
-                            @if ($document->stage < 7 && !(count($userRoleIds) === 1 && in_array(3, $userRoleIds)))
+                            <!-- @if ($document->stage < 5 && !(count($userRoleIds) === 1 && in_array(3, $userRoleIds)))
+                                <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#auditReviewer">
+                                    Review
+                                </button>
+                            @endif -->
+                            @if($document->stage < 7)
                                 <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#auditReviewer">
                                     Review
                                 </button>
@@ -234,7 +239,7 @@
 
                                 @php
                                     $reviewer = DB::table('audit_reviewers_details')
-                                        ->where(['deviation_id' => $document->id, 'type' => 'Change Control'])
+                                        ->where(['doc_id' => $document->id, 'type' => 'Change Control'])
                                         ->get();
                                 @endphp
                                 <!-- Customer grid view -->
@@ -375,7 +380,7 @@
                             <td>
                                 <div>
                                     <strong> Data Field Name :</strong><a
-                                        href="{{ url('DeviationAuditTrialDetails', $dataDemo->id) }}">{{ $dataDemo->activity_type ? $dataDemo->activity_type : 'Not Applicable' }}</a>
+                                        href="#">{{ $dataDemo->activity_type ? $dataDemo->activity_type : 'Not Applicable' }}</a>
                                 </div>
                                 <div style="margin-top: 5px;">
                                     @if($dataDemo->activity_type == "Activity Log")
