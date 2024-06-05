@@ -50,7 +50,7 @@ class ErrataController extends Controller
         // $data->details = !empty($request->details) ? implode(',', $request->details) : '';
 
         // $data->details = $request->details;
-        $data->Date_and_time_of_correction = $request->Date_and_time_of_correction;
+        $data->Date_and_time_of_correction = $request->Date_and_time_of_correction ? Carbon::parse($request->Date_and_time_of_correction)->format('d-M-Y H:i') : '';
         $data->QA_Feedbacks = $request->QA_Feedbacks;
         if (!empty($request->QA_Attachments)) {
             $files = [];
@@ -769,7 +769,7 @@ class ErrataController extends Controller
         $data->brief_description = $request->brief_description;
         $data->type_of_error = $request->type_of_error;
         // $data->details = $request->details;
-        $data->Date_and_time_of_correction = $request->Date_and_time_of_correction;
+        $data->Date_and_time_of_correction = $request->Date_and_time_of_correction ? Carbon::parse($request->Date_and_time_of_correction)->format('d-M-Y H:i') : '';
         $data->QA_Feedbacks = $request->QA_Feedbacks;
 
 

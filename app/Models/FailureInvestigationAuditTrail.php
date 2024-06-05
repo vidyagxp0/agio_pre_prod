@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class FailureInvestigationAuditTrail extends Model
 {
     use HasFactory;
-    protected $table = 'failure_investigation_audit_trails';
+    protected $table = 'failure_investigation_trials';
 
     public function failureInvestigation() {
         return $this->belongsTo(FailureInvestigation::class);

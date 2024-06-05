@@ -15,9 +15,9 @@ return new class extends Migration
     {
         Schema::create('deviation_new_grid_datas', function (Blueprint $table) {
             $table->id();
-            $table->bigInteger('deviation_id')->nullable();
-            $table->string('identifier')->nullable();
-            $table->longText('data')->nullable();
+            $table->bigInteger('deviation_id');
+            $table->string('identifier');
+            $table->longText('data');
             $table->timestamps();
         });
     }
