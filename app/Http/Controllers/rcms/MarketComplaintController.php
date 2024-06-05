@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\MarketComplaint;
 use App\Models\MarketComplaintGrids ;
 use App\Models\MarketComplaintAuditTrial;
+use App\Models\Capa;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use App\Models\RecordNumber;
@@ -35,7 +36,7 @@ $marketComplaint = new MarketComplaint();
 $marketComplaint->status = 'Opened';
 $marketComplaint->stage = 1;
 
-// Manually assigning each field from the request
+        // Manually assigning each field from the request
         $marketComplaint->initiator_id = Auth::user()->id;
         $marketComplaint->division_id = $request->division_id;
         $marketComplaint->initiator_group = $request->initiator_group;
@@ -800,30 +801,31 @@ return redirect()->to('rcms/qms-dashboard')->with('success', 'Market Complaint c
 
 
     public function show($id)
-    {
-            $data = MarketComplaint::find($id);
-    $productsgi = MarketComplaintGrids::where('mc_id',$id)->where('identifier','ProductDetails')->first();
-    $traceability_gi = MarketComplaintGrids::where('mc_id',$id)->where('identifier','Traceability')->first();
-    $investing_team = MarketComplaintGrids::where('mc_id',$id)->where('identifier','Investing_team')->first();
-    $brain_stroming_details = MarketComplaintGrids::where('mc_id',$id)->where('identifier','brain_stroming_details')->first();
-    $team_members = MarketComplaintGrids::where('mc_id',$id)->where('identifier','Team_Members')->first();
-    $report_approval = MarketComplaintGrids::where('mc_id',$id)->where('identifier','Report_Approval')->first();
-    $product_materialDetails = MarketComplaintGrids::where('mc_id',$id)->where('identifier','Product_MaterialDetails')->first();
-    // dd($product_materialDetails->data);
-    // dd($product_materialDetails);
-    // $productsgi = MarketComplaintGrids::where('mc_id',$id)->where('identifier','ProductDetails')->first();
+{
+                $data = MarketComplaint::find($id);
+            $productsgi = MarketComplaintGrids::where('mc_id',$id)->where('identifer','ProductDetails')->first();
+            $traceability_gi = MarketComplaintGrids::where('mc_id',$id)->where('identifer','Traceability')->first();
+            $investing_team = MarketComplaintGrids::where('mc_id',$id)->where('identifer','Investing_team')->first();
+            $brain_stroming_details = MarketComplaintGrids::where('mc_id',$id)->where('identifer','brain_stroming_details')->first();
+            $team_members = MarketComplaintGrids::where('mc_id',$id)->where('identifer','Team_Members')->first();
+            $report_approval = MarketComplaintGrids::where('mc_id',$id)->where('identifer','Report_Approval')->first();
+            $product_materialDetails = MarketComplaintGrids::where('mc_id',$id)->where('identifer','Product_MaterialDetails')->first();
+            // dd($product_materialDetails->data);
+            // dd($product_materialDetails);
+            // dd($data);
+            // $productsgi = MarketComplaintGrids::where('mc_id',$id)->where('identifer','ProductDetails')->first();
 
-    $proposal_to_accomplish_investigation = MarketComplaintGrids::where('mc_id', $id)->where('identifier', 'Proposal_to_accomplish_investigation')->first();
-    $proposalData = $proposal_to_accomplish_investigation ? json_decode($proposal_to_accomplish_investigation->data, true) : [];
-        
-
-// dd( $brain_stroming_session);
-    return view('frontend.market_complaint.market_complaint_view',compact(
-        'data','productsgi','traceability_gi','investing_team','brain_stroming_details','team_members','report_approval','product_materialDetails','proposalData'));
+            $proposal_to_accomplish_investigation = MarketComplaintGrids::where('mc_id', $id)->where('identifer', 'Proposal_to_accomplish_investigation')->first();
+            $proposalData = $proposal_to_accomplish_investigation ? json_decode($proposal_to_accomplish_investigation->data, true) : [];
 
 
+            // dd( $brain_stroming_session);
+                return view('frontend.market_complaint.market_complaint_view',compact(
+                    'data','productsgi','traceability_gi','investing_team','brain_stroming_details','team_members','report_approval','product_materialDetails','proposalData'));
 
-        }
+
+
+    }
 
 
 
@@ -1913,9 +1915,120 @@ public function marketComplaintStateChange(Request $request,$id)
 
 
 
+// =======================================================RCA and Action ======================================================
+
+public function MarketComplaintRca_actionChild(Request $request,$id)
+{
+    // dd($request->revision);
+    
+    $cc = MarketComplaint::find($id);
+    $cft = [];
+    $parent_id = $id;
+    $parent_type = "Capa";
+    $old_record = Capa::select('id', 'division_id', 'record')->get();
+    $record_number = ((RecordNumber::first()->value('counter')) + 1);
+    $record_number = str_pad($record_number, 4, '0', STR_PAD_LEFT);
+    $currentDate = Carbon::now();
+    $formattedDate = $currentDate->addDays(30);
+    $due_date = $formattedDate->format('d-M-Y');
+    $parent_intiation_date = Capa::where('id', $id)->value('intiation_date');
+    $parent_record =  ((RecordNumber::first()->value('counter')) + 1);
+    $parent_record = str_pad($parent_record, 4, '0', STR_PAD_LEFT);
+    $parent_initiator_id = $id;
+   
+    if ($request->revision == "rca-child") {
+        $cc->originator = User::where('id', $cc->initiator_id)->value('name');
+        return view('frontend.forms.root-cause-analysis', compact('record_number', 'due_date', 'parent_id','old_record', 'parent_type','parent_intiation_date','parent_record','parent_initiator_id','cft'));
+
+    }
+    if ($request->revision == "Action-Item") {
+        // return "test";
+        $cc->originator = User::where('id', $cc->initiator_id)->value('name');
+        return view('frontend.forms.action-item', compact('record_number', 'due_date', 'parent_id','old_record', 'parent_type','parent_intiation_date','parent_record','parent_initiator_id'));
+
+    }
+    
+
+}
 
 
-    public function singleReport(Request $request, $id){
+
+
+// ================================================================Capa and Action==================================================
+
+    public function MarketComplaintCapa_ActionChild(Request $request,$id)
+    {
+        // dd($request->revision);
+        
+        $cc = MarketComplaint::find($id);
+        $cft = [];
+        $parent_id = $id;
+        $parent_type = "Capa";
+        $old_record = Capa::select('id', 'division_id', 'record')->get();
+        $record_number = ((RecordNumber::first()->value('counter')) + 1);
+        $record_number = str_pad($record_number, 4, '0', STR_PAD_LEFT);
+        $currentDate = Carbon::now();
+        $formattedDate = $currentDate->addDays(30);
+        $due_date = $formattedDate->format('d-M-Y');
+        $parent_intiation_date = Capa::where('id', $id)->value('intiation_date');
+        $parent_record =  ((RecordNumber::first()->value('counter')) + 1);
+        $parent_record = str_pad($parent_record, 4, '0', STR_PAD_LEFT);
+        $parent_initiator_id = $id;
+       
+        if ($request->revision == "capa-child") {
+            $cc->originator = User::where('id', $cc->initiator_id)->value('name');
+            return view('frontend.forms.capa', compact('record_number', 'due_date', 'parent_id','old_record', 'parent_type','parent_intiation_date','parent_record','parent_initiator_id','cft'));
+
+        }
+        if ($request->revision == "Action-Item") {
+            // return "test";
+            $cc->originator = User::where('id', $cc->initiator_id)->value('name');
+            return view('frontend.forms.action-item', compact('record_number', 'due_date', 'parent_id','old_record', 'parent_type','parent_intiation_date','parent_record','parent_initiator_id'));
+
+        }
+        
+
+    }
+// {{-- ==================================Regulatory  Reporting  and Effectiveness  Check child=============================================== --}}
+
+        public function MarketComplaintRegu_Effec_Child(Request $request,$id)
+        {
+            // dd($request->revision);
+            
+            $cc = MarketComplaint::find($id);
+            $cft = [];
+            $parent_id = $id;
+            $parent_type = "Capa";
+            $old_record = Capa::select('id', 'division_id', 'record')->get();
+            $record_number = ((RecordNumber::first()->value('counter')) + 1);
+            $record_number = str_pad($record_number, 4, '0', STR_PAD_LEFT);
+            $currentDate = Carbon::now();
+            $formattedDate = $currentDate->addDays(30);
+            $due_date = $formattedDate->format('d-M-Y');
+            $parent_intiation_date = Capa::where('id', $id)->value('intiation_date');
+            $parent_record =  ((RecordNumber::first()->value('counter')) + 1);
+            $parent_record = str_pad($parent_record, 4, '0', STR_PAD_LEFT);
+            $parent_initiator_id = $id;
+        
+            if ($request->revision == "regulatory-child") {
+                $cc->originator = User::where('id', $cc->initiator_id)->value('name');
+                return "test";
+                // return view('frontend.forms.capa', compact('record_number', 'due_date', 'parent_id','old_record', 'parent_type','parent_intiation_date','parent_record','parent_initiator_id','cft'));
+
+            }
+            if ($request->revision == "Effectiveness-child") {
+                // return "test";
+                $cc->originator = User::where('id', $cc->initiator_id)->value('name');
+                return view('frontend.forms.effectiveness-check', compact('record_number', 'due_date', 'parent_id','old_record', 'parent_type','parent_intiation_date','parent_record','parent_initiator_id'));
+
+            }
+            
+
+        }
+
+
+    public function singleReport(Request $request, $id)
+    {
 
         $data = MarketComplaint::find($id);
         $prductgigrid =MarketComplaintGrids::where(['mc_id' => $id,'identifier' => 'ProductDetails'])->first();
@@ -1959,9 +2072,9 @@ public function marketComplaintStateChange(Request $request,$id)
         $document = MarketComplaint::where('id', $id)->first();
         $document->initiator = User::where('id', $document->initiator_id)->value('name');
 
+      
+        return view('frontend.market_complaint.audit-trial',compact('audit', 'document', 'today'));
 
-return view('frontend.market_complaint.audit-trial',compact('audit', 'document', 'today'));
-        
     }
 
 
@@ -2013,7 +2126,8 @@ return view('frontend.market_complaint.audit-trial',compact('audit', 'document',
 
 
 
-    public function auditTrailPdf($id){
+    public function auditTrailPdf($id)
+    {
         $doc = MarketComplaint::find($id);
         $doc->originator = User::where('id', $doc->initiator_id)->value('name');
         $data = MarketComplaintAuditTrial::where('market_id', $doc->id)->orderByDesc('id')->paginate();
