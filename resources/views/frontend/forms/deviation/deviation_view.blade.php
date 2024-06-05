@@ -1114,18 +1114,15 @@
                                             }
                                         }
                                     </script>
-                                    <div class="col-6 new-date-data-field">
-                                        <div class="group-input input-date">
+                                    <div class="col-6">
+                                        <div class="group-input">
                                             <label for="severity-level">Deviation Observed On <span
                                                     class="text-danger">*</span></label>
                                             <!-- <span class="text-primary">Severity levels in a QMS record gauge issue seriousness, guiding priority for corrective actions. Ranging from low to high, they ensure quality standards and mitigate critical risks.</span> -->
-
-                                            <div class="calenderauditee">
-                                                <input type="text" id="Deviation_date" readonly placeholder="DD-MMM-YYYY" value="{{ Helpers::getdateFormat($data->Deviation_date) }}" />
-                                                <input type="date" name="Deviation_date" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" value=""
-                                                class="hide-input"
-                                                oninput="handleDateInput(this, 'Deviation_date')" />
-                                            </div>
+                                            <input type="date" id="Deviation_date"
+                                                max="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
+                                                name="Deviation_date"{{ $data->stage == 0 || $data->stage == 11 ? 'disabled' : '' }}
+                                                value="{{ old('Deviation_date') ? old('Deviation_date') : $data->Deviation_date }}">
                                             @error('Deviation_date')
                                                 <div class="text-danger">{{ $message }}</div>
                                             @enderror
@@ -1184,22 +1181,19 @@
                                             @enderror
                                         </div>
                                     </div>
-                                    <div class="col-6 new-date-data-field">
-                                        <div class="group-input input-date">
+                                    <div class="col-lg-6">
+                                        <div class="group-input">
                                             <label for="Initiator Group">Deviation Reported On <span
                                                     class="text-danger">*</span></label>
                                             <!-- <div><small class="text-primary">Please select related information</small></div> -->
-
-                                            <div class="calenderauditee">
-                                                <input type="text" id="Deviation_reported_date" readonly placeholder="DD-MMM-YYYY" value="{{ Helpers::getdateFormat($data->Deviation_reported_date) }}" />
-                                                <input type="date" name="Deviation_reported_date" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" value=""
-                                                class="hide-input"
-                                                oninput="handleDateInput(this, 'Deviation_reported_date')" />
-                                            </div>
-                                            @error('Deviation_reported_date')
-                                                <div class="text-danger">{{ $message }}</div>
-                                            @enderror
+                                            <input type="date" id="Deviation_reported_date"
+                                                max="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
+                                                name="Deviation_reported_date"{{ $data->stage == 0 || $data->stage == 11 ? 'disabled' : '' }}
+                                                value="{{ $data->Deviation_reported_date }}">
                                         </div>
+                                        @error('Deviation_reported_date')
+                                            <div class="text-danger">{{ $message }}</div>
+                                        @enderror
                                     </div>
 
                                     <script>
