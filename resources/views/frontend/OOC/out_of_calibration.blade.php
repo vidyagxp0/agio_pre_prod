@@ -191,8 +191,8 @@ $users = DB::table('users')->get();
                             <div class="col-lg-6">
                                 <div class="group-input">
                                     <label for="RLS Record Number"><b>Record Number</b></label>
-                                    <input disabled type="text" name="record_number" >
-                                    {{-- <input disabled type="text" name="record_number" value="{{ Helpers::getDivisionName(session()->get('division')) }}/LI/{{ date('Y') }}/{{ $record_number }}"> --}}
+                                    <input disabled type="number" name="record_number" value="" >
+                                    {{-- <input disabled type="number" name="record_number" value="{{$record}}"> --}}
                                   
                                 </div>
                             </div>
@@ -240,31 +240,44 @@ $users = DB::table('users')->get();
                             </div>
 
 
-                            <div class="col-lg-6">
+                            {{-- <div class="col-lg-6"> --}}
+                                <div class="col-lg-6">
+                                    <div class="group-input">
+                                        <label for="Initiator Group"><b>Initiator Group</b></label>
+                                        <select name="Initiator_Group" id="initiator_group">
+                                            <option value="">-- Select --</option>
+                                            <option value="CQA" @if(old('Initiator_Group') =="CQA") selected @endif>Corporate Quality Assurance</option>
+                                            <option value="QAB" @if(old('Initiator_Group') =="QAB") selected @endif>Quality Assurance Biopharma</option>
+                                            <option value="CQC" @if(old('Initiator_Group') =="CQA") selected @endif>Central Quality Control</option>
+                                            <option value="CQC" @if(old('Initiator_Group') =="MANU") selected @endif>Manufacturing</option>
+                                            <option value="PSG" @if(old('Initiator_Group') =="PSG") selected @endif>Plasma Sourcing Group</option>
+                                            <option value="CS"  @if(old('Initiator_Group') == "CS") selected @endif>Central Stores</option>
+                                            <option value="ITG" @if(old('Initiator_Group') =="ITG") selected @endif>Information Technology Group</option>
+                                            <option value="MM"  @if(old('Initiator_Group') == "MM") selected @endif>Molecular Medicine</option>
+                                            <option value="CL"  @if(old('Initiator_Group') == "CL") selected @endif>Central Laboratory</option>
+
+                                            <option value="TT"  @if(old('Initiator_Group') == "TT") selected @endif>Tech team</option>
+                                            <option value="QA"  @if(old('Initiator_Group') == "QA") selected @endif> Quality Assurance</option>
+                                            <option value="QM"  @if(old('Initiator_Group') == "QM") selected @endif>Quality Management</option>
+                                            <option value="IA"  @if(old('Initiator_Group') == "IA") selected @endif>IT Administration</option>
+                                            <option value="ACC"  @if(old('Initiator_Group') == "ACC") selected @endif>Accounting</option>
+                                            <option value="LOG"  @if(old('Initiator_Group') == "LOG") selected @endif>Logistics</option>
+                                            <option value="SM"  @if(old('Initiator_Group') == "SM") selected @endif>Senior Management</option>
+                                            <option value="BA"  @if(old('Initiator_Group') == "BA") selected @endif>Business Administration</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            {{-- </div> --}}
+                            <div class="col-md-12 mb-3">
                                 <div class="group-input">
-                                    <label for="Initiator Group"><b>Initiator Group</b></label>
-                                    <select name="Initiator_Group" id="initiator_group">
-                                        <option value="">-- Select --</option>
-                                        <option value="CQA">Corporate Quality Assurance</option>
-                                        <option value="QAB">Quality Assurance Biopharma</option>
-                                        <option value="CQC">Central Quality Control</option>
-                                        <option value="MANU">Manufacturing</option>
-                                        <option value="PSG">Plasma Sourcing Group</option>
-                                        <option value="CS">Central Stores</option>
-                                        <option value="ITG">Information Technology Group</option>
-                                        <option value="MM">Molecular Medicine</option>
-                                        <option value="CL">Central Laboratory</option>
-                                        <option value="TT">Tech team</option>
-                                        <option value="QA">Quality Assurance</option>
-                                        <option value="QM">Quality Management</option>
-                                        <option value="IA">IT Administration</option>
-                                        <option value="ACC">Accounting</option>
-                                        <option value="LOG">Logistics</option>
-                                        <option value="SM">Senior Management</option>
-                                        <option value="BA">Business Administration</option>
-                                    </select>
+                                    <label for="Description">Short Description <span class="text-danger">*</span></label>
+                                    <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
+                                    <input type="text" name="description_ooc" >
+                                    
                                 </div>
                             </div>
+
+                            
                             <div class="col-lg-12">
                                 <div class="group-input">
                                     <label for="Initiator Group Code">Initiator Group Code</label>
@@ -331,12 +344,26 @@ $users = DB::table('users')->get();
                                 </div>
                             </div>
 
+                            
+
                             <div class="col-md-12 mb-3">
                                 <div class="group-input">
                                     <label for="If Other">If Other</label>
                                     <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
                                     <textarea class="summernote" name="initiated_if_other" id="summernote-1">
                                     </textarea>
+                                </div>
+                            </div>
+                            <div class="col-lg-12">
+                                <div class="group-input">
+                                    <label for="affected documents closed"><b>Affected Documents Closed</b></label>
+                                    <select name="affected_document_closure" id="affected_document_closure">
+                                        <option value="0">-- Select --</option>
+                                        <option value="Yes">Yes</option>
+                                        <option value="No">No</option>
+                                        <option value="NA">NA</option>
+                                      
+                                    </select>
                                 </div>
                             </div>
 
@@ -365,14 +392,7 @@ $users = DB::table('users')->get();
 
 
 
-                            <div class="col-md-12 mb-3">
-                                <div class="group-input">
-                                    <label for="Description">Description</label>
-                                    <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
-                                    <textarea class="summernote" name="description_ooc" id="summernote-1">
-                                    </textarea>
-                                </div>
-                            </div>
+                           
 
 
                             <div class="col-lg-12">
@@ -416,7 +436,7 @@ $users = DB::table('users')->get();
                                     <div class="calenderauditee">
                                         <input type="text" id="ooc_due_date" readonly
                                             placeholder="DD-MMM-YYYY"/>
-                                        <input type="date" name="ooc_due_date"  min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input" oninput="handleDateInput(this, 'ooc_due_date')"  />
+                                        <input type="date" name="ooc_due_date"   class="hide-input" oninput="handleDateInput(this, 'ooc_due_date')"  />
                                     </div>
                                     
                                 </div>
@@ -852,7 +872,7 @@ $users = DB::table('users')->get();
 
                         <div class="col-lg-6">
                             <div class="group-input">
-                                <label for="Initiator Group">Initial OOC is Invalidated/Validated</label>
+                                <label for="Initiator Group">Invalidated & Validated</label>
                                 <select name="is_repeat_stae_ooc" onchange="">
                                     <option value="0">-- select --</option>
                                     <option value="Yes">Yes</option>
@@ -863,12 +883,12 @@ $users = DB::table('users')->get();
                         </div>
 
 
-                        <div class="col-6">
+                        {{-- <div class="col-6">
                             <div class="group-input">
                                 <label for="qa_comments">Additinal Remarks (if any)</label>
                                 <textarea name="qa_comments_stage_ooc"></textarea>
                             </div>
-                        </div>
+                        </div> --}}
 
                         <div class="col-md-12 mb-3">
                             <div class="group-input">

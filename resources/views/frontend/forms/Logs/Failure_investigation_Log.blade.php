@@ -144,23 +144,24 @@
                                         
                                     </thead>
                                     <tbody>
+                                        @foreach ($failure as $failurelog)
+                                            
                                         <tr>
-
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-
+                                            
+                                            <td>{{$loop->index+1}}</td>
+                                            <td>{{$failurelog->intiation_date}}</td>
+                                            <td>{{$failurelog->short_description}}</td>
+                                            <td>{{ Helpers::getDivisionName($failurelog->division_id) }}/FE/{{ date('Y') }}/{{ str_pad($failurelog->record, 4, '0', STR_PAD_LEFT)}}</td>
+                                            <td>{{Auth::user()->name}}</td>
+                                            <td>{{$failurelog->Initiator_Group}}</td>
+                                            <td>{{Helpers::getDivisionName(session()->get('division'))}}</td>
+                                            <td>{{$failurelog->due_date}}</td>
+                                            <td>{{$failurelog->QA_final_approved_on}}</td>
+                                            <td>{{$failurelog->status}}</td>
+                                           
+                                            
                                         </tr>
+                                        @endforeach
 
                                     </tbody>
                                 </table>

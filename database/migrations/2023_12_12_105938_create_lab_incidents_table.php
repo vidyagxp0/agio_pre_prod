@@ -29,6 +29,7 @@ return new class extends Migration
             $table->string('severity_level2')->nullable();
             $table->string('Initiator_Group')->nullable();
             $table->longtext('Incident_Category_others')->nullable();
+            $table->text('capa_capa')->nullable();
 
             $table->string('initiator_group_code')->nullable();
             $table->string('Other_Ref')->nullable();
@@ -138,6 +139,11 @@ return new class extends Migration
             $table->longtext('investigation_summary_ia')->nullable();
             $table->text('type_incidence_ia')->nullable();
             $table->longtext('attachments_ia')->nullable();
+            $table->date('Incident_date_analysis_ssfi')->nullable();
+            $table->integer('investigator_qc')->nullable();
+            $table->integer('qc_review_to')->nullable();
+            $table->integer('qc_approved_to')->nullable();
+            $table->integer('suit_qc_review_to')->nullable();
             // Extension
             $table->longtext('reasoon_for_extension_e')->nullable();
             $table->longtext('extension_date_e')->nullable();

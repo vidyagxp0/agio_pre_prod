@@ -21,6 +21,7 @@ use App\Models\Observation;
 use App\Models\QMSDivision;
 use App\Models\FailureInvestigation;
 use App\Models\Ootc;
+use App\Models\RecordNumber;
 use Helpers;
 use App\Models\User;
 use Carbon\Carbon;
@@ -112,6 +113,7 @@ class DashboardController extends Controller
                 "parent" => $data->cc_id ? $data->cc_id : "-",
                 "record" => $data->record,
                 "type" => "Action-Item",
+                "due_date" => $data->due_date,
                 "parent_id" => $data->parent_id,
                 "parent_type" => $data->parent_type,
                 "division_id" => $data->division_id,
@@ -312,6 +314,7 @@ class DashboardController extends Controller
                 "id" => $data->id,
                 "parent" => $data->parent_record ? $data->parent_record : "-",
                 "record" => $data->record,
+                "due_date" => $data->due_date,
                 "division_id" => $data->division_id,
                 "type" => "Root-Cause-Analysis",
                 "parent_id" => $data->parent_id,
@@ -345,7 +348,6 @@ class DashboardController extends Controller
                 "date_close" => $data->updated_at,
             ]);
         }
-        // datas13
         foreach ($datas13 as $data) {
             $data->create = Carbon::parse($data->created_at)->format('d-M-Y h:i A');
             array_push($table, [
@@ -464,7 +466,7 @@ class DashboardController extends Controller
                 "id" => $data->id,
                 "parent" => $data->parent_record ? $data->parent_record : "-",
                 "record" => $data->record,
-                "type" => "OOC",
+                "type" => "Out Of Calibration",
                 "parent_id" => $data->parent_id,
                 "parent_type" => $data->parent_type,
                 "division_id" => $data->division_id,
@@ -921,7 +923,14 @@ class DashboardController extends Controller
             $audit = "riskAuditReport/" . $data->id;
             $division = QMSDivision::find($data->division_id);
             $division_name = $division->name;
-        } elseif ($type == "Lab-Incident") {
+        } elseif ($type == "Out_Of_Calibration") {
+            $data = OutOfCalibration::find($id);
+            $recordno = ((RecordNumber::first()->value('counter')) + 1);
+            $single = "OOCSingleReport/" . $data->id;
+            $audit = "ooc_Audit_Report/" . $data->id;
+            $division = QMSDivision::find($data->division_id);
+            $division_name = $division->name;
+        }elseif ($type == "Lab-Incident") {
             $data = LabIncident::find($id);
             $single = "LabIncidentSingleReport/" . $data->id;
             $audit = "LabIncidentAuditReport/" . $data->id;

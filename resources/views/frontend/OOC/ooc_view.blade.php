@@ -244,101 +244,144 @@ $users = DB::table('users')->get();
                     <button class="button_theme1"> <a class="text-white" href="">
                             {{-- {{ url('DeviationAuditTrial', $data->id) }} --}}
 
-                            {{-- add here url for auditTrail i.e. href="{{ url('CapaAuditTrial', $data->id) }}" --}}
-                            Audit Trail </a> </button>
+            @if ($ooc->stage == 1 && (in_array(3, $userRoleIds) || in_array(18, $userRoleIds)))
+                <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
+                    Submit
+                </button>
+                <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#cancel-modal">
+                    Cancel
+                </button>
+            @elseif($ooc->stage == 2 && (in_array(4, $userRoleIds) || in_array(18, $userRoleIds)))
+                <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
+                    Initial Phase I Investigation
+                </button>
+                {{-- <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#cancel-modal">
+                    Cancellation Request
+                </button> --}}
+                <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#rejection-modal">
+                    Request More Info
+                </button>
+                <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal">
+                    Child
+                </button>
+            @elseif($ooc->stage == 3 && (in_array(9, $userRoleIds) || in_array(18, $userRoleIds)))
+            <button class="button_theme1" name="assignable_cause_identification" data-bs-toggle="modal" data-bs-target="#signature-modal">
+                Assignable Cause Found
+            </button>
+            <button class="button_theme1" name="no_assignable_cause_identification" data-bs-toggle="modal" data-bs-target="#signature-modal1">
+                Assignable Cause Not Found
+            </button>
+            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#rejection-modal">
+                Request More Info
+            </button>
+               
+                
+            @elseif($ooc->stage == 4 && (in_array(9, $userRoleIds) || in_array(18, $userRoleIds)))
+           
+            
+            <button class="button_theme1" name="assignable_cause_identification" data-bs-toggle="modal" data-bs-target="#signature-modal">
+                Correction Completed
+            </button>
+            <button class="button_theme1" name="no_assignable_cause_identification" data-bs-toggle="modal" data-bs-target="#signature-modal1">
+                Cause Failed
+            </button>
+            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal">
+                Child
+            </button>   
+            {{-- <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
+                    All Activities Completed
+                </button> --}}
+            @elseif($ooc->stage == 5 && (in_array(3, $userRoleIds) || in_array(18, $userRoleIds)))
+                <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
+                    Obvious Results Not Found
+                </button>
+                <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal1">
+                    Obvious Results Found
+                </button>
+                {{-- <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#rejection-modal">
+                    Request More Info
+                </button> --}}
+                <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal">
+                    Child
+                </button> 
+                {{-- <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal1">
+                    Child
+                </button> --}}
+            @elseif($ooc->stage == 6 && (in_array(3, $userRoleIds) || in_array(18, $userRoleIds)))
+            {{-- <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
+                Extended Inv. Complete
+            </button>
+                <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#rejection-modal">
+                    Request More Info
+                </button> --}}
+            @elseif($ooc->stage == 7 && (in_array(3, $userRoleIds) || in_array(18, $userRoleIds) || in_array(7, $userRoleIds)))
+                <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
+                    Cause Identification
+                </button>
+                <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal1">
+                    Cause Not Identification
+                </button>
+                
+             @elseif($ooc->stage == 8 && (in_array(9, $userRoleIds) || in_array(18, $userRoleIds) || in_array(7, $userRoleIds)))
+                {{-- <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
+                    Pending Approval
+                </button> --}}
+                <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
+                    Correction Complete
+                </button>
+                <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#rejection-modal">
+                    Result Failed
+                </button>
+                <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal">
+                    Child
+                </button> 
+                
 
-                    {{-- @if ($data->stage == 1 && (in_array(3, $userRoleIds) || in_array(18, $userRoleIds))) --}}
-                    <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
-                        Submit
-                    </button>
-                    <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#cancel-modal">
-                        Cancel
-                    </button>
-                    {{-- @elseif($data->stage == 2 && (in_array(4, $userRoleIds) || in_array(18, $userRoleIds))) --}}
-                    {{-- <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#more-info-required-modal">
-                        More Info Required
-                    </button> --}}
-                    <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
-                        HOD Review Complete
-                    </button>
-                    <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#cancel-modal">
-                        Cancel
-                    </button>
-                    {{-- @elseif($data->stage == 3 && (in_array(7, $userRoleIds) || in_array(18, $userRoleIds))) --}}
-                    {{-- <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#more-info-required-modal">
-                        More Info Required
-                    </button>
-                    <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
-                        QA Initial Review Complete
-                    </button>
+                @elseif($ooc->stage == 9 && (in_array(9, $userRoleIds) || in_array(18, $userRoleIds) || in_array(7, $userRoleIds)))
+                
+               
+                @elseif($ooc->stage == 10 && (in_array(9, $userRoleIds) || in_array(18, $userRoleIds) || in_array(7, $userRoleIds)))
+                <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
+                    Correction Complete
+                </button>
+           
+                <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal">
+                    Child
+                </button>
+               
+                @elseif($ooc->stage == 11 && (in_array(9, $userRoleIds) || in_array(18, $userRoleIds) || in_array(7, $userRoleIds)))
+                <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal1">
+                    QA Review Complete
+                </button>
+           
+                <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal1">
+                    Child
+                </button>
+               
+                @elseif($ooc->stage == 12 && (in_array(9, $userRoleIds) || in_array(18, $userRoleIds) || in_array(7, $userRoleIds)))
+                <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
+                    Pending Initial Assessment & Lab Investigation
+                </button>
+                <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
+                    Send to HOD Review
+                </button>
+                <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
+                    Send to QA Initial Review
+                </button>
+                <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
+                    Approved
+                </button>
+                       
+               
+               
 
-                    <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal">
-                        Child
-                    </button> --}}
-                    {{-- @elseif(
-                        $data->stage == 4 &&
-                            (in_array(5, $userRoleIds) || in_array(18, $userRoleIds) || in_array(Auth::user()->id, $valuesArray)))
-                        @if (!$cftCompleteUser) --}}
-                    {{-- <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#more-info-required-modal">
-                        More Info Required
-                    </button> --}}
-
-                    {{-- @elseif($data->stage == 5 && (in_array(7, $userRoleIds) || in_array(18, $userRoleIds))) --}}
-                    {{-- <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#sendToInitiator">
-                        Send to Initiator
-                    </button>
-                    <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#hodsend">
-                        Send to HOD
-                    </button>
-                    <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#qasend">
-                        Send to QA Initial Review
-                    </button>
-                    <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
-                        QA Final Review Complete
-                    </button>
-                    <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal">
-                        Child
-                    </button> --}}
-                    {{-- @elseif($data->stage == 6 && (in_array(39, $userRoleIds) || in_array(18, $userRoleIds))) --}}
-                    {{-- <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#more-info-required-modal">
-                        More Info Required
-                    </button>
-                    <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
-                        Approved
-                    </button> --}}
-                    {{-- @elseif($data->stage == 7 && (in_array(3, $userRoleIds) || in_array(18, $userRoleIds))) --}}
-                    {{-- <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#sendToInitiator">
-                        Send to Opened
-                    </button>
-                    <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#hodsend">
-                        Send to HOD Review
-                    </button>
-                    <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#qasend">
-                        Send to QA Initial Review
-                    </button>
-                    <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
-                        Initiator Updated Complete
-                    </button> --}}
-                    {{-- @elseif($data->stage == 8 && (in_array(39, $userRoleIds) || in_array(18, $userRoleIds))) --}}
-                    {{-- <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#sendToInitiator">
-                        Send to Opened
-                    </button>
-                    <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#hodsend">
-                        Send to HOD Review
-                    </button> --}}
-                    {{-- <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#qasend">
-                        Send to QA Initial Review
-                    </button>
-                    <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#pending-initiator-update">
-                        Send to Pending Initiator Update
-                    </button>
-                    <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
-                        QA Final Review Complete
-                    </button> --}}
-                    {{-- @endif --}}
-                    {{-- <button class="button_theme1"> <a class="text-white" href="{{ url('rcms/qms-dashboard') }}"> Exit
-                        </a> </button> --}}
-
+                
+                <!-- <button class="button_theme1"> <a class="text-white" href="{{ url('rcms/qms-dashboard') }}">
+                        Exit
+                    </a> </button> -->
+            @endif
+            <button class="button_theme1"> <a class="text-white" href="{{ url('rcms/qms-dashboard') }}"> Exit
+                </a> </button>
 
                 </div>
 
@@ -365,42 +408,61 @@ $users = DB::table('users')->get();
                     <div class="">HOD Review</div>
                     {{-- @endif --}}
 
-                    {{-- @if ($data->stage >= 3) --}}
-                    {{-- <div class="active">QA Initial Review</div> --}}
-                    {{-- @else --}}
-                    <div class="">QA Initial Review</div>
-                    {{-- @endif --}}
+                @if ($ooc->stage >= 3)
+                    <div class="active">Under Stage I Investigation</div>
+                @else
+                    <div class="">Under Stage I Investigation</div>
+                @endif
 
-                    {{-- @if ($data->stage >= 4) --}}
-                    {{-- <div class="active">CFT Review</div> --}}
-                    {{-- @else --}}
-                    <div class="">CFT Review</div>
-                    {{-- @endif --}}
-
-
-                    {{-- @if ($data->stage >= 5) --}}
-                    {{-- <div class="active">QA Final Review</div> --}}
-                    {{-- @else --}}
-                    <div class="">QA Final Review</div>
-                    {{-- @endif --}}
-                    {{-- @if ($data->stage >= 6) --}}
-                    {{-- <div class="active">QA Head/Manager Designee Approval</div> --}}
-                    {{-- @else --}}
-                    <div class="">QA Head/Manager Designee Approval</div>
-                    {{-- @endif --}}
-                    {{-- @if ($data->stage >= 7) --}}
-                    {{-- <div class="active">Pending Initiator Update</div> --}}
-                    {{-- @else --}}
-                    <div class="">Pending Initiator Update</div>
-                    {{-- @endif --}}
-                    {{-- @if ($data->stage >= 8) --}}
-                    {{-- <div class="active">QA Final Approval</div> --}}
-                    {{-- @else --}}
-                    <div class="">QA Final Approval</div>
-                    {{-- @endif --}}
-                    {{-- @if ($data->stage >= 9) --}}
-                    {{-- <div class="bg-danger">Closed - Done</div> --}}
-                    {{-- @else --}}
+                @if ($ooc->stage >= 4)
+                    <div class="active">Under Stage I Corrective</div>
+                @else
+                    <div class="">Under Stage I Corrective</div>
+                @endif
+                @if ($ooc->stage >= 5)
+                    <div class="active">Under Stage II A Investigation</div>
+                @else
+                    <div class="">Under Stage II A Investigation</div>
+                @endif
+                {{-- @if ($ooc->stage >= 6)
+                    <div class="active">To Pending Final Approval</div>
+                @else
+                    <div class="">To Pending Final Approval</div>
+                @endif --}}
+                @if ($ooc->stage >= 7)
+                    <div class="active">Under Stage II B Investigation</div>
+                @else
+                    <div class="">Under Stage II B Investigation</div>
+                @endif
+                 @if ($ooc->stage >= 8)
+                    <div class="active">Under Stage II A Correction</div>
+                @else
+                    <div class="">Under Stage II A Correction</div>    
+                @endif
+                {{-- @if ($ooc->stage >= 9)
+                    <div class="active">To Pending Final Approval</div>
+                @else
+                    <div class="">To Pending Final Approval</div>    
+                @endif --}}
+                @if ($ooc->stage >= 10)
+                    <div class="active">Under Stage II A Correction</div>
+                @else
+                    <div class="">Under Stage II A Correction</div>    
+                @endif
+                @if ($ooc->stage >= 11)
+                    <div class="active">Discussion Manufacturing QA Correction</div>
+                @else
+                    <div class="">Discussion Manufacturing QA Correction</div>    
+                @endif
+                @if ($ooc->stage >= 12)
+                    <div class="active">Pending Final Approval</div>
+                @else
+                    <div class="">Pending Final Approval</div>    
+                @endif
+                
+                @if ($ooc->stage >= 13)
+                    <div class="bg-danger" >Closed - Done</div>
+                @else
                     <div class="">Closed - Done</div>
                     {{-- @endif --}}
                     {{-- @endif --}}
@@ -426,8 +488,9 @@ $users = DB::table('users')->get();
 
         </div>
 
-        <form action="{{ route('oocCreate') }}" method="POST" enctype="multipart/form-data">
+        <form action="{{route('OutOfCalibrationUpdate' ,$ooc->id) }}" method="POST" enctype="multipart/form-data">
             @csrf
+           
 
             <div id="step-form">
                 @if (!empty($parent_id))
@@ -482,7 +545,7 @@ $users = DB::table('users')->get();
                                    </div>
                             </div>
 
-                            <div class="col-md-6 new-date-data-field">
+                            {{-- <div class="col-md-6 new-date-data-field">
                                 <div class="group-input input-date">
                                     <label for="due-date">Due Date <span class="text-danger"></span></label>
                                     <p class="text-primary"> last date this record should be closed by</p>
@@ -494,7 +557,40 @@ $users = DB::table('users')->get();
                                     </div>
 
                                 </div>
+                            </div> --}}
+
+                            <div class="col-md-6 new-date-data-field">
+                                <div class="group-input input-date">
+                                    <label for="due-date">Due Date <span class="text-danger"></span></label>
+                                    <p class="text-primary">Last date this record should be closed by</p>
+                            
+                                    <div class="calenderauditee">
+                                        <input type="text" id="due_date_display" readonly
+                                            placeholder="DD-MMM-YYYY" value="{{ Helpers::getdateFormat($ooc->due_date) }}"
+                                            {{ $ooc->stage == 0 || $ooc->stage == 8 ? 'disabled' : '' }} />
+                                        <input type="date" id="due_date" name="due_date"
+                                            {{ $ooc->stage == 0 || $ooc->stage == 8 ? 'disabled' : '' }}
+                                            min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input"
+                                            value="{{ $ooc->due_date }}" oninput="handleDateInput(this, 'due_date_display')" />
+                                    </div>
+                                </div>
                             </div>
+
+                            {{-- javascript for due date --}}
+                            <script>
+                                                        function handleDateInput(dateInput, displayId) {
+                            const displayElement = document.getElementById(displayId);
+                            if (displayElement) {
+                                const dateValue = new Date(dateInput.value);
+                                const options = { year: 'numeric', month: 'short', day: '2-digit' };
+                                displayElement.value = dateValue.toLocaleDateString('en-GB', options).replace(/ /g, '-');
+    }
+}
+
+                            </script>
+
+                            {{-- javascript for due date --}}
+
 
 
                             <div class="col-lg-6">
@@ -522,6 +618,17 @@ $users = DB::table('users')->get();
                                     </select>
                                 </div>
                             </div>
+
+                            <div class="col-md-12 mb-3">
+                                <div class="group-input">
+                                    <label for="Description">Short Description</label>
+                                    <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
+                                    <input type="text" name="description_ooc" value="{{$ooc->description_ooc}}">
+                                    
+                                </div>
+                            </div>
+
+
                             <div class="col-lg-12">
                                 <div class="group-input">
                                     <label for="Initiator Group Code">Initiator Group Code</label>
@@ -569,24 +676,55 @@ $users = DB::table('users')->get();
                                         <input type="text" name="initiator_group_code" id="nitiator_group_code" value="" readonly>
                                     </div>
                                 </div> --}}
+                                    
+                            {{-- <div class="col-lg-12">
+                                <div class="group-input">
+                                    <label for="Initiator Group">Initiated Through</label>
+                                    <div><small class="text-primary">Please select related information</small></div>
+                                    <select name="initiated_through" onchange="">
+                                        <option value="0">-- select --</option>
+                                        <option value="Recall" {{ $ooc->is_repeat_ooc == 'Recall' ? 'selected' : '' }}>Recall</option>
+                                        
+                                        
+                                        <option value="Return"{{ $ooc->is_repeat_ooc == 'Return' ? 'selected' : '' }}>Return</option>
+                                        
+                                       
+                                        <option  value="Deviation"{{ $ooc->is_repeat_ooc == 'Deviation' ? 'selected' : '' }}>Deviation</option>
+
+                                        <option value="Complaint"{{ $ooc->is_repeat_ooc == 'Complaint' ? 'selected' : '' }}>Complaint</option>
+                                        <option value="Regulatory"{{ $ooc->is_repeat_ooc == 'Regulatory' ? 'selected' : '' }}>Regulatory</option>
+                                        
+                                        <option value="Lab Incident"{{ $ooc->is_repeat_ooc == 'Lab Incident' ? 'selected' : '' }}>Lab Incident</option>
+
+                                        <option value="Improvement"{{ $ooc->is_repeat_ooc == 'Improvement' ? 'selected' : '' }}>Improvement</option>
+                                       
+                                        <option value="Others"{{ $ooc->is_repeat_ooc == 'Others' ? 'selected' : '' }}>Others</option>
+
+                                        
+                                        
+                                    </select>
+                                </div>
+                            </div> --}}
+
 
                             <div class="col-lg-12">
                                 <div class="group-input">
                                     <label for="Initiator Group">Initiated Through</label>
                                     <div><small class="text-primary">Please select related information</small></div>
                                     <select name="initiated_through" onchange="">
-                                        <option value="">-- select --</option>
-                                        <option value="recall">Recall</option>
-                                        <option value="return">Return</option>
-                                        <option value="deviation">Deviation</option>
-                                        <option value="complaint">Complaint</option>
-                                        <option value="regulatory">Regulatory</option>
-                                        <option value="lab-incident">Lab Incident</option>
-                                        <option value="improvement">Improvement</option>
-                                        <option value="others">Others</option>
+                                        <option value="0">-- select --</option>
+                                        <option value="recall" {{ isset($ooc) && $ooc->initiated_through == 'recall' ? 'selected' : '' }}>Recall</option>
+                                        <option value="return" {{ isset($ooc) && $ooc->initiated_through == 'return' ? 'selected' : '' }}>Return</option>
+                                        <option value="deviation" {{ isset($ooc) && $ooc->initiated_through == 'deviation' ? 'selected' : '' }}>Deviation</option>
+                                        <option value="complaint" {{ isset($ooc) && $ooc->initiated_through == 'complaint' ? 'selected' : '' }}>Complaint</option>
+                                        <option value="regulatory" {{ isset($ooc) && $ooc->initiated_through == 'regulatory' ? 'selected' : '' }}>Regulatory</option>
+                                        <option value="lab-incident" {{ isset($ooc) && $ooc->initiated_through == 'lab-incident' ? 'selected' : '' }}>Lab Incident</option>
+                                        <option value="improvement" {{ isset($ooc) && $ooc->initiated_through == 'improvement' ? 'selected' : '' }}>Improvement</option>
+                                        <option value="others" {{ isset($ooc) && $ooc->initiated_through == 'others' ? 'selected' : '' }}>Others</option>
                                     </select>
                                 </div>
                             </div>
+
 
                             <div class="col-md-12 mb-3">
                                 <div class="group-input">
@@ -622,21 +760,17 @@ $users = DB::table('users')->get();
 
 
 
-                            <div class="col-md-12 mb-3">
-                                <div class="group-input">
-                                    <label for="Description">Description</label>
-                                    <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
-                                    <textarea class="summernote" name="description_ooc" id="summernote-1">
-                                    </textarea>
-                                </div>
-                            </div>
+                            
 
 
-                            <div class="col-lg-12">
-                                <div class="group-input">
-                                    <label for="Initial Attachments">Initial Attachment</label>
-                                    <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
-                                    {{-- <input type="file" id="myfile" name="Initial_Attachment"> --}}
+                            
+                            
+                        <div class="col-lg-12">
+                            <div class="group-input">
+                                <label for="Initial Attachment">Initial Attachment</label>
+                                <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
+                                {{-- <input type="file" id="myfile" name="Initial_Attachment" {{ $data->stage == 0 || $data->stage == 8 ? "disabled" : "" }}
+                                    value="{{ $data->Initial_Attachment }}"> --}}
                                     <div class="file-attachment-field">
                                         <div class="file-attachment-list" id="initial_attachment_ooc"></div>
                                         <div class="add-btn">
@@ -675,10 +809,54 @@ $users = DB::table('users')->get();
                                             placeholder="DD-MMM-YYYY"/>
                                         <input type="date" name="ooc_due_date"  min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input" oninput="handleDateInput(this, 'ooc_due_date')"  />
                                     </div>
+                                </div>
+                            </div> --}}
+                            {{-- <div class="col-lg-6 new-date-data-field">
+                                <div class="group-input input-date">
+                                    <label for="Date Due"> OOC Logged On </label>
+                                    <div><small class="text-primary">Please mention expected date of completion</small></div>
+                                    <div class="calenderauditee">
+                                        <input type="text" id="ooc_due_date" readonly
+                                            placeholder="DD-MMM-YYYY" value="{{ Helpers::getdateFormat($ooc->ooc_due_date) }}" {{ $ooc->stage == 0 || $ooc->stage == 8 ? 'disabled' : ''}}/>
+                                        <input type="date" name="ooc_due_date" {{ $ooc->stage == 0 || $ooc->stage == 8 ? 'disabled' : ''}} class="hide-input"
+                                            oninput="handleDateInput(this, 'ooc_due_date')" />
+                                    </div>
+                                </div>
+                            </div> --}}
 
+
+                            <div class="col-md-6 new-date-data-field">
+                                <div class="group-input input-date">
+                                    <label for="ooc_due_date">OOC Logged On <span class="text-danger"></span></label>
+                                    <p class="text-primary">Last date this record should be closed by</p>
+                            
+                                    <div class="calenderauditee">
+                                        <input type="text" id="ooc_due_date_display" readonly
+                                            placeholder="DD-MMM-YYYY" value="{{ Helpers::getdateFormat($ooc->ooc_due_date) }}" />
+                                        <input type="date" id="ooc_due_date" name="ooc_due_date"
+                                            class="hide-input"
+                                            value="{{ $ooc->ooc_due_date }}" oninput="handleDateInput(this, 'ooc_due_date_display')" />
+                                    </div>
                                 </div>
                             </div>
 
+
+                            <script>
+                                                            function handleDateInput(dateInput, displayId) {
+                                const displayElement = document.getElementById(displayId);
+                                if (displayElement) {
+                                    const dateValue = new Date(dateInput.value);
+                                    const options = { year: 'numeric', month: 'short', day: '2-digit' };
+                                    displayElement.value = dateValue.toLocaleDateString('en-GB', options).replace(/ /g, '-');
+                                }
+                            }
+
+                            </script>
+                            
+
+
+
+                            {{-- grid added new --}}
 
                             <div class="col-12">
                                 <div class="group-input">
@@ -841,116 +1019,20 @@ $users = DB::table('users')->get();
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <tr>
-                                                <td></td>
-                                                <td style="background: #DCD8D8">Status of calibration for other instrument(s) used for performing calibration of the referred instrument</td>
-                                                <td>
-                                                    <textarea name="what_will_be"></textarea>
-                                                </td>
-                                                <td>
-                                                    <textarea name="what_will_not_be"></textarea>
-                                                </td>
-
-                                            </tr>
-                                            <tr>
-                                                <td></td>
-                                                <td style="background: #DCD8D8">Verification of calibration standards used Primary Standard: Physical apperance, validity, certificate. Secondary standard: Physical appearance, validity</td>
-                                                <td>
-                                                    <textarea name="where_will_be"></textarea>
-                                                </td>
-                                                <td>
-                                                    <textarea name="where_will_not_be"></textarea>
-                                                </td>
-
-                                            </tr>
-                                            <tr>
-                                                <td></td>
-                                                <td style="background: #DCD8D8">Verification of dilution, calculation, weighing, Titer values and readings</td>
-                                                <td>
-                                                    <textarea name="when_will_be"></textarea>
-                                                </td>
-                                                <td>
-                                                    <textarea name="when_will_not_be"></textarea>
-                                                </td>
-
-                                            </tr>
-                                            <tr>
-                                                <td></td>
-                                                <td style="background: #DCD8D8">Verification of glassware used</td>
-                                                <td>
-                                                    <textarea name="coverage_will_be"></textarea>
-                                                </td>
-                                                <td>
-                                                    <textarea name="coverage_will_not_be"></textarea>
-                                                </td>
-
-                                            </tr>
-                                            <tr>
-                                                <td></td>
-                                                <td style="background: #DCD8D8">Verification of chromatograms/spectrums/other instrument</td>
-                                                <td>
-                                                    <textarea name="who_will_be"></textarea>
-                                                </td>
-                                                <td>
-                                                    <textarea name="who_will_not_be"></textarea>
-                                                </td>
-
-                                            </tr>
-                                            <tr>
-                                                <td></td>
-                                                <td style="background: #DCD8D8">Adequacy of system suitability checks</td>
-                                                <td>
-                                                    <textarea name="who_will_be"></textarea>
-                                                </td>
-                                                <td>
-                                                    <textarea name="who_will_not_be"></textarea>
-                                                </td>
-
-                                            </tr>
-                                            <tr>
-                                                <td></td>
-                                                <td style="background: #DCD8D8">Instrument Malfunction</td>
-                                                <td>
-                                                    <textarea name="who_will_be"></textarea>
-                                                </td>
-                                                <td>
-                                                    <textarea name="who_will_not_be"></textarea>
-                                                </td>
-
-                                            </tr>
-                                            <tr>
-                                                <td></td>
-                                                <td style="background: #DCD8D8">Check for adherence to the calibration method</td>
-                                                <td>
-                                                    <textarea name="who_will_be"></textarea>
-                                                </td>
-                                                <td>
-                                                    <textarea name="who_will_not_be"></textarea>
-                                                </td>
-
-                                            </tr>
-                                            <tr>
-                                                <td></td>
-                                                <td style="background: #DCD8D8">Previous History of instrument</td>
-                                                <td>
-                                                    <textarea name="who_will_be"></textarea>
-                                                </td>
-                                                <td>
-                                                    <textarea name="who_will_not_be"></textarea>
-                                                </td>
-
-                                            </tr>
-                                            <tr>
-                                                <td></td>
-                                                <td style="background: #DCD8D8">Others</td>
-                                                <td>
-                                                    <textarea name="who_will_be"></textarea>
-                                                </td>
-                                                <td>
-                                                    <textarea name="who_will_not_be"></textarea>
-                                                </td>
-
-                                            </tr>
+                                            @foreach ($oocevaluations as $index => $item)
+             @if(isset($oocEvolution->data[$index]))
+            <tr>
+                <td>{{ $index + 1 }}</td>
+                <td style="background: #DCD8D8">{{ $item }}</td>
+                <td>
+                    <textarea name="oocevoluation[{{ $index }}][response]">{{ $oocEvolution->data[$index]['response'] }}</textarea>
+                </td>
+                <td>
+                    <textarea name="oocevoluation[{{ $index }}][remarks]">{{ $oocEvolution->data[$index]['remarks'] }}</textarea>
+                </td>
+            </tr>
+        @endif
+    @endforeach
                                         </tbody>
                                     </table>
                                 </div>
@@ -1109,7 +1191,7 @@ $users = DB::table('users')->get();
 
                         <div class="col-lg-6">
                             <div class="group-input">
-                                <label for="Initiator Group">Initial OOC is Invalidated/Validated</label>
+                                <label for="Initiator Group">Invalidated & Validated</label>
                                 <select name="is_repeat_stae_ooc" onchange="">
                                     <option value="0">-- select --</option>
                                     <option value="Yes">Yes</option>
@@ -1119,13 +1201,13 @@ $users = DB::table('users')->get();
                             </div>
                         </div>
 
-
+{{-- 
                         <div class="col-6">
                             <div class="group-input">
                                 <label for="qa_comments">Additinal Remarks (if any)</label>
                                 <textarea name="qa_comments_stage_ooc"></textarea>
                             </div>
-                        </div>
+                        </div> --}}
 
                         <div class="col-md-12 mb-3">
                             <div class="group-input">

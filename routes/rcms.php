@@ -22,6 +22,8 @@ use App\Http\Controllers\rcms\FailureInvestigationController;
 use App\Http\Controllers\rcms\RootCauseController;
 use App\Http\Controllers\RiskManagementController;
 use App\Http\Controllers\rcms\DeviationController;
+use App\Http\Controllers\rcms\LogController;
+use App\Http\Controllers\rcms\OOCController;
 use App\Models\EffectivenessCheck;
 use Illuminate\Support\Facades\Route;
 
@@ -35,6 +37,10 @@ Route::group(['prefix' => 'rcms'], function () {
     Route::view('rcms_dashboard', 'frontend.rcms.dashboard');
     Route::view('form-division', 'frontend.forms.form-division');
     Route::get('/logout', [UserLoginController::class, 'rcmslogout'])->name('rcms.logout');
+
+    Route::get('/qms-logs/{slug}', [LogController::class, 'index'])->name('rcms.logs.show');
+    
+
 
     Route::middleware(['rcms'])->group(
         function () {
@@ -119,6 +125,7 @@ Route::group(['prefix' => 'rcms'], function () {
             Route::post('LabIncidentCancel/{id}', [LabIncidentController::class, 'LabIncidentCancel'])->name('LabIncidentCancel');
             Route::post('LabIncidentChildCapa/{id}', [LabIncidentController::class, 'lab_incident_capa_child'])->name('lab_incident_capa_child');
             Route::post('LabIncidentChildRoot/{id}', [LabIncidentController::class, 'lab_incident_root_child'])->name('lab_incident_root_child');
+            Route::post('labincidentRiskChild/{id}', [LabIncidentController::class, 'labincidentRiskChild'])->name('labincidentRisk_Child');
             Route::get('LabIncidentAuditTrial/{id}', [LabIncidentController::class, 'LabIncidentAuditTrial'])->name('audittrialLabincident');
             Route::get('auditDetailsLabIncident/{id}', [LabIncidentController::class, 'auditDetailsLabIncident'])->name('LabIncidentauditDetails');
             Route::post('root_cause_analysis/{id}', [LabIncidentController::class, 'root_cause_analysis'])->name('Child_root_cause_analysis');
@@ -248,6 +255,9 @@ Route::group(['prefix' => 'rcms'], function () {
             Route::get('audit_pdf/{id}',[OOTController::class,'auditTiailPdf']);
 
 
+            Route::get('OOCSingleReport/{id}',[OOCController::class, 'singleReports']);
+
+
 
 
 
@@ -313,6 +323,14 @@ Route::group(['prefix' => 'rcms'], function () {
             });
             // Route::get('rcms/marketComplaintSingleReport/{id}', [MarketComplaintController::class, 'singleReport']);
             Route::get('pdf-report/{id}', [MarketComplaintController::class, 'singleReport']);
+
+
+
+
+
+            
+
+
 
 
         }

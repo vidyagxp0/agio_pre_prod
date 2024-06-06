@@ -148,24 +148,27 @@
                                     </thead>
 
                                     <tbody>
+                                        @foreach ($erratalog as $logs)
+                                            
                                         <tr>
-
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-
+                                            
+                                            <td>{{$loop->index+1}}</td>
+                                            <td>{{$logs->intiation_date}}</td>
+                                            <td>{{ Helpers::getDivisionName($logs->division_id) }}/CC/{{ date('Y') }}/{{ str_pad($logs->record, 4, '0', STR_PAD_LEFT) }}</td>
+                                            <td>{{$logs->short_description}}</td>
+                                            <td>{{ Auth::user()->name }}</td>
+                                            <td>{{ Helpers::getDivisionName(session()->get('division')) }}</td>
+                                            <td>{{$logs->department_code}}</td>
+                                            <td>{{$logs->document_type}}</td>
+                                            <td>{{$logs->type_of_error}}</td>
+                                            <td>{{$logs->Date_and_time_of_correction}}</td>
+                                            <td>{{$logs->due_date}}</td>
+                                            <td>{{$logs->qa_head_approval_completed_on}}</td>
+                                            <td>{{$logs->status}}</td>
+                                            
                                         </tr>
-
+                                        @endforeach
+                                        
                                     </tbody>
                                 </table>
                             </div>
