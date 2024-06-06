@@ -109,6 +109,7 @@
                         '<td><input type="text" name="info_of_product_material['+ loopIndex +'][in_process_sample_stage]"></td>'+
                         '<td><select name="info_of_product_material['+ loopIndex +'][packingMaterialType]"><option value="primary">Primary</option><option value="secondary">Secondary</option><option value="tertiary">Tertiary</option><option value="not_applicable">Not Applicable</option></select></td>'+
                         '<td><select name="info_of_product_material['+ loopIndex +'][stabilityfor]"><option value="submission">Submission</option><option value="commercial">Commercial</option><option value="pack_evaluation">Pack Evaluation</option><option value="not_applicable">Not Applicable</option></select></td>'+
+                        '<td><button type="text" class="removeRowBtn" name="Action[]" readonly>Remove</button></td>' +
                         '</tr>';
 
                     // for (var i = 0; i < users.length; i++) {
@@ -129,7 +130,11 @@
             });
         });
     </script>
-
+    <script>
+        $(document).on('click', '.removeRowBtn', function() {
+            $(this).closest('tr').remove();
+        })
+    </script>
 
 
     <!-- --------------------------------grid-2--------------------------script -->
@@ -152,6 +157,7 @@
                                         '<td><input type="text" name="stability_study['+ loopIndex +'][pack_details]"></td>'+
                                         '<td><input type="text" name="stability_study['+ loopIndex +'][specification_no]"></td>'+
                                         '<td><input type="text" name="stability_study['+ loopIndex +'][sample_description]"></td>'+
+                                        '<td><button type="text" class="removeRowBtn" name="Action[]" readonly>Remove</button></td>' +
 
                         '</tr>';
 
@@ -191,6 +197,7 @@
                                         '<td><input type="text" name="oos_details['+ loopIndex +'][specification_limit]"></td>'+
                                         '<td><input type="text" name="oos_details['+ loopIndex +'][details_of_obvious_error]"></td>'+
                                         '<td><input type="file" name="oos_details['+ loopIndex +'][file_attachment_oos_details]"></td>'+
+                                        '<td><button type="text" class="removeRowBtn" name="Action[]" readonly>Remove</button></td>' +
 
 
                         '</tr>';
@@ -414,8 +421,8 @@
                             <div class="group-input">
                                 <label for="Initiator Group">Type </label>
                                 <select id="dynamicSelectType" name="type">
-                                    <option value="{{ route('oos.index') }}">OOS Chemical</option>
                                     <option value="{{ route('oos_micro.index') }}">OOS Micro</option>
+                                    <option value="{{ route('oos.index') }}">OOS Chemical</option>
                                     <option value="{{ route('oot.index');  }}">OOT</option>
                                 </select>
                             </div>
@@ -451,18 +458,25 @@
                                 <input type="hidden" value="{{ date('Y-m-d') }}" name="intiation_date_gi">
                             </div>
                         </div>
-                        <div class="col-lg-6">
-                            <div class="group-input">
-                                <label for="Initiator"> Due Date
-                                </label>
 
-                                <small class="text-primary">
-                                    Please mention expected date of completion
-                                </small>
-                                <input type="date" id="date" name="due_date_gi">
+                        <div class="col-6">
+                            <div class="new-date-data-field">
 
+                                <div class="group-input input-date">
+                                    <label for="Initiator">Due Date</label>
+                                    <small class="text-primary">
+                                        Please mention expected date of completion
+                                    </small>
+                                    <div class="calenderauditee">
+                                        <input type="text"  id="due_date"  readonly placeholder="DD-MMM-YYYY" />
+                                        <input type="date" name="due_date" value=""
+                                        class="hide-input"
+                                        oninput="handleDateInput(this, 'due_date')"/>
+                                    </div>
+                                </div>
                             </div>
                         </div>
+
                         <div class="col-lg-6">
                             <div class="group-input">
                                 <label for="Short Description">Severity Level</label>
@@ -595,13 +609,21 @@
 
                             </div>
                         </div>
+                        <div class="col-6">
+                            <div class="new-date-data-field">
 
-                        <div class="col-lg-6">
-                            <div class="group-input">
-                                <label for="Initiator Group">Deviation Occured On</label>
-                                <input type="date" name="deviation_occured_on_gi">
+                                <div class="group-input input-date">
+                                    <label for="Initiator Group">Deviation Occured On</label>
+                                    <div class="calenderauditee">
+                                        <input type="text"  id="deviation_occured_on_gi"  readonly placeholder="DD-MMM-YYYY" />
+                                        <input type="date" name="deviation_occured_on_gi" value=""
+                                        class="hide-input"
+                                        oninput="handleDateInput(this, 'deviation_occured_on_gi')"/>
+                                    </div>
+                                </div>
                             </div>
                         </div>
+
                         <div class="col-lg-6">
                             <div class="group-input">
                                 <label for="Initiator Group">Description</label>
@@ -643,9 +665,7 @@
                             <div class="group-input">
                                 <label for="Reference Recores">Reference System Document</label>
                                 <select multiple id="reference_record" name="reference_system_document_gi[]" id="">
-                                    <option value="">--Select---</option>
-                                    <option value="1">1</option>
-                                    <option value="2">2</option>
+                                    {{-- <option value="">--Select---</option> --}}
                                 </select>
                             </div>
                         </div>
@@ -653,7 +673,7 @@
                             <div class="group-input">
                                 <label for="Reference Recores">Reference Document</label>
                                 <select multiple id="reference_record" name="reference_document_gi[]" id="">
-                                    <option value="">--Select---</option>
+                                    {{-- <option value="">--Select---</option> --}}
                                     {{-- @foreach ($old_record as $new)
                                         <option value="{{ $new->id }}">
                                             {{ Helpers::getDivisionName($new->division_id) }}/OOS_MICRO/{{ date('Y') }}/{{ Helpers::recordFormat($new->record) }}
@@ -696,11 +716,11 @@
                         </div>
                         <div class="col-12">
                             <div class="group-input">
-                                <label for="Initiator Group">Customer*</label>
+                                <label for="Initiator Group">Customer</label>
                                 <select name="customer_gi">
                                     <option>Enter Your Selection Here</option>
-                                    <option value="1">1</option>
-                                    <option value="2">2</option>
+                                    <option value="Yes">Yes</option>
+                                    <option value="No">No</option>
                                 </select>
                             </div>
                         </div>
@@ -733,6 +753,7 @@
                                             <th style="width: 10%"> In- Process Sample Stage.</th>
                                             <th style="width: 12% pt-3">Packing Material Type</th>
                                             <th style="width: 16% pt-2"> Stability for</th>
+                                            <th style="width: 5%">Action</th>
                                         </tr>
                                     </thead>
                                     @php
@@ -742,26 +763,28 @@
                                         <td disabled >{{$serialNumber++}}</td>
                                         <td><input type="text" name="productMaterial[0][item_product_code]"></td>
                                         <td><input type="text" name="productMaterial[0][batch_no]"></td>
-                                        <td><input type="text" name="productMaterial[0][mfg_date]"></td>
-                                        <td><input type="text" name="productMaterial[0][expiry_date]"></td>
+                                        <td><input type="date" name="productMaterial[0][mfg_date]"></td>
+                                        <td><input type="date" name="productMaterial[0][expiry_date]"></td>
                                         <td><input type="text" name="productMaterial[0][label_claim]"></td>
                                         <td><input type="text" name="productMaterial[0][pack_size]"></td>
                                         <td><input type="text" name="productMaterial[0][analyst_name]"></td>
                                         <td><input type="text" name="productMaterial[0][others_specify]"></td>
                                         <td><input type="text" name="productMaterial[0][in_process_sample_stage]"></td>
                                         <td><select name="productMaterial[0][packingMaterialType]">
+                                                <option value=''>Select</option>
                                                 <option value='primary'>Primary</option>
                                                 <option value='Secondary'>Secondary</option>
                                                 <option value='tertiary'>Tertiary</option>
                                                 <option value='not applicable'>Not Applicable</option>
                                             </select> </td>
                                         <td><select name="productMaterial[0][stabilityfor]">
+                                                <option value=''>Select</option>
                                                 <option value='Submission'>Submission</option>
                                                 <option value='commercial'>Commercial</option>
                                                 <option value='pack evaluation'>Pack Evaluation</option>
                                                 <option value='not applicable'>Not Applicable</option>
                                             </select> </td>
-
+                                        <td></td>
 
 
                                     </tbody>
@@ -794,7 +817,7 @@
                                             <th style="width: 16%">Pack Details (if any)</th>
                                             <th style="width: 16%">Specification No.</th>
                                             <th style="width: 16%">Sample Description</th>
-
+                                            <th style="width: 5%">Action</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -806,6 +829,7 @@
                                         <td><input type="text" name="stability_study[0][pack_details]"></td>
                                         <td><input type="text" name="stability_study[0][specification_no]"></td>
                                         <td><input type="text" name="stability_study[0][sample_description]"></td>
+                                        <td></td>
                                     </tbody>
 
                                 </table>
@@ -839,7 +863,7 @@
                                             <th style="width: 16%">File Attachment</th>
                                             {{-- <th style="width: 16%">Submit By</th>
                                             <th style="width: 16%">Submit On</th> --}}
-
+                                            <th style="width: 5%">Action</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -852,7 +876,7 @@
                                         <td><input type="file" name="oos_details[0][file_attachment_oos_details]"></td>
                                         {{-- <td><input type="text" name="text[]"></td>
                                         <td><input type="date" name="time[]"></td> --}}
-
+                                        <td></td>
 
 
                                     </tbody>
@@ -910,9 +934,7 @@
                                 <label for="Reference Recores">Field Alert Ref.No.
                                 </label>
                                 <select multiple id="reference_record" name="field_alert_ref_no_pli[]" id="">
-                                    <option value="">--Select---</option>
-                                    <option value="1">1</option>
-                                    <option value="2">2</option>
+                                    {{-- <option value="">--Select---</option> --}}
                                 </select>
                             </div>
                         </div>
@@ -971,9 +993,7 @@
                             <div class="group-input">
                                 <label for="Reference Recores">Verification Analysis Ref.</label>
                                 <select multiple id="reference_record" name="verification_analysis_ref_pli[]" id="">
-                                    <option value="">--Select---</option>
-                                    <option value="1">1</option>
-                                    <option value="2">2</option>
+                                    {{-- <option value="">--Select---</option> --}}
                                 </select>
                             </div>
                         </div>
@@ -992,9 +1012,7 @@
                             <div class="group-input">
                                 <label for="Reference Recores">Analyst Interview Ref.</label>
                                 <select multiple id="reference_record" name="analyst_interview_ref_pli[]" id="">
-                                    <option value="">--Select---</option>
-                                    <option value="1">1</option>
-                                    <option value="2">2</option>
+                                    {{-- <option value="">--Select---</option> --}}
                                 </select>
                             </div>
                         </div>
@@ -1037,9 +1055,7 @@
                             <div class="group-input">
                                 <label for="Reference Recores">Phase I Investigation Ref.</label>
                                 <select multiple id="reference_record" name="phase_i_investigation_ref_pli[]" id="">
-                                    <option value="">--Select---</option>
-                                    <option value="1">1</option>
-                                    <option value="2">2</option>
+                                    {{-- <option value="">--Select---</option> --}}
                                 </select>
                             </div>
                         </div>
@@ -1236,9 +1252,7 @@
                                 <label for="Reference Recores">Recommended Actions Reference
                                 </label>
                                 <select multiple id="reference_record" name="recommended_actions_reference_plic[]" id="">
-                                    <option value="">--Select---</option>
-                                    <option value="1">1</option>
-                                    <option value="2">2</option>
+                                    {{-- <option value="">--Select---</option> --}}
                                 </select>
                             </div>
                         </div>
@@ -1344,7 +1358,7 @@
                                     <tbody>
                                         <td><input disabled type="text" name="info_product_oos_capa[0][serial]" value="1"></td>
                                         <td><input type="text" name="info_product_oos_capa[0][oos_number]"></td>
-                                        <td><input type="text" name="info_product_oos_capa[0][oos_reported_date]"></td>
+                                        <td><input type="date" name="info_product_oos_capa[0][oos_reported_date]"></td>
                                         <td><input type="text" name="info_product_oos_capa[0][description_of_oos]"></td>
                                         <td><input type="text" name="info_product_oos_capa[0][previous_oos_root_cause]"></td>
                                         <td><input type="text" name="info_product_oos_capa[0][capa]"></td>
@@ -1448,9 +1462,7 @@
                         <div class="group-input">
                             <label for="Audit Attachments"> Manufacturing Invest. Ref. </label>
                             <select multiple id="manufacturing_invst" name="manufacturing_invst_ref_piii[]">
-                                <option value="">--Select---</option>
-                                <option value="1">1</option>
-                                <option value="2">2</option>
+                                {{-- <option value="">--Select---</option> --}}
                             </select>
                         </div>
                     </div>
@@ -1475,9 +1487,7 @@
                         <div class="group-input">
                             <label for="Reference Recores">Re-sampling Ref. No.</label>
                             <select multiple id="reference_record" name="re_sampling_ref_no_piii[]" id="">
-                                <option value="">--Select---</option>
-                                <option value="1">1</option>
-                                <option value="2">2</option>
+                                {{-- <option value="">--Select---</option> --}}
                             </select>
                         </div>
                     </div>
@@ -1497,9 +1507,7 @@
                         <div class="group-input">
                             <label for="Reference Recores">Hypo/Exp. Reference</label>
                             <select multiple id="reference_record" name="hypo_exp_reference_piii[]" id="">
-                                <option value="">--Select---</option>
-                                <option value="1">1</option>
-                                <option value="2">2</option>
+                                {{-- <option value="">--Select---</option> --}}
                             </select>
                         </div>
                     </div>
@@ -1683,9 +1691,7 @@
                         <div class="group-input">
                             <label for="Reference Recores">Recommended Action Reference</label>
                             <select multiple id="reference_record" name="recommended_action_reference_piiqcr[]" id="">
-                                <option value="">--Select---</option>
-                                <option value="1">1</option>
-                                <option value="2">2</option>
+                                {{-- <option value="">--Select---</option> --}}
                             </select>
                         </div>
                     </div>
@@ -1702,9 +1708,7 @@
                         <div class="group-input">
                             <label for="Reference Recores">Invest ref.</label>
                             <select multiple id="reference_record" name="invest_ref_piiqcr[]" id="">
-                                <option value="">--Select---</option>
-                                <option value="1">1</option>
-                                <option value="2">2</option>
+                                {{-- <option value="">--Select---</option> --}}
                             </select>
                         </div>
                     </div>
