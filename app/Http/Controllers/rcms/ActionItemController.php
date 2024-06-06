@@ -13,6 +13,7 @@ use App\Models\RecordNumber;
 use App\Models\CheckEffecVerifi;
 use App\Models\RefInfoComments;
 use App\Models\Taskdetails;
+
 use App\Models\User;
 use Carbon\Carbon;
 use PDF;
@@ -119,7 +120,35 @@ class ActionItemController extends Controller
             $openState->Support_doc = json_encode($files);
             }
         }
+
+
+
         $openState->save();
+
+        // if (!empty($openState->short_description)) {
+        //     $history = new ActionItemAuditTrail();
+        //     $history->aci_id = $openState->id;
+        //     $history->activity_type = 'Shor Description';
+        //     $history->previous = "NA";
+        //     $history->current = $openState->short_description;
+        //     $history->comment = "Not Applicable";
+        //     $history->user_id = Auth::user()->id;
+        //     $history->user_name = Auth::user()->name;
+        //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        //     $history->origin_state = $openState->status;
+        //      $history->change_to = "Opened";
+        //         $history->change_from = "Initiator";
+        //         $history->action_name = "store";
+        //     $history->save();
+        // }
+
+
+
+
+
+
+
+
         $counter = DB::table('record_numbers')->value('counter');
         $recordNumber = str_pad($counter, 5, '0', STR_PAD_LEFT);
         $newCounter = $counter + 1;
@@ -937,7 +966,7 @@ public function actionStageCancel(Request $request, $id)
 }
 public function actionItemAuditTrialShow($id)
 {
-    $audit = ActionItemHistory::where('cc_id', $id)->orderByDESC('id')->get()->unique('activity_type');
+    $audit = ActionItemHistory::where('cc_id', $id)->orderByDESC('id')->paginate();
     $today = Carbon::now()->format('d-m-y');
     $document = ActionItem::where('id', $id)->first();
     $document->initiator = User::where('id', $document->initiator_id)->value('name');
@@ -1006,4 +1035,46 @@ public static function auditReport($id)
         return $pdf->stream('ActionItem-Audit' . $id . '.pdf');
     }
 }
+
+public function auditTrailPdf($id)
+    {
+        $doc = ActionItem::find($id);
+        $doc->originator = User::where('id', $doc->initiator_id)->value('name');
+        $data = ActionItemHistory::where('cc_id', $doc->id)->orderByDesc('id')->paginate();
+       
+        $pdf = App::make('dompdf.wrapper');
+        $time = Carbon::now();
+        $pdf = PDF::loadview('frontend.action-item.actionItem_audit_trail_pdf', compact('data', 'doc'))
+            ->setOptions([
+                'defaultFont' => 'sans-serif',
+                'isHtml5ParserEnabled' => true,
+                'isRemoteEnabled' => true,
+                'isPhpEnabled' => true,
+            ]);
+        
+        $pdf->setPaper('A4');
+        $pdf->render();
+        $canvas = $pdf->getDomPDF()->getCanvas();
+        $height = $canvas->get_height();
+        $width = $canvas->get_width();
+
+        $canvas->page_script('$pdf->set_opacity(0.1,"Multiply");');
+
+        $canvas->page_text(
+            $width / 3,
+            $height / 2,
+            $doc->status,
+            null,
+            60,
+            [0, 0, 0],
+            2,
+            6,
+            -20
+        );
+        return $pdf->stream('Action-Item-Audit_Trail' . $id . '.pdf');
+    }
+
+
+
+
 }
