@@ -13,12 +13,10 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('failure_investigation_grid_datas', function (Blueprint $table) {
-            $table->id();
-            $table->bigInteger('failure_investigation_id')->nullable();
-            $table->string('identifier')->nullable();
-            $table->longText('data')->nullable();
-            $table->timestamps();
+        Schema::table('ootcs', function (Blueprint $table) {
+            $table->longText('short_description')->nullable();
+            $table->text('pli_finaly_validity_check')->nullable();
+            $table->text('finaly_validity_check')->nullable();
         });
     }
 
@@ -29,6 +27,8 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('failure_investigation_grid_datas');
+        Schema::table('ootcs', function (Blueprint $table) {
+            //
+        });
     }
 };

@@ -10,21 +10,57 @@ use App\Models\ProductGridOot;
 use App\Models\OotChecklist;
 use App\Models\OotAuditTrial;
 use App\Models\RoleGroup;
+use App\Models\QMSDivision;
 use Carbon\Carbon;
 use App\Models\User;
+use App\Models\OpenStage;
 use App\Models\RcmsDashboardController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\App;
 use PDF;
+use Helpers;
 use Illuminate\Support\Facades\Hash;
 
 class OOTController extends Controller
 {
     public function index(Request $request)
     {
+        $cft = [];
+        $old_record = Ootc::select('id', 'division_id', 'record_number')->get();
+        $data = ((RecordNumber::first()->value('counter')) + 1);
+        $data = str_pad($data, 4, '0', STR_PAD_LEFT);
+
+        $division = QMSDivision::where('name', Helpers::getDivisionName(session()->get('division')))->first();
+
+        if ($division) {
+            $ootData = Ootc::where('division_id', $division->id)->latest()->first();
+
+            // if ($ootData) {
+            //     $record_number = $ootData->record_number ? str_pad($ootData->record_number->record_number + 1, 4, '0', STR_PAD_LEFT) : '0001';
+            // } else {
+            //     $record_number = '0001';
+            // }
+
+            if (is_object($ootData) && isset($ootData->record_number)) {
+                // Ensure $ootData->record_number is an object and has the property record_number
+                if (is_object($ootData->record_number) && isset($ootData->record_number->record_number)) {
+                    $record_number = str_pad($ootData->record_number->record_number + 1, 4, '0', STR_PAD_LEFT);
+                } else {
+                    $record_number = '0001'; // Default value if the structure is not as expected
+                }
+            } else {
+                $record_number = '0001'; // Default value if $ootData is not an object or doesn't have record_number
+            }
+        }
+
+        $currentDate = Carbon::now();
+        $formattedDate = $currentDate->addDays(30);
+        $due_date= $formattedDate->format('Y-m-d');
+        $changeControl = OpenStage::find(1);
+         if(!empty($changeControl->cft)) $cft = explode(',', $changeControl->cft);
     
-        return view('frontend.OOT.OOT_form');
+        return view('frontend.OOT.OOT_form', compact('old_record', 'data','division', 'due_date'));
     }
 
     public function store(Request $request)
@@ -34,15 +70,16 @@ class OOTController extends Controller
         // return dd($request->all());
          
         $data = new Ootc();
-        $data->initiator_id   = Auth::user()->id;
-        $data->record_number   = ((RecordNumber::first()->value('counter')) + 1);
-        $data->intiation_date = $request->intiation_date;
-        $data->due_date       = $request->due_date;
-        $data->division_id        = $request->division_id;  
+        $data->initiator_id          = Auth::user()->id;
+        $data->record_number         = ((RecordNumber::first()->value('counter')) + 1);
+        $data->intiation_date        = $request->intiation_date;
+        $data->due_date              = $request->due_date;
+        $data->division_id           = $request->division_id;  
         $data->severity_level        = $request->severity_level;
         $data->initiator_group       = $request->initiator_group;
         $data->initiator_group_code  = $request->initiator_group_code;
         $data->initiated_through     = $request->initiated_through;
+        $data->short_description     = $request->short_description;
         $data->if_others	         = $request->if_others;
         $data->is_repeat             = $request->is_repeat;
         $data->repeat_nature         = $request->repeat_nature;
@@ -52,16 +89,16 @@ class OOTController extends Controller
         $data->producct_history      = $request->producct_history;
         $data->probble_cause         = $request->probble_cause;
         $data->investigation_details = $request->investigation_details;
-        $data->comments               = $request->comments;
-        $data->reference             = $request->reference;
-        // dd($request->investigation_details);
+        $data->comments              = $request->comments;
+        // $data->reference             = $request->reference;
+        $data->reference             = implode(',', $request->reference);
          $data->productmaterialname   = $request->productmaterialname;
-        $data->grade_typeofwater     = $request->grade_typeofwater;
-        $data->sampleLocation_Point  = $request->sampleLocation_Point;
-        $data->market                = $request->market;
-        $data->customer              = $request->customer;
-        $data->analyst_name          = $request->analyst_name;
-        $data->others                = $request->others;
+        $data->grade_typeofwater      = $request->grade_typeofwater;
+        $data->sampleLocation_Point   = $request->sampleLocation_Point;
+        $data->market                 = $request->market;
+        $data->customer               = $request->customer;
+        $data->analyst_name           = $request->analyst_name;
+        $data->others                 = $request->others;
         
         if (is_array($request->reference_record )) {
             $data->reference_record = implode(',', $request->reference_record);
@@ -82,6 +119,8 @@ class OOTController extends Controller
             $data->Attachment = json_encode($files);
         }   
 
+        $data->pli_finaly_validity_check          = $request->pli_finaly_validity_check;
+        $data->finaly_validity_check              = $request->finaly_validity_check;  
         $data->corrective_action                  = $request->corrective_action;
         $data->preventive_action                  = $request->preventive_action;
         $data->inv_comments                       = $request->inv_comments;
@@ -164,8 +203,12 @@ class OOTController extends Controller
 
         $data->status = 'Opened';                 
         $data->stage = 1;
-        //  dd($data);
+    //   dd($data);
         $data->save();
+
+        $record = RecordNumber::first();
+        $record->counter = ((RecordNumber::first()->value('counter'))+1);
+        $record->update();
 
          $checkList = new OotChecklist();
         //  $checkList->ootcs_id = $data->id;
@@ -241,11 +284,12 @@ class OOTController extends Controller
          $checkList->remark_thirty_four          = $request->remark_thirty_four;
          $checkList->l_e_i_oot                   = $request->l_e_i_oot;
          $checkList->elaborate_the_reson         = $request->elaborate_the_reson;
-         $checkList->in_charge = $request->in_charge;
-         $checkList->pli_head_designee = $request->pli_head_designee;	 
-
-        //  dd($checkList);
+         $checkList->in_charge                   = $request->in_charge;
+         $checkList->pli_head_designee           = $request->pli_head_designee;	
+         $checkList->data                        = $request->data;
+        //   dd($checkList->data);
         $checkList->save();
+
         $productGrid = ProductGridOot::where(['ootcs_id' => $data->id, 'identifier' =>'product_materiel'])->firstOrCreate();
         $productGrid->ootcs_id = $data->id;
         $productGrid->identifier = 'product_materiel';
@@ -277,10 +321,10 @@ class OOTController extends Controller
         if (!empty($data->division_code)) {
             $history = new OotAuditTrial();
             $history->ootcs_id = $data->id;
-            $history->activity_type = 'Save';
+            $history->activity_type = 'division_code';
             $history->previous = "Null";
             $history->current = $data->division_code;
-            $history->comment = "NA";
+            $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -288,13 +332,15 @@ class OOTController extends Controller
             $history->save();
         }
 
+        
+
         if (!empty($data->due_date)) {
             $history = new OotAuditTrial();
             $history->ootcs_id = $data->id;
-            $history->activity_type = 'Division Code';
+            $history->activity_type = 'Due date';
             $history->previous = "Null";
-            $history->current = $data->division_code;
-            $history->comment = "NA";
+            $history->current = $data->due_date;
+            $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -308,10 +354,27 @@ class OOTController extends Controller
         if (!empty($data->initiated_through)) {
             $history = new OotAuditTrial();
             $history->ootcs_id = $data->id;
-            $history->activity_type = 'Division Code';
+            $history->activity_type = 'Initiated Through';
             $history->previous = "Null";
             $history->current = $data->initiated_through;
-            $history->comment = "NA";
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $data->status;
+            $history->change_to = "Opened";
+            $history->change_from = "Initiator";
+            $history->action_name = "Create";
+            $history->save();
+        }
+
+        if (!empty($data->short_description)) {
+            $history = new OotAuditTrial();
+            $history->ootcs_id = $data->id;
+            $history->activity_type = 'Short Description';
+            $history->previous = "Null";
+            $history->current = $data->short_description;
+            $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -325,10 +388,10 @@ class OOTController extends Controller
         if (!empty($data->if_others)) {
             $history = new OotAuditTrial();
             $history->ootcs_id = $data->id;
-            $history->activity_type = 'Division Code';
+            $history->activity_type = 'If others';
             $history->previous = "Null";
             $history->current = $data->if_others;
-            $history->comment = "NA";
+            $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -342,10 +405,10 @@ class OOTController extends Controller
         if (!empty($data->is_repeat)) {
             $history = new OotAuditTrial();
             $history->ootcs_id = $data->id;
-            $history->activity_type = 'Division Code';
+            $history->activity_type = 'is_repeat';
             $history->previous = "Null";
             $history->current = $data->is_repeat;
-            $history->comment = "NA";
+            $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -362,7 +425,7 @@ class OOTController extends Controller
             $history->activity_type = 'Repeat Nature';
             $history->previous = "Null";
             $history->current = $data->repeat_nature;
-            $history->comment = "NA";
+            $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -379,7 +442,7 @@ class OOTController extends Controller
             $history->activity_type = 'Nature Of Change';
             $history->previous = "Null";
             $history->current = $data->natureOfChange;
-            $history->comment = "NA";
+            $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -397,7 +460,7 @@ class OOTController extends Controller
             $history->activity_type = 'Oot Occured On';
             $history->previous = "Null";
             $history->current = $data->oot_occured_on;
-            $history->comment = "NA";
+            $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -414,7 +477,7 @@ class OOTController extends Controller
             $history->activity_type = 'Oot Details';
             $history->previous = "Null";
             $history->current = $data->oot_details;
-            $history->comment = "NA";
+            $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -431,7 +494,7 @@ class OOTController extends Controller
             $history->activity_type = 'Product His';
             $history->previous = "Null";
             $history->current = $data->producct_history;
-            $history->comment = "NA";
+            $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -448,7 +511,7 @@ class OOTController extends Controller
             $history->activity_type = 'Product History';
             $history->previous = "Null";
             $history->current = $data->producct_history;
-            $history->comment = "NA";
+            $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -465,7 +528,7 @@ class OOTController extends Controller
             $history->activity_type = 'Probble Cause';
             $history->previous = "Null";
             $history->current = $data->probble_cause;
-            $history->comment = "NA";
+            $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -482,7 +545,7 @@ class OOTController extends Controller
             $history->activity_type = 'Investigation Details';
             $history->previous = "Null";
             $history->current = $data->investigation_details;
-            $history->comment = "NA";
+            $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -499,7 +562,7 @@ class OOTController extends Controller
             $history->activity_type = 'Comments';
             $history->previous = "Null";
             $history->current = $data->comments;
-            $history->comment = "NA";
+            $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -510,22 +573,7 @@ class OOTController extends Controller
             $history->save();
         }
 
-        if (!empty($data->comments)) {
-            $history = new OotAuditTrial();
-            $history->ootcs_id = $data->id;
-            $history->activity_type = 'Comments';
-            $history->previous = "Null";
-            $history->current = $data->comments;
-            $history->comment = "NA";
-            $history->user_id = Auth::user()->id;
-            $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state = $data->status;
-            $history->change_to = "Opened";
-            $history->change_from = "Initiator";
-            $history->action_name = "Create";
-            $history->save();
-        }
+        
 
         if (!empty($data->productmaterialname)) {
             $history = new OotAuditTrial();
@@ -533,7 +581,7 @@ class OOTController extends Controller
             $history->activity_type = 'Product Material Name';
             $history->previous = "Null";
             $history->current = $data->productmaterialname;
-            $history->comment = "NA";
+            $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -550,7 +598,7 @@ class OOTController extends Controller
             $history->activity_type = 'Grade Type Of Water';
             $history->previous = "Null";
             $history->current = $data->grade_typeofwater;
-            $history->comment = "NA";
+            $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -567,7 +615,7 @@ class OOTController extends Controller
             $history->activity_type = 'Sample Location Point';
             $history->previous = "Null";
             $history->current = $data->sampleLocation_Point;
-            $history->comment = "NA";
+            $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -584,7 +632,7 @@ class OOTController extends Controller
             $history->activity_type = 'Market';
             $history->previous = "Null";
             $history->current = $data->market;
-            $history->comment = "NA";
+            $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -601,7 +649,7 @@ class OOTController extends Controller
             $history->activity_type = 'customer';
             $history->previous = "Null";
             $history->current = $data->market;
-            $history->comment = "NA";
+            $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -618,7 +666,7 @@ class OOTController extends Controller
             $history->activity_type = 'analyst_name';
             $history->previous = "Null";
             $history->current = $data->analyst_name;
-            $history->comment = "NA";
+            $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -635,7 +683,7 @@ class OOTController extends Controller
             $history->activity_type = 'Reference Record';
             $history->previous = "Null";
             $history->current = $data->reference_record;
-            $history->comment = "NA";
+            $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -652,7 +700,7 @@ class OOTController extends Controller
             $history->activity_type = 'Others';
             $history->previous = "Null";
             $history->current = $data->others;
-            $history->comment = "NA";
+            $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -669,7 +717,7 @@ class OOTController extends Controller
             $history->activity_type = 'stability For';
             $history->previous = "Null";
             $history->current = $data->stability_for;
-            $history->comment = "NA";
+            $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -688,9 +736,17 @@ class OOTController extends Controller
 
     public function ootShow($id){
 
-       $data = Ootc::where('id',$id)->first();      
+        $cft = [];
+        $revised_date = "";
+        
+        //dd($data);
+        
+        $data = Ootc::where('id',$id)->first();  
+        $old_record = Ootc::select('id', 'division_id', 'record_number')->get();
+       $formattedDate = Helpers::getdateFormat($data->due_date);    
+       $occuredDate = Helpers::getdateFormat($data->oot_occured_on); 
        $grid_product_mat = ProductGridOot::where(['ootcs_id' => $id, 'identifier' => 'product_materiel'])->first();
-    //    dd($grid_product_mat);
+    //    dd($grid_product_mat); 
        $gridStability = ProductGridOot::where(['ootcs_id' => $id, 'identifier' => 'details_of_stability'])->first();
        $GridOotRes = ProductGridOot::where(['ootcs_id' => $id, 'identifier' => 'oot_result'])->first();
     // dd($GridOotRes);
@@ -701,7 +757,7 @@ class OOTController extends Controller
     //   dd($checkList);
        $record_number = ((RecordNumber::first()->value('counter')) + 1);
        $record_number = str_pad($record_number, 4, '0', STR_PAD_LEFT);
-        return view('frontend.OOT.ootView',compact('data','record_number','grid_product_mat','checkList','gridStability','GridOotRes','InfoProductMat'));
+        return view('frontend.OOT.ootView',compact('data','record_number','grid_product_mat','checkList','gridStability','GridOotRes','InfoProductMat','formattedDate','occuredDate','old_record'));
 
     }
 
@@ -717,6 +773,7 @@ class OOTController extends Controller
         $data->initiator_group       = $request->initiator_group;
         $data->initiator_group_code  =$request->initiator_group_code;
         $data->initiated_through     = $request->initiated_through;
+        $data->short_description     = $request->short_description;
         $data->if_others	         = $request->if_others;
         $data->is_repeat             = $request->is_repeat;
         $data->repeat_nature         = $request->repeat_nature;
@@ -727,7 +784,7 @@ class OOTController extends Controller
         $data->probble_cause         = $request->probble_cause;
         $data->investigation_details = $request->investigation_details;
         $data->comments              = $request->comments;
-        $data->reference             = $request->reference;
+        $data->reference             = implode('',$request->reference );
         $data->productmaterialname   = $request->productmaterialname;
         $data->grade_typeofwater     = $request->grade_typeofwater;
         $data->sampleLocation_Point  = $request->sampleLocation_Point;
@@ -753,6 +810,9 @@ class OOTController extends Controller
             // Save the file paths in the database
             $data->Attachment = json_encode($files);
         }  
+        
+        $data->pli_finaly_validity_check             = $request->pli_finaly_validity_check;
+        $data->finaly_validity_check                 = $request->finaly_validity_check; 
         $data->corrective_action                     = $request->corrective_action;
         $data->preventive_action                     = $request->preventive_action;
         $data->inv_comments                          = $request->inv_comments;
@@ -887,15 +947,15 @@ class OOTController extends Controller
          $checkList->responce_eleven    = $request->responce_eleven;
          $checkList->responce_twele     = $request->responce_twele;
          $checkList->responce_thrteen   = $request->responce_thrteen;
-         $checkList->responce_fourteen  = $request->responce_fourteen;
-         $checkList->responce_fifteen   = $request->responce_fifteen;
-         $checkList->responce_sixteen   = $request->responce_sixteen;
-         $checkList->responce_seventeen = $request->responce_seventeen;
-         $checkList->responce_eighteen  = $request->responce_eighteen;
-         $checkList->responce_ninteen   = $request->responce_ninteen;
-         $checkList->responce_twenty    = $request->responce_twenty;
-         $checkList->responce_twenty_one = $request->responce_twenty_one;
-         $checkList->responce_twenty_two = $request->responce_twenty_two;
+         $checkList->responce_fourteen      = $request->responce_fourteen;
+         $checkList->responce_fifteen       = $request->responce_fifteen;
+         $checkList->responce_sixteen       = $request->responce_sixteen;
+         $checkList->responce_seventeen     = $request->responce_seventeen;
+         $checkList->responce_eighteen      = $request->responce_eighteen;
+         $checkList->responce_ninteen       = $request->responce_ninteen;
+         $checkList->responce_twenty        = $request->responce_twenty;
+         $checkList->responce_twenty_one    = $request->responce_twenty_one;
+         $checkList->responce_twenty_two    = $request->responce_twenty_two;
          $checkList->responce_twenty_three  =  $request->responce_twenty_three;
          $checkList->responce_twenty_four   =  $request->responce_twenty_four;
          $checkList->responce_twenty_five   =  $request->responce_twenty_five;
@@ -946,6 +1006,7 @@ class OOTController extends Controller
          $checkList->elaborate_the_reson    = $request->elaborate_the_reson;
          $checkList->in_charge              = $request->in_charge;
          $checkList->pli_head_designee      = $request->pli_head_designee;
+         $checkList->data                        = $request->data;
         $checkList->update();
 
 
@@ -953,10 +1014,10 @@ class OOTController extends Controller
         if ($lastDocument->division_code != $data->division_code) {
             $history = new OotAuditTrial();
             $history->ootcs_id = $data->id;
-            $history->activity_type = 'Save';
+            $history->activity_type = 'division_code';
             $history->previous =  $lastDocument->division_code;
             $history->current = $data->division_code;
-            $history->comment = "NA";
+            $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -967,13 +1028,13 @@ class OOTController extends Controller
             $history->save();
         }
 
-        if ($lastDocument->due_date) {
+        if ($lastDocument->due_date != $data->due_date  ) {
             $history = new OotAuditTrial();
             $history->ootcs_id = $data->id;
             $history->activity_type = 'Due Date';
             $history->previous = $lastDocument->due_date;
             $history->current = $data->due_date;
-            $history->comment = "NA";
+            $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -984,13 +1045,30 @@ class OOTController extends Controller
             $history->save();
         }
 
-        if ($lastDocument->initiated_through) {
+        if ($lastDocument->short_description != $data->short_description) {
+            $history = new OotAuditTrial();
+            $history->ootcs_id = $data->id;
+            $history->activity_type = 'short_description';
+            $history->previous =  $lastDocument->short_description;
+            $history->current = $data->short_description;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to = "Not Applicable";
+            $history->change_from = $lastDocument->status;
+            $history->action_name = "Update";
+            $history->save();
+        }
+
+        if ($lastDocument->initiated_through != $data->initiated_through) {
             $history = new OotAuditTrial();
             $history->ootcs_id = $data->id;
             $history->activity_type = 'Initiated Through';
             $history->previous = $lastDocument->initiated_through;
             $history->current = $data->initiated_through;
-            $history->comment = "NA";
+            $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -1001,13 +1079,13 @@ class OOTController extends Controller
             $history->save();
         }
 
-        if ($lastDocument->if_others) {
+        if ($lastDocument->if_others != $data->if_others) {
             $history = new OotAuditTrial();
             $history->ootcs_id = $data->id;
             $history->activity_type = 'If Others';
             $history->previous = $lastDocument->if_others;
             $history->current = $data->if_others;
-            $history->comment = "NA";
+            $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -1018,13 +1096,13 @@ class OOTController extends Controller
             $history->save();
         }
 
-        if ($lastDocument->is_repeat) {
+        if ($lastDocument->is_repeat != $data->is_repeat) {
             $history = new OotAuditTrial();
             $history->ootcs_id = $data->id;
             $history->activity_type = 'Is Repeat';
             $history->previous = $lastDocument->is_repeat;
             $history->current = $data->is_repeat;
-            $history->comment = "NA";
+            $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -1035,13 +1113,13 @@ class OOTController extends Controller
             $history->save();
         }
 
-        if ($lastDocument->repeat_nature) {
+        if ($lastDocument->repeat_nature != $data->repeat_nature) {
             $history = new OotAuditTrial();
             $history->ootcs_id = $data->id;
             $history->activity_type = 'Repeat Nature';
             $history->previous = $lastDocument->repeat_nature;
             $history->current = $data->repeat_nature;
-            $history->comment = "NA";
+            $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -1052,13 +1130,13 @@ class OOTController extends Controller
             $history->save();
         }
 
-        if ($lastDocument->natureofChange) {
+        if ($lastDocument->natureofChange != $data->natureofChange) {
             $history = new OotAuditTrial();
             $history->ootcs_id = $data->id;
             $history->activity_type = 'Nature Of Change';
             $history->previous = $lastDocument->natureOfChange;
             $history->current = $data->natureOfChange;
-            $history->comment = "NA";
+            $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -1070,13 +1148,13 @@ class OOTController extends Controller
         }
 
         
-        if ($lastDocument->oot_occured_on) {
+        if ($lastDocument->oot_occured_on != $data->oot_occured_on) {
             $history = new OotAuditTrial();
             $history->ootcs_id = $data->id;
             $history->activity_type = 'Oot Occured On';
             $history->previous = $lastDocument->oot_occured_on;
             $history->current = $data->oot_occured_on;
-            $history->comment = "NA";
+            $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -1087,13 +1165,13 @@ class OOTController extends Controller
             $history->save();
         }
 
-        if ($lastDocument->oot_details) {
+        if ($lastDocument->oot_details != $data->oot_details ) {
             $history = new OotAuditTrial();
             $history->ootcs_id = $data->id;
             $history->activity_type = 'Oot Details';
             $history->previous = $lastDocument->oot_details;
             $history->current = $data->oot_details;
-            $history->comment = "NA";
+            $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -1103,13 +1181,13 @@ class OOTController extends Controller
             $history->action_name = "Update";
             $history->save();
         }
-        if ($lastDocument->producct_history) {
+        if ($lastDocument->producct_history != $data->producct_history) {
             $history = new OotAuditTrial();
             $history->ootcs_id = $data->id;
             $history->activity_type = 'Product History';
             $history->previous = $lastDocument->producct_history;
             $history->current = $data->producct_history;
-            $history->comment = "NA";
+            $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -1120,13 +1198,13 @@ class OOTController extends Controller
             $history->save();
         }
 
-        if ($lastDocument->probble_cause) {
+        if ($lastDocument->probble_cause != $data->probble_cause) {
             $history = new OotAuditTrial();
             $history->ootcs_id = $data->id;
             $history->activity_type = 'Probble Cause';
             $history->previous = $lastDocument->probble_cause;
             $history->current = $data->probble_cause;
-            $history->comment = "NA";
+            $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -1137,13 +1215,13 @@ class OOTController extends Controller
             $history->save();
         }
 
-        if ($lastDocument->investigation_details) {
+        if ($lastDocument->investigation_details != $data->investigation_details) {
             $history = new OotAuditTrial();
             $history->ootcs_id = $data->id;
             $history->activity_type = 'Investigation Details';
             $history->previous = $lastDocument->investigation_details;
             $history->current = $data->investigation_details;
-            $history->comment = "NA";
+            $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -1154,13 +1232,13 @@ class OOTController extends Controller
             $history->save();
         }
 
-        if ($lastDocument->comments) {
+        if ($lastDocument->comments != $data->comments) {
             $history = new OotAuditTrial();
             $history->ootcs_id = $data->id;
             $history->activity_type = 'Comments';
             $history->previous = $lastDocument->comments;
             $history->current = $data->comments;
-            $history->comment = "NA";
+            $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -1172,13 +1250,13 @@ class OOTController extends Controller
         }
 
 
-        if ($lastDocument->productmaterialname) {
+        if ($lastDocument->productmaterialname != $data->productmaterialname) {
             $history = new OotAuditTrial();
             $history->ootcs_id = $data->id;
             $history->activity_type = 'Product Material Name';
             $history->previous = $lastDocument->productmaterialname;
             $history->current = $data->productmaterialname;
-            $history->comment = "NA";
+            $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -1189,13 +1267,13 @@ class OOTController extends Controller
             $history->save();
         }
 
-        if ($lastDocument->grade_typeofwater) {
+        if ($lastDocument->grade_typeofwater != $data->grade_typeofwater) {
             $history = new OotAuditTrial();
             $history->ootcs_id = $data->id;
             $history->activity_type = 'Grade Type Of Water';
             $history->previous = $lastDocument->grade_typeofwater;
             $history->current = $data->grade_typeofwater;
-            $history->comment = "NA";
+            $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -1206,13 +1284,13 @@ class OOTController extends Controller
             $history->save();
         }
 
-        if ($lastDocument->sampleLocation_Point) {
+        if ($lastDocument->sampleLocation_Point != $data->sampleLocation_Point) {
             $history = new OotAuditTrial();
             $history->ootcs_id = $data->id;
             $history->activity_type = 'Sample Location Point';
             $history->previous = $lastDocument->sampleLocation_Point;
             $history->current = $data->sampleLocation_Point;
-            $history->comment = "NA";
+            $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -1223,13 +1301,13 @@ class OOTController extends Controller
             $history->save();
         }
 
-        if ($lastDocument->market) {
+        if ($lastDocument->market  != $data-> market) {
             $history = new OotAuditTrial();
             $history->ootcs_id = $data->id;
             $history->activity_type = 'Market';
             $history->previous = $lastDocument->market;
             $history->current = $data->market;
-            $history->comment = "NA";
+            $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -1240,13 +1318,13 @@ class OOTController extends Controller
             $history->save();
         }
 
-        if ($lastDocument->customer) {
+        if ($lastDocument->customer != $data->market) {
             $history = new OotAuditTrial();
             $history->ootcs_id = $data->id;
             $history->activity_type = 'customer';
             $history->previous = $lastDocument->customer;
             $history->current = $data->customer;
-            $history->comment = "NA";
+            $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -1257,13 +1335,13 @@ class OOTController extends Controller
             $history->save();
         }
 
-        if ($lastDocument->analyst_name) {
+        if ($lastDocument->analyst_name != $data->analyst_name) {
             $history = new OotAuditTrial();
             $history->ootcs_id = $data->id;
             $history->activity_type = 'Analyst Name';
             $history->previous = $lastDocument->analyst_name;
             $history->current = $data->analyst_name;
-            $history->comment = "NA";
+            $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -1274,13 +1352,13 @@ class OOTController extends Controller
             $history->save();
         }
 
-        if ($lastDocument->reference_record) {
+        if ($lastDocument->reference_record != $data->reference_record) {
             $history = new OotAuditTrial();
             $history->ootcs_id = $data->id;
             $history->activity_type = 'Reference Record';
             $history->previous = $lastDocument->reference_record;
             $history->current = $data->reference_record;
-            $history->comment = "NA";
+            $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -1291,13 +1369,13 @@ class OOTController extends Controller
             $history->save();
         }
 
-        if ($lastDocument->others) {
+        if ($lastDocument->others != $data-> others) {
             $history = new OotAuditTrial();
             $history->ootcs_id = $data->id;
             $history->activity_type = 'Others';
             $history->previous = $lastDocument->others;
             $history->current = $data->others;
-            $history->comment = "NA";
+            $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -1308,13 +1386,13 @@ class OOTController extends Controller
             $history->save();
         }
 
-        if ($lastDocument->stability_for) {
+        if ($lastDocument->stability_for != $data->stability_for) {
             $history = new OotAuditTrial();
             $history->ootcs_id = $data->id;
             $history->activity_type = 'stability For';
             $history->previous = $lastDocument->stability_for;
             $history->current = $data->stability_for;
-            $history->comment = "NA";
+            $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -1409,6 +1487,7 @@ class OOTController extends Controller
                                 $history->action = "Submit";
                                 $history->change_to = "Pending Lab Supervisor Review";
                                 $history->change_from = $lastDocument->status;
+                                $history->action_name = $lastDocument->status;
                                 $history->save();
                             //     $list = Helpers::getLeadAuditeeUserList();
                             //     foreach ($list as $u) {
@@ -1450,8 +1529,10 @@ class OOTController extends Controller
                             $history->origin_state = $lastDocument->status;
                             $history->stage = "Preliminary Lab Investigation";
                             $history->action = "Submit";
-                                $history->change_to = "Pending preliminary lab investigation";
-                                $history->change_from = $lastDocument->status;
+                            $history->change_to = "Pending preliminary lab investigation";
+                             $history->change_from = $lastDocument->status;
+                             $history->action_name = $lastDocument->status;
+
                             $history->save();
                     //     $list = Helpers::getQAUserList();
                     //     foreach ($list as $u) {
@@ -1493,6 +1574,8 @@ class OOTController extends Controller
                             $history->action = "Submit";
                                 $history->change_to = "Pending Capa";
                                 $history->change_from = $lastDocument->status;
+                                $history->action_name = $lastDocument->status;
+                                
                             $history->save();
                         //     $list = Helpers::getLeadAuditeeUserList();
                         //     foreach ($list as $u) {
@@ -1535,6 +1618,7 @@ class OOTController extends Controller
                             $history->action = "Submit";
                                 $history->change_to = "Pending Final Approval";
                                 $history->change_from = $lastDocument->status;
+                                $history->action_name = $lastDocument->status;
                             $history->save();
                         //     $list = Helpers::getLeadAuditeeUserList();
                         //     foreach ($list as $u) {
@@ -1577,6 +1661,8 @@ class OOTController extends Controller
                 $history->action = "Submit";
                                 $history->change_to = "Pending CAPA";
                                 $history->change_from = $lastDocument->status;
+                                $history->action_name = $lastDocument->status;
+
                 $history->save();
                     //     $list = Helpers::getLeadAuditeeUserList();
                     //     foreach ($list as $u) {
@@ -1619,6 +1705,8 @@ class OOTController extends Controller
                 $history->action = "Submit";
                                 $history->change_to = "Close done";
                                 $history->change_from = $lastDocument->status;
+                                $history->action_name = $lastDocument->status;
+
                 $history->save();
                 //     $list = Helpers::getLeadAuditeeUserList();
                 //     foreach ($list as $u) {

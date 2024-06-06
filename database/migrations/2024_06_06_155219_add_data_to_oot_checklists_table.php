@@ -13,12 +13,8 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('failure_investigation_grid_datas', function (Blueprint $table) {
-            $table->id();
-            $table->bigInteger('failure_investigation_id')->nullable();
-            $table->string('identifier')->nullable();
+        Schema::table('oot_checklists', function (Blueprint $table) {
             $table->longText('data')->nullable();
-            $table->timestamps();
         });
     }
 
@@ -29,6 +25,8 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('failure_investigation_grid_datas');
+        Schema::table('oot_checklists', function (Blueprint $table) {
+            //
+        });
     }
 };

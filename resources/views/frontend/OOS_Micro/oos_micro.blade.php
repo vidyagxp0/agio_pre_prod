@@ -412,6 +412,17 @@
                     <div class="row">
                         <div class="col-lg-6">
                             <div class="group-input">
+                                <label for="Initiator Group">Type </label>
+                                <select id="dynamicSelectType" name="type">
+                                    <option value="{{ route('oos.index') }}">OOS Chemical</option>
+                                    <option value="{{ route('oos_micro.index') }}">OOS Micro</option>
+                                    <option value="{{ route('oot.index');  }}">OOT</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-6">
+                            <div class="group-input">
                                 <label for="Initiator"> Record Number </label>
                                 <input disabled type="text" name="record">
                                 {{-- value="{{ Helpers::getDivisionName(session()->get('division')) }}/OOS_MICRO/{{ date('Y') }}/{{ $record_number }}"> --}}
@@ -1435,6 +1446,7 @@
 
                     <div class="col-lg-6">
                         <div class="group-input">
+                            <label for="Audit Attachments"> Manufacturing Invest. Ref. </label>
                             <select multiple id="manufacturing_invst" name="manufacturing_invst_ref_piii[]">
                                 <option value="">--Select---</option>
                                 <option value="1">1</option>
@@ -9256,6 +9268,10 @@
         document.getElementById('initiator_group').addEventListener('change', function() {
             var selectedValue = this.value;
             document.getElementById('initiator_group_code').value = selectedValue;
+        });
+        document.getElementById("dynamicSelectType").addEventListener("change", function() {
+            var selectedRoute = this.value;
+            window.location.href = selectedRoute; // Redirect to the selected route
         });
     </script>
     <script>
