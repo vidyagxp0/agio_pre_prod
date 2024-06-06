@@ -29,6 +29,7 @@ return new class extends Migration
             $table->string('severity_level2')->nullable();
             $table->string('Initiator_Group')->nullable();
             $table->longtext('Incident_Category_others')->nullable();
+            $table->text('capa_capa')->nullable();
 
             $table->string('initiator_group_code')->nullable();
             $table->string('Other_Ref')->nullable();
@@ -66,6 +67,43 @@ return new class extends Migration
             $table->text('status')->nullable();
             $table->integer('stage')->nullable();
 
+
+            //System Suitability Failure Incidence
+            $table->longText('instrument_involved_SSFI')->nullable();
+            $table->string('stage_SSFI')->nullable();
+            $table->string('stability_condition_SSFI')->nullable();
+            $table->string('interval_SSFI')->nullable();
+            $table->string('test_SSFI')->nullable();
+            $table->string('date_of_analysis_SSFI')->nullable();
+            $table->string('specification_number_SSFI')->nullable();
+            $table->string('stp_number_SSFI')->nullable();
+            $table->string('name_of_analyst_SSFI')->nullable();
+            $table->string('date_of_incidence_SSFI')->nullable();
+            $table->string('qc_reviewer_SSFI')->nullable();
+            $table->longText('description_of_incidence_SSFI')->nullable();
+            $table->longText('detail_investigation_SSFI')->nullable();
+            $table->longText('proposed_corrective_action_SSFI')->nullable();
+            $table->longText('root_cause_SSFI')->nullable();
+            $table->longText('incident_summary_SSFI')->nullable();
+            $table->string('investigator_qc_SSFI')->nullable();
+            $table->string('reviewed_by_qc_SSFI')->nullable();
+            $table->longText('file_attachment_SSFI')->nullable();
+
+            //Closure
+            $table->string('closure_of_incident_closure')->nullable();
+            $table->string('affected_documents_closed_closure')->nullable();
+            $table->string('qc_head_remark_closure')->nullable();
+            $table->string('qc_head_closure')->nullable();
+            $table->longText('qa_head_remark_closure')->nullable();
+            $table->longText('file_attachment_closure')->nullable();
+
+
+
+
+
+
+
+
             $table->text('submitted_by')->nullable();
             $table->text('verification_complete_completed_by')->nullable();
             $table->text('preliminary_completed_by')->nullable();
@@ -102,7 +140,7 @@ return new class extends Migration
             $table->text('review_completed_on')->nullable();
             $table->text('all_activities_completed_by')->nullable();
             $table->text('all_activities_completed_on')->nullable();
-          
+
             // new added -- General Information
 
             $table->longtext('incident_involved_others_gi')->nullable();
@@ -138,6 +176,11 @@ return new class extends Migration
             $table->longtext('investigation_summary_ia')->nullable();
             $table->text('type_incidence_ia')->nullable();
             $table->longtext('attachments_ia')->nullable();
+            $table->date('Incident_date_analysis_ssfi')->nullable();
+            $table->integer('investigator_qc')->nullable();
+            $table->integer('qc_review_to')->nullable();
+            $table->integer('qc_approved_to')->nullable();
+            $table->integer('suit_qc_review_to')->nullable();
             // Extension
             $table->longtext('reasoon_for_extension_e')->nullable();
             $table->longtext('extension_date_e')->nullable();
@@ -150,10 +193,10 @@ return new class extends Migration
             $table->text('extension_date__tc')->nullable();
             $table->text('extension_date_idtc')->nullable();
             $table->longtext('extension_attachments_e')->nullable();
-            
 
 
-            
+
+
 
 
 

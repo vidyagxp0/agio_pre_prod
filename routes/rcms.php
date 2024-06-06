@@ -19,11 +19,13 @@ use App\Http\Controllers\rcms\OOTController;
 use App\Http\Controllers\rcms\OOSController;
 use App\Http\Controllers\rcms\MarketComplaintController;
 use App\Http\Controllers\rcms\FailureInvestigationController;
+use App\Http\Controllers\OOSMicroController;
 use App\Http\Controllers\rcms\NonConformaceController;
 use App\Http\Controllers\rcms\RootCauseController;
 use App\Http\Controllers\RiskManagementController;
 use App\Http\Controllers\rcms\DeviationController;
 use App\Http\Controllers\rcms\LogController;
+use App\Http\Controllers\rcms\OOCController;
 use App\Models\EffectivenessCheck;
 use Illuminate\Support\Facades\Route;
 
@@ -39,6 +41,7 @@ Route::group(['prefix' => 'rcms'], function () {
     Route::get('/logout', [UserLoginController::class, 'rcmslogout'])->name('rcms.logout');
 
     Route::get('/qms-logs/{slug}', [LogController::class, 'index'])->name('rcms.logs.show');
+    
 
 
     Route::middleware(['rcms'])->group(
@@ -124,12 +127,14 @@ Route::group(['prefix' => 'rcms'], function () {
             Route::post('LabIncidentCancel/{id}', [LabIncidentController::class, 'LabIncidentCancel'])->name('LabIncidentCancel');
             Route::post('LabIncidentChildCapa/{id}', [LabIncidentController::class, 'lab_incident_capa_child'])->name('lab_incident_capa_child');
             Route::post('LabIncidentChildRoot/{id}', [LabIncidentController::class, 'lab_incident_root_child'])->name('lab_incident_root_child');
+            Route::post('labincidentRiskChild/{id}', [LabIncidentController::class, 'labincidentRiskChild'])->name('labincidentRisk_Child');
             Route::get('LabIncidentAuditTrial/{id}', [LabIncidentController::class, 'LabIncidentAuditTrial'])->name('audittrialLabincident');
             Route::get('auditDetailsLabIncident/{id}', [LabIncidentController::class, 'auditDetailsLabIncident'])->name('LabIncidentauditDetails');
             Route::post('root_cause_analysis/{id}', [LabIncidentController::class, 'root_cause_analysis'])->name('Child_root_cause_analysis');
             Route::get('LabIncidentSingleReport/{id}', [LabIncidentController::class, 'singleReport'])->name('LabIncidentSingleReport');
             Route::get('LabIncidentAuditReport/{id}', [LabIncidentController::class, 'auditReport'])->name('LabIncidentAuditReport');
             //------------------------------------
+
 
 
             Route::post('create', [AuditProgramController::class, 'create'])->name('createAuditProgram');
@@ -175,6 +180,8 @@ Route::group(['prefix' => 'rcms'], function () {
             Route::post('child_management_Review/{id}', [ManagementReviewController::class, 'child_management_Review'])->name('childmanagementReview');
             Route::get('internalSingleReport/{id}', [InternalauditController::class, 'singleReport'])->name('internalSingleReport');
             Route::get('internalauditReport/{id}', [InternalauditController::class, 'auditReport'])->name('internalauditReport');
+            Route::get('oos_micro/audit_report/{id}', [OOSMicroController::class, 'auditReport'])->name('audit_report');
+            Route::get('oos_micro/single_report/{id}', [OOSMicroController::class, 'singleReport'])->name('oos_micro/single_report');
 
             Route::post('errata/stages/{id}',[ErrataController::class, 'stageChange'])->name('errata.stage');
             Route::post('errata/stagesreject/{id}',[ErrataController::class, 'stageReject'])->name('errata.stagereject');
@@ -285,6 +292,9 @@ Route::group(['prefix' => 'rcms'], function () {
             Route::get('audit_pdf/{id}',[OOTController::class,'auditTiailPdf']);
 
 
+            Route::get('OOCSingleReport/{id}',[OOCController::class, 'singleReports']);
+
+
 
 
 
@@ -343,10 +353,19 @@ Route::group(['prefix' => 'rcms'], function () {
                 Route::get('MarketAuditReport/{id}', [MarketComplaintController::class, 'auditReport'])->name('marketAuditReport');
                 // Route::get('marketauditTrailPdf/{id}', [MarketComplaintController::class, 'auditTrailPdf'])->name('marketauditTrailPdf');
                 Route::get('marketauditTrailPdf/{id}', [MarketComplaintController::class, 'auditTrailPdf'])->name('marketauditTrailPdf');
+            Route::post('MarketComplaintC_AChild/{id}', [MarketComplaintController::class, 'MarketComplaintCapa_ActionChild'])->name('capa_action_child');
+            Route::post('MarketComplaintRCA_ActionChild/{id}', [MarketComplaintController::class, 'MarketComplaintRca_actionChild'])->name('rca_action_child');
+            Route::post('MarketComplaintRegul_Effec_Child/{id}', [MarketComplaintController::class, 'MarketComplaintRegu_Effec_Child'])->name('Regu_Effec_child');
+
             });
             // Route::get('rcms/marketComplaintSingleReport/{id}', [MarketComplaintController::class, 'singleReport']);
             Route::get('pdf-report/{id}', [MarketComplaintController::class, 'singleReport']);
 
+
+
+
+
+            
 
 
 

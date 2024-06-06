@@ -146,8 +146,12 @@
                                     </thead>
 
                                     <tbody>
+                                        @foreach ($nonconformance as $logs)
+                                            
                                         <tr>
-
+                                            
+                                            <td>{{$loop->index+1}}</td>
+                                            <td><td>
                                             <td></td>
                                             <td></td>
                                             <td></td>
@@ -157,11 +161,10 @@
                                             <td></td>
                                             <td></td>
                                             <td></td>
-                                            <td></td>
-                                            <td></td>
-
+                                            
                                         </tr>
-
+                                        
+                                        @endforeach
                                     </tbody>
                                 </table>
                             </div>

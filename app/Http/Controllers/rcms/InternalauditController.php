@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\RecordNumber;
 use Illuminate\Http\Request;
 use App\Models\InternalAudit;
-use App\Models\{InternalAuditTrial,IA_checklist_tablet_compression,IA_checklist_tablet_coating,Checklist_Capsule, IA_checklist_dispensing, IA_checklist_engineering, IA_checklist_hr, IA_checklist_stores, IA_dispencing_manufacturing, IA_ointment_paking, IA_quality_control};
+use App\Models\{InternalAuditTrial,IA_checklist_tablet_compression,IA_checklist_tablet_coating,Checklist_Capsule, IA_checklist__formulation_research, IA_checklist_analytical_research, IA_checklist_dispensing, IA_checklist_engineering, IA_checklist_hr, IA_checklist_manufacturing_filling, IA_checklist_production_injection, IA_checklist_stores, IA_dispencing_manufacturing, IA_ointment_paking, IA_quality_control};
 use App\Models\{IA_checklist_capsule_paking};
 use App\Models\RoleGroup;
 use App\Models\InternalAuditGrid;
@@ -1327,6 +1327,114 @@ $Checklist_Capsule->save();
   $checklist_production_dispensing->remark_documentation_name_comment = $request->remark_documentation_name_comment;
   $checklist_production_dispensing->save();
 
+// ======================================checklist injecection production=================
+  $checklist_production_injection = IA_checklist_production_injection::where(['ia_id' => $id])->firstOrCreate();
+  $checklist_production_injection->ia_id = $id;
+ 
+ 
+  
+  for ($i = 1; $i <= 41; $i++)
+  {
+      $string = 'response_injection_packing_'. $i;
+      $checklist_production_injection->$string = $request->$string;
+  }
+ 
+  for ($i = 1; $i <= 41; $i++)
+  {
+      $string = 'remark_injection_packing_'. $i;
+      $checklist_production_injection->$string = $request->$string;
+  }
+  for ($i = 1; $i <= 6; $i++)
+  {
+      $string = 'response_documentation_production_'. $i;
+      $checklist_production_injection->$string = $request->$string;
+  }
+ 
+  for ($i = 1; $i <= 6; $i++)
+  {
+      $string = 'remark_documentation_production_'. $i;
+      $checklist_production_injection->$string = $request->$string;
+  }
+  // dd($checklistTabletCompression->tablet_compress_remark_1)
+  $checklist_production_injection->response_injection_packing_comment = $request->response_injection_packing_comment;
+  $checklist_production_injection->save();
+
+  // ====================================== IA_checklist_manufacturing_filling =================
+  $checklist_manufacturing_production = IA_checklist_manufacturing_filling::where(['ia_id' => $id])->firstOrCreate();
+  $checklist_manufacturing_production->ia_id = $id;
+ 
+ 
+  
+  for ($i = 1; $i <= 44; $i++)
+  {
+      $string = 'response_powder_manufacturing_filling_'. $i;
+      $checklist_manufacturing_production->$string = $request->$string;
+  }
+ 
+  for ($i = 1; $i <= 44; $i++)
+  {
+      $string = 'remark_powder_manufacturing_filling_'. $i;
+      $checklist_manufacturing_production->$string = $request->$string;
+  }
+  for ($i = 1; $i <= 3; $i++)
+  {
+      $string = 'response_packing_'. $i;
+      $checklist_manufacturing_production->$string = $request->$string;
+  }
+ 
+  for ($i = 1; $i <= 3; $i++)
+  {
+      $string = 'remark_packing_'. $i;
+      $checklist_manufacturing_production->$string = $request->$string;
+  }
+  // dd($checklistTabletCompression->tablet_compress_remark_1)
+  $checklist_manufacturing_production->remark_powder_manufacturing_filling_comment = $request->remark_powder_manufacturing_filling_comment;
+  $checklist_manufacturing_production->save();
+
+
+   // ====================================== IA_checklist_analytical_research =================
+   $checklist_analytical_research = IA_checklist_analytical_research::where(['ia_id' => $id])->firstOrCreate();
+   $checklist_analytical_research->ia_id = $id;
+  
+  
+   
+   for ($i = 1; $i <= 26; $i++)
+   {
+       $string = 'response_analytical_research_development_'. $i;
+       $checklist_analytical_research->$string = $request->$string;
+   }
+  
+   for ($i = 1; $i <= 26; $i++)
+   {
+       $string = 'remark_analytical_research_development_'. $i;
+       $checklist_analytical_research->$string = $request->$string;
+   }
+  
+   // dd($checklistTabletCompression->tablet_compress_remark_1)
+   $checklist_analytical_research->remark_analytical_research_comment = $request->remark_analytical_research_comment;
+   $checklist_analytical_research->save();
+ 
+ // ====================================== IA_checklist_analytical_research =================
+ $checklist__formulation_research = IA_checklist__formulation_research::where(['ia_id' => $id])->firstOrCreate();
+ $checklist__formulation_research->ia_id = $id;
+
+
+ 
+ for ($i = 1; $i <= 24; $i++)
+ {
+     $string = 'response_formulation_research_development_'. $i;
+     $checklist__formulation_research->$string = $request->$string;
+ }
+
+ for ($i = 1; $i <= 24; $i++)
+ {
+     $string = 'remark_formulation_research_development_'. $i;
+     $checklist__formulation_research->$string = $request->$string;
+ }
+
+ // dd($checklistTabletCompression->tablet_compress_remark_1)
+ $checklist__formulation_research->remark_formulation_research_development_comment = $request->remark_formulation_research_development_comment;
+ $checklist__formulation_research->save();
 
 
         if (!empty($request->inv_attachment)) {
@@ -1985,6 +2093,14 @@ $Checklist_Capsule->save();
         $checklist11 = IA_checklist_stores::where('ia_id', $id)->first();
         $checklist12 = IA_checklist_hr::where('ia_id', $id)->first();
         $checklist13 = IA_checklist_dispensing::where('ia_id', $id)->first();
+        $checklist14 = IA_checklist_production_injection::where('ia_id', $id)->first();
+        $checklist15 = IA_checklist_manufacturing_filling::where('ia_id', $id)->first();
+        $checklist16 = IA_checklist_analytical_research::where('ia_id', $id)->first();
+        $checklist17 = IA_checklist__formulation_research::where('ia_id', $id)->first();
+
+
+
+
 
 
 
@@ -1998,7 +2114,7 @@ $Checklist_Capsule->save();
      //   dd($grid_data);
         $grid_data1 = InternalAuditGrid::where('audit_id', $id)->where('type', "Observation_field")->first();
         // return dd($checklist1);
-        return view('frontend.internalAudit.view', compact('data','checklist1','checklist2','checklist3', 'checklist4','checklist6','checklist7','checklist9','checklist10','checklist11','checklist12','checklist13','old_record','grid_data','grid_data1'));
+        return view('frontend.internalAudit.view', compact('data','checklist1','checklist2','checklist3', 'checklist4','checklist6','checklist7','checklist9','checklist10','checklist11','checklist12','checklist13','checklist14','checklist15','checklist16','checklist17','old_record','grid_data','grid_data1'));
     }
 
     public function InternalAuditStateChange(Request $request, $id)
