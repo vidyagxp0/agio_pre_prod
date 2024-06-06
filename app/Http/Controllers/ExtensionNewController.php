@@ -158,12 +158,130 @@ class ExtensionNewController extends Controller
         $extensionNew->file_attachment_reviewer = $request->file_attachment_reviewer;
         $extensionNew->approver_remarks = $request->approver_remarks;
         $extensionNew->file_attachment_approver = $request->file_attachment_approver;
+        if (!empty ($request->file_attachment_extension)) {
+            $files = [];
+            if ($request->hasfile('file_attachment_extension')) {
+                foreach ($request->file('file_attachment_extension') as $file) {
+                    $name = $request->name . 'file_attachment_extension' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $file->move('upload/', $name);
+                    $files[] = $name;
+                }
+            }
+
+
+            $extensionNew->file_attachment_extension = json_encode($files);
+        }
+
+        if (!empty ($request->file_attachment_reviewer)) {
+            $files = [];
+            if ($request->hasfile('file_attachment_reviewer')) {
+                foreach ($request->file('file_attachment_reviewer') as $file) {
+                    $name = $request->name . 'file_attachment_reviewer' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $file->move('upload/', $name);
+                    $files[] = $name;
+                }
+            }
+
+
+            $extensionNew->file_attachment_reviewer = json_encode($files);
+        }
+
+        if (!empty ($request->file_attachment_approver)) {
+            $files = [];
+            if ($request->hasfile('file_attachment_approver')) {
+                foreach ($request->file('file_attachment_approver') as $file) {
+                    $name = $request->name . 'file_attachment_approver' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $file->move('upload/', $name);
+                    $files[] = $name;
+                }
+            }
+
+
+            $extensionNew->file_attachment_approver = json_encode($files);
+        }
         $extensionNew->save();
         return redirect()->back()->with('success', 'Extension data saved successfully!');
 
 
     }
 
+    public function reject(Request $request,$id){
+        try {
+            if ($request->username == Auth::user()->email && Hash::check($request->password, Auth::user()->password)) {
+                $extensionNew = extension_new::find($id);
+                $lastDocument = extension_new::find($id);
+
+                if ($extensionNew->stage == 2) {
+
+                    $extensionNew->stage = "0";
+                    $extensionNew->status = "Closed Cancelled";
+                    $extensionNew->reject_by = Auth::user()->name;
+                    $extensionNew->reject_on = Carbon::now()->format('d-M-Y');
+                    $extensionNew->reject_comment = $request->comment;
+
+                    
+                    $extensionNew->update();
+                    return back();
+                }
+             
+               
+            } else {
+                toastr()->error('E-signature Not match');
+                return back();
+            }
+        } catch (\Throwable $th) {
+            return response()->json([
+                'success' => false,
+                'message' => $th->getMessage()
+            ], 500);
+        }
+    }
+    public function moreinfoStateChange(Request $request,$id){
+        try {
+            if ($request->username == Auth::user()->email && Hash::check($request->password, Auth::user()->password)) {
+                $extensionNew = extension_new::find($id);
+                $lastDocument = extension_new::find($id);
+
+                if ($extensionNew->stage == 2) {
+
+                    $extensionNew->stage = "1";
+                    $extensionNew->status = "Opened";
+                    $extensionNew->more_info_review_by = Auth::user()->name;
+                    $extensionNew->more_info_review_on = Carbon::now()->format('d-M-Y');
+                    $extensionNew->more_info_review_comment = $request->comment;
+
+                    
+                    $extensionNew->update();
+                    toastr()->success('Document Sent');
+                    return back();
+                }
+                if ($extensionNew->stage == 3) {
+
+
+                    $extensionNew->stage = "2";
+                    $extensionNew->status = "In Review";
+                    $extensionNew->more_info_inapproved_by = Auth::user()->name;
+                    $extensionNew->more_info_inapproved_on = Carbon::now()->format('d-M-Y');
+                    $extensionNew->more_info_inapproved_comment = $request->comment;
+
+                   
+
+                    $extensionNew->update();
+                    toastr()->success('Document Sent');
+                    return back();
+                }
+               
+            } else {
+                toastr()->error('E-signature Not match');
+                return back();
+            }
+        } catch (\Throwable $th) {
+            return response()->json([
+                'success' => false,
+                'message' => $th->getMessage()
+            ], 500);
+        }
+    }
     public function sendstage(Request $request,$id){
         try {
             if ($request->username == Auth::user()->email && Hash::check($request->password, Auth::user()->password)) {
