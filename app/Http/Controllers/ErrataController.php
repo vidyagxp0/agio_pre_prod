@@ -10,18 +10,19 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use App\Models\User;
+use App\Models\RecordNumber;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\App;
 use PDF;
 class ErrataController extends Controller
 {
-    public function index($id)
+    public function index()
     {
-        $old_record = errata::select('id', 'division_id', 'record')->get();
+        // $old_record = errata::select('id', 'division_id', 'record')->get();
         // $showdata = errata::find($id);
-        $record_number = ((errata::first()->value('counter')) + 1);
+        $record_number = ((RecordNumber::first()->value('counter')) + 1);
         $record_number = str_pad($record_number, 4, '0', STR_PAD_LEFT);
-        return view('frontend.errata.errata_new', compact('old_record'));
+        return view('frontend.errata.errata_new', compact('record_number'));
         // $erratagridnew = ErrataGrid::where('id', $id)->latest()->first();
 
     }
