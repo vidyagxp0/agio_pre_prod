@@ -745,7 +745,7 @@
                                                         <td><div class="group-input new-date-data-field mb-0">
                                                                         <div class="input-date "><div
                                                                          class="calenderauditee">
-                                                                        <input type="text"   id="date_due{{$key}}" readonly placeholder="DD-MMM-YYYY" value="{{ Helpers::getdateFormat(unserialize($action_item_details->date_due)[$key]) }}"/>
+                                                                        <input type="text"   id="date_due{{$key}}" readonly placeholder="DD-MM-YYYY" value="{{ Helpers::getdateFormat(unserialize($action_item_details->date_due)[$key]) }}"/>
                                                                         <input type="date"  id="date_due{{$key}}_checkdate" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} {{ $data->stage == 0 || $data->stage == 3 ? 'disabled' : '' }} value="{{unserialize($action_item_details->date_due)[$key]}}"  name="date_due[]"  min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" value="{{ Helpers::getdateFormat(unserialize($action_item_details->date_due)[$key]) }}
                                                                         "class="hide-input" 
                                                                         oninput="handleDateInput(this, `date_due{{$key}}`);checkDate('date_due{{$key}}_checkdate','date_closed{{$key}}_checkdate')"  /></div></div></div></td>
@@ -775,7 +775,7 @@
                                                                         {{-- <input type="text" id="date_closed{{$key}}" readonly placeholder="DD-MMM-YYYY" value= "{{ Helpers::getdateFormat(unserialize($action_item_details->date_closed)[$key] ?? null ) }}"/>
                                                                         <input type="date" name="date_closed[]" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}  min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"  value= "{{ Helpers::getdateFormat(unserialize($action_item_details->date_closed)[$key] ?? null ) }}" id="date_closed{{$key}}_checkdate" value="{{ unserialize($action_item_details->date_closed)[$key]}} "class="hide-input" 
                                                                         oninput="handleDateInput(this, `date_closed{{$key}}`);checkDate(`date_due{{$key}}_checkdate`,`date_closed{{$key}}_checkdate`)" /></div></div></div></td>' --}}
-                                                                        <input type="text"   id="date_closed{{$key}}" readonly placeholder="DD-MMM-YYYY" value="{{ Helpers::getdateFormat(unserialize($action_item_details->date_closed)[$key]) }}" />
+                                                                        <input type="text"   id="date_closed{{$key}}" readonly placeholder="DD-MM-YYYY" value="{{ Helpers::getdateFormat(unserialize($action_item_details->date_closed)[$key]) }}" />
                                                                         <input type="date" id="date_closed{{$key}}_checkdate" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}  value="{{unserialize($action_item_details->date_closed)[$key]}}"  name="date_closed[]"  min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"  value="{{ Helpers::getdateFormat(unserialize($action_item_details->date_closed)[$key]) }}"class="hide-input" 
                                                                         oninput="handleDateInput(this, `date_closed{{$key}}`);checkDate('date_due{{$key}}_checkdate','date_closed{{$key}}_checkdate')"  /></div></div></div></td>
                                                         <td><input type="text" name="remark[]" {{ $data->stage == 0 || $data->stage == 3 ? 'disabled' : '' }} 
@@ -870,7 +870,7 @@
                                                         <td><div class="group-input new-date-data-field mb-0">
                                                                         <div class="input-date "><div
                                                                          class="calenderauditee">
-                                                              <input type="text"   id="date_closed2{{$key}}" {{ $data->stage == 0 || $data->stage == 3 ? 'disabled' : '' }}  readonly placeholder="DD-MMM-YYYY" value="{{ Helpers::getdateFormat(unserialize($capa_detail_details->date_closed2)[$key]) }}" />
+                                                              <input type="text"   id="date_closed2{{$key}}" {{ $data->stage == 0 || $data->stage == 3 ? 'disabled' : '' }}  readonly placeholder="DD-MM-YYYY" value="{{ Helpers::getdateFormat(unserialize($capa_detail_details->date_closed2)[$key]) }}" />
                                                                 <input type="date" id="date_closed2{{$key}}" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} value="{{unserialize($capa_detail_details->date_closed2)[$key]}}"  name="date_closed2[]"  min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" value="{{ Helpers::getdateFormat(unserialize($capa_detail_details->date_closed2)[$key]) }}"class="hide-input" 
                                                                 oninput="handleDateInput(this, `date_closed2{{$key}}`)"  /></div></div></div></td>
 
@@ -890,7 +890,7 @@
                                     <label for="next_managment_review_date">Next Management Review Date</label>
                                     <div class="calenderauditee">
                                         <input type="text" id="next_managment_review_date" readonly  {{ $data->stage == 0 || $data->stage == 3 ? 'disabled' : '' }} 
-                                            placeholder="DD-MMM-YYYY" value="{{ Helpers::getdateFormat($data->next_managment_review_date) }}"/>
+                                            placeholder="DD-MM-YYYY" value="{{ Helpers::getdateFormat($data->next_managment_review_date) }}"/>
                                         <input type="date" name="next_managment_review_date"   {{ $data->stage == 0 || $data->stage == 3 ? 'disabled' : '' }}  min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" value="{{ $data->next_managment_review_date }} "
                                         class="hide-input" oninput="handleDateInput(this, 'next_managment_review_date')" />
                                     </div>
@@ -949,34 +949,53 @@
                      <div id="CCForm5" class="inner-block cctabcontent">
                         <div class="inner-block-content">
                             <div class="row">
-                                <div class="col-lg-6">
+                                <div class="col-lg-3">
                                     <div class="group-input">
                                         <label for="Completed By">Completed By</label>
                                          <div class="static">{{ $data->completed_by }}</div> 
                                     </div>
                                 </div>
                            
-                                <div class="col-lg-6">
+                                <div class="col-lg-3">
                                     <div class="group-input">
                                         <label for="Completed On">Completed On</label>
                                          <div class="static">{{ $data->completed_on}}</div> 
                                     </div>
                                 </div>
-                                <div class="col-lg-6">
+                                <div class="col-lg-3">
+                                    <div class="group-input">
+                                        <label for="Plan Approved By">Comment</label>
+                                        <input type="hidden"
+                                        name="ppli_comments"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>
+                                        <div class="static">{{ $data->comment }}</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-3">
                                     <div class="group-input">
                                         <label for="Completed By">Submited By</label>
                                          <div class="static">{{ $data->Submited_by }}</div> 
                                     </div>
                                 </div>
-                                <div class="col-lg-6">
+                                <div class="col-lg-3">
                                     <div class="group-input">
                                         <label for="Completed By">Submited On</label>
                                          <div class="static">{{ $data->Submited_on }}</div> 
                                     </div>
                                 </div>
+                                <div class="col-lg-3">
+                                    <div class="group-input">
+                                        <label for="Plan Approved By">Comment</label>
+                                        <input type="hidden"
+                                            name="sub_comment"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>
+                                        <div class="static">{{ $data->comment }}</div>
+                                    </div>
+                                </div>
                             </div>
+                                
                             <div class="button-block">
-                                <button type="submit" class="saveButton>Save</button>
+                                <button type="submit" class="saveButton">Save</button>
                                 <button type="button" class="backButton" onclick="previousStep()">Back</button>
                                 <button type="submit">Submit</button>
                                 <button type="button"> <a class="text-white" href="{{ url('rcms/qms-dashboard') }}">
@@ -1191,7 +1210,7 @@
             cell2.innerHTML = "<input type='text' name='short_desc[]'>";
 
             var cell3 = newRow.insertCell(2);
-            cell3.innerHTML = '<td><div class="group-input new-date-data-field mb-0"><div class="input-date "><div class="calenderauditee"> <input type="text" id="date_due' + currentRowCount +'" readonly placeholder="DD-MMM-YYYY" /><input type="date" name="date_due[]" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}  min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"  id="date_due' + currentRowCount +'_checkdate"  class="hide-input" oninput="handleDateInput(this, `date_due' + currentRowCount +'`);checkDate(`date_due' + currentRowCount +'_checkdate`,`date_closed' + currentRowCount +'_checkdate`)" /></div></div></div></td>';
+            cell3.innerHTML = '<td><div class="group-input new-date-data-field mb-0"><div class="input-date "><div class="calenderauditee"> <input type="text" id="date_due' + currentRowCount +'" readonly placeholder="DD-MM-YYYY" /><input type="date" name="date_due[]" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}  min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"  id="date_due' + currentRowCount +'_checkdate"  class="hide-input" oninput="handleDateInput(this, `date_due' + currentRowCount +'`);checkDate(`date_due' + currentRowCount +'_checkdate`,`date_closed' + currentRowCount +'_checkdate`)" /></div></div></div></td>';
 
             var cell4 = newRow.insertCell(3);
             cell4.innerHTML = "<input type='text' name='site[]'>";
@@ -1209,7 +1228,7 @@
             cell6.innerHTML = "<input type='text' name='current_status[]'>"; 
 
             var cell7 = newRow.insertCell(6);
-            cell7.innerHTML = '<td><div class="group-input new-date-data-field mb-0"><div class="input-date "><div class="calenderauditee"> <input type="text" id="date_closed' + currentRowCount +'" readonly placeholder="DD-MMM-YYYY" /><input type="date" name="date_closed[]"  min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"  id="date_closed'+ currentRowCount +'_checkdate" class="hide-input" oninput="handleDateInput(this, `date_closed' + currentRowCount +'`);checkDate(`date_due' + currentRowCount +'_checkdate`,`date_closed' + currentRowCount +'_checkdate`)" /></div></div></div></td>';
+            cell7.innerHTML = '<td><div class="group-input new-date-data-field mb-0"><div class="input-date "><div class="calenderauditee"> <input type="text" id="date_closed' + currentRowCount +'" readonly placeholder="DD-MM-YYYY" /><input type="date" name="date_closed[]"  min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"  id="date_closed'+ currentRowCount +'_checkdate" class="hide-input" oninput="handleDateInput(this, `date_closed' + currentRowCount +'`);checkDate(`date_due' + currentRowCount +'_checkdate`,`date_closed' + currentRowCount +'_checkdate`)" /></div></div></div></td>';
               
             var cell8 = newRow.insertCell(7);
             cell8.innerHTML = "<input type='text' name='remark[]'>";
@@ -1253,7 +1272,7 @@
             cell1.innerHTML = currentRowCount;
 
             var cell2 = newRow.insertCell(1);
-            cell2.innerHTML = '<td><div class="group-input new-date-data-field mb-0"><div class="input-date "><div class="calenderauditee"> <input type="text" id="date' + currentRowCount +'" readonly placeholder="DD-MMM-YYYY" /><input type="date" name="date[]" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}  min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"  id="date' + currentRowCount +'_checkdate"  class="hide-input" oninput="handleDateInput(this, `date' + currentRowCount +'`);" /></div></div></div></td>';
+            cell2.innerHTML = '<td><div class="group-input new-date-data-field mb-0"><div class="input-date "><div class="calenderauditee"> <input type="text" id="date' + currentRowCount +'" readonly placeholder="DD-MM-YYYY" /><input type="date" name="date[]" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}  min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"  id="date' + currentRowCount +'_checkdate"  class="hide-input" oninput="handleDateInput(this, `date' + currentRowCount +'`);" /></div></div></div></td>';
 
             var cell3 = newRow.insertCell(2);
             cell3.innerHTML = "<input type='text' name='topic[]' >";
@@ -1288,8 +1307,6 @@
             document.getElementById(cityName).style.display = "block";
             evt.currentTarget.className += " active";
         }
-
-
 
         function openCity(evt, cityName) {
             var i, cctabcontent, cctablinks;
@@ -1397,7 +1414,7 @@
                                 
                                 '<td><input type="text" name="current_status2[]">' +
                                
-                                '<td><div class="group-input new-date-data-field mb-0"><div class="input-date "><div class="calenderauditee"><input type="text" id="date_closed2' + serialNumber +'" readonly placeholder="DD-MMM-YYYY" /><input type="date" name="date_closed2[]" {{ $data->stage == 0 || $data->stage == 3 ? 'disabled' : '' }} min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"  class="hide-input" oninput="handleDateInput(this, `date_closed2' + serialNumber +'`)" /></div></div></div></td>' +
+                                '<td><div class="group-input new-date-data-field mb-0"><div class="input-date "><div class="calenderauditee"><input type="text" id="date_closed2' + serialNumber +'" readonly placeholder="DD-MM-YYYY" /><input type="date" name="date_closed2[]" {{ $data->stage == 0 || $data->stage == 3 ? 'disabled' : '' }} min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"  class="hide-input" oninput="handleDateInput(this, `date_closed2' + serialNumber +'`)" /></div></div></div></td>' +
         
                                 '<td><input type="text" name="remark2[]"></td>' +
         

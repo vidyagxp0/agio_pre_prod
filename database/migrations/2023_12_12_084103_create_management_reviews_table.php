@@ -122,11 +122,10 @@ return new class extends Migration
             $table->string('Submited_by')->nullable();
             $table->string('Submited_on')->nullable();
             
-
-
             $table->string('completed_by')->nullable();
             $table->string('completed_on')->nullable();
-             $table->timestamps();
+            $table->string('sub_comment')->nullable();
+            $table->timestamps();
         });
     }
 

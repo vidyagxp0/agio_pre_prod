@@ -1040,7 +1040,7 @@
                         <div class="inner-block-content">
                             <div class="group-input">
                                 <label for="risk_opportunities">Risk & Opportunities</label>
-                                <textarea name="risk_opportunities"></textarea>
+                                <textarea name="risk_opportunities" id="risk_opportunities"></textarea>
                             </div>
                             <div class="group-input">
                                 <label for="external_supplier_performance">External Supplier Performance</label>
@@ -1123,7 +1123,7 @@
                                         <td><div class="group-input new-date-data-field mb-0">
                                             <div class="input-date "><div
                                              class="calenderauditee">
-                                            <input type="text" id="date_due0" readonly placeholder="DD-MMM-YYYY" />
+                                            <input type="text" id="date_due0" readonly placeholder="DD-MM-YYYY" />
                                             <input type="date" name="date_due[]" id="date_due0_checkdate" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input" 
                                             oninput="handleDateInput(this, `date_due0`);checkDate('date_due0_checkdate','date_closed0_checkdate')" /></div></div></div></td>
                                         <td><input type="text" name="site[]"></td>
@@ -1141,12 +1141,12 @@
                                         <td><div class="group-input new-date-data-field mb-0">
                                             <div class="input-date "><div
                                              class="calenderauditee">
-                                            <input type="text" id="date_closed0" readonly placeholder="DD-MMM-YYYY" />
+                                            <input type="text" id="date_closed0" readonly placeholder="DD-MM-YYYY" />
                                             <input type="date" name="date_closed[]" id="date_closed0_checkdate" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input" 
                                             oninput="handleDateInput(this, `date_closed0`);checkDate('date_due0_checkdate','date_closed0_checkdate')" /></div>
                                         </div>
-                                    </div>
-                                </td>
+                                         </div>
+                                         </td>
 
 
                                         <td><input type="text" name="remark[]"></td>
@@ -1207,7 +1207,7 @@
                                         <td><input type="text" name="current_status2[]"></td>
                                         <td><div class="group-input new-date-data-field mb-0"><div class="input-date ">
                                             <div class="calenderauditee">
-                                            <input type="text" id="date_closed_capa1" readonly placeholder="DD-MMM-YYYY" />
+                                            <input type="text" id="date_closed_capa1" readonly placeholder="DD-MM-YYYY" />
                                             <input type="date" name="date_closed2[]"   min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input" 
                                                         oninput="handleDateInput(this, `date_closed_capa1`);" /></div></div>
                                                     </div>
@@ -1224,10 +1224,9 @@
                                     <label for="next_managment_review_date">Next Management Review Date</label>
                                     <div class="calenderauditee">
                                         <input type="text" id="next_managment_review_date" readonly
-                                            placeholder="DD-MMM-YYYY" />
+                                            placeholder="DD-MM-YYYY" />
                                         <input type="date" name="next_managment_review_date"   min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input {{ (isset($data->stage) and $data->stage == 0 )|| (isset($data->stage) and $data->stage == 3 )? 'disabled' : '' }}
-                                         min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
-                                            oninput="handleDateInput(this, 'next_managment_review_date')" />
+                                         min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"  oninput="handleDateInput(this, 'next_managment_review_date')"/>
                                     </div>
                                 </div>
                             </div>
@@ -1490,7 +1489,7 @@ function addActionItemDetails(tableId) {
             cell2.innerHTML = "<input type='text' name='short_desc[]'>";
 
             var cell3 = newRow.insertCell(2);
-            cell3.innerHTML = '<td><div class="group-input new-date-data-field mb-0"><div class="input-date "><div class="calenderauditee"> <input type="text" id="date_due' + currentRowCount +'" readonly placeholder="DD-MMM-YYYY" /><input type="date" name="date_due[]"   min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" id="date_due' + currentRowCount +'_checkdate"  class="hide-input" oninput="handleDateInput(this, `date_due' + currentRowCount +'`);checkDate(`date_due' + currentRowCount +'_checkdate`,`date_closed' + currentRowCount +'_checkdate`)" /></div></div></div></td>';
+            cell3.innerHTML = '<td><div class="group-input new-date-data-field mb-0"><div class="input-date "><div class="calenderauditee"> <input type="text" id="date_due' + currentRowCount +'" readonly placeholder="DD-MM-YYYY" /><input type="date" name="date_due[]"   min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" id="date_due' + currentRowCount +'_checkdate"  class="hide-input" oninput="handleDateInput(this, `date_due' + currentRowCount +'`);checkDate(`date_due' + currentRowCount +'_checkdate`,`date_closed' + currentRowCount +'_checkdate`)" /></div></div></div></td>';
 
             var cell4 = newRow.insertCell(3);
             cell4.innerHTML = "<input type='text' name='site[]'>";
@@ -1508,7 +1507,7 @@ function addActionItemDetails(tableId) {
             cell6.innerHTML = "<input type='text' name='current_status[]'>"; 
 
             var cell7 = newRow.insertCell(6);
-            cell7.innerHTML = '<td><div class="group-input new-date-data-field mb-0"><div class="input-date "><div class="calenderauditee"> <input type="text" id="date_closed' + currentRowCount +'" readonly placeholder="DD-MMM-YYYY" /><input type="date" name="date_closed[]"  min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"  id="date_closed'+ currentRowCount +'_checkdate" class="hide-input" oninput="handleDateInput(this, `date_closed' + currentRowCount +'`);checkDate(`date_due' + currentRowCount +'_checkdate`,`date_closed' + currentRowCount +'_checkdate`)" /></div></div></div></td>';
+            cell7.innerHTML = '<td><div class="group-input new-date-data-field mb-0"><div class="input-date "><div class="calenderauditee"> <input type="text" id="date_closed' + currentRowCount +'" readonly placeholder="DD-MM-YYYY" /><input type="date" name="date_closed[]"  min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"  id="date_closed'+ currentRowCount +'_checkdate" class="hide-input" oninput="handleDateInput(this, `date_closed' + currentRowCount +'`);checkDate(`date_due' + currentRowCount +'_checkdate`,`date_closed' + currentRowCount +'_checkdate`)" /></div></div></div></td>';
               
             var cell8 = newRow.insertCell(7);
             cell8.innerHTML = "<input type='text' name='remark[]'>";
@@ -1647,7 +1646,7 @@ function addActionItemDetails(tableId) {
                         
                         '<td><input type="text" name="current_status2[]">' +
                        
-                        '<td><div class="group-input new-date-data-field mb-0"><div class="input-date "><div class="calenderauditee"><input type="text" id="date_closed_capa' + serialNumber +'" readonly placeholder="DD-MMM-YYYY" /><input type="date" name="date_closed2[]"min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"  class="hide-input" oninput="handleDateInput(this, `date_closed_capa' + serialNumber +'`)" /></div></div></div></td>' +
+                        '<td><div class="group-input new-date-data-field mb-0"><div class="input-date "><div class="calenderauditee"><input type="text" id="date_closed_capa' + serialNumber +'" readonly placeholder="DD-MM-YYYY" /><input type="date" name="date_closed2[]"min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"  class="hide-input" oninput="handleDateInput(this, `date_closed_capa' + serialNumber +'`)" /></div></div></div></td>' +
 
                         '<td><input type="text" name="remark2[]"></td>' +
 

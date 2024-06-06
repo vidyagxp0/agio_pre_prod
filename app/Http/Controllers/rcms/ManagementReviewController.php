@@ -65,8 +65,8 @@ class ManagementReviewController extends Controller
          $management->control_externally_provide_services = $request->control_externally_provide_services;
          $management->production_service_provision= $request->production_service_provision;
          $management->release_product_services = $request->release_product_services;
-        $management->control_nonconforming_outputs = $request->control_nonconforming_outputs;
-        $management->risk_opportunities = $request->risk_opportunities;
+         $management->control_nonconforming_outputs = $request->control_nonconforming_outputs;
+        //  $management->risk_opportunities = $request->risk_opportunities;
         $management->initiator_group_code= $request->initiator_group_code;
         $management->initiator_Group= $request->initiator_Group;
        // $management->type = $request->type;
@@ -76,7 +76,7 @@ class ManagementReviewController extends Controller
         //$management->topic = json_encode($request->topic);
        // $management->responsible = json_encode ($request->responsible);
 
-        //$management->comment = json_encode($request->comment);
+        $management->comment = json_encode($request->comment);
         //$management->end_time = json_encode($request->end_time);
        // $management->topic = json_encode($request->topic);
         
@@ -92,7 +92,8 @@ class ManagementReviewController extends Controller
         $management->assigned_to = $request->assigned_to;
         $management->due_date = $request->due_date;
         $management->type = $request->type;
-       
+
+
         $management->start_date = $request->start_date;
         $management->end_date = $request->end_date;
         $management->attendees = $request->attendees;
@@ -166,6 +167,7 @@ class ManagementReviewController extends Controller
         
         // $management = new MeetingSummary();
         $management->risk_opportunities = $request->risk_opportunities;
+        // $management->risk_opportunities = $request->risk_opportunities;
         $management->external_supplier_performance = $request->external_supplier_performance;
         $management->customer_satisfaction_level = $request->customer_satisfaction_level;
         $management->budget_estimates = $request->budget_estimates; 
@@ -179,13 +181,10 @@ class ManagementReviewController extends Controller
         $management->summary_recommendation = $request->summary_recommendation;
         $management->additional_suport_required = $request->additional_suport_required;
         // $management->file_attchment_if_any = json_encode($request->file_attchment_if_any);
+
+        
        
         $management->save();
-
-
-       
-
-
         // --------------agenda--------------
         $data1 = new ManagementReviewDocDetails();
         $data1->review_id = $management->id;
@@ -719,6 +718,7 @@ class ManagementReviewController extends Controller
         $management->production_service_provision= $request->production_service_provision;
         $management->release_product_services = $request->release_product_services;
        $management->control_nonconforming_outputs = $request->control_nonconforming_outputs;
+       $management->risk_opportunities = $request->risk_opportunities;
          $management->external_supplier_performance = $request->external_supplier_performance;
          $management->customer_satisfaction_level = $request->customer_satisfaction_level;
          $management->budget_estimates = $request->budget_estimates; 
@@ -1344,6 +1344,7 @@ class ManagementReviewController extends Controller
                 $changeControl->status = 'In Progress';
                 $changeControl->Submited_by = Auth::user()->name;
                 $changeControl->Submited_on = Carbon::now()->format('d-M-Y');
+                $changeControl->comment = $request->comment;
                 $history = new ManagementAuditTrial();
                 $history->ManagementReview_id = $id;
                 $history->activity_type = 'Activity Log';
@@ -1382,6 +1383,7 @@ class ManagementReviewController extends Controller
                 $changeControl->status = 'Closed - Done';
                 $changeControl->completed_by = Auth::user()->name;
                 $changeControl->completed_on = Carbon::now()->format('d-M-Y');
+                $changeControl->sub_comment = $request->comment;
                 $history = new ManagementAuditTrial();
                 $history->ManagementReview_id = $id;
                 $history->activity_type = 'Activity Log';
