@@ -104,7 +104,7 @@
             querySelect.options.add(new Option('Opened', '1'));
             querySelect.options.add(new Option('Check Effectiveness', '2'));
             querySelect.options.add(new Option('Close - Done', '3'));
- 
+
         } else if (scopeValue === 'CC') {
             querySelect.options.add(new Option('Opened', '1'));
             querySelect.options.add(new Option('Under HOD Review', '2'));
@@ -138,18 +138,18 @@
     }
     .table-container {
   overflow: auto;
-  max-height: 350px; 
+  max-height: 350px;
 }
 
 .table-header11 {
   position: sticky;
   top: 0;
-  background-color: white; 
+  background-color: white;
   z-index: 1;
 }
 
 .table-body-new {
-  margin-top: 30px; 
+  margin-top: 30px;
 }
 .td_c{
     width: 100px !important;
@@ -207,7 +207,7 @@
                             <div class="item-btn" onclick="window.print()">Print</div>
                         </div>
 
-                      
+
                         <div class="main-scope-table table-container">
                             <table class="table table-bordered" id="auditTable">
                                 <thead class="table-header11">
@@ -544,8 +544,7 @@
                                                             -
                                                         </td>
                                                     @endif
-                                            <td
-                                            class="viewdetails" data-id="{{ $datas->id }}"
+                                            <td class="viewdetails" data-id="{{ $datas->id }}"
                                                 data-type="{{ $datas->type }}" data-bs-toggle="modal"
                                                 data-bs-target="#record-modal">
                                                 @if ($datas->division_id)

@@ -986,10 +986,10 @@ class DashboardController extends Controller
             $division_name = $division->name;
         } elseif ($type == "Observation") {
             $data = Observation::find($id);
-            $single = "#";
+            $single = "ObservationSingleReport/" .$data->id;
             $audit = "ObservationAuditTrialShow/" .$data->id;
             $division = QMSDivision::find($data->division_id);
-            $division_name = $division->name;
+            $division_name = $division ? $division->name : '';
         } elseif ($type == "Effectiveness-Check") {
             $data = EffectivenessCheck::find($id);
             $single = "effectiveSingleReport/" .$data->id;
