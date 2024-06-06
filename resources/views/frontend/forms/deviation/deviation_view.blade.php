@@ -1148,7 +1148,7 @@
 
                                     <div class="col-lg-6 new-time-data-field">
                                         <div
-                                            class="group-input input-time @error('Delay_Justification') @else delayJustificationBlock @enderror">
+                                            class="group-input input-time @if ($data->Delay_Justification) style="display: block !important" @endif @error('Delay_Justification') @else delayJustificationBlock @enderror">
                                             <label for="deviation_time">Delay Justification <span class="text-danger">*</span></label>
                                             <textarea id="Delay_Justification" name="Delay_Justification">{{ $data->Delay_Justification }}</textarea>
                                         </div>
