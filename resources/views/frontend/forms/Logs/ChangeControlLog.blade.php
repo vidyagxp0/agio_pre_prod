@@ -75,37 +75,53 @@
                                 <div class="flex-grow-2" style="margin-left:-50px; margin-bottom:12px">
                                     <div class="filter-bar d-flex justify-content-between">
                                         <div class="filter-item">
-                                            <label for="process">Department</label>
-                                            <select class="custom-select" id="process">
-                                                <option value="all">All Records</option>
-
+                                            <label for="initiator_group">Department</label>
+                                            <select name="Initiator_Group" id="initiator_group" class="form-control">
+                                                {{-- <option value="all">All Records</option> --}}
+                                                <option value="">Enter Your Selection Here</option>
+                                                <option value="CQA">Corporate Quality Assurance</option>
+                                                <option value="QAB">Quality Assurance Biopharma</option>
+                                                <option value="CQC">Central Quality Control</option>
+                                                <option value="MANU">Manufacturing</option>
+                                                <option value="PSG">Plasma Sourcing Group</option>
+                                                <option value="CS">Central Stores</option>
+                                                <option value="ITG">Information Technology Group</option>
+                                                <option value="MM">Molecular Medicine</option>
+                                                <option value="CL">Central Laboratory</option>
+                                                <option value="TT">Tech team</option>
+                                                <option value="QA">Quality Assurance</option>
+                                                <option value="QM">Quality Management</option>
+                                                <option value="IA">IT Administration</option>
+                                                <option value="ACC">Accounting</option>
+                                                <option value="LOG">Logistics</option>
+                                                <option value="SM">Senior Management</option>
+                                                <option value="BA">Business Administration</option>
                                             </select>
                                         </div>
+                                        
                                         <div class="filter-item">
                                             <label for="criteria">Division</label>
-                                            <select class="custom-select" id="criteria">
-                                                <option value="all">All Records</option>
+                                            <select class="custom-select" id="division_id">
+                                                <option value="Null">Select Records</option>
+                                                <option value="1">Corporate</option>
+                                                <option value="2">Plant</option>
 
                                             </select>
                                         </div>
                                         <div class="filter-item">
-                                            <label for="division">Date From</label>
-                                            <select class="custom-select" id="division">
-                                                <option value="all">All Records</option>
-
-                                            </select>
+                                            <label for="date_from">Date From</label>
+                                            <input type="date" class="custom-select" id="date_from">
                                         </div>
                                         <div class="filter-item">
-                                            <label for="originator">Date To</label>
-                                            <select class="custom-select" id="originator">
-                                                <option value="all">All Records</option>
-
-                                            </select>
+                                            <label for="date_to">Date To</label>
+                                            <input type="date" class="custom-select" id="date_to">
                                         </div> 
                                         <div class="filter-item">
-                                            <label for="originator">Type of Document</label>
-                                            <select class="custom-select" id="originator">
-                                                <option value="all">All Records</option>
+                                            <label for="originator">Nature Of Change</label>
+                                            <select class="custom-select" id="naturechange">
+                                                <option value="Null">Select Records</option>
+                                                <option value="Temporary">Temporary</option>
+                                                <option value="Permanent">Permanent</option>
 
                                             </select>
                                         </div>
@@ -119,6 +135,7 @@
 
                                             </select>
                                         </div>
+                                        
                                     </div>
                                 </div>
                             </div>
@@ -144,31 +161,17 @@
                                             <th >Status </th>
                                         </tr>
                                     </thead>
-
-                                    <tbody>
-                                        @foreach ($ccontrol as $control)
-                                            
-                                        <tr>
-
-                                            <td>{{$loop->index+1}}</td>
-                                            <td>{{$control->intiation_date}}</td>
-                                            <td>{{ Helpers::getDivisionName($control->division_id) }}/CC/{{ date('Y') }}/{{ str_pad($control->record, 4, '0', STR_PAD_LEFT) }}</td>
-                                            <td>{{Helpers::getDivisionName(session()->get('division'))}}</td>
-                                            <td>{{$control->initiator_group_code}}</td>
-                                            <td>{{ Auth::user()->name }}</td>
-                                            <td>{{$control->short_description}}</td>
-                                            <td>{{$control->proposed_change}}</td>
-                                            <td>{{$control->doc_change}}</td>
-                                            <td></td>
-                                            <td></td>
-                                            <td>{{$control->due_date}}</td>
-                                            <td>{{$control->status}}</td>
-
-                                        </tr>
-
-                                        @endforeach
+                                    <tbody id="tableData">
+                                        @include('frontend.forms.Logs.comps.changecontrol_data')
                                     </tbody>
+
+                                   
                                 </table>
+                                <div class="d-flex justify-content-center" style="margin-top: 10px;">
+                                    <div class="spinner-border text-primary" role="status" id="spinner">
+                                        <span class="sr-only">Loading...</span>
+                                    </div>
+                                </div>
                             </div>
                         </div>
 
@@ -181,9 +184,90 @@
 
     </div>
 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.7.2/axios.min.js" integrity="sha512-JSCFHhKDilTRRXe9ak/FJ28dcpOJxzQaCd3Xg8MyF6XFjODhy/YMCM8HW0TFDckNHWUewW+kfvhin43hKtJxAw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script>
         VirtualSelect.init({
             ele: '#Facility, #Group, #Audit, #Auditee ,#capa_related_record ,#classRoom_training'
         });
+
+        $('#spinner').hide();
+
+        const filterData = {
+            department_cc: null,
+            division_id: null,
+            nchange:null,
+            period: null,
+            date_from: null,
+            date_to: null
+
+        }
+
+        $('#initiator_group').change(function() {
+            filterData.department_cc = $(this).val();
+            filterRecords()
+        });
+
+         // Division ID change event
+
+          $('#division_id').change(function() {
+            filterData.division_id = $(this).val();
+            filterRecords();
+         });
+
+        //  naturechange
+
+         $('#naturechange').change(function() {
+            filterData.nchange = $(this).val();
+            filterRecords();
+         });
+
+         $('#date_from').change(function() {
+        filterData.date_from = $(this).val();
+        filterRecords();
+        });
+
+        $('#date_to').change(function() {
+            filterData.date_to = $(this).val();
+            filterRecords();
+        });
+        
+         $('#datewise').change(function() {
+        filterData.period = $(this).val();
+        filterRecords();
+    });
+
+        //  $('#deviationdate').change(function() {
+        //     filterData.deviationDate = $(this).val();
+        //     console.log('Deviation date changed:', filterData.deviationDate);
+        //     filterRecords();
+        //  });
+
+
+
+
+        async function filterRecords()
+        {
+            $('#tableData').html('');
+            $('#spinner').show();
+            
+            try {
+
+
+                const postUrl = "{{ route('api.cccontrol.filter') }}";
+
+                const res = await axios.post(postUrl, filterData);
+
+                if (res.data.status == 'ok') {
+                    $('#tableData').html(res.data.body);
+                }
+
+            } catch (err) {
+                console.log('Error in filterRecords', err.message);
+            }
+            
+            $('#spinner').hide();
+        }
+
+        
     </script>
 @endsection

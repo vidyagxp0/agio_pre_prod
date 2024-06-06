@@ -45,6 +45,8 @@ class OOCController extends Controller
         $data->record = ((RecordNumber::first()->value('counter')) + 1);
         $data->initiator_id = Auth::user()->id;
         $data->division_id = $request->division_id;
+        $data->division_code = $request->division_code;
+        $data->intiation_date = $request->intiation_date;
         $data->description_ooc = $request->description_ooc;
         $data->assign_to = $request->assign_to;
         $data->due_date = $request->due_date;
@@ -401,6 +403,7 @@ class OOCController extends Controller
         $ooc->initiator_id = Auth::user()->id;
         $ooc->assign_to = $request->assign_to;
         $ooc->due_date = $request->due_date;
+        $ooc->division_code = $request->division_code;
         // $ooc->due_date = $validatedData['due_date'];
         $ooc->description_ooc = $request->description_ooc;
         $ooc->Initiator_Group= $request->Initiator_Group;
@@ -410,6 +413,7 @@ class OOCController extends Controller
         $ooc->is_repeat_ooc= $request->is_repeat_ooc;
         $ooc->Repeat_Nature= $request->Repeat_Nature;
         $ooc->ooc_due_date= $request->ooc_due_date;
+        $ooc->intiation_date = $request->intiation_date;
         // $ooc->ooc_due_date = $validatedData['ooc_due_date'];
         $ooc->Delay_Justification_for_Reporting= $request->Delay_Justification_for_Reporting;
         $ooc->HOD_Remarks = $request->HOD_Remarks;

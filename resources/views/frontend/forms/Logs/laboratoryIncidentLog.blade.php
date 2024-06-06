@@ -194,7 +194,7 @@
                                                 <td>{{$lablog->Incident_Type}}</td>
                                                 <td>{{$lablog->Incident_name_analyst_no_gi}}</td>
                                                 <td>{{$lablog->due_date}}</td>
-                                                <td>{{$lablog->closure_comment}}</td>
+                                                <td>{{$lablog->closure_completed_on}}</td>
                                                 <td>{{$lablog->status}}</td>
                                             </tr>
                                         @endforeach

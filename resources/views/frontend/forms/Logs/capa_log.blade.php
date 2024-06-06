@@ -76,36 +76,76 @@
                                     <div class="filter-bar d-flex justify-content-between">
                                         <div class="filter-item">
                                             <label for="process">Department</label>
+                                            
+                                            
                                             <select class="custom-select" id="process">
-                                                <option value="all">All Records</option>
+                                               <option value="select">--  Select Option  --</option>
+                                                <option value="CQA">
+                                                           Corporate
+                                                            Quality Assurance</option>
+                                                        <option value="QAB">Quality
+                                                            Assurance Biopharma</option>
+                                                        <option value="CQC">Central
+                                                            Quality Control</option>
+                                                        <option value="CQC">Manufacturing
+                                                        </option>
+                                                        <option value="PSG">Plasma
+                                                            Sourcing Group</option>
+                                                        <option value="CS">Central
+                                                            Stores</option>
+                                                        <option value="ITG">Information
+                                                            Technology Group</option>
+                                                        <option value="MM">Molecular
+                                                            Medicine</option>
+                                                        <option value="CL">Central
+                                                            Laboratory</option>
+                                                        <option value="TT">Tech
+                                                            Team</option>
+                                                        <option value="QA">Quality
+                                                            Assurance</option>
+                                                        <option value="QM">Quality
+                                                            Management</option>
+                                                        <option value="IA">IT
+                                                            Administration</option>
+                                                        <option value="ACC">Accounting
+                                                        </option>
+                                                        <option value="LOG">Logistics
+                                                        </option>
+                                                        <option value="SM">Senior
+                                                            Management</option>
+                                                        <option value="BA">Business
+                                                            Administration</option>
 
                                             </select>
                                         </div>
                                         <div class="filter-item">
                                             <label for="criteria">Division</label>
                                             <select class="custom-select" id="criteria">
-                                                <option value="all">All Records</option>
+                                                <option value="select">--Select--</option>
+                                                <option value="corporate">Corporate</option>
+                                                <option value="plant">Plant</option>
 
                                             </select>
                                         </div>
                                         <div class="filter-item">
                                             <label for="division">Date From</label>
-                                            <select class="custom-select" id="division">
-                                                <option value="all">All Records</option>
+                                            {{-- <select class="custom-select" id="division"> --}}
+                                                 <input type="date" class="custom-select" id="dateFrom" name="dateFrom">
 
-                                            </select>
+                                            {{-- </select> --}}
                                         </div>
                                         <div class="filter-item">
                                             <label for="originator">Date To</label>
-                                            <select class="custom-select" id="originator">
-                                                <option value="all">All Records</option>
-
+                                                <input type="date" class="custome-select" id="dateTo" name="dateTo">
                                             </select>
                                         </div> 
                                         <div class="filter-item">
                                             <label for="originator">CAPA Type</label>
                                             <select class="custom-select" id="originator">
-                                                <option value="all">All Records</option>
+                                                <option value="--select--">Select Option</option>
+                                                <option value="Corrective Action">Corrective Action</option>
+                                                <option value="Preventive Action">Preventive Action</option>
+                                                <option value="Corrective & Preventive Action">Corrective & Preventive Action</option>
 
                                             </select>
                                         </div>

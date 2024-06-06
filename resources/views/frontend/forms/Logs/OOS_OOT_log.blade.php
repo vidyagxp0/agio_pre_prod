@@ -154,11 +154,11 @@
                                             
                                             <td>{{$loop->index+1}}</td>
                                             <td>{{$ootlog->intiation_date}}</td>
-                                            <td>{{$ootlog->record_number}}</td>
+                                            <td>{{ Helpers::getDivisionName($ootlog->division_id) }}/OOT/{{ date('Y') }}/{{ str_pad($ootlog->record_number, 4, '0', STR_PAD_LEFT) }}</td>
                                             <td>{{$ootlog->description_of_oot_details}}</td>
-                                            <td></td>
-                                            <td></td>
-                                            <td>{{$ootlog->closure_date}}</td>
+                                            <td>type of document </td>
+                                            <td>grid</td>
+                                            <td>grid</td>
                                             <td>{{$ootlog->due_date}}</td>
                                             <td>{{$ootlog->Final_Approval_on}}</td>
                                             <td>{{$ootlog->status}}</td>

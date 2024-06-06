@@ -76,36 +76,52 @@
                                     <div class="filter-bar d-flex justify-content-between">
                                         <div class="filter-item">
                                             <label for="process">Department</label>
-                                            <select class="custom-select" id="process">
-                                                <option value="all">All Records</option>
-
+                                            <select name="Initiator_Group" id="initiator_group" class="form-control">
+                                                {{-- <option value="all">All Records</option> --}}
+                                                <option value="">Enter Your Selection Here</option>
+                                                <option value="CQA">Corporate Quality Assurance</option>
+                                                <option value="QAB">Quality Assurance Biopharma</option>
+                                                <option value="CQC">Central Quality Control</option>
+                                                <option value="MANU">Manufacturing</option>
+                                                <option value="PSG">Plasma Sourcing Group</option>
+                                                <option value="CS">Central Stores</option>
+                                                <option value="ITG">Information Technology Group</option>
+                                                <option value="MM">Molecular Medicine</option>
+                                                <option value="CL">Central Laboratory</option>
+                                                <option value="TT">Tech team</option>
+                                                <option value="QA">Quality Assurance</option>
+                                                <option value="QM">Quality Management</option>
+                                                <option value="IA">IT Administration</option>
+                                                <option value="ACC">Accounting</option>
+                                                <option value="LOG">Logistics</option>
+                                                <option value="SM">Senior Management</option>
+                                                <option value="BA">Business Administration</option>
                                             </select>
                                         </div>
                                         <div class="filter-item">
                                             <label for="criteria">Division</label>
-                                            <select class="custom-select" id="criteria">
-                                                <option value="all">All Records</option>
+                                            <select class="custom-select" id="division_id">
+                                                <option value="Null">Select Records</option>
+                                                <option value="1">Corporate</option>
+                                                <option value="2">Plant</option>
 
                                             </select>
                                         </div>
                                         <div class="filter-item">
-                                            <label for="division">Date From</label>
-                                            <select class="custom-select" id="division">
-                                                <option value="all">All Records</option>
-
-                                            </select>
+                                            <label for="date_from">Date From</label>
+                                            <input type="date" class="custom-select" id="date_from">
                                         </div>
                                         <div class="filter-item">
-                                            <label for="originator">Date To</label>
-                                            <select class="custom-select" id="originator">
-                                                <option value="all">All Records</option>
-
-                                            </select>
-                                        </div> 
-                                        <div class="filter-item">
+                                            <label for="date_to">Date To</label>
+                                            <input type="date" class="custom-select" id="date_to">
+                                        </div>                                         <div class="filter-item">
                                             <label for="originator">Type of Error</label>
-                                            <select class="custom-select" id="originator">
-                                                <option value="all">All Records</option>
+                                            <select class="custom-select" id="errorstab">
+                                                <option value="null">Select Records</option>
+                                                <option value="Grammatical Error (GE)">Grammatical Error</option>
+                                                <option value="Typographical Error (TE)">Typographical Error</option>
+                                                <option value="Calculation Error (CE)">Calculation Error</option>
+                                                <option value="Missing Word Error (ME)">Missing Word Error</option>
 
                                             </select>
                                         </div>
@@ -134,7 +150,7 @@
                                             <th>Date of Initiation</th>
                                             <th>Errata No.</th>
                                             <th>Short Description</th>
-                                            <th>Originator</th>
+                                            <th>Initiator</th>
                                             <th>Division</th>
                                             <th>Department</th>
                                             <th>Document Type</th>
@@ -147,29 +163,15 @@
                                         </tr>
                                     </thead>
 
-                                    <tbody>
-                                        @foreach ($erratalog as $logs)
-                                            
-                                        <tr>
-                                            
-                                            <td>{{$loop->index+1}}</td>
-                                            <td>{{$logs->intiation_date}}</td>
-                                            <td>{{ Helpers::getDivisionName($logs->division_id) }}/CC/{{ date('Y') }}/{{ str_pad($logs->record, 4, '0', STR_PAD_LEFT) }}</td>
-                                            <td>{{$logs->short_description}}</td>
-                                            <td>{{ Auth::user()->name }}</td>
-                                            <td>{{ Helpers::getDivisionName(session()->get('division')) }}</td>
-                                            <td>{{$logs->department_code}}</td>
-                                            <td>{{$logs->document_type}}</td>
-                                            <td>{{$logs->type_of_error}}</td>
-                                            <td>{{$logs->Date_and_time_of_correction}}</td>
-                                            <td>{{$logs->due_date}}</td>
-                                            <td>{{$logs->qa_head_approval_completed_on}}</td>
-                                            <td>{{$logs->status}}</td>
-                                            
-                                        </tr>
-                                        @endforeach
+                                    <tbody id="tableData">
+                                        @include('frontend.forms.logs.comps.errata_data')
                                         
                                     </tbody>
+                                    <div class="d-flex justify-content-center" style="margin-top: 10px;">
+                                        <div class="spinner-border text-primary" role="status" id="spinner">
+                                            <span class="sr-only">Loading...</span>
+                                        </div>
+                                    </div>
                                 </table>
                             </div>
                         </div>
@@ -182,10 +184,85 @@
     </div>
 
     </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.7.2/axios.min.js" integrity="sha512-JSCFHhKDilTRRXe9ak/FJ28dcpOJxzQaCd3Xg8MyF6XFjODhy/YMCM8HW0TFDckNHWUewW+kfvhin43hKtJxAw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
     <script>
         VirtualSelect.init({
             ele: '#Facility, #Group, #Audit, #Auditee ,#capa_related_record ,#classRoom_training'
         });
+
+        
+        $('#spinner').hide();
+
+        const filterData = {
+            department_e: null,
+            division_id: null,
+            period: null,
+            date_from: null,
+            date_to: null,
+            error_er:null
+
+
+        }
+        $('#initiator_group').change(function() {
+            filterData.department_e = $(this).val();
+            filterRecords()
+        });
+
+         // Division ID change event
+
+         $('#division_id').change(function() {
+            filterData.division_id = $(this).val();
+            filterRecords();
+         });
+
+
+         $('#date_from').change(function() {
+        filterData.date_from = $(this).val();
+        filterRecords();
+        });
+
+        $('#date_to').change(function() {
+            filterData.date_to = $(this).val();
+            filterRecords();
+        });
+
+
+        $('#datewise').change(function() {
+        filterData.period = $(this).val();
+        filterRecords();
+    });
+
+    $('#errorstab').change(function() {
+            filterData.error_er = $(this).val();
+            filterRecords()
+        });
+
+
+    
+
+    async function filterRecords()
+        {
+            $('#tableData').html('');
+            $('#spinner').show();
+            
+            try {
+
+
+                const postUrl = "{{ route('api.errata.filter') }}";
+
+                const res = await axios.post(postUrl, filterData);
+
+                if (res.data.status == 'ok') {
+                    $('#tableData').html(res.data.body);
+                }
+
+            } catch (err) {
+                console.log('Error in filterRecords', err.message);
+            }
+            
+            $('#spinner').hide();
+        }
+
     </script>
 @endsection

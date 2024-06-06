@@ -168,15 +168,15 @@
                                             <td>{{ Auth::user()->name }}</td>
                                             <td>{{ $marketlog->initiator_group}}</td>
                                             <td>{{Helpers::getDivisionName(session()->get('division'))}}</td>
-                                            <td></td>
-                                            <td>{{$marketlog->is_repeat_gi}}</td>
-                                            <td>{{$marketlog->categorization_of_complaint_gi}}</td>
-                                            <td>{{$marktelog->complaint_reported_on_gi}}</td>
+                                            <td>grid</td>
+                                            <td>grid</td>
+                                            <td>grid</td>
+                                            <td>grid</td>
                                             <td>{{$marketlog->details_of_nature_market_complaint_gi}}</td>
-                                            <td>{{$marketlog->complainant_gi}}</td>
+                                            <td>{{$marketlog->categorization_of_complaint_gi}}</td>
                                             <td>{{$marketlog->complaint_reported_on_gi}}</td>
                                             <td>{{$marketlog->due_date_gi}}</td>
-                                            <td>{{$marketlog->closure_date}}</td>
+                                            <td>{{$marketlog->closed_done_on}}</td>
                                             <td>{{$marketlog->status}}</td>
                                         </tr>
                                         

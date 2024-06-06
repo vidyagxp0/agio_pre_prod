@@ -154,13 +154,13 @@
                                             
                                             <td>{{$loop->index+1}}</td>
                                             <td>{{$ooclog->intiation_date}}</td>
-                                            <td></td>
-                                            <td></td>
+                                            <td>grid</td>
+                                            <td>grid</td>
                                             <td>{{$ooclog->description_ooc}}</td>
                                             <td>{{Auth::user()->name}}</td>
                                             <td>{{Helpers::getDivisionName(session()->get('division'))}}</td>
                                             <td>{{$ooclog->initiator_group_code}}</td>
-                                            <td>{{$ooclog->assign_to}} hold</td>
+                                            <td>{{Auth::user($ooclog->assign_to)->name}}</td>
                                             <td>{{$ooclog->ooc_due_date}}</td>
                                             <td>{{$ooclog->due_date}}</td>
                                             <td>{{$ooclog->approved_ooc_completed_on}}</td>

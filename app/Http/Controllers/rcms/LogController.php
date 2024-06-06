@@ -92,8 +92,9 @@ class LogController extends Controller
 
             case 'risk-management':
                 $riskmlog = RiskManagement::get();
+                $gridMarket = RiskAssesmentGrid::get();
                 
-                return view('frontend.forms.Logs.riskmanagementLog',compact('riskmlog'));
+                return view('frontend.forms.Logs.riskmanagementLog',compact('riskmlog','gridMarket'));
 
 
                 
@@ -101,7 +102,7 @@ class LogController extends Controller
                 $internal_audi = InternalAudit::get();
                 
                 return view('frontend.forms.logs.Internal_audit_Log',compact('internal_audi'));
-                
+              
             default:
             return $slug;
 

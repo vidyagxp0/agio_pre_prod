@@ -2163,6 +2163,34 @@ class LabIncidentController extends Controller
                
            }
 
+           public function lab_incident_extension(Request $request ,$id)
+           {
+            $cc = LabIncident::find($id);
+            $cft = [];
+            $parent_id = $id;
+            $parent_type = "Capa";
+            $old_record = Capa::select('id', 'division_id', 'record')->get();
+            $record_number = ((RecordNumber::first()->value('counter')) + 1);
+            $record_number = str_pad($record_number, 4, '0', STR_PAD_LEFT);
+            $currentDate = Carbon::now();
+            $formattedDate = $currentDate->addDays(30);
+            $due_date = $formattedDate->format('d-M-Y');
+            $parent_intiation_date = Capa::where('id', $id)->value('intiation_date');
+            $parent_record =  ((RecordNumber::first()->value('counter')) + 1);
+            $parent_record = str_pad($parent_record, 4, '0', STR_PAD_LEFT);
+            $parent_initiator_id = $id;
+            $parent_name = $request->parent_name;
+            $changeControl = OpenStage::find(1);
+            if (!empty($changeControl->cft)) $cft = explode(',', $changeControl->cft);
+            if ($request->revision == "extension-child") {
+                $cc->originator = User::where('id', $cc->initiator_id)->value('name');
+                   
+                return view('frontend.forms.extension',compact('cft','parent_name','parent_id','parent_type','old_record','record_number','currentDate','formattedDate','due_date','parent_intiation_date','parent_record','parent_initiator_id'));
+                // return view('frontend.forms.root-cause-analysis', compact('record_number', 'due_date', 'parent_id', 'parent_type'));
+            }
+
+           }
+
     public function lab_incident_root_child(Request $request, $id)
     {
         $cc = LabIncident::find($id);
@@ -2219,6 +2247,7 @@ class LabIncidentController extends Controller
             return view('frontend.forms.risk-management', compact('record_number', 'due_date', 'parent_id','old_record', 'parent_type','parent_intiation_date','parent_record','parent_initiator_id'));
 
         }
+        
 
     }
     public function LabIncidentStateTwo(Request $request,$id)

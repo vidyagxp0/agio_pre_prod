@@ -159,17 +159,17 @@
                                             
                                             <td>{{$loop->index+1}}</td>
                                             <td>{{$logs->intiation_date}}</td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
+                                            <td>{{ Helpers::getDivisionName($logs->division_id) }}/IA/{{ Helpers::year($logs->created_at) }}/{{ $logs->record }}</td>
+                                            <td>{{Auth::user()->name}}</td>
+                                            <td>{{$logs->short_description}}</td>
+                                            <td>{{$logs->Audit_Category}}</td>
+                                            <td>{{$logs->audit_type}}</td>
+                                            <td>{{$logs->lead_auditor}}</td>
+                                            <td>{{$logs->initiator_group_code}}</td>
+                                            <td>{{Helpers::getDivisionName(session()->get('division'))}}</td>
+                                            <td>{{$logs->due_date}}</td>
+                                            <td>{{$logs->audit_lead_more_info_reqd_on}}</td>
+                                            <td>{{$logs->status}}</td>
                                             
                                         </tr>
                                         @endforeach
