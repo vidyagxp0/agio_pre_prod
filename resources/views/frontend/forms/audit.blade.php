@@ -24318,10 +24318,7 @@
                                                         <tr>
                                                             <td class="flex text-center">3.2.1</td>
                                                             <td>
-
                                                                 	Handling of starting materials?<br>
-
-
                                                             </td>
                                                             <td>
                                                                 <div
@@ -24350,8 +24347,6 @@
                                                             <td>
 
                                                                 	Manufacturing?
-
-
                                                             </td>
                                                             <td>
                                                                 <div
@@ -24380,7 +24375,6 @@
                                                             <td>
 
                                                                 	Quarantined finished products or are other control systems in place?<br>
-
 
                                                             </td>
                                                             <td>
@@ -24438,9 +24432,7 @@
                                                         </tr> <tr>
                                                             <td class="flex text-center">3.2.5</td>
                                                             <td>
-
                                                                 	Packaging and dispatch?<br>
-
 
                                                             </td>
                                                             <td>
@@ -24468,9 +24460,7 @@
                                                         </tr> <tr>
                                                             <td class="flex text-center">3.2.6</td>
                                                             <td>
-
                                                                 	Rest and eating?
-
                                                             </td>
                                                             <td>
                                                                 <div
@@ -24502,7 +24492,6 @@
                                                             <td>
                                                                 Does the present design prevent:
 
-
                                                                 </td>
                                                             <td>
 
@@ -24515,9 +24504,7 @@
                                                         <tr>
                                                             <td class="flex text-center">3.3.1</td>
                                                             <td>
-
                                                                 	Chemical contamination?<br>
-
 
                                                                 </td>
                                                             <td>
@@ -24542,9 +24529,7 @@
                                                         </tr> <tr>
                                                             <td class="flex text-center">3.3.2</td>
                                                             <td>
-
                                                                 	Physical contamination?
-
 
                                                                 </td>
                                                             <td>

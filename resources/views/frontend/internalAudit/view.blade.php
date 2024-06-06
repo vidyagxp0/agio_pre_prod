@@ -6702,7 +6702,7 @@ function addMultipleFiles(input, block_id) {
                                 </tr>
                                 <tr>
                                     <td class="flex text-center">1.16</td>
-                                    <td> Is there proper storage of cleaned equipment so as to prevent contamination?      <td>
+                                    <td> Is there proper storage of cleaned equipment so as to prevent contamination?<td>
                                         <div
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="capsule_response_16" id="response"
@@ -7693,7 +7693,7 @@ function addMultipleFiles(input, block_id) {
         "Are any unplanned process changes (process excursions) documented in the batch record?",
     ];
         // "Check for area activity record 59."
-    
+
 
     $documentationQuestions = [
         "Do records have doer & checker signatures? Check the timings, date and yield etc in the batch production record.",
@@ -9399,7 +9399,7 @@ function addMultipleFiles(input, block_id) {
 
 </div>
 
-<div id="CCForm15" class="inner-block cctabcontent">    
+<div id="CCForm15" class="inner-block cctabcontent">
 @php
 $checklistEngineering = [
     "Is there a master list of all equipment that specifies those requiring maintenance and/or calibration?",
@@ -9443,7 +9443,7 @@ $checklistHVAC = [
     "Check area cleanness and HEPA grills."
 ];
 @endphp
-   
+
 <div class="inner-block-content">
     <div class="row">
         <div class="sub-head">Checklist for Engineering</div>
@@ -9477,7 +9477,7 @@ $checklistHVAC = [
                                                 <option value="Yes" @if($checklist9 && $checklist9->$engineeringresponce == "Yes") selected @endif>Yes</option>
                                                 <option value="No" @if($checklist9 && $checklist9->$engineeringresponce == "No") selected @endif>No</option>
                                                 <option value="N/A" @if($checklist9 && $checklist9->$engineeringresponce == "N/A") selected @endif>N/A</option>
-                                           
+
                                             </select>
                                         </div>
                                     </td>
@@ -9525,7 +9525,7 @@ $checklistHVAC = [
                                                 <option value="Yes" @if($checklist9 && $checklist9->$engineeringresponce == "Yes") selected @endif>Yes</option>
                                                 <option value="No" @if($checklist9 && $checklist9->$engineeringresponce == "No") selected @endif>No</option>
                                                 <option value="N/A" @if($checklist9 && $checklist9->$engineeringresponce == "N/A") selected @endif>N/A</option>
-                                           
+
                                             </select>
                                         </div>
                                     </td>
@@ -9575,7 +9575,7 @@ $checklistHVAC = [
                                                 <option value="Yes" @if($checklist9 && $checklist9->$engineeringresponce == "Yes") selected @endif>Yes</option>
                                                 <option value="No" @if($checklist9 && $checklist9->$engineeringresponce == "No") selected @endif>No</option>
                                                 <option value="N/A" @if($checklist9 && $checklist9->$engineeringresponce == "N/A") selected @endif>N/A</option>
-                                           
+
                                             </select>
                                         </div>
                                     </td>
@@ -9765,7 +9765,7 @@ $checklistqualitycontrol = [
                                                     <option value="Yes" @if($checklist10 && $checklist10->$qualitycontrol == "Yes") selected @endif>Yes</option>
                                                     <option value="No" @if($checklist10 && $checklist10->$qualitycontrol == "No") selected @endif>No</option>
                                                     <option value="N/A" @if($checklist10 && $checklist10->$qualitycontrol == "N/A") selected @endif>N/A</option>
-                                               
+
                                                 </select>
                                             </div>
                                         </td>
@@ -9886,7 +9886,7 @@ $checklistqualitycontrol = [
                                                 <option value="Yes" @if($checklist11 && $checklist11->$checkliststores == "Yes") selected @endif>Yes</option>
                                                 <option value="No" @if($checklist11 && $checklist11->$checkliststores == "No") selected @endif>No</option>
                                                 <option value="N/A" @if($checklist11 && $checklist11->$checkliststores == "N/A") selected @endif>N/A</option>
-                                           
+
                                             </select>
                                         </div>
                                     </td>
@@ -10211,7 +10211,7 @@ $checklistqualitycontrol = [
                                                 <option value="Yes" @if($checklist13 && $checklist13->$response_injection_name == "Yes") selected @endif>Yes</option>
                                                 <option value="No" @if($checklist13 && $checklist13->$response_injection_name == "No") selected @endif>No</option>
                                                 <option value="N/A" @if($checklist13 && $checklist13->$response_injection_name == "N/A") selected @endif>N/A</option>
-                                           
+
                                             </select>
                                         </div>
                                     </td>
@@ -10260,7 +10260,7 @@ $checklistqualitycontrol = [
                                                 <option value="Yes" @if($checklist13 && $checklist13->$response_documentation_name == "Yes") selected @endif>Yes</option>
                                                 <option value="No" @if($checklist13 && $checklist13->$response_documentation_name == "No") selected @endif>No</option>
                                                 <option value="N/A" @if($checklist13 && $checklist13->$response_documentation_name == "N/A") selected @endif>N/A</option>
-                                           
+
                                             </select>
                                         </div>
                                     </td>
@@ -10354,7 +10354,7 @@ $checklistqualitycontrol = [
             "Have you any standard procedure for removal of scrap?",
             "Is there any procedure to cross verify the dispensed packaging material before starting the packaging."
         ];
-    
+
         $questions_documentation = [
             "Do records have doer & checker signatures? Check the timings, date and yield etc in the batch production record.",
             "Is each batch assigned a distinctive code, so that material can be traced through manufacturing and distribution? Check for In process analytical reports",
@@ -10364,13 +10364,13 @@ $checklistqualitycontrol = [
             "Current version of SOP’s is available in respective areas?"
         ];
     @endphp
-    
+
     <div class="inner-block-content">
         <div class="row">
             <div class="sub-head">
                 Checklist for Injection Packing
             </div>
-    
+
             <div class="col-12">
                 <div class="group-input">
                     <div class="why-why-chart">
@@ -10399,7 +10399,7 @@ $checklistqualitycontrol = [
                                                     <option value="Yes" @if($checklist14 && $checklist14->$response_injection_name == "Yes") selected @endif>Yes</option>
                                                     <option value="No" @if($checklist14 && $checklist14->$response_injection_name == "No") selected @endif>No</option>
                                                     <option value="N/A" @if($checklist14 && $checklist14->$response_injection_name == "N/A") selected @endif>N/A</option>
-                                               
+
                                                 </select>
                                             </div>
                                         </td>
@@ -10415,11 +10415,11 @@ $checklistqualitycontrol = [
                     </div>
                 </div>
             </div>
-    
+
             <div class="sub-head">
                 Checklist for Documentation
             </div>
-    
+
             <div class="col-12">
                 <div class="group-input">
                     <div class="why-why-chart">
@@ -10448,7 +10448,7 @@ $checklistqualitycontrol = [
                                                     <option value="Yes" @if($checklist14 && $checklist14->$response_production == "Yes") selected @endif>Yes</option>
                                                     <option value="No" @if($checklist14 && $checklist14->$response_production == "No") selected @endif>No</option>
                                                     <option value="N/A" @if($checklist14 && $checklist14->$response_production == "N/A") selected @endif>N/A</option>
-                                               
+
                                                 </select>
                                             </div>
                                         </td>
@@ -10464,14 +10464,14 @@ $checklistqualitycontrol = [
                     </div>
                 </div>
             </div>
-    
+
             <div class="col-md-12 mb-4">
                 <div class="group-input">
                     <label for="Description Deviation">Final Comments</label>
                     <textarea class="summernote" name="response_injection_packing_comment" id="summernote-1">@if($checklist14 && $checklist14->{"response_injection_packing_comment"}){{ $checklist14->{"response_injection_packing_comment"} }}@endif</textarea>
                 </div>
             </div>
-    
+
             <div class="col-12">
                 <div class="group-input">
                     <label for="Audit Attachments">Supporting Attachment</label>
@@ -10485,7 +10485,7 @@ $checklistqualitycontrol = [
                     </div>
                 </div>
             </div>
-    
+
             <div class="button-block">
                 <button type="submit" class="saveButton">Save</button>
                 <button type="button" class="backButton" onclick="previousStep()">Back</button>
@@ -10494,9 +10494,9 @@ $checklistqualitycontrol = [
             </div>
         </div>
     </div>
-    
 
-   
+
+
  </div>
 
 
@@ -10589,7 +10589,7 @@ $checklistqualitycontrol = [
                                                 <option value="Yes" @if($checklist15 && $checklist15->$response_name_manufacturingnew == "Yes") selected @endif>Yes</option>
                                                 <option value="No" @if($checklist15 && $checklist15->$response_name_manufacturingnew == "No") selected @endif>No</option>
                                                 <option value="N/A" @if($checklist15 && $checklist15->$response_name_manufacturingnew == "N/A") selected @endif>N/A</option>
-                                           
+
                                             </select>
                                         </div>
                                     </td>
@@ -10638,7 +10638,7 @@ $checklistqualitycontrol = [
                                                 <option value="Yes" @if($checklist15 && $checklist15->$response_name_manufacturing == "Yes") selected @endif>Yes</option>
                                                 <option value="No" @if($checklist15 && $checklist15->$response_name_manufacturing == "No") selected @endif>No</option>
                                                 <option value="N/A" @if($checklist15 && $checklist15->$response_name_manufacturing == "N/A") selected @endif>N/A</option>
-                                           
+
                                             </select>
                                         </div>
                                     </td>
@@ -10756,7 +10756,7 @@ $checklistqualitycontrol = [
                                                 <option value="Yes" @if($checklist16 && $checklist16->$response_name_analytical_research == "Yes") selected @endif>Yes</option>
                                                 <option value="No" @if($checklist16 && $checklist16->$response_name_analytical_research == "No") selected @endif>No</option>
                                                 <option value="N/A" @if($checklist16 && $checklist16->$response_name_analytical_research == "N/A") selected @endif>N/A</option>
-                                           
+
                                             </select>
                                         </div>
                                     </td>
@@ -10867,7 +10867,7 @@ $checklistqualitycontrol = [
                                                 <option value="Yes" @if($checklist17 && $checklist17->$response_name_formulation == "Yes") selected @endif>Yes</option>
                                                 <option value="No" @if($checklist17 && $checklist17->$response_name_formulation == "No") selected @endif>No</option>
                                                 <option value="N/A" @if($checklist17 && $checklist17->$response_name_formulation == "N/A") selected @endif>N/A</option>
-                                           
+
                                             </select>
                                         </div>
                                     </td>
@@ -10989,12 +10989,14 @@ $checklistqualitycontrol = [
                                     <td>
                                         <div
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                            <select name="response" id="response"
+                                            <select name="checklist_LL_P2P_response_1" id="checklist_LL_P2P_response_1"
                                                 style="padding: 2px; width:80%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="">Select an Option</option>
-                                                <option value="Yes">Yes</option>
-                                                <option value="No">No</option>
-                                                <option value="N/A">N/A</option>
+                                               <option value="">Select an Option</option>
+                                                <option value="Yes" @if($checklist18 && $checklist18->checklist_LL_P2P_response_1) {{ $checklist18->checklist_LL_P2P_response_1 == "Yes" ? 'selected' : '' }}@endif>Yes</option>
+                                                <option value="No"  @if($checklist18 && $checklist18->checklist_LL_P2P_response_1) {{ $checklist18->checklist_LL_P2P_response_1 == "No" ? 'selected' : '' }} @endif>No</option>
+                                                <option value="N/A" @if($checklist18 && $checklist18->checklist_LL_P2P_response_1) {{ $checklist18->checklist_LL_P2P_response_1 == "N/A" ? 'selected' : '' }}@endif>N/A</option>
+
+
                                             </select>
                                         </div>
                                     </td>
@@ -11002,7 +11004,7 @@ $checklistqualitycontrol = [
                                         <textarea name="when_will_not_be"></textarea> --}} <td style="vertical-align: middle;">
                                         <div
                                             style="margin: auto; display: flex; justify-content: center;">
-                                            <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                            <textarea name="checklist_LL_P2P_remark_1" style="border-radius: 7px; border: 1.5px solid black;">@if( $checklist18 && $checklist18->checklist_LL_P2P_remark_1){{ $checklist18->checklist_LL_P2P_remark_1 }}@endif</textarea>
                                         </div>
                                     </td>
 
@@ -11016,12 +11018,12 @@ $checklistqualitycontrol = [
                                     <td>
                                         <div
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                            <select name="response" id="response"
+                                            <select name="checklist_LL_P2P_response_2" id="checklist_LL_P2P_response_2"
                                                 style="padding: 2px; width:80%; border: 1px solid black;  background-color: #f0f0f0;">
                                                 <option value="">Select an Option</option>
-                                                <option value="Yes">Yes</option>
-                                                <option value="No">No</option>
-                                                <option value="N/A">N/A</option>
+                                                <option value="Yes" @if($checklist18 && $checklist18->checklist_LL_P2P_response_2) {{ $checklist18->checklist_LL_P2P_response_2 == "Yes" ? 'selected' : '' }}@endif>Yes</option>
+                                                <option value="No"  @if($checklist18 && $checklist18->checklist_LL_P2P_response_2) {{ $checklist18->checklist_LL_P2P_response_2 == "No" ? 'selected' : '' }} @endif>No</option>
+                                                <option value="N/A" @if($checklist18 && $checklist18->checklist_LL_P2P_response_2) {{ $checklist18->checklist_LL_P2P_response_2 == "N/A" ? 'selected' : '' }}@endif>N/A</option>
                                             </select>
                                         </div>
                                     </td>
@@ -11029,7 +11031,7 @@ $checklistqualitycontrol = [
                                         <textarea name="coverage_will_not_be"></textarea> --}} <td style="vertical-align: middle;">
                                         <div
                                             style="margin: auto; display: flex; justify-content: center;">
-                                            <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                            <textarea name="checklist_LL_P2P_remark_2" style="border-radius: 7px; border: 1.5px solid black;">@if( $checklist18 && $checklist18->checklist_LL_P2P_remark_2){{ $checklist18->checklist_LL_P2P_remark_2 }}@endif</textarea>
                                         </div>
                                     </td>
 
@@ -11045,12 +11047,13 @@ $checklistqualitycontrol = [
                                     <td>
                                         <div
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                            <select name="response" id="response"
+                                            <select name="checklist_LL_P2P_response_3" id="checklist_LL_P2P_response_3"
                                                 style="padding: 2px; width:80%; border: 1px solid black;  background-color: #f0f0f0;">
                                                 <option value="">Select an Option</option>
-                                                <option value="Yes">Yes</option>
-                                                <option value="No">No</option>
-                                                <option value="N/A">N/A</option>
+                                                <option value="Yes" @if($checklist18 && $checklist18->checklist_LL_P2P_response_3) {{ $checklist18->checklist_LL_P2P_response_3 == "Yes" ? 'selected' : '' }}@endif>Yes</option>
+                                                <option value="No"  @if($checklist18 && $checklist18->checklist_LL_P2P_response_3) {{ $checklist18->checklist_LL_P2P_response_3 == "No" ? 'selected' : '' }} @endif>No</option>
+                                                <option value="N/A" @if($checklist18 && $checklist18->checklist_LL_P2P_response_3) {{ $checklist18->checklist_LL_P2P_response_3 == "N/A" ? 'selected' : '' }}@endif>N/A</option>
+
                                             </select>
                                         </div>
                                     </td>
@@ -11058,7 +11061,8 @@ $checklistqualitycontrol = [
                                         <textarea name="who_will_not_be"></textarea> --}} <td style="vertical-align: middle;">
                                         <div
                                             style="margin: auto; display: flex; justify-content: center;">
-                                            <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                            <textarea name="checklist_LL_P2P_remark_3" style="border-radius: 7px; border: 1.5px solid black;">@if( $checklist18 && $checklist18->checklist_LL_P2P_remark_3){{ $checklist18->checklist_LL_P2P_remark_3 }}@endif</textarea>
+
                                         </div>
                                     </td>
 
@@ -11200,12 +11204,13 @@ $checklistqualitycontrol = [
                                     <td>
                                         <div
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                            <select name="response" id="response"
+                                            <select name="checklist_LL_P2P_response_6" id="checklist_LL_P2P_response_6"
                                                 style="padding: 2px; width:80%; border: 1px solid black;  background-color: #f0f0f0;">
                                                 <option value="">Select an Option</option>
-                                                <option value="Yes">Permanent</option>
-                                                <option value="No">Temporary</option>
-                                                <option value="N/A">Casual</option>
+                                                <option value="Yes" @if($checklist18 && $checklist18->checklist_LL_P2P_response_6) {{ $checklist18->checklist_LL_P2P_response_6 == "Yes" ? 'selected' : '' }}@endif>Yes</option>
+                                                <option value="No"  @if($checklist18 && $checklist18->checklist_LL_P2P_response_6) {{ $checklist18->checklist_LL_P2P_response_6 == "No" ? 'selected' : '' }} @endif>No</option>
+                                                <option value="N/A" @if($checklist18 && $checklist18->checklist_LL_P2P_response_6) {{ $checklist18->checklist_LL_P2P_response_6 == "N/A" ? 'selected' : '' }}@endif>N/A</option>
+
                                             </select>
                                         </div>
                                     </td>
@@ -11213,7 +11218,8 @@ $checklistqualitycontrol = [
                                         <textarea name="who_will_not_be"></textarea> --}} <td style="vertical-align: middle;">
                                         <div
                                             style="margin: auto; display: flex; justify-content: center;">
-                                            <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                            <textarea name="checklist_LL_P2P_remark_6" style="border-radius: 7px; border: 1.5px solid black;">@if( $checklist18 && $checklist18->checklist_LL_P2P_remark_6){{ $checklist18->checklist_LL_P2P_remark_6 }}@endif</textarea>
+
                                         </div>
                                     </td>
 
@@ -11225,12 +11231,13 @@ $checklistqualitycontrol = [
                                     <td>
                                         <div
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                            <select name="response" id="response"
+                                            <select name="checklist_LL_P2P_response_7" id="checklist_LL_P2P_response_7"
                                                 style="padding: 2px; width:80%; border: 1px solid black;  background-color: #f0f0f0;">
                                                 <option value="">Select an Option</option>
-                                                <option value="Yes">Yes</option>
-                                                <option value="No">No</option>
-                                                <option value="N/A">N/A</option>
+                                                <option value="Yes" @if($checklist18 && $checklist18->checklist_LL_P2P_response_7) {{ $checklist18->checklist_LL_P2P_response_7 == "Yes" ? 'selected' : '' }}@endif>Yes</option>
+                                                <option value="No"  @if($checklist18 && $checklist18->checklist_LL_P2P_response_7) {{ $checklist18->checklist_LL_P2P_response_7 == "No" ? 'selected' : '' }} @endif>No</option>
+                                                <option value="N/A" @if($checklist18 && $checklist18->checklist_LL_P2P_response_7) {{ $checklist18->checklist_LL_P2P_response_7 == "N/A" ? 'selected' : '' }}@endif>N/A</option>
+
                                             </select>
                                         </div>
                                     </td>
@@ -11238,7 +11245,7 @@ $checklistqualitycontrol = [
                                         <textarea name="who_will_not_be"></textarea> --}} <td style="vertical-align: middle;">
                                         <div
                                             style="margin: auto; display: flex; justify-content: center;">
-                                            <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                            <textarea name="checklist_LL_P2P_remark_7" style="border-radius: 7px; border: 1.5px solid black;">@if( $checklist18 && $checklist18->checklist_LL_P2P_remark_7){{ $checklist18->checklist_LL_P2P_remark_7 }}@endif</textarea>
                                         </div>
                                     </td>
 
@@ -11252,12 +11259,13 @@ $checklistqualitycontrol = [
                                     <td>
                                         <div
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                            <select name="response" id="response"
+                                            <select name="checklist_LL_P2P_response_8" id="checklist_LL_P2P_response_8"
                                                 style="padding: 2px; width:80%; border: 1px solid black;  background-color: #f0f0f0;">
                                                 <option value="">Select an Option</option>
-                                                <option value="Yes">Urban</option>
-                                                <option value="No">Rural</option>
-                                                <option value="N/A">Industrial</option>
+                                                <option value="Yes" @if($checklist18 && $checklist18->checklist_LL_P2P_response_8) {{ $checklist18->checklist_LL_P2P_response_8 == "Yes" ? 'selected' : '' }}@endif>Yes</option>
+                                                <option value="No"  @if($checklist18 && $checklist18->checklist_LL_P2P_response_8) {{ $checklist18->checklist_LL_P2P_response_8 == "No" ? 'selected' : '' }} @endif>No</option>
+                                                <option value="N/A" @if($checklist18 && $checklist18->checklist_LL_P2P_response_8) {{ $checklist18->checklist_LL_P2P_response_8 == "N/A" ? 'selected' : '' }}@endif>N/A</option>
+
                                             </select>
                                         </div>
                                     </td>
@@ -11265,7 +11273,7 @@ $checklistqualitycontrol = [
                                         <textarea name="who_will_not_be"></textarea> --}} <td style="vertical-align: middle;">
                                         <div
                                             style="margin: auto; display: flex; justify-content: center;">
-                                            <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                            <textarea name="checklist_LL_P2P_remark_8" style="border-radius: 7px; border: 1.5px solid black;">@if( $checklist18 && $checklist18->checklist_LL_P2P_remark_78){{ $checklist18->checklist_LL_P2P_remark_8 }}@endif</textarea>
                                         </div>
                                     </td>
 
@@ -11282,13 +11290,23 @@ $checklistqualitycontrol = [
 
                                     <td>
 
+                                        <div
+                                        style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
+                                        <select name="checklist_LL_P2P_response_8" id="checklist_LL_P2P_response_8"
+                                            style="padding: 2px; width:80%; border: 1px solid black;  background-color: #f0f0f0;">
+                                            <option value="">Select an Option</option>
+                                            <option value="Yes" @if($checklist18 && $checklist18->checklist_LL_P2P_response_9) {{ $checklist18->checklist_LL_P2P_response_9 == "Yes" ? 'selected' : '' }}@endif>Yes</option>
+                                            <option value="No"  @if($checklist18 && $checklist18->checklist_LL_P2P_response_9) {{ $checklist18->checklist_LL_P2P_response_9 == "No" ? 'selected' : '' }} @endif>No</option>
+                                            <option value="N/A" @if($checklist18 && $checklist18->checklist_LL_P2P_response_9) {{ $checklist18->checklist_LL_P2P_response_9 == "N/A" ? 'selected' : '' }}@endif>N/A</option>
 
+                                        </select>
+                                    </div>
                                     </td>
                                     {{--    <td>
                                         <textarea name="who_will_not_be"></textarea> --}} <td style="vertical-align: middle;">
                                         <div
                                             style="margin: auto; display: flex; justify-content: center;">
-                                            <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                            <textarea name="checklist_LL_P2P_remark_9" style="border-radius: 7px; border: 1.5px solid black;">@if( $checklist18 && $checklist18->checklist_LL_P2P_remark_9){{ $checklist18->checklist_LL_P2P_remark_9 }}@endif</textarea>
                                         </div>
                                     </td>
 
@@ -11307,7 +11325,7 @@ $checklistqualitycontrol = [
                                         <div
                                         style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                         <input type="text" placeholder="Enter value here"
-                                            style="padding: 2px; width:80%; border: 1px solid black;  background-color: #f0f0f0;">
+                                            style="padding: 2px; width:80%; border: 1px solid black;  background-color: #f0f0f0;" name = "checklist_LL_P2P_response_10">
 
                                     </div>
 
@@ -11316,7 +11334,7 @@ $checklistqualitycontrol = [
                                         <textarea name="who_will_not_be"></textarea> --}} <td style="vertical-align: middle;">
                                         <div
                                             style="margin: auto; display: flex; justify-content: center;">
-                                            <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                            <textarea name="checklist_LL_P2P_remark_10" style="border-radius: 7px; border: 1.5px solid black;">@if( $checklist18 && $checklist18->checklist_LL_P2P_remark_10){{ $checklist18->checklist_LL_P2P_remark_10 }}@endif</textarea>
                                         </div>
                                     </td>
 
@@ -11332,7 +11350,7 @@ $checklistqualitycontrol = [
                                     <td>
                                         <div
                                         style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                        <input type="text"placeholder="Enter value here"
+                                        <input type="text"placeholder="Enter value here" name = "checklist_LL_P2P_response_11"
                                             style="padding: 2px; width:80%; border: 1px solid black;  background-color: #f0f0f0;">
 
                                     </div>
@@ -11342,7 +11360,7 @@ $checklistqualitycontrol = [
                                         <textarea name="who_will_not_be"></textarea> --}} <td style="vertical-align: middle;">
                                         <div
                                             style="margin: auto; display: flex; justify-content: center;">
-                                            <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                            <textarea name="checklist_LL_P2P_remark_11" style="border-radius: 7px; border: 1.5px solid black;">@if( $checklist18 && $checklist18->checklist_LL_P2P_remark_11){{ $checklist18->checklist_LL_P2P_remark_11 }}@endif</textarea>
                                         </div>
                                     </td>
 
@@ -11358,7 +11376,7 @@ $checklistqualitycontrol = [
                                     <td>
                                         <div
                                 style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                <input type="text"placeholder="Enter value here"
+                                <input type="text"placeholder="Enter value here" name = "checklist_LL_P2P_response_12"
                                     style="padding: 2px; width:80%; border: 1px solid black;  background-color: #f0f0f0;">
 
                             </div>
@@ -11368,7 +11386,7 @@ $checklistqualitycontrol = [
                                         <textarea name="who_will_not_be"></textarea> --}} <td style="vertical-align: middle;">
                                         <div
                                             style="margin: auto; display: flex; justify-content: center;">
-                                            <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                            <textarea name="checklist_LL_P2P_remark_12" style="border-radius: 7px; border: 1.5px solid black;">@if( $checklist18 && $checklist18->checklist_LL_P2P_remark_12){{ $checklist18->checklist_LL_P2P_remark_12 }}@endif</textarea>
                                         </div>
                                     </td>
 
@@ -11385,12 +11403,13 @@ $checklistqualitycontrol = [
                                     <td>
                                         <div
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                            <select name="response" id="response"
+                                            <select name="checklist_LL_P2P_response_13" id="checklist_LL_P2P_response_13"
                                                 style="padding: 2px; width:80%; border: 1px solid black;  background-color: #f0f0f0;">
                                                 <option value="">Select an Option</option>
-                                                <option value="Yes">Yes</option>
-                                                <option value="No">No</option>
-                                                <option value="N/A">N/A</option>
+                                                <option value="Yes" @if($checklist18 && $checklist18->checklist_LL_P2P_response_13) {{ $checklist18->checklist_LL_P2P_response_13 == "Yes" ? 'selected' : '' }}@endif>Yes</option>
+                                                <option value="No"  @if($checklist18 && $checklist18->checklist_LL_P2P_response_13) {{ $checklist18->checklist_LL_P2P_response_13 == "No" ? 'selected' : '' }} @endif>No</option>
+                                                <option value="N/A" @if($checklist18 && $checklist18->checklist_LL_P2P_response_13) {{ $checklist18->checklist_LL_P2P_response_13 == "N/A" ? 'selected' : '' }}@endif>N/A</option>
+
                                             </select>
                                         </div>
                                     </td>
@@ -11398,7 +11417,7 @@ $checklistqualitycontrol = [
                                         <textarea name="who_will_not_be"></textarea> --}} <td style="vertical-align: middle;">
                                         <div
                                             style="margin: auto; display: flex; justify-content: center;">
-                                            <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                            <textarea name="checklist_LL_P2P_remark_13" style="border-radius: 7px; border: 1.5px solid black;">@if( $checklist18 && $checklist18->checklist_LL_P2P_remark_13){{ $checklist18->checklist_LL_P2P_remark_13 }}@endif</textarea>
                                         </div>
                                     </td>
 
@@ -11412,12 +11431,12 @@ $checklistqualitycontrol = [
                                     <td>
                                         <div
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                            <select name="response" id="response"
+                                            <select name="checklist_LL_P2P_response_14" id="checklist_LL_P2P_response_14"
                                                 style="padding: 2px; width:80%; border: 1px solid black;  background-color: #f0f0f0;">
                                                 <option value="">Select an Option</option>
-                                                <option value="Yes">Yes</option>
-                                                <option value="No">No</option>
-                                                <option value="N/A">N/A</option>
+                                                <option value="Yes" @if($checklist18 && $checklist18->checklist_LL_P2P_response_14) {{ $checklist18->checklist_LL_P2P_response_14 == "Yes" ? 'selected' : '' }}@endif>Yes</option>
+                                                <option value="No"  @if($checklist18 && $checklist18->checklist_LL_P2P_response_14) {{ $checklist18->checklist_LL_P2P_response_14 == "No" ? 'selected' : '' }} @endif>No</option>
+                                                <option value="N/A" @if($checklist18 && $checklist18->checklist_LL_P2P_response_14) {{ $checklist18->checklist_LL_P2P_response_14 == "N/A" ? 'selected' : '' }}@endif>N/A</option>
                                             </select>
                                         </div>
                                     </td>
@@ -11425,7 +11444,7 @@ $checklistqualitycontrol = [
                                         <textarea name="who_will_not_be"></textarea> --}} <td style="vertical-align: middle;">
                                         <div
                                             style="margin: auto; display: flex; justify-content: center;">
-                                            <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                            <textarea name="checklist_LL_P2P_remark_14" style="border-radius: 7px; border: 1.5px solid black;">@if( $checklist18 && $checklist18->checklist_LL_P2P_remark_14){{ $checklist18->checklist_LL_P2P_remark_14 }}@endif</textarea>
                                         </div>
                                     </td>
 
@@ -11439,19 +11458,20 @@ $checklistqualitycontrol = [
                                     <td>
                                         <div
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                            <select name="response" id="response"
+                                            <select name="checklist_LL_P2P_response_15" id="checklist_LL_P2P_response_15"
                                                 style="padding: 2px; width:80%; border: 1px solid black;  background-color: #f0f0f0;">
                                                 <option value="">Select an Option</option>
-                                                <option value="Yes">Yes</option>
-                                                <option value="No">No</option>
-                                                <option value="N/A">N/A</option>
+                                                <option value="Yes" @if($checklist18 && $checklist18->checklist_LL_P2P_response_15) {{ $checklist18->checklist_LL_P2P_response_15 == "Yes" ? 'selected' : '' }}@endif>Yes</option>
+                                                <option value="No"  @if($checklist18 && $checklist18->checklist_LL_P2P_response_15) {{ $checklist18->checklist_LL_P2P_response_15 == "No" ? 'selected' : '' }} @endif>No</option>
+                                                <option value="N/A" @if($checklist18 && $checklist18->checklist_LL_P2P_response_15) {{ $checklist18->checklist_LL_P2P_response_15 == "N/A" ? 'selected' : '' }}@endif>N/A</option>
+
                                             </select>
                                         </div>
                                     </td>
                                     <td style="vertical-align: middle;">
                                         <div
                                             style="margin: auto; display: flex; justify-content: center;">
-                                            <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                            <textarea name="checklist_LL_P2P_remark_15" style="border-radius: 7px; border: 1.5px solid black;">@if( $checklist18 && $checklist18->checklist_LL_P2P_remark_15){{ $checklist18->checklist_LL_P2P_remark_15 }}@endif</textarea>
                                         </div>
                                     </td>
 
@@ -11487,12 +11507,13 @@ $checklistqualitycontrol = [
 
                                         <div
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                            <select name="response" id="response"
+                                            <select name="checklist_LL_P2P_response_16" id="checklist_LL_P2P_response_16"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                 <option value="">Select an Option</option>
-                                                <option value="Yes">Yes</option>
-                                                <option value="No">No</option>
-                                                <option value="N/A">N/A</option>
+                                                <option value="Yes" @if($checklist18 && $checklist18->checklist_LL_P2P_response_16) {{ $checklist18->checklist_LL_P2P_response_16 == "Yes" ? 'selected' : '' }}@endif>Yes</option>
+                                                <option value="No"  @if($checklist18 && $checklist18->checklist_LL_P2P_response_16) {{ $checklist18->checklist_LL_P2P_response_16 == "No" ? 'selected' : '' }} @endif>No</option>
+                                                <option value="N/A" @if($checklist18 && $checklist18->checklist_LL_P2P_response_16) {{ $checklist18->checklist_LL_P2P_response_16 == "N/A" ? 'selected' : '' }}@endif>N/A</option>
+
                                             </select>
                                         </div>
 
@@ -11503,7 +11524,7 @@ $checklistqualitycontrol = [
                                     <td style="vertical-align: middle;">
                                         <div
                                             style="margin: auto; display: flex; justify-content: center;">
-                                            <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                            <textarea name="checklist_LL_P2P_remark_16" style="border-radius: 7px; border: 1.5px solid black;">@if( $checklist18 && $checklist18->checklist_LL_P2P_remark_16){{ $checklist18->checklist_LL_P2P_remark_16 }}@endif</textarea>
                                         </div>
                                     </td>
 
@@ -11516,12 +11537,13 @@ $checklistqualitycontrol = [
                                     <td>
                                         <div
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                            <select name="response" id="response"
+                                            <select name="checklist_LL_P2P_response_17" id="checklist_LL_P2P_response_17"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                 <option value="">Select an Option</option>
-                                                <option value="Yes">Yes</option>
-                                                <option value="No">No</option>
-                                                <option value="N/A">N/A</option>
+                                                <option value="Yes" @if($checklist18 && $checklist18->checklist_LL_P2P_response_17) {{ $checklist18->checklist_LL_P2P_response_17 == "Yes" ? 'selected' : '' }}@endif>Yes</option>
+                                                <option value="No"  @if($checklist18 && $checklist18->checklist_LL_P2P_response_17) {{ $checklist18->checklist_LL_P2P_response_17 == "No" ? 'selected' : '' }} @endif>No</option>
+                                                <option value="N/A" @if($checklist18 && $checklist18->checklist_LL_P2P_response_17) {{ $checklist18->checklist_LL_P2P_response_17 == "N/A" ? 'selected' : '' }}@endif>N/A</option>
+
                                             </select>
                                         </div>
                                     </td>
@@ -11529,7 +11551,7 @@ $checklistqualitycontrol = [
                                     <td style="vertical-align: middle;">
                                         <div
                                             style="margin: auto; display: flex; justify-content: center;">
-                                            <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                            <textarea name="checklist_LL_P2P_remark_17" style="border-radius: 7px; border: 1.5px solid black;">@if( $checklist18 && $checklist18->checklist_LL_P2P_remark_17){{ $checklist18->checklist_LL_P2P_remark_17 }}@endif</textarea>
                                         </div>
                                     </td>
 
@@ -11542,12 +11564,13 @@ $checklistqualitycontrol = [
                                     <td>
                                         <div
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                            <select name="response" id="response"
+                                            <select name="checklist_LL_P2P_response_18" id="checklist_LL_P2P_response_18"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                 <option value="">Select an Option</option>
-                                                <option value="Yes">Yes</option>
-                                                <option value="No">No</option>
-                                                <option value="N/A">N/A</option>
+                                                <option value="Yes" @if($checklist18 && $checklist18->checklist_LL_P2P_response_18) {{ $checklist18->checklist_LL_P2P_response_18 == "Yes" ? 'selected' : '' }}@endif>Yes</option>
+                                                <option value="No"  @if($checklist18 && $checklist18->checklist_LL_P2P_response_18) {{ $checklist18->checklist_LL_P2P_response_18 == "No" ? 'selected' : '' }} @endif>No</option>
+                                                <option value="N/A" @if($checklist18 && $checklist18->checklist_LL_P2P_response_18) {{ $checklist18->checklist_LL_P2P_response_18 == "N/A" ? 'selected' : '' }}@endif>N/A</option>
+
                                             </select>
                                         </div>
                                     </td>
@@ -11555,7 +11578,7 @@ $checklistqualitycontrol = [
                                     <td style="vertical-align: middle;">
                                         <div
                                             style="margin: auto; display: flex; justify-content: center;">
-                                            <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                            <textarea name="checklist_LL_P2P_remark_18" style="border-radius: 7px; border: 1.5px solid black;">@if( $checklist18 && $checklist18->checklist_LL_P2P_remark_18){{ $checklist18->checklist_LL_P2P_remark_18 }}@endif</textarea>
                                         </div>
                                     </td>
 
@@ -11580,12 +11603,13 @@ $checklistqualitycontrol = [
                                     <td>
                                         <div
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                            <select name="response" id="response"
+                                            <select name="checklist_LL_P2P_response_19" id="checklist_LL_P2P_response_19"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                 <option value="">Select an Option</option>
-                                                <option value="Yes">Yes</option>
-                                                <option value="No">No</option>
-                                                <option value="N/A">N/A</option>
+                                                <option value="Yes" @if($checklist18 && $checklist18->checklist_LL_P2P_response_19) {{ $checklist18->checklist_LL_P2P_response_19 == "Yes" ? 'selected' : '' }}@endif>Yes</option>
+                                                <option value="No"  @if($checklist18 && $checklist18->checklist_LL_P2P_response_19) {{ $checklist18->checklist_LL_P2P_response_19 == "No" ? 'selected' : '' }} @endif>No</option>
+                                                <option value="N/A" @if($checklist18 && $checklist18->checklist_LL_P2P_response_19) {{ $checklist18->checklist_LL_P2P_response_19 == "N/A" ? 'selected' : '' }}@endif>N/A</option>
+
                                             </select>
                                         </div>
                                     </td>
@@ -11593,7 +11617,7 @@ $checklistqualitycontrol = [
                                     <td style="vertical-align: middle;">
                                         <div
                                             style="margin: auto; display: flex; justify-content: center;">
-                                            <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                            <textarea name="checklist_LL_P2P_remark_19" style="border-radius: 7px; border: 1.5px solid black;">@if( $checklist18 && $checklist18->checklist_LL_P2P_remark_19){{ $checklist18->checklist_LL_P2P_remark_19 }}@endif</textarea>
                                         </div>
                                     </td>
                                 </tr>  <tr>
@@ -11607,12 +11631,12 @@ $checklistqualitycontrol = [
                                     <td>
                                         <div
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                            <select name="response" id="response"
+                                            <select name="checklist_LL_P2P_response_20" id="checklist_LL_P2P_response_20"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                 <option value="">Select an Option</option>
-                                                <option value="Yes">Yes</option>
-                                                <option value="No">No</option>
-                                                <option value="N/A">N/A</option>
+                                                <option value="Yes" @if($checklist18 && $checklist18->checklist_LL_P2P_response_20) {{ $checklist18->checklist_LL_P2P_response_20 == "Yes" ? 'selected' : '' }}@endif>Yes</option>
+                                                <option value="No"  @if($checklist18 && $checklist18->checklist_LL_P2P_response_20) {{ $checklist18->checklist_LL_P2P_response_20 == "No" ? 'selected' : '' }} @endif>No</option>
+                                                <option value="N/A" @if($checklist18 && $checklist18->checklist_LL_P2P_response_20) {{ $checklist18->checklist_LL_P2P_response_20 == "N/A" ? 'selected' : '' }}@endif>N/A</option>
                                             </select>
                                         </div>
                                     </td>
@@ -11620,7 +11644,7 @@ $checklistqualitycontrol = [
                                     <td style="vertical-align: middle;">
                                         <div
                                             style="margin: auto; display: flex; justify-content: center;">
-                                            <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                            <textarea name="checklist_LL_P2P_remark_20" style="border-radius: 7px; border: 1.5px solid black;">@if( $checklist18 && $checklist18->checklist_LL_P2P_remark_20){{ $checklist18->checklist_LL_P2P_remark_20 }}@endif</textarea>
                                         </div>
                                     </td>
                                 </tr>  <tr>
@@ -11634,12 +11658,13 @@ $checklistqualitycontrol = [
                                     <td>
                                         <div
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                            <select name="response" id="response"
+                                            <select name="checklist_LL_P2P_response_21" id="checklist_LL_P2P_response_21"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                 <option value="">Select an Option</option>
-                                                <option value="Yes">Yes</option>
-                                                <option value="No">No</option>
-                                                <option value="N/A">N/A</option>
+                                                <option value="Yes" @if($checklist18 && $checklist18->checklist_LL_P2P_response_21) {{ $checklist18->checklist_LL_P2P_response_21 == "Yes" ? 'selected' : '' }}@endif>Yes</option>
+                                                <option value="No"  @if($checklist18 && $checklist18->checklist_LL_P2P_response_21) {{ $checklist18->checklist_LL_P2P_response_21 == "No" ? 'selected' : '' }} @endif>No</option>
+                                                <option value="N/A" @if($checklist18 && $checklist18->checklist_LL_P2P_response_21) {{ $checklist18->checklist_LL_P2P_response_21 == "N/A" ? 'selected' : '' }}@endif>N/A</option>
+
                                             </select>
                                         </div>
                                     </td>
@@ -11647,7 +11672,7 @@ $checklistqualitycontrol = [
                                     <td style="vertical-align: middle;">
                                         <div
                                             style="margin: auto; display: flex; justify-content: center;">
-                                            <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                            <textarea name="checklist_LL_P2P_remark_21" style="border-radius: 7px; border: 1.5px solid black;">@if( $checklist18 && $checklist18->checklist_LL_P2P_remark_21){{ $checklist18->checklist_LL_P2P_remark_21 }}@endif</textarea>
                                         </div>
                                     </td>
                                 </tr>  <tr>
@@ -11661,12 +11686,14 @@ $checklistqualitycontrol = [
                                     <td>
                                         <div
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                            <select name="response" id="response"
+                                            <select name="checklist_LL_P2P_response_22" id="checklist_LL_P2P_response_22"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                 <option value="">Select an Option</option>
-                                                <option value="Yes">Yes</option>
-                                                <option value="No">No</option>
-                                                <option value="N/A">N/A</option>
+                                                <option value="Yes" @if($checklist18 && $checklist18->checklist_LL_P2P_response_22) {{ $checklist18->checklist_LL_P2P_response_22 == "Yes" ? 'selected' : '' }}@endif>Yes</option>
+                                                <option value="No"  @if($checklist18 && $checklist18->checklist_LL_P2P_response_22) {{ $checklist18->checklist_LL_P2P_response_22 == "No" ? 'selected' : '' }} @endif>No</option>
+                                                <option value="N/A" @if($checklist18 && $checklist18->checklist_LL_P2P_response_22) {{ $checklist18->checklist_LL_P2P_response_22 == "N/A" ? 'selected' : '' }}@endif>N/A</option>
+
+
                                             </select>
                                         </div>
                                     </td>
@@ -11674,7 +11701,7 @@ $checklistqualitycontrol = [
                                     <td style="vertical-align: middle;">
                                         <div
                                             style="margin: auto; display: flex; justify-content: center;">
-                                            <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                            <textarea name="checklist_LL_P2P_remark_22" style="border-radius: 7px; border: 1.5px solid black;">@if( $checklist18 && $checklist18->checklist_LL_P2P_remark_22){{ $checklist18->checklist_LL_P2P_remark_22 }}@endif</textarea>
                                         </div>
                                     </td>
                                 </tr>  <tr>
@@ -11688,12 +11715,13 @@ $checklistqualitycontrol = [
                                     <td>
                                         <div
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                            <select name="response" id="response"
+                                            <select name="checklist_LL_P2P_response_23" id="checklist_LL_P2P_response_23"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                 <option value="">Select an Option</option>
-                                                <option value="Yes">Yes</option>
-                                                <option value="No">No</option>
-                                                <option value="N/A">N/A</option>
+                                                <option value="Yes" @if($checklist18 && $checklist18->checklist_LL_P2P_response_23) {{ $checklist18->checklist_LL_P2P_response_23 == "Yes" ? 'selected' : '' }}@endif>Yes</option>
+                                                <option value="No"  @if($checklist18 && $checklist18->checklist_LL_P2P_response_23) {{ $checklist18->checklist_LL_P2P_response_23 == "No" ? 'selected' : '' }} @endif>No</option>
+                                                <option value="N/A" @if($checklist18 && $checklist18->checklist_LL_P2P_response_23) {{ $checklist18->checklist_LL_P2P_response_23 == "N/A" ? 'selected' : '' }}@endif>N/A</option>
+
                                             </select>
                                         </div>
                                     </td>
@@ -11701,7 +11729,7 @@ $checklistqualitycontrol = [
                                     <td style="vertical-align: middle;">
                                         <div
                                             style="margin: auto; display: flex; justify-content: center;">
-                                            <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                            <textarea name="checklist_LL_P2P_remark_23" style="border-radius: 7px; border: 1.5px solid black;">@if( $checklist18 && $checklist18->checklist_LL_P2P_remark_23){{ $checklist18->checklist_LL_P2P_remark_23 }}@endif</textarea>
                                         </div>
                                     </td>
                                 </tr>  <tr>
@@ -11714,12 +11742,12 @@ $checklistqualitycontrol = [
                                     <td>
                                         <div
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                            <select name="response" id="response"
+                                            <select name="checklist_LL_P2P_response_24" id="checklist_LL_P2P_response_24"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                 <option value="">Select an Option</option>
-                                                <option value="Yes">Yes</option>
-                                                <option value="No">No</option>
-                                                <option value="N/A">N/A</option>
+                                                <option value="Yes" @if($checklist18 && $checklist18->checklist_LL_P2P_response_24) {{ $checklist18->checklist_LL_P2P_response_24 == "Yes" ? 'selected' : '' }}@endif>Yes</option>
+                                                <option value="No"  @if($checklist18 && $checklist18->checklist_LL_P2P_response_24) {{ $checklist18->checklist_LL_P2P_response_24 == "No" ? 'selected' : '' }} @endif>No</option>
+                                                <option value="N/A" @if($checklist18 && $checklist18->checklist_LL_P2P_response_24) {{ $checklist18->checklist_LL_P2P_response_24 == "N/A" ? 'selected' : '' }}@endif>N/A</option>
                                             </select>
                                         </div>
                                     </td>
@@ -11727,7 +11755,7 @@ $checklistqualitycontrol = [
                                     <td style="vertical-align: middle;">
                                         <div
                                             style="margin: auto; display: flex; justify-content: center;">
-                                            <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                            <textarea name="checklist_LL_P2P_remark_24" style="border-radius: 7px; border: 1.5px solid black;">@if( $checklist18 && $checklist18->checklist_LL_P2P_remark_24){{ $checklist18->checklist_LL_P2P_remark_24 }}@endif</textarea>
                                         </div>
                                     </td>
                                 </tr>
@@ -11763,11 +11791,12 @@ $checklistqualitycontrol = [
 
                                             <div
                                                 style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                <select name="response" id="response"
+                                                <select name="checklist_LL_P2P_response_25" id="checklist_LL_P2P_response_25"
                                                     style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                     <option value="">Select an Option</option>
-                                                    <option value="Yes">Designed</option>
-                                                    <option value="No">Adapted</option>
+                                                    <option value="Yes" @if($checklist18 && $checklist18->checklist_LL_P2P_response_25) {{ $checklist18->checklist_LL_P2P_response_25 == "Yes" ? 'selected' : '' }}@endif>Yes</option>
+                                                    <option value="No"  @if($checklist18 && $checklist18->checklist_LL_P2P_response_25) {{ $checklist18->checklist_LL_P2P_response_25 == "No" ? 'selected' : '' }} @endif>No</option>
+                                                    <option value="N/A" @if($checklist18 && $checklist18->checklist_LL_P2P_response_25) {{ $checklist18->checklist_LL_P2P_response_25 == "N/A" ? 'selected' : '' }}@endif>N/A</option>
 
                                                 </select>
                                             </div>
@@ -11779,7 +11808,7 @@ $checklistqualitycontrol = [
                                         <td style="vertical-align: middle;">
                                             <div
                                                 style="margin: auto; display: flex; justify-content: center;">
-                                                <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                <textarea name="checklist_LL_P2P_remark_25" style="border-radius: 7px; border: 1.5px solid black;">@if( $checklist18 && $checklist18->checklist_LL_P2P_remark_25){{ $checklist18->checklist_LL_P2P_remark_25 }}@endif</textarea>
                                             </div>
                                         </td>
 
@@ -11812,12 +11841,13 @@ $checklistqualitycontrol = [
                                         <td>
                                             <div
                                                 style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                <select name="response" id="response"
+                                                <select name="checklist_LL_P2P_response_26" id="checklist_LL_P2P_response_26"
                                                     style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                     <option value="">Select an Option</option>
-                                                    <option value="Yes">Yes</option>
-                                                    <option value="No">No</option>
-                                                    <option value="N/A">N/A</option>
+                                                    <option value="Yes" @if($checklist18 && $checklist18->checklist_LL_P2P_response_26) {{ $checklist18->checklist_LL_P2P_response_26 == "Yes" ? 'selected' : '' }}@endif>Yes</option>
+                                                    <option value="No"  @if($checklist18 && $checklist18->checklist_LL_P2P_response_26) {{ $checklist18->checklist_LL_P2P_response_26 == "No" ? 'selected' : '' }} @endif>No</option>
+                                                    <option value="N/A" @if($checklist18 && $checklist18->checklist_LL_P2P_response_26) {{ $checklist18->checklist_LL_P2P_response_26 == "N/A" ? 'selected' : '' }}@endif>N/A</option>
+
                                                 </select>
                                             </div>
                                         </td>
@@ -11825,7 +11855,7 @@ $checklistqualitycontrol = [
                                         <td style="vertical-align: middle;">
                                             <div
                                                 style="margin: auto; display: flex; justify-content: center;">
-                                                <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                <textarea name="checklist_LL_P2P_remark_26" style="border-radius: 7px; border: 1.5px solid black;">@if( $checklist18 && $checklist18->checklist_LL_P2P_remark_26){{ $checklist18->checklist_LL_P2P_remark_26 }}@endif</textarea>
                                             </div>
                                         </td>
 
@@ -11842,12 +11872,13 @@ $checklistqualitycontrol = [
                                         <td>
                                             <div
                                                 style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                <select name="response" id="response"
+                                                <select name="checklist_LL_P2P_response_27" id="checklist_LL_P2P_response_27"
                                                     style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                     <option value="">Select an Option</option>
-                                                    <option value="Yes">Yes</option>
-                                                    <option value="No">No</option>
-                                                    <option value="N/A">N/A</option>
+                                                    <option value="Yes" @if($checklist18 && $checklist18->checklist_LL_P2P_response_27) {{ $checklist18->checklist_LL_P2P_response_27 == "Yes" ? 'selected' : '' }}@endif>Yes</option>
+                                                    <option value="No"  @if($checklist18 && $checklist18->checklist_LL_P2P_response_27) {{ $checklist18->checklist_LL_P2P_response_27 == "No" ? 'selected' : '' }} @endif>No</option>
+                                                    <option value="N/A" @if($checklist18 && $checklist18->checklist_LL_P2P_response_27) {{ $checklist18->checklist_LL_P2P_response_27 == "N/A" ? 'selected' : '' }}@endif>N/A</option>
+
                                                 </select>
                                             </div>
                                         </td>
@@ -11855,7 +11886,7 @@ $checklistqualitycontrol = [
                                         <td style="vertical-align: middle;">
                                             <div
                                                 style="margin: auto; display: flex; justify-content: center;">
-                                                <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                <textarea name="checklist_LL_P2P_remark_27" style="border-radius: 7px; border: 1.5px solid black;">@if( $checklist18 && $checklist18->checklist_LL_P2P_remark_27){{ $checklist18->checklist_LL_P2P_remark_27 }}@endif</textarea>
                                             </div>
                                         </td>
 
@@ -11872,12 +11903,13 @@ $checklistqualitycontrol = [
                                         <td>
                                             <div
                                                 style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                <select name="response" id="response"
+                                                <select name="checklist_LL_P2P_response_28" id="checklist_LL_P2P_response_28"
                                                     style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                     <option value="">Select an Option</option>
-                                                    <option value="Yes">Yes</option>
-                                                    <option value="No">No</option>
-                                                    <option value="N/A">N/A</option>
+                                                    <option value="Yes" @if($checklist18 && $checklist18->checklist_LL_P2P_response_28) {{ $checklist18->checklist_LL_P2P_response_28 == "Yes" ? 'selected' : '' }}@endif>Yes</option>
+                                                    <option value="No"  @if($checklist18 && $checklist18->checklist_LL_P2P_response_28) {{ $checklist18->checklist_LL_P2P_response_28 == "No" ? 'selected' : '' }} @endif>No</option>
+                                                    <option value="N/A" @if($checklist18 && $checklist18->checklist_LL_P2P_response_28) {{ $checklist18->checklist_LL_P2P_response_28 == "N/A" ? 'selected' : '' }}@endif>N/A</option>
+
                                                 </select>
                                             </div>
                                         </td>
@@ -11885,7 +11917,7 @@ $checklistqualitycontrol = [
                                         <td style="vertical-align: middle;">
                                             <div
                                                 style="margin: auto; display: flex; justify-content: center;">
-                                                <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                <textarea name="checklist_LL_P2P_remark_28" style="border-radius: 7px; border: 1.5px solid black;">@if( $checklist18 && $checklist18->checklist_LL_P2P_remark_28){{ $checklist18->checklist_LL_P2P_remark_28 }}@endif</textarea>
                                             </div>
                                         </td>
 
@@ -11902,12 +11934,14 @@ $checklistqualitycontrol = [
                                         <td>
                                             <div
                                                 style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                <select name="response" id="response"
+                                                <select name="checklist_LL_P2P_response_29" id="checklist_LL_P2P_response_29"
                                                     style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                     <option value="">Select an Option</option>
-                                                    <option value="Yes">Yes</option>
-                                                    <option value="No">No</option>
-                                                    <option value="N/A">N/A</option>
+                                                    <option value="Yes" @if($checklist18 && $checklist18->checklist_LL_P2P_response_29) {{ $checklist18->checklist_LL_P2P_response_29 == "Yes" ? 'selected' : '' }}@endif>Yes</option>
+                                                    <option value="No"  @if($checklist18 && $checklist18->checklist_LL_P2P_response_29) {{ $checklist18->checklist_LL_P2P_response_29 == "No" ? 'selected' : '' }} @endif>No</option>
+                                                    <option value="N/A" @if($checklist18 && $checklist18->checklist_LL_P2P_response_29) {{ $checklist18->checklist_LL_P2P_response_29 == "N/A" ? 'selected' : '' }}@endif>N/A</option>
+
+
                                                 </select>
                                             </div>
                                         </td>
@@ -11915,7 +11949,7 @@ $checklistqualitycontrol = [
                                         <td style="vertical-align: middle;">
                                             <div
                                                 style="margin: auto; display: flex; justify-content: center;">
-                                                <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                <textarea name="checklist_LL_P2P_remark_29" style="border-radius: 7px; border: 1.5px solid black;">@if( $checklist18 && $checklist18->checklist_LL_P2P_remark_29){{ $checklist18->checklist_LL_P2P_remark_29 }}@endif</textarea>
                                             </div>
                                         </td>
 
@@ -11932,12 +11966,13 @@ $checklistqualitycontrol = [
                                         <td>
                                             <div
                                                 style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                <select name="response" id="response"
+                                                <select name="checklist_LL_P2P_response_30" id="checklist_LL_P2P_response_30"
                                                     style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                     <option value="">Select an Option</option>
-                                                    <option value="Yes">Yes</option>
-                                                    <option value="No">No</option>
-                                                    <option value="N/A">N/A</option>
+                                                    <option value="Yes" @if($checklist18 && $checklist18->checklist_LL_P2P_response_30) {{ $checklist18->checklist_LL_P2P_response_30 == "Yes" ? 'selected' : '' }}@endif>Yes</option>
+                                                    <option value="No"  @if($checklist18 && $checklist18->checklist_LL_P2P_response_30) {{ $checklist18->checklist_LL_P2P_response_30 == "No" ? 'selected' : '' }} @endif>No</option>
+                                                    <option value="N/A" @if($checklist18 && $checklist18->checklist_LL_P2P_response_30) {{ $checklist18->checklist_LL_P2P_response_30 == "N/A" ? 'selected' : '' }}@endif>N/A</option>
+
                                                 </select>
                                             </div>
                                         </td>
@@ -11945,7 +11980,7 @@ $checklistqualitycontrol = [
                                         <td style="vertical-align: middle;">
                                             <div
                                                 style="margin: auto; display: flex; justify-content: center;">
-                                                <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                <textarea name="checklist_LL_P2P_remark_30" style="border-radius: 7px; border: 1.5px solid black;">@if( $checklist18 && $checklist18->checklist_LL_P2P_remark_30){{ $checklist18->checklist_LL_P2P_remark_30 }}@endif</textarea>
                                             </div>
                                         </td>
 
@@ -11961,12 +11996,13 @@ $checklistqualitycontrol = [
                                         <td>
                                             <div
                                                 style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                <select name="response" id="response"
+                                                <select name="checklist_LL_P2P_response_31" id="checklist_LL_P2P_response_31"
                                                     style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                     <option value="">Select an Option</option>
-                                                    <option value="Yes">Yes</option>
-                                                    <option value="No">No</option>
-                                                    <option value="N/A">N/A</option>
+                                                    <option value="Yes" @if($checklist18 && $checklist18->checklist_LL_P2P_response_31) {{ $checklist18->checklist_LL_P2P_response_31 == "Yes" ? 'selected' : '' }}@endif>Yes</option>
+                                                    <option value="No"  @if($checklist18 && $checklist18->checklist_LL_P2P_response_31) {{ $checklist18->checklist_LL_P2P_response_31 == "No" ? 'selected' : '' }} @endif>No</option>
+                                                    <option value="N/A" @if($checklist18 && $checklist18->checklist_LL_P2P_response_31) {{ $checklist18->checklist_LL_P2P_response_31 == "N/A" ? 'selected' : '' }}@endif>N/A</option>
+
                                                 </select>
                                             </div>
                                         </td>
@@ -11974,7 +12010,7 @@ $checklistqualitycontrol = [
                                         <td style="vertical-align: middle;">
                                             <div
                                                 style="margin: auto; display: flex; justify-content: center;">
-                                                <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                <textarea name="checklist_LL_P2P_remark_31" style="border-radius: 7px; border: 1.5px solid black;">@if( $checklist18 && $checklist18->checklist_LL_P2P_remark_31){{ $checklist18->checklist_LL_P2P_remark_31 }}@endif</textarea>
                                             </div>
                                         </td>
 
@@ -12009,12 +12045,13 @@ $checklistqualitycontrol = [
                                         <td>
                                             <div
                                                 style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                <select name="response" id="response"
+                                                <select name="checklist_LL_P2P_response_32" id="checklist_LL_P2P_response_32"
                                                     style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                     <option value="">Select an Option</option>
-                                                    <option value="Yes">Yes</option>
-                                                    <option value="No">No</option>
-                                                    <option value="N/A">N/A</option>
+                                                    <option value="Yes" @if($checklist18 && $checklist18->checklist_LL_P2P_response_32) {{ $checklist18->checklist_LL_P2P_response_32 == "Yes" ? 'selected' : '' }}@endif>Yes</option>
+                                                    <option value="No"  @if($checklist18 && $checklist18->checklist_LL_P2P_response_32) {{ $checklist18->checklist_LL_P2P_response_32 == "No" ? 'selected' : '' }} @endif>No</option>
+                                                    <option value="N/A" @if($checklist18 && $checklist18->checklist_LL_P2P_response_32) {{ $checklist18->checklist_LL_P2P_response_32 == "N/A" ? 'selected' : '' }}@endif>N/A</option>
+
                                                 </select>
                                             </div>
                                         </td>
@@ -12022,7 +12059,7 @@ $checklistqualitycontrol = [
                                         <td style="vertical-align: middle;">
                                             <div
                                                 style="margin: auto; display: flex; justify-content: center;">
-                                                <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                <textarea name="checklist_LL_P2P_remark_32" style="border-radius: 7px; border: 1.5px solid black;">@if( $checklist18 && $checklist18->checklist_LL_P2P_remark_32){{ $checklist18->checklist_LL_P2P_remark_32 }}@endif</textarea>
                                             </div>
                                         </td>
                                     </tr> <tr>
@@ -12036,12 +12073,13 @@ $checklistqualitycontrol = [
                                         <td>
                                             <div
                                                 style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                <select name="response" id="response"
+                                                <select name="checklist_LL_P2P_response_33" id="checklist_LL_P2P_response_33"
                                                     style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                     <option value="">Select an Option</option>
-                                                    <option value="Yes">Yes</option>
-                                                    <option value="No">No</option>
-                                                    <option value="N/A">N/A</option>
+                                                    <option value="Yes" @if($checklist18 && $checklist18->checklist_LL_P2P_response_33) {{ $checklist18->checklist_LL_P2P_response_33 == "Yes" ? 'selected' : '' }}@endif>Yes</option>
+                                                    <option value="No"  @if($checklist18 && $checklist18->checklist_LL_P2P_response_33) {{ $checklist18->checklist_LL_P2P_response_33 == "No" ? 'selected' : '' }} @endif>No</option>
+                                                    <option value="N/A" @if($checklist18 && $checklist18->checklist_LL_P2P_response_33) {{ $checklist18->checklist_LL_P2P_response_33 == "N/A" ? 'selected' : '' }}@endif>N/A</option>
+
                                                 </select>
                                             </div>
                                         </td>
@@ -12049,7 +12087,7 @@ $checklistqualitycontrol = [
                                         <td style="vertical-align: middle;">
                                             <div
                                                 style="margin: auto; display: flex; justify-content: center;">
-                                                <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                <textarea name="checklist_LL_P2P_remark_33" style="border-radius: 7px; border: 1.5px solid black;">@if( $checklist18 && $checklist18->checklist_LL_P2P_remark_33){{ $checklist18->checklist_LL_P2P_remark_33 }}@endif</textarea>
                                             </div>
                                         </td>
                                     </tr> <tr>
@@ -12062,12 +12100,13 @@ $checklistqualitycontrol = [
                                         <td>
                                             <div
                                                 style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                <select name="response" id="response"
+                                                <select name="checklist_LL_P2P_response_34" id="checklist_LL_P2P_response_34"
                                                     style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                     <option value="">Select an Option</option>
-                                                    <option value="Yes">Yes</option>
-                                                    <option value="No">No</option>
-                                                    <option value="N/A">N/A</option>
+                                                    <option value="Yes" @if($checklist18 && $checklist18->checklist_LL_P2P_response_34) {{ $checklist18->checklist_LL_P2P_response_34 == "Yes" ? 'selected' : '' }}@endif>Yes</option>
+                                                    <option value="No"  @if($checklist18 && $checklist18->checklist_LL_P2P_response_34) {{ $checklist18->checklist_LL_P2P_response_34 == "No" ? 'selected' : '' }} @endif>No</option>
+                                                    <option value="N/A" @if($checklist18 && $checklist18->checklist_LL_P2P_response_34) {{ $checklist18->checklist_LL_P2P_response_34 == "N/A" ? 'selected' : '' }}@endif>N/A</option>
+
                                                 </select>
                                             </div>
                                         </td>
@@ -12075,7 +12114,7 @@ $checklistqualitycontrol = [
                                         <td style="vertical-align: middle;">
                                             <div
                                                 style="margin: auto; display: flex; justify-content: center;">
-                                                <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                <textarea name="checklist_LL_P2P_remark_34" style="border-radius: 7px; border: 1.5px solid black;">@if( $checklist18 && $checklist18->checklist_LL_P2P_remark_34){{ $checklist18->checklist_LL_P2P_remark_34 }}@endif</textarea>
                                             </div>
                                         </td>
                                     </tr>
@@ -12087,11 +12126,24 @@ $checklistqualitycontrol = [
 
                                         </td>
                                         <td>
+                                            <div
+                                            style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
+                                            <select name="checklist_LL_P2P_response_35" id="checklist_LL_P2P_response_35"
+                                                style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
+                                                <option value="">Select an Option</option>
+                                                <option value="Yes" @if($checklist18 && $checklist18->checklist_LL_P2P_response_35) {{ $checklist18->checklist_LL_P2P_response_35 == "Yes" ? 'selected' : '' }}@endif>Yes</option>
+                                                <option value="No"  @if($checklist18 && $checklist18->checklist_LL_P2P_response_35) {{ $checklist18->checklist_LL_P2P_response_35 == "No" ? 'selected' : '' }} @endif>No</option>
+                                                <option value="N/A" @if($checklist18 && $checklist18->checklist_LL_P2P_response_35) {{ $checklist18->checklist_LL_P2P_response_35 == "N/A" ? 'selected' : '' }}@endif>N/A</option>
 
+                                            </select>
+                                        </div>
                                         </td>
 
                                         <td style="vertical-align: middle;">
-
+                                            <div
+                                            style="margin: auto; display: flex; justify-content: center;">
+                                            <textarea name="checklist_LL_P2P_remark_35" style="border-radius: 7px; border: 1.5px solid black;">@if( $checklist18 && $checklist18->checklist_LL_P2P_remark_35){{ $checklist18->checklist_LL_P2P_remark_34 }}@endif</textarea>
+                                        </div>
                                         </td>
                                     </tr>
 
@@ -12105,12 +12157,13 @@ $checklistqualitycontrol = [
                                         <td>
                                             <div
                                                 style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                <select name="response" id="response"
+                                                <select name="checklist_LL_P2P_response_36" id="checklist_LL_P2P_response_36"
                                                     style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                     <option value="">Select an Option</option>
-                                                    <option value="Yes">Yes</option>
-                                                    <option value="No">No</option>
-                                                    <option value="N/A">N/A</option>
+                                                    <option value="Yes" @if($checklist18 && $checklist18->checklist_LL_P2P_response_36) {{ $checklist18->checklist_LL_P2P_response_36 == "Yes" ? 'selected' : '' }}@endif>Yes</option>
+                                                <option value="No"  @if($checklist18 && $checklist18->checklist_LL_P2P_response_36) {{ $checklist18->checklist_LL_P2P_response_36 == "No" ? 'selected' : '' }} @endif>No</option>
+                                                <option value="N/A" @if($checklist18 && $checklist18->checklist_LL_P2P_response_36) {{ $checklist18->checklist_LL_P2P_response_36 == "N/A" ? 'selected' : '' }}@endif>N/A</option>
+
                                                 </select>
                                             </div>
                                         </td>
@@ -12118,7 +12171,7 @@ $checklistqualitycontrol = [
                                         <td style="vertical-align: middle;">
                                             <div
                                                 style="margin: auto; display: flex; justify-content: center;">
-                                                <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                <textarea name="checklist_LL_P2P_remark_36" style="border-radius: 7px; border: 1.5px solid black;">@if( $checklist18 && $checklist18->checklist_LL_P2P_remark_36){{ $checklist18->checklist_LL_P2P_remark_36 }}@endif</textarea>
                                             </div>
                                         </td>
                                     </tr> <tr>
@@ -12131,12 +12184,13 @@ $checklistqualitycontrol = [
                                         <td>
                                             <div
                                                 style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                <select name="response" id="response"
+                                                <select name="checklist_LL_P2P_response_37" id="checklist_LL_P2P_response_37"
                                                     style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                     <option value="">Select an Option</option>
-                                                    <option value="Yes">Yes</option>
-                                                    <option value="No">No</option>
-                                                    <option value="N/A">N/A</option>
+                                                    <option value="Yes" @if($checklist18 && $checklist18->checklist_LL_P2P_response_37) {{ $checklist18->checklist_LL_P2P_response_37 == "Yes" ? 'selected' : '' }}@endif>Yes</option>
+                                                    <option value="No"  @if($checklist18 && $checklist18->checklist_LL_P2P_response_37) {{ $checklist18->checklist_LL_P2P_response_37 == "No" ? 'selected' : '' }} @endif>No</option>
+                                                    <option value="N/A" @if($checklist18 && $checklist18->checklist_LL_P2P_response_37) {{ $checklist18->checklist_LL_P2P_response_37 == "N/A" ? 'selected' : '' }}@endif>N/A</option>
+
                                                 </select>
                                             </div>
                                         </td>
@@ -12144,7 +12198,7 @@ $checklistqualitycontrol = [
                                         <td style="vertical-align: middle;">
                                             <div
                                                 style="margin: auto; display: flex; justify-content: center;">
-                                                <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                <textarea name="checklist_LL_P2P_remark_37" style="border-radius: 7px; border: 1.5px solid black;">@if( $checklist18 && $checklist18->checklist_LL_P2P_remark_37){{ $checklist18->checklist_LL_P2P_remark_37 }}@endif</textarea>
                                             </div>
                                         </td>
                                     </tr> <tr>
@@ -12156,12 +12210,13 @@ $checklistqualitycontrol = [
                                         <td>
                                             <div
                                                 style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                <select name="response" id="response"
+                                                <select name="checklist_LL_P2P_remark_38" id="checklist_LL_P2P_remark_38"
                                                     style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                     <option value="">Select an Option</option>
-                                                    <option value="Yes">Yes</option>
-                                                    <option value="No">No</option>
-                                                    <option value="N/A">N/A</option>
+                                                    <option value="Yes" @if($checklist18 && $checklist18->checklist_LL_P2P_response_38) {{ $checklist18->checklist_LL_P2P_response_38 == "Yes" ? 'selected' : '' }}@endif>Yes</option>
+                                                    <option value="No"  @if($checklist18 && $checklist18->checklist_LL_P2P_response_38) {{ $checklist18->checklist_LL_P2P_response_38 == "No" ? 'selected' : '' }} @endif>No</option>
+                                                    <option value="N/A" @if($checklist18 && $checklist18->checklist_LL_P2P_response_38) {{ $checklist18->checklist_LL_P2P_response_38 == "N/A" ? 'selected' : '' }}@endif>N/A</option>
+
                                                 </select>
                                             </div>
                                         </td>
@@ -12169,7 +12224,7 @@ $checklistqualitycontrol = [
                                         <td style="vertical-align: middle;">
                                             <div
                                                 style="margin: auto; display: flex; justify-content: center;">
-                                                <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                <textarea name="checklist_LL_P2P_remark_38" style="border-radius: 7px; border: 1.5px solid black;">@if( $checklist18 && $checklist18->checklist_LL_P2P_remark_38){{ $checklist18->checklist_LL_P2P_remark_38 }}@endif</textarea>
                                             </div>
                                         </td>
                                     </tr> <tr>
@@ -12182,12 +12237,14 @@ $checklistqualitycontrol = [
                                         <td>
                                             <div
                                                 style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                <select name="response" id="response"
+                                                <select name="checklist_LL_P2P_remark_39" id="checklist_LL_P2P_remark_39"
                                                     style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                     <option value="">Select an Option</option>
-                                                    <option value="Yes">Yes</option>
-                                                    <option value="No">No</option>
-                                                    <option value="N/A">N/A</option>
+                                                    <option value="Yes" @if($checklist18 && $checklist18->checklist_LL_P2P_response_39) {{ $checklist18->checklist_LL_P2P_response_39 == "Yes" ? 'selected' : '' }}@endif>Yes</option>
+                                                    <option value="No"  @if($checklist18 && $checklist18->checklist_LL_P2P_response_39) {{ $checklist18->checklist_LL_P2P_response_39 == "No" ? 'selected' : '' }} @endif>No</option>
+                                                    <option value="N/A" @if($checklist18 && $checklist18->checklist_LL_P2P_response_39) {{ $checklist18->checklist_LL_P2P_response_39 == "N/A" ? 'selected' : '' }}@endif>N/A</option>
+
+
                                                 </select>
                                             </div>
                                         </td>
@@ -12195,7 +12252,7 @@ $checklistqualitycontrol = [
                                         <td style="vertical-align: middle;">
                                             <div
                                                 style="margin: auto; display: flex; justify-content: center;">
-                                                <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                <textarea name="checklist_LL_P2P_remark_39" style="border-radius: 7px; border: 1.5px solid black;">@if( $checklist18 && $checklist18->checklist_LL_P2P_remark_39){{ $checklist18->checklist_LL_P2P_remark_39 }}@endif</textarea>
                                             </div>
                                         </td>
                                     </tr> <tr>
@@ -12207,12 +12264,12 @@ $checklistqualitycontrol = [
                                         <td>
                                             <div
                                                 style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                <select name="response" id="response"
+                                                <select name="checklist_LL_P2P_response_40" id="checklist_LL_P2P_response_40"
                                                     style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                     <option value="">Select an Option</option>
-                                                    <option value="Yes">Yes</option>
-                                                    <option value="No">No</option>
-                                                    <option value="N/A">N/A</option>
+                                                    <option value="Yes" @if($checklist18 && $checklist18->checklist_LL_P2P_response_40) {{ $checklist18->checklist_LL_P2P_response_40 == "Yes" ? 'selected' : '' }}@endif>Yes</option>
+                                                    <option value="No"  @if($checklist18 && $checklist18->checklist_LL_P2P_response_40) {{ $checklist18->checklist_LL_P2P_response_40 == "No" ? 'selected' : '' }} @endif>No</option>
+                                                    <option value="N/A" @if($checklist18 && $checklist18->checklist_LL_P2P_response_40) {{ $checklist18->checklist_LL_P2P_response_40 == "N/A" ? 'selected' : '' }}@endif>N/A</option>
                                                 </select>
                                             </div>
                                         </td>
@@ -12220,25 +12277,26 @@ $checklistqualitycontrol = [
                                         <td style="vertical-align: middle;">
                                             <div
                                                 style="margin: auto; display: flex; justify-content: center;">
-                                                <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                <textarea name="checklist_LL_P2P_remark_40" style="border-radius: 7px; border: 1.5px solid black;">@if( $checklist18 && $checklist18->checklist_LL_P2P_remark_40){{ $checklist18->checklist_LL_P2P_remark_39 }}@endif</textarea>
                                             </div>
                                         </td>
                                     </tr>
 
                                     <tr>
                                         <td class="flex text-center">3.5</td>
-                                        <td>
-                                            Do you have written Good House Keeping Procedures?
-                                        </td>
+                                        <td>Were the premises designed or adapted for the present use?</td>
+
                                         <td>
                                             <div
                                                 style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                <select name="response" id="response"
+                                                <select name="checklist_LL_P2P_response_41" id="checklist_LL_P2P_response_41"
                                                     style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                     <option value="">Select an Option</option>
                                                     <option value="Yes">Yes</option>
-                                                    <option value="No">No</option>
-                                                    <option value="N/A">N/A</option>
+                                                    <option value="Yes" @if($checklist18 && $checklist18->checklist_LL_P2P_response_41) {{ $checklist18->checklist_LL_P2P_response_41 == "Yes" ? 'selected' : '' }}@endif>Yes</option>
+                                                    <option value="No"  @if($checklist18 && $checklist18->checklist_LL_P2P_response_41) {{ $checklist18->checklist_LL_P2P_response_41 == "No" ? 'selected' : '' }} @endif>No</option>
+                                                    <option value="N/A" @if($checklist18 && $checklist18->checklist_LL_P2P_response_41) {{ $checklist18->checklist_LL_P2P_response_41 == "N/A" ? 'selected' : '' }}@endif>N/A</option>
+
                                                 </select>
                                             </div>
                                         </td>
@@ -12246,7 +12304,7 @@ $checklistqualitycontrol = [
                                         <td style="vertical-align: middle;">
                                             <div
                                                 style="margin: auto; display: flex; justify-content: center;">
-                                                <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                <textarea name="checklist_LL_P2P_remark_41" style="border-radius: 7px; border: 1.5px solid black;">@if( $checklist18 && $checklist18->checklist_LL_P2P_remark_41){{ $checklist18->checklist_LL_P2P_remark_41 }}@endif</textarea>
                                             </div>
                                         </td>
                                     </tr>
@@ -12254,17 +12312,19 @@ $checklistqualitycontrol = [
                                     <tr>
                                         <td class="flex text-center">3.6</td>
                                         <td>
-                                            If yes, do you maintain follow- up records of these procedures?
+                                            Are there separate areas for:
+
                                         </td>
                                         <td>
                                             <div
                                                 style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                <select name="response" id="response"
+                                                <select name="checklist_LL_P2P_response_42" id="checklist_LL_P2P_response_42"
                                                     style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                     <option value="">Select an Option</option>
-                                                    <option value="Yes">Yes</option>
-                                                    <option value="No">No</option>
-                                                    <option value="N/A">N/A</option>
+                                                    <option value="Yes" @if($checklist18 && $checklist18->checklist_LL_P2P_response_42) {{ $checklist18->checklist_LL_P2P_response_42 == "Yes" ? 'selected' : '' }}@endif>Yes</option>
+                                                    <option value="No"  @if($checklist18 && $checklist18->checklist_LL_P2P_response_42) {{ $checklist18->checklist_LL_P2P_response_42 == "No" ? 'selected' : '' }} @endif>No</option>
+                                                    <option value="N/A" @if($checklist18 && $checklist18->checklist_LL_P2P_response_42) {{ $checklist18->checklist_LL_P2P_response_42 == "N/A" ? 'selected' : '' }}@endif>N/A</option>
+
                                                 </select>
                                             </div>
                                         </td>
@@ -12272,25 +12332,24 @@ $checklistqualitycontrol = [
                                         <td style="vertical-align: middle;">
                                             <div
                                                 style="margin: auto; display: flex; justify-content: center;">
-                                                <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
-                                            </div>
+                                                <textarea name="checklist_LL_P2P_remark_42" style="border-radius: 7px; border: 1.5px solid black;">@if( $checklist18 && $checklist18->checklist_LL_P2P_remark_42){{ $checklist18->checklist_LL_P2P_remark_42 }}@endif</textarea>                                            </div>
                                         </td>
                                     </tr>
 
                                     <tr>
                                         <td class="flex text-center">3.7</td>
                                         <td>
-                                            Do your manufacturing locations follow Good Manufacturing Practices?
-                                        </td>
+                                            Handling of starting materials?<br>
+                                    </td>
                                         <td>
                                             <div
                                                 style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                <select name="response" id="response"
+                                                <select name="checklist_LL_P2P_response_43" id="checklist_LL_P2P_response_43"
                                                     style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                     <option value="">Select an Option</option>
-                                                    <option value="Yes">Yes</option>
-                                                    <option value="No">No</option>
-                                                    <option value="N/A">N/A</option>
+                                                    <option value="Yes" @if($checklist18 && $checklist18->checklist_LL_P2P_response_43) {{ $checklist18->checklist_LL_P2P_response_43 == "Yes" ? 'selected' : '' }}@endif>Yes</option>
+                                                    <option value="No"  @if($checklist18 && $checklist18->checklist_LL_P2P_response_43) {{ $checklist18->checklist_LL_P2P_response_43 == "No" ? 'selected' : '' }} @endif>No</option>
+                                                    <option value="N/A" @if($checklist18 && $checklist18->checklist_LL_P2P_response_43) {{ $checklist18->checklist_LL_P2P_response_43 == "N/A" ? 'selected' : '' }}@endif>N/A</option>
                                                 </select>
                                             </div>
                                         </td>
@@ -12298,7 +12357,7 @@ $checklistqualitycontrol = [
                                         <td style="vertical-align: middle;">
                                             <div
                                                 style="margin: auto; display: flex; justify-content: center;">
-                                                <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                <textarea name="checklist_LL_P2P_remark_43" style="border-radius: 7px; border: 1.5px solid black;">@if( $checklist18 && $checklist18->checklist_LL_P2P_remark_43){{ $checklist18->checklist_LL_P2P_remark_43 }}@endif</textarea>                                            </div>
                                             </div>
                                         </td>
                                     </tr>
@@ -12306,17 +12365,17 @@ $checklistqualitycontrol = [
                                     <tr>
                                         <td class="flex text-center">3.8</td>
                                         <td>
-                                            Are plant supply pipelines identified and labeled?
-                                        </td>
+                                            Manufacturing?
+                                    </td>
                                         <td>
                                             <div
                                                 style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                <select name="response" id="response"
+                                                <select name="checklist_LL_P2P_response_44" id="checklist_LL_P2P_response_44"
                                                     style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                     <option value="">Select an Option</option>
-                                                    <option value="Yes">Yes</option>
-                                                    <option value="No">No</option>
-                                                    <option value="N/A">N/A</option>
+                                                    <option value="Yes" @if($checklist18 && $checklist18->checklist_LL_P2P_response_44) {{ $checklist18->checklist_LL_P2P_response_44 == "Yes" ? 'selected' : '' }}@endif>Yes</option>
+                                                    <option value="No"  @if($checklist18 && $checklist18->checklist_LL_P2P_response_44) {{ $checklist18->checklist_LL_P2P_response_44 == "No" ? 'selected' : '' }} @endif>No</option>
+                                                    <option value="N/A" @if($checklist18 && $checklist18->checklist_LL_P2P_response_44) {{ $checklist18->checklist_LL_P2P_response_43 == "N/A" ? 'selected' : '' }}@endif>N/A</option>
                                                 </select>
                                             </div>
                                         </td>
@@ -12324,7 +12383,7 @@ $checklistqualitycontrol = [
                                         <td style="vertical-align: middle;">
                                             <div
                                                 style="margin: auto; display: flex; justify-content: center;">
-                                                <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                <textarea name="checklist_LL_P2P_remark_44" style="border-radius: 7px; border: 1.5px solid black;">@if( $checklist18 && $checklist18->checklist_LL_P2P_remark_44){{ $checklist18->checklist_LL_P2P_remark_44 }}@endif</textarea>                                            </div>
                                             </div>
                                         </td>
                                     </tr>
@@ -12332,17 +12391,20 @@ $checklistqualitycontrol = [
                                     <tr>
                                         <td class="flex text-center">3.9</td>
                                         <td>
-                                            Is the core area is equipped with HVAC/AHU system?
-                                        </td>
+
+                                            Quarantined finished products or are other control systems in place?<br>
+
+                                    </td>
                                         <td>
                                             <div
                                                 style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                <select name="response" id="response"
+                                                <select name="checklist_LL_P2P_response_45" id="checklist_LL_P2P_response_45"
                                                     style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                     <option value="">Select an Option</option>
-                                                    <option value="Yes">Yes</option>
-                                                    <option value="No">No</option>
-                                                    <option value="N/A">N/A</option>
+                                                    <option value="Yes" @if($checklist18 && $checklist18->checklist_LL_P2P_response_45) {{ $checklist18->checklist_LL_P2P_response_45 == "Yes" ? 'selected' : '' }}@endif>Yes</option>
+                                                    <option value="No"  @if($checklist18 && $checklist18->checklist_LL_P2P_response_45) {{ $checklist18->checklist_LL_P2P_response_45 == "No" ? 'selected' : '' }} @endif>No</option>
+                                                    <option value="N/A" @if($checklist18 && $checklist18->checklist_LL_P2P_response_45) {{ $checklist18->checklist_LL_P2P_response_45 == "N/A" ? 'selected' : '' }}@endif>N/A</option>
+
                                                 </select>
                                             </div>
                                         </td>
@@ -12350,7 +12412,7 @@ $checklistqualitycontrol = [
                                         <td style="vertical-align: middle;">
                                             <div
                                                 style="margin: auto; display: flex; justify-content: center;">
-                                                <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                <textarea name="checklist_LL_P2P_remark_45" style="border-radius: 7px; border: 1.5px solid black;">@if( $checklist18 && $checklist18->checklist_LL_P2P_remark_45){{ $checklist18->checklist_LL_P2P_remark_45 }}@endif</textarea>                                            </div>
                                             </div>
                                         </td>
                                     </tr>
@@ -12358,17 +12420,20 @@ $checklistqualitycontrol = [
                                     <tr>
                                         <td class="flex text-center">3.10</td>
                                         <td>
-                                            Is there provision of compressed air in core area?
-                                        </td>
+
+                                            Approved finished products?<br>
+
+
+                                    </td>
                                         <td>
                                             <div
                                                 style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                <select name="response" id="response"
+                                                <select name="checklist_LL_P2P_response_46" id="checklist_LL_P2P_response_46"
                                                     style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                     <option value="">Select an Option</option>
-                                                    <option value="Yes">Yes</option>
-                                                    <option value="No">No</option>
-                                                    <option value="N/A">N/A</option>
+                                                    <option value="Yes" @if($checklist18 && $checklist18->checklist_LL_P2P_response_46) {{ $checklist18->checklist_LL_P2P_response_46 == "Yes" ? 'selected' : '' }}@endif>Yes</option>
+                                                    <option value="No"  @if($checklist18 && $checklist18->checklist_LL_P2P_response_46) {{ $checklist18->checklist_LL_P2P_response_46 == "No" ? 'selected' : '' }} @endif>No</option>
+                                                    <option value="N/A" @if($checklist18 && $checklist18->checklist_LL_P2P_response_46) {{ $checklist18->checklist_LL_P2P_response_46 == "N/A" ? 'selected' : '' }}@endif>N/A</option>
                                                 </select>
                                             </div>
                                         </td>
@@ -12376,7 +12441,7 @@ $checklistqualitycontrol = [
                                         <td style="vertical-align: middle;">
                                             <div
                                                 style="margin: auto; display: flex; justify-content: center;">
-                                                <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                <textarea name="checklist_LL_P2P_remark_46" style="border-radius: 7px; border: 1.5px solid black;">@if( $checklist18 && $checklist18->checklist_LL_P2P_remark_46){{ $checklist18->checklist_LL_P2P_remark_46 }}@endif</textarea>                                            </div>
                                             </div>
                                         </td>
                                     </tr>
@@ -12384,17 +12449,18 @@ $checklistqualitycontrol = [
                                     <tr>
                                         <td class="flex text-center">3.11</td>
                                         <td>
-                                            Have support systems like compressed air been validated?
-                                        </td>
+                                            Packaging and dispatch?<br>
+
+                                    </td>
                                         <td>
                                             <div
                                                 style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                <select name="response" id="response"
+                                                <select name="checklist_LL_P2P_response_47" id="checklist_LL_P2P_response_47"
                                                     style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                     <option value="">Select an Option</option>
-                                                    <option value="Yes">Yes</option>
-                                                    <option value="No">No</option>
-                                                    <option value="N/A">N/A</option>
+                                                    <option value="Yes" @if($checklist18 && $checklist18->checklist_LL_P2P_response_47) {{ $checklist18->checklist_LL_P2P_response_47 == "Yes" ? 'selected' : '' }}@endif>Yes</option>
+                                                    <option value="No"  @if($checklist18 && $checklist18->checklist_LL_P2P_response_47) {{ $checklist18->checklist_LL_P2P_response_47 == "No" ? 'selected' : '' }} @endif>No</option>
+                                                    <option value="N/A" @if($checklist18 && $checklist18->checklist_LL_P2P_response_47) {{ $checklist18->checklist_LL_P2P_response_47 == "N/A" ? 'selected' : '' }}@endif>N/A</option>
                                                 </select>
                                             </div>
                                         </td>
@@ -12402,7 +12468,7 @@ $checklistqualitycontrol = [
                                         <td style="vertical-align: middle;">
                                             <div
                                                 style="margin: auto; display: flex; justify-content: center;">
-                                                <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                <textarea name="checklist_LL_P2P_remark_47" style="border-radius: 7px; border: 1.5px solid black;">@if( $checklist18 && $checklist18->checklist_LL_P2P_remark_47){{ $checklist18->checklist_LL_P2P_remark_47 }}@endif</textarea>                                            </div>
                                             </div>
                                         </td>
                                     </tr>
@@ -12410,17 +12476,17 @@ $checklistqualitycontrol = [
                                     <tr>
                                         <td class="flex text-center">3.12</td>
                                         <td>
-                                            Do you monitor the quality of the water used during the manufacturing process?
-                                        </td>
+                                            Rest and eating?
+                                    </td>
                                         <td>
                                             <div
                                                 style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                <select name="response" id="response"
+                                                <select name="checklist_LL_P2P_response_48" id="checklist_LL_P2P_response_48"
                                                     style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                     <option value="">Select an Option</option>
-                                                    <option value="Yes">Yes</option>
-                                                    <option value="No">No</option>
-                                                    <option value="N/A">N/A</option>
+                                                    <option value="Yes" @if($checklist18 && $checklist18->checklist_LL_P2P_response_48) {{ $checklist18->checklist_LL_P2P_response_48 == "Yes" ? 'selected' : '' }}@endif>Yes</option>
+                                                    <option value="No"  @if($checklist18 && $checklist18->checklist_LL_P2P_response_48) {{ $checklist18->checklist_LL_P2P_response_48 == "No" ? 'selected' : '' }} @endif>No</option>
+                                                    <option value="N/A" @if($checklist18 && $checklist18->checklist_LL_P2P_response_48) {{ $checklist18->checklist_LL_P2P_response_48 == "N/A" ? 'selected' : '' }}@endif>N/A</option>
                                                 </select>
                                             </div>
                                         </td>
@@ -12428,7 +12494,7 @@ $checklistqualitycontrol = [
                                         <td style="vertical-align: middle;">
                                             <div
                                                 style="margin: auto; display: flex; justify-content: center;">
-                                                <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                <textarea name="checklist_LL_P2P_remark_48" style="border-radius: 7px; border: 1.5px solid black;">@if( $checklist18 && $checklist18->checklist_LL_P2P_remark_48){{ $checklist18->checklist_LL_P2P_remark_48 }}@endif</textarea>                                            </div>
                                             </div>
                                         </td>
                                     </tr>
@@ -12436,17 +12502,19 @@ $checklistqualitycontrol = [
                                     <tr>
                                         <td class="flex text-center">3.13</td>
                                         <td>
-                                            Is the premises situated in an environment which causes minimum risk of contamination to material or products?
-                                        </td>
+                                            Does the present design prevent:
+
+                                            </td>
                                         <td>
                                             <div
                                                 style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                <select name="response" id="response"
+                                                <select name="checklist_LL_P2P_response_49" id="checklist_LL_P2P_response_49"
                                                     style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                     <option value="">Select an Option</option>
-                                                    <option value="Yes">Yes</option>
-                                                    <option value="No">No</option>
-                                                    <option value="N/A">N/A</option>
+                                                    <option value="Yes" @if($checklist18 && $checklist18->checklist_LL_P2P_response_49) {{ $checklist18->checklist_LL_P2P_response_49 == "Yes" ? 'selected' : '' }}@endif>Yes</option>
+                                                    <option value="No"  @if($checklist18 && $checklist18->checklist_LL_P2P_response_49) {{ $checklist18->checklist_LL_P2P_response_49 == "No" ? 'selected' : '' }} @endif>No</option>
+                                                    <option value="N/A" @if($checklist18 && $checklist18->checklist_LL_P2P_response_49) {{ $checklist18->checklist_LL_P2P_response_49 == "N/A" ? 'selected' : '' }}@endif>N/A</option>
+
                                                 </select>
                                             </div>
                                         </td>
@@ -12454,7 +12522,7 @@ $checklistqualitycontrol = [
                                         <td style="vertical-align: middle;">
                                             <div
                                                 style="margin: auto; display: flex; justify-content: center;">
-                                                <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                <textarea name="checklist_LL_P2P_remark_49" style="border-radius: 7px; border: 1.5px solid black;">@if( $checklist18 && $checklist18->checklist_LL_P2P_remark_49){{ $checklist18->checklist_LL_P2P_remark_49 }}@endif</textarea>                                            </div>
                                             </div>
                                         </td>
                                     </tr>
@@ -12467,12 +12535,13 @@ $checklistqualitycontrol = [
                                         <td>
                                             <div
                                                 style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                <select name="response" id="response"
+                                                <select name="checklist_LL_P2P_response_50" id="checklist_LL_P2P_response_50"
                                                     style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                     <option value="">Select an Option</option>
-                                                    <option value="Yes">Yes</option>
-                                                    <option value="No">No</option>
-                                                    <option value="N/A">N/A</option>
+                                                    <option value="Yes" @if($checklist18 && $checklist18->checklist_LL_P2P_response_50) {{ $checklist18->checklist_LL_P2P_response_50 == "Yes" ? 'selected' : '' }}@endif>Yes</option>
+                                                    <option value="No"  @if($checklist18 && $checklist18->checklist_LL_P2P_response_50) {{ $checklist18->checklist_LL_P2P_response_50 == "No" ? 'selected' : '' }} @endif>No</option>
+                                                    <option value="N/A" @if($checklist18 && $checklist18->checklist_LL_P2P_response_50) {{ $checklist18->checklist_LL_P2P_response_50 == "N/A" ? 'selected' : '' }}@endif>N/A</option>
+
                                                 </select>
                                             </div>
                                         </td>
@@ -12480,7 +12549,7 @@ $checklistqualitycontrol = [
                                         <td style="vertical-align: middle;">
                                             <div
                                                 style="margin: auto; display: flex; justify-content: center;">
-                                                <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                <textarea name="checklist_LL_P2P_remark_50" style="border-radius: 7px; border: 1.5px solid black;">@if( $checklist18 && $checklist18->checklist_LL_P2P_remark_50){{ $checklist18->checklist_LL_P2P_remark_50 }}@endif</textarea>                                            </div>
                                             </div>
                                         </td>
                                     </tr>
@@ -12488,17 +12557,19 @@ $checklistqualitycontrol = [
                                     <tr>
                                         <td class="flex text-center">3.15</td>
                                         <td>
-                                            Is area provided commensurate with production activities and adequate storage areas for under process materials and finished products provided?
+                                            Chemical contamination?<br>
+
                                         </td>
                                         <td>
                                             <div
                                                 style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                <select name="response" id="response"
+                                                <select name="checklist_LL_P2P_response_51" id="checklist_LL_P2P_response_51"
                                                     style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                     <option value="">Select an Option</option>
-                                                    <option value="Yes">Yes</option>
-                                                    <option value="No">No</option>
-                                                    <option value="N/A">N/A</option>
+                                                    <option value="Yes" @if($checklist18 && $checklist18->checklist_LL_P2P_response_51) {{ $checklist18->checklist_LL_P2P_response_51 == "Yes" ? 'selected' : '' }}@endif>Yes</option>
+                                                    <option value="No"  @if($checklist18 && $checklist18->checklist_LL_P2P_response_51) {{ $checklist18->checklist_LL_P2P_response_51 == "No" ? 'selected' : '' }} @endif>No</option>
+                                                    <option value="N/A" @if($checklist18 && $checklist18->checklist_LL_P2P_response_51) {{ $checklist18->checklist_LL_P2P_response_51 == "N/A" ? 'selected' : '' }}@endif>N/A</option>
+
                                                 </select>
                                             </div>
                                         </td>
@@ -12506,7 +12577,7 @@ $checklistqualitycontrol = [
                                         <td style="vertical-align: middle;">
                                             <div
                                                 style="margin: auto; display: flex; justify-content: center;">
-                                                <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                <textarea name="checklist_LL_P2P_remark_51" style="border-radius: 7px; border: 1.5px solid black;">@if( $checklist18 && $checklist18->checklist_LL_P2P_remark_51){{ $checklist18->checklist_LL_P2P_remark_51 }}@endif</textarea>                                            </div>
                                             </div>
                                         </td>
                                     </tr>
@@ -12514,17 +12585,18 @@ $checklistqualitycontrol = [
                                     <tr>
                                         <td class="flex text-center">3.16</td>
                                         <td>
-                                            Are procedures available for maintenance, cleaning and sanitation of buildings, premises and surroundings?
+                                            Physical contamination?
+
                                         </td>
                                         <td>
                                             <div
                                                 style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                <select name="response" id="response"
+                                                <select name="checklist_LL_P2P_response_52" id="checklist_LL_P2P_response_52"
                                                     style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                     <option value="">Select an Option</option>
-                                                    <option value="Yes">Yes</option>
-                                                    <option value="No">No</option>
-                                                    <option value="N/A">N/A</option>
+                                                    <option value="Yes" @if($checklist18 && $checklist18->checklist_LL_P2P_response_52) {{ $checklist18->checklist_LL_P2P_response_52 == "Yes" ? 'selected' : '' }}@endif>Yes</option>
+                                                    <option value="No"  @if($checklist18 && $checklist18->checklist_LL_P2P_response_52) {{ $checklist18->checklist_LL_P2P_response_52 == "No" ? 'selected' : '' }} @endif>No</option>
+                                                    <option value="N/A" @if($checklist18 && $checklist18->checklist_LL_P2P_response_52) {{ $checklist18->checklist_LL_P2P_response_52 == "N/A" ? 'selected' : '' }}@endif>N/A</option>
                                                 </select>
                                             </div>
                                         </td>
@@ -12532,7 +12604,7 @@ $checklistqualitycontrol = [
                                         <td style="vertical-align: middle;">
                                             <div
                                                 style="margin: auto; display: flex; justify-content: center;">
-                                                <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                <textarea name="checklist_LL_P2P_remark_52" style="border-radius: 7px; border: 1.5px solid black;">@if( $checklist18 && $checklist18->checklist_LL_P2P_remark_52){{ $checklist18->checklist_LL_P2P_remark_52 }}@endif</textarea>                                            </div>
                                             </div>
                                         </td>
                                     </tr>
@@ -12540,17 +12612,20 @@ $checklistqualitycontrol = [
                                     <tr>
                                         <td class="flex text-center">3.17</td>
                                         <td>
-                                            Are arrangements made for control of pest, rodent, and birds? If yes, please specify the frequency for such controls?
+
+                                            Microbial contamination?
+
                                         </td>
                                         <td>
                                             <div
                                                 style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                <select name="response" id="response"
+                                                <select name="checklist_LL_P2P_response_53" id="checklist_LL_P2P_response_53"
                                                     style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                     <option value="">Select an Option</option>
-                                                    <option value="Yes">Yes</option>
-                                                    <option value="No">No</option>
-                                                    <option value="N/A">N/A</option>
+                                                    <option value="Yes" @if($checklist18 && $checklist18->checklist_LL_P2P_response_53) {{ $checklist18->checklist_LL_P2P_response_53 == "Yes" ? 'selected' : '' }}@endif>Yes</option>
+                                                    <option value="No"  @if($checklist18 && $checklist18->checklist_LL_P2P_response_53) {{ $checklist18->checklist_LL_P2P_response_53 == "No" ? 'selected' : '' }} @endif>No</option>
+                                                    <option value="N/A" @if($checklist18 && $checklist18->checklist_LL_P2P_response_53) {{ $checklist18->checklist_LL_P2P_response_53 == "N/A" ? 'selected' : '' }}@endif>N/A</option>
+
                                                 </select>
                                             </div>
                                         </td>
@@ -12558,7 +12633,7 @@ $checklistqualitycontrol = [
                                         <td style="vertical-align: middle;">
                                             <div
                                                 style="margin: auto; display: flex; justify-content: center;">
-                                                <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                <textarea name="checklist_LL_P2P_remark_53" style="border-radius: 7px; border: 1.5px solid black;">@if( $checklist18 && $checklist18->checklist_LL_P2P_remark_53){{ $checklist18->checklist_LL_P2P_remark_53 }}@endif</textarea>                                            </div>
                                             </div>
                                         </td>
                                     </tr>
@@ -12566,17 +12641,18 @@ $checklistqualitycontrol = [
                                     <tr>
                                         <td class="flex text-center">3.18</td>
                                         <td>
-                                            Do you have changing / toilet / refreshment facilities physically separated from production / storage areas?
-                                        </td>
+                                                                Are your working-rooms:
+
+                                                            </td>
                                         <td>
                                             <div
                                                 style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                <select name="response" id="response"
+                                                <select name="checklist_LL_P2P_response_54" id="checklist_LL_P2P_response_54"
                                                     style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                     <option value="">Select an Option</option>
-                                                    <option value="Yes">Yes</option>
-                                                    <option value="No">No</option>
-                                                    <option value="N/A">N/A</option>
+                                                    <option value="Yes" @if($checklist18 && $checklist18->checklist_LL_P2P_response_54) {{ $checklist18->checklist_LL_P2P_response_54 == "Yes" ? 'selected' : '' }}@endif>Yes</option>
+                                                    <option value="No"  @if($checklist18 && $checklist18->checklist_LL_P2P_response_54) {{ $checklist18->checklist_LL_P2P_response_54 == "No" ? 'selected' : '' }} @endif>No</option>
+                                                    <option value="N/A" @if($checklist18 && $checklist18->checklist_LL_P2P_response_54) {{ $checklist18->checklist_LL_P2P_response_54 == "N/A" ? 'selected' : '' }}@endif>N/A</option>
                                                 </select>
                                             </div>
                                         </td>
@@ -12584,17 +12660,10 @@ $checklistqualitycontrol = [
                                         <td style="vertical-align: middle;">
                                             <div
                                                 style="margin: auto; display: flex; justify-content: center;">
-                                                <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                <textarea name="checklist_LL_P2P_remark_54" style="border-radius: 7px; border: 1.5px solid black;">@if( $checklist18 && $checklist18->checklist_LL_P2P_remark_54){{ $checklist18->checklist_LL_P2P_remark_54 }}@endif</textarea>                                            </div>
                                             </div>
                                         </td>
                                     </tr>
-
-
-
-
-
-
-
                                 </tbody>
                             </table>
                         </div>
@@ -12624,28 +12693,25 @@ $checklistqualitycontrol = [
 
                                                 <div
                                                     style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                    <select name="response" id="response"
+                                                    <select name="checklist_LL_P2P_response_55" id="checklist_LL_P2P_response_55"
                                                         style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                         <option value="">Select an Option</option>
-                                                        <option value="Yes">Multi</option>
-                                                        <option value="No">Single</option>
+                                                        <option value="Yes" @if($checklist18 && $checklist18->checklist_LL_P2P_response_55) {{ $checklist18->checklist_LL_P2P_response_55 == "Yes" ? 'selected' : '' }}@endif>Yes</option>
+                                                    <option value="No"  @if($checklist18 && $checklist18->checklist_LL_P2P_response_55) {{ $checklist18->checklist_LL_P2P_response_55 == "No" ? 'selected' : '' }} @endif>No</option>
+                                                    <option value="N/A" @if($checklist18 && $checklist18->checklist_LL_P2P_response_55) {{ $checklist18->checklist_LL_P2P_response_55 == "N/A" ? 'selected' : '' }}@endif>N/A</option>
+
 
                                                     </select>
                                                 </div>
-
-
                                             </td>
                                             </td>
 
                                             <td style="vertical-align: middle;">
                                                 <div
                                                     style="margin: auto; display: flex; justify-content: center;">
-                                                    <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                    <textarea name="checklist_LL_P2P_remark_55" style="border-radius: 7px; border: 1.5px solid black;">@if( $checklist18 && $checklist18->checklist_LL_P2P_remark_55){{ $checklist18->checklist_LL_P2P_remark_55 }}@endif</textarea>                                            </div>
                                                 </div>
                                             </td>
-
-
-
                                         </tr>
                                         <tr>
                                             <td class="flex text-center">4.2</td>
@@ -12656,12 +12722,13 @@ $checklistqualitycontrol = [
                                             <td>
                                                 <div
                                                     style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                    <select name="response" id="response"
+                                                    <select name="checklist_LL_P2P_response_56" id="checklist_LL_P2P_response_56"
                                                         style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                         <option value="">Select an Option</option>
-                                                        <option value="Yes">Yes</option>
-                                                        <option value="No">No</option>
-                                                        <option value="N/A">N/A</option>
+                                                        <option value="Yes" @if($checklist18 && $checklist18->checklist_LL_P2P_response_56) {{ $checklist18->checklist_LL_P2P_response_56 == "Yes" ? 'selected' : '' }}@endif>Yes</option>
+                                                        <option value="No"  @if($checklist18 && $checklist18->checklist_LL_P2P_response_56) {{ $checklist18->checklist_LL_P2P_response_56 == "No" ? 'selected' : '' }} @endif>No</option>
+                                                        <option value="N/A" @if($checklist18 && $checklist18->checklist_LL_P2P_response_56) {{ $checklist18->checklist_LL_P2P_response_56 == "N/A" ? 'selected' : '' }}@endif>N/A</option>
+
                                                     </select>
                                                 </div>
                                             </td>
@@ -12669,12 +12736,9 @@ $checklistqualitycontrol = [
                                             <td style="vertical-align: middle;">
                                                 <div
                                                     style="margin: auto; display: flex; justify-content: center;">
-                                                    <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                    <textarea name="checklist_LL_P2P_remark_56" style="border-radius: 7px; border: 1.5px solid black;">@if( $checklist18 && $checklist18->checklist_LL_P2P_remark_56){{ $checklist18->checklist_LL_P2P_remark_56 }}@endif</textarea>                                            </div>
                                                 </div>
                                             </td>
-
-
-
                                         </tr>
                                         <tr>
                                             <td class="flex text-center">4.3</td>
@@ -12685,12 +12749,13 @@ $checklistqualitycontrol = [
                                             <td>
                                                 <div
                                                     style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                    <select name="response" id="response"
+                                                    <select name="checklist_LL_P2P_response_57" id="checklist_LL_P2P_response_57"
                                                         style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                         <option value="">Select an Option</option>
-                                                        <option value="Yes">Yes</option>
-                                                        <option value="No">No</option>
-                                                        <option value="N/A">N/A</option>
+                                                        <option value="Yes" @if($checklist18 && $checklist18->checklist_LL_P2P_response_57) {{ $checklist18->checklist_LL_P2P_response_57 == "Yes" ? 'selected' : '' }}@endif>Yes</option>
+                                                        <option value="No"  @if($checklist18 && $checklist18->checklist_LL_P2P_response_57) {{ $checklist18->checklist_LL_P2P_response_57 == "No" ? 'selected' : '' }} @endif>No</option>
+                                                        <option value="N/A" @if($checklist18 && $checklist18->checklist_LL_P2P_response_57) {{ $checklist18->checklist_LL_P2P_response_57 == "N/A" ? 'selected' : '' }}@endif>N/A</option>
+
                                                     </select>
                                                 </div>
                                             </td>
@@ -12698,7 +12763,7 @@ $checklistqualitycontrol = [
                                             <td style="vertical-align: middle;">
                                                 <div
                                                     style="margin: auto; display: flex; justify-content: center;">
-                                                    <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                    <textarea name="checklist_LL_P2P_remark_57" style="border-radius: 7px; border: 1.5px solid black;">@if( $checklist18 && $checklist18->checklist_LL_P2P_remark_57){{ $checklist18->checklist_LL_P2P_remark_57 }}@endif</textarea>                                            </div>
                                                 </div>
                                             </td>
                                         </tr>
@@ -12711,12 +12776,13 @@ $checklistqualitycontrol = [
                                             <td>
                                                 <div
                                                     style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                    <select name="response" id="response"
+                                                    <select name="checklist_LL_P2P_response_58" id="checklist_LL_P2P_response_58"
                                                         style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                         <option value="">Select an Option</option>
-                                                        <option value="Yes">Yes</option>
-                                                        <option value="No">No</option>
-                                                        <option value="N/A">N/A</option>
+                                                        <option value="Yes" @if($checklist18 && $checklist18->checklist_LL_P2P_response_58) {{ $checklist18->checklist_LL_P2P_response_58 == "Yes" ? 'selected' : '' }}@endif>Yes</option>
+                                                        <option value="No"  @if($checklist18 && $checklist18->checklist_LL_P2P_response_58) {{ $checklist18->checklist_LL_P2P_response_58 == "No" ? 'selected' : '' }} @endif>No</option>
+                                                        <option value="N/A" @if($checklist18 && $checklist18->checklist_LL_P2P_response_58) {{ $checklist18->checklist_LL_P2P_response_58 == "N/A" ? 'selected' : '' }}@endif>N/A</option>
+
                                                     </select>
                                                 </div>
                                             </td>
@@ -12724,7 +12790,7 @@ $checklistqualitycontrol = [
                                             <td style="vertical-align: middle;">
                                                 <div
                                                     style="margin: auto; display: flex; justify-content: center;">
-                                                    <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                    <textarea name="checklist_LL_P2P_remark_58" style="border-radius: 7px; border: 1.5px solid black;">@if( $checklist18 && $checklist18->checklist_LL_P2P_remark_58){{ $checklist18->checklist_LL_P2P_remark_58 }}@endif</textarea>                                            </div>
                                                 </div>
                                             </td>
                                         </tr>
@@ -12737,12 +12803,13 @@ $checklistqualitycontrol = [
                                             <td>
                                                 <div
                                                     style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                    <select name="response" id="response"
+                                                    <select name="checklist_LL_P2P_response_59" id="checklist_LL_P2P_response_59"
                                                         style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                         <option value="">Select an Option</option>
-                                                        <option value="Yes">Yes</option>
-                                                        <option value="No">No</option>
-                                                        <option value="N/A">N/A</option>
+                                                        <option value="Yes" @if($checklist18 && $checklist18->checklist_LL_P2P_response_59) {{ $checklist18->checklist_LL_P2P_response_59 == "Yes" ? 'selected' : '' }}@endif>Yes</option>
+                                                        <option value="No"  @if($checklist18 && $checklist18->checklist_LL_P2P_response_59) {{ $checklist18->checklist_LL_P2P_response_59 == "No" ? 'selected' : '' }} @endif>No</option>
+                                                        <option value="N/A" @if($checklist18 && $checklist18->checklist_LL_P2P_response_59) {{ $checklist18->checklist_LL_P2P_response_59 == "N/A" ? 'selected' : '' }}@endif>N/A</option>
+
                                                     </select>
                                                 </div>
                                             </td>
@@ -12750,7 +12817,7 @@ $checklistqualitycontrol = [
                                             <td style="vertical-align: middle;">
                                                 <div
                                                     style="margin: auto; display: flex; justify-content: center;">
-                                                    <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                    <textarea name="checklist_LL_P2P_remark_59" style="border-radius: 7px; border: 1.5px solid black;">@if( $checklist18 && $checklist18->checklist_LL_P2P_remark_59){{ $checklist18->checklist_LL_P2P_remark_59 }}@endif</textarea>                                            </div>
                                                 </div>
                                             </td>
                                         </tr>
@@ -12763,12 +12830,12 @@ $checklistqualitycontrol = [
                                             <td>
                                                 <div
                                                     style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                    <select name="response" id="response"
+                                                    <select name="checklist_LL_P2P_response_60" id="checklist_LL_P2P_response_60"
                                                         style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                         <option value="">Select an Option</option>
-                                                        <option value="Yes">Yes</option>
-                                                        <option value="No">No</option>
-                                                        <option value="N/A">N/A</option>
+                                                        <option value="Yes" @if($checklist18 && $checklist18->checklist_LL_P2P_response_60) {{ $checklist18->checklist_LL_P2P_response_60 == "Yes" ? 'selected' : '' }}@endif>Yes</option>
+                                                        <option value="No"  @if($checklist18 && $checklist18->checklist_LL_P2P_response_60) {{ $checklist18->checklist_LL_P2P_response_60 == "No" ? 'selected' : '' }} @endif>No</option>
+                                                        <option value="N/A" @if($checklist18 && $checklist18->checklist_LL_P2P_response_60) {{ $checklist18->checklist_LL_P2P_response_60 == "N/A" ? 'selected' : '' }}@endif>N/A</option>
                                                     </select>
                                                 </div>
                                             </td>
@@ -12776,7 +12843,7 @@ $checklistqualitycontrol = [
                                             <td style="vertical-align: middle;">
                                                 <div
                                                     style="margin: auto; display: flex; justify-content: center;">
-                                                    <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                    <textarea name="checklist_LL_P2P_remark_60" style="border-radius: 7px; border: 1.5px solid black;">@if( $checklist18 && $checklist18->checklist_LL_P2P_remark_60){{ $checklist18->checklist_LL_P2P_remark_60 }}@endif</textarea>                                            </div>
                                                 </div>
                                             </td>
                                         </tr>
@@ -12789,12 +12856,12 @@ $checklistqualitycontrol = [
                                             <td>
                                                 <div
                                                     style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                    <select name="response" id="response"
+                                                    <select name="checklist_LL_P2P_response_61" id="checklist_LL_P2P_response_61"
                                                         style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                         <option value="">Select an Option</option>
-                                                        <option value="Yes">Yes</option>
-                                                        <option value="No">No</option>
-                                                        <option value="N/A">N/A</option>
+                                                        <option value="Yes" @if($checklist18 && $checklist18->checklist_LL_P2P_response_61) {{ $checklist18->checklist_LL_P2P_response_61 == "Yes" ? 'selected' : '' }}@endif>Yes</option>
+                                                        <option value="No"  @if($checklist18 && $checklist18->checklist_LL_P2P_response_61) {{ $checklist18->checklist_LL_P2P_response_61 == "No" ? 'selected' : '' }} @endif>No</option>
+                                                        <option value="N/A" @if($checklist18 && $checklist18->checklist_LL_P2P_response_61) {{ $checklist18->checklist_LL_P2P_response_61 == "N/A" ? 'selected' : '' }}@endif>N/A</option>
                                                     </select>
                                                 </div>
                                             </td>
@@ -12802,7 +12869,7 @@ $checklistqualitycontrol = [
                                             <td style="vertical-align: middle;">
                                                 <div
                                                     style="margin: auto; display: flex; justify-content: center;">
-                                                    <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                    <textarea name="checklist_LL_P2P_remark_61" style="border-radius: 7px; border: 1.5px solid black;">@if( $checklist18 && $checklist18->checklist_LL_P2P_remark_61){{ $checklist18->checklist_LL_P2P_remark_61 }}@endif</textarea>                                            </div>
                                                 </div>
                                             </td>
                                         </tr>
@@ -12815,12 +12882,13 @@ $checklistqualitycontrol = [
                                             <td>
                                                 <div
                                                     style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                    <select name="response" id="response"
+                                                    <select name="checklist_LL_P2P_response_62" id="checklist_LL_P2P_response_62"
                                                         style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                         <option value="">Select an Option</option>
-                                                        <option value="Yes">Yes</option>
-                                                        <option value="No">No</option>
-                                                        <option value="N/A">N/A</option>
+                                                        <option value="Yes" @if($checklist18 && $checklist18->checklist_LL_P2P_response_62) {{ $checklist18->checklist_LL_P2P_response_62 == "Yes" ? 'selected' : '' }}@endif>Yes</option>
+                                                        <option value="No"  @if($checklist18 && $checklist18->checklist_LL_P2P_response_62) {{ $checklist18->checklist_LL_P2P_response_62 == "No" ? 'selected' : '' }} @endif>No</option>
+                                                        <option value="N/A" @if($checklist18 && $checklist18->checklist_LL_P2P_response_62) {{ $checklist18->checklist_LL_P2P_response_62 == "N/A" ? 'selected' : '' }}@endif>N/A</option>
+
                                                     </select>
                                                 </div>
                                             </td>
@@ -12828,7 +12896,7 @@ $checklistqualitycontrol = [
                                             <td style="vertical-align: middle;">
                                                 <div
                                                     style="margin: auto; display: flex; justify-content: center;">
-                                                    <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                    <textarea name="checklist_LL_P2P_remark_62" style="border-radius: 7px; border: 1.5px solid black;">@if( $checklist18 && $checklist18->checklist_LL_P2P_remark_62){{ $checklist18->checklist_LL_P2P_remark_62 }}@endif</textarea>                                            </div>
                                                 </div>
                                             </td>
                                         </tr>
@@ -12841,12 +12909,13 @@ $checklistqualitycontrol = [
                                             <td>
                                                 <div
                                                     style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                    <select name="response" id="response"
+                                                    <select name="checklist_LL_P2P_response_63" id="checklist_LL_P2P_response_63"
                                                         style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                         <option value="">Select an Option</option>
-                                                        <option value="Yes">Yes</option>
-                                                        <option value="No">No</option>
-                                                        <option value="N/A">N/A</option>
+                                                        <option value="Yes" @if($checklist18 && $checklist18->checklist_LL_P2P_response_63) {{ $checklist18->checklist_LL_P2P_response_63 == "Yes" ? 'selected' : '' }}@endif>Yes</option>
+                                                        <option value="No"  @if($checklist18 && $checklist18->checklist_LL_P2P_response_63) {{ $checklist18->checklist_LL_P2P_response_63 == "No" ? 'selected' : '' }} @endif>No</option>
+                                                        <option value="N/A" @if($checklist18 && $checklist18->checklist_LL_P2P_response_63) {{ $checklist18->checklist_LL_P2P_response_63 == "N/A" ? 'selected' : '' }}@endif>N/A</option>
+
                                                     </select>
                                                 </div>
                                             </td>
@@ -12854,7 +12923,7 @@ $checklistqualitycontrol = [
                                             <td style="vertical-align: middle;">
                                                 <div
                                                     style="margin: auto; display: flex; justify-content: center;">
-                                                    <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                    <textarea name="checklist_LL_P2P_remark_63" style="border-radius: 7px; border: 1.5px solid black;">@if( $checklist18 && $checklist18->checklist_LL_P2P_remark_63){{ $checklist18->checklist_LL_P2P_remark_63 }}@endif</textarea>                                            </div>
                                                 </div>
                                             </td>
                                         </tr>
@@ -12867,12 +12936,13 @@ $checklistqualitycontrol = [
                                             <td>
                                                 <div
                                                     style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                    <select name="response" id="response"
+                                                    <select name="checklist_LL_P2P_response_64" id="checklist_LL_P2P_response_64"
                                                         style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                         <option value="">Select an Option</option>
-                                                        <option value="Yes">Yes</option>
-                                                        <option value="No">No</option>
-                                                        <option value="N/A">N/A</option>
+                                                        <option value="Yes" @if($checklist18 && $checklist18->checklist_LL_P2P_response_64) {{ $checklist18->checklist_LL_P2P_response_64 == "Yes" ? 'selected' : '' }}@endif>Yes</option>
+                                                        <option value="No"  @if($checklist18 && $checklist18->checklist_LL_P2P_response_64) {{ $checklist18->checklist_LL_P2P_response_64 == "No" ? 'selected' : '' }} @endif>No</option>
+                                                        <option value="N/A" @if($checklist18 && $checklist18->checklist_LL_P2P_response_64) {{ $checklist18->checklist_LL_P2P_response_64 == "N/A" ? 'selected' : '' }}@endif>N/A</option>
+
                                                     </select>
                                                 </div>
                                             </td>
@@ -12880,7 +12950,7 @@ $checklistqualitycontrol = [
                                             <td style="vertical-align: middle;">
                                                 <div
                                                     style="margin: auto; display: flex; justify-content: center;">
-                                                    <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                    <textarea name="checklist_LL_P2P_remark_64" style="border-radius: 7px; border: 1.5px solid black;">@if( $checklist18 && $checklist18->checklist_LL_P2P_remark_64){{ $checklist18->checklist_LL_P2P_remark_64 }}@endif</textarea>                                            </div>
                                                 </div>
                                             </td>
                                         </tr>
@@ -12893,12 +12963,12 @@ $checklistqualitycontrol = [
                                             <td>
                                                 <div
                                                     style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                    <select name="response" id="response"
+                                                    <select name="checklist_LL_P2P_response_65" id="checklist_LL_P2P_response_65"
                                                         style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                         <option value="">Select an Option</option>
-                                                        <option value="Yes">Yes</option>
-                                                        <option value="No">No</option>
-                                                        <option value="N/A">N/A</option>
+                                                        <option value="Yes" @if($checklist18 && $checklist18->checklist_LL_P2P_response_65) {{ $checklist18->checklist_LL_P2P_response_65 == "Yes" ? 'selected' : '' }}@endif>Yes</option>
+                                                        <option value="No"  @if($checklist18 && $checklist18->checklist_LL_P2P_response_65) {{ $checklist18->checklist_LL_P2P_response_65 == "No" ? 'selected' : '' }} @endif>No</option>
+                                                        <option value="N/A" @if($checklist18 && $checklist18->checklist_LL_P2P_response_65) {{ $checklist18->checklist_LL_P2P_response_65 == "N/A" ? 'selected' : '' }}@endif>N/A</option>
                                                     </select>
                                                 </div>
                                             </td>
@@ -12906,7 +12976,7 @@ $checklistqualitycontrol = [
                                             <td style="vertical-align: middle;">
                                                 <div
                                                     style="margin: auto; display: flex; justify-content: center;">
-                                                    <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                    <textarea name="checklist_LL_P2P_remark_65" style="border-radius: 7px; border: 1.5px solid black;">@if( $checklist18 && $checklist18->checklist_LL_P2P_remark_65){{ $checklist18->checklist_LL_P2P_remark_65 }}@endif</textarea>                                            </div>
                                                 </div>
                                             </td>
                                         </tr>
@@ -12919,12 +12989,13 @@ $checklistqualitycontrol = [
                                             <td>
                                                 <div
                                                     style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                    <select name="response" id="response"
+                                                    <select name="checklist_LL_P2P_response_66" id="checklist_LL_P2P_response_66"
                                                         style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                         <option value="">Select an Option</option>
-                                                        <option value="Yes">Yes</option>
-                                                        <option value="No">No</option>
-                                                        <option value="N/A">N/A</option>
+                                                        <option value="Yes" @if($checklist18 && $checklist18->checklist_LL_P2P_response_67) {{ $checklist18->checklist_LL_P2P_response_67 == "Yes" ? 'selected' : '' }}@endif>Yes</option>
+                                                        <option value="No"  @if($checklist18 && $checklist18->checklist_LL_P2P_response_67) {{ $checklist18->checklist_LL_P2P_response_67 == "No" ? 'selected' : '' }} @endif>No</option>
+                                                        <option value="N/A" @if($checklist18 && $checklist18->checklist_LL_P2P_response_67) {{ $checklist18->checklist_LL_P2P_response_67 == "N/A" ? 'selected' : '' }}@endif>N/A</option>
+
                                                     </select>
                                                 </div>
                                             </td>
@@ -12932,7 +13003,7 @@ $checklistqualitycontrol = [
                                             <td style="vertical-align: middle;">
                                                 <div
                                                     style="margin: auto; display: flex; justify-content: center;">
-                                                    <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                    <textarea name="checklist_LL_P2P_remark_66" style="border-radius: 7px; border: 1.5px solid black;">@if( $checklist18 && $checklist18->checklist_LL_P2P_remark_66){{ $checklist18->checklist_LL_P2P_remark_66 }}@endif</textarea>                                            </div>
                                                 </div>
                                             </td>
                                         </tr>
@@ -12944,31 +13015,18 @@ $checklistqualitycontrol = [
 
 
                                             </td>
-                                            <td>
-
-                                            </td>
-
-                                            <td style="vertical-align: middle;">
-
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td class="flex text-center">4.13.1</td>
-                                            <td>
-
-                                                    Is the software validated?
 
 
-                                            </td>
                                             <td>
                                                 <div
                                                     style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                    <select name="response" id="response"
+                                                    <select name="checklist_LL_P2P_response_67" id="checklist_LL_P2P_response_67"
                                                         style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                         <option value="">Select an Option</option>
-                                                        <option value="Yes">Yes</option>
-                                                        <option value="No">No</option>
-                                                        <option value="N/A">N/A</option>
+                                                        <option value="Yes" @if($checklist18 && $checklist18->checklist_LL_P2P_response_67) {{ $checklist18->checklist_LL_P2P_response_67 == "Yes" ? 'selected' : '' }}@endif>Yes</option>
+                                                        <option value="No"  @if($checklist18 && $checklist18->checklist_LL_P2P_response_67) {{ $checklist18->checklist_LL_P2P_response_67 == "No" ? 'selected' : '' }} @endif>No</option>
+                                                        <option value="N/A" @if($checklist18 && $checklist18->checklist_LL_P2P_response_67) {{ $checklist18->checklist_LL_P2P_response_67 == "N/A" ? 'selected' : '' }}@endif>N/A</option>
+
                                                     </select>
                                                 </div>
                                             </td>
@@ -12976,7 +13034,34 @@ $checklistqualitycontrol = [
                                             <td style="vertical-align: middle;">
                                                 <div
                                                     style="margin: auto; display: flex; justify-content: center;">
-                                                    <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                    <textarea name="checklist_LL_P2P_remark_67" style="border-radius: 7px; border: 1.5px solid black;">@if( $checklist18 && $checklist18->checklist_LL_P2P_remark_67){{ $checklist18->checklist_LL_P2P_remark_67 }}@endif</textarea>                                            </div>
+                                                </div>
+                                            </td>
+                                        </tr>
+
+                                        <tr>
+                                            <td class="flex text-center">4.13.1</td>
+                                            <td>
+
+                                                    Is the software validated?
+                                            </td>
+                                            <td>
+                                                <div
+                                                    style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
+                                                    <select name="checklist_LL_P2P_response_68" id="checklist_LL_P2P_response_68"
+                                                        style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
+                                                        <option value="">Select an Option</option>
+                                                        <option value="Yes" @if($checklist18 && $checklist18->checklist_LL_P2P_response_68) {{ $checklist18->checklist_LL_P2P_response_68 == "Yes" ? 'selected' : '' }}@endif>Yes</option>
+                                                        <option value="No"  @if($checklist18 && $checklist18->checklist_LL_P2P_response_68) {{ $checklist18->checklist_LL_P2P_response_68 == "No" ? 'selected' : '' }} @endif>No</option>
+                                                        <option value="N/A" @if($checklist18 && $checklist18->checklist_LL_P2P_response_68) {{ $checklist18->checklist_LL_P2P_response_68 == "N/A" ? 'selected' : '' }}@endif>N/A</option>
+                                                    </select>
+                                                </div>
+                                            </td>
+
+                                            <td style="vertical-align: middle;">
+                                                <div
+                                                    style="margin: auto; display: flex; justify-content: center;">
+                                                    <textarea name="checklist_LL_P2P_remark_68" style="border-radius: 7px; border: 1.5px solid black;">@if( $checklist18 && $checklist18->checklist_LL_P2P_remark_68){{ $checklist18->checklist_LL_P2P_remark_68 }}@endif</textarea>                                            </div>
                                                 </div>
                                             </td>
                                         </tr> <tr>
@@ -12989,12 +13074,13 @@ $checklistqualitycontrol = [
                                             <td>
                                                 <div
                                                     style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                    <select name="response" id="response"
+                                                    <select name="checklist_LL_P2P_response_69" id="checklist_LL_P2P_response_69"
                                                         style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                         <option value="">Select an Option</option>
-                                                        <option value="Yes">Yes</option>
-                                                        <option value="No">No</option>
-                                                        <option value="N/A">N/A</option>
+                                                        <option value="Yes" @if($checklist18 && $checklist18->checklist_LL_P2P_response_69) {{ $checklist18->checklist_LL_P2P_response_69 == "Yes" ? 'selected' : '' }}@endif>Yes</option>
+                                                        <option value="No"  @if($checklist18 && $checklist18->checklist_LL_P2P_response_69) {{ $checklist18->checklist_LL_P2P_response_69 == "No" ? 'selected' : '' }} @endif>No</option>
+                                                        <option value="N/A" @if($checklist18 && $checklist18->checklist_LL_P2P_response_69) {{ $checklist18->checklist_LL_P2P_response_69 == "N/A" ? 'selected' : '' }}@endif>N/A</option>
+
                                                     </select>
                                                 </div>
                                             </td>
@@ -13002,26 +13088,24 @@ $checklistqualitycontrol = [
                                             <td style="vertical-align: middle;">
                                                 <div
                                                     style="margin: auto; display: flex; justify-content: center;">
-                                                    <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                    <textarea name="checklist_LL_P2P_remark_69" style="border-radius: 7px; border: 1.5px solid black;">@if( $checklist18 && $checklist18->checklist_LL_P2P_remark_69){{ $checklist18->checklist_LL_P2P_remark_69 }}@endif</textarea>                                            </div>
                                                 </div>
                                             </td>
                                         </tr> <tr>
                                             <td class="flex text-center">4.13.3</td>
                                             <td>
-
                                                     Is there a procedure concerning change of software and its copying?
-
-
                                             </td>
                                             <td>
                                                 <div
                                                     style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                    <select name="response" id="response"
+                                                    <select name="checklist_LL_P2P_response_70" id="checklist_LL_P2P_response_70"
                                                         style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                         <option value="">Select an Option</option>
-                                                        <option value="Yes">Yes</option>
-                                                        <option value="No">No</option>
-                                                        <option value="N/A">N/A</option>
+                                                        <option value="Yes" @if($checklist18 && $checklist18->checklist_LL_P2P_response_70) {{ $checklist18->checklist_LL_P2P_response_70 == "Yes" ? 'selected' : '' }}@endif>Yes</option>
+                                                        <option value="No"  @if($checklist18 && $checklist18->checklist_LL_P2P_response_70) {{ $checklist18->checklist_LL_P2P_response_70 == "No" ? 'selected' : '' }} @endif>No</option>
+                                                        <option value="N/A" @if($checklist18 && $checklist18->checklist_LL_P2P_response_70) {{ $checklist18->checklist_LL_P2P_response_70 == "N/A" ? 'selected' : '' }}@endif>N/A</option>
+
                                                     </select>
                                                 </div>
                                             </td>
@@ -13029,7 +13113,7 @@ $checklistqualitycontrol = [
                                             <td style="vertical-align: middle;">
                                                 <div
                                                     style="margin: auto; display: flex; justify-content: center;">
-                                                    <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                    <textarea name="checklist_LL_P2P_remark_70" style="border-radius: 7px; border: 1.5px solid black;">@if( $checklist18 && $checklist18->checklist_LL_P2P_remark_70){{ $checklist18->checklist_LL_P2P_remark_70 }}@endif</textarea>                                            </div>
                                                 </div>
                                             </td>
                                         </tr> <tr>
@@ -13042,12 +13126,13 @@ $checklistqualitycontrol = [
                                             <td>
                                                 <div
                                                     style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                    <select name="response" id="response"
+                                                    <select name="checklist_LL_P2P_response_71" id="checklist_LL_P2P_response_71"
                                                         style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                         <option value="">Select an Option</option>
-                                                        <option value="Yes">Yes</option>
-                                                        <option value="No">No</option>
-                                                        <option value="N/A">N/A</option>
+                                                        <option value="Yes" @if($checklist18 && $checklist18->checklist_LL_P2P_response_71) {{ $checklist18->checklist_LL_P2P_response_71 == "Yes" ? 'selected' : '' }}@endif>Yes</option>
+                                                        <option value="No"  @if($checklist18 && $checklist18->checklist_LL_P2P_response_71) {{ $checklist18->checklist_LL_P2P_response_71 == "No" ? 'selected' : '' }} @endif>No</option>
+                                                        <option value="N/A" @if($checklist18 && $checklist18->checklist_LL_P2P_response_71) {{ $checklist18->checklist_LL_P2P_response_71 == "N/A" ? 'selected' : '' }}@endif>N/A</option>
+
                                                     </select>
                                                 </div>
                                             </td>
@@ -13055,7 +13140,7 @@ $checklistqualitycontrol = [
                                             <td style="vertical-align: middle;">
                                                 <div
                                                     style="margin: auto; display: flex; justify-content: center;">
-                                                    <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                    <textarea name="checklist_LL_P2P_remark_72" style="border-radius: 7px; border: 1.5px solid black;">@if( $checklist18 && $checklist18->checklist_LL_P2P_remark_72){{ $checklist18->checklist_LL_P2P_remark_72 }}@endif</textarea>                                            </div>
                                                 </div>
                                             </td>
                                         </tr>
@@ -13065,17 +13150,28 @@ $checklistqualitycontrol = [
                                             <td>
                                                 Do you contract out any of the following services
 
-
                                             </td>
                                             <td>
+                                                <div
+                                                    style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
+                                                    <select name="checklist_LL_P2P_response_71" id="checklist_LL_P2P_response_71"
+                                                        style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
+                                                        <option value="">Select an Option</option>
+                                                        <option value="Yes" @if($checklist18 && $checklist18->checklist_LL_P2P_response_72) {{ $checklist18->checklist_LL_P2P_response_72 == "Yes" ? 'selected' : '' }}@endif>Yes</option>
+                                                        <option value="No"  @if($checklist18 && $checklist18->checklist_LL_P2P_response_72) {{ $checklist18->checklist_LL_P2P_response_72 == "No" ? 'selected' : '' }} @endif>No</option>
+                                                        <option value="N/A" @if($checklist18 && $checklist18->checklist_LL_P2P_response_72) {{ $checklist18->checklist_LL_P2P_response_72 == "N/A" ? 'selected' : '' }}@endif>N/A</option>
 
+                                                    </select>
+                                                </div>
                                             </td>
 
                                             <td style="vertical-align: middle;">
-
+                                                <div
+                                                    style="margin: auto; display: flex; justify-content: center;">
+                                                    <textarea name="checklist_LL_P2P_remark_72" style="border-radius: 7px; border: 1.5px solid black;">@if( $checklist18 && $checklist18->checklist_LL_P2P_remark_72){{ $checklist18->checklist_LL_P2P_remark_72 }}@endif</textarea>                                            </div>
+                                                </div>
                                             </td>
                                         </tr>
-                                        <tr>
                                             <td class="flex text-center">4.14.1</td>
                                             <td>
 
@@ -13086,12 +13182,13 @@ $checklistqualitycontrol = [
                                             <td>
                                                 <div
                                                     style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                    <select name="response" id="response"
+                                                    <select name="checklist_LL_P2P_response_73" id="checklist_LL_P2P_response_72"
                                                         style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                         <option value="">Select an Option</option>
-                                                        <option value="Yes">Yes</option>
-                                                        <option value="No">No</option>
-                                                        <option value="N/A">N/A</option>
+                                                        <option value="Yes" @if($checklist18 && $checklist18->checklist_LL_P2P_response_73) {{ $checklist18->checklist_LL_P2P_response_73 == "Yes" ? 'selected' : '' }}@endif>Yes</option>
+                                                        <option value="No"  @if($checklist18 && $checklist18->checklist_LL_P2P_response_73) {{ $checklist18->checklist_LL_P2P_response_73 == "No" ? 'selected' : '' }} @endif>No</option>
+                                                        <option value="N/A" @if($checklist18 && $checklist18->checklist_LL_P2P_response_73) {{ $checklist18->checklist_LL_P2P_response_73 == "N/A" ? 'selected' : '' }}@endif>N/A</option>
+
                                                     </select>
                                                 </div>
                                             </td>
@@ -13099,7 +13196,7 @@ $checklistqualitycontrol = [
                                             <td style="vertical-align: middle;">
                                                 <div
                                                     style="margin: auto; display: flex; justify-content: center;">
-                                                    <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                    <textarea name="checklist_LL_P2P_remark_73" style="border-radius: 7px; border: 1.5px solid black;">@if( $checklist18 && $checklist18->checklist_LL_P2P_remark_73){{ $checklist18->checklist_LL_P2P_remark_73 }}@endif</textarea>                                            </div>
                                                 </div>
                                             </td>
                                         </tr> <tr>
@@ -13112,12 +13209,13 @@ $checklistqualitycontrol = [
                                             <td>
                                                 <div
                                                     style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                    <select name="response" id="response"
+                                                    <select name="checklist_LL_P2P_response_74" id="checklist_LL_P2P_response_74"
                                                         style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                         <option value="">Select an Option</option>
-                                                        <option value="Yes">Yes</option>
-                                                        <option value="No">No</option>
-                                                        <option value="N/A">N/A</option>
+                                                        <option value="Yes" @if($checklist18 && $checklist18->checklist_LL_P2P_response_74) {{ $checklist18->checklist_LL_P2P_response_74 == "Yes" ? 'selected' : '' }}@endif>Yes</option>
+                                                        <option value="No"  @if($checklist18 && $checklist18->checklist_LL_P2P_response_74) {{ $checklist18->checklist_LL_P2P_response_74 == "No" ? 'selected' : '' }} @endif>No</option>
+                                                        <option value="N/A" @if($checklist18 && $checklist18->checklist_LL_P2P_response_74) {{ $checklist18->checklist_LL_P2P_response_74 == "N/A" ? 'selected' : '' }}@endif>N/A</option>
+
                                                     </select>
                                                 </div>
                                             </td>
@@ -13125,7 +13223,7 @@ $checklistqualitycontrol = [
                                             <td style="vertical-align: middle;">
                                                 <div
                                                     style="margin: auto; display: flex; justify-content: center;">
-                                                    <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                    <textarea name="checklist_LL_P2P_remark_74" style="border-radius: 7px; border: 1.5px solid black;">@if( $checklist18 && $checklist18->checklist_LL_P2P_remark_74){{ $checklist18->checklist_LL_P2P_remark_74 }}@endif</textarea>                                            </div>
                                                 </div>
                                             </td>
                                         </tr>
@@ -13138,12 +13236,13 @@ $checklistqualitycontrol = [
                                             <td>
                                                 <div
                                                     style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                    <select name="response" id="response"
+                                                    <select name="checklist_LL_P2P_response_75" id="checklist_LL_P2P_response_75"
                                                         style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                         <option value="">Select an Option</option>
-                                                        <option value="Yes">Yes</option>
-                                                        <option value="No">No</option>
-                                                        <option value="N/A">N/A</option>
+                                                        <option value="Yes" @if($checklist18 && $checklist18->checklist_LL_P2P_response_75) {{ $checklist18->checklist_LL_P2P_response_75 == "Yes" ? 'selected' : '' }}@endif>Yes</option>
+                                                        <option value="No"  @if($checklist18 && $checklist18->checklist_LL_P2P_response_75) {{ $checklist18->checklist_LL_P2P_response_75 == "No" ? 'selected' : '' }} @endif>No</option>
+                                                        <option value="N/A" @if($checklist18 && $checklist18->checklist_LL_P2P_response_75) {{ $checklist18->checklist_LL_P2P_response_75 == "N/A" ? 'selected' : '' }}@endif>N/A</option>
+
                                                     </select>
                                                 </div>
                                             </td>
@@ -13151,7 +13250,7 @@ $checklistqualitycontrol = [
                                             <td style="vertical-align: middle;">
                                                 <div
                                                     style="margin: auto; display: flex; justify-content: center;">
-                                                    <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                    <textarea name="checklist_LL_P2P_remark_75" style="border-radius: 7px; border: 1.5px solid black;">@if( $checklist18 && $checklist18->checklist_LL_P2P_remark_75){{ $checklist18->checklist_LL_P2P_remark_74 }}@endif</textarea>                                            </div>
                                                 </div>
                                             </td>
                                         </tr>
@@ -13184,12 +13283,13 @@ $checklistqualitycontrol = [
 
                                                     <div
                                                         style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                        <select name="response" id="response"
+                                                        <select name="checklist_LL_P2P_response_76" id="checklist_LL_P2P_response_76"
                                                             style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                             <option value="">Select an Option</option>
-                                                            <option value="Yes">Yes</option>
-                                                            <option value="No">No</option>
-                                                            <option value="N/A">N/A</option>
+                                                           <option value="Yes" @if($checklist18 && $checklist18->checklist_LL_P2P_response_76) {{ $checklist18->checklist_LL_P2P_response_76 == "Yes" ? 'selected' : '' }}@endif>Yes</option>
+                                                        <option  value="No"  @if($checklist18 && $checklist18->checklist_LL_P2P_response_76) {{ $checklist18->checklist_LL_P2P_response_76 == "No" ? 'selected' : '' }} @endif>No</option>
+                                                        <option value="N/A" @if($checklist18 && $checklist18->checklist_LL_P2P_response_76) {{ $checklist18->checklist_LL_P2P_response_76 == "N/A" ? 'selected' : '' }}@endif>N/A</option>
+
                                                         </select>
                                                     </div>
 
@@ -13200,7 +13300,7 @@ $checklistqualitycontrol = [
                                                 <td style="vertical-align: middle;">
                                                     <div
                                                         style="margin: auto; display: flex; justify-content: center;">
-                                                        <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                        <textarea name="checklist_LL_P2P_remark_76" style="border-radius: 7px; border: 1.5px solid black;">@if( $checklist18 && $checklist18->checklist_LL_P2P_remark_76){{ $checklist18->checklist_LL_P2P_remark_76 }}@endif</textarea>                                            </div>
                                                     </div>
                                                 </td>
 
@@ -13216,12 +13316,13 @@ $checklistqualitycontrol = [
                                                 <td>
                                                     <div
                                                         style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                        <select name="response" id="response"
+                                                        <select name="checklist_LL_P2P_response_77" id="checklist_LL_P2P_response_77"
                                                             style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                             <option value="">Select an Option</option>
-                                                            <option value="Yes">Yes</option>
-                                                            <option value="No">No</option>
-                                                            <option value="N/A">N/A</option>
+                                                       <option value="Yes" @if($checklist18 && $checklist18->checklist_LL_P2P_response_78) {{ $checklist18->checklist_LL_P2P_response_78 == "Yes" ? 'selected' : '' }}@endif>Yes</option>
+                                                        <option  value="No"  @if($checklist18 && $checklist18->checklist_LL_P2P_response_78) {{ $checklist18->checklist_LL_P2P_response_78 == "No" ? 'selected' : '' }} @endif>No</option>
+                                                        <option value="N/A" @if($checklist18 && $checklist18->checklist_LL_P2P_response_78) {{ $checklist18->checklist_LL_P2P_response_78 == "N/A" ? 'selected' : '' }}@endif>N/A</option>
+
                                                         </select>
                                                     </div>
                                                 </td>
@@ -13229,7 +13330,7 @@ $checklistqualitycontrol = [
                                                 <td style="vertical-align: middle;">
                                                     <div
                                                         style="margin: auto; display: flex; justify-content: center;">
-                                                        <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                        <textarea name="checklist_LL_P2P_remark_77" style="border-radius: 7px; border: 1.5px solid black;">@if( $checklist18 && $checklist18->checklist_LL_P2P_remark_77){{ $checklist18->checklist_LL_P2P_remark_77 }}@endif</textarea>                                            </div>
                                                     </div>
                                                 </td>
 
@@ -13245,12 +13346,12 @@ $checklistqualitycontrol = [
                                                 <td>
                                                     <div
                                                         style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                        <select name="response" id="response"
+                                                        <select name="checklist_LL_P2P_response_79" id="checklist_LL_P2P_response_79"
                                                             style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                             <option value="">Select an Option</option>
-                                                            <option value="Yes">Yes</option>
-                                                            <option value="No">No</option>
-                                                            <option value="N/A">N/A</option>
+                                                         <option value="Yes" @if($checklist18 && $checklist18->checklist_LL_P2P_response_79) {{ $checklist18->checklist_LL_P2P_response_79 == "Yes" ? 'selected' : '' }}@endif>Yes</option>
+                                                        <option  value="No"  @if($checklist18 && $checklist18->checklist_LL_P2P_response_79) {{ $checklist18->checklist_LL_P2P_response_79 == "No" ? 'selected' : '' }} @endif>No</option>
+                                                        <option value="N/A" @if($checklist18 && $checklist18->checklist_LL_P2P_response_79) {{ $checklist18->checklist_LL_P2P_response_79 == "N/A" ? 'selected' : '' }}@endif>N/A</option>
                                                         </select>
                                                     </div>
                                                 </td>
@@ -13258,7 +13359,7 @@ $checklistqualitycontrol = [
                                                 <td style="vertical-align: middle;">
                                                     <div
                                                         style="margin: auto; display: flex; justify-content: center;">
-                                                        <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                        <textarea name="checklist_LL_P2P_remark_78" style="border-radius: 7px; border: 1.5px solid black;">@if( $checklist18 && $checklist18->checklist_LL_P2P_remark_78){{ $checklist18->checklist_LL_P2P_remark_78 }}@endif</textarea>                                            </div>
                                                     </div>
                                                 </td>
                                             </tr>
@@ -13275,14 +13376,31 @@ $checklistqualitycontrol = [
                                     style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
 
                             </div>
+
+                                                </td>
+                                                <td>
+                                                    <div
+                                                        style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
+                                                        <select name="checklist_LL_P2P_response_79" id="checklist_LL_P2P_response_79"
+                                                            style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
+                                                            <option value="">Select an Option</option>
+                                                         <option value="Yes" @if($checklist18 && $checklist18->checklist_LL_P2P_response_79) {{ $checklist18->checklist_LL_P2P_response_79 == "Yes" ? 'selected' : '' }}@endif>Yes</option>
+                                                        <option  value="No"  @if($checklist18 && $checklist18->checklist_LL_P2P_response_79) {{ $checklist18->checklist_LL_P2P_response_79 == "No" ? 'selected' : '' }} @endif>No</option>
+                                                        <option value="N/A" @if($checklist18 && $checklist18->checklist_LL_P2P_response_79) {{ $checklist18->checklist_LL_P2P_response_79 == "N/A" ? 'selected' : '' }}@endif>N/A</option>
+                                                        </select>
+                                                    </div>
                                                 </td>
 
                                                 <td style="vertical-align: middle;">
                                                     <div
                                                         style="margin: auto; display: flex; justify-content: center;">
-                                                        <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                        <textarea name="checklist_LL_P2P_remark_78" style="border-radius: 7px; border: 1.5px solid black;">@if( $checklist18 && $checklist18->checklist_LL_P2P_remark_78){{ $checklist18->checklist_LL_P2P_remark_78 }}@endif</textarea>                                            </div>
                                                     </div>
                                                 </td>
+                                            </tr>
+
+
+
                                             </tr>
 
                                             <tr>
@@ -13293,12 +13411,13 @@ $checklistqualitycontrol = [
                                                 <td>
                                                     <div
                                                         style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                        <select name="response" id="response"
+                                                        <select name="checklist_LL_P2P_response_80" id="checklist_LL_P2P_response_80"
                                                             style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                             <option value="">Select an Option</option>
-                                                            <option value="Yes">Yes</option>
-                                                            <option value="No">No</option>
-                                                            <option value="N/A">N/A</option>
+                                                            <option value="Yes" @if($checklist18 && $checklist18->checklist_LL_P2P_response_80) {{ $checklist18->checklist_LL_P2P_response_80 == "Yes" ? 'selected' : '' }}@endif>Yes</option>
+                                                            <option  value="No"  @if($checklist18 && $checklist18->checklist_LL_P2P_response_80) {{ $checklist18->checklist_LL_P2P_response_80 == "No" ? 'selected' : '' }} @endif>No</option>
+                                                            <option value="N/A" @if($checklist18 && $checklist18->checklist_LL_P2P_response_80) {{ $checklist18->checklist_LL_P2P_response_80 == "N/A" ? 'selected' : '' }}@endif>N/A</option>
+
                                                         </select>
                                                     </div>
                                                 </td>
@@ -13306,7 +13425,7 @@ $checklistqualitycontrol = [
                                                 <td style="vertical-align: middle;">
                                                     <div
                                                         style="margin: auto; display: flex; justify-content: center;">
-                                                        <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                        <textarea name="checklist_LL_P2P_remark_80" style="border-radius: 7px; border: 1.5px solid black;">@if( $checklist18 && $checklist18->checklist_LL_P2P_remark_80){{ $checklist18->checklist_LL_P2P_remark_80 }}@endif</textarea>                                            </div>
                                                     </div>
                                                 </td>
                                             </tr>
@@ -13319,12 +13438,13 @@ $checklistqualitycontrol = [
                                                 <td>
                                                     <div
                                                         style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                        <select name="response" id="response"
+                                                        <select name="checklist_LL_P2P_response_81" id="checklist_LL_P2P_response_81"
                                                             style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                             <option value="">Select an Option</option>
-                                                            <option value="Yes">Yes</option>
-                                                            <option value="No">No</option>
-                                                            <option value="N/A">N/A</option>
+                                                            <option value="Yes" @if($checklist18 && $checklist18->checklist_LL_P2P_response_81) {{ $checklist18->checklist_LL_P2P_response_81 == "Yes" ? 'selected' : '' }}@endif>Yes</option>
+                                                            <option  value="No"  @if($checklist18 && $checklist18->checklist_LL_P2P_response_81) {{ $checklist18->checklist_LL_P2P_response_81 == "No" ? 'selected' : '' }} @endif>No</option>
+                                                            <option value="N/A" @if($checklist18 && $checklist18->checklist_LL_P2P_response_81) {{ $checklist18->checklist_LL_P2P_response_81 == "N/A" ? 'selected' : '' }}@endif>N/A</option>
+
                                                         </select>
                                                     </div>
                                                 </td>
@@ -13332,7 +13452,7 @@ $checklistqualitycontrol = [
                                                 <td style="vertical-align: middle;">
                                                     <div
                                                         style="margin: auto; display: flex; justify-content: center;">
-                                                        <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                        <textarea name="checklist_LL_P2P_remark_81" style="border-radius: 7px; border: 1.5px solid black;">@if( $checklist18 && $checklist18->checklist_LL_P2P_remark_81){{ $checklist18->checklist_LL_P2P_remark_81 }}@endif</textarea>                                            </div>
                                                     </div>
                                                 </td>
                                             </tr>
@@ -13344,19 +13464,26 @@ $checklistqualitycontrol = [
                                                 </td>
                                                 <td>
                                                     <div
-                                style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                <input type="text"
-                                    style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
+                                                        style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
+                                                        <select name="checklist_LL_P2P_response_82" id="checklist_LL_P2P_response_82"
+                                                            style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
+                                                            <option value="">Select an Option</option>
+                                                            <option value="Yes" @if($checklist18 && $checklist18->checklist_LL_P2P_response_82) {{ $checklist18->checklist_LL_P2P_response_82 == "Yes" ? 'selected' : '' }}@endif>Yes</option>
+                                                            <option  value="No"  @if($checklist18 && $checklist18->checklist_LL_P2P_response_82) {{ $checklist18->checklist_LL_P2P_response_82 == "No" ? 'selected' : '' }} @endif>No</option>
+                                                            <option value="N/A" @if($checklist18 && $checklist18->checklist_LL_P2P_response_82) {{ $checklist18->checklist_LL_P2P_response_82 == "N/A" ? 'selected' : '' }}@endif>N/A</option>
 
-                            </div>
+                                                        </select>
+                                                    </div>
                                                 </td>
 
                                                 <td style="vertical-align: middle;">
                                                     <div
                                                         style="margin: auto; display: flex; justify-content: center;">
-                                                        <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                        <textarea name="checklist_LL_P2P_remark_82" style="border-radius: 7px; border: 1.5px solid black;">@if( $checklist18 && $checklist18->checklist_LL_P2P_remark_82){{ $checklist18->checklist_LL_P2P_remark_82 }}@endif</textarea>                                            </div>
                                                     </div>
                                                 </td>
+
+
                                             </tr>
 
                                             <tr>
@@ -13367,12 +13494,13 @@ $checklistqualitycontrol = [
                                                 <td>
                                                     <div
                                                         style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                        <select name="response" id="response"
+                                                        <select name="checklist_LL_P2P_response_83" id="checklist_LL_P2P_response_83"
                                                             style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                             <option value="">Select an Option</option>
-                                                            <option value="Yes">Yes</option>
-                                                            <option value="No">No</option>
-                                                            <option value="N/A">N/A</option>
+                                                            <option value="Yes" @if($checklist18 && $checklist18->checklist_LL_P2P_response_83) {{ $checklist18->checklist_LL_P2P_response_83 == "Yes" ? 'selected' : '' }}@endif>Yes</option>
+                                                            <option  value="No"  @if($checklist18 && $checklist18->checklist_LL_P2P_response_83) {{ $checklist18->checklist_LL_P2P_response_83 == "No" ? 'selected' : '' }} @endif>No</option>
+                                                            <option value="N/A" @if($checklist18 && $checklist18->checklist_LL_P2P_response_83) {{ $checklist18->checklist_LL_P2P_response_83 == "N/A" ? 'selected' : '' }}@endif>N/A</option>
+
                                                         </select>
                                                     </div>
                                                 </td>
@@ -13380,7 +13508,7 @@ $checklistqualitycontrol = [
                                                 <td style="vertical-align: middle;">
                                                     <div
                                                         style="margin: auto; display: flex; justify-content: center;">
-                                                        <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                        <textarea name="checklist_LL_P2P_remark_83" style="border-radius: 7px; border: 1.5px solid black;">@if( $checklist18 && $checklist18->checklist_LL_P2P_remark_83){{ $checklist18->checklist_LL_P2P_remark_83 }}@endif</textarea>                                            </div>
                                                     </div>
                                                 </td>
                                             </tr>
@@ -13393,12 +13521,13 @@ $checklistqualitycontrol = [
                                                 <td>
                                                     <div
                                                         style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                        <select name="response" id="response"
+                                                        <select name="checklist_LL_P2P_response_84" id="checklist_LL_P2P_response_84"
                                                             style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                             <option value="">Select an Option</option>
-                                                            <option value="Yes">Yes</option>
-                                                            <option value="No">No</option>
-                                                            <option value="N/A">N/A</option>
+                                                            <option value="Yes" @if($checklist18 && $checklist18->checklist_LL_P2P_response_84) {{ $checklist18->checklist_LL_P2P_response_84 == "Yes" ? 'selected' : '' }}@endif>Yes</option>
+                                                            <option  value="No"  @if($checklist18 && $checklist18->checklist_LL_P2P_response_84) {{ $checklist18->checklist_LL_P2P_response_84 == "No" ? 'selected' : '' }} @endif>No</option>
+                                                            <option value="N/A" @if($checklist18 && $checklist18->checklist_LL_P2P_response_84) {{ $checklist18->checklist_LL_P2P_response_84 == "N/A" ? 'selected' : '' }}@endif>N/A</option>
+
                                                         </select>
                                                     </div>
                                                 </td>
@@ -13406,7 +13535,7 @@ $checklistqualitycontrol = [
                                                 <td style="vertical-align: middle;">
                                                     <div
                                                         style="margin: auto; display: flex; justify-content: center;">
-                                                        <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                        <textarea name="checklist_LL_P2P_remark_84" style="border-radius: 7px; border: 1.5px solid black;">@if( $checklist18 && $checklist18->checklist_LL_P2P_remark_84){{ $checklist18->checklist_LL_P2P_remark_84 }}@endif</textarea>                                            </div>
                                                     </div>
                                                 </td>
                                             </tr>
@@ -13419,12 +13548,13 @@ $checklistqualitycontrol = [
                                                 <td>
                                                     <div
                                                         style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                        <select name="response" id="response"
+                                                        <select name="checklist_LL_P2P_response_85" id="checklist_LL_P2P_response_85"
                                                             style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                             <option value="">Select an Option</option>
-                                                            <option value="Yes">Yes</option>
-                                                            <option value="No">No</option>
-                                                            <option value="N/A">N/A</option>
+                                                            <option value="Yes" @if($checklist18 && $checklist18->checklist_LL_P2P_response_85) {{ $checklist18->checklist_LL_P2P_response_85 == "Yes" ? 'selected' : '' }}@endif>Yes</option>
+                                                            <option  value="No"  @if($checklist18 && $checklist18->checklist_LL_P2P_response_85) {{ $checklist18->checklist_LL_P2P_response_85 == "No" ? 'selected' : '' }} @endif>No</option>
+                                                            <option value="N/A" @if($checklist18 && $checklist18->checklist_LL_P2P_response_85) {{ $checklist18->checklist_LL_P2P_response_85 == "N/A" ? 'selected' : '' }}@endif>N/A</option>
+
                                                         </select>
                                                     </div>
                                                 </td>
@@ -13432,7 +13562,7 @@ $checklistqualitycontrol = [
                                                 <td style="vertical-align: middle;">
                                                     <div
                                                         style="margin: auto; display: flex; justify-content: center;">
-                                                        <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                        <textarea name="checklist_LL_P2P_remark_85" style="border-radius: 7px; border: 1.5px solid black;">@if( $checklist18 && $checklist18->checklist_LL_P2P_remark_85){{ $checklist18->checklist_LL_P2P_remark_85 }}@endif</textarea>                                            </div>
                                                     </div>
                                                 </td>
                                             </tr>
@@ -13445,12 +13575,13 @@ $checklistqualitycontrol = [
                                                 <td>
                                                     <div
                                                         style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                        <select name="response" id="response"
+                                                        <select name="checklist_LL_P2P_response_86" id="checklist_LL_P2P_response_86"
                                                             style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                             <option value="">Select an Option</option>
-                                                            <option value="Yes">Yes</option>
-                                                            <option value="No">No</option>
-                                                            <option value="N/A">N/A</option>
+                                                            <option value="Yes" @if($checklist18 && $checklist18->checklist_LL_P2P_response_86) {{ $checklist18->checklist_LL_P2P_response_86 == "Yes" ? 'selected' : '' }}@endif>Yes</option>
+                                                            <option  value="No"  @if($checklist18 && $checklist18->checklist_LL_P2P_response_86) {{ $checklist18->checklist_LL_P2P_response_86 == "No" ? 'selected' : '' }} @endif>No</option>
+                                                            <option value="N/A" @if($checklist18 && $checklist18->checklist_LL_P2P_response_86) {{ $checklist18->checklist_LL_P2P_response_86 == "N/A" ? 'selected' : '' }}@endif>N/A</option>
+
                                                         </select>
                                                     </div>
                                                 </td>
@@ -13458,7 +13589,7 @@ $checklistqualitycontrol = [
                                                 <td style="vertical-align: middle;">
                                                     <div
                                                         style="margin: auto; display: flex; justify-content: center;">
-                                                        <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                        <textarea name="checklist_LL_P2P_remark_86" style="border-radius: 7px; border: 1.5px solid black;">@if( $checklist18 && $checklist18->checklist_LL_P2P_remark_86){{ $checklist18->checklist_LL_P2P_remark_86 }}@endif</textarea>                                            </div>
                                                     </div>
                                                 </td>
                                             </tr>
@@ -13468,108 +13599,139 @@ $checklistqualitycontrol = [
                                                 <td>
                                                     If yes, do the batch records detail the following:
 
-
                                                 </td>
                                                 <td>
+                                                    <div
+                                                        style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
+                                                        <select name="checklist_LL_P2P_response_86" id="checklist_LL_P2P_response_86"
+                                                            style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
+                                                            <option value="">Select an Option</option>
+                                                            <option value="Yes" @if($checklist18 && $checklist18->checklist_LL_P2P_response_87) {{ $checklist18->checklist_LL_P2P_response_87 == "Yes" ? 'selected' : '' }}@endif>Yes</option>
+                                                            <option  value="No"  @if($checklist18 && $checklist18->checklist_LL_P2P_response_87) {{ $checklist18->checklist_LL_P2P_response_87 == "No" ? 'selected' : '' }} @endif>No</option>
+                                                            <option value="N/A" @if($checklist18 && $checklist18->checklist_LL_P2P_response_87) {{ $checklist18->checklist_LL_P2P_response_87 == "N/A" ? 'selected' : '' }}@endif>N/A</option>
 
+                                                        </select>
+                                                    </div>
                                                 </td>
 
                                                 <td style="vertical-align: middle;">
-
+                                                    <div
+                                                        style="margin: auto; display: flex; justify-content: center;">
+                                                        <textarea name="checklist_LL_P2P_remark_87" style="border-radius: 7px; border: 1.5px solid black;">@if( $checklist18 && $checklist18->checklist_LL_P2P_remark_87){{ $checklist18->checklist_LL_P2P_remark_87 }}@endif</textarea>                                            </div>
+                                                    </div>
                                                 </td>
+
                                             </tr>
                                             <tr>
                                                 <td class="flex text-center">5.12.1</td>
                                                 <td>
-
                                                         Description, Lot Number & Quantities of Material used?
-
-
                                                 </td>
+
                                                 <td>
                                                     <div
-                                style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                <input type="text"
-                                    style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
+                                                        style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
+                                                        <select name="checklist_LL_P2P_response_87" id="checklist_LL_P2P_response_87"
+                                                            style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
+                                                            <option value="">Select an Option</option>
+                                                            <option value="Yes" @if($checklist18 && $checklist18->checklist_LL_P2P_response_87) {{ $checklist18->checklist_LL_P2P_response_87 == "Yes" ? 'selected' : '' }}@endif>Yes</option>
+                                                            <option  value="No"  @if($checklist18 && $checklist18->checklist_LL_P2P_response_87) {{ $checklist18->checklist_LL_P2P_response_87 == "No" ? 'selected' : '' }} @endif>No</option>
+                                                            <option value="N/A" @if($checklist18 && $checklist18->checklist_LL_P2P_response_87) {{ $checklist18->checklist_LL_P2P_response_87 == "N/A" ? 'selected' : '' }}@endif>N/A</option>
 
-                            </div>
+                                                        </select>
+                                                    </div>
                                                 </td>
 
                                                 <td style="vertical-align: middle;">
                                                     <div
                                                         style="margin: auto; display: flex; justify-content: center;">
-                                                        <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                        <textarea name="checklist_LL_P2P_remark_87" style="border-radius: 7px; border: 1.5px solid black;">@if( $checklist18 && $checklist18->checklist_LL_P2P_remark_87){{ $checklist18->checklist_LL_P2P_remark_87 }}@endif</textarea>                                            </div>
                                                     </div>
                                                 </td>
+
+
                                             </tr><tr>
                                                 <td class="flex text-center">5.12.2</td>
                                                 <td>
-
                                                         Processing Conditions (Temperature, Time etc.)?
-
 
                                                 </td>
                                                 <td>
                                                     <div
-                                style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                <input type="text"
-                                    style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
+                                                        style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
+                                                        <select name="checklist_LL_P2P_response_88" id="checklist_LL_P2P_response_88"
+                                                            style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
+                                                            <option value="">Select an Option</option>
+                                                            <option value="Yes" @if($checklist18 && $checklist18->checklist_LL_P2P_response_88) {{ $checklist18->checklist_LL_P2P_response_88 == "Yes" ? 'selected' : '' }}@endif>Yes</option>
+                                                            <option  value="No"  @if($checklist18 && $checklist18->checklist_LL_P2P_response_88) {{ $checklist18->checklist_LL_P2P_response_88 == "No" ? 'selected' : '' }} @endif>No</option>
+                                                            <option value="N/A" @if($checklist18 && $checklist18->checklist_LL_P2P_response_88) {{ $checklist18->checklist_LL_P2P_response_88 == "N/A" ? 'selected' : '' }}@endif>N/A</option>
 
-                            </div>
+                                                        </select>
+                                                    </div>
                                                 </td>
 
                                                 <td style="vertical-align: middle;">
                                                     <div
                                                         style="margin: auto; display: flex; justify-content: center;">
-                                                        <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                        <textarea name="checklist_LL_P2P_remark_88" style="border-radius: 7px; border: 1.5px solid black;">@if( $checklist18 && $checklist18->checklist_LL_P2P_remark_88){{ $checklist18->checklist_LL_P2P_remark_88 }}@endif</textarea>                                            </div>
                                                     </div>
                                                 </td>
+
                                             </tr><tr>
                                                 <td class="flex text-center">5.12.3</td>
                                                 <td>
-
                                                         The identification of the Person who performed the particular step?
-
 
                                                 </td>
                                                 <td>
                                                     <div
-                                style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                <input type="text"
-                                    style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
+                                                        style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
+                                                        <select name="checklist_LL_P2P_response_89" id="checklist_LL_P2P_response_89"
+                                                            style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
+                                                            <option value="">Select an Option</option>
+                                                            <option value="Yes" @if($checklist18 && $checklist18->checklist_LL_P2P_response_89) {{ $checklist18->checklist_LL_P2P_response_89 == "Yes" ? 'selected' : '' }}@endif>Yes</option>
+                                                            <option  value="No"  @if($checklist18 && $checklist18->checklist_LL_P2P_response_89) {{ $checklist18->checklist_LL_P2P_response_89 == "No" ? 'selected' : '' }} @endif>No</option>
+                                                            <option value="N/A" @if($checklist18 && $checklist18->checklist_LL_P2P_response_89) {{ $checklist18->checklist_LL_P2P_response_89 == "N/A" ? 'selected' : '' }}@endif>N/A</option>
 
-                            </div>
+                                                        </select>
+                                                    </div>
                                                 </td>
 
                                                 <td style="vertical-align: middle;">
                                                     <div
                                                         style="margin: auto; display: flex; justify-content: center;">
-                                                        <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                        <textarea name="checklist_LL_P2P_remark_89" style="border-radius: 7px; border: 1.5px solid black;">@if( $checklist18 && $checklist18->checklist_LL_P2P_remark_89){{ $checklist18->checklist_LL_P2P_remark_89 }}@endif</textarea>                                            </div>
                                                     </div>
                                                 </td>
+
+
                                             </tr><tr>
                                                 <td class="flex text-center">5.12.4</td>
                                                 <td>
-
                                                         Results of any In-process tests?
-
 
                                                 </td>
                                                 <td>
                                                     <div
-                                                     style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                     <input type="text"
-                                                     style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                    </div>
+                                                        style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
+                                                        <select name="checklist_LL_P2P_response_90" id="checklist_LL_P2P_response_90"
+                                                            style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
+                                                            <option value="">Select an Option</option>
+                                                            <option value="Yes" @if($checklist18 && $checklist18->checklist_LL_P2P_response_90) {{ $checklist18->checklist_LL_P2P_response_90 == "Yes" ? 'selected' : '' }}@endif>Yes</option>
+                                                            <option  value="No"  @if($checklist18 && $checklist18->checklist_LL_P2P_response_90) {{ $checklist18->checklist_LL_P2P_response_90 == "No" ? 'selected' : '' }} @endif>No</option>
+                                                            <option value="N/A" @if($checklist18 && $checklist18->checklist_LL_P2P_response_90) {{ $checklist18->checklist_LL_P2P_response_90 == "N/A" ? 'selected' : '' }}@endif>N/A</option>
 
+                                                        </select>
+                                                    </div>
                                                 </td>
 
                                                 <td style="vertical-align: middle;">
                                                     <div
                                                         style="margin: auto; display: flex; justify-content: center;">
-                                                        <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                        <textarea name="checklist_LL_P2P_remark_90" style="border-radius: 7px; border: 1.5px solid black;">@if( $checklist18 && $checklist18->checklist_LL_P2P_remark_90){{ $checklist18->checklist_LL_P2P_remark_90 }}@endif</textarea>                                            </div>
                                                     </div>
                                                 </td>
+
                                             </tr>
                                             <tr>
                                                 <td class="flex text-center">5.12.5</td>
@@ -13577,23 +13739,29 @@ $checklistqualitycontrol = [
 
                                                         All deviations from standard conditions?
 
-
                                                 </td>
                                                 <td>
                                                     <div
-                                                     style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                     <input type="text"
-                                                     style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
+                                                        style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
+                                                        <select name="checklist_LL_P2P_response_91" id="checklist_LL_P2P_response_91"
+                                                            style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
+                                                            <option value="">Select an Option</option>
+                                                            <option value="Yes" @if($checklist18 && $checklist18->checklist_LL_P2P_response_91) {{ $checklist18->checklist_LL_P2P_response_91 == "Yes" ? 'selected' : '' }}@endif>Yes</option>
+                                                            <option  value="No"  @if($checklist18 && $checklist18->checklist_LL_P2P_response_91) {{ $checklist18->checklist_LL_P2P_response_91 == "No" ? 'selected' : '' }} @endif>No</option>
+                                                            <option value="N/A" @if($checklist18 && $checklist18->checklist_LL_P2P_response_91) {{ $checklist18->checklist_LL_P2P_response_91 == "N/A" ? 'selected' : '' }}@endif>N/A</option>
+
+                                                        </select>
                                                     </div>
                                                 </td>
 
                                                 <td style="vertical-align: middle;">
                                                     <div
                                                         style="margin: auto; display: flex; justify-content: center;">
-                                                        <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                        <textarea name="checklist_LL_P2P_remark_91" style="border-radius: 7px; border: 1.5px solid black;">@if( $checklist18 && $checklist18->checklist_LL_P2P_remark_91){{ $checklist18->checklist_LL_P2P_remark_91 }}@endif</textarea>                                            </div>
                                                     </div>
                                                 </td>
-                                            </tr>
+
+                                              </tr>
 
                                             <tr>
                                                 <td class="flex text-center">5.12.6</td>
@@ -13601,22 +13769,28 @@ $checklistqualitycontrol = [
 
                                                     All cleaning operations carried out before & after batch manufacture?
 
-
                                                 </td>
                                                 <td>
                                                     <div
-                                                     style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                     <input type="text"
-                                                     style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
+                                                        style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
+                                                        <select name="checklist_LL_P2P_response_92" id="checklist_LL_P2P_response_92"
+                                                            style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
+                                                            <option value="">Select an Option</option>
+                                                            <option value="Yes" @if($checklist18 && $checklist18->checklist_LL_P2P_response_92) {{ $checklist18->checklist_LL_P2P_response_92 == "Yes" ? 'selected' : '' }}@endif>Yes</option>
+                                                            <option  value="No"  @if($checklist18 && $checklist18->checklist_LL_P2P_response_92) {{ $checklist18->checklist_LL_P2P_response_92 == "No" ? 'selected' : '' }} @endif>No</option>
+                                                            <option value="N/A" @if($checklist18 && $checklist18->checklist_LL_P2P_response_92) {{ $checklist18->checklist_LL_P2P_response_92 == "N/A" ? 'selected' : '' }}@endif>N/A</option>
+
+                                                        </select>
                                                     </div>
                                                 </td>
 
                                                 <td style="vertical-align: middle;">
                                                     <div
                                                         style="margin: auto; display: flex; justify-content: center;">
-                                                        <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                        <textarea name="checklist_LL_P2P_remark_92" style="border-radius: 7px; border: 1.5px solid black;">@if( $checklist18 && $checklist18->checklist_LL_P2P_remark_92){{ $checklist18->checklist_LL_P2P_remark_92 }}@endif</textarea>                                            </div>
                                                     </div>
                                                 </td>
+
                                             </tr>
 
                                             <tr>
@@ -13626,19 +13800,25 @@ $checklistqualitycontrol = [
                                                 </td>
                                                 <td>
                                                     <div
-                                style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                <input type="number"
-                                placeholder="Enter  value here"
-                                    style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;" >
-                            </div>
+                                                        style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
+                                                        <select name="checklist_LL_P2P_response_93" id="checklist_LL_P2P_response_93"
+                                                            style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
+                                                            <option value="">Select an Option</option>
+                                                            <option value="Yes" @if($checklist18 && $checklist18->checklist_LL_P2P_response_93) {{ $checklist18->checklist_LL_P2P_response_93 == "Yes" ? 'selected' : '' }}@endif>Yes</option>
+                                                            <option  value="No"  @if($checklist18 && $checklist18->checklist_LL_P2P_response_93) {{ $checklist18->checklist_LL_P2P_response_93 == "No" ? 'selected' : '' }} @endif>No</option>
+                                                            <option value="N/A" @if($checklist18 && $checklist18->checklist_LL_P2P_response_93) {{ $checklist18->checklist_LL_P2P_response_93 == "N/A" ? 'selected' : '' }}@endif>N/A</option>
+
+                                                        </select>
+                                                    </div>
                                                 </td>
 
                                                 <td style="vertical-align: middle;">
                                                     <div
                                                         style="margin: auto; display: flex; justify-content: center;">
-                                                        <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                        <textarea name="checklist_LL_P2P_remark_93" style="border-radius: 7px; border: 1.5px solid black;">@if( $checklist18 && $checklist18->checklist_LL_P2P_remark_93){{ $checklist18->checklist_LL_P2P_remark_93 }}@endif</textarea>                                            </div>
                                                     </div>
                                                 </td>
+
                                             </tr>
 
                                             <tr>
@@ -13649,12 +13829,13 @@ $checklistqualitycontrol = [
                                                 <td>
                                                     <div
                                                         style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                        <select name="response" id="response"
+                                                        <select name="checklist_LL_P2P_response_94" id="checklist_LL_P2P_response_94"
                                                             style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                             <option value="">Select an Option</option>
-                                                            <option value="Yes">Yes</option>
-                                                            <option value="No">No</option>
-                                                            <option value="N/A">N/A</option>
+                                                            <option value="Yes" @if($checklist18 && $checklist18->checklist_LL_P2P_response_94) {{ $checklist18->checklist_LL_P2P_response_94 == "Yes" ? 'selected' : '' }}@endif>Yes</option>
+                                                            <option  value="No"  @if($checklist18 && $checklist18->checklist_LL_P2P_response_94) {{ $checklist18->checklist_LL_P2P_response_94 == "No" ? 'selected' : '' }} @endif>No</option>
+                                                            <option value="N/A" @if($checklist18 && $checklist18->checklist_LL_P2P_response_94) {{ $checklist18->checklist_LL_P2P_response_94 == "N/A" ? 'selected' : '' }}@endif>N/A</option>
+
                                                         </select>
                                                     </div>
                                                 </td>
@@ -13662,7 +13843,7 @@ $checklistqualitycontrol = [
                                                 <td style="vertical-align: middle;">
                                                     <div
                                                         style="margin: auto; display: flex; justify-content: center;">
-                                                        <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                        <textarea name="checklist_LL_P2P_remark_94" style="border-radius: 7px; border: 1.5px solid black;">@if( $checklist18 && $checklist18->checklist_LL_P2P_remark_94){{ $checklist18->checklist_LL_P2P_remark_94 }}@endif</textarea>                                            </div>
                                                     </div>
                                                 </td>
                                             </tr>
@@ -13675,12 +13856,13 @@ $checklistqualitycontrol = [
                                                 <td>
                                                     <div
                                                         style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                        <select name="response" id="response"
+                                                        <select name="checklist_LL_P2P_response_95" id="checklist_LL_P2P_response_95"
                                                             style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                             <option value="">Select an Option</option>
-                                                            <option value="Yes">Yes</option>
-                                                            <option value="No">No</option>
-                                                            <option value="N/A">N/A</option>
+                                                            <option value="Yes" @if($checklist18 && $checklist18->checklist_LL_P2P_response_95) {{ $checklist18->checklist_LL_P2P_response_95 == "Yes" ? 'selected' : '' }}@endif>Yes</option>
+                                                            <option  value="No"  @if($checklist18 && $checklist18->checklist_LL_P2P_response_95) {{ $checklist18->checklist_LL_P2P_response_95 == "No" ? 'selected' : '' }} @endif>No</option>
+                                                            <option value="N/A" @if($checklist18 && $checklist18->checklist_LL_P2P_response_95) {{ $checklist18->checklist_LL_P2P_response_95 == "N/A" ? 'selected' : '' }}@endif>N/A</option>
+
                                                         </select>
                                                     </div>
                                                 </td>
@@ -13688,7 +13870,7 @@ $checklistqualitycontrol = [
                                                 <td style="vertical-align: middle;">
                                                     <div
                                                         style="margin: auto; display: flex; justify-content: center;">
-                                                        <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                        <textarea name="checklist_LL_P2P_remark_95" style="border-radius: 7px; border: 1.5px solid black;">@if( $checklist18 && $checklist18->checklist_LL_P2P_remark_95){{ $checklist18->checklist_LL_P2P_remark_95 }}@endif</textarea>                                            </div>
                                                     </div>
                                                 </td>
                                             </tr>
@@ -13701,12 +13883,13 @@ $checklistqualitycontrol = [
                                                 <td>
                                                     <div
                                                         style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                        <select name="response" id="response"
+                                                        <select name="checklist_LL_P2P_response_96" id="checklist_LL_P2P_response_96"
                                                             style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                             <option value="">Select an Option</option>
-                                                            <option value="Yes">Yes</option>
-                                                            <option value="No">No</option>
-                                                            <option value="N/A">N/A</option>
+                                                            <option value="Yes" @if($checklist18 && $checklist18->checklist_LL_P2P_response_96) {{ $checklist18->checklist_LL_P2P_response_96 == "Yes" ? 'selected' : '' }}@endif>Yes</option>
+                                                            <option  value="No"  @if($checklist18 && $checklist18->checklist_LL_P2P_response_96) {{ $checklist18->checklist_LL_P2P_response_96 == "No" ? 'selected' : '' }} @endif>No</option>
+                                                            <option value="N/A" @if($checklist18 && $checklist18->checklist_LL_P2P_response_96) {{ $checklist18->checklist_LL_P2P_response_96 == "N/A" ? 'selected' : '' }}@endif>N/A</option>
+
                                                         </select>
                                                     </div>
                                                 </td>
@@ -13714,7 +13897,7 @@ $checklistqualitycontrol = [
                                                 <td style="vertical-align: middle;">
                                                     <div
                                                         style="margin: auto; display: flex; justify-content: center;">
-                                                        <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                        <textarea name="checklist_LL_P2P_remark_96" style="border-radius: 7px; border: 1.5px solid black;">@if( $checklist18 && $checklist18->checklist_LL_P2P_remark_96){{ $checklist18->checklist_LL_P2P_remark_96 }}@endif</textarea>                                            </div>
                                                     </div>
                                                 </td>
                                             </tr>
@@ -13727,12 +13910,13 @@ $checklistqualitycontrol = [
                                                 <td>
                                                     <div
                                                         style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                        <select name="response" id="response"
+                                                        <select name="checklist_LL_P2P_response_97" id="checklist_LL_P2P_response_97"
                                                             style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                             <option value="">Select an Option</option>
-                                                            <option value="Yes">Yes</option>
-                                                            <option value="No">No</option>
-                                                            <option value="N/A">N/A</option>
+                                                            <option value="Yes" @if($checklist18 && $checklist18->checklist_LL_P2P_response_97) {{ $checklist18->checklist_LL_P2P_response_97 == "Yes" ? 'selected' : '' }}@endif>Yes</option>
+                                                            <option  value="No"  @if($checklist18 && $checklist18->checklist_LL_P2P_response_97) {{ $checklist18->checklist_LL_P2P_response_97 == "No" ? 'selected' : '' }} @endif>No</option>
+                                                            <option value="N/A" @if($checklist18 && $checklist18->checklist_LL_P2P_response_97) {{ $checklist18->checklist_LL_P2P_response_97 == "N/A" ? 'selected' : '' }}@endif>N/A</option>
+
                                                         </select>
                                                     </div>
                                                 </td>
@@ -13740,7 +13924,7 @@ $checklistqualitycontrol = [
                                                 <td style="vertical-align: middle;">
                                                     <div
                                                         style="margin: auto; display: flex; justify-content: center;">
-                                                        <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                        <textarea name="checklist_LL_P2P_remark_96" style="border-radius: 7px; border: 1.5px solid black;">@if( $checklist18 && $checklist18->checklist_LL_P2P_remark_96){{ $checklist18->checklist_LL_P2P_remark_96 }}@endif</textarea>                                            </div>
                                                     </div>
                                                 </td>
                                             </tr>
@@ -13753,12 +13937,13 @@ $checklistqualitycontrol = [
                                                 <td>
                                                     <div
                                                         style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                        <select name="response" id="response"
+                                                        <select name="checklist_LL_P2P_response_98" id="checklist_LL_P2P_response_98"
                                                             style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                             <option value="">Select an Option</option>
-                                                            <option value="Yes">Yes</option>
-                                                            <option value="No">No</option>
-                                                            <option value="N/A">N/A</option>
+                                                            <option value="Yes" @if($checklist18 && $checklist18->checklist_LL_P2P_response_98) {{ $checklist18->checklist_LL_P2P_response_98 == "Yes" ? 'selected' : '' }}@endif>Yes</option>
+                                                            <option  value="No"  @if($checklist18 && $checklist18->checklist_LL_P2P_response_98) {{ $checklist18->checklist_LL_P2P_response_98 == "No" ? 'selected' : '' }} @endif>No</option>
+                                                            <option value="N/A" @if($checklist18 && $checklist18->checklist_LL_P2P_response_98) {{ $checklist18->checklist_LL_P2P_response_98 == "N/A" ? 'selected' : '' }}@endif>N/A</option>
+
                                                         </select>
                                                     </div>
                                                 </td>
@@ -13766,7 +13951,7 @@ $checklistqualitycontrol = [
                                                 <td style="vertical-align: middle;">
                                                     <div
                                                         style="margin: auto; display: flex; justify-content: center;">
-                                                        <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                        <textarea name="checklist_LL_P2P_remark_98" style="border-radius: 7px; border: 1.5px solid black;">@if( $checklist18 && $checklist18->checklist_LL_P2P_remark_98){{ $checklist18->checklist_LL_P2P_remark_98 }}@endif</textarea>                                            </div>
                                                     </div>
                                                 </td>
                                             </tr>
@@ -13779,12 +13964,13 @@ $checklistqualitycontrol = [
                                                 <td>
                                                     <div
                                                         style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                        <select name="response" id="response"
+                                                        <select name="checklist_LL_P2P_response_99" id="checklist_LL_P2P_response_99"
                                                             style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                             <option value="">Select an Option</option>
-                                                            <option value="Yes">Yes</option>
-                                                            <option value="No">No</option>
-                                                            <option value="N/A">N/A</option>
+                                                            <option value="Yes" @if($checklist18 && $checklist18->checklist_LL_P2P_response_99) {{ $checklist18->checklist_LL_P2P_response_99 == "Yes" ? 'selected' : '' }}@endif>Yes</option>
+                                                            <option  value="No"  @if($checklist18 && $checklist18->checklist_LL_P2P_response_99) {{ $checklist18->checklist_LL_P2P_response_99 == "No" ? 'selected' : '' }} @endif>No</option>
+                                                            <option value="N/A" @if($checklist18 && $checklist18->checklist_LL_P2P_response_99) {{ $checklist18->checklist_LL_P2P_response_99 == "N/A" ? 'selected' : '' }}@endif>N/A</option>
+
                                                         </select>
                                                     </div>
                                                 </td>
@@ -13792,7 +13978,7 @@ $checklistqualitycontrol = [
                                                 <td style="vertical-align: middle;">
                                                     <div
                                                         style="margin: auto; display: flex; justify-content: center;">
-                                                        <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                        <textarea name="checklist_LL_P2P_remark_99" style="border-radius: 7px; border: 1.5px solid black;">@if( $checklist18 && $checklist18->checklist_LL_P2P_remark_99){{ $checklist18->checklist_LL_P2P_remark_99 }}@endif</textarea>                                            </div>
                                                     </div>
                                                 </td>
                                             </tr>  <tr>
@@ -13803,12 +13989,13 @@ $checklistqualitycontrol = [
                                                 <td>
                                                     <div
                                                         style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                        <select name="response" id="response"
+                                                        <select name="checklist_LL_P2P_response_100" id="checklist_LL_P2P_response_100"
                                                             style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                             <option value="">Select an Option</option>
-                                                            <option value="Yes">Yes</option>
-                                                            <option value="No">No</option>
-                                                            <option value="N/A">N/A</option>
+                                                            <option value="Yes" @if($checklist18 && $checklist18->checklist_LL_P2P_response_100) {{ $checklist18->checklist_LL_P2P_response_100 == "Yes" ? 'selected' : '' }}@endif>Yes</option>
+                                                            <option  value="No"  @if($checklist18 && $checklist18->checklist_LL_P2P_response_100) {{ $checklist18->checklist_LL_P2P_response_100 == "No" ? 'selected' : '' }} @endif>No</option>
+                                                            <option value="N/A" @if($checklist18 && $checklist18->checklist_LL_P2P_response_100) {{ $checklist18->checklist_LL_P2P_response_100 == "N/A" ? 'selected' : '' }}@endif>N/A</option>
+
                                                         </select>
                                                     </div>
                                                 </td>
@@ -13816,7 +14003,7 @@ $checklistqualitycontrol = [
                                                 <td style="vertical-align: middle;">
                                                     <div
                                                         style="margin: auto; display: flex; justify-content: center;">
-                                                        <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                        <textarea name="checklist_LL_P2P_remark_100" style="border-radius: 7px; border: 1.5px solid black;">@if( $checklist18 && $checklist18->checklist_LL_P2P_remark_100){{ $checklist18->checklist_LL_P2P_remark_100 }}@endif</textarea>                                            </div>
                                                     </div>
                                                 </td>
                                             </tr>  <tr>
@@ -13827,12 +14014,13 @@ $checklistqualitycontrol = [
                                                 <td>
                                                     <div
                                                         style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                        <select name="response" id="response"
+                                                        <select name="checklist_LL_P2P_response_101" id="checklist_LL_P2P_response_101"
                                                             style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                             <option value="">Select an Option</option>
-                                                            <option value="Yes">Yes</option>
-                                                            <option value="No">No</option>
-                                                            <option value="N/A">N/A</option>
+                                                            <option value="Yes" @if($checklist18 && $checklist18->checklist_LL_P2P_response_101) {{ $checklist18->checklist_LL_P2P_response_101 == "Yes" ? 'selected' : '' }}@endif>Yes</option>
+                                                            <option  value="No"  @if($checklist18 && $checklist18->checklist_LL_P2P_response_101) {{ $checklist18->checklist_LL_P2P_response_101 == "No" ? 'selected' : '' }} @endif>No</option>
+                                                            <option value="N/A" @if($checklist18 && $checklist18->checklist_LL_P2P_response_101) {{ $checklist18->checklist_LL_P2P_response_101 == "N/A" ? 'selected' : '' }}@endif>N/A</option>
+
                                                         </select>
                                                     </div>
                                                 </td>
@@ -13840,7 +14028,7 @@ $checklistqualitycontrol = [
                                                 <td style="vertical-align: middle;">
                                                     <div
                                                         style="margin: auto; display: flex; justify-content: center;">
-                                                        <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                        <textarea name="checklist_LL_P2P_remark_101" style="border-radius: 7px; border: 1.5px solid black;">@if( $checklist18 && $checklist18->checklist_LL_P2P_remark_101){{ $checklist18->checklist_LL_P2P_remark_101 }}@endif</textarea>                                            </div>
                                                     </div>
                                                 </td>
                                             </tr>  <tr>
@@ -13851,12 +14039,13 @@ $checklistqualitycontrol = [
                                                 <td>
                                                     <div
                                                         style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                        <select name="response" id="response"
+                                                        <select name="checklist_LL_P2P_response_102" id="checklist_LL_P2P_response_102"
                                                             style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                             <option value="">Select an Option</option>
-                                                            <option value="Yes">Yes</option>
-                                                            <option value="No">No</option>
-                                                            <option value="N/A">N/A</option>
+                                                            <option value="Yes" @if($checklist18 && $checklist18->checklist_LL_P2P_response_102) {{ $checklist18->checklist_LL_P2P_response_102 == "Yes" ? 'selected' : '' }}@endif>Yes</option>
+                                                            <option  value="No"  @if($checklist18 && $checklist18->checklist_LL_P2P_response_102) {{ $checklist18->checklist_LL_P2P_response_102 == "No" ? 'selected' : '' }} @endif>No</option>
+                                                            <option value="N/A" @if($checklist18 && $checklist18->checklist_LL_P2P_response_102) {{ $checklist18->checklist_LL_P2P_response_102 == "N/A" ? 'selected' : '' }}@endif>N/A</option>
+
                                                         </select>
                                                     </div>
                                                 </td>
@@ -13864,7 +14053,7 @@ $checklistqualitycontrol = [
                                                 <td style="vertical-align: middle;">
                                                     <div
                                                         style="margin: auto; display: flex; justify-content: center;">
-                                                        <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                        <textarea name="checklist_LL_P2P_remark_102" style="border-radius: 7px; border: 1.5px solid black;">@if( $checklist18 && $checklist18->checklist_LL_P2P_remark_102){{ $checklist18->checklist_LL_P2P_remark_102 }}@endif</textarea>                                            </div>
                                                     </div>
                                                 </td>
                                             </tr>  <tr>
@@ -13875,12 +14064,13 @@ $checklistqualitycontrol = [
                                                 <td>
                                                     <div
                                                         style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                        <select name="response" id="response"
+                                                        <select name="checklist_LL_P2P_response_103" id="checklist_LL_P2P_response_103"
                                                             style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                             <option value="">Select an Option</option>
-                                                            <option value="Yes">Yes</option>
-                                                            <option value="No">No</option>
-                                                            <option value="N/A">N/A</option>
+                                                            <option value="Yes" @if($checklist18 && $checklist18->checklist_LL_P2P_response_103) {{ $checklist18->checklist_LL_P2P_response_103 == "Yes" ? 'selected' : '' }}@endif>Yes</option>
+                                                            <option  value="No"  @if($checklist18 && $checklist18->checklist_LL_P2P_response_103) {{ $checklist18->checklist_LL_P2P_response_103 == "No" ? 'selected' : '' }} @endif>No</option>
+                                                            <option value="N/A" @if($checklist18 && $checklist18->checklist_LL_P2P_response_103) {{ $checklist18->checklist_LL_P2P_response_103 == "N/A" ? 'selected' : '' }}@endif>N/A</option>
+
                                                         </select>
                                                     </div>
                                                 </td>
@@ -13888,7 +14078,7 @@ $checklistqualitycontrol = [
                                                 <td style="vertical-align: middle;">
                                                     <div
                                                         style="margin: auto; display: flex; justify-content: center;">
-                                                        <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                        <textarea name="checklist_LL_P2P_remark_103" style="border-radius: 7px; border: 1.5px solid black;">@if( $checklist18 && $checklist18->checklist_LL_P2P_remark_103){{ $checklist18->checklist_LL_P2P_remark_103 }}@endif</textarea>                                            </div>
                                                     </div>
                                                 </td>
                                             </tr>  <tr>
@@ -13899,12 +14089,13 @@ $checklistqualitycontrol = [
                                                 <td>
                                                     <div
                                                         style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                        <select name="response" id="response"
+                                                        <select name="checklist_LL_P2P_response_104" id="checklist_LL_P2P_response_104"
                                                             style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                             <option value="">Select an Option</option>
-                                                            <option value="Yes">Yes</option>
-                                                            <option value="No">No</option>
-                                                            <option value="N/A">N/A</option>
+                                                            <option value="Yes" @if($checklist18 && $checklist18->checklist_LL_P2P_response_104) {{ $checklist18->checklist_LL_P2P_response_104 == "Yes" ? 'selected' : '' }}@endif>Yes</option>
+                                                            <option  value="No"  @if($checklist18 && $checklist18->checklist_LL_P2P_response_104) {{ $checklist18->checklist_LL_P2P_response_104 == "No" ? 'selected' : '' }} @endif>No</option>
+                                                            <option value="N/A" @if($checklist18 && $checklist18->checklist_LL_P2P_response_104) {{ $checklist18->checklist_LL_P2P_response_104 == "N/A" ? 'selected' : '' }}@endif>N/A</option>
+
                                                         </select>
                                                     </div>
                                                 </td>
@@ -13912,7 +14103,7 @@ $checklistqualitycontrol = [
                                                 <td style="vertical-align: middle;">
                                                     <div
                                                         style="margin: auto; display: flex; justify-content: center;">
-                                                        <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                        <textarea name="checklist_LL_P2P_remark_104" style="border-radius: 7px; border: 1.5px solid black;">@if( $checklist18 && $checklist18->checklist_LL_P2P_remark_104){{ $checklist18->checklist_LL_P2P_remark_104 }}@endif</textarea>                                            </div>
                                                     </div>
                                                 </td>
                                             </tr>  <tr>
@@ -13923,12 +14114,13 @@ $checklistqualitycontrol = [
                                                 <td>
                                                     <div
                                                         style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                        <select name="response" id="response"
+                                                        <select name="checklist_LL_P2P_response_105" id="checklist_LL_P2P_response_105"
                                                             style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                             <option value="">Select an Option</option>
-                                                            <option value="Yes">Yes</option>
-                                                            <option value="No">No</option>
-                                                            <option value="N/A">N/A</option>
+                                                            <option value="Yes" @if($checklist18 && $checklist18->checklist_LL_P2P_response_105) {{ $checklist18->checklist_LL_P2P_response_105 == "Yes" ? 'selected' : '' }}@endif>Yes</option>
+                                                            <option  value="No"  @if($checklist18 && $checklist18->checklist_LL_P2P_response_105) {{ $checklist18->checklist_LL_P2P_response_105 == "No" ? 'selected' : '' }} @endif>No</option>
+                                                            <option value="N/A" @if($checklist18 && $checklist18->checklist_LL_P2P_response_105) {{ $checklist18->checklist_LL_P2P_response_105 == "N/A" ? 'selected' : '' }}@endif>N/A</option>
+
                                                         </select>
                                                     </div>
                                                 </td>
@@ -13936,7 +14128,7 @@ $checklistqualitycontrol = [
                                                 <td style="vertical-align: middle;">
                                                     <div
                                                         style="margin: auto; display: flex; justify-content: center;">
-                                                        <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                        <textarea name="checklist_LL_P2P_remark_105" style="border-radius: 7px; border: 1.5px solid black;">@if( $checklist18 && $checklist18->checklist_LL_P2P_remark_105){{ $checklist18->checklist_LL_P2P_remark_105 }}@endif</textarea>                                            </div>
                                                     </div>
                                                 </td>
                                             </tr>  <tr>
@@ -13947,12 +14139,13 @@ $checklistqualitycontrol = [
                                                 <td>
                                                     <div
                                                         style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                        <select name="response" id="response"
+                                                        <select name="checklist_LL_P2P_response_106" id="checklist_LL_P2P_response_106"
                                                             style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                             <option value="">Select an Option</option>
-                                                            <option value="Yes">Yes</option>
-                                                            <option value="No">No</option>
-                                                            <option value="N/A">N/A</option>
+                                                            <option value="Yes" @if($checklist18 && $checklist18->checklist_LL_P2P_response_106) {{ $checklist18->checklist_LL_P2P_response_106 == "Yes" ? 'selected' : '' }}@endif>Yes</option>
+                                                            <option  value="No"  @if($checklist18 && $checklist18->checklist_LL_P2P_response_106) {{ $checklist18->checklist_LL_P2P_response_106 == "No" ? 'selected' : '' }} @endif>No</option>
+                                                            <option value="N/A" @if($checklist18 && $checklist18->checklist_LL_P2P_response_106) {{ $checklist18->checklist_LL_P2P_response_106 == "N/A" ? 'selected' : '' }}@endif>N/A</option>
+
                                                         </select>
                                                     </div>
                                                 </td>
@@ -13960,7 +14153,7 @@ $checklistqualitycontrol = [
                                                 <td style="vertical-align: middle;">
                                                     <div
                                                         style="margin: auto; display: flex; justify-content: center;">
-                                                        <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                        <textarea name="checklist_LL_P2P_remark_106" style="border-radius: 7px; border: 1.5px solid black;">@if( $checklist18 && $checklist18->checklist_LL_P2P_remark_106){{ $checklist18->checklist_LL_P2P_remark_106 }}@endif</textarea>                                            </div>
                                                     </div>
                                                 </td>
                                             </tr>  <tr>
@@ -13971,12 +14164,13 @@ $checklistqualitycontrol = [
                                                 <td>
                                                     <div
                                                         style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                        <select name="response" id="response"
+                                                        <select name="checklist_LL_P2P_response_107" id="checklist_LL_P2P_response_107"
                                                             style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                             <option value="">Select an Option</option>
-                                                            <option value="Yes">Yes</option>
-                                                            <option value="No">No</option>
-                                                            <option value="N/A">N/A</option>
+                                                            <option value="Yes" @if($checklist18 && $checklist18->checklist_LL_P2P_response_107) {{ $checklist18->checklist_LL_P2P_response_107 == "Yes" ? 'selected' : '' }}@endif>Yes</option>
+                                                            <option  value="No"  @if($checklist18 && $checklist18->checklist_LL_P2P_response_107) {{ $checklist18->checklist_LL_P2P_response_107 == "No" ? 'selected' : '' }} @endif>No</option>
+                                                            <option value="N/A" @if($checklist18 && $checklist18->checklist_LL_P2P_response_107) {{ $checklist18->checklist_LL_P2P_response_107 == "N/A" ? 'selected' : '' }}@endif>N/A</option>
+
                                                         </select>
                                                     </div>
                                                 </td>
@@ -13984,7 +14178,7 @@ $checklistqualitycontrol = [
                                                 <td style="vertical-align: middle;">
                                                     <div
                                                         style="margin: auto; display: flex; justify-content: center;">
-                                                        <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                        <textarea name="checklist_LL_P2P_remark_107" style="border-radius: 7px; border: 1.5px solid black;">@if( $checklist18 && $checklist18->checklist_LL_P2P_remark_107){{ $checklist18->checklist_LL_P2P_remark_107 }}@endif</textarea>                                            </div>
                                                     </div>
                                                 </td>
                                             </tr>  <tr>
@@ -13995,12 +14189,13 @@ $checklistqualitycontrol = [
                                                 <td>
                                                     <div
                                                         style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                        <select name="response" id="response"
+                                                        <select name="checklist_LL_P2P_response_108" id="checklist_LL_P2P_response_108"
                                                             style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                             <option value="">Select an Option</option>
-                                                            <option value="Yes">Yes</option>
-                                                            <option value="No">No</option>
-                                                            <option value="N/A">N/A</option>
+                                                            <option value="Yes" @if($checklist18 && $checklist18->checklist_LL_P2P_response_108) {{ $checklist18->checklist_LL_P2P_response_108 == "Yes" ? 'selected' : '' }}@endif>Yes</option>
+                                                            <option  value="No"  @if($checklist18 && $checklist18->checklist_LL_P2P_response_108) {{ $checklist18->checklist_LL_P2P_response_108 == "No" ? 'selected' : '' }} @endif>No</option>
+                                                            <option value="N/A" @if($checklist18 && $checklist18->checklist_LL_P2P_response_108) {{ $checklist18->checklist_LL_P2P_response_108 == "N/A" ? 'selected' : '' }}@endif>N/A</option>
+
                                                         </select>
                                                     </div>
                                                 </td>
@@ -14008,7 +14203,7 @@ $checklistqualitycontrol = [
                                                 <td style="vertical-align: middle;">
                                                     <div
                                                         style="margin: auto; display: flex; justify-content: center;">
-                                                        <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                        <textarea name="checklist_LL_P2P_remark_108" style="border-radius: 7px; border: 1.5px solid black;">@if( $checklist18 && $checklist18->checklist_LL_P2P_remark_108){{ $checklist18->checklist_LL_P2P_remark_108 }}@endif</textarea>                                            </div>
                                                     </div>
                                                 </td>
                                             </tr>  <tr>
@@ -14019,12 +14214,13 @@ $checklistqualitycontrol = [
                                                 <td>
                                                     <div
                                                         style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                        <select name="response" id="response"
+                                                        <select name="checklist_LL_P2P_response_109" id="checklist_LL_P2P_response_109"
                                                             style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                             <option value="">Select an Option</option>
-                                                            <option value="Yes">Yes</option>
-                                                            <option value="No">No</option>
-                                                            <option value="N/A">N/A</option>
+                                                            <option value="Yes" @if($checklist18 && $checklist18->checklist_LL_P2P_response_109) {{ $checklist18->checklist_LL_P2P_response_109 == "Yes" ? 'selected' : '' }}@endif>Yes</option>
+                                                            <option  value="No"  @if($checklist18 && $checklist18->checklist_LL_P2P_response_109) {{ $checklist18->checklist_LL_P2P_response_109 == "No" ? 'selected' : '' }} @endif>No</option>
+                                                            <option value="N/A" @if($checklist18 && $checklist18->checklist_LL_P2P_response_109) {{ $checklist18->checklist_LL_P2P_response_109 == "N/A" ? 'selected' : '' }}@endif>N/A</option>
+
                                                         </select>
                                                     </div>
                                                 </td>
@@ -14032,7 +14228,7 @@ $checklistqualitycontrol = [
                                                 <td style="vertical-align: middle;">
                                                     <div
                                                         style="margin: auto; display: flex; justify-content: center;">
-                                                        <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                        <textarea name="checklist_LL_P2P_remark_109" style="border-radius: 7px; border: 1.5px solid black;">@if( $checklist18 && $checklist18->checklist_LL_P2P_remark_109){{ $checklist18->checklist_LL_P2P_remark_109 }}@endif</textarea>                                            </div>
                                                     </div>
                                                 </td>
                                             </tr>  <tr>
@@ -14043,12 +14239,13 @@ $checklistqualitycontrol = [
                                                 <td>
                                                     <div
                                                         style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                        <select name="response" id="response"
+                                                        <select name="checklist_LL_P2P_response_110" id="checklist_LL_P2P_response_110"
                                                             style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                             <option value="">Select an Option</option>
-                                                            <option value="Yes">Yes</option>
-                                                            <option value="No">No</option>
-                                                            <option value="N/A">N/A</option>
+                                                            <option value="Yes" @if($checklist18 && $checklist18->checklist_LL_P2P_response_110) {{ $checklist18->checklist_LL_P2P_response_110 == "Yes" ? 'selected' : '' }}@endif>Yes</option>
+                                                            <option  value="No"  @if($checklist18 && $checklist18->checklist_LL_P2P_response_110) {{ $checklist18->checklist_LL_P2P_response_110 == "No" ? 'selected' : '' }} @endif>No</option>
+                                                            <option value="N/A" @if($checklist18 && $checklist18->checklist_LL_P2P_response_110) {{ $checklist18->checklist_LL_P2P_response_110 == "N/A" ? 'selected' : '' }}@endif>N/A</option>
+
                                                         </select>
                                                     </div>
                                                 </td>
@@ -14056,7 +14253,7 @@ $checklistqualitycontrol = [
                                                 <td style="vertical-align: middle;">
                                                     <div
                                                         style="margin: auto; display: flex; justify-content: center;">
-                                                        <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                        <textarea name="checklist_LL_P2P_remark_110" style="border-radius: 7px; border: 1.5px solid black;">@if( $checklist18 && $checklist18->checklist_LL_P2P_remark_110){{ $checklist18->checklist_LL_P2P_remark_110 }}@endif</textarea>                                            </div>
                                                     </div>
                                                 </td>
                                             </tr>  <tr>
@@ -14067,12 +14264,13 @@ $checklistqualitycontrol = [
                                                 <td>
                                                     <div
                                                         style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                        <select name="response" id="response"
+                                                        <select name="checklist_LL_P2P_response_111" id="checklist_LL_P2P_response_111"
                                                             style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                             <option value="">Select an Option</option>
-                                                            <option value="Yes">Yes</option>
-                                                            <option value="No">No</option>
-                                                            <option value="N/A">N/A</option>
+                                                            <option value="Yes" @if($checklist18 && $checklist18->checklist_LL_P2P_response_111) {{ $checklist18->checklist_LL_P2P_response_111 == "Yes" ? 'selected' : '' }}@endif>Yes</option>
+                                                            <option  value="No"  @if($checklist18 && $checklist18->checklist_LL_P2P_response_111) {{ $checklist18->checklist_LL_P2P_response_111 == "No" ? 'selected' : '' }} @endif>No</option>
+                                                            <option value="N/A" @if($checklist18 && $checklist18->checklist_LL_P2P_response_111) {{ $checklist18->checklist_LL_P2P_response_111 == "N/A" ? 'selected' : '' }}@endif>N/A</option>
+
                                                         </select>
                                                     </div>
                                                 </td>
@@ -14080,7 +14278,7 @@ $checklistqualitycontrol = [
                                                 <td style="vertical-align: middle;">
                                                     <div
                                                         style="margin: auto; display: flex; justify-content: center;">
-                                                        <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                        <textarea name="checklist_LL_P2P_remark_111" style="border-radius: 7px; border: 1.5px solid black;">@if( $checklist18 && $checklist18->checklist_LL_P2P_remark_111){{ $checklist18->checklist_LL_P2P_remark_111 }}@endif</textarea>                                            </div>
                                                     </div>
                                                 </td>
                                             </tr>  <tr>
@@ -14091,12 +14289,13 @@ $checklistqualitycontrol = [
                                                 <td>
                                                     <div
                                                         style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                        <select name="response" id="response"
+                                                        <select name="checklist_LL_P2P_response_112" id="checklist_LL_P2P_response_112"
                                                             style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                             <option value="">Select an Option</option>
-                                                            <option value="Yes">Yes</option>
-                                                            <option value="No">No</option>
-                                                            <option value="N/A">N/A</option>
+                                                            <option value="Yes" @if($checklist18 && $checklist18->checklist_LL_P2P_response_112) {{ $checklist18->checklist_LL_P2P_response_112 == "Yes" ? 'selected' : '' }}@endif>Yes</option>
+                                                            <option  value="No"  @if($checklist18 && $checklist18->checklist_LL_P2P_response_112) {{ $checklist18->checklist_LL_P2P_response_112 == "No" ? 'selected' : '' }} @endif>No</option>
+                                                            <option value="N/A" @if($checklist18 && $checklist18->checklist_LL_P2P_response_112) {{ $checklist18->checklist_LL_P2P_response_112 == "N/A" ? 'selected' : '' }}@endif>N/A</option>
+
                                                         </select>
                                                     </div>
                                                 </td>
@@ -14104,7 +14303,7 @@ $checklistqualitycontrol = [
                                                 <td style="vertical-align: middle;">
                                                     <div
                                                         style="margin: auto; display: flex; justify-content: center;">
-                                                        <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                        <textarea name="checklist_LL_P2P_remark_112" style="border-radius: 7px; border: 1.5px solid black;">@if( $checklist18 && $checklist18->checklist_LL_P2P_remark_112){{ $checklist18->checklist_LL_P2P_remark_112 }}@endif</textarea>                                            </div>
                                                     </div>
                                                 </td>
                                             </tr>  <tr>
@@ -14115,12 +14314,13 @@ $checklistqualitycontrol = [
                                                 <td>
                                                     <div
                                                         style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                        <select name="response" id="response"
+                                                        <select name="checklist_LL_P2P_response_113" id="checklist_LL_P2P_response_113"
                                                             style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                             <option value="">Select an Option</option>
-                                                            <option value="Yes">Yes</option>
-                                                            <option value="No">No</option>
-                                                            <option value="N/A">N/A</option>
+                                                            <option value="Yes" @if($checklist18 && $checklist18->checklist_LL_P2P_response_113) {{ $checklist18->checklist_LL_P2P_response_113 == "Yes" ? 'selected' : '' }}@endif>Yes</option>
+                                                            <option  value="No"  @if($checklist18 && $checklist18->checklist_LL_P2P_response_113) {{ $checklist18->checklist_LL_P2P_response_113 == "No" ? 'selected' : '' }} @endif>No</option>
+                                                            <option value="N/A" @if($checklist18 && $checklist18->checklist_LL_P2P_response_113) {{ $checklist18->checklist_LL_P2P_response_113 == "N/A" ? 'selected' : '' }}@endif>N/A</option>
+
                                                         </select>
                                                     </div>
                                                 </td>
@@ -14128,7 +14328,7 @@ $checklistqualitycontrol = [
                                                 <td style="vertical-align: middle;">
                                                     <div
                                                         style="margin: auto; display: flex; justify-content: center;">
-                                                        <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                        <textarea name="checklist_LL_P2P_remark_113" style="border-radius: 7px; border: 1.5px solid black;">@if( $checklist18 && $checklist18->checklist_LL_P2P_remark_113){{ $checklist18->checklist_LL_P2P_remark_113 }}@endif</textarea>                                            </div>
                                                     </div>
                                                 </td>
                                             </tr>
@@ -14162,12 +14362,13 @@ $checklistqualitycontrol = [
 
                                             <div
                                                 style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                <select name="response" id="response"
+                                                <select name="checklist_LL_P2P_response_114" id="checklist_LL_P2P_response_114"
                                                     style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                     <option value="">Select an Option</option>
-                                                    <option value="Yes">Yes</option>
-                                                    <option value="No">No</option>
-                                                    <option value="N/A">N/A</option>
+                                                    <option value="Yes" @if($checklist18 && $checklist18->checklist_LL_P2P_response_114) {{ $checklist18->checklist_LL_P2P_response_114 == "Yes" ? 'selected' : '' }}@endif>Yes</option>
+                                                   <option  value="No"  @if($checklist18 && $checklist18->checklist_LL_P2P_response_114) {{ $checklist18->checklist_LL_P2P_response_114 == "No" ? 'selected' : '' }} @endif>No</option>
+                                                    <option value="N/A" @if($checklist18 && $checklist18->checklist_LL_P2P_response_114) {{ $checklist18->checklist_LL_P2P_response_114 == "N/A" ? 'selected' : '' }}@endif>N/A</option>
+
                                                 </select>
                                             </div>
 
@@ -14178,7 +14379,7 @@ $checklistqualitycontrol = [
                                         <td style="vertical-align: middle;">
                                             <div
                                                 style="margin: auto; display: flex; justify-content: center;">
-                                                <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                <textarea name="checklist_LL_P2P_remark_114" style="border-radius: 7px; border: 1.5px solid black;">@if( $checklist18 && $checklist18->checklist_LL_P2P_remark_114){{ $checklist18->checklist_LL_P2P_remark_114 }}@endif</textarea>                                            </div>
                                             </div>
                                         </td>
 
@@ -14194,12 +14395,13 @@ $checklistqualitycontrol = [
                                         <td>
                                             <div
                                                 style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                <select name="response" id="response"
+                                                <select name="checklist_LL_P2P_response_115" id="checklist_LL_P2P_response_115"
                                                     style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                     <option value="">Select an Option</option>
-                                                    <option value="Yes">Yes</option>
-                                                    <option value="No">No</option>
-                                                    <option value="N/A">N/A</option>
+                                                    <option value="Yes" @if($checklist18 && $checklist18->checklist_LL_P2P_response_115) {{ $checklist18->checklist_LL_P2P_response_115 == "Yes" ? 'selected' : '' }}@endif>Yes</option>
+                                                    <option  value="No"  @if($checklist18 && $checklist18->checklist_LL_P2P_response_115) {{ $checklist18->checklist_LL_P2P_response_115 == "No" ? 'selected' : '' }} @endif>No</option>
+                                                     <option value="N/A" @if($checklist18 && $checklist18->checklist_LL_P2P_response_115) {{ $checklist18->checklist_LL_P2P_response_115 == "N/A" ? 'selected' : '' }}@endif>N/A</option>
+
                                                 </select>
                                             </div>
                                         </td>
@@ -14207,7 +14409,7 @@ $checklistqualitycontrol = [
                                         <td style="vertical-align: middle;">
                                             <div
                                                 style="margin: auto; display: flex; justify-content: center;">
-                                                <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                <textarea name="checklist_LL_P2P_remark_115" style="border-radius: 7px; border: 1.5px solid black;">@if( $checklist18 && $checklist18->checklist_LL_P2P_remark_115){{ $checklist18->checklist_LL_P2P_remark_115 }}@endif</textarea>                                            </div>
                                             </div>
                                         </td>
 
@@ -14223,12 +14425,13 @@ $checklistqualitycontrol = [
                                         <td>
                                             <div
                                                 style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                <select name="response" id="response"
+                                                <select name="checklist_LL_P2P_response_116" id="checklist_LL_P2P_response_116"
                                                     style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                     <option value="">Select an Option</option>
-                                                    <option value="Yes">Yes</option>
-                                                    <option value="No">No</option>
-                                                    <option value="N/A">N/A</option>
+                                                    <option value="Yes" @if($checklist18 && $checklist18->checklist_LL_P2P_response_116) {{ $checklist18->checklist_LL_P2P_response_116 == "Yes" ? 'selected' : '' }}@endif>Yes</option>
+                                                    <option  value="No"  @if($checklist18 && $checklist18->checklist_LL_P2P_response_116) {{ $checklist18->checklist_LL_P2P_response_116 == "No" ? 'selected' : '' }} @endif>No</option>
+                                                     <option value="N/A" @if($checklist18 && $checklist18->checklist_LL_P2P_response_116) {{ $checklist18->checklist_LL_P2P_response_116 == "N/A" ? 'selected' : '' }}@endif>N/A</option>
+
                                                 </select>
                                             </div>
                                         </td>
@@ -14236,7 +14439,7 @@ $checklistqualitycontrol = [
                                         <td style="vertical-align: middle;">
                                             <div
                                                 style="margin: auto; display: flex; justify-content: center;">
-                                                <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                <textarea name="checklist_LL_P2P_remark_116" style="border-radius: 7px; border: 1.5px solid black;">@if( $checklist18 && $checklist18->checklist_LL_P2P_remark_116){{ $checklist18->checklist_LL_P2P_remark_116 }}@endif</textarea>                                            </div>
                                             </div>
                                         </td>
                                     </tr>
@@ -14248,19 +14451,28 @@ $checklistqualitycontrol = [
                                         </td>
                                         <td>
                                             <div
-                                style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                <input type="text"
-                                    style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
+                                                style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
+                                                <select name="checklist_LL_P2P_response_117" id="checklist_LL_P2P_response_117"
+                                                    style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
+                                                    <option value="">Select an Option</option>
+                                                    <option value="Yes" @if($checklist18 && $checklist18->checklist_LL_P2P_response_117) {{ $checklist18->checklist_LL_P2P_response_117 == "Yes" ? 'selected' : '' }}@endif>Yes</option>
+                                                    <option  value="No"  @if($checklist18 && $checklist18->checklist_LL_P2P_response_117) {{ $checklist18->checklist_LL_P2P_response_117 == "No" ? 'selected' : '' }} @endif>No</option>
+                                                     <option value="N/A" @if($checklist18 && $checklist18->checklist_LL_P2P_response_117) {{ $checklist18->checklist_LL_P2P_response_117 == "N/A" ? 'selected' : '' }}@endif>N/A</option>
 
-                            </div>
+                                                </select>
+                                            </div>
                                         </td>
 
                                         <td style="vertical-align: middle;">
                                             <div
                                                 style="margin: auto; display: flex; justify-content: center;">
-                                                <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                <textarea name="checklist_LL_P2P_remark_117" style="border-radius: 7px; border: 1.5px solid black;">@if( $checklist18 && $checklist18->checklist_LL_P2P_remark_117){{ $checklist18->checklist_LL_P2P_remark_117 }}@endif</textarea>                                            </div>
                                             </div>
                                         </td>
+
+                                        </td>
+
+
                                     </tr>
 
                                     <tr>
@@ -14271,12 +14483,13 @@ $checklistqualitycontrol = [
                                         <td>
                                             <div
                                                 style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                <select name="response" id="response"
+                                                <select name="checklist_LL_P2P_response_118" id="checklist_LL_P2P_response_118"
                                                     style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                     <option value="">Select an Option</option>
-                                                    <option value="Yes">Yes</option>
-                                                    <option value="No">No</option>
-                                                    <option value="N/A">N/A</option>
+                                                    <option value="Yes" @if($checklist18 && $checklist18->checklist_LL_P2P_response_118) {{ $checklist18->checklist_LL_P2P_response_118 == "Yes" ? 'selected' : '' }}@endif>Yes</option>
+                                                    <option  value="No"  @if($checklist18 && $checklist18->checklist_LL_P2P_response_118) {{ $checklist18->checklist_LL_P2P_response_118 == "No" ? 'selected' : '' }} @endif>No</option>
+                                                     <option value="N/A" @if($checklist18 && $checklist18->checklist_LL_P2P_response_118) {{ $checklist18->checklist_LL_P2P_response_118 == "N/A" ? 'selected' : '' }}@endif>N/A</option>
+
                                                 </select>
                                             </div>
                                         </td>
@@ -14284,7 +14497,7 @@ $checklistqualitycontrol = [
                                         <td style="vertical-align: middle;">
                                             <div
                                                 style="margin: auto; display: flex; justify-content: center;">
-                                                <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                <textarea name="checklist_LL_P2P_remark_118" style="border-radius: 7px; border: 1.5px solid black;">@if( $checklist18 && $checklist18->checklist_LL_P2P_remark_118){{ $checklist18->checklist_LL_P2P_remark_118 }}@endif</textarea>                                            </div>
                                             </div>
                                         </td>
                                     </tr>
@@ -14297,12 +14510,13 @@ $checklistqualitycontrol = [
                                         <td>
                                             <div
                                                 style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                <select name="response" id="response"
+                                                <select name="checklist_LL_P2P_response_119" id="checklist_LL_P2P_response_119"
                                                     style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                     <option value="">Select an Option</option>
-                                                    <option value="Yes">Yes</option>
-                                                    <option value="No">No</option>
-                                                    <option value="N/A">N/A</option>
+                                                    <option value="Yes" @if($checklist18 && $checklist18->checklist_LL_P2P_response_119) {{ $checklist18->checklist_LL_P2P_response_119 == "Yes" ? 'selected' : '' }}@endif>Yes</option>
+                                                    <option  value="No"  @if($checklist18 && $checklist18->checklist_LL_P2P_response_119) {{ $checklist18->checklist_LL_P2P_response_119 == "No" ? 'selected' : '' }} @endif>No</option>
+                                                     <option value="N/A" @if($checklist18 && $checklist18->checklist_LL_P2P_response_119) {{ $checklist18->checklist_LL_P2P_response_119 == "N/A" ? 'selected' : '' }}@endif>N/A</option>
+
                                                 </select>
                                             </div>
                                         </td>
@@ -14310,7 +14524,7 @@ $checklistqualitycontrol = [
                                         <td style="vertical-align: middle;">
                                             <div
                                                 style="margin: auto; display: flex; justify-content: center;">
-                                                <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                <textarea name="checklist_LL_P2P_remark_119" style="border-radius: 7px; border: 1.5px solid black;">@if( $checklist18 && $checklist18->checklist_LL_P2P_remark_119){{ $checklist18->checklist_LL_P2P_remark_119 }}@endif</textarea>                                            </div>
                                             </div>
                                         </td>
                                     </tr>
@@ -14323,12 +14537,13 @@ $checklistqualitycontrol = [
                                         <td>
                                             <div
                                                 style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                <select name="response" id="response"
+                                                <select name="checklist_LL_P2P_response_120" id="checklist_LL_P2P_response_120"
                                                     style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                     <option value="">Select an Option</option>
-                                                    <option value="Yes">Yes</option>
-                                                    <option value="No">No</option>
-                                                    <option value="N/A">N/A</option>
+                                                    <option value="Yes" @if($checklist18 && $checklist18->checklist_LL_P2P_response_120) {{ $checklist18->checklist_LL_P2P_response_120 == "Yes" ? 'selected' : '' }}@endif>Yes</option>
+                                                    <option  value="No"  @if($checklist18 && $checklist18->checklist_LL_P2P_response_120) {{ $checklist18->checklist_LL_P2P_response_120 == "No" ? 'selected' : '' }} @endif>No</option>
+                                                     <option value="N/A" @if($checklist18 && $checklist18->checklist_LL_P2P_response_120) {{ $checklist18->checklist_LL_P2P_response_120 == "N/A" ? 'selected' : '' }}@endif>N/A</option>
+
                                                 </select>
                                             </div>
                                         </td>
@@ -14336,7 +14551,7 @@ $checklistqualitycontrol = [
                                         <td style="vertical-align: middle;">
                                             <div
                                                 style="margin: auto; display: flex; justify-content: center;">
-                                                <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                <textarea name="checklist_LL_P2P_remark_120" style="border-radius: 7px; border: 1.5px solid black;">@if( $checklist18 && $checklist18->checklist_LL_P2P_remark_120){{ $checklist18->checklist_LL_P2P_remark_120 }}@endif</textarea>                                            </div>
                                             </div>
                                         </td>
                                     </tr>
@@ -14349,12 +14564,13 @@ $checklistqualitycontrol = [
                                         <td>
                                             <div
                                                 style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                <select name="response" id="response"
+                                                <select name="checklist_LL_P2P_response_121" id="checklist_LL_P2P_response_121"
                                                     style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                     <option value="">Select an Option</option>
-                                                    <option value="Yes">Yes</option>
-                                                    <option value="No">No</option>
-                                                    <option value="N/A">N/A</option>
+                                                    <option value="Yes" @if($checklist18 && $checklist18->checklist_LL_P2P_response_121) {{ $checklist18->checklist_LL_P2P_response_121 == "Yes" ? 'selected' : '' }}@endif>Yes</option>
+                                                    <option  value="No"  @if($checklist18 && $checklist18->checklist_LL_P2P_response_121) {{ $checklist18->checklist_LL_P2P_response_121 == "No" ? 'selected' : '' }} @endif>No</option>
+                                                     <option value="N/A" @if($checklist18 && $checklist18->checklist_LL_P2P_response_121) {{ $checklist18->checklist_LL_P2P_response_121 == "N/A" ? 'selected' : '' }}@endif>N/A</option>
+
                                                 </select>
                                             </div>
                                         </td>
@@ -14362,7 +14578,7 @@ $checklistqualitycontrol = [
                                         <td style="vertical-align: middle;">
                                             <div
                                                 style="margin: auto; display: flex; justify-content: center;">
-                                                <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                <textarea name="checklist_LL_P2P_remark_121" style="border-radius: 7px; border: 1.5px solid black;">@if( $checklist18 && $checklist18->checklist_LL_P2P_remark_121){{ $checklist18->checklist_LL_P2P_remark_121 }}@endif</textarea>                                            </div>
                                             </div>
                                         </td>
                                     </tr>
@@ -14375,12 +14591,13 @@ $checklistqualitycontrol = [
                                         <td>
                                             <div
                                                 style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                <select name="response" id="response"
+                                                <select name="checklist_LL_P2P_response_122" id="checklist_LL_P2P_response_122"
                                                     style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                     <option value="">Select an Option</option>
-                                                    <option value="Yes">Yes</option>
-                                                    <option value="No">No</option>
-                                                    <option value="N/A">N/A</option>
+                                                    <option value="Yes" @if($checklist18 && $checklist18->checklist_LL_P2P_response_122) {{ $checklist18->checklist_LL_P2P_response_122 == "Yes" ? 'selected' : '' }}@endif>Yes</option>
+                                                    <option  value="No"  @if($checklist18 && $checklist18->checklist_LL_P2P_response_122) {{ $checklist18->checklist_LL_P2P_response_122 == "No" ? 'selected' : '' }} @endif>No</option>
+                                                     <option value="N/A" @if($checklist18 && $checklist18->checklist_LL_P2P_response_122) {{ $checklist18->checklist_LL_P2P_response_122 == "N/A" ? 'selected' : '' }}@endif>N/A</option>
+
                                                 </select>
                                             </div>
                                         </td>
@@ -14388,7 +14605,7 @@ $checklistqualitycontrol = [
                                         <td style="vertical-align: middle;">
                                             <div
                                                 style="margin: auto; display: flex; justify-content: center;">
-                                                <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                <textarea name="checklist_LL_P2P_remark_122" style="border-radius: 7px; border: 1.5px solid black;">@if( $checklist18 && $checklist18->checklist_LL_P2P_remark_122){{ $checklist18->checklist_LL_P2P_remark_122 }}@endif</textarea>                                            </div>
                                             </div>
                                         </td>
                                     </tr>
@@ -14403,12 +14620,13 @@ $checklistqualitycontrol = [
                                         <td>
                                             <div
                                                 style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                <select name="response" id="response"
+                                                <select name="checklist_LL_P2P_response_123" id="checklist_LL_P2P_response_123"
                                                     style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                     <option value="">Select an Option</option>
-                                                    <option value="Yes">Yes</option>
-                                                    <option value="No">No</option>
-                                                    <option value="N/A">N/A</option>
+                                                    <option value="Yes" @if($checklist18 && $checklist18->checklist_LL_P2P_response_123) {{ $checklist18->checklist_LL_P2P_response_123 == "Yes" ? 'selected' : '' }}@endif>Yes</option>
+                                                    <option  value="No"  @if($checklist18 && $checklist18->checklist_LL_P2P_response_123) {{ $checklist18->checklist_LL_P2P_response_123 == "No" ? 'selected' : '' }} @endif>No</option>
+                                                     <option value="N/A" @if($checklist18 && $checklist18->checklist_LL_P2P_response_123) {{ $checklist18->checklist_LL_P2P_response_123 == "N/A" ? 'selected' : '' }}@endif>N/A</option>
+
                                                 </select>
                                             </div>
                                         </td>
@@ -14416,7 +14634,7 @@ $checklistqualitycontrol = [
                                         <td style="vertical-align: middle;">
                                             <div
                                                 style="margin: auto; display: flex; justify-content: center;">
-                                                <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                <textarea name="checklist_LL_P2P_remark_123" style="border-radius: 7px; border: 1.5px solid black;">@if( $checklist18 && $checklist18->checklist_LL_P2P_remark_123){{ $checklist18->checklist_LL_P2P_remark_123 }}@endif</textarea>                                            </div>
                                             </div>
                                         </td>
                                     </tr>
@@ -14427,177 +14645,226 @@ $checklistqualitycontrol = [
                                         <td class="flex text-center">6.11</td>
                                         <td>
                                             Do you maintain information records for raw materials which include the following:
-
-                                        </td>
-                                        <td>
-
-                                        </td>
-
-                                        <td style="vertical-align: middle;">
-
-                                        </td>
-                                    </tr> <tr>
-                                        <td class="flex text-center">6.11.1</td>
-                                        <td>
-
-                                              Your lot Identity?<br>
-
-
                                         </td>
                                         <td>
                                             <div
-                                style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                <input type="text"
-                                    style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
+                                                style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
+                                                <select name="checklist_LL_P2P_response_124" id="checklist_LL_P2P_response_124"
+                                                    style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
+                                                    <option value="">Select an Option</option>
+                                                    <option value="Yes" @if($checklist18 && $checklist18->checklist_LL_P2P_response_124) {{ $checklist18->checklist_LL_P2P_response_124 == "Yes" ? 'selected' : '' }}@endif>Yes</option>
+                                                    <option  value="No"  @if($checklist18 && $checklist18->checklist_LL_P2P_response_124) {{ $checklist18->checklist_LL_P2P_response_124 == "No" ? 'selected' : '' }} @endif>No</option>
+                                                     <option value="N/A" @if($checklist18 && $checklist18->checklist_LL_P2P_response_124) {{ $checklist18->checklist_LL_P2P_response_124 == "N/A" ? 'selected' : '' }}@endif>N/A</option>
 
-                            </div>
+                                                </select>
+                                            </div>
                                         </td>
 
                                         <td style="vertical-align: middle;">
                                             <div
                                                 style="margin: auto; display: flex; justify-content: center;">
-                                                <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                <textarea name="checklist_LL_P2P_remark_124" style="border-radius: 7px; border: 1.5px solid black;">@if( $checklist18 && $checklist18->checklist_LL_P2P_remark_124){{ $checklist18->checklist_LL_P2P_remark_124 }}@endif</textarea>                                            </div>
+                                            </div>
+                                        </td>
+                                    </tr> <tr>
+                                        <td class="flex text-center">6.11.1</td>
+                                        <td>
+                                              Your lot Identity?<br>
+                                        </td>
+
+                                        <td>
+                                            <div
+                                                style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
+                                                <select name="checklist_LL_P2P_response_125" id="checklist_LL_P2P_response_125"
+                                                    style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
+                                                    <option value="">Select an Option</option>
+                                                    <option value="Yes" @if($checklist18 && $checklist18->checklist_LL_P2P_response_125) {{ $checklist18->checklist_LL_P2P_response_125 == "Yes" ? 'selected' : '' }}@endif>Yes</option>
+                                                    <option  value="No"  @if($checklist18 && $checklist18->checklist_LL_P2P_response_125) {{ $checklist18->checklist_LL_P2P_response_125 == "No" ? 'selected' : '' }} @endif>No</option>
+                                                     <option value="N/A" @if($checklist18 && $checklist18->checklist_LL_P2P_response_125) {{ $checklist18->checklist_LL_P2P_response_125 == "N/A" ? 'selected' : '' }}@endif>N/A</option>
+
+                                                </select>
+                                            </div>
+                                        </td>
+
+                                        <td style="vertical-align: middle;">
+                                            <div
+                                                style="margin: auto; display: flex; justify-content: center;">
+                                                <textarea name="checklist_LL_P2P_remark_125" style="border-radius: 7px; border: 1.5px solid black;">@if( $checklist18 && $checklist18->checklist_LL_P2P_remark_125){{ $checklist18->checklist_LL_P2P_remark_125 }}@endif</textarea>                                            </div>
+                                            </div>
+                                        </td>
+                                        <td style="vertical-align: middle;">
+                                            <div
+                                                style="margin: auto; display: flex; justify-content: center;">
+                                                <textarea name="checklist_LL_P2P_remark_125" style="border-radius: 7px; border: 1.5px solid black;">@if( $checklist18 && $checklist18->checklist_LL_P2P_remark_125){{ $checklist18->checklist_LL_P2P_remark_125 }}@endif</textarea>                                            </div>
                                             </div>
                                         </td>
                                     </tr> <tr>
                                         <td class="flex text-center">6.11.2</td>
                                         <td>
-
                                                   Suppliers Lot No?
-
-
                                         </td>
+
+
                                         <td>
                                             <div
-                                style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                <input type="number"
-                                    style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
+                                                style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
+                                                <select name="checklist_LL_P2P_response_126" id="checklist_LL_P2P_response_126"
+                                                    style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
+                                                    <option value="">Select an Option</option>
+                                                    <option value="Yes" @if($checklist18 && $checklist18->checklist_LL_P2P_response_126) {{ $checklist18->checklist_LL_P2P_response_126 == "Yes" ? 'selected' : '' }}@endif>Yes</option>
+                                                    <option  value="No"  @if($checklist18 && $checklist18->checklist_LL_P2P_response_126) {{ $checklist18->checklist_LL_P2P_response_126 == "No" ? 'selected' : '' }} @endif>No</option>
+                                                     <option value="N/A" @if($checklist18 && $checklist18->checklist_LL_P2P_response_126) {{ $checklist18->checklist_LL_P2P_response_126 == "N/A" ? 'selected' : '' }}@endif>N/A</option>
 
-                            </div>
+                                                </select>
+                                            </div>
                                         </td>
 
                                         <td style="vertical-align: middle;">
                                             <div
                                                 style="margin: auto; display: flex; justify-content: center;">
-                                                <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                <textarea name="checklist_LL_P2P_remark_126" style="border-radius: 7px; border: 1.5px solid black;">@if( $checklist18 && $checklist18->checklist_LL_P2P_remark_126){{ $checklist18->checklist_LL_P2P_remark_126 }}@endif</textarea>                                            </div>
                                             </div>
                                         </td>
+
                                     </tr> <tr>
                                         <td class="flex text-center">6.11.3</td>
                                         <td>
-
                                                 Date of Receipt?
-
-
                                         </td>
+
                                         <td>
                                             <div
-                                            style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                            <input type="date"
-                                                style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
+                                                style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
+                                                <select name="checklist_LL_P2P_response_127" id="checklist_LL_P2P_response_127"
+                                                    style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
+                                                    <option value="">Select an Option</option>
+                                                    <option value="Yes" @if($checklist18 && $checklist18->checklist_LL_P2P_response_127) {{ $checklist18->checklist_LL_P2P_response_127 == "Yes" ? 'selected' : '' }}@endif>Yes</option>
+                                                    <option  value="No"  @if($checklist18 && $checklist18->checklist_LL_P2P_response_127) {{ $checklist18->checklist_LL_P2P_response_127 == "No" ? 'selected' : '' }} @endif>No</option>
+                                                     <option value="N/A" @if($checklist18 && $checklist18->checklist_LL_P2P_response_127) {{ $checklist18->checklist_LL_P2P_response_127 == "N/A" ? 'selected' : '' }}@endif>N/A</option>
 
-                                        </div>
+                                                </select>
+                                            </div>
                                         </td>
 
                                         <td style="vertical-align: middle;">
                                             <div
                                                 style="margin: auto; display: flex; justify-content: center;">
-                                                <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                <textarea name="checklist_LL_P2P_remark_127" style="border-radius: 7px; border: 1.5px solid black;">@if( $checklist18 && $checklist18->checklist_LL_P2P_remark_127){{ $checklist18->checklist_LL_P2P_remark_127 }}@endif</textarea>                                            </div>
                                             </div>
                                         </td>
-                                    </tr> <tr>
+                                      </tr> <tr>
                                         <td class="flex text-center">6.11.4</td>
                                         <td>
-
                                                     Quantity?
 
-
                                         </td>
+
                                         <td>
                                             <div
-                                style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                <input type="number"
-                                    style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
+                                                style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
+                                                <select name="checklist_LL_P2P_response_128" id="checklist_LL_P2P_response_128"
+                                                    style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
+                                                    <option value="">Select an Option</option>
+                                                    <option value="Yes" @if($checklist18 && $checklist18->checklist_LL_P2P_response_128) {{ $checklist18->checklist_LL_P2P_response_128 == "Yes" ? 'selected' : '' }}@endif>Yes</option>
+                                                    <option  value="No"  @if($checklist18 && $checklist18->checklist_LL_P2P_response_128) {{ $checklist18->checklist_LL_P2P_response_128 == "No" ? 'selected' : '' }} @endif>No</option>
+                                                     <option value="N/A" @if($checklist18 && $checklist18->checklist_LL_P2P_response_128) {{ $checklist18->checklist_LL_P2P_response_128 == "N/A" ? 'selected' : '' }}@endif>N/A</option>
 
-                            </div>
+                                                </select>
+                                            </div>
                                         </td>
 
                                         <td style="vertical-align: middle;">
                                             <div
                                                 style="margin: auto; display: flex; justify-content: center;">
-                                                <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                <textarea name="checklist_LL_P2P_remark_128" style="border-radius: 7px; border: 1.5px solid black;">@if( $checklist18 && $checklist18->checklist_LL_P2P_remark_128){{ $checklist18->checklist_LL_P2P_remark_128 }}@endif</textarea>                                            </div>
                                             </div>
                                         </td>
-                                    </tr> <tr>
+                                       </tr> <tr>
                                         <td class="flex text-center">6.11.5</td>
                                         <td>
 
                                                 Suppliers name?
 
-
                                         </td>
                                         <td>
                                             <div
-                                style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                <input type="text"
-                                    style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
+                                                style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
+                                                <select name="checklist_LL_P2P_response_129" id="checklist_LL_P2P_response_129"
+                                                    style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
+                                                    <option value="">Select an Option</option>
+                                                    <option value="Yes" @if($checklist18 && $checklist18->checklist_LL_P2P_response_129) {{ $checklist18->checklist_LL_P2P_response_129 == "Yes" ? 'selected' : '' }}@endif>Yes</option>
+                                                    <option  value="No"  @if($checklist18 && $checklist18->checklist_LL_P2P_response_129) {{ $checklist18->checklist_LL_P2P_response_129 == "No" ? 'selected' : '' }} @endif>No</option>
+                                                     <option value="N/A" @if($checklist18 && $checklist18->checklist_LL_P2P_response_129) {{ $checklist18->checklist_LL_P2P_response_129 == "N/A" ? 'selected' : '' }}@endif>N/A</option>
 
-                            </div>
+                                                </select>
+                                            </div>
                                         </td>
 
                                         <td style="vertical-align: middle;">
                                             <div
                                                 style="margin: auto; display: flex; justify-content: center;">
-                                                <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                <textarea name="checklist_LL_P2P_remark_129" style="border-radius: 7px; border: 1.5px solid black;">@if( $checklist18 && $checklist18->checklist_LL_P2P_remark_129){{ $checklist18->checklist_LL_P2P_remark_129 }}@endif</textarea>                                            </div>
                                             </div>
                                         </td>
-                                    </tr> <tr>
+
+                                    </tr>
+                                     <tr>
                                         <td class="flex text-center">6.11.6</td>
                                         <td>
-
                                                 Shelf Life?
 
-
                                         </td>
                                         <td>
                                             <div
-                                            style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                            <input type="text"
-                                                style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
+                                                style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
+                                                <select name="checklist_LL_P2P_response_130" id="checklist_LL_P2P_response_130"
+                                                    style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
+                                                    <option value="">Select an Option</option>
+                                                    <option value="Yes" @if($checklist18 && $checklist18->checklist_LL_P2P_response_130) {{ $checklist18->checklist_LL_P2P_response_130 == "Yes" ? 'selected' : '' }}@endif>Yes</option>
+                                                    <option  value="No"  @if($checklist18 && $checklist18->checklist_LL_P2P_response_130) {{ $checklist18->checklist_LL_P2P_response_130 == "No" ? 'selected' : '' }} @endif>No</option>
+                                                     <option value="N/A" @if($checklist18 && $checklist18->checklist_LL_P2P_response_130) {{ $checklist18->checklist_LL_P2P_response_130 == "N/A" ? 'selected' : '' }}@endif>N/A</option>
 
-                                        </div>
+                                                </select>
+                                            </div>
                                         </td>
 
                                         <td style="vertical-align: middle;">
                                             <div
                                                 style="margin: auto; display: flex; justify-content: center;">
-                                                <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                <textarea name="checklist_LL_P2P_remark_130" style="border-radius: 7px; border: 1.5px solid black;">@if( $checklist18 && $checklist18->checklist_LL_P2P_remark_130){{ $checklist18->checklist_LL_P2P_remark_130 }}@endif</textarea>                                            </div>
                                             </div>
                                         </td>
-                                    </tr> <tr>
+
+                                    </tr>
+                                     <tr>
                                         <td class="flex text-center">6.11.7</td>
                                         <td>
-
                                                 Test Results?
-
 
                                         </td>
                                         <td>
                                             <div
-                                            style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                            <input type="text"
-                                                style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
+                                                style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
+                                                <select name="checklist_LL_P2P_response_131" id="checklist_LL_P2P_response_131"
+                                                    style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
+                                                    <option value="">Select an Option</option>
+                                                    <option value="Yes" @if($checklist18 && $checklist18->checklist_LL_P2P_response_131) {{ $checklist18->checklist_LL_P2P_response_131 == "Yes" ? 'selected' : '' }}@endif>Yes</option>
+                                                    <option  value="No"  @if($checklist18 && $checklist18->checklist_LL_P2P_response_131) {{ $checklist18->checklist_LL_P2P_response_131 == "No" ? 'selected' : '' }} @endif>No</option>
+                                                     <option value="N/A" @if($checklist18 && $checklist18->checklist_LL_P2P_response_131) {{ $checklist18->checklist_LL_P2P_response_131 == "N/A" ? 'selected' : '' }}@endif>N/A</option>
 
-                                        </div>
+                                                </select>
+                                            </div>
                                         </td>
 
                                         <td style="vertical-align: middle;">
                                             <div
                                                 style="margin: auto; display: flex; justify-content: center;">
-                                                <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                <textarea name="checklist_LL_P2P_remark_131" style="border-radius: 7px; border: 1.5px solid black;">@if( $checklist18 && $checklist18->checklist_LL_P2P_remark_131){{ $checklist18->checklist_LL_P2P_remark_131 }}@endif</textarea>                                            </div>
                                             </div>
                                         </td>
-                                    </tr> <tr>
+
+                                    </tr>
+                                    <tr>
                                         <td class="flex text-center">6.11.8</td>
                                         <td>
 
@@ -14607,20 +14874,25 @@ $checklistqualitycontrol = [
                                         </td>
                                         <td>
                                             <div
-                                            style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                            <input type="text"
-                                                style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
+                                                style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
+                                                <select name="checklist_LL_P2P_response_132" id="checklist_LL_P2P_response_132"
+                                                    style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
+                                                    <option value="">Select an Option</option>
+                                                    <option value="Yes" @if($checklist18 && $checklist18->checklist_LL_P2P_response_132) {{ $checklist18->checklist_LL_P2P_response_132 == "Yes" ? 'selected' : '' }}@endif>Yes</option>
+                                                    <option  value="No"  @if($checklist18 && $checklist18->checklist_LL_P2P_response_132) {{ $checklist18->checklist_LL_P2P_response_132 == "No" ? 'selected' : '' }} @endif>No</option>
+                                                     <option value="N/A" @if($checklist18 && $checklist18->checklist_LL_P2P_response_132) {{ $checklist18->checklist_LL_P2P_response_132 == "N/A" ? 'selected' : '' }}@endif>N/A</option>
 
-                                        </div>
+                                                </select>
+                                            </div>
                                         </td>
 
                                         <td style="vertical-align: middle;">
                                             <div
                                                 style="margin: auto; display: flex; justify-content: center;">
-                                                <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                <textarea name="checklist_LL_P2P_remark_132" style="border-radius: 7px; border: 1.5px solid black;">@if( $checklist18 && $checklist18->checklist_LL_P2P_remark_132){{ $checklist18->checklist_LL_P2P_remark_132 }}@endif</textarea>                                            </div>
                                             </div>
                                         </td>
-                                    </tr>
+                                      </tr>
                                     <tr>
                                         <td class="flex text-center">6.11.9</td>
                                         <td>
@@ -14632,20 +14904,20 @@ $checklistqualitycontrol = [
                                         <td>
                                             <div
                                                 style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                <select name="response" id="response"
+                                                <select name="checklist_LL_P2P_response_133" id="checklist_LL_P2P_response_133"
                                                     style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                     <option value="">Select an Option</option>
-                                                    <option value="Yes">Accepted</option>
-                                                    <option value="No">Rejected</option>
-                                                    <option value="N/A">N/A</option>
-                                                </select>
+                                                    <option value="Yes" @if($checklist18 && $checklist18->checklist_LL_P2P_response_133) {{ $checklist18->checklist_LL_P2P_response_133 == "Yes" ? 'selected' : '' }}@endif>Yes</option>
+                                                    <option  value="No"  @if($checklist18 && $checklist18->checklist_LL_P2P_response_133) {{ $checklist18->checklist_LL_P2P_response_133 == "No" ? 'selected' : '' }} @endif>No</option>
+                                                     <option value="N/A" @if($checklist18 && $checklist18->checklist_LL_P2P_response_133) {{ $checklist18->checklist_LL_P2P_response_133 == "N/A" ? 'selected' : '' }}@endif>N/A</option>
+</select>
                                             </div>
                                         </td>
 
                                         <td style="vertical-align: middle;">
                                             <div
                                                 style="margin: auto; display: flex; justify-content: center;">
-                                                <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                <textarea name="checklist_LL_P2P_remark_132" style="border-radius: 7px; border: 1.5px solid black;">@if( $checklist18 && $checklist18->checklist_LL_P2P_remark_132){{ $checklist18->checklist_LL_P2P_remark_132 }}@endif</textarea>                                            </div>
                                             </div>
                                         </td>
                                     </tr>
@@ -14661,12 +14933,13 @@ $checklistqualitycontrol = [
                                         <td>
                                             <div
                                                 style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                <select name="response" id="response"
+                                                <select name="checklist_LL_P2P_response_134" id="checklist_LL_P2P_response_134"
                                                     style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                     <option value="">Select an Option</option>
-                                                    <option value="Yes">Yes</option>
-                                                    <option value="No">No</option>
-                                                    <option value="N/A">N/A</option>
+                                                    <option value="Yes" @if($checklist18 && $checklist18->checklist_LL_P2P_response_134) {{ $checklist18->checklist_LL_P2P_response_134 == "Yes" ? 'selected' : '' }}@endif>Yes</option>
+                                                    <option  value="No"  @if($checklist18 && $checklist18->checklist_LL_P2P_response_134) {{ $checklist18->checklist_LL_P2P_response_134 == "No" ? 'selected' : '' }} @endif>No</option>
+                                                     <option value="N/A" @if($checklist18 && $checklist18->checklist_LL_P2P_response_134) {{ $checklist18->checklist_LL_P2P_response_134 == "N/A" ? 'selected' : '' }}@endif>N/A</option>
+</select>
                                                 </select>
                                             </div>
                                         </td>
@@ -14674,7 +14947,7 @@ $checklistqualitycontrol = [
                                         <td style="vertical-align: middle;">
                                             <div
                                                 style="margin: auto; display: flex; justify-content: center;">
-                                                <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                <textarea name="checklist_LL_P2P_remark_134" style="border-radius: 7px; border: 1.5px solid black;">@if( $checklist18 && $checklist18->checklist_LL_P2P_remark_134){{ $checklist18->checklist_LL_P2P_remark_134 }}@endif</textarea>                                            </div>
                                             </div>
                                         </td>
                                     </tr>
@@ -14686,12 +14959,13 @@ $checklistqualitycontrol = [
                                         <td>
                                             <div
                                                 style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                <select name="response" id="response"
+                                                <select name="checklist_LL_P2P_response_135" id="checklist_LL_P2P_response_135"
                                                     style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                     <option value="">Select an Option</option>
-                                                    <option value="Yes">Yes</option>
-                                                    <option value="No">No</option>
-                                                    <option value="N/A">N/A</option>
+                                                    <option value="Yes" @if($checklist18 && $checklist18->checklist_LL_P2P_response_135) {{ $checklist18->checklist_LL_P2P_response_135 == "Yes" ? 'selected' : '' }}@endif>Yes</option>
+                                                    <option  value="No"  @if($checklist18 && $checklist18->checklist_LL_P2P_response_135) {{ $checklist18->checklist_LL_P2P_response_135 == "No" ? 'selected' : '' }} @endif>No</option>
+                                                     <option value="N/A" @if($checklist18 && $checklist18->checklist_LL_P2P_response_135) {{ $checklist18->checklist_LL_P2P_response_135 == "N/A" ? 'selected' : '' }}@endif>N/A</option>
+</select>
                                                 </select>
                                             </div>
                                         </td>
@@ -14699,7 +14973,7 @@ $checklistqualitycontrol = [
                                         <td style="vertical-align: middle;">
                                             <div
                                                 style="margin: auto; display: flex; justify-content: center;">
-                                                <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                <textarea name="checklist_LL_P2P_remark_135" style="border-radius: 7px; border: 1.5px solid black;">@if( $checklist18 && $checklist18->checklist_LL_P2P_remark_135){{ $checklist18->checklist_LL_P2P_remark_135 }}@endif</textarea>                                            </div>
                                             </div>
                                         </td>
                                     </tr>
@@ -14712,20 +14986,20 @@ $checklistqualitycontrol = [
                                         <td>
                                             <div
                                                 style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                <select name="response" id="response"
+                                                <select name="checklist_LL_P2P_response_136" id="checklist_LL_P2P_response_136"
                                                     style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                     <option value="">Select an Option</option>
-                                                    <option value="Yes">Yes</option>
-                                                    <option value="No">No</option>
-                                                    <option value="N/A">N/A</option>
-                                                </select>
+                                                    <option value="Yes" @if($checklist18 && $checklist18->checklist_LL_P2P_response_136) {{ $checklist18->checklist_LL_P2P_response_136 == "Yes" ? 'selected' : '' }}@endif>Yes</option>
+                                                    <option  value="No"  @if($checklist18 && $checklist18->checklist_LL_P2P_response_136) {{ $checklist18->checklist_LL_P2P_response_136 == "No" ? 'selected' : '' }} @endif>No</option>
+                                                     <option value="N/A" @if($checklist18 && $checklist18->checklist_LL_P2P_response_136) {{ $checklist18->checklist_LL_P2P_response_136 == "N/A" ? 'selected' : '' }}@endif>N/A</option>
+</select></select>
                                             </div>
                                         </td>
 
                                         <td style="vertical-align: middle;">
                                             <div
                                                 style="margin: auto; display: flex; justify-content: center;">
-                                                <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                <textarea name="checklist_LL_P2P_remark_136" style="border-radius: 7px; border: 1.5px solid black;">@if( $checklist18 && $checklist18->checklist_LL_P2P_remark_136){{ $checklist18->checklist_LL_P2P_remark_136 }}@endif</textarea>                                            </div>
                                             </div>
                                         </td>
                                     </tr>
@@ -14738,12 +15012,13 @@ $checklistqualitycontrol = [
                                         <td>
                                             <div
                                                 style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                <select name="response" id="response"
+                                                <select name="checklist_LL_P2P_response_137" id="checklist_LL_P2P_response_137"
                                                     style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                     <option value="">Select an Option</option>
-                                                    <option value="Yes">Yes</option>
-                                                    <option value="No">No</option>
-                                                    <option value="N/A">N/A</option>
+                                                    <option value="Yes" @if($checklist18 && $checklist18->checklist_LL_P2P_response_137) {{ $checklist18->checklist_LL_P2P_response_137 == "Yes" ? 'selected' : '' }}@endif>Yes</option>
+                                                    <option  value="No"  @if($checklist18 && $checklist18->checklist_LL_P2P_response_137) {{ $checklist18->checklist_LL_P2P_response_137 == "No" ? 'selected' : '' }} @endif>No</option>
+                                                     <option value="N/A" @if($checklist18 && $checklist18->checklist_LL_P2P_response_137) {{ $checklist18->checklist_LL_P2P_response_137 == "N/A" ? 'selected' : '' }}@endif>N/A</option>
+</select></select>
                                                 </select>
                                             </div>
                                         </td>
@@ -14751,7 +15026,7 @@ $checklistqualitycontrol = [
                                         <td style="vertical-align: middle;">
                                             <div
                                                 style="margin: auto; display: flex; justify-content: center;">
-                                                <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                <textarea name="checklist_LL_P2P_remark_137" style="border-radius: 7px; border: 1.5px solid black;">@if( $checklist18 && $checklist18->checklist_LL_P2P_remark_137){{ $checklist18->checklist_LL_P2P_remark_137 }}@endif</textarea>                                            </div>
                                             </div>
                                         </td>
                                     </tr>
@@ -14764,12 +15039,13 @@ $checklistqualitycontrol = [
                                         <td>
                                             <div
                                                 style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                <select name="response" id="response"
+                                                <select name="checklist_LL_P2P_response_138" id="checklist_LL_P2P_response_138"
                                                     style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                     <option value="">Select an Option</option>
-                                                    <option value="Yes">Yes</option>
-                                                    <option value="No">No</option>
-                                                    <option value="N/A">N/A</option>
+                                                    <option value="Yes" @if($checklist18 && $checklist18->checklist_LL_P2P_response_138) {{ $checklist18->checklist_LL_P2P_response_138 == "Yes" ? 'selected' : '' }}@endif>Yes</option>
+                                                    <option  value="No"  @if($checklist18 && $checklist18->checklist_LL_P2P_response_138) {{ $checklist18->checklist_LL_P2P_response_138 == "No" ? 'selected' : '' }} @endif>No</option>
+                                                     <option value="N/A" @if($checklist18 && $checklist18->checklist_LL_P2P_response_138) {{ $checklist18->checklist_LL_P2P_response_138 == "N/A" ? 'selected' : '' }}@endif>N/A</option>
+</select></select>
                                                 </select>
                                             </div>
                                         </td>
@@ -14777,7 +15053,7 @@ $checklistqualitycontrol = [
                                         <td style="vertical-align: middle;">
                                             <div
                                                 style="margin: auto; display: flex; justify-content: center;">
-                                                <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                <textarea name="checklist_LL_P2P_remark_138" style="border-radius: 7px; border: 1.5px solid black;">@if( $checklist18 && $checklist18->checklist_LL_P2P_remark_138){{ $checklist18->checklist_LL_P2P_remark_138 }}@endif</textarea>                                            </div>
                                             </div>
                                         </td>
                                     </tr>
@@ -14790,12 +15066,12 @@ $checklistqualitycontrol = [
                                         <td>
                                             <div
                                                 style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                <select name="response" id="response"
+                                                <select name="checklist_LL_P2P_response_139" id="checklist_LL_P2P_response_139"
                                                     style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                     <option value="">Select an Option</option>
-                                                    <option value="Yes">Yes</option>
-                                                    <option value="No">No</option>
-                                                    <option value="N/A">N/A</option>
+                                                    <option value="Yes" @if($checklist18 && $checklist18->checklist_LL_P2P_response_139) {{ $checklist18->checklist_LL_P2P_response_139 == "Yes" ? 'selected' : '' }}@endif>Yes</option>
+                                                    <option  value="No"  @if($checklist18 && $checklist18->checklist_LL_P2P_response_139) {{ $checklist18->checklist_LL_P2P_response_139 == "No" ? 'selected' : '' }} @endif>No</option>
+                                                     <option value="N/A" @if($checklist18 && $checklist18->checklist_LL_P2P_response_139) {{ $checklist18->checklist_LL_P2P_response_139 == "N/A" ? 'selected' : '' }}@endif>N/A</option>
                                                 </select>
                                             </div>
                                         </td>
@@ -14803,7 +15079,7 @@ $checklistqualitycontrol = [
                                         <td style="vertical-align: middle;">
                                             <div
                                                 style="margin: auto; display: flex; justify-content: center;">
-                                                <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                <textarea name="checklist_LL_P2P_remark_139" style="border-radius: 7px; border: 1.5px solid black;">@if( $checklist18 && $checklist18->checklist_LL_P2P_remark_139){{ $checklist18->checklist_LL_P2P_remark_139 }}@endif</textarea>                                            </div>
                                             </div>
                                         </td>
                                     </tr>
@@ -14816,12 +15092,13 @@ $checklistqualitycontrol = [
                                         <td>
                                             <div
                                                 style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                <select name="response" id="response"
+                                                <select name="checklist_LL_P2P_response_140" id="checklist_LL_P2P_response_140"
                                                     style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                     <option value="">Select an Option</option>
-                                                    <option value="Yes">Yes</option>
-                                                    <option value="No">No</option>
-                                                    <option value="N/A">N/A</option>
+                                                    <option value="Yes" @if($checklist18 && $checklist18->checklist_LL_P2P_response_140) {{ $checklist18->checklist_LL_P2P_response_140 == "Yes" ? 'selected' : '' }}@endif>Yes</option>
+                                                    <option  value="No"  @if($checklist18 && $checklist18->checklist_LL_P2P_response_140) {{ $checklist18->checklist_LL_P2P_response_140 == "No" ? 'selected' : '' }} @endif>No</option>
+                                                     <option value="N/A" @if($checklist18 && $checklist18->checklist_LL_P2P_response_140) {{ $checklist18->checklist_LL_P2P_response_140 == "N/A" ? 'selected' : '' }}@endif>N/A</option>
+
                                                 </select>
                                             </div>
                                         </td>
@@ -14829,7 +15106,7 @@ $checklistqualitycontrol = [
                                         <td style="vertical-align: middle;">
                                             <div
                                                 style="margin: auto; display: flex; justify-content: center;">
-                                                <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                <textarea name="checklist_LL_P2P_remark_140" style="border-radius: 7px; border: 1.5px solid black;">@if( $checklist18 && $checklist18->checklist_LL_P2P_remark_140){{ $checklist18->checklist_LL_P2P_remark_140 }}@endif</textarea>                                            </div>
                                             </div>
                                         </td>
                                     </tr>
@@ -14842,12 +15119,13 @@ $checklistqualitycontrol = [
                                         <td>
                                             <div
                                                 style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                <select name="response" id="response"
+                                                <select name="checklist_LL_P2P_response_141" id="checklist_LL_P2P_response_141"
                                                     style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                     <option value="">Select an Option</option>
-                                                    <option value="Yes">Yes</option>
-                                                    <option value="No">No</option>
-                                                    <option value="N/A">N/A</option>
+                                                    <option value="Yes" @if($checklist18 && $checklist18->checklist_LL_P2P_response_141) {{ $checklist18->checklist_LL_P2P_response_141 == "Yes" ? 'selected' : '' }}@endif>Yes</option>
+                                                    <option  value="No"  @if($checklist18 && $checklist18->checklist_LL_P2P_response_141) {{ $checklist18->checklist_LL_P2P_response_141 == "No" ? 'selected' : '' }} @endif>No</option>
+                                                     <option value="N/A" @if($checklist18 && $checklist18->checklist_LL_P2P_response_141) {{ $checklist18->checklist_LL_P2P_response_141 == "N/A" ? 'selected' : '' }}@endif>N/A</option>
+
                                                 </select>
                                             </div>
                                         </td>
@@ -14855,7 +15133,7 @@ $checklistqualitycontrol = [
                                         <td style="vertical-align: middle;">
                                             <div
                                                 style="margin: auto; display: flex; justify-content: center;">
-                                                <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                <textarea name="checklist_LL_P2P_remark_141" style="border-radius: 7px; border: 1.5px solid black;">@if( $checklist18 && $checklist18->checklist_LL_P2P_remark_141){{ $checklist18->checklist_LL_P2P_remark_141 }}@endif</textarea>                                            </div>
                                             </div>
                                         </td>
                                     </tr>
@@ -14867,12 +15145,13 @@ $checklistqualitycontrol = [
                                         <td>
                                             <div
                                                 style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                <select name="response" id="response"
+                                                <select name="checklist_LL_P2P_response_143" id="checklist_LL_P2P_response_142"
                                                     style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                     <option value="">Select an Option</option>
-                                                    <option value="Yes">Yes</option>
-                                                    <option value="No">No</option>
-                                                    <option value="N/A">N/A</option>
+                                                    <option value="Yes" @if($checklist18 && $checklist18->checklist_LL_P2P_response_142) {{ $checklist18->checklist_LL_P2P_response_142 == "Yes" ? 'selected' : '' }}@endif>Yes</option>
+                                                    <option  value="No"  @if($checklist18 && $checklist18->checklist_LL_P2P_response_142) {{ $checklist18->checklist_LL_P2P_response_142 == "No" ? 'selected' : '' }} @endif>No</option>
+                                                     <option value="N/A" @if($checklist18 && $checklist18->checklist_LL_P2P_response_142) {{ $checklist18->checklist_LL_P2P_response_142 == "N/A" ? 'selected' : '' }}@endif>N/A</option>
+
                                                 </select>
                                             </div>
                                         </td>
@@ -14880,7 +15159,7 @@ $checklistqualitycontrol = [
                                         <td style="vertical-align: middle;">
                                             <div
                                                 style="margin: auto; display: flex; justify-content: center;">
-                                                <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                <textarea name="checklist_LL_P2P_remark_142" style="border-radius: 7px; border: 1.5px solid black;">@if( $checklist18 && $checklist18->checklist_LL_P2P_remark_142){{ $checklist18->checklist_LL_P2P_remark_142 }}@endif</textarea>                                            </div>
                                             </div>
                                         </td>
                                     </tr> <tr>
@@ -14891,12 +15170,13 @@ $checklistqualitycontrol = [
                                         <td>
                                             <div
                                                 style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                <select name="response" id="response"
+                                                <select name="checklist_LL_P2P_response_143" id="checklist_LL_P2P_response_143"
                                                     style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                     <option value="">Select an Option</option>
-                                                    <option value="Yes">Yes</option>
-                                                    <option value="No">No</option>
-                                                    <option value="N/A">N/A</option>
+                                                    <option value="Yes" @if($checklist18 && $checklist18->checklist_LL_P2P_response_143) {{ $checklist18->checklist_LL_P2P_response_143 == "Yes" ? 'selected' : '' }}@endif>Yes</option>
+                                                    <option  value="No"  @if($checklist18 && $checklist18->checklist_LL_P2P_response_143) {{ $checklist18->checklist_LL_P2P_response_143 == "No" ? 'selected' : '' }} @endif>No</option>
+                                                     <option value="N/A" @if($checklist18 && $checklist18->checklist_LL_P2P_response_143) {{ $checklist18->checklist_LL_P2P_response_143 == "N/A" ? 'selected' : '' }}@endif>N/A</option>
+
                                                 </select>
                                             </div>
                                         </td>
@@ -14904,7 +15184,7 @@ $checklistqualitycontrol = [
                                         <td style="vertical-align: middle;">
                                             <div
                                                 style="margin: auto; display: flex; justify-content: center;">
-                                                <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                <textarea name="checklist_LL_P2P_remark_143" style="border-radius: 7px; border: 1.5px solid black;">@if( $checklist18 && $checklist18->checklist_LL_P2P_remark_143){{ $checklist18->checklist_LL_P2P_remark_143 }}@endif</textarea>                                            </div>
                                             </div>
                                         </td>
                                     </tr> <tr>
@@ -14915,12 +15195,12 @@ $checklistqualitycontrol = [
                                         <td>
                                             <div
                                                 style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                <select name="response" id="response"
+                                                <select name="checklist_LL_P2P_response_144" id="checklist_LL_P2P_response_144"
                                                     style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                     <option value="">Select an Option</option>
-                                                    <option value="Yes">Yes</option>
-                                                    <option value="No">No</option>
-                                                    <option value="N/A">N/A</option>
+                                                    <option value="Yes" @if($checklist18 && $checklist18->checklist_LL_P2P_response_144) {{ $checklist18->checklist_LL_P2P_response_144 == "Yes" ? 'selected' : '' }}@endif>Yes</option>
+                                                    <option  value="No"  @if($checklist18 && $checklist18->checklist_LL_P2P_response_144) {{ $checklist18->checklist_LL_P2P_response_144 == "No" ? 'selected' : '' }} @endif>No</option>
+                                                     <option value="N/A" @if($checklist18 && $checklist18->checklist_LL_P2P_response_144) {{ $checklist18->checklist_LL_P2P_response_144 == "N/A" ? 'selected' : '' }}@endif>N/A</option>
                                                 </select>
                                             </div>
                                         </td>
@@ -14928,7 +15208,7 @@ $checklistqualitycontrol = [
                                         <td style="vertical-align: middle;">
                                             <div
                                                 style="margin: auto; display: flex; justify-content: center;">
-                                                <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                <textarea name="checklist_LL_P2P_remark_144" style="border-radius: 7px; border: 1.5px solid black;">@if( $checklist18 && $checklist18->checklist_LL_P2P_remark_144){{ $checklist18->checklist_LL_P2P_remark_144 }}@endif</textarea>                                            </div>
                                             </div>
                                         </td>
                                     </tr>
@@ -14960,12 +15240,12 @@ $checklistqualitycontrol = [
 
                                                 <div
                                                     style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                    <select name="response" id="response"
+                                                    <select name="checklist_LL_P2P_response_145" id="checklist_LL_P2P_response_145"
                                                         style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                         <option value="">Select an Option</option>
-                                                        <option value="Yes">Yes</option>
-                                                        <option value="No">No</option>
-                                                        <option value="N/A">N/A</option>
+                                                        <option value="Yes" @if($checklist18 && $checklist18->checklist_LL_P2P_response_145) {{ $checklist18->checklist_LL_P2P_response_145 == "Yes" ? 'selected' : '' }}@endif>Yes</option>
+                                                        <option  value="No"  @if($checklist18 && $checklist18->checklist_LL_P2P_response_145) {{ $checklist18->checklist_LL_P2P_response_145 == "No" ? 'selected' : '' }} @endif>No</option>
+                                                         <option value="N/A" @if($checklist18 && $checklist18->checklist_LL_P2P_response_145) {{ $checklist18->checklist_LL_P2P_response_145 == "N/A" ? 'selected' : '' }}@endif>N/A</option>
                                                     </select>
                                                 </div>
 
@@ -14976,7 +15256,7 @@ $checklistqualitycontrol = [
                                             <td style="vertical-align: middle;">
                                                 <div
                                                     style="margin: auto; display: flex; justify-content: center;">
-                                                    <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                    <textarea name="checklist_LL_P2P_remark_145" style="border-radius: 7px; border: 1.5px solid black;">@if( $checklist18 && $checklist18->checklist_LL_P2P_remark_145){{ $checklist18->checklist_LL_P2P_remark_145 }}@endif</textarea>                                            </div>
                                                 </div>
                                             </td>
 
@@ -14992,12 +15272,13 @@ $checklistqualitycontrol = [
                                             <td>
                                                 <div
                                                     style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                    <select name="response" id="response"
+                                                    <select name="checklist_LL_P2P_response_146" id="checklist_LL_P2P_response_146"
                                                         style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                         <option value="">Select an Option</option>
-                                                        <option value="Yes">Yes</option>
-                                                        <option value="No">No</option>
-                                                        <option value="N/A">N/A</option>
+                                                        <option value="Yes" @if($checklist18 && $checklist18->checklist_LL_P2P_response_146) {{ $checklist18->checklist_LL_P2P_response_146 == "Yes" ? 'selected' : '' }}@endif>Yes</option>
+                                                        <option  value="No"  @if($checklist18 && $checklist18->checklist_LL_P2P_response_146) {{ $checklist18->checklist_LL_P2P_response_146 == "No" ? 'selected' : '' }} @endif>No</option>
+                                                         <option value="N/A" @if($checklist18 && $checklist18->checklist_LL_P2P_response_146) {{ $checklist18->checklist_LL_P2P_response_146 == "N/A" ? 'selected' : '' }}@endif>N/A</option>
+
                                                     </select>
                                                 </div>
                                             </td>
@@ -15005,7 +15286,7 @@ $checklistqualitycontrol = [
                                             <td style="vertical-align: middle;">
                                                 <div
                                                     style="margin: auto; display: flex; justify-content: center;">
-                                                    <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                    <textarea name="checklist_LL_P2P_remark_146" style="border-radius: 7px; border: 1.5px solid black;">@if( $checklist18 && $checklist18->checklist_LL_P2P_remark_146){{ $checklist18->checklist_LL_P2P_remark_146 }}@endif</textarea>                                            </div>
                                                 </div>
                                             </td>
 
@@ -15021,12 +15302,13 @@ $checklistqualitycontrol = [
                                             <td>
                                                 <div
                                                     style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                    <select name="response" id="response"
+                                                    <select name="checklist_LL_P2P_response_147" id="checklist_LL_P2P_response_147"
                                                         style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                         <option value="">Select an Option</option>
-                                                        <option value="Yes">Yes</option>
-                                                        <option value="No">No</option>
-                                                        <option value="N/A">N/A</option>
+                                                        <option value="Yes" @if($checklist18 && $checklist18->checklist_LL_P2P_response_147) {{ $checklist18->checklist_LL_P2P_response_147 == "Yes" ? 'selected' : '' }}@endif>Yes</option>
+                                                        <option  value="No"  @if($checklist18 && $checklist18->checklist_LL_P2P_response_147) {{ $checklist18->checklist_LL_P2P_response_147 == "No" ? 'selected' : '' }} @endif>No</option>
+                                                         <option value="N/A" @if($checklist18 && $checklist18->checklist_LL_P2P_response_147) {{ $checklist18->checklist_LL_P2P_response_147 == "N/A" ? 'selected' : '' }}@endif>N/A</option>
+
                                                     </select>
                                                 </div>
                                             </td>
@@ -15034,7 +15316,7 @@ $checklistqualitycontrol = [
                                             <td style="vertical-align: middle;">
                                                 <div
                                                     style="margin: auto; display: flex; justify-content: center;">
-                                                    <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                    <textarea name="checklist_LL_P2P_remark_147" style="border-radius: 7px; border: 1.5px solid black;">@if( $checklist18 && $checklist18->checklist_LL_P2P_remark_147){{ $checklist18->checklist_LL_P2P_remark_147 }}@endif</textarea>                                            </div>
                                                 </div>
                                             </td>
                                         </tr>
@@ -15047,12 +15329,13 @@ $checklistqualitycontrol = [
                                             <td>
                                                 <div
                                                     style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                    <select name="response" id="response"
+                                                    <select name="checklist_LL_P2P_response_148" id="checklist_LL_P2P_response_148"
                                                         style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                         <option value="">Select an Option</option>
-                                                        <option value="Yes">Yes</option>
-                                                        <option value="No">No</option>
-                                                        <option value="N/A">N/A</option>
+                                                        <option value="Yes" @if($checklist18 && $checklist18->checklist_LL_P2P_response_148) {{ $checklist18->checklist_LL_P2P_response_148 == "Yes" ? 'selected' : '' }}@endif>Yes</option>
+                                                        <option  value="No"  @if($checklist18 && $checklist18->checklist_LL_P2P_response_148) {{ $checklist18->checklist_LL_P2P_response_148 == "No" ? 'selected' : '' }} @endif>No</option>
+                                                         <option value="N/A" @if($checklist18 && $checklist18->checklist_LL_P2P_response_148) {{ $checklist18->checklist_LL_P2P_response_148 == "N/A" ? 'selected' : '' }}@endif>N/A</option>
+
                                                     </select>
                                                 </div>
                                             </td>
@@ -15060,7 +15343,7 @@ $checklistqualitycontrol = [
                                             <td style="vertical-align: middle;">
                                                 <div
                                                     style="margin: auto; display: flex; justify-content: center;">
-                                                    <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                    <textarea name="checklist_LL_P2P_remark_148" style="border-radius: 7px; border: 1.5px solid black;">@if( $checklist18 && $checklist18->checklist_LL_P2P_remark_148){{ $checklist18->checklist_LL_P2P_remark_148 }}@endif</textarea>                                            </div>
                                                 </div>
                                             </td>
                                         </tr>
@@ -15073,12 +15356,13 @@ $checklistqualitycontrol = [
                                             <td>
                                                 <div
                                                     style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                    <select name="response" id="response"
+                                                    <select name="checklist_LL_P2P_response_149" id="checklist_LL_P2P_response_149"
                                                         style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                         <option value="">Select an Option</option>
-                                                        <option value="Yes">Yes</option>
-                                                        <option value="No">No</option>
-                                                        <option value="N/A">N/A</option>
+                                                        <option value="Yes" @if($checklist18 && $checklist18->checklist_LL_P2P_response_149) {{ $checklist18->checklist_LL_P2P_response_149 == "Yes" ? 'selected' : '' }}@endif>Yes</option>
+                                                        <option  value="No"  @if($checklist18 && $checklist18->checklist_LL_P2P_response_149) {{ $checklist18->checklist_LL_P2P_response_149 == "No" ? 'selected' : '' }} @endif>No</option>
+                                                         <option value="N/A" @if($checklist18 && $checklist18->checklist_LL_P2P_response_149) {{ $checklist18->checklist_LL_P2P_response_149 == "N/A" ? 'selected' : '' }}@endif>N/A</option>
+
                                                     </select>
                                                 </div>
                                             </td>
@@ -15086,7 +15370,7 @@ $checklistqualitycontrol = [
                                             <td style="vertical-align: middle;">
                                                 <div
                                                     style="margin: auto; display: flex; justify-content: center;">
-                                                    <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                    <textarea name="checklist_LL_P2P_remark_149" style="border-radius: 7px; border: 1.5px solid black;">@if( $checklist18 && $checklist18->checklist_LL_P2P_remark_149){{ $checklist18->checklist_LL_P2P_remark_149 }}@endif</textarea>                                            </div>
                                                 </div>
                                             </td>
                                         </tr>
@@ -15099,12 +15383,13 @@ $checklistqualitycontrol = [
                                             <td>
                                                 <div
                                                     style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                    <select name="response" id="response"
+                                                    <select name="checklist_LL_P2P_response_150" id="checklist_LL_P2P_response_150"
                                                         style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                         <option value="">Select an Option</option>
-                                                        <option value="Yes">Yes</option>
-                                                        <option value="No">No</option>
-                                                        <option value="N/A">N/A</option>
+                                                        <option value="Yes" @if($checklist18 && $checklist18->checklist_LL_P2P_response_150) {{ $checklist18->checklist_LL_P2P_response_150 == "Yes" ? 'selected' : '' }}@endif>Yes</option>
+                                                        <option  value="No"  @if($checklist18 && $checklist18->checklist_LL_P2P_response_150) {{ $checklist18->checklist_LL_P2P_response_150 == "No" ? 'selected' : '' }} @endif>No</option>
+                                                         <option value="N/A" @if($checklist18 && $checklist18->checklist_LL_P2P_response_150) {{ $checklist18->checklist_LL_P2P_response_150 == "N/A" ? 'selected' : '' }}@endif>N/A</option>
+
                                                     </select>
                                                 </div>
                                             </td>
@@ -15112,7 +15397,7 @@ $checklistqualitycontrol = [
                                             <td style="vertical-align: middle;">
                                                 <div
                                                     style="margin: auto; display: flex; justify-content: center;">
-                                                    <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                    <textarea name="checklist_LL_P2P_remark_150" style="border-radius: 7px; border: 1.5px solid black;">@if( $checklist18 && $checklist18->checklist_LL_P2P_remark_150){{ $checklist18->checklist_LL_P2P_remark_150 }}@endif</textarea>                                            </div>
                                                 </div>
                                             </td>
                                         </tr>
@@ -15125,12 +15410,13 @@ $checklistqualitycontrol = [
                                             <td>
                                                 <div
                                                     style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                    <select name="response" id="response"
+                                                    <select name="checklist_LL_P2P_response_151" id="checklist_LL_P2P_response_151"
                                                         style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                         <option value="">Select an Option</option>
-                                                        <option value="Yes">Yes</option>
-                                                        <option value="No">No</option>
-                                                        <option value="N/A">N/A</option>
+                                                        <option value="Yes" @if($checklist18 && $checklist18->checklist_LL_P2P_response_151) {{ $checklist18->checklist_LL_P2P_response_151 == "Yes" ? 'selected' : '' }}@endif>Yes</option>
+                                                        <option  value="No"  @if($checklist18 && $checklist18->checklist_LL_P2P_response_151) {{ $checklist18->checklist_LL_P2P_response_151 == "No" ? 'selected' : '' }} @endif>No</option>
+                                                         <option value="N/A" @if($checklist18 && $checklist18->checklist_LL_P2P_response_151) {{ $checklist18->checklist_LL_P2P_response_151 == "N/A" ? 'selected' : '' }}@endif>N/A</option>
+
                                                     </select>
                                                 </div>
                                             </td>
@@ -15138,7 +15424,7 @@ $checklistqualitycontrol = [
                                             <td style="vertical-align: middle;">
                                                 <div
                                                     style="margin: auto; display: flex; justify-content: center;">
-                                                    <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                    <textarea name="checklist_LL_P2P_remark_151" style="border-radius: 7px; border: 1.5px solid black;">@if( $checklist18 && $checklist18->checklist_LL_P2P_remark_151){{ $checklist18->checklist_LL_P2P_remark_151 }}@endif</textarea>                                            </div>
                                                 </div>
                                             </td>
                                         </tr>
@@ -15151,12 +15437,13 @@ $checklistqualitycontrol = [
                                             <td>
                                                 <div
                                                     style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                    <select name="response" id="response"
+                                                    <select name="checklist_LL_P2P_response_152" id="checklist_LL_P2P_response_152"
                                                         style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                         <option value="">Select an Option</option>
-                                                        <option value="Yes">Yes</option>
-                                                        <option value="No">No</option>
-                                                        <option value="N/A">N/A</option>
+                                                        <option value="Yes" @if($checklist18 && $checklist18->checklist_LL_P2P_response_152) {{ $checklist18->checklist_LL_P2P_response_152 == "Yes" ? 'selected' : '' }}@endif>Yes</option>
+                                                        <option  value="No"  @if($checklist18 && $checklist18->checklist_LL_P2P_response_152) {{ $checklist18->checklist_LL_P2P_response_152 == "No" ? 'selected' : '' }} @endif>No</option>
+                                                         <option value="N/A" @if($checklist18 && $checklist18->checklist_LL_P2P_response_152) {{ $checklist18->checklist_LL_P2P_response_152 == "N/A" ? 'selected' : '' }}@endif>N/A</option>
+
                                                     </select>
                                                 </div>
                                             </td>
@@ -15164,7 +15451,7 @@ $checklistqualitycontrol = [
                                             <td style="vertical-align: middle;">
                                                 <div
                                                     style="margin: auto; display: flex; justify-content: center;">
-                                                    <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                    <textarea name="checklist_LL_P2P_remark_152" style="border-radius: 7px; border: 1.5px solid black;">@if( $checklist18 && $checklist18->checklist_LL_P2P_remark_152){{ $checklist18->checklist_LL_P2P_remark_152 }}@endif</textarea>                                            </div>
                                                 </div>
                                             </td>
                                         </tr>
@@ -15177,12 +15464,13 @@ $checklistqualitycontrol = [
                                             <td>
                                                 <div
                                                     style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                    <select name="response" id="response"
+                                                    <select name="checklist_LL_P2P_response_153" id="checklist_LL_P2P_response_153"
                                                         style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                         <option value="">Select an Option</option>
-                                                        <option value="Yes">Yes</option>
-                                                        <option value="No">No</option>
-                                                        <option value="N/A">N/A</option>
+                                                        <option value="Yes" @if($checklist18 && $checklist18->checklist_LL_P2P_response_153) {{ $checklist18->checklist_LL_P2P_response_153 == "Yes" ? 'selected' : '' }}@endif>Yes</option>
+                                                        <option  value="No"  @if($checklist18 && $checklist18->checklist_LL_P2P_response_153) {{ $checklist18->checklist_LL_P2P_response_153 == "No" ? 'selected' : '' }} @endif>No</option>
+                                                         <option value="N/A" @if($checklist18 && $checklist18->checklist_LL_P2P_response_153) {{ $checklist18->checklist_LL_P2P_response_153 == "N/A" ? 'selected' : '' }}@endif>N/A</option>
+
                                                     </select>
                                                 </div>
                                             </td>
@@ -15190,7 +15478,7 @@ $checklistqualitycontrol = [
                                             <td style="vertical-align: middle;">
                                                 <div
                                                     style="margin: auto; display: flex; justify-content: center;">
-                                                    <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                    <textarea name="checklist_LL_P2P_remark_153" style="border-radius: 7px; border: 1.5px solid black;">@if( $checklist18 && $checklist18->checklist_LL_P2P_remark_153){{ $checklist18->checklist_LL_P2P_remark_153 }}@endif</textarea>                                            </div>
                                                 </div>
                                             </td>
                                         </tr>
@@ -15203,12 +15491,13 @@ $checklistqualitycontrol = [
                                             <td>
                                                 <div
                                                     style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                    <select name="response" id="response"
+                                                    <select name="checklist_LL_P2P_response_154" id="checklist_LL_P2P_response_154"
                                                         style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                         <option value="">Select an Option</option>
-                                                        <option value="Yes">Yes</option>
-                                                        <option value="No">No</option>
-                                                        <option value="N/A">N/A</option>
+                                                        <option value="Yes" @if($checklist18 && $checklist18->checklist_LL_P2P_response_154) {{ $checklist18->checklist_LL_P2P_response_154 == "Yes" ? 'selected' : '' }}@endif>Yes</option>
+                                                        <option  value="No"  @if($checklist18 && $checklist18->checklist_LL_P2P_response_154) {{ $checklist18->checklist_LL_P2P_response_154 == "No" ? 'selected' : '' }} @endif>No</option>
+                                                         <option value="N/A" @if($checklist18 && $checklist18->checklist_LL_P2P_response_154) {{ $checklist18->checklist_LL_P2P_response_154 == "N/A" ? 'selected' : '' }}@endif>N/A</option>
+
                                                     </select>
                                                 </div>
                                             </td>
@@ -15216,7 +15505,7 @@ $checklistqualitycontrol = [
                                             <td style="vertical-align: middle;">
                                                 <div
                                                     style="margin: auto; display: flex; justify-content: center;">
-                                                    <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                    <textarea name="checklist_LL_P2P_remark_154" style="border-radius: 7px; border: 1.5px solid black;">@if( $checklist18 && $checklist18->checklist_LL_P2P_remark_154){{ $checklist18->checklist_LL_P2P_remark_154 }}@endif</textarea>                                            </div>
                                                 </div>
                                             </td>
                                         </tr>
@@ -15228,33 +15517,17 @@ $checklistqualitycontrol = [
                                             <td>
                                                 Are quality standards or written control procedures available for:
 
-
-                                            </td>
-                                            <td>
-
-                                            </td>
-
-                                            <td style="vertical-align: middle;">
-
-                                            </td>
-                                        </tr>
-                                         <tr>
-                                            <td class="flex text-center">7.11.1</td>
-                                            <td>
-
-                                                    Starting materials?
-
-
                                             </td>
                                             <td>
                                                 <div
                                                     style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                    <select name="response" id="response"
+                                                    <select name="checklist_LL_P2P_response_155" id="checklist_LL_P2P_response_155"
                                                         style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                         <option value="">Select an Option</option>
-                                                        <option value="Yes">Yes</option>
-                                                        <option value="No">No</option>
-                                                        <option value="N/A">N/A</option>
+                                                        <option value="Yes" @if($checklist18 && $checklist18->checklist_LL_P2P_response_155) {{ $checklist18->checklist_LL_P2P_response_155 == "Yes" ? 'selected' : '' }}@endif>Yes</option>
+                                                        <option  value="No"  @if($checklist18 && $checklist18->checklist_LL_P2P_response_155) {{ $checklist18->checklist_LL_P2P_response_155 == "No" ? 'selected' : '' }} @endif>No</option>
+                                                         <option value="N/A" @if($checklist18 && $checklist18->checklist_LL_P2P_response_155) {{ $checklist18->checklist_LL_P2P_response_155 == "N/A" ? 'selected' : '' }}@endif>N/A</option>
+
                                                     </select>
                                                 </div>
                                             </td>
@@ -15262,7 +15535,34 @@ $checklistqualitycontrol = [
                                             <td style="vertical-align: middle;">
                                                 <div
                                                     style="margin: auto; display: flex; justify-content: center;">
-                                                    <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                    <textarea name="checklist_LL_P2P_remark_155" style="border-radius: 7px; border: 1.5px solid black;">@if( $checklist18 && $checklist18->checklist_LL_P2P_remark_155){{ $checklist18->checklist_LL_P2P_remark_155 }}@endif</textarea>                                            </div>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                         <tr>
+                                            <td class="flex text-center">7.11.1</td>
+                                            <td>
+                                                    Starting materials?
+
+                                            </td>
+                                            <td>
+                                                <div
+                                                    style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
+                                                    <select name="checklist_LL_P2P_response_156" id="checklist_LL_P2P_response_156"
+                                                        style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
+                                                        <option value="">Select an Option</option>
+                                                        <option value="Yes" @if($checklist18 && $checklist18->checklist_LL_P2P_response_156) {{ $checklist18->checklist_LL_P2P_response_156 == "Yes" ? 'selected' : '' }}@endif>Yes</option>
+                                                        <option  value="No"  @if($checklist18 && $checklist18->checklist_LL_P2P_response_156) {{ $checklist18->checklist_LL_P2P_response_156 == "No" ? 'selected' : '' }} @endif>No</option>
+                                                         <option value="N/A" @if($checklist18 && $checklist18->checklist_LL_P2P_response_156) {{ $checklist18->checklist_LL_P2P_response_156 == "N/A" ? 'selected' : '' }}@endif>N/A</option>
+
+                                                    </select>
+                                                </div>
+                                            </td>
+
+                                            <td style="vertical-align: middle;">
+                                                <div
+                                                    style="margin: auto; display: flex; justify-content: center;">
+                                                    <textarea name="checklist_LL_P2P_remark_156" style="border-radius: 7px; border: 1.5px solid black;">@if( $checklist18 && $checklist18->checklist_LL_P2P_remark_156){{ $checklist18->checklist_LL_P2P_remark_156 }}@endif</textarea>                                            </div>
                                                 </div>
                                             </td>
                                         </tr>  <tr>
@@ -15276,20 +15576,20 @@ $checklistqualitycontrol = [
                                             <td>
                                                 <div
                                                     style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                    <select name="response" id="response"
+                                                    <select name="checklist_LL_P2P_response_157" id="checklist_LL_P2P_response_157"
                                                         style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                         <option value="">Select an Option</option>
-                                                        <option value="Yes">Yes</option>
-                                                        <option value="No">No</option>
-                                                        <option value="N/A">N/A</option>
-                                                    </select>
+                                                        <option value="Yes" @if($checklist18 && $checklist18->checklist_LL_P2P_response_157) {{ $checklist18->checklist_LL_P2P_response_157 == "Yes" ? 'selected' : '' }}@endif>Yes</option>
+                                                        <option  value="No"  @if($checklist18 && $checklist18->checklist_LL_P2P_response_157) {{ $checklist18->checklist_LL_P2P_response_157 == "No" ? 'selected' : '' }} @endif>No</option>
+                                                         <option value="N/A" @if($checklist18 && $checklist18->checklist_LL_P2P_response_157) {{ $checklist18->checklist_LL_P2P_response_157 == "N/A" ? 'selected' : '' }}@endif>N/A</option>
+</select>
                                                 </div>
                                             </td>
 
                                             <td style="vertical-align: middle;">
                                                 <div
                                                     style="margin: auto; display: flex; justify-content: center;">
-                                                    <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                    <textarea name="checklist_LL_P2P_remark_157" style="border-radius: 7px; border: 1.5px solid black;">@if( $checklist18 && $checklist18->checklist_LL_P2P_remark_157){{ $checklist18->checklist_LL_P2P_remark_157 }}@endif</textarea>                                            </div>
                                                 </div>
                                             </td>
                                         </tr>  <tr>
@@ -15302,12 +15602,13 @@ $checklistqualitycontrol = [
                                             <td>
                                                 <div
                                                     style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                    <select name="response" id="response"
+                                                    <select name="checklist_LL_P2P_response_158" id="checklist_LL_P2P_response_158"
                                                         style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                         <option value="">Select an Option</option>
-                                                        <option value="Yes">Yes</option>
-                                                        <option value="No">No</option>
-                                                        <option value="N/A">N/A</option>
+                                                        <option value="Yes" @if($checklist18 && $checklist18->checklist_LL_P2P_response_158) {{ $checklist18->checklist_LL_P2P_response_158 == "Yes" ? 'selected' : '' }}@endif>Yes</option>
+                                                        <option  value="No"  @if($checklist18 && $checklist18->checklist_LL_P2P_response_158) {{ $checklist18->checklist_LL_P2P_response_158 == "No" ? 'selected' : '' }} @endif>No</option>
+                                                         <option value="N/A" @if($checklist18 && $checklist18->checklist_LL_P2P_response_158) {{ $checklist18->checklist_LL_P2P_response_158 == "N/A" ? 'selected' : '' }}@endif>N/A</option>
+</select>
                                                     </select>
                                                 </div>
                                             </td>
@@ -15315,7 +15616,7 @@ $checklistqualitycontrol = [
                                             <td style="vertical-align: middle;">
                                                 <div
                                                     style="margin: auto; display: flex; justify-content: center;">
-                                                    <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                    <textarea name="checklist_LL_P2P_remark_158" style="border-radius: 7px; border: 1.5px solid black;">@if( $checklist18 && $checklist18->checklist_LL_P2P_remark_158){{ $checklist18->checklist_LL_P2P_remark_158 }}@endif</textarea>                                            </div>
                                                 </div>
                                             </td>
                                         </tr>
@@ -15330,12 +15631,13 @@ $checklistqualitycontrol = [
                                             <td>
                                                 <div
                                                     style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                    <select name="response" id="response"
+                                                    <select name="checklist_LL_P2P_response_159" id="checklist_LL_P2P_response_159"
                                                         style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                         <option value="">Select an Option</option>
-                                                        <option value="Yes">Yes</option>
-                                                        <option value="No">No</option>
-                                                        <option value="N/A">N/A</option>
+                                                        <option value="Yes" @if($checklist18 && $checklist18->checklist_LL_P2P_response_159) {{ $checklist18->checklist_LL_P2P_response_159 == "Yes" ? 'selected' : '' }}@endif>Yes</option>
+                                                        <option  value="No"  @if($checklist18 && $checklist18->checklist_LL_P2P_response_159) {{ $checklist18->checklist_LL_P2P_response_159 == "No" ? 'selected' : '' }} @endif>No</option>
+                                                         <option value="N/A" @if($checklist18 && $checklist18->checklist_LL_P2P_response_159) {{ $checklist18->checklist_LL_P2P_response_159 == "N/A" ? 'selected' : '' }}@endif>N/A</option>
+</select>
                                                     </select>
                                                 </div>
                                             </td>
@@ -15343,7 +15645,7 @@ $checklistqualitycontrol = [
                                             <td style="vertical-align: middle;">
                                                 <div
                                                     style="margin: auto; display: flex; justify-content: center;">
-                                                    <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                    <textarea name="checklist_LL_P2P_remark_159" style="border-radius: 7px; border: 1.5px solid black;">@if( $checklist18 && $checklist18->checklist_LL_P2P_remark_159){{ $checklist18->checklist_LL_P2P_remark_159 }}@endif</textarea>                                            </div>
                                                 </div>
                                             </td>
                                         </tr>
@@ -15359,12 +15661,12 @@ $checklistqualitycontrol = [
                                             <td>
                                                 <div
                                                     style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                    <select name="response" id="response"
+                                                    <select name="checklist_LL_P2P_response_160" id="checklist_LL_P2P_response_160"
                                                         style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                         <option value="">Select an Option</option>
-                                                        <option value="Yes">Yes</option>
-                                                        <option value="No">No</option>
-                                                        <option value="N/A">N/A</option>
+                                                        <option value="Yes" @if($checklist18 && $checklist18->checklist_LL_P2P_response_160) {{ $checklist18->checklist_LL_P2P_response_160 == "Yes" ? 'selected' : '' }}@endif>Yes</option>
+                                                        <option  value="No"  @if($checklist18 && $checklist18->checklist_LL_P2P_response_160) {{ $checklist18->checklist_LL_P2P_response_160 == "No" ? 'selected' : '' }} @endif>No</option>
+                                                         <option value="N/A" @if($checklist18 && $checklist18->checklist_LL_P2P_response_160) {{ $checklist18->checklist_LL_P2P_response_160 == "N/A" ? 'selected' : '' }}@endif>N/A</option>
                                                     </select>
                                                 </div>
                                             </td>
@@ -15372,7 +15674,7 @@ $checklistqualitycontrol = [
                                             <td style="vertical-align: middle;">
                                                 <div
                                                     style="margin: auto; display: flex; justify-content: center;">
-                                                    <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                    <textarea name="checklist_LL_P2P_remark_160" style="border-radius: 7px; border: 1.5px solid black;">@if( $checklist18 && $checklist18->checklist_LL_P2P_remark_160){{ $checklist18->checklist_LL_P2P_remark_160 }}@endif</textarea>                                            </div>
                                                 </div>
                                             </td>
                                         </tr>
@@ -15385,12 +15687,12 @@ $checklistqualitycontrol = [
                                             <td>
                                                 <div
                                                     style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                    <select name="response" id="response"
+                                                    <select name="checklist_LL_P2P_response_161" id="checklist_LL_P2P_response_161"
                                                         style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                         <option value="">Select an Option</option>
-                                                        <option value="Yes">Yes</option>
-                                                        <option value="No">No</option>
-                                                        <option value="N/A">N/A</option>
+                                                        <option value="Yes" @if($checklist18 && $checklist18->checklist_LL_P2P_response_161) {{ $checklist18->checklist_LL_P2P_response_161 == "Yes" ? 'selected' : '' }}@endif>Yes</option>
+                                                        <option  value="No"  @if($checklist18 && $checklist18->checklist_LL_P2P_response_161) {{ $checklist18->checklist_LL_P2P_response_161 == "No" ? 'selected' : '' }} @endif>No</option>
+                                                         <option value="N/A" @if($checklist18 && $checklist18->checklist_LL_P2P_response_161) {{ $checklist18->checklist_LL_P2P_response_161 == "N/A" ? 'selected' : '' }}@endif>N/A</option>
                                                     </select>
                                                 </div>
                                             </td>
@@ -15398,7 +15700,7 @@ $checklistqualitycontrol = [
                                             <td style="vertical-align: middle;">
                                                 <div
                                                     style="margin: auto; display: flex; justify-content: center;">
-                                                    <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                    <textarea name="checklist_LL_P2P_remark_161" style="border-radius: 7px; border: 1.5px solid black;">@if( $checklist18 && $checklist18->checklist_LL_P2P_remark_161){{ $checklist18->checklist_LL_P2P_remark_161 }}@endif</textarea>                                            </div>
                                                 </div>
                                             </td>
                                         </tr>
@@ -15411,12 +15713,12 @@ $checklistqualitycontrol = [
                                             <td>
                                                 <div
                                                     style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                    <select name="response" id="response"
+                                                    <select name="checklist_LL_P2P_response_162" id="checklist_LL_P2P_response_162"
                                                         style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                         <option value="">Select an Option</option>
-                                                        <option value="Yes">Yes</option>
-                                                        <option value="No">No</option>
-                                                        <option value="N/A">N/A</option>
+                                                        <option value="Yes" @if($checklist18 && $checklist18->checklist_LL_P2P_response_162) {{ $checklist18->checklist_LL_P2P_response_162 == "Yes" ? 'selected' : '' }}@endif>Yes</option>
+                                                        <option  value="No"  @if($checklist18 && $checklist18->checklist_LL_P2P_response_162) {{ $checklist18->checklist_LL_P2P_response_162 == "No" ? 'selected' : '' }} @endif>No</option>
+                                                         <option value="N/A" @if($checklist18 && $checklist18->checklist_LL_P2P_response_162) {{ $checklist18->checklist_LL_P2P_response_162 == "N/A" ? 'selected' : '' }}@endif>N/A</option>
                                                     </select>
                                                 </div>
                                             </td>
@@ -15424,7 +15726,7 @@ $checklistqualitycontrol = [
                                             <td style="vertical-align: middle;">
                                                 <div
                                                     style="margin: auto; display: flex; justify-content: center;">
-                                                    <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                    <textarea name="checklist_LL_P2P_remark_162" style="border-radius: 7px; border: 1.5px solid black;">@if( $checklist18 && $checklist18->checklist_LL_P2P_remark_162){{ $checklist18->checklist_LL_P2P_remark_162 }}@endif</textarea>                                            </div>
                                                 </div>
                                             </td>
                                         </tr>
@@ -15437,12 +15739,13 @@ $checklistqualitycontrol = [
                                             <td>
                                                 <div
                                                     style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                    <select name="response" id="response"
+                                                    <select name="checklist_LL_P2P_response_163" id="checklist_LL_P2P_response_163"
                                                         style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                         <option value="">Select an Option</option>
-                                                        <option value="Yes">Yes</option>
-                                                        <option value="No">No</option>
-                                                        <option value="N/A">N/A</option>
+                                                        <option value="Yes" @if($checklist18 && $checklist18->checklist_LL_P2P_response_163) {{ $checklist18->checklist_LL_P2P_response_163 == "Yes" ? 'selected' : '' }}@endif>Yes</option>
+                                                        <option  value="No"  @if($checklist18 && $checklist18->checklist_LL_P2P_response_163) {{ $checklist18->checklist_LL_P2P_response_163 == "No" ? 'selected' : '' }} @endif>No</option>
+                                                         <option value="N/A" @if($checklist18 && $checklist18->checklist_LL_P2P_response_163) {{ $checklist18->checklist_LL_P2P_response_163 == "N/A" ? 'selected' : '' }}@endif>N/A</option>
+
                                                     </select>
                                                 </div>
                                             </td>
@@ -15450,7 +15753,7 @@ $checklistqualitycontrol = [
                                             <td style="vertical-align: middle;">
                                                 <div
                                                     style="margin: auto; display: flex; justify-content: center;">
-                                                    <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                    <textarea name="checklist_LL_P2P_remark_163" style="border-radius: 7px; border: 1.5px solid black;">@if( $checklist18 && $checklist18->checklist_LL_P2P_remark_163){{ $checklist18->checklist_LL_P2P_remark_163 }}@endif</textarea>                                            </div>
                                                 </div>
                                             </td>
                                         </tr>
@@ -15462,32 +15765,17 @@ $checklistqualitycontrol = [
                                             <td>
                                                 If yes:
 
-
-                                            </td>
-                                            <td>
-
-                                            </td>
-
-                                            <td style="vertical-align: middle;">
-
-                                            </td>
-                                        </tr><tr>
-                                            <td class="flex text-center">7.15.1</td>
-                                            <td>
-
-                                                    Do you have a calibration scheme?
-
-
                                             </td>
                                             <td>
                                                 <div
                                                     style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                    <select name="response" id="response"
+                                                    <select name="checklist_LL_P2P_response_164" id="checklist_LL_P2P_response_164"
                                                         style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                         <option value="">Select an Option</option>
-                                                        <option value="Yes">Yes</option>
-                                                        <option value="No">No</option>
-                                                        <option value="N/A">N/A</option>
+                                                        <option value="Yes" @if($checklist18 && $checklist18->checklist_LL_P2P_response_164) {{ $checklist18->checklist_LL_P2P_response_164 == "Yes" ? 'selected' : '' }}@endif>Yes</option>
+                                                        <option  value="No"  @if($checklist18 && $checklist18->checklist_LL_P2P_response_164) {{ $checklist18->checklist_LL_P2P_response_164 == "No" ? 'selected' : '' }} @endif>No</option>
+                                                         <option value="N/A" @if($checklist18 && $checklist18->checklist_LL_P2P_response_164) {{ $checklist18->checklist_LL_P2P_response_164 == "N/A" ? 'selected' : '' }}@endif>N/A</option>
+
                                                     </select>
                                                 </div>
                                             </td>
@@ -15495,7 +15783,34 @@ $checklistqualitycontrol = [
                                             <td style="vertical-align: middle;">
                                                 <div
                                                     style="margin: auto; display: flex; justify-content: center;">
-                                                    <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                    <textarea name="checklist_LL_P2P_remark_164" style="border-radius: 7px; border: 1.5px solid black;">@if( $checklist18 && $checklist18->checklist_LL_P2P_remark_164){{ $checklist18->checklist_LL_P2P_remark_164 }}@endif</textarea>                                            </div>
+                                                </div>
+                                            </td>
+                                        </tr><tr>
+                                            <td class="flex text-center">7.15.1</td>
+                                            <td>
+
+                                                    Do you have a calibration scheme?
+
+                                            </td>
+                                            <td>
+                                                <div
+                                                    style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
+                                                    <select name="checklist_LL_P2P_response_165" id="checklist_LL_P2P_response_165"
+                                                        style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
+                                                        <option value="">Select an Option</option>
+                                                        <option value="Yes" @if($checklist18 && $checklist18->checklist_LL_P2P_response_165) {{ $checklist18->checklist_LL_P2P_response_165 == "Yes" ? 'selected' : '' }}@endif>Yes</option>
+                                                        <option  value="No"  @if($checklist18 && $checklist18->checklist_LL_P2P_response_165) {{ $checklist18->checklist_LL_P2P_response_165 == "No" ? 'selected' : '' }} @endif>No</option>
+                                                         <option value="N/A" @if($checklist18 && $checklist18->checklist_LL_P2P_response_165) {{ $checklist18->checklist_LL_P2P_response_165 == "N/A" ? 'selected' : '' }}@endif>N/A</option>
+
+                                                    </select>
+                                                </div>
+                                            </td>
+
+                                            <td style="vertical-align: middle;">
+                                                <div
+                                                    style="margin: auto; display: flex; justify-content: center;">
+                                                    <textarea name="checklist_LL_P2P_remark_165" style="border-radius: 7px; border: 1.5px solid black;">@if( $checklist18 && $checklist18->checklist_LL_P2P_remark_165){{ $checklist18->checklist_LL_P2P_remark_165 }}@endif</textarea>                                            </div>
                                                 </div>
                                             </td>
                                         </tr><tr>
@@ -15509,12 +15824,13 @@ $checklistqualitycontrol = [
                                             <td>
                                                 <div
                                                     style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                    <select name="response" id="response"
+                                                    <select name="checklist_LL_P2P_response_166" id="checklist_LL_P2P_response_166"
                                                         style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                         <option value="">Select an Option</option>
-                                                        <option value="Yes">Yes</option>
-                                                        <option value="No">No</option>
-                                                        <option value="N/A">N/A</option>
+                                                        <option value="Yes" @if($checklist18 && $checklist18->checklist_LL_P2P_response_166) {{ $checklist18->checklist_LL_P2P_response_166 == "Yes" ? 'selected' : '' }}@endif>Yes</option>
+                                                        <option  value="No"  @if($checklist18 && $checklist18->checklist_LL_P2P_response_166) {{ $checklist18->checklist_LL_P2P_response_166 == "No" ? 'selected' : '' }} @endif>No</option>
+                                                         <option value="N/A" @if($checklist18 && $checklist18->checklist_LL_P2P_response_166) {{ $checklist18->checklist_LL_P2P_response_166 == "N/A" ? 'selected' : '' }}@endif>N/A</option>
+
                                                     </select>
                                                 </div>
                                             </td>
@@ -15522,7 +15838,7 @@ $checklistqualitycontrol = [
                                             <td style="vertical-align: middle;">
                                                 <div
                                                     style="margin: auto; display: flex; justify-content: center;">
-                                                    <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                    <textarea name="checklist_LL_P2P_remark_166" style="border-radius: 7px; border: 1.5px solid black;">@if( $checklist18 && $checklist18->checklist_LL_P2P_remark_166){{ $checklist18->checklist_LL_P2P_remark_166 }}@endif</textarea>                                            </div>
                                                 </div>
                                             </td>
                                         </tr>
@@ -15537,12 +15853,13 @@ $checklistqualitycontrol = [
                                             <td>
                                                 <div
                                                     style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                    <select name="response" id="response"
+                                                    <select name="checklist_LL_P2P_response_167" id="checklist_LL_P2P_response_167"
                                                         style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                         <option value="">Select an Option</option>
-                                                        <option value="Yes">Yes</option>
-                                                        <option value="No">No</option>
-                                                        <option value="N/A">N/A</option>
+                                                        <option value="Yes" @if($checklist18 && $checklist18->checklist_LL_P2P_response_167) {{ $checklist18->checklist_LL_P2P_response_167 == "Yes" ? 'selected' : '' }}@endif>Yes</option>
+                                                        <option  value="No"  @if($checklist18 && $checklist18->checklist_LL_P2P_response_167) {{ $checklist18->checklist_LL_P2P_response_167 == "No" ? 'selected' : '' }} @endif>No</option>
+                                                         <option value="N/A" @if($checklist18 && $checklist18->checklist_LL_P2P_response_167) {{ $checklist18->checklist_LL_P2P_response_167 == "N/A" ? 'selected' : '' }}@endif>N/A</option>
+
                                                     </select>
                                                 </div>
                                             </td>
@@ -15550,7 +15867,7 @@ $checklistqualitycontrol = [
                                             <td style="vertical-align: middle;">
                                                 <div
                                                     style="margin: auto; display: flex; justify-content: center;">
-                                                    <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                    <textarea name="checklist_LL_P2P_remark_167" style="border-radius: 7px; border: 1.5px solid black;">@if( $checklist18 && $checklist18->checklist_LL_P2P_remark_167){{ $checklist18->checklist_LL_P2P_remark_167 }}@endif</textarea>                                            </div>
                                                 </div>
                                             </td>
                                         </tr>
@@ -15565,12 +15882,13 @@ $checklistqualitycontrol = [
                                             <td>
                                                 <div
                                                     style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                    <select name="response" id="response"
+                                                    <select name="checklist_LL_P2P_response_168" id="checklist_LL_P2P_response_168"
                                                         style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                         <option value="">Select an Option</option>
-                                                        <option value="Yes">Yes</option>
-                                                        <option value="No">No</option>
-                                                        <option value="N/A">N/A</option>
+                                                        <option value="Yes" @if($checklist18 && $checklist18->checklist_LL_P2P_response_168) {{ $checklist18->checklist_LL_P2P_response_168 == "Yes" ? 'selected' : '' }}@endif>Yes</option>
+                                                        <option  value="No"  @if($checklist18 && $checklist18->checklist_LL_P2P_response_168) {{ $checklist18->checklist_LL_P2P_response_168 == "No" ? 'selected' : '' }} @endif>No</option>
+                                                         <option value="N/A" @if($checklist18 && $checklist18->checklist_LL_P2P_response_168) {{ $checklist18->checklist_LL_P2P_response_168 == "N/A" ? 'selected' : '' }}@endif>N/A</option>
+
                                                     </select>
                                                 </div>
                                             </td>
@@ -15578,7 +15896,7 @@ $checklistqualitycontrol = [
                                             <td style="vertical-align: middle;">
                                                 <div
                                                     style="margin: auto; display: flex; justify-content: center;">
-                                                    <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                    <textarea name="checklist_LL_P2P_remark_168" style="border-radius: 7px; border: 1.5px solid black;">@if( $checklist18 && $checklist18->checklist_LL_P2P_remark_168){{ $checklist18->checklist_LL_P2P_remark_168 }}@endif</textarea>                                            </div>
                                                 </div>
                                             </td>
                                         </tr>
@@ -15591,12 +15909,13 @@ $checklistqualitycontrol = [
                                             <td>
                                                 <div
                                                     style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                    <select name="response" id="response"
+                                                    <select name="checklist_LL_P2P_response_169" id="checklist_LL_P2P_response_169"
                                                         style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                         <option value="">Select an Option</option>
-                                                        <option value="Yes">Yes</option>
-                                                        <option value="No">No</option>
-                                                        <option value="N/A">N/A</option>
+                                                        <option value="Yes" @if($checklist18 && $checklist18->checklist_LL_P2P_response_169) {{ $checklist18->checklist_LL_P2P_response_169 == "Yes" ? 'selected' : '' }}@endif>Yes</option>
+                                                        <option  value="No"  @if($checklist18 && $checklist18->checklist_LL_P2P_response_169) {{ $checklist18->checklist_LL_P2P_response_169 == "No" ? 'selected' : '' }} @endif>No</option>
+                                                         <option value="N/A" @if($checklist18 && $checklist18->checklist_LL_P2P_response_169) {{ $checklist18->checklist_LL_P2P_response_169 == "N/A" ? 'selected' : '' }}@endif>N/A</option>
+
                                                     </select>
                                                 </div>
                                             </td>
@@ -15604,7 +15923,7 @@ $checklistqualitycontrol = [
                                             <td style="vertical-align: middle;">
                                                 <div
                                                     style="margin: auto; display: flex; justify-content: center;">
-                                                    <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                    <textarea name="checklist_LL_P2P_remark_169" style="border-radius: 7px; border: 1.5px solid black;">@if( $checklist18 && $checklist18->checklist_LL_P2P_remark_169){{ $checklist18->checklist_LL_P2P_remark_169 }}@endif</textarea>                                            </div>
                                                 </div>
                                             </td>
                                         </tr>
@@ -15617,12 +15936,13 @@ $checklistqualitycontrol = [
                                             <td>
                                                 <div
                                                     style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                    <select name="response" id="response"
+                                                    <select name="checklist_LL_P2P_response_170" id="checklist_LL_P2P_response_170"
                                                         style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                         <option value="">Select an Option</option>
-                                                        <option value="Yes">Yes</option>
-                                                        <option value="No">No</option>
-                                                        <option value="N/A">N/A</option>
+                                                        <option value="Yes" @if($checklist18 && $checklist18->checklist_LL_P2P_response_170) {{ $checklist18->checklist_LL_P2P_response_170 == "Yes" ? 'selected' : '' }}@endif>Yes</option>
+                                                        <option  value="No"  @if($checklist18 && $checklist18->checklist_LL_P2P_response_170) {{ $checklist18->checklist_LL_P2P_response_170 == "No" ? 'selected' : '' }} @endif>No</option>
+                                                         <option value="N/A" @if($checklist18 && $checklist18->checklist_LL_P2P_response_170) {{ $checklist18->checklist_LL_P2P_response_170 == "N/A" ? 'selected' : '' }}@endif>N/A</option>
+
                                                     </select>
                                                 </div>
                                             </td>
@@ -15630,7 +15950,7 @@ $checklistqualitycontrol = [
                                             <td style="vertical-align: middle;">
                                                 <div
                                                     style="margin: auto; display: flex; justify-content: center;">
-                                                    <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                    <textarea name="checklist_LL_P2P_remark_170" style="border-radius: 7px; border: 1.5px solid black;">@if( $checklist18 && $checklist18->checklist_LL_P2P_remark_170){{ $checklist18->checklist_LL_P2P_remark_170 }}@endif</textarea>                                            </div>
                                                 </div>
                                             </td>
                                         </tr>
@@ -15643,12 +15963,13 @@ $checklistqualitycontrol = [
                                             <td>
                                                 <div
                                                     style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                    <select name="response" id="response"
+                                                    <select name="checklist_LL_P2P_response_171" id="checklist_LL_P2P_response_171"
                                                         style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                         <option value="">Select an Option</option>
-                                                        <option value="Yes">Yes</option>
-                                                        <option value="No">No</option>
-                                                        <option value="N/A">N/A</option>
+                                                        <option value="Yes" @if($checklist18 && $checklist18->checklist_LL_P2P_response_171) {{ $checklist18->checklist_LL_P2P_response_171 == "Yes" ? 'selected' : '' }}@endif>Yes</option>
+                                                        <option  value="No"  @if($checklist18 && $checklist18->checklist_LL_P2P_response_171) {{ $checklist18->checklist_LL_P2P_response_171 == "No" ? 'selected' : '' }} @endif>No</option>
+                                                         <option value="N/A" @if($checklist18 && $checklist18->checklist_LL_P2P_response_171) {{ $checklist18->checklist_LL_P2P_response_171 == "N/A" ? 'selected' : '' }}@endif>N/A</option>
+
                                                     </select>
                                                 </div>
                                             </td>
@@ -15656,7 +15977,7 @@ $checklistqualitycontrol = [
                                             <td style="vertical-align: middle;">
                                                 <div
                                                     style="margin: auto; display: flex; justify-content: center;">
-                                                    <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                    <textarea name="checklist_LL_P2P_remark_171" style="border-radius: 7px; border: 1.5px solid black;">@if( $checklist18 && $checklist18->checklist_LL_P2P_remark_171){{ $checklist18->checklist_LL_P2P_remark_171 }}@endif</textarea>                                            </div>
                                                 </div>
                                             </td>
                                         </tr>
@@ -15667,17 +15988,22 @@ $checklistqualitycontrol = [
                                             </td>
                                             <td>
                                                 <div
-                                                style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                <input type="number"
-                                                placeholder="Enter  value here"
-                                                    style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;" >
-                                            </div>
+                                                    style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
+                                                    <select name="checklist_LL_P2P_response_172" id="checklist_LL_P2P_response_172"
+                                                        style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
+                                                        <option value="">Select an Option</option>
+                                                        <option value="Yes" @if($checklist18 && $checklist18->checklist_LL_P2P_response_172) {{ $checklist18->checklist_LL_P2P_response_172 == "Yes" ? 'selected' : '' }}@endif>Yes</option>
+                                                        <option  value="No"  @if($checklist18 && $checklist18->checklist_LL_P2P_response_172) {{ $checklist18->checklist_LL_P2P_response_172 == "No" ? 'selected' : '' }} @endif>No</option>
+                                                         <option value="N/A" @if($checklist18 && $checklist18->checklist_LL_P2P_response_172) {{ $checklist18->checklist_LL_P2P_response_172 == "N/A" ? 'selected' : '' }}@endif>N/A</option>
+
+                                                    </select>
+                                                </div>
                                             </td>
 
                                             <td style="vertical-align: middle;">
                                                 <div
                                                     style="margin: auto; display: flex; justify-content: center;">
-                                                    <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                    <textarea name="checklist_LL_P2P_remark_172" style="border-radius: 7px; border: 1.5px solid black;">@if( $checklist18 && $checklist18->checklist_LL_P2P_remark_172){{ $checklist18->checklist_LL_P2P_remark_172 }}@endif</textarea>                                            </div>
                                                 </div>
                                             </td>
                                         </tr><tr>
@@ -15688,12 +16014,13 @@ $checklistqualitycontrol = [
                                             <td>
                                                 <div
                                                     style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                    <select name="response" id="response"
+                                                    <select name="checklist_LL_P2P_response_173" id="checklist_LL_P2P_response_173"
                                                         style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                         <option value="">Select an Option</option>
-                                                        <option value="Yes">Yes</option>
-                                                        <option value="No">No</option>
-                                                        <option value="N/A">N/A</option>
+                                                        <option value="Yes" @if($checklist18 && $checklist18->checklist_LL_P2P_response_173) {{ $checklist18->checklist_LL_P2P_response_173 == "Yes" ? 'selected' : '' }}@endif>Yes</option>
+                                                        <option  value="No"  @if($checklist18 && $checklist18->checklist_LL_P2P_response_173) {{ $checklist18->checklist_LL_P2P_response_173 == "No" ? 'selected' : '' }} @endif>No</option>
+                                                         <option value="N/A" @if($checklist18 && $checklist18->checklist_LL_P2P_response_173) {{ $checklist18->checklist_LL_P2P_response_173 == "N/A" ? 'selected' : '' }}@endif>N/A</option>
+
                                                     </select>
                                                 </div>
                                             </td>
@@ -15701,7 +16028,7 @@ $checklistqualitycontrol = [
                                             <td style="vertical-align: middle;">
                                                 <div
                                                     style="margin: auto; display: flex; justify-content: center;">
-                                                    <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                    <textarea name="checklist_LL_P2P_remark_173" style="border-radius: 7px; border: 1.5px solid black;">@if( $checklist18 && $checklist18->checklist_LL_P2P_remark_173){{ $checklist18->checklist_LL_P2P_remark_173 }}@endif</textarea>                                            </div>
                                                 </div>
                                             </td>
                                         </tr><tr>
@@ -15712,12 +16039,13 @@ $checklistqualitycontrol = [
                                             <td>
                                                 <div
                                                     style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                    <select name="response" id="response"
+                                                    <select name="checklist_LL_P2P_response_174" id="checklist_LL_P2P_response_174"
                                                         style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                         <option value="">Select an Option</option>
-                                                        <option value="Yes">Yes</option>
-                                                        <option value="No">No</option>
-                                                        <option value="N/A">N/A</option>
+                                                        <option value="Yes" @if($checklist18 && $checklist18->checklist_LL_P2P_response_174) {{ $checklist18->checklist_LL_P2P_response_174 == "Yes" ? 'selected' : '' }}@endif>Yes</option>
+                                                        <option  value="No"  @if($checklist18 && $checklist18->checklist_LL_P2P_response_174) {{ $checklist18->checklist_LL_P2P_response_174 == "No" ? 'selected' : '' }} @endif>No</option>
+                                                         <option value="N/A" @if($checklist18 && $checklist18->checklist_LL_P2P_response_174) {{ $checklist18->checklist_LL_P2P_response_174 == "N/A" ? 'selected' : '' }}@endif>N/A</option>
+
                                                     </select>
                                                 </div>
                                             </td>
@@ -15725,7 +16053,7 @@ $checklistqualitycontrol = [
                                             <td style="vertical-align: middle;">
                                                 <div
                                                     style="margin: auto; display: flex; justify-content: center;">
-                                                    <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                    <textarea name="checklist_LL_P2P_remark_174" style="border-radius: 7px; border: 1.5px solid black;">@if( $checklist18 && $checklist18->checklist_LL_P2P_remark_174){{ $checklist18->checklist_LL_P2P_remark_174 }}@endif</textarea>                                            </div>
                                                 </div>
                                             </td>
                                         </tr><tr>
@@ -15736,12 +16064,13 @@ $checklistqualitycontrol = [
                                             <td>
                                                 <div
                                                     style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                    <select name="response" id="response"
+                                                    <select name="checklist_LL_P2P_response_175" id="checklist_LL_P2P_response_175"
                                                         style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                         <option value="">Select an Option</option>
-                                                        <option value="Yes">Yes</option>
-                                                        <option value="No">No</option>
-                                                        <option value="N/A">N/A</option>
+                                                        <option value="Yes" @if($checklist18 && $checklist18->checklist_LL_P2P_response_175) {{ $checklist18->checklist_LL_P2P_response_175 == "Yes" ? 'selected' : '' }}@endif>Yes</option>
+                                                        <option  value="No"  @if($checklist18 && $checklist18->checklist_LL_P2P_response_175) {{ $checklist18->checklist_LL_P2P_response_175 == "No" ? 'selected' : '' }} @endif>No</option>
+                                                         <option value="N/A" @if($checklist18 && $checklist18->checklist_LL_P2P_response_175) {{ $checklist18->checklist_LL_P2P_response_175 == "N/A" ? 'selected' : '' }}@endif>N/A</option>
+
                                                     </select>
                                                 </div>
                                             </td>
@@ -15749,7 +16078,7 @@ $checklistqualitycontrol = [
                                             <td style="vertical-align: middle;">
                                                 <div
                                                     style="margin: auto; display: flex; justify-content: center;">
-                                                    <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                    <textarea name="checklist_LL_P2P_remark_175" style="border-radius: 7px; border: 1.5px solid black;">@if( $checklist18 && $checklist18->checklist_LL_P2P_remark_175){{ $checklist18->checklist_LL_P2P_remark_175 }}@endif</textarea>                                            </div>
                                                 </div>
                                             </td>
                                         </tr><tr>
@@ -15760,12 +16089,13 @@ $checklistqualitycontrol = [
                                             <td>
                                                 <div
                                                     style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                    <select name="response" id="response"
+                                                    <select name="checklist_LL_P2P_response_176" id="checklist_LL_P2P_response_176"
                                                         style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                         <option value="">Select an Option</option>
-                                                        <option value="Yes">Yes</option>
-                                                        <option value="No">No</option>
-                                                        <option value="N/A">N/A</option>
+                                                        <option value="Yes" @if($checklist18 && $checklist18->checklist_LL_P2P_response_176) {{ $checklist18->checklist_LL_P2P_response_176 == "Yes" ? 'selected' : '' }}@endif>Yes</option>
+                                                        <option  value="No"  @if($checklist18 && $checklist18->checklist_LL_P2P_response_176) {{ $checklist18->checklist_LL_P2P_response_176 == "No" ? 'selected' : '' }} @endif>No</option>
+                                                         <option value="N/A" @if($checklist18 && $checklist18->checklist_LL_P2P_response_176) {{ $checklist18->checklist_LL_P2P_response_176 == "N/A" ? 'selected' : '' }}@endif>N/A</option>
+
                                                     </select>
                                                 </div>
                                             </td>
@@ -15773,7 +16103,7 @@ $checklistqualitycontrol = [
                                             <td style="vertical-align: middle;">
                                                 <div
                                                     style="margin: auto; display: flex; justify-content: center;">
-                                                    <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                    <textarea name="checklist_LL_P2P_remark_176" style="border-radius: 7px; border: 1.5px solid black;">@if( $checklist18 && $checklist18->checklist_LL_P2P_remark_176){{ $checklist18->checklist_LL_P2P_remark_176 }}@endif</textarea>                                            </div>
                                                 </div>
                                             </td>
                                         </tr><tr>
@@ -15784,12 +16114,13 @@ $checklistqualitycontrol = [
                                             <td>
                                                 <div
                                                     style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                    <select name="response" id="response"
+                                                    <select name="checklist_LL_P2P_response_177" id="checklist_LL_P2P_response_177"
                                                         style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                         <option value="">Select an Option</option>
-                                                        <option value="Yes">Yes</option>
-                                                        <option value="No">No</option>
-                                                        <option value="N/A">N/A</option>
+                                                        <option value="Yes" @if($checklist18 && $checklist18->checklist_LL_P2P_response_177) {{ $checklist18->checklist_LL_P2P_response_177 == "Yes" ? 'selected' : '' }}@endif>Yes</option>
+                                                        <option  value="No"  @if($checklist18 && $checklist18->checklist_LL_P2P_response_177) {{ $checklist18->checklist_LL_P2P_response_177 == "No" ? 'selected' : '' }} @endif>No</option>
+                                                         <option value="N/A" @if($checklist18 && $checklist18->checklist_LL_P2P_response_177) {{ $checklist18->checklist_LL_P2P_response_177 == "N/A" ? 'selected' : '' }}@endif>N/A</option>
+
                                                     </select>
                                                 </div>
                                             </td>
@@ -15797,7 +16128,7 @@ $checklistqualitycontrol = [
                                             <td style="vertical-align: middle;">
                                                 <div
                                                     style="margin: auto; display: flex; justify-content: center;">
-                                                    <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                    <textarea name="checklist_LL_P2P_remark_177" style="border-radius: 7px; border: 1.5px solid black;">@if( $checklist18 && $checklist18->checklist_LL_P2P_remark_177){{ $checklist18->checklist_LL_P2P_remark_177 }}@endif</textarea>                                            </div>
                                                 </div>
                                             </td>
                                         </tr>
@@ -15833,12 +16164,13 @@ $checklistqualitycontrol = [
                                         <td>
                                             <div
                                                 style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                <select name="response" id="response"
+                                                <select name="checklist_LL_P2P_response_178" id="checklist_LL_P2P_response_178"
                                                     style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                     <option value="">Select an Option</option>
-                                                    <option value="Yes">Yes</option>
-                                                    <option value="No">No</option>
-                                                    <option value="N/A">N/A</option>
+                                                    <option value="Yes" @if($checklist18 && $checklist18->checklist_LL_P2P_response_178) {{ $checklist18->checklist_LL_P2P_response_178 == "Yes" ? 'selected' : '' }}@endif>Yes</option>
+                                                 <option  value="No"  @if($checklist18 && $checklist18->checklist_LL_P2P_response_178) {{ $checklist18->checklist_LL_P2P_response_178 == "No" ? 'selected' : '' }} @endif>No</option>
+                                                 <option value="N/A" @if($checklist18 && $checklist18->checklist_LL_P2P_response_178) {{ $checklist18->checklist_LL_P2P_response_178 == "N/A" ? 'selected' : '' }}@endif>N/A</option>
+
                                                 </select>
                                             </div>
                                         </td>
@@ -15846,7 +16178,7 @@ $checklistqualitycontrol = [
                                         <td style="vertical-align: middle;">
                                             <div
                                                 style="margin: auto; display: flex; justify-content: center;">
-                                                <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                <textarea name="checklist_LL_P2P_remark_178" style="border-radius: 7px; border: 1.5px solid black;">@if( $checklist18 && $checklist18->checklist_LL_P2P_remark_178){{ $checklist18->checklist_LL_P2P_remark_178 }}@endif</textarea>                                            </div>
                                             </div>
                                         </td>
 
@@ -15861,12 +16193,13 @@ $checklistqualitycontrol = [
                                         <td>
                                             <div
                                                 style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                <select name="response" id="response"
+                                                <select name="checklist_LL_P2P_response_179" id="checklist_LL_P2P_response_179"
                                                     style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                     <option value="">Select an Option</option>
-                                                    <option value="Yes">Yes</option>
-                                                    <option value="No">No</option>
-                                                    <option value="N/A">N/A</option>
+                                                    <option value="Yes" @if($checklist18 && $checklist18->checklist_LL_P2P_response_179) {{ $checklist18->checklist_LL_P2P_response_179 == "Yes" ? 'selected' : '' }}@endif>Yes</option>
+                                                    <option  value="No"  @if($checklist18 && $checklist18->checklist_LL_P2P_response_179) {{ $checklist18->checklist_LL_P2P_response_179 == "No" ? 'selected' : '' }} @endif>No</option>
+                                                    <option value="N/A" @if($checklist18 && $checklist18->checklist_LL_P2P_response_179) {{ $checklist18->checklist_LL_P2P_response_179 == "N/A" ? 'selected' : '' }}@endif>N/A</option>
+
                                                 </select>
                                             </div>
                                         </td>
@@ -15874,7 +16207,7 @@ $checklistqualitycontrol = [
                                         <td style="vertical-align: middle;">
                                             <div
                                                 style="margin: auto; display: flex; justify-content: center;">
-                                                <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                <textarea name="checklist_LL_P2P_remark_179" style="border-radius: 7px; border: 1.5px solid black;">@if( $checklist18 && $checklist18->checklist_LL_P2P_remark_179){{ $checklist18->checklist_LL_P2P_remark_179 }}@endif</textarea>                                            </div>
                                             </div>
                                         </td>
 
@@ -15887,21 +16220,27 @@ $checklistqualitycontrol = [
                                             Who is responsible for release and reject of your end product?
 
                                             </td>
-                                        <td>
-                                            <div
-                                            style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                            <input type="text"
-                                                style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
+                                            <td>
+                                                <div
+                                                    style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
+                                                    <select name="checklist_LL_P2P_response_180" id="checklist_LL_P2P_response_180"
+                                                        style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
+                                                        <option value="">Select an Option</option>
+                                                        <option value="Yes" @if($checklist18 && $checklist18->checklist_LL_P2P_response_180) {{ $checklist18->checklist_LL_P2P_response_180 == "Yes" ? 'selected' : '' }}@endif>Yes</option>
+                                                        <option  value="No"  @if($checklist18 && $checklist18->checklist_LL_P2P_response_180) {{ $checklist18->checklist_LL_P2P_response_180 == "No" ? 'selected' : '' }} @endif>No</option>
+                                                        <option value="N/A" @if($checklist18 && $checklist18->checklist_LL_P2P_response_180) {{ $checklist18->checklist_LL_P2P_response_180 == "N/A" ? 'selected' : '' }}@endif>N/A</option>
 
-                                        </div>
-                                        </td>
+                                                    </select>
+                                                </div>
+                                            </td>
 
-                                        <td style="vertical-align: middle;">
-                                            <div
-                                                style="margin: auto; display: flex; justify-content: center;">
-                                                <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
-                                            </div>
-                                        </td>
+                                            <td style="vertical-align: middle;">
+                                                <div
+                                                    style="margin: auto; display: flex; justify-content: center;">
+                                                    <textarea name="checklist_LL_P2P_remark_180" style="border-radius: 7px; border: 1.5px solid black;">@if( $checklist18 && $checklist18->checklist_LL_P2P_remark_180){{ $checklist18->checklist_LL_P2P_remark_180 }}@endif</textarea>                                            </div>
+                                                </div>
+                                            </td>
+
                                     </tr>
 
                                     <tr>
@@ -15912,12 +16251,13 @@ $checklistqualitycontrol = [
                                         <td>
                                             <div
                                                 style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                <select name="response" id="response"
+                                                <select name="checklist_LL_P2P_response_181" id="checklist_LL_P2P_response_181"
                                                     style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                     <option value="">Select an Option</option>
-                                                    <option value="Yes">Yes</option>
-                                                    <option value="No">No</option>
-                                                    <option value="N/A">N/A</option>
+                                                    <option value="Yes" @if($checklist18 && $checklist18->checklist_LL_P2P_response_181) {{ $checklist18->checklist_LL_P2P_response_181 == "Yes" ? 'selected' : '' }}@endif>Yes</option>
+                                                        <option  value="No"  @if($checklist18 && $checklist18->checklist_LL_P2P_response_181) {{ $checklist18->checklist_LL_P2P_response_181 == "No" ? 'selected' : '' }} @endif>No</option>
+                                                        <option value="N/A" @if($checklist18 && $checklist18->checklist_LL_P2P_response_181) {{ $checklist18->checklist_LL_P2P_response_181 == "N/A" ? 'selected' : '' }}@endif>N/A</option>
+
                                                 </select>
                                             </div>
                                         </td>
@@ -15925,7 +16265,7 @@ $checklistqualitycontrol = [
                                         <td style="vertical-align: middle;">
                                             <div
                                                 style="margin: auto; display: flex; justify-content: center;">
-                                                <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                <textarea name="checklist_LL_P2P_remark_181" style="border-radius: 7px; border: 1.5px solid black;">@if( $checklist18 && $checklist18->checklist_LL_P2P_remark_181){{ $checklist18->checklist_LL_P2P_remark_181 }}@endif</textarea>                                            </div>
                                             </div>
                                         </td>
                                     </tr>
@@ -15938,12 +16278,13 @@ $checklistqualitycontrol = [
                                         <td>
                                             <div
                                                 style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                <select name="response" id="response"
+                                                <select name="checklist_LL_P2P_response_182" id="checklist_LL_P2P_response_182"
                                                     style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                     <option value="">Select an Option</option>
-                                                    <option value="Yes">Yes</option>
-                                                    <option value="No">No</option>
-                                                    <option value="N/A">N/A</option>
+                                                    <option value="Yes" @if($checklist18 && $checklist18->checklist_LL_P2P_response_182) {{ $checklist18->checklist_LL_P2P_response_182 == "Yes" ? 'selected' : '' }}@endif>Yes</option>
+                                                    <option  value="No"  @if($checklist18 && $checklist18->checklist_LL_P2P_response_182) {{ $checklist18->checklist_LL_P2P_response_182 == "No" ? 'selected' : '' }} @endif>No</option>
+                                                    <option value="N/A" @if($checklist18 && $checklist18->checklist_LL_P2P_response_182) {{ $checklist18->checklist_LL_P2P_response_182 == "N/A" ? 'selected' : '' }}@endif>N/A</option>
+
                                                 </select>
                                             </div>
                                         </td>
@@ -15951,7 +16292,7 @@ $checklistqualitycontrol = [
                                         <td style="vertical-align: middle;">
                                             <div
                                                 style="margin: auto; display: flex; justify-content: center;">
-                                                <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                <textarea name="checklist_LL_P2P_remark_182" style="border-radius: 7px; border: 1.5px solid black;">@if( $checklist18 && $checklist18->checklist_LL_P2P_remark_182){{ $checklist18->checklist_LL_P2P_remark_182 }}@endif</textarea>                                            </div>
                                             </div>
                                         </td>
                                     </tr>
@@ -15964,12 +16305,13 @@ $checklistqualitycontrol = [
                                         <td>
                                             <div
                                                 style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                <select name="response" id="response"
+                                                <select name="checklist_LL_P2P_response_183" id="checklist_LL_P2P_response_183"
                                                     style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                     <option value="">Select an Option</option>
-                                                    <option value="Yes">Yes</option>
-                                                    <option value="No">No</option>
-                                                    <option value="N/A">N/A</option>
+                                                    <option value="Yes" @if($checklist18 && $checklist18->checklist_LL_P2P_response_183) {{ $checklist18->checklist_LL_P2P_response_183 == "Yes" ? 'selected' : '' }}@endif>Yes</option>
+                                                    <option  value="No"  @if($checklist18 && $checklist18->checklist_LL_P2P_response_183) {{ $checklist18->checklist_LL_P2P_response_183 == "No" ? 'selected' : '' }} @endif>No</option>
+                                                    <option value="N/A" @if($checklist18 && $checklist18->checklist_LL_P2P_response_183) {{ $checklist18->checklist_LL_P2P_response_183 == "N/A" ? 'selected' : '' }}@endif>N/A</option>
+
                                                 </select>
                                             </div>
                                         </td>
@@ -15977,7 +16319,7 @@ $checklistqualitycontrol = [
                                         <td style="vertical-align: middle;">
                                             <div
                                                 style="margin: auto; display: flex; justify-content: center;">
-                                                <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                <textarea name="checklist_LL_P2P_remark_183" style="border-radius: 7px; border: 1.5px solid black;">@if( $checklist18 && $checklist18->checklist_LL_P2P_remark_183){{ $checklist18->checklist_LL_P2P_remark_183 }}@endif</textarea>                                            </div>
                                             </div>
                                         </td>
                                     </tr>
@@ -15990,12 +16332,13 @@ $checklistqualitycontrol = [
                                         <td>
                                             <div
                                                 style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                <select name="response" id="response"
+                                                <select name="checklist_LL_P2P_response_184" id="checklist_LL_P2P_response_184"
                                                     style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                     <option value="">Select an Option</option>
-                                                    <option value="Yes">Yes</option>
-                                                    <option value="No">No</option>
-                                                    <option value="N/A">N/A</option>
+                                                    <option value="Yes" @if($checklist18 && $checklist18->checklist_LL_P2P_response_184) {{ $checklist18->checklist_LL_P2P_response_184 == "Yes" ? 'selected' : '' }}@endif>Yes</option>
+                                                    <option  value="No"  @if($checklist18 && $checklist18->checklist_LL_P2P_response_184) {{ $checklist18->checklist_LL_P2P_response_184 == "No" ? 'selected' : '' }} @endif>No</option>
+                                                    <option value="N/A" @if($checklist18 && $checklist18->checklist_LL_P2P_response_184) {{ $checklist18->checklist_LL_P2P_response_184 == "N/A" ? 'selected' : '' }}@endif>N/A</option>
+
                                                 </select>
                                             </div>
                                         </td>
@@ -16003,7 +16346,7 @@ $checklistqualitycontrol = [
                                         <td style="vertical-align: middle;">
                                             <div
                                                 style="margin: auto; display: flex; justify-content: center;">
-                                                <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                <textarea name="checklist_LL_P2P_remark_184" style="border-radius: 7px; border: 1.5px solid black;">@if( $checklist18 && $checklist18->checklist_LL_P2P_remark_184){{ $checklist18->checklist_LL_P2P_remark_184 }}@endif</textarea>                                            </div>
                                             </div>
                                         </td>
                                     </tr>
@@ -16016,12 +16359,13 @@ $checklistqualitycontrol = [
                                         <td>
                                             <div
                                                 style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                <select name="response" id="response"
+                                                <select name="checklist_LL_P2P_response_185" id="checklist_LL_P2P_response_185"
                                                     style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                     <option value="">Select an Option</option>
-                                                    <option value="Yes">Yes</option>
-                                                    <option value="No">No</option>
-                                                    <option value="N/A">N/A</option>
+                                                    <option value="Yes" @if($checklist18 && $checklist18->checklist_LL_P2P_response_185) {{ $checklist18->checklist_LL_P2P_response_185 == "Yes" ? 'selected' : '' }}@endif>Yes</option>
+                                                    <option  value="No"  @if($checklist18 && $checklist18->checklist_LL_P2P_response_185) {{ $checklist18->checklist_LL_P2P_response_185 == "No" ? 'selected' : '' }} @endif>No</option>
+                                                    <option value="N/A" @if($checklist18 && $checklist18->checklist_LL_P2P_response_185) {{ $checklist18->checklist_LL_P2P_response_185 == "N/A" ? 'selected' : '' }}@endif>N/A</option>
+
                                                 </select>
                                             </div>
                                         </td>
@@ -16029,7 +16373,7 @@ $checklistqualitycontrol = [
                                         <td style="vertical-align: middle;">
                                             <div
                                                 style="margin: auto; display: flex; justify-content: center;">
-                                                <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                <textarea name="checklist_LL_P2P_remark_185" style="border-radius: 7px; border: 1.5px solid black;">@if( $checklist18 && $checklist18->checklist_LL_P2P_remark_185){{ $checklist18->checklist_LL_P2P_remark_185 }}@endif</textarea>                                            </div>
                                             </div>
                                         </td>
                                     </tr>
@@ -16042,12 +16386,13 @@ $checklistqualitycontrol = [
                                         <td>
                                             <div
                                                 style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                <select name="response" id="response"
+                                                <select name="checklist_LL_P2P_response_186" id="checklist_LL_P2P_response_186"
                                                     style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                     <option value="">Select an Option</option>
-                                                    <option value="Yes">Yes</option>
-                                                    <option value="No">No</option>
-                                                    <option value="N/A">N/A</option>
+                                                    <option value="Yes" @if($checklist18 && $checklist18->checklist_LL_P2P_response_186) {{ $checklist18->checklist_LL_P2P_response_186 == "Yes" ? 'selected' : '' }}@endif>Yes</option>
+                                                    <option  value="No"  @if($checklist18 && $checklist18->checklist_LL_P2P_response_186) {{ $checklist18->checklist_LL_P2P_response_186 == "No" ? 'selected' : '' }} @endif>No</option>
+                                                    <option value="N/A" @if($checklist18 && $checklist18->checklist_LL_P2P_response_186) {{ $checklist18->checklist_LL_P2P_response_186 == "N/A" ? 'selected' : '' }}@endif>N/A</option>
+
                                                 </select>
                                             </div>
                                         </td>
@@ -16055,7 +16400,7 @@ $checklistqualitycontrol = [
                                         <td style="vertical-align: middle;">
                                             <div
                                                 style="margin: auto; display: flex; justify-content: center;">
-                                                <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                <textarea name="checklist_LL_P2P_remark_186" style="border-radius: 7px; border: 1.5px solid black;">@if( $checklist18 && $checklist18->checklist_LL_P2P_remark_186){{ $checklist18->checklist_LL_P2P_remark_186 }}@endif</textarea>                                            </div>
                                             </div>
                                         </td>
                                     </tr>
@@ -16068,12 +16413,13 @@ $checklistqualitycontrol = [
                                         <td>
                                             <div
                                                 style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                <select name="response" id="response"
+                                                <select name="checklist_LL_P2P_response_187" id="checklist_LL_P2P_response_187"
                                                     style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                     <option value="">Select an Option</option>
-                                                    <option value="Yes">Yes</option>
-                                                    <option value="No">No</option>
-                                                    <option value="N/A">N/A</option>
+                                                    <option value="Yes" @if($checklist18 && $checklist18->checklist_LL_P2P_response_187) {{ $checklist18->checklist_LL_P2P_response_187 == "Yes" ? 'selected' : '' }}@endif>Yes</option>
+                                                    <option  value="No"  @if($checklist18 && $checklist18->checklist_LL_P2P_response_187) {{ $checklist18->checklist_LL_P2P_response_187 == "No" ? 'selected' : '' }} @endif>No</option>
+                                                    <option value="N/A" @if($checklist18 && $checklist18->checklist_LL_P2P_response_187) {{ $checklist18->checklist_LL_P2P_response_187 == "N/A" ? 'selected' : '' }}@endif>N/A</option>
+
                                                 </select>
                                             </div>
                                         </td>
@@ -16081,7 +16427,7 @@ $checklistqualitycontrol = [
                                         <td style="vertical-align: middle;">
                                             <div
                                                 style="margin: auto; display: flex; justify-content: center;">
-                                                <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                <textarea name="checklist_LL_P2P_remark_187" style="border-radius: 7px; border: 1.5px solid black;">@if( $checklist18 && $checklist18->checklist_LL_P2P_remark_187){{ $checklist18->checklist_LL_P2P_remark_187 }}@endif</textarea>                                            </div>
                                             </div>
                                         </td>
                                     </tr>
@@ -16094,12 +16440,13 @@ $checklistqualitycontrol = [
                                         <td>
                                             <div
                                                 style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                <select name="response" id="response"
+                                                <select name="checklist_LL_P2P_response_188" id="checklist_LL_P2P_response_188"
                                                     style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                     <option value="">Select an Option</option>
-                                                    <option value="Yes">Yes</option>
-                                                    <option value="No">No</option>
-                                                    <option value="N/A">N/A</option>
+                                                    <option value="Yes" @if($checklist18 && $checklist18->checklist_LL_P2P_response_188) {{ $checklist18->checklist_LL_P2P_response_188 == "Yes" ? 'selected' : '' }}@endif>Yes</option>
+                                                    <option  value="No"  @if($checklist18 && $checklist18->checklist_LL_P2P_response_188) {{ $checklist18->checklist_LL_P2P_response_188 == "No" ? 'selected' : '' }} @endif>No</option>
+                                                    <option value="N/A" @if($checklist18 && $checklist18->checklist_LL_P2P_response_188) {{ $checklist18->checklist_LL_P2P_response_188 == "N/A" ? 'selected' : '' }}@endif>N/A</option>
+
                                                 </select>
                                             </div>
                                         </td>
@@ -16107,7 +16454,7 @@ $checklistqualitycontrol = [
                                         <td style="vertical-align: middle;">
                                             <div
                                                 style="margin: auto; display: flex; justify-content: center;">
-                                                <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                <textarea name="checklist_LL_P2P_remark_188" style="border-radius: 7px; border: 1.5px solid black;">@if( $checklist18 && $checklist18->checklist_LL_P2P_remark_188){{ $checklist18->checklist_LL_P2P_remark_188 }}@endif</textarea>                                            </div>
                                             </div>
                                         </td>
                                     </tr>
@@ -16120,12 +16467,13 @@ $checklistqualitycontrol = [
                                         <td>
                                             <div
                                                 style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                <select name="response" id="response"
+                                                <select name="checklist_LL_P2P_response_189" id="checklist_LL_P2P_response_189"
                                                     style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                     <option value="">Select an Option</option>
-                                                    <option value="Yes">Yes</option>
-                                                    <option value="No">No</option>
-                                                    <option value="N/A">N/A</option>
+                                                    <option value="Yes" @if($checklist18 && $checklist18->checklist_LL_P2P_response_189) {{ $checklist18->checklist_LL_P2P_response_189 == "Yes" ? 'selected' : '' }}@endif>Yes</option>
+                                                    <option  value="No"  @if($checklist18 && $checklist18->checklist_LL_P2P_response_189) {{ $checklist18->checklist_LL_P2P_response_189 == "No" ? 'selected' : '' }} @endif>No</option>
+                                                    <option value="N/A" @if($checklist18 && $checklist18->checklist_LL_P2P_response_189) {{ $checklist18->checklist_LL_P2P_response_189 == "N/A" ? 'selected' : '' }}@endif>N/A</option>
+
                                                 </select>
                                             </div>
                                         </td>
@@ -16133,7 +16481,7 @@ $checklistqualitycontrol = [
                                         <td style="vertical-align: middle;">
                                             <div
                                                 style="margin: auto; display: flex; justify-content: center;">
-                                                <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                <textarea name="checklist_LL_P2P_remark_189" style="border-radius: 7px; border: 1.5px solid black;">@if( $checklist18 && $checklist18->checklist_LL_P2P_remark_189){{ $checklist18->checklist_LL_P2P_remark_189 }}@endif</textarea>                                            </div>
                                             </div>
                                         </td>
                                     </tr>
@@ -16146,12 +16494,13 @@ $checklistqualitycontrol = [
                                         <td>
                                             <div
                                                 style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                <select name="response" id="response"
+                                                <select name="checklist_LL_P2P_response_190" id="checklist_LL_P2P_response_190"
                                                     style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                     <option value="">Select an Option</option>
-                                                    <option value="Yes">Yes</option>
-                                                    <option value="No">No</option>
-                                                    <option value="N/A">N/A</option>
+                                                    <option value="Yes" @if($checklist18 && $checklist18->checklist_LL_P2P_response_190) {{ $checklist18->checklist_LL_P2P_response_190 == "Yes" ? 'selected' : '' }}@endif>Yes</option>
+                                                    <option  value="No"  @if($checklist18 && $checklist18->checklist_LL_P2P_response_190) {{ $checklist18->checklist_LL_P2P_response_190 == "No" ? 'selected' : '' }} @endif>No</option>
+                                                    <option value="N/A" @if($checklist18 && $checklist18->checklist_LL_P2P_response_190) {{ $checklist18->checklist_LL_P2P_response_190 == "N/A" ? 'selected' : '' }}@endif>N/A</option>
+
                                                 </select>
                                             </div>
                                         </td>
@@ -16159,7 +16508,7 @@ $checklistqualitycontrol = [
                                         <td style="vertical-align: middle;">
                                             <div
                                                 style="margin: auto; display: flex; justify-content: center;">
-                                                <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                <textarea name="checklist_LL_P2P_remark_190" style="border-radius: 7px; border: 1.5px solid black;">@if( $checklist18 && $checklist18->checklist_LL_P2P_remark_190){{ $checklist18->checklist_LL_P2P_remark_190 }}@endif</textarea>                                            </div>
                                             </div>
                                         </td>
                                     </tr>
@@ -16172,12 +16521,13 @@ $checklistqualitycontrol = [
                                         <td>
                                             <div
                                                 style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                <select name="response" id="response"
+                                                <select name="checklist_LL_P2P_response_191" id="checklist_LL_P2P_response_191"
                                                     style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                     <option value="">Select an Option</option>
-                                                    <option value="Yes">Yes</option>
-                                                    <option value="No">No</option>
-                                                    <option value="N/A">N/A</option>
+                                                    <option value="Yes" @if($checklist18 && $checklist18->checklist_LL_P2P_response_191) {{ $checklist18->checklist_LL_P2P_response_191 == "Yes" ? 'selected' : '' }}@endif>Yes</option>
+                                                    <option  value="No"  @if($checklist18 && $checklist18->checklist_LL_P2P_response_191) {{ $checklist18->checklist_LL_P2P_response_191 == "No" ? 'selected' : '' }} @endif>No</option>
+                                                    <option value="N/A" @if($checklist18 && $checklist18->checklist_LL_P2P_response_191) {{ $checklist18->checklist_LL_P2P_response_191 == "N/A" ? 'selected' : '' }}@endif>N/A</option>
+
                                                 </select>
                                             </div>
                                         </td>
@@ -16185,7 +16535,7 @@ $checklistqualitycontrol = [
                                         <td style="vertical-align: middle;">
                                             <div
                                                 style="margin: auto; display: flex; justify-content: center;">
-                                                <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                <textarea name="checklist_LL_P2P_remark_191" style="border-radius: 7px; border: 1.5px solid black;">@if( $checklist18 && $checklist18->checklist_LL_P2P_remark_191){{ $checklist18->checklist_LL_P2P_remark_191 }}@endif</textarea>                                            </div>
                                             </div>
                                         </td>
                                     </tr>
@@ -16198,12 +16548,13 @@ $checklistqualitycontrol = [
                                         <td>
                                             <div
                                                 style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                <select name="response" id="response"
+                                                <select name="checklist_LL_P2P_response_192" id="checklist_LL_P2P_response_192"
                                                     style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                     <option value="">Select an Option</option>
-                                                    <option value="Yes">Yes</option>
-                                                    <option value="No">No</option>
-                                                    <option value="N/A">N/A</option>
+                                                    <option value="Yes" @if($checklist18 && $checklist18->checklist_LL_P2P_response_192) {{ $checklist18->checklist_LL_P2P_response_192 == "Yes" ? 'selected' : '' }}@endif>Yes</option>
+                                                    <option  value="No"  @if($checklist18 && $checklist18->checklist_LL_P2P_response_192) {{ $checklist18->checklist_LL_P2P_response_192 == "No" ? 'selected' : '' }} @endif>No</option>
+                                                    <option value="N/A" @if($checklist18 && $checklist18->checklist_LL_P2P_response_192) {{ $checklist18->checklist_LL_P2P_response_192 == "N/A" ? 'selected' : '' }}@endif>N/A</option>
+
                                                 </select>
                                             </div>
                                         </td>
@@ -16211,7 +16562,7 @@ $checklistqualitycontrol = [
                                         <td style="vertical-align: middle;">
                                             <div
                                                 style="margin: auto; display: flex; justify-content: center;">
-                                                <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                <textarea name="checklist_LL_P2P_remark_192" style="border-radius: 7px; border: 1.5px solid black;">@if( $checklist18 && $checklist18->checklist_LL_P2P_remark_192){{ $checklist18->checklist_LL_P2P_remark_192 }}@endif</textarea>                                            </div>
                                             </div>
                                         </td>
                                     </tr>
@@ -16224,12 +16575,13 @@ $checklistqualitycontrol = [
                                         <td>
                                             <div
                                                 style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                <select name="response" id="response"
+                                                <select name="checklist_LL_P2P_response_193" id="checklist_LL_P2P_response_193"
                                                     style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                     <option value="">Select an Option</option>
-                                                    <option value="Yes">Yes</option>
-                                                    <option value="No">No</option>
-                                                    <option value="N/A">N/A</option>
+                                                    <option value="Yes" @if($checklist18 && $checklist18->checklist_LL_P2P_response_193) {{ $checklist18->checklist_LL_P2P_response_193 == "Yes" ? 'selected' : '' }}@endif>Yes</option>
+                                                    <option  value="No"  @if($checklist18 && $checklist18->checklist_LL_P2P_response_193) {{ $checklist18->checklist_LL_P2P_response_193 == "No" ? 'selected' : '' }} @endif>No</option>
+                                                    <option value="N/A" @if($checklist18 && $checklist18->checklist_LL_P2P_response_193) {{ $checklist18->checklist_LL_P2P_response_193 == "N/A" ? 'selected' : '' }}@endif>N/A</option>
+
                                                 </select>
                                             </div>
                                         </td>
@@ -16237,7 +16589,7 @@ $checklistqualitycontrol = [
                                         <td style="vertical-align: middle;">
                                             <div
                                                 style="margin: auto; display: flex; justify-content: center;">
-                                                <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                <textarea name="checklist_LL_P2P_remark_193" style="border-radius: 7px; border: 1.5px solid black;">@if( $checklist18 && $checklist18->checklist_LL_P2P_remark_193){{ $checklist18->checklist_LL_P2P_remark_193 }}@endif</textarea>                                            </div>
                                             </div>
                                         </td>
                                     </tr>
@@ -16271,15 +16623,26 @@ $checklistqualitycontrol = [
                                             <td>
                                                 Are written procedures and specifications are available for
 
-
-
                                             </td>
                                             <td>
+                                                <div
+                                                    style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
+                                                    <select name="checklist_LL_P2P_response_194" id="checklist_LL_P2P_response_194"
+                                                        style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
+                                                        <option value="">Select an Option</option>
+                                                        <option value="Yes" @if($checklist18 && $checklist18->checklist_LL_P2P_response_194) {{ $checklist18->checklist_LL_P2P_response_194 == "Yes" ? 'selected' : '' }}@endif>Yes</option>
+                                                        <option  value="No"  @if($checklist18 && $checklist18->checklist_LL_P2P_response_194) {{ $checklist18->checklist_LL_P2P_response_194 == "No" ? 'selected' : '' }} @endif>No</option>
+                                                        <option value="N/A" @if($checklist18 && $checklist18->checklist_LL_P2P_response_194) {{ $checklist18->checklist_LL_P2P_response_194 == "N/A" ? 'selected' : '' }}@endif>N/A</option>
 
+                                                    </select>
+                                                </div>
                                             </td>
 
                                             <td style="vertical-align: middle;">
-
+                                                <div
+                                                    style="margin: auto; display: flex; justify-content: center;">
+                                                    <textarea name="checklist_LL_P2P_remark_194" style="border-radius: 7px; border: 1.5px solid black;">@if( $checklist18 && $checklist18->checklist_LL_P2P_remark_194){{ $checklist18->checklist_LL_P2P_remark_194 }}@endif</textarea>                                            </div>
+                                                </div>
                                             </td>
 
                                         </tr>
@@ -16287,21 +16650,19 @@ $checklistqualitycontrol = [
                                         <tr>
                                             <td class="flex text-center">9.1.1</td>
                                             <td>
-
                                                     Packaging components
 
-
-
                                             </td>
                                             <td>
                                                 <div
                                                     style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                    <select name="response" id="response"
+                                                    <select name="checklist_LL_P2P_response_195" id="checklist_LL_P2P_response_195"
                                                         style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                         <option value="">Select an Option</option>
-                                                        <option value="Yes">Yes</option>
-                                                        <option value="No">No</option>
-                                                        <option value="N/A">N/A</option>
+                                                        <option value="Yes" @if($checklist18 && $checklist18->checklist_LL_P2P_response_195) {{ $checklist18->checklist_LL_P2P_response_195 == "Yes" ? 'selected' : '' }}@endif>Yes</option>
+                                                        <option  value="No"  @if($checklist18 && $checklist18->checklist_LL_P2P_response_195) {{ $checklist18->checklist_LL_P2P_response_195 == "No" ? 'selected' : '' }} @endif>No</option>
+                                                        <option value="N/A" @if($checklist18 && $checklist18->checklist_LL_P2P_response_195) {{ $checklist18->checklist_LL_P2P_response_195 == "N/A" ? 'selected' : '' }}@endif>N/A</option>
+
                                                     </select>
                                                 </div>
                                             </td>
@@ -16309,28 +16670,27 @@ $checklistqualitycontrol = [
                                             <td style="vertical-align: middle;">
                                                 <div
                                                     style="margin: auto; display: flex; justify-content: center;">
-                                                    <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                    <textarea name="checklist_LL_P2P_remark_195" style="border-radius: 7px; border: 1.5px solid black;">@if( $checklist18 && $checklist18->checklist_LL_P2P_remark_195){{ $checklist18->checklist_LL_P2P_remark_195 }}@endif</textarea>                                            </div>
                                                 </div>
                                             </td>
 
-                                        </tr> <tr>
+                                        </tr>
+                                        <tr>
                                             <td class="flex text-center">9.1.2</td>
                                             <td>
-
                                                     Packing operation
-
-
 
                                             </td>
                                             <td>
                                                 <div
                                                     style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                    <select name="response" id="response"
+                                                    <select name="checklist_LL_P2P_response_196" id="checklist_LL_P2P_response_196"
                                                         style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                         <option value="">Select an Option</option>
-                                                        <option value="Yes">Yes</option>
-                                                        <option value="No">No</option>
-                                                        <option value="N/A">N/A</option>
+                                                        <option value="Yes" @if($checklist18 && $checklist18->checklist_LL_P2P_response_196) {{ $checklist18->checklist_LL_P2P_response_196 == "Yes" ? 'selected' : '' }}@endif>Yes</option>
+                                                        <option  value="No"  @if($checklist18 && $checklist18->checklist_LL_P2P_response_196) {{ $checklist18->checklist_LL_P2P_response_196 == "No" ? 'selected' : '' }} @endif>No</option>
+                                                        <option value="N/A" @if($checklist18 && $checklist18->checklist_LL_P2P_response_196) {{ $checklist18->checklist_LL_P2P_response_196 == "N/A" ? 'selected' : '' }}@endif>N/A</option>
+
                                                     </select>
                                                 </div>
                                             </td>
@@ -16338,7 +16698,7 @@ $checklistqualitycontrol = [
                                             <td style="vertical-align: middle;">
                                                 <div
                                                     style="margin: auto; display: flex; justify-content: center;">
-                                                    <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                    <textarea name="checklist_LL_P2P_remark_196" style="border-radius: 7px; border: 1.5px solid black;">@if( $checklist18 && $checklist18->checklist_LL_P2P_remark_196){{ $checklist18->checklist_LL_P2P_remark_196 }}@endif</textarea>                                            </div>
                                                 </div>
                                             </td>
 
@@ -16356,12 +16716,13 @@ $checklistqualitycontrol = [
                                             <td>
                                                 <div
                                                     style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                    <select name="response" id="response"
+                                                    <select name="checklist_LL_P2P_response_197" id="checklist_LL_P2P_response_197"
                                                         style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                         <option value="">Select an Option</option>
-                                                        <option value="Yes">Yes</option>
-                                                        <option value="No">No</option>
-                                                        <option value="N/A">N/A</option>
+                                                        <option value="Yes" @if($checklist18 && $checklist18->checklist_LL_P2P_response_197) {{ $checklist18->checklist_LL_P2P_response_197 == "Yes" ? 'selected' : '' }}@endif>Yes</option>
+                                                        <option  value="No"  @if($checklist18 && $checklist18->checklist_LL_P2P_response_197) {{ $checklist18->checklist_LL_P2P_response_197 == "No" ? 'selected' : '' }} @endif>No</option>
+                                                        <option value="N/A" @if($checklist18 && $checklist18->checklist_LL_P2P_response_197) {{ $checklist18->checklist_LL_P2P_response_197 == "N/A" ? 'selected' : '' }}@endif>N/A</option>
+
                                                     </select>
                                                 </div>
                                             </td>
@@ -16369,7 +16730,7 @@ $checklistqualitycontrol = [
                                             <td style="vertical-align: middle;">
                                                 <div
                                                     style="margin: auto; display: flex; justify-content: center;">
-                                                    <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                    <textarea name="checklist_LL_P2P_remark_197" style="border-radius: 7px; border: 1.5px solid black;">@if( $checklist18 && $checklist18->checklist_LL_P2P_remark_197){{ $checklist18->checklist_LL_P2P_remark_197 }}@endif</textarea>                                            </div>
                                                 </div>
                                             </td>
 
@@ -16383,12 +16744,13 @@ $checklistqualitycontrol = [
                                             <td>
                                                 <div
                                                     style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                    <select name="response" id="response"
+                                                    <select name="checklist_LL_P2P_response_198" id="checklist_LL_P2P_response_198"
                                                         style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                         <option value="">Select an Option</option>
-                                                        <option value="Yes">Yes</option>
-                                                        <option value="No">No</option>
-                                                        <option value="N/A">N/A</option>
+                                                        <option value="Yes" @if($checklist18 && $checklist18->checklist_LL_P2P_response_198) {{ $checklist18->checklist_LL_P2P_response_198 == "Yes" ? 'selected' : '' }}@endif>Yes</option>
+                                                        <option  value="No"  @if($checklist18 && $checklist18->checklist_LL_P2P_response_198) {{ $checklist18->checklist_LL_P2P_response_198 == "No" ? 'selected' : '' }} @endif>No</option>
+                                                        <option value="N/A" @if($checklist18 && $checklist18->checklist_LL_P2P_response_198) {{ $checklist18->checklist_LL_P2P_response_198 == "N/A" ? 'selected' : '' }}@endif>N/A</option>
+
                                                     </select>
                                                 </div>
                                             </td>
@@ -16396,7 +16758,7 @@ $checklistqualitycontrol = [
                                             <td style="vertical-align: middle;">
                                                 <div
                                                     style="margin: auto; display: flex; justify-content: center;">
-                                                    <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                    <textarea name="checklist_LL_P2P_remark_198" style="border-radius: 7px; border: 1.5px solid black;">@if( $checklist18 && $checklist18->checklist_LL_P2P_remark_198){{ $checklist18->checklist_LL_P2P_remark_198 }}@endif</textarea>                                            </div>
                                                 </div>
                                             </td>
 
@@ -16412,11 +16774,12 @@ $checklistqualitycontrol = [
                                             <td>
                                                 <div
                                                     style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                    <select name="response" id="response"
+                                                    <select name="checklist_LL_P2P_response_199" id="checklist_LL_P2P_response_199"
                                                         style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                        <option value="">Select an Option</option>
-                                                        <option value="Yes">Supplier-Contractor</option>
-                                                        <option value="No">Owned</option>
+                                                        <option value="Yes" @if($checklist18 && $checklist18->checklist_LL_P2P_response_199) {{ $checklist18->checklist_LL_P2P_response_199 == "Yes" ? 'selected' : '' }}@endif>Yes</option>
+                                                        <option  value="No"  @if($checklist18 && $checklist18->checklist_LL_P2P_response_199) {{ $checklist18->checklist_LL_P2P_response_199 == "No" ? 'selected' : '' }} @endif>No</option>
+                                                        <option value="N/A" @if($checklist18 && $checklist18->checklist_LL_P2P_response_199) {{ $checklist18->checklist_LL_P2P_response_199 == "N/A" ? 'selected' : '' }}@endif>N/A</option>
+
 
                                                     </select>
                                                 </div>
@@ -16425,7 +16788,7 @@ $checklistqualitycontrol = [
                                             <td style="vertical-align: middle;">
                                                 <div
                                                     style="margin: auto; display: flex; justify-content: center;">
-                                                    <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                    <textarea name="checklist_LL_P2P_remark_199" style="border-radius: 7px; border: 1.5px solid black;">@if( $checklist18 && $checklist18->checklist_LL_P2P_remark_199){{ $checklist18->checklist_LL_P2P_remark_199 }}@endif</textarea>                                            </div>
                                                 </div>
                                             </td>
                                         </tr>
@@ -16438,12 +16801,13 @@ $checklistqualitycontrol = [
                                             <td>
                                                 <div
                                                     style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                    <select name="response" id="response"
+                                                    <select name="checklist_LL_P2P_response_200" id="checklist_LL_P2P_response_200"
                                                         style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                         <option value="">Select an Option</option>
-                                                        <option value="Yes">Yes</option>
-                                                        <option value="No">No</option>
-                                                        <option value="N/A">N/A</option>
+                                                        <option value="Yes" @if($checklist18 && $checklist18->checklist_LL_P2P_response_200) {{ $checklist18->checklist_LL_P2P_response_200 == "Yes" ? 'selected' : '' }}@endif>Yes</option>
+                                                        <option  value="No"  @if($checklist18 && $checklist18->checklist_LL_P2P_response_200) {{ $checklist18->checklist_LL_P2P_response_200 == "No" ? 'selected' : '' }} @endif>No</option>
+                                                        <option value="N/A" @if($checklist18 && $checklist18->checklist_LL_P2P_response_200) {{ $checklist18->checklist_LL_P2P_response_200 == "N/A" ? 'selected' : '' }}@endif>N/A</option>
+
                                                     </select>
                                                 </div>
                                             </td>
@@ -16451,7 +16815,7 @@ $checklistqualitycontrol = [
                                             <td style="vertical-align: middle;">
                                                 <div
                                                     style="margin: auto; display: flex; justify-content: center;">
-                                                    <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                    <textarea name="checklist_LL_P2P_remark_200" style="border-radius: 7px; border: 1.5px solid black;">@if( $checklist18 && $checklist18->checklist_LL_P2P_remark_200){{ $checklist18->checklist_LL_P2P_remark_200 }}@endif</textarea>                                            </div>
                                                 </div>
                                             </td>
                                         </tr>
@@ -16463,11 +16827,24 @@ $checklistqualitycontrol = [
 
                                             </td>
                                             <td>
+                                                <div
+                                                    style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
+                                                    <select name="checklist_LL_P2P_response_201" id="checklist_LL_P2P_response_201"
+                                                        style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
+                                                        <option value="">Select an Option</option>
+                                                        <option value="Yes" @if($checklist18 && $checklist18->checklist_LL_P2P_response_201) {{ $checklist18->checklist_LL_P2P_response_201 == "Yes" ? 'selected' : '' }}@endif>Yes</option>
+                                                        <option  value="No"  @if($checklist18 && $checklist18->checklist_LL_P2P_response_201) {{ $checklist18->checklist_LL_P2P_response_201 == "No" ? 'selected' : '' }} @endif>No</option>
+                                                        <option value="N/A" @if($checklist18 && $checklist18->checklist_LL_P2P_response_201) {{ $checklist18->checklist_LL_P2P_response_201 == "N/A" ? 'selected' : '' }}@endif>N/A</option>
 
+                                                    </select>
+                                                </div>
                                             </td>
 
                                             <td style="vertical-align: middle;">
-
+                                                <div
+                                                    style="margin: auto; display: flex; justify-content: center;">
+                                                    <textarea name="checklist_LL_P2P_remark_201" style="border-radius: 7px; border: 1.5px solid black;">@if( $checklist18 && $checklist18->checklist_LL_P2P_remark_201){{ $checklist18->checklist_LL_P2P_remark_201 }}@endif</textarea>                                            </div>
+                                                </div>
                                             </td>
                                         </tr>
                                         <tr>
@@ -16481,12 +16858,13 @@ $checklistqualitycontrol = [
                                             <td>
                                                 <div
                                                     style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                    <select name="response" id="response"
+                                                    <select name="checklist_LL_P2P_response_202" id="checklist_LL_P2P_response_202"
                                                         style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                         <option value="">Select an Option</option>
-                                                        <option value="Yes">Yes</option>
-                                                        <option value="No">No</option>
-                                                        <option value="N/A">N/A</option>
+                                                        <option value="Yes" @if($checklist18 && $checklist18->checklist_LL_P2P_response_202) {{ $checklist18->checklist_LL_P2P_response_202 == "Yes" ? 'selected' : '' }}@endif>Yes</option>
+                                                        <option  value="No"  @if($checklist18 && $checklist18->checklist_LL_P2P_response_202) {{ $checklist18->checklist_LL_P2P_response_202 == "No" ? 'selected' : '' }} @endif>No</option>
+                                                        <option value="N/A" @if($checklist18 && $checklist18->checklist_LL_P2P_response_202) {{ $checklist18->checklist_LL_P2P_response_202 == "N/A" ? 'selected' : '' }}@endif>N/A</option>
+
                                                     </select>
                                                 </div>
                                             </td>
@@ -16494,7 +16872,7 @@ $checklistqualitycontrol = [
                                             <td style="vertical-align: middle;">
                                                 <div
                                                     style="margin: auto; display: flex; justify-content: center;">
-                                                    <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                    <textarea name="checklist_LL_P2P_remark_202" style="border-radius: 7px; border: 1.5px solid black;">@if( $checklist18 && $checklist18->checklist_LL_P2P_remark_202){{ $checklist18->checklist_LL_P2P_remark_202 }}@endif</textarea>                                            </div>
                                                 </div>
                                             </td>
                                         </tr> <tr>
@@ -16507,12 +16885,13 @@ $checklistqualitycontrol = [
                                             <td>
                                                 <div
                                                     style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                    <select name="response" id="response"
+                                                    <select name="checklist_LL_P2P_response_203" id="checklist_LL_P2P_response_203"
                                                         style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                         <option value="">Select an Option</option>
-                                                        <option value="Yes">Yes</option>
-                                                        <option value="No">No</option>
-                                                        <option value="N/A">N/A</option>
+                                                        <option value="Yes" @if($checklist18 && $checklist18->checklist_LL_P2P_response_203) {{ $checklist18->checklist_LL_P2P_response_203 == "Yes" ? 'selected' : '' }}@endif>Yes</option>
+                                                        <option  value="No"  @if($checklist18 && $checklist18->checklist_LL_P2P_response_203) {{ $checklist18->checklist_LL_P2P_response_203 == "No" ? 'selected' : '' }} @endif>No</option>
+                                                        <option value="N/A" @if($checklist18 && $checklist18->checklist_LL_P2P_response_203) {{ $checklist18->checklist_LL_P2P_response_203 == "N/A" ? 'selected' : '' }}@endif>N/A</option>
+
                                                     </select>
                                                 </div>
                                             </td>
@@ -16520,7 +16899,7 @@ $checklistqualitycontrol = [
                                             <td style="vertical-align: middle;">
                                                 <div
                                                     style="margin: auto; display: flex; justify-content: center;">
-                                                    <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                    <textarea name="checklist_LL_P2P_remark_203" style="border-radius: 7px; border: 1.5px solid black;">@if( $checklist18 && $checklist18->checklist_LL_P2P_remark_203){{ $checklist18->checklist_LL_P2P_remark_203 }}@endif</textarea>                                            </div>
                                                 </div>
                                             </td>
                                         </tr>
@@ -16533,12 +16912,13 @@ $checklistqualitycontrol = [
                                             <td>
                                                 <div
                                                     style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                    <select name="response" id="response"
+                                                    <select name="checklist_LL_P2P_response_204" id="checklist_LL_P2P_response_204"
                                                         style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                         <option value="">Select an Option</option>
-                                                        <option value="Yes">Yes</option>
-                                                        <option value="No">No</option>
-                                                        <option value="N/A">N/A</option>
+                                                        <option value="Yes" @if($checklist18 && $checklist18->checklist_LL_P2P_response_204) {{ $checklist18->checklist_LL_P2P_response_204 == "Yes" ? 'selected' : '' }}@endif>Yes</option>
+                                                        <option  value="No"  @if($checklist18 && $checklist18->checklist_LL_P2P_response_204) {{ $checklist18->checklist_LL_P2P_response_204 == "No" ? 'selected' : '' }} @endif>No</option>
+                                                        <option value="N/A" @if($checklist18 && $checklist18->checklist_LL_P2P_response_204) {{ $checklist18->checklist_LL_P2P_response_204 == "N/A" ? 'selected' : '' }}@endif>N/A</option>
+
                                                     </select>
                                                 </div>
                                             </td>
@@ -16546,7 +16926,7 @@ $checklistqualitycontrol = [
                                             <td style="vertical-align: middle;">
                                                 <div
                                                     style="margin: auto; display: flex; justify-content: center;">
-                                                    <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                    <textarea name="checklist_LL_P2P_remark_204" style="border-radius: 7px; border: 1.5px solid black;">@if( $checklist18 && $checklist18->checklist_LL_P2P_remark_204){{ $checklist18->checklist_LL_P2P_remark_204 }}@endif</textarea>                                            </div>
                                                 </div>
                                             </td>
                                         </tr>
@@ -16559,12 +16939,13 @@ $checklistqualitycontrol = [
                                             <td>
                                                 <div
                                                     style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                    <select name="response" id="response"
+                                                    <select name="checklist_LL_P2P_response_205" id="checklist_LL_P2P_response_205"
                                                         style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                         <option value="">Select an Option</option>
-                                                        <option value="Yes">Yes</option>
-                                                        <option value="No">No</option>
-                                                        <option value="N/A">N/A</option>
+                                                        <option value="Yes" @if($checklist18 && $checklist18->checklist_LL_P2P_response_205) {{ $checklist18->checklist_LL_P2P_response_205 == "Yes" ? 'selected' : '' }}@endif>Yes</option>
+                                                        <option  value="No"  @if($checklist18 && $checklist18->checklist_LL_P2P_response_205) {{ $checklist18->checklist_LL_P2P_response_205 == "No" ? 'selected' : '' }} @endif>No</option>
+                                                        <option value="N/A" @if($checklist18 && $checklist18->checklist_LL_P2P_response_205) {{ $checklist18->checklist_LL_P2P_response_205 == "N/A" ? 'selected' : '' }}@endif>N/A</option>
+
                                                     </select>
                                                 </div>
                                             </td>
@@ -16572,7 +16953,7 @@ $checklistqualitycontrol = [
                                             <td style="vertical-align: middle;">
                                                 <div
                                                     style="margin: auto; display: flex; justify-content: center;">
-                                                    <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                    <textarea name="checklist_LL_P2P_remark_205" style="border-radius: 7px; border: 1.5px solid black;">@if( $checklist18 && $checklist18->checklist_LL_P2P_remark_205){{ $checklist18->checklist_LL_P2P_remark_205 }}@endif</textarea>                                            </div>
                                                 </div>
                                             </td>
                                         </tr>
@@ -16585,12 +16966,13 @@ $checklistqualitycontrol = [
                                             <td>
                                                 <div
                                                     style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                    <select name="response" id="response"
+                                                    <select name="checklist_LL_P2P_response_206" id="checklist_LL_P2P_response_206"
                                                         style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                         <option value="">Select an Option</option>
-                                                        <option value="Yes">Yes</option>
-                                                        <option value="No">No</option>
-                                                        <option value="N/A">N/A</option>
+                                                        <option value="Yes" @if($checklist18 && $checklist18->checklist_LL_P2P_response_206) {{ $checklist18->checklist_LL_P2P_response_206 == "Yes" ? 'selected' : '' }}@endif>Yes</option>
+                                                        <option  value="No"  @if($checklist18 && $checklist18->checklist_LL_P2P_response_206) {{ $checklist18->checklist_LL_P2P_response_206 == "No" ? 'selected' : '' }} @endif>No</option>
+                                                        <option value="N/A" @if($checklist18 && $checklist18->checklist_LL_P2P_response_206) {{ $checklist18->checklist_LL_P2P_response_206 == "N/A" ? 'selected' : '' }}@endif>N/A</option>
+
                                                     </select>
                                                 </div>
                                             </td>
@@ -16598,12 +16980,10 @@ $checklistqualitycontrol = [
                                             <td style="vertical-align: middle;">
                                                 <div
                                                     style="margin: auto; display: flex; justify-content: center;">
-                                                    <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                    <textarea name="checklist_LL_P2P_remark_206" style="border-radius: 7px; border: 1.5px solid black;">@if( $checklist18 && $checklist18->checklist_LL_P2P_remark_206){{ $checklist18->checklist_LL_P2P_remark_206 }}@endif</textarea>                                            </div>
                                                 </div>
                                             </td>
                                         </tr>
-
-
 
                                         <tr>
                                             <td class="flex text-center">9.9</td>
@@ -16612,14 +16992,26 @@ $checklistqualitycontrol = [
 
                                             </td>
                                             <td>
+                                                <div
+                                                    style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
+                                                    <select name="checklist_LL_P2P_response_207" id="checklist_LL_P2P_response_207"
+                                                        style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
+                                                        <option value="">Select an Option</option>
+                                                        <option value="Yes" @if($checklist18 && $checklist18->checklist_LL_P2P_response_207) {{ $checklist18->checklist_LL_P2P_response_207 == "Yes" ? 'selected' : '' }}@endif>Yes</option>
+                                                        <option  value="No"  @if($checklist18 && $checklist18->checklist_LL_P2P_response_207) {{ $checklist18->checklist_LL_P2P_response_207 == "No" ? 'selected' : '' }} @endif>No</option>
+                                                        <option value="N/A" @if($checklist18 && $checklist18->checklist_LL_P2P_response_207) {{ $checklist18->checklist_LL_P2P_response_207 == "N/A" ? 'selected' : '' }}@endif>N/A</option>
 
+                                                    </select>
+                                                </div>
                                             </td>
 
                                             <td style="vertical-align: middle;">
-
+                                                <div
+                                                    style="margin: auto; display: flex; justify-content: center;">
+                                                    <textarea name="checklist_LL_P2P_remark_207" style="border-radius: 7px; border: 1.5px solid black;">@if( $checklist18 && $checklist18->checklist_LL_P2P_remark_207){{ $checklist18->checklist_LL_P2P_remark_207 }}@endif</textarea>                                            </div>
+                                                </div>
                                             </td>
-                                        </tr>
-                                        <tr>
+                                          <tr>
                                             <td class="flex text-center">9.9.1</td>
                                             <td>
 
@@ -16630,12 +17022,13 @@ $checklistqualitycontrol = [
                                             <td>
                                                 <div
                                                     style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                    <select name="response" id="response"
+                                                    <select name="checklist_LL_P2P_response_208" id="checklist_LL_P2P_response_208"
                                                         style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                         <option value="">Select an Option</option>
-                                                        <option value="Yes">Yes</option>
-                                                        <option value="No">No</option>
-                                                        <option value="N/A">N/A</option>
+                                                        <option value="Yes" @if($checklist18 && $checklist18->checklist_LL_P2P_response_208) {{ $checklist18->checklist_LL_P2P_response_208 == "Yes" ? 'selected' : '' }}@endif>Yes</option>
+                                                        <option  value="No"  @if($checklist18 && $checklist18->checklist_LL_P2P_response_208) {{ $checklist18->checklist_LL_P2P_response_208 == "No" ? 'selected' : '' }} @endif>No</option>
+                                                        <option value="N/A" @if($checklist18 && $checklist18->checklist_LL_P2P_response_208) {{ $checklist18->checklist_LL_P2P_response_208 == "N/A" ? 'selected' : '' }}@endif>N/A</option>
+
                                                     </select>
                                                 </div>
                                             </td>
@@ -16643,33 +17036,39 @@ $checklistqualitycontrol = [
                                             <td style="vertical-align: middle;">
                                                 <div
                                                     style="margin: auto; display: flex; justify-content: center;">
-                                                    <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                    <textarea name="checklist_LL_P2P_remark_208" style="border-radius: 7px; border: 1.5px solid black;">@if( $checklist18 && $checklist18->checklist_LL_P2P_remark_208){{ $checklist18->checklist_LL_P2P_remark_208 }}@endif</textarea>                                            </div>
                                                 </div>
                                             </td>
                                         </tr> <tr>
                                             <td class="flex text-center">9.9.2</td>
                                             <td>
-
                                                     Batch Number?
-
 
                                             </td>
                                             <td>
                                                 <div
-                                style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                <input type="number"
-                                    style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
+                                                    style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
+                                                    <select name="checklist_LL_P2P_response_209" id="checklist_LL_P2P_response_209"
+                                                        style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
+                                                        <option value="">Select an Option</option>
+                                                        <option value="Yes" @if($checklist18 && $checklist18->checklist_LL_P2P_response_209) {{ $checklist18->checklist_LL_P2P_response_209 == "Yes" ? 'selected' : '' }}@endif>Yes</option>
+                                                        <option  value="No"  @if($checklist18 && $checklist18->checklist_LL_P2P_response_209) {{ $checklist18->checklist_LL_P2P_response_209 == "No" ? 'selected' : '' }} @endif>No</option>
+                                                        <option value="N/A" @if($checklist18 && $checklist18->checklist_LL_P2P_response_209) {{ $checklist18->checklist_LL_P2P_response_209 == "N/A" ? 'selected' : '' }}@endif>N/A</option>
 
-                            </div>
+                                                    </select>
+                                                </div>
                                             </td>
 
                                             <td style="vertical-align: middle;">
                                                 <div
                                                     style="margin: auto; display: flex; justify-content: center;">
-                                                    <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                    <textarea name="checklist_LL_P2P_remark_209" style="border-radius: 7px; border: 1.5px solid black;">@if( $checklist18 && $checklist18->checklist_LL_P2P_remark_209){{ $checklist18->checklist_LL_P2P_remark_209 }}@endif</textarea>                                            </div>
                                                 </div>
                                             </td>
-                                        </tr> <tr>
+
+
+                                        </tr>
+                                        <tr>
                                             <td class="flex text-center">9.9.3</td>
                                             <td>
 
@@ -16680,12 +17079,12 @@ $checklistqualitycontrol = [
                                             <td>
                                                 <div
                                                     style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                    <select name="response" id="response"
+                                                    <select name="checklist_LL_P2P_response_210" id="checklist_LL_P2P_response_210"
                                                         style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                         <option value="">Select an Option</option>
-                                                        <option value="Yes">Yes</option>
-                                                        <option value="No">No</option>
-                                                        <option value="N/A">N/A</option>
+                                                        <option value="Yes" @if($checklist18 && $checklist18->checklist_LL_P2P_response_210) {{ $checklist18->checklist_LL_P2P_response_210 == "Yes" ? 'selected' : '' }}@endif>Yes</option>
+                                                        <option  value="No"  @if($checklist18 && $checklist18->checklist_LL_P2P_response_210) {{ $checklist18->checklist_LL_P2P_response_210 == "No" ? 'selected' : '' }} @endif>No</option>
+                                                        <option value="N/A" @if($checklist18 && $checklist18->checklist_LL_P2P_response_210) {{ $checklist18->checklist_LL_P2P_response_210 == "N/A" ? 'selected' : '' }}@endif>N/A</option>
                                                     </select>
                                                 </div>
                                             </td>
@@ -16693,7 +17092,7 @@ $checklistqualitycontrol = [
                                             <td style="vertical-align: middle;">
                                                 <div
                                                     style="margin: auto; display: flex; justify-content: center;">
-                                                    <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                    <textarea name="checklist_LL_P2P_remark_210" style="border-radius: 7px; border: 1.5px solid black;">@if( $checklist18 && $checklist18->checklist_LL_P2P_remark_210){{ $checklist18->checklist_LL_P2P_remark_210 }}@endif</textarea>                                            </div>
                                                 </div>
                                             </td>
                                         </tr> <tr>
@@ -16704,20 +17103,26 @@ $checklistqualitycontrol = [
 
 
                                             </td>
-                                            <td> <div
-                                                style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                <input type="number"
-                                                    style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-
-                                            </div>
+                                            <td>
+                                                <div
+                                                    style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
+                                                    <select name="checklist_LL_P2P_response_211" id="checklist_LL_P2P_response_211"
+                                                        style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
+                                                        <option value="">Select an Option</option>
+                                                        <option value="Yes" @if($checklist18 && $checklist18->checklist_LL_P2P_response_211) {{ $checklist18->checklist_LL_P2P_response_211 == "Yes" ? 'selected' : '' }}@endif>Yes</option>
+                                                        <option  value="No"  @if($checklist18 && $checklist18->checklist_LL_P2P_response_211) {{ $checklist18->checklist_LL_P2P_response_211 == "No" ? 'selected' : '' }} @endif>No</option>
+                                                        <option value="N/A" @if($checklist18 && $checklist18->checklist_LL_P2P_response_211) {{ $checklist18->checklist_LL_P2P_response_211 == "N/A" ? 'selected' : '' }}@endif>N/A</option>
+                                                    </select>
+                                                </div>
                                             </td>
 
                                             <td style="vertical-align: middle;">
                                                 <div
                                                     style="margin: auto; display: flex; justify-content: center;">
-                                                    <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                    <textarea name="checklist_LL_P2P_remark_211" style="border-radius: 7px; border: 1.5px solid black;">@if( $checklist18 && $checklist18->checklist_LL_P2P_remark_211){{ $checklist18->checklist_LL_P2P_remark_211 }}@endif</textarea>                                            </div>
                                                 </div>
                                             </td>
+
                                         </tr> <tr>
                                             <td class="flex text-center">9.9.5</td>
                                             <td>
@@ -16728,19 +17133,24 @@ $checklistqualitycontrol = [
                                             </td>
                                             <td>
                                                 <div
-                                style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                <input type="date"
-                                    style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-
-                            </div>
+                                                    style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
+                                                    <select name="checklist_LL_P2P_response_212" id="checklist_LL_P2P_response_212"
+                                                        style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
+                                                        <option value="">Select an Option</option>
+                                                        <option value="Yes" @if($checklist18 && $checklist18->checklist_LL_P2P_response_212) {{ $checklist18->checklist_LL_P2P_response_212 == "Yes" ? 'selected' : '' }}@endif>Yes</option>
+                                                        <option  value="No"  @if($checklist18 && $checklist18->checklist_LL_P2P_response_212) {{ $checklist18->checklist_LL_P2P_response_212 == "No" ? 'selected' : '' }} @endif>No</option>
+                                                        <option value="N/A" @if($checklist18 && $checklist18->checklist_LL_P2P_response_212) {{ $checklist18->checklist_LL_P2P_response_212 == "N/A" ? 'selected' : '' }}@endif>N/A</option>
+                                                    </select>
+                                                </div>
                                             </td>
 
                                             <td style="vertical-align: middle;">
                                                 <div
                                                     style="margin: auto; display: flex; justify-content: center;">
-                                                    <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                    <textarea name="checklist_LL_P2P_remark_210" style="border-radius: 7px; border: 1.5px solid black;">@if( $checklist18 && $checklist18->checklist_LL_P2P_remark_210){{ $checklist18->checklist_LL_P2P_remark_210 }}@endif</textarea>                                            </div>
                                                 </div>
                                             </td>
+
                                         </tr>
                                         <tr>
                                             <td class="flex text-center">9.9.6</td>
@@ -16774,19 +17184,24 @@ $checklistqualitycontrol = [
                                             </td>
                                             <td>
                                                 <div
-                                style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                <input type="text"
-                                    style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-
-                            </div>
+                                                    style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
+                                                    <select name="checklist_LL_P2P_response_213" id="checklist_LL_P2P_response_213"
+                                                        style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
+                                                        <option value="">Select an Option</option>
+                                                        <option value="Yes" @if($checklist18 && $checklist18->checklist_LL_P2P_response_213) {{ $checklist18->checklist_LL_P2P_response_213 == "Yes" ? 'selected' : '' }}@endif>Yes</option>
+                                                        <option  value="No"  @if($checklist18 && $checklist18->checklist_LL_P2P_response_213) {{ $checklist18->checklist_LL_P2P_response_213 == "No" ? 'selected' : '' }} @endif>No</option>
+                                                        <option value="N/A" @if($checklist18 && $checklist18->checklist_LL_P2P_response_213) {{ $checklist18->checklist_LL_P2P_response_213 == "N/A" ? 'selected' : '' }}@endif>N/A</option>
+                                                    </select>
+                                                </div>
                                             </td>
 
                                             <td style="vertical-align: middle;">
                                                 <div
                                                     style="margin: auto; display: flex; justify-content: center;">
-                                                    <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                    <textarea name="checklist_LL_P2P_remark_213" style="border-radius: 7px; border: 1.5px solid black;">@if( $checklist18 && $checklist18->checklist_LL_P2P_remark_213){{ $checklist18->checklist_LL_P2P_remark_213 }}@endif</textarea>                                            </div>
                                                 </div>
                                             </td>
+
                                         </tr>
 
                                     </tbody>
@@ -16821,12 +17236,13 @@ $checklistqualitycontrol = [
                                                 <td>
                                                     <div
                                                         style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                        <select name="response" id="response"
+                                                        <select name="checklist_LL_P2P_response_214" id="checklist_LL_P2P_response_214"
                                                             style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                             <option value="">Select an Option</option>
-                                                            <option value="Yes">Yes</option>
-                                                            <option value="No">No</option>
-                                                            <option value="N/A">N/A</option>
+                                                            <option value="Yes" @if($checklist18 && $checklist18->checklist_LL_P2P_response_214) {{ $checklist18->checklist_LL_P2P_response_214 == "Yes" ? 'selected' : '' }}@endif>Yes</option>
+                                                        <option  value="No"  @if($checklist18 && $checklist18->checklist_LL_P2P_response_214) {{ $checklist18->checklist_LL_P2P_response_214 == "No" ? 'selected' : '' }} @endif>No</option>
+                                                        <option value="N/A" @if($checklist18 && $checklist18->checklist_LL_P2P_response_214) {{ $checklist18->checklist_LL_P2P_response_214 == "N/A" ? 'selected' : '' }}@endif>N/A</option>
+
                                                         </select>
                                                     </div>
                                                 </td>
@@ -16834,7 +17250,7 @@ $checklistqualitycontrol = [
                                                 <td style="vertical-align: middle;">
                                                     <div
                                                         style="margin: auto; display: flex; justify-content: center;">
-                                                        <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                        <textarea name="checklist_LL_P2P_remark_214" style="border-radius: 7px; border: 1.5px solid black;">@if( $checklist18 && $checklist18->checklist_LL_P2P_remark_214){{ $checklist18->checklist_LL_P2P_remark_214 }}@endif</textarea>                                            </div>
                                                     </div>
                                                 </td>
 
@@ -16845,16 +17261,29 @@ $checklistqualitycontrol = [
                                                 <td>
                                                     If so, are these systems <br>
 
-
-
                                                 </td>
                                                 <td>
+                                                    <div
+                                                        style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
+                                                        <select name="checklist_LL_P2P_response_215" id="checklist_LL_P2P_response_215"
+                                                            style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
+                                                            <option value="">Select an Option</option>
+                                                            <option value="Yes" @if($checklist18 && $checklist18->checklist_LL_P2P_response_215) {{ $checklist18->checklist_LL_P2P_response_215 == "Yes" ? 'selected' : '' }}@endif>Yes</option>
+                                                        <option  value="No"  @if($checklist18 && $checklist18->checklist_LL_P2P_response_215) {{ $checklist18->checklist_LL_P2P_response_215 == "No" ? 'selected' : '' }} @endif>No</option>
+                                                        <option value="N/A" @if($checklist18 && $checklist18->checklist_LL_P2P_response_215) {{ $checklist18->checklist_LL_P2P_response_215 == "N/A" ? 'selected' : '' }}@endif>N/A</option>
 
+                                                        </select>
+                                                    </div>
                                                 </td>
 
                                                 <td style="vertical-align: middle;">
-
+                                                    <div
+                                                        style="margin: auto; display: flex; justify-content: center;">
+                                                        <textarea name="checklist_LL_P2P_remark_215" style="border-radius: 7px; border: 1.5px solid black;">@if( $checklist18 && $checklist18->checklist_LL_P2P_remark_215){{ $checklist18->checklist_LL_P2P_remark_215 }}@endif</textarea>                                            </div>
+                                                    </div>
                                                 </td>
+
+
 
                                             </tr>
                                             <tr>
@@ -16868,12 +17297,13 @@ $checklistqualitycontrol = [
                                                 <td>
                                                     <div
                                                         style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                        <select name="response" id="response"
+                                                        <select name="checklist_LL_P2P_response_216" id="checklist_LL_P2P_response_216"
                                                             style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                             <option value="">Select an Option</option>
-                                                            <option value="Yes">Yes</option>
-                                                            <option value="No">No</option>
-                                                            <option value="N/A">N/A</option>
+                                                            <option value="Yes" @if($checklist18 && $checklist18->checklist_LL_P2P_response_216) {{ $checklist18->checklist_LL_P2P_response_216 == "Yes" ? 'selected' : '' }}@endif>Yes</option>
+                                                            <option  value="No"  @if($checklist18 && $checklist18->checklist_LL_P2P_response_216) {{ $checklist18->checklist_LL_P2P_response_216 == "No" ? 'selected' : '' }} @endif>No</option>
+                                                            <option value="N/A" @if($checklist18 && $checklist18->checklist_LL_P2P_response_216) {{ $checklist18->checklist_LL_P2P_response_216 == "N/A" ? 'selected' : '' }}@endif>N/A</option>
+
                                                         </select>
                                                     </div>
                                                 </td>
@@ -16881,7 +17311,7 @@ $checklistqualitycontrol = [
                                                 <td style="vertical-align: middle;">
                                                     <div
                                                         style="margin: auto; display: flex; justify-content: center;">
-                                                        <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                        <textarea name="checklist_LL_P2P_remark_216" style="border-radius: 7px; border: 1.5px solid black;">@if( $checklist18 && $checklist18->checklist_LL_P2P_remark_216){{ $checklist18->checklist_LL_P2P_remark_216 }}@endif</textarea>                                            </div>
                                                     </div>
                                                 </td>
 
@@ -16897,12 +17327,12 @@ $checklistqualitycontrol = [
                                                 <td>
                                                     <div
                                                         style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                        <select name="response" id="response"
+                                                        <select name="checklist_LL_P2P_response_217" id="checklist_LL_P2P_response_217"
                                                             style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                             <option value="">Select an Option</option>
-                                                            <option value="Yes">Yes</option>
-                                                            <option value="No">No</option>
-                                                            <option value="N/A">N/A</option>
+                                                            <option value="Yes" @if($checklist18 && $checklist18->checklist_LL_P2P_response_217) {{ $checklist18->checklist_LL_P2P_response_217 == "Yes" ? 'selected' : '' }}@endif>Yes</option>
+                                                            <option  value="No"  @if($checklist18 && $checklist18->checklist_LL_P2P_response_217) {{ $checklist18->checklist_LL_P2P_response_217 == "No" ? 'selected' : '' }} @endif>No</option>
+                                                            <option value="N/A" @if($checklist18 && $checklist18->checklist_LL_P2P_response_217) {{ $checklist18->checklist_LL_P2P_response_217 == "N/A" ? 'selected' : '' }}@endif>N/A</option>
                                                         </select>
                                                     </div>
                                                 </td>
@@ -16910,7 +17340,7 @@ $checklistqualitycontrol = [
                                                 <td style="vertical-align: middle;">
                                                     <div
                                                         style="margin: auto; display: flex; justify-content: center;">
-                                                        <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                        <textarea name="checklist_LL_P2P_remark_217" style="border-radius: 7px; border: 1.5px solid black;">@if( $checklist18 && $checklist18->checklist_LL_P2P_remark_217){{ $checklist18->checklist_LL_P2P_remark_217 }}@endif</textarea>                                            </div>
                                                     </div>
                                                 </td>
 
@@ -16927,14 +17357,26 @@ $checklistqualitycontrol = [
 
 
 
-                                                    <td>
-
-
+                                                <td>
+                                                    <div
+                                                        style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
+                                                        <select name="checklist_LL_P2P_response_218" id="checklist_LL_P2P_response_218"
+                                                            style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
+                                                            <option value="">Select an Option</option>
+                                                            <option value="Yes" @if($checklist18 && $checklist18->checklist_LL_P2P_response_218) {{ $checklist18->checklist_LL_P2P_response_218 == "Yes" ? 'selected' : '' }}@endif>Yes</option>
+                                                            <option  value="No"  @if($checklist18 && $checklist18->checklist_LL_P2P_response_218) {{ $checklist18->checklist_LL_P2P_response_218 == "No" ? 'selected' : '' }} @endif>No</option>
+                                                            <option value="N/A" @if($checklist18 && $checklist18->checklist_LL_P2P_response_218) {{ $checklist18->checklist_LL_P2P_response_218 == "N/A" ? 'selected' : '' }}@endif>N/A</option>
+                                                        </select>
+                                                    </div>
                                                 </td>
 
                                                 <td style="vertical-align: middle;">
-
+                                                    <div
+                                                        style="margin: auto; display: flex; justify-content: center;">
+                                                        <textarea name="checklist_LL_P2P_remark_218" style="border-radius: 7px; border: 1.5px solid black;">@if( $checklist18 && $checklist18->checklist_LL_P2P_remark_218){{ $checklist18->checklist_LL_P2P_remark_218 }}@endif</textarea>                                            </div>
+                                                    </div>
                                                 </td>
+
 
                                             </tr>
                                             <tr>
@@ -16950,11 +17392,12 @@ $checklistqualitycontrol = [
 
                                                     <td>
                                                         <div style="display: flex; justify-content: space-around; align-items: center; margin: 5%; gap: 5px; flex-direction: column;">
-                                                            <select name="response1" id="response1" style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
+                                                            <select name="checklist_LL_P2P_response_219" id="checklist_LL_P2P_response_219" style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
                                                                 <option value="Select">Select an Option</option>
-                                                                <option value="Yes">Yes</option>
-                                                                <option value="No">No</option>
-                                                                <option value="N/A">N/A</option>
+                                                                <option value="Yes" @if($checklist18 && $checklist18->checklist_LL_P2P_response_219) {{ $checklist18->checklist_LL_P2P_response_219 == "Yes" ? 'selected' : '' }}@endif>Yes</option>
+                                                                <option  value="No"  @if($checklist18 && $checklist18->checklist_LL_P2P_response_219) {{ $checklist18->checklist_LL_P2P_response_219 == "No" ? 'selected' : '' }} @endif>No</option>
+                                                                <option value="N/A" @if($checklist18 && $checklist18->checklist_LL_P2P_response_219) {{ $checklist18->checklist_LL_P2P_response_219 == "N/A" ? 'selected' : '' }}@endif>N/A</option>
+
                                                             </select>
 
 
@@ -16966,7 +17409,7 @@ $checklistqualitycontrol = [
                                                 <td style="vertical-align: middle;">
                                                     <div
                                                         style="margin: auto; display: flex; justify-content: center;">
-                                                        <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                        <textarea name="checklist_LL_P2P_remark_219" style="border-radius: 7px; border: 1.5px solid black;">@if( $checklist18 && $checklist18->checklist_LL_P2P_remark_219){{ $checklist18->checklist_LL_P2P_remark_219 }}@endif</textarea>                                            </div>
                                                     </div>
                                                 </td>
 
@@ -16984,11 +17427,12 @@ $checklistqualitycontrol = [
 
                                                     <td>
                                                         <div style="display: flex; justify-content: space-around; align-items: center; margin: 5%; gap: 5px; flex-direction: column;">
-                                                            <select name="response1" id="response1" style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
+                                                            <select name="checklist_LL_P2P_response_220" id="checklist_LL_P2P_response_220" style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
                                                                 <option value="Select">Select an Option</option>
-                                                                <option value="Yes">Yes</option>
-                                                                <option value="No">No</option>
-                                                                <option value="N/A">N/A</option>
+                                                                <option value="Yes" @if($checklist18 && $checklist18->checklist_LL_P2P_response_220) {{ $checklist18->checklist_LL_P2P_response_220 == "Yes" ? 'selected' : '' }}@endif>Yes</option>
+                                                                <option  value="No"  @if($checklist18 && $checklist18->checklist_LL_P2P_response_220) {{ $checklist18->checklist_LL_P2P_response_220 == "No" ? 'selected' : '' }} @endif>No</option>
+                                                                <option value="N/A" @if($checklist18 && $checklist18->checklist_LL_P2P_response_220) {{ $checklist18->checklist_LL_P2P_response_220 == "N/A" ? 'selected' : '' }}@endif>N/A</option>
+
                                                             </select>
 
 
@@ -17000,7 +17444,7 @@ $checklistqualitycontrol = [
                                                 <td style="vertical-align: middle;">
                                                     <div
                                                         style="margin: auto; display: flex; justify-content: center;">
-                                                        <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                        <textarea name="checklist_LL_P2P_remark_220" style="border-radius: 7px; border: 1.5px solid black;">@if( $checklist18 && $checklist18->checklist_LL_P2P_remark_220){{ $checklist18->checklist_LL_P2P_remark_220 }}@endif</textarea>                                            </div>
                                                     </div>
                                                 </td>
 
