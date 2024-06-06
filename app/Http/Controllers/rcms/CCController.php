@@ -119,11 +119,14 @@ class CCController extends Controller
         $openState->Initiator_Group = $request->Initiator_Group;
         $openState->initiator_group_code = $request->initiator_group_code;
         $openState->short_description = $request->short_description;
-        $openState->assign_to = $request->assign_to;
+        // $openState->assign_to = $request->assign_to;
+        // $openState->Division_Code = $request->div_code;
+        //$openState->related_records = json_encode($request->related_records);
+        //$openState->qa_eval_attach = json_encode($request->qa_eval_attach);
+        // $openState->Microbiology = $request->Microbiology;
         $openState->due_date = $request->due_date;
         $openState->doc_change = $request->natureChange;
         $openState->If_Others = $request->others;
-        $openState->Division_Code = $request->div_code;
         $openState->severity_level1 = $request->severity_level1;
         $openState->initiated_through = $request->initiated_through;
         $openState->initiated_through_req = $request->initiated_through_req;
@@ -138,16 +141,13 @@ class CCController extends Controller
 
         $openState->type_chnage = $request->type_chnage;
         $openState->qa_comments = $request->qa_comments;
-        //$openState->related_records = json_encode($request->related_records);
         $openState->related_records = implode(',', $request->related_records);
         $openState->qa_head = json_encode($request->qa_head);
 
         $openState->qa_eval_comments = json_encode($request->qa_eval_comments);
-        //$openState->qa_eval_attach = json_encode($request->qa_eval_attach);
         $openState->training_required = $request->training_required;
         $openState->train_comments = $request->train_comments;
 
-        $openState->Microbiology = $request->Microbiology;
         if ($request->Microbiology_Person) {
             $openState->Microbiology_Person = implode(',', $request->Microbiology_Person);
         } else {
@@ -226,6 +226,14 @@ class CCController extends Controller
         $Cft->production_on = $request->production_on;
         $Cft->production_by = $request->production_by;
 
+        $Cft->RA_Comments = $request->RA_Comments;
+        $Cft->RA_person = $request->RA_person;
+        $Cft->RA_assessment = $request->RA_assessment;
+        $Cft->RA_feedback = $request->RA_feedback;
+        $Cft->RA_attachment = $request->RA_attachment;
+        $Cft->RA_by = $request->RA_by;
+        $Cft->RA_on = $request->RA_on;
+
         $Cft->Warehouse_review = $request->Warehouse_review;
         $Cft->Warehouse_notification = $request->Warehouse_notification;
         $Cft->Warehouse_assessment = $request->Warehouse_assessment;
@@ -303,45 +311,45 @@ class CCController extends Controller
         $Cft->Project_management_by = $request->Project_management_by;
         $Cft->Project_management_on = $request->Project_management_on;
 
-        $Cft->Other1_review = $request->Other1_review;
-        $Cft->Other1_person = $request->Other1_person;
-        $Cft->Other1_Department_person = $request->Other1_Department_person;
-        $Cft->Other1_assessment = $request->Other1_assessment;
-        $Cft->Other1_feedback = $request->Other1_feedback;
-        $Cft->Other1_by = $request->Other1_by;
-        $Cft->Other1_on = $request->Other1_on;
+        // $Cft->Other1_review = $request->Other1_review;
+        // $Cft->Other1_person = $request->Other1_person;
+        // $Cft->Other1_Department_person = $request->Other1_Department_person;
+        // $Cft->Other1_assessment = $request->Other1_assessment;
+        // $Cft->Other1_feedback = $request->Other1_feedback;
+        // $Cft->Other1_by = $request->Other1_by;
+        // $Cft->Other1_on = $request->Other1_on;
 
-        $Cft->Other2_review = $request->Other2_review;
-        $Cft->Other2_person = $request->Other2_person;
-        $Cft->Other2_Department_person = $request->Other2_Department_person;
-        $Cft->Other2_Assessment = $request->Other2_Assessment;
-        $Cft->Other2_feedback = $request->Other2_feedback;
-        $Cft->Other2_by = $request->Other2_by;
-        $Cft->Other2_on = $request->Other2_on;
+        // $Cft->Other2_review = $request->Other2_review;
+        // $Cft->Other2_person = $request->Other2_person;
+        // $Cft->Other2_Department_person = $request->Other2_Department_person;
+        // $Cft->Other2_Assessment = $request->Other2_Assessment;
+        // $Cft->Other2_feedback = $request->Other2_feedback;
+        // $Cft->Other2_by = $request->Other2_by;
+        // $Cft->Other2_on = $request->Other2_on;
 
-        $Cft->Other3_review = $request->Other3_review;
-        $Cft->Other3_person = $request->Other3_person;
-        $Cft->Other3_Department_person = $request->Other3_Department_person;
-        $Cft->Other3_Assessment = $request->Other3_Assessment;
-        $Cft->Other3_feedback = $request->Other3_feedback;
-        $Cft->Other3_by = $request->Other3_by;
-        $Cft->Other3_on = $request->Other3_on;
+        // $Cft->Other3_review = $request->Other3_review;
+        // $Cft->Other3_person = $request->Other3_person;
+        // $Cft->Other3_Department_person = $request->Other3_Department_person;
+        // $Cft->Other3_Assessment = $request->Other3_Assessment;
+        // $Cft->Other3_feedback = $request->Other3_feedback;
+        // $Cft->Other3_by = $request->Other3_by;
+        // $Cft->Other3_on = $request->Other3_on;
 
-        $Cft->Other4_review = $request->Other4_review;
-        $Cft->Other4_person = $request->Other4_person;
-        $Cft->Other4_Department_person = $request->Other4_Department_person;
-        $Cft->Other4_Assessment = $request->Other4_Assessment;
-        $Cft->Other4_feedback = $request->Other4_feedback;
-        $Cft->Other4_by = $request->Other4_by;
-        $Cft->Other4_on = $request->Other4_on;
+        // $Cft->Other4_review = $request->Other4_review;
+        // $Cft->Other4_person = $request->Other4_person;
+        // $Cft->Other4_Department_person = $request->Other4_Department_person;
+        // $Cft->Other4_Assessment = $request->Other4_Assessment;
+        // $Cft->Other4_feedback = $request->Other4_feedback;
+        // $Cft->Other4_by = $request->Other4_by;
+        // $Cft->Other4_on = $request->Other4_on;
 
-        $Cft->Other5_review = $request->Other5_review;
-        $Cft->Other5_person = $request->Other5_person;
-        $Cft->Other5_Department_person = $request->Other5_Department_person;
-        $Cft->Other5_Assessment = $request->Other5_Assessment;
-        $Cft->Other5_feedback = $request->Other5_feedback;
-        $Cft->Other5_by = $request->Other5_by;
-        $Cft->Other5_on = $request->Other5_on;
+        // $Cft->Other5_review = $request->Other5_review;
+        // $Cft->Other5_person = $request->Other5_person;
+        // $Cft->Other5_Department_person = $request->Other5_Department_person;
+        // $Cft->Other5_Assessment = $request->Other5_Assessment;
+        // $Cft->Other5_feedback = $request->Other5_feedback;
+        // $Cft->Other5_by = $request->Other5_by;
+        // $Cft->Other5_on = $request->Other5_on;
 
         if (!empty ($request->production_attachment)) {
             $files = [];
@@ -606,7 +614,7 @@ class CCController extends Controller
 
         $review = new Qareview();
         $review->cc_id = $openState->id;
-        $review->type_chnage = $request->type_chnage;
+        // $review->type_chnage = $request->type_chnage;
         $review->qa_comments = $request->qa_comments;
         if ($request->related_records) {
             $review->related_records = implode(',', $request->related_records);
@@ -1631,9 +1639,9 @@ class CCController extends Controller
     {
 
         $data = CC::find($id);
-
         $cc_lid = $data->id;
         $data->assign_to_name = User::where('id', $data->assign_to)->value('name');
+        $division = CC::where('c_c_s.id', $id)->leftjoin('q_m_s_divisions', 'q_m_s_divisions.id', 'c_c_s.division_id')->first(['name']);
         $docdetail = Docdetail::where('cc_id', $id)->first();
         $review = Qareview::where('cc_id', $id)->first();
         $cc_cfts = CcCft::where('cc_id', $id)->first();
@@ -1664,6 +1672,7 @@ class CCController extends Controller
             'review',
             'evaluation',
             'info',
+            'division',
             'cc_cfts',
             'comments',
             'impactassement',
@@ -1709,7 +1718,11 @@ class CCController extends Controller
 
         //     return response()->json(['error' => 'Failed to update data'], 500);
         // }
-
+        
+        // $openState->type_chnage = $request->type_chnage;
+        // $openState->Division_Code = $request->div_code;
+        // $openState->related_records = $request->related_records;
+        
         $openState->initiator_id = Auth::user()->id;
         $openState->Initiator_Group = $request->Initiator_Group;
         $openState->initiator_group_code = $request->initiator_group_code;
@@ -1718,7 +1731,6 @@ class CCController extends Controller
         $openState->due_date = $request->due_date;
         $openState->doc_change = $request->naturechange;
         $openState->If_Others = $request->others;
-        $openState->Division_Code = $request->div_code;
         $openState->severity_level1 = $request->severity_level1;
         $openState->initiated_through = $request->initiated_through;
         $openState->initiated_through_req = $request->initiated_through_req;
@@ -1730,16 +1742,14 @@ class CCController extends Controller
         $openState->other_comment = $request->other_comment;
         $openState->other_comment = $request->other_comment;
         $openState->supervisor_comment = $request->supervisor_comment;
-        $openState->type_chnage = $request->type_chnage;
         $openState->qa_comments = $request->qa_comments;
-        // $openState->related_records = $request->related_records;
         $openState->related_records = implode(',', $request->related_records);
         $openState->qa_head = $request->qa_head;
 
         $openState->qa_eval_comments = $request->qa_eval_comments;
         $openState->qa_eval_attach = $request->qa_eval_attach;
-        $openState->training_required = $request->training_required;
-        $openState->train_comments = $request->train_comments;
+        // $openState->training_required = $request->training_required;
+        // $openState->train_comments = $request->train_comments;
 
         $openState->Microbiology = $request->Microbiology;
 
@@ -1765,18 +1775,18 @@ class CCController extends Controller
         $openState->Bd_Person = $request->Bd_Person;
         $openState->additional_attachments = json_encode($request->additional_attachments);
 
-        $openState->cft_comments = $request->cft_comments;
-        $openState->cft_comments = $request->cft_comments;
-        $openState->cft_attchament = json_encode($request->cft_attchament);
-        $openState->qa_commentss = $request->qa_commentss;
-        $openState->designee_comments = $request->designee_comments;
-        $openState->Warehouse_comments = $request->Warehouse_comments;
-        $openState->Engineering_comments = $request->Engineering_comments;
-        $openState->Instrumentation_comments = $request->Instrumentation_comments;
-        $openState->Validation_comments = $request->Validation_comments;
-        $openState->Others_comments = $request->Others_comments;
-        $openState->Group_comments = $request->Group_comments;
-        $openState->group_attachments = json_encode($request->group_attachments);
+        // $openState->cft_comments = $request->cft_comments;
+        // $openState->cft_comments = $request->cft_comments;
+        // $openState->cft_attchament = json_encode($request->cft_attchament);
+        // $openState->qa_commentss = $request->qa_commentss;
+        // $openState->designee_comments = $request->designee_comments;
+        // $openState->Warehouse_comments = $request->Warehouse_comments;
+        // $openState->Engineering_comments = $request->Engineering_comments;
+        // $openState->Instrumentation_comments = $request->Instrumentation_comments;
+        // $openState->Validation_comments = $request->Validation_comments;
+        // $openState->Others_comments = $request->Others_comments;
+        // $openState->Group_comments = $request->Group_comments;
+        // $openState->group_attachments = json_encode($request->group_attachments);
 
         $openState->risk_identification = $request->risk_identification;
         $openState->severity = $request->severity;
@@ -4577,8 +4587,8 @@ class CCController extends Controller
                 return back();
             }
             if ($changeControl->stage == 5) {
-                $changeControl->stage = "4";
-                $changeControl->status = "Pending RA Review";
+                $changeControl->stage = "3";
+                $changeControl->status = "QA Initial Review";
                 $changeControl->update();
                 $history = new CCStageHistory();
                 $history->type = "Change-Control";
@@ -4587,7 +4597,7 @@ class CCController extends Controller
                 $history->user_name = Auth::user()->name;
                 $history->comments = $request->comments;
                 $history->stage_id = $changeControl->stage;
-                $history->status = "Pending RA Review";
+                $history->status = "QA Initial Review";
                 $history->save();
                 toastr()->success('Document Sent');
                 return back();
@@ -5018,10 +5028,6 @@ class CCController extends Controller
         if ($request->revision == "Extension") {
             $cc->originator = User::where('id', $cc->initiator_id)->value('name');
             return view('frontend.forms.extension', compact('parent_name','parent_id', 'record_number', 'parent_short_description', 'parent_initiator_id', 'parent_intiation_date', 'parent_division_id', 'parent_record', 'cc'));
-        }
-        if ($request->revision == "RCA") {
-            $cc->originator = User::where('id', $cc->initiator_id)->value('name');
-            return view('frontend.forms.extension', compact('parent_name', 'record_number', 'parent_short_description', 'parent_initiator_id', 'parent_intiation_date', 'parent_division_id', 'parent_record', 'cc'));
         }
         if ($request->revision == "New Document") {
             $cc->originator = User::where('id', $cc->initiator_id)->value('name');
