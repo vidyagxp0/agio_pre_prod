@@ -181,12 +181,6 @@ class ChartController extends Controller
                 
             }
 
-            // foreach ($departments as $department)
-            // {
-            //     $collection = collect($data[$department]);
-
-            //     $data[$department] = $collection->flatten()->all();
-            // }
 
             $res['body'] = $data;
 
