@@ -95,9 +95,9 @@
                                         <label for="due-date">Start Date of Training</label>
                                         <div class="calenderauditee">                                     
                                             <input type="text"  id="startdate"  readonly placeholder="DD-MMM-YYYY" />
-                                            <input type="date" name="startdate" value=""
+                                            <input type="date" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" name="startdate" id="start_date_checkdate" value=""
                                             class="hide-input"
-                                            oninput="handleDateInput(this, 'startdate')"/>
+                                            oninput="handleDateInput(this, 'startdate');checkDate('start_date_checkdate','enddate')"/>
                                         </div>
 
                                     </div>
@@ -107,9 +107,9 @@
                                         <label for="due-date">End Date of Training</label>
                                         <div class="calenderauditee">                                     
                                             <input type="text"  id="enddate"  readonly placeholder="DD-MMM-YYYY" />
-                                            <input type="date" name="enddate"  value=""
+                                            <input type="date" name="enddate" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" id="end_date_checkdate" value=""
                                             class="hide-input"
-                                            oninput="handleDateInput(this, 'enddate')"/>
+                                            oninput="handleDateInput(this, 'enddate');checkDate('start_date_checkdate','end_date_checkdate')"/>
                                         </div>
                                     </div>
                                 </div>
