@@ -1489,8 +1489,9 @@ $users = DB::table('users')
                     <div class="col-md-12 mb-4">
                         <div class="group-input">
                             <label for="Description Deviation">Impact Assessment.</label>
+                            <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
                             <textarea class="summernote" name="impact_assessment_piiqcr" id="summernote-1">
-                            </textarea>
+                                    </textarea>
                         </div>
                     </div>
                     <div class="col-12">

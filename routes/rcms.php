@@ -241,7 +241,7 @@ Route::group(['prefix' => 'rcms'], function () {
             });
 
             /**
-             * OOS
+             * OOS chemical
              */
             Route::group(['prefix' => 'oos', 'as' => 'oos.'], function() {
             Route::get('/',[OOSController::class, 'index'])->name('index');
@@ -261,8 +261,6 @@ Route::group(['prefix' => 'rcms'], function () {
             Route::get('auditDetails/{id}', [OOSController::class, 'auditDetails'])->name('audit_details');
             Route::get('audit_report/{id}', [OOSController::class, 'auditReport'])->name('audit_report');
             Route::get('single_report/{id}', [OOSController::class, 'singleReport'])->name('single_report');
-
-            
 
             });
 
