@@ -151,7 +151,7 @@
                                         <tr>
                                             
                                             <td>{{$loop->index+1}}</td>
-                                            <td><td>
+                                            <td></td>
                                             <td></td>
                                             <td></td>
                                             <td></td>

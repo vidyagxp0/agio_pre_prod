@@ -62,10 +62,12 @@ class LogController extends Controller
                 $labincident = LabIncident::get();
                 
         
-                $labgrid = lab_incidents_grid::where('identifier', 'incident report')->get()->keyBy('labincident_id');
+                // $outOfCalibrations = OutOfCalibration::with('labincident')->get();
+                $labincident = LabIncident::with('labIncidentSeconds')->get();
+
                                             
                                         
-                    return view('frontend.forms.logs.laboratoryincidentLog',compact('labincident','labgrid'));
+                    return view('frontend.forms.logs.laboratoryincidentLog',compact('labincident'));
                     break;        
                 
 

@@ -71,13 +71,13 @@
                                         </div></th>
                                         
                                         <th><div class="filter-item">
-                                            <label for="date_from">Date From</label>
-                                            <input type="date" class="custom-select" id="date_from">
+                                            <label for="date_from_dev">Date From</label>
+                                            <input type="date" class="custom-select" id="date_from_dev">
                                         </div>
                                        </th><th>
                                         <div class="filter-item">
-                                            <label for="date_to">Date To</label>
-                                            <input type="date" class="custom-select" id="date_to">
+                                            <label for="date_to_dev">Date To</label>
+                                            <input type="date" class="custom-select" id="date_to_dev">
                                         </div></th><th>
                                         <div class="filter-item" style="flex: 1; min-width: 200px;">
                                             <label for="originator" style="margin-right: 10px;">Deviation Related to</label>
@@ -173,24 +173,24 @@
         $('#spinner').hide();
 
         const filterData = {
-            department: null,
-            division_id: null,
+            departmentDeviation: null,
+            division_idDeviation: null,
             deviationDate:null,
-            date_from: null,
-            date_to: null
+            date_fromDeviation: null,
+            date_toDeviation: null
 
 
         }
 
         $('#initiator_group').change(function() {
-            filterData.department = $(this).val();
+            filterData.departmentDeviation = $(this).val();
             filterRecords()
         })
 
          // Division ID change event
 
           $('#division_id').change(function() {
-            filterData.division_id = $(this).val();
+            filterData.division_idDeviation = $(this).val();
             filterRecords();
          });
 
@@ -202,13 +202,13 @@
          });
 
          
-         $('#date_from').change(function() {
-        filterData.date_from = $(this).val();
+         $('#date_from_dev').change(function() {
+        filterData.date_fromDeviation = $(this).val();
         filterRecords();
         });
 
-        $('#date_to').change(function() {
-            filterData.date_to = $(this).val();
+        $('#date_to_dev').change(function() {
+            filterData.date_toDeviation = $(this).val();
             filterRecords();
         });
 

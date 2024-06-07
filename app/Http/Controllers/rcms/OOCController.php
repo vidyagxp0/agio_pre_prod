@@ -217,7 +217,7 @@ class OOCController extends Controller
             $history->activity_type = 'If Other';
             $history->previous = "Null";
             $history->current = $data->initiated_if_other;
-            $history->comment = "No Applicable";
+            $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -235,7 +235,7 @@ class OOCController extends Controller
             $history->activity_type = 'Is Repeat';
             $history->previous = "Null";
             $history->current = $data->is_repeat_ooc;
-            $history->comment = "No Applicable";
+            $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -253,7 +253,7 @@ class OOCController extends Controller
             $history->activity_type = 'Repeat Nature';
             $history->previous = "Null";
             $history->current = $data->Repeat_Nature;
-            $history->comment = "No Applicable";
+            $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -269,7 +269,7 @@ class OOCController extends Controller
             $history->activity_type = 'Description';
             $history->previous = "Null";
             $history->current = $data->description_ooc;
-            $history->comment = "No Applicable";
+            $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -285,7 +285,7 @@ class OOCController extends Controller
             $history->activity_type = 'Due Date';
             $history->previous = "Null";
             $history->current = $data->due_date;
-            $history->comment = "No Applicable";
+            $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -303,7 +303,7 @@ class OOCController extends Controller
             $history->activity_type = 'Initiator Group';
             $history->previous = "Null";
             $history->current = $data->Initiator_Group;
-            $history->comment = "No Applicable";
+            $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -322,7 +322,7 @@ class OOCController extends Controller
             $history->activity_type = 'Delay Justification for Reporting';
             $history->previous = "Null";
             $history->current = $data->Delay_Justification_for_Reporting;
-            $history->comment = "No Applicable";
+            $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');

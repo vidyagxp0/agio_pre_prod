@@ -76,5 +76,18 @@ class OutOfCalibration extends Model
         'initiated_through_rootcause_ooc',
         'initiated_through_impact_closure_ooc'
     ];
+
+
+    public function division()
+    {
+        return $this->belongsTo(QMSDivision::class,'division_id');
+    }
+
+    public function initiator()
+    {
+        return $this->belongsTo(User::class,'initiator_id');
+    }
+
+   
     
 }
