@@ -1620,6 +1620,7 @@
                         <div id="alert-message" style="display:none;">
                             Your stage is Closed - Done You Cannot Edit or Save.
                         </div>
+                           
 
                         <script>
                             function showAlert(event) {
@@ -1835,107 +1836,123 @@
 
 
 
-                           <div class="col-12">
-    <div class="group-input">
-        <label for="root_cause">
-            Report Approval
-            <button type="button" id="report_approval">+</button>
-            <span class="text-primary" data-bs-toggle="modal"
-                data-bs-target="#document-details-field-instruction-modal"
-                style="font-size: 0.8rem; font-weight: 400; cursor: pointer;">
-                (Launch Instruction)
-            </span>
-        </label>
-        <div class="table-responsive">
-            <table class="table table-bordered" id="report_approval_details" style="width: 100%;">
-                <thead>
-                    <tr>
-                        <th style="width: 100px;">Row #</th>
-                        <th>Names</th>
-                        <th>Department</th>
-                        <th>Sign</th>
-                        <th>Date</th>
-                        <th>Action</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @php
-                        $reportindex = 1;
-                    @endphp
-                    @if (!empty($report_approval) && is_array($report_approval->data))
-                        @foreach ($report_approval->data as $index => $rep_ap)
-                            <tr>
-                                <td><input disabled type="text" name="Report_Approval[{{ $index }}][serial]" value="{{ $reportindex++ }}"></td>
-                                <td><input type="text" name="Report_Approval[{{ $index }}][names_rrv]" value="{{ $rep_ap['names_rrv'] }}"></td>
-                                <td><input type="text" name="Report_Approval[{{ $index }}][department_rrv]" value="{{ $rep_ap['department_rrv'] }}"></td>
-                                <td><input type="text" name="Report_Approval[{{ $index }}][sign_rrv]" value="{{ $rep_ap['sign_rrv'] }}"></td>
-                                <td>
-                                    <div class="new-date-data-field">
-                                        <div class="group-input input-date">
-                                            <div class="calenderauditee">
-                                                <input
-                                                    class="click_date"
-                                                    id="date_{{ $index }}_date_rrv"
-                                                    type="text"
-                                                    name="Report_Approval[{{ $index }}][date_rrv]"
-                                                    placeholder="DD-MMM-YYYY"
-                                                    value="{{ !empty($rep_ap['date_rrv']) ? \Carbon\Carbon::parse($rep_ap['date_rrv'])->format('d-M-Y') : '' }}"
-                                                />
-                                                <input
-                                                    type="date"
-                                                    name="Report_Approval[{{ $index }}][date_rrv]"
-                                                    value="{{ !empty($rep_ap['date_rrv']) ? \Carbon\Carbon::parse($rep_ap['date_rrv'])->format('Y-m-d') : '' }}"
-                                                    id="date_{{ $index }}_date_rrv"
-                                                    class="hide-input show_date"
-                                                    style="position: absolute; top: 0; left: 0; opacity: 0;"
-                                                    onchange="handleDateInput(this, 'date_{{ $index }}_date_rrv')"
-                                                />
-                                            </div>
-                                        </div>
+                            <div class="col-12">
+                                <div class="group-input">
+                                    <label for="root_cause">
+                                        Report Approval
+                                        <button type="button" id="report_approval">+</button>
+                                        <span class="text-primary" data-bs-toggle="modal" data-bs-target="#document-details-field-instruction-modal" style="font-size: 0.8rem; font-weight: 400; cursor: pointer;">
+                                            (Launch Instruction)
+                                        </span>
+                                    </label>
+                                    <div class="table-responsive">
+                                        <table class="table table-bordered" id="report_approval_details" style="width: 100%;">
+                                            <thead>
+                                                <tr>
+                                                    <th style="width: 100px;">Row #</th>
+                                                    <th>Names</th>
+                                                    <th>Department</th>
+                                                    <th>Sign</th>
+                                                    <th>Date</th>
+                                                    <th>Action</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @php
+                                                    $reportindex = 1;
+                                                @endphp
+                                                @if (!empty($report_approval) && is_array($report_approval->data))
+                                                    @foreach ($report_approval->data as $index => $rep_ap)
+                                                        <tr>
+                                                            <td><input disabled type="text" name="Report_Approval[{{ $index }}][serial]" value="{{ $reportindex++ }}"></td>
+                                                            <td><input type="text" name="Report_Approval[{{ $index }}][names_rrv]" value="{{ $rep_ap['names_rrv'] }}"></td>
+                                                            <td><input type="text" name="Report_Approval[{{ $index }}][department_rrv]" value="{{ $rep_ap['department_rrv'] }}"></td>
+                                                            <td><input type="text" name="Report_Approval[{{ $index }}][sign_rrv]" value="{{ $rep_ap['sign_rrv'] }}"></td>
+                                                            <td>
+                                                                <div class="new-date-data-field">
+                                                                    <div class="group-input input-date">
+                                                                        <div class="calenderauditee">
+                                                                            <input
+                                                                                class="click_date"
+                                                                                id="date_{{ $index }}_date_rrv"
+                                                                                type="text"
+                                                                                name="Report_Approval[{{ $index }}][date_rrv]"
+                                                                                placeholder="DD-MMM-YYYY"
+                                                                                value="{{ !empty($rep_ap['date_rrv']) ? \Carbon\Carbon::parse($rep_ap['date_rrv'])->format('d-M-Y') : '' }}"
+                                                                            />
+                                                                            <input
+                                                                                type="date"
+                                                                                name="Report_Approval[{{ $index }}][date_rrv]"
+                                                                                value="{{ !empty($rep_ap['date_rrv']) ? \Carbon\Carbon::parse($rep_ap['date_rrv'])->format('Y-m-d') : '' }}"
+                                                                                id="date_{{ $index }}_date_rrv"
+                                                                                class="hide-input show_date"
+                                                                                style="position: absolute; top: 0; left: 0; opacity: 0;"
+                                                                                onchange="handleDateInput(this, 'date_{{ $index }}_date_rrv')"
+                                                                            />
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </td>
+                                                            <td><button type="button" class="removeRowBtn">Remove</button></td>
+                                                        </tr>
+                                                    @endforeach
+                                                @endif
+                                            </tbody>
+                                        </table>
                                     </div>
-                                </td>
-                                <td><button type="button" class="removeRowBtn">Remove</button></td>
-                            </tr>
-                        @endforeach
-                    @endif
-                </tbody>
-            </table>
-        </div>
-    </div>
-</div>
+                                </div>
+                            </div>
+                            
+                            
 
-<script>
-    $(document).ready(function() {
-        let indexReaprovel = {{ ($report_approval && is_array($report_approval->data)) ? count($report_approval->data) : 0 }};
-        
-        $('#report_approval').click(function(e) {
-            e.preventDefault();
-
-            function generateTableRow(serialNumber) {
-                var html =
-                    '<tr>' +
-                    '<td><input disabled type="text" name="Report_Approval[' + serialNumber + '][serial]" value="' + (serialNumber + 1) + '"></td>' +
-                    '<td><input type="text" name="Report_Approval[' + serialNumber + '][names_rrv]"></td>' +
-                    '<td><input type="text" name="Report_Approval[' + serialNumber + '][department_rrv]"></td>' +
-                    '<td><input type="text" name="Report_Approval[' + serialNumber + '][sign_rrv]"></td>' +
-                    '<td><div class="new-date-data-field"><div class="group-input input-date"><div class="calenderauditee"><input id="date_'+ serialNumber +'_date_rrv" type="text" name="Report_Approval[' + serialNumber + '][date_rrv]" placeholder="DD-MMM-YYYY" /> <input type="date" name="Report_Approval[' + serialNumber + '][date_rrv]" min="{{ \Carbon\Carbon::now()->format("Y-m-d") }}" value="{{ \Carbon\Carbon::now()->format("Y-m-d") }}" id="date_'+ serialNumber +'_date_rrv" class="hide-input show_date" style="position: absolute; top: 0; left: 0; opacity: 0;" oninput="handleDateInput(this, \'date_'+ serialNumber +'_date_rrv\')" /> </div></div></div></td>' +
-                    '<td><button type="button" class="removeRowBtn">Remove</button></td>' +
-                    '</tr>';
-                indexReaprovel++;
-                return html;
-            }
-
-            var tableBody = $('#report_approval_details tbody');
-            var rowCount = tableBody.children('tr').length;
-            var newRow = generateTableRow(rowCount);
-            tableBody.append(newRow);
-        });
-
-        $(document).on('click', '.removeRowBtn', function() {
-            $(this).closest('tr').remove();
-        });
-    });
-</script>
+                            <script>
+                                $(document).ready(function() {
+                                    let indexReaprovel = {{ ($report_approval && is_array($report_approval->data)) ? count($report_approval->data) : 0 }};
+                                    
+                                    $('#report_approval').click(function(e) {
+                                        e.preventDefault();
+                            
+                                        function generateTableRow(serialNumber) {
+                                            var html =
+                                                '<tr>' +
+                                                '<td><input disabled type="text" name="Report_Approval[' + serialNumber + '][serial]" value="' + (serialNumber + 1) + '"></td>' +
+                                                '<td><input type="text" name="Report_Approval[' + serialNumber + '][names_rrv]"></td>' +
+                                                '<td><input type="text" name="Report_Approval[' + serialNumber + '][department_rrv]"></td>' +
+                                                '<td><input type="text" name="Report_Approval[' + serialNumber + '][sign_rrv]"></td>' +
+                                                '<td><div class="new-date-data-field"><div class="group-input input-date"><div class="calenderauditee"><input id="date_'+ serialNumber +'_date_rrv" type="text" name="Report_Approval[' + serialNumber + '][date_rrv]" placeholder="DD-MMM-YYYY" value="" /> <input type="date" name="Report_Approval[' + serialNumber + '][date_rrv]" value="" id="date_'+ serialNumber +'_date_rrv" class="hide-input show_date" style="position: absolute; top: 0; left: 0; opacity: 0;" oninput="handleDateInput(this, \'date_'+ serialNumber +'_date_rrv\')" /> </div></div></div></td>' +
+                                                '<td><button type="button" class="removeRowBtn">Remove</button></td>' +
+                                                '</tr>';
+                                            indexReaprovel++;
+                                            return html;
+                                        }
+                            
+                                        var tableBody = $('#report_approval_details tbody');
+                                        var rowCount = tableBody.children('tr').length;
+                                        var newRow = generateTableRow(rowCount);
+                                        tableBody.append(newRow);
+                                    });
+                            
+                                    $(document).on('click', '.removeRowBtn', function() {
+                                        $(this).closest('tr').remove();
+                                    });
+                                });
+                            
+                                function handleDateInput(dateInput, textInputId) {
+                                    const textInput = document.getElementById(textInputId);
+                                    if (dateInput.value) {
+                                        const date = new Date(dateInput.value);
+                                        const formattedDate = date.toLocaleDateString('en-GB', {
+                                            day: '2-digit',
+                                            month: 'short',
+                                            year: 'numeric'
+                                        }).replace(/ /g, '-');
+                                        textInput.value = formattedDate;
+                                    } else {
+                                        textInput.value = '';
+                                    }
+                                }
+                            </script>
+                            
 
 
 
@@ -2001,7 +2018,27 @@
                                 </div> --}}
                         </div>
                         <div class="button-block">
-                            <button type="submit" class="saveButton">Save</button>
+                            <button type="submit" class="saveButton" id="saveButton"
+                            @if ($data->stage == 8) onclick="showAlert(event)" @endif>Save</button>
+
+                        <div id="alert-message" style="display:none;">
+                            Your stage is Closed - Done You Cannot Edit or Save.
+                        </div>
+                           
+
+                        <script>
+                            function showAlert(event) {
+                                event.preventDefault(); // Prevent form submission
+                                var alertMessage = document.getElementById('alert-message').innerText;
+                                alert(alertMessage);
+                            }
+                        
+                            document.addEventListener('DOMContentLoaded', function () {
+                                var stage = {{ $data->stage }};
+                                
+                              
+                            });
+                        </script>
                             <button type="button" class="backButton" onclick="previousStep()">Back</button>
                             <button type="button" class="nextButton" onclick="nextStep()">Next</button>
 
@@ -2053,20 +2090,16 @@
                                                 <th>Released Quantity</th>
                                                 <th>Remarks</th>
                                                 <th>Action</th>
-
-
                                             </tr>
                                         </thead>
                                         <tbody>
                                             @php
-                                                $productmateIndex = 1;
+                                                $productmateIndex = 0;
                                             @endphp
                                             @if (!empty($product_materialDetails) && is_array($product_materialDetails->data))
                                                 @foreach ($product_materialDetails->data as $index => $Prodmateriyal)
                                                     <tr>
-
-                                                        <td>{{  $productmateIndex++ }}</td>
-                                                        {{-- <td><input disabled type="text" name="Product_MaterialDetails[{{ $index }}][serial]" value="{{ $productmateIndex++ }}"></td> --}}
+                                                        <td>{{  ++$productmateIndex }}</td>
                                                         <td><input type="text" name="Product_MaterialDetails[{{ $index }}][product_name_ca]" value="{{ array_key_exists('product_name_ca', $Prodmateriyal) ? $Prodmateriyal['product_name_ca'] : '' }}"></td>
                                                         <td><input type="text" name="Product_MaterialDetails[{{ $index }}][batch_no_pmd_ca]" value="{{ array_key_exists('batch_no_pmd_ca', $Prodmateriyal) ? $Prodmateriyal['batch_no_pmd_ca'] : '' }}"></td>
                                                         <td>
@@ -2074,19 +2107,19 @@
                                                                 <div class="group-input input-date">
                                                                     <div class="calenderauditee">
                                                                         <input
-                                                                        class="click_date"
-                                                                        id="date_{{ $index }}_mfg_date_pmd_ca" type="text"
-                                                                         name="Product_MaterialDetails[{{ $index }}][mfg_date_pmd_ca]"
-                                                                          placeholder="DD-MMM-YYYY"
-                                                                          value="{{ !empty($Prodmateriyal['mfg_date_pmd_ca']) ? \Carbon\Carbon::parse($Prodmateriyal['mfg_date_pmd_ca'])->format('d-M-Y') : '' }}"
-                                                                          />
+                                                                            class="click_date"
+                                                                            id="date_{{ $index }}_mfg_date_pmd_ca" type="text"
+                                                                            name="Product_MaterialDetails[{{ $index }}][mfg_date_pmd_ca]"
+                                                                            placeholder="DD-MMM-YYYY"
+                                                                            value="{{ !empty($Prodmateriyal['mfg_date_pmd_ca']) ? \Carbon\Carbon::parse($Prodmateriyal['mfg_date_pmd_ca'])->format('d-M-Y') : '' }}"
+                                                                        />
                                                                         <input type="date"
-                                                                         name="Product_MaterialDetails[{{ $index }}][mfg_date_pmd_ca]"
-                                                                         value="{{ !empty($Prodmateriyal['mfg_date_pmd_ca']) ? \Carbon\Carbon::parse($Prodmateriyal['mfg_date_pmd_ca'])->format('d-M-Y') : '' }}"
-                                                                         id="date_{{ $index }}_mfg_date_pmd_ca"
-                                                                        class="hide-input show_date"
-                                                                         style="position: absolute; top: 0; left: 0; opacity: 0;" 
-                                                                         onchange="handleDateInput(this, 'date_{{ $index }}_mfg_date_pmd_ca')" />
+                                                                            name="Product_MaterialDetails[{{ $index }}][mfg_date_pmd_ca]"
+                                                                            value="{{ !empty($Prodmateriyal['mfg_date_pmd_ca']) ? \Carbon\Carbon::parse($Prodmateriyal['mfg_date_pmd_ca'])->format('Y-m-d') : '' }}"
+                                                                            id="date_{{ $index }}_mfg_date_pmd_ca"
+                                                                            class="hide-input show_date"
+                                                                            style="position: absolute; top: 0; left: 0; opacity: 0;" 
+                                                                            onchange="handleDateInput(this, 'date_{{ $index }}_mfg_date_pmd_ca')" />
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -2096,19 +2129,19 @@
                                                                 <div class="group-input input-date">
                                                                     <div class="calenderauditee">
                                                                         <input
-                                                                        class="click_date"
-                                                                        id="date_{{ $index }}_expiry_date_pmd_ca" type="text"
-                                                                         name="Product_MaterialDetails[{{ $index }}][expiry_date_pmd_ca]"
-                                                                          placeholder="DD-MMM-YYYY" 
-                                                                          value="{{ !empty($Prodmateriyal['expiry_date_pmd_ca']) ? \Carbon\Carbon::parse($Prodmateriyal['expiry_date_pmd_ca'])->format('d-M-Y') : '' }}"
-                                                                          />
+                                                                            class="click_date"
+                                                                            id="date_{{ $index }}_expiry_date_pmd_ca" type="text"
+                                                                            name="Product_MaterialDetails[{{ $index }}][expiry_date_pmd_ca]"
+                                                                            placeholder="DD-MMM-YYYY" 
+                                                                            value="{{ !empty($Prodmateriyal['expiry_date_pmd_ca']) ? \Carbon\Carbon::parse($Prodmateriyal['expiry_date_pmd_ca'])->format('d-M-Y') : '' }}"
+                                                                        />
                                                                         <input type="date"
-                                                                         name="Product_MaterialDetails[{{ $index }}][expiry_date_pmd_ca]"
-                                                                         value="{{ !empty($Prodmateriyal['expiry_date_pmd_ca']) ? \Carbon\Carbon::parse($Prodmateriyal['expiry_date_pmd_ca'])->format('d-M-Y') : '' }}"
-                                                                         id="date_{{ $index }}_expiry_date_pmd_ca"
-                                                                        class="hide-input show_date" 
-                                                                        style="position: absolute; top: 0; left: 0; opacity: 0;" 
-                                                                        onchange="handleDateInput(this, 'date_{{ $index }}_expiry_date_pmd_ca')" />
+                                                                            name="Product_MaterialDetails[{{ $index }}][expiry_date_pmd_ca]"
+                                                                            value="{{ !empty($Prodmateriyal['expiry_date_pmd_ca']) ? \Carbon\Carbon::parse($Prodmateriyal['expiry_date_pmd_ca'])->format('Y-m-d') : '' }}"
+                                                                            id="date_{{ $index }}_expiry_date_pmd_ca"
+                                                                            class="hide-input show_date" 
+                                                                            style="position: absolute; top: 0; left: 0; opacity: 0;" 
+                                                                            onchange="handleDateInput(this, 'date_{{ $index }}_expiry_date_pmd_ca')" />
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -2117,12 +2150,12 @@
                                                         <td><input type="text" name="Product_MaterialDetails[{{ $index }}][pack_profile_pmd_ca]" value="{{ array_key_exists('pack_profile_pmd_ca', $Prodmateriyal) ? $Prodmateriyal['pack_profile_pmd_ca'] : '' }}"></td>
                                                         <td><input type="text" name="Product_MaterialDetails[{{ $index }}][released_quantity_pmd_ca]" value="{{ array_key_exists('released_quantity_pmd_ca', $Prodmateriyal) ? $Prodmateriyal['released_quantity_pmd_ca'] : '' }}"></td>
                                                         <td><input type="text" name="Product_MaterialDetails[{{ $index }}][remarks_ca]" value="{{ array_key_exists('remarks_ca', $Prodmateriyal) ? $Prodmateriyal['remarks_ca'] : '' }}"></td>
-                                                        <td><button type="text" class="removeRowBtn" >Remove</button></td>
+                                                        <td><button type="text" class="removeRowBtn">Remove</button></td>
                                                     </tr>
                                                 @endforeach
                                             @else
                                                 <tr>
-                                                    <td colspan="5">No found</td>
+                                                    <td colspan="10">No found</td>
                                                 </tr>
                                             @endif
                                         </tbody>
@@ -2130,43 +2163,39 @@
                                 </div>
                             </div>
                         </div>
-
+                        
                         <script>
                             $(document).ready(function() {
-                                let indexMaetDetails = {{($product_materialDetails && is_array($product_materialDetails->data) ) ? count($product_materialDetails->data) :0 }};
+                                let indexMaetDetails = {{ ($product_materialDetails && is_array($product_materialDetails->data)) ? count($product_materialDetails->data) : 0 }};
                                 $('#promate_add').click(function(e) {
                                     e.preventDefault();
-
+                        
                                     function generateTableRow(productserialno) {
                                         var html =
                                             '<tr>' +
-                                                '<td><input disabled type="text" name="Product_MaterialDetails[' + productserialno + '][serial]" value="' + (productserialno + 1) + '"></td>' +
-                                                '<td><input type="text" name="Product_MaterialDetails[' + indexMaetDetails + '][product_name_ca]"></td>' +
-                                                '<td><input type="text" name="Product_MaterialDetails[' + indexMaetDetails + '][batch_no_pmd_ca]"></td>' +
-                                                '<td> <div class="new-date-data-field"><div class="group-input input-date"><div class="calenderauditee"><input id="date_'+ indexMaetDetails +'_mfg_date_pmd_ca" type="text" name="Product_MaterialDetails[' + indexMaetDetails + '][mfg_date_pmd_ca]" placeholder="DD-MMM-YYYY" /> <input type="date" name="Product_MaterialDetails[' + indexMaetDetails + '][mfg_date_pmd_ca]" min="{{ \Carbon\Carbon::now()->format("Y-m-d") }}" value="{{ \Carbon\Carbon::now()->format("Y-m-d") }}" id="date_'+ indexMaetDetails +'_mfg_date_pmd_ca" class="hide-input show_date" style="position: absolute; top: 0; left: 0; opacity: 0;" oninput="handleDateInput(this, \'date_'+ indexMaetDetails +'_mfg_date_pmd_ca\')" /> </div></div></div> </td>' +
-                                                '<td> <div class="new-date-data-field"><div class="group-input input-date"><div class="calenderauditee"><input id="date_'+ indexMaetDetails +'_expiry_date_pmd_ca" type="text" name="Product_MaterialDetails[' + indexMaetDetails + '][expiry_date_pmd_ca]" placeholder="DD-MMM-YYYY" /> <input type="date" name="Product_MaterialDetails[' + indexMaetDetails + '][expiry_date_pmd_ca]" min="{{ \Carbon\Carbon::now()->format("Y-m-d") }}" value="{{ \Carbon\Carbon::now()->format("Y-m-d") }}" id="date_'+ indexMaetDetails +'_expiry_date_pmd_ca" class="hide-input show_date" style="position: absolute; top: 0; left: 0; opacity: 0;" oninput="handleDateInput(this, \'date_'+ indexMaetDetails +'_expiry_date_pmd_ca\')" /> </div></div></div> </td>' +
-                                                '<td><input type="text" name="Product_MaterialDetails[' + indexMaetDetails + '][batch_size_pmd_ca]"></td>' +
-                                                '<td><input type="text" name="Product_MaterialDetails[' + indexMaetDetails + '][pack_profile_pmd_ca]"></td>' +
-                                                '<td><input type="text" name="Product_MaterialDetails[' + indexMaetDetails + '][released_quantity_pmd_ca]"></td>' +
-                                                '<td><input type="text" name="Product_MaterialDetails[' + indexMaetDetails + '][remarks_ca]"></td>' +
-
-
-                                                '<td><button type="text" class="removeRowBtn" >Remove</button></td>' +
-
+                                                '<td>' + (productserialno + 1) + '</td>' +
+                                                '<td><input type="text" name="Product_MaterialDetails[' + productserialno + '][product_name_ca]"></td>' +
+                                                '<td><input type="text" name="Product_MaterialDetails[' + productserialno + '][batch_no_pmd_ca]"></td>' +
+                                                '<td> <div class="new-date-data-field"><div class="group-input input-date"><div class="calenderauditee"><input id="date_'+ productserialno +'_mfg_date_pmd_ca" type="text" name="Product_MaterialDetails[' + productserialno + '][mfg_date_pmd_ca]" placeholder="DD-MMM-YYYY" /> <input type="date" name="Product_MaterialDetails[' + productserialno + '][mfg_date_pmd_ca]" min="{{ \Carbon\Carbon::now()->format("Y-m-d") }}" value="{{ \Carbon\Carbon::now()->format("Y-m-d") }}" id="date_'+ productserialno +'_mfg_date_pmd_ca" class="hide-input show_date" style="position: absolute; top: 0; left: 0; opacity: 0;" oninput="handleDateInput(this, \'date_'+ productserialno +'_mfg_date_pmd_ca\')" /> </div></div></div> </td>' +
+                                                '<td> <div class="new-date-data-field"><div class="group-input input-date"><div class="calenderauditee"><input id="date_'+ productserialno +'_expiry_date_pmd_ca" type="text" name="Product_MaterialDetails[' + productserialno + '][expiry_date_pmd_ca]" placeholder="DD-MMM-YYYY" /> <input type="date" name="Product_MaterialDetails[' + productserialno + '][expiry_date_pmd_ca]" min="{{ \Carbon\Carbon::now()->format("Y-m-d") }}" value="{{ \Carbon\Carbon::now()->format("Y-m-d") }}" id="date_'+ productserialno +'_expiry_date_pmd_ca" class="hide-input show_date" style="position: absolute; top: 0; left: 0; opacity: 0;" oninput="handleDateInput(this, \'date_'+ productserialno +'_expiry_date_pmd_ca\')" /> </div></div></div> </td>' +
+                                                '<td><input type="text" name="Product_MaterialDetails[' + productserialno + '][batch_size_pmd_ca]"></td>' +
+                                                '<td><input type="text" name="Product_MaterialDetails[' + productserialno + '][pack_profile_pmd_ca]"></td>' +
+                                                '<td><input type="text" name="Product_MaterialDetails[' + productserialno + '][released_quantity_pmd_ca]"></td>' +
+                                                '<td><input type="text" name="Product_MaterialDetails[' + productserialno + '][remarks_ca]"></td>' +
+                                                '<td><button type="text" class="removeRowBtn">Remove</button></td>' +
                                             '</tr>';
-                                            indexMaetDetails++;
                                         return html;
                                     }
-
+                        
                                     var tableBody = $('#prod_mate_details tbody');
                                     var rowCount = tableBody.children('tr').length;
                                     var newRow = generateTableRow(rowCount);
                                     tableBody.append(newRow);
+                                    indexMaetDetails++;
                                 });
                             });
                         </script>
-
-
+                        
 
 
 
@@ -2414,7 +2443,27 @@
 
                 </div>
                 <div class="button-block">
-                    <button type="submit" class="saveButton">Save</button>
+                    <button type="submit" class="saveButton" id="saveButton"
+                            @if ($data->stage == 8) onclick="showAlert(event)" @endif>Save</button>
+
+                        <div id="alert-message" style="display:none;">
+                            Your stage is Closed - Done You Cannot Edit or Save.
+                        </div>
+                           
+
+                        <script>
+                            function showAlert(event) {
+                                event.preventDefault(); // Prevent form submission
+                                var alertMessage = document.getElementById('alert-message').innerText;
+                                alert(alertMessage);
+                            }
+                        
+                            document.addEventListener('DOMContentLoaded', function () {
+                                var stage = {{ $data->stage }};
+                                
+                              
+                            });
+                        </script>
                     <button type="button" class="backButton" onclick="previousStep()">Back</button>
                     <button type="button" class="nextButton" onclick="nextStep()">Next</button>
 
@@ -2482,7 +2531,27 @@
 
             </div>
             <div class="button-block">
-                <button type="submit" class="saveButton">Save</button>
+                <button type="submit" class="saveButton" id="saveButton"
+                            @if ($data->stage == 8) onclick="showAlert(event)" @endif>Save</button>
+
+                        <div id="alert-message" style="display:none;">
+                            Your stage is Closed - Done You Cannot Edit or Save.
+                        </div>
+                           
+
+                        <script>
+                            function showAlert(event) {
+                                event.preventDefault(); // Prevent form submission
+                                var alertMessage = document.getElementById('alert-message').innerText;
+                                alert(alertMessage);
+                            }
+                        
+                            document.addEventListener('DOMContentLoaded', function () {
+                                var stage = {{ $data->stage }};
+                                
+                              
+                            });
+                        </script>
                 <button type="button" class="backButton" onclick="previousStep()">Back</button>
                 <button type="button" class="nextButton" onclick="nextStep()">Next</button>
 
