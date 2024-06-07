@@ -440,40 +440,43 @@
                             <div class="modal-header">
                                 <h4 class="modal-title">Child</h4>
                             </div>
-                            <form action="{{ route('marketcomplaint.capa_action_child', $data->id) }}" method="POST">
-                                @csrf
-                                <!-- Modal body -->
-                                <div class="modal-body">
-                                    <div class="group-input">
-                                        <label for="capa-child">
-                                            <input type="radio" name="revision" id="capa-child" value="capa-child">
-                                            CAPA
-                                        </label>
+                            <div class="model-body">
+
+                                <form action="{{ route('marketcomplaint.capa_action_child', $data->id) }}" method="POST">
+                                    @csrf
+                                    <!-- Modal body -->
+                                    <div class="modal-body">
+                                        <div class="group-input">
+                                            <label style="  display: flex;     gap: 18px; width: 60px;" for="capa-child">
+                                                <input type="radio" name="revision" id="capa-child" value="capa-child">
+                                                CAPA
+                                            </label>
+                                        </div>
+                                        <div class="group-input">
+                                            <label  style=" display: flex;     gap: 16px; width: 60px;" for="root-item">
+                                                <input type="radio" name="revision" id="root-item" value="Action-Item">
+                                                Action Item
+                                            </label>
+                                        </div>
+                                        {{-- <div class="group-input">
+                                            <label for="root-item">
+                                             <input type="radio" name="revision" id="root-item" value="effectiveness-check">
+                                                Effectiveness check
+                                            </label>
+                                        </div> --}}
                                     </div>
-                                    <div class="group-input">
-                                        <label for="root-item">
-                                            <input type="radio" name="revision" id="root-item" value="Action-Item">
-                                            Action Item
-                                        </label>
-                                    </div>
-                                    {{-- <div class="group-input">
-                                        <label for="root-item">
-                                         <input type="radio" name="revision" id="root-item" value="effectiveness-check">
-                                            Effectiveness check
-                                        </label>
-                                    </div> --}}
-                                </div>
-            
-                                <!-- Modal footer -->
-                                <!-- <div class="modal-footer">
-                                    <button type="button" data-bs-dismiss="modal">Close</button>
-                                    <button type="submit">Continue</button>
-                                </div> -->
-                                <div class="modal-footer">
-                                          <button type="submit">Submit</button>
-                                         <button type="button" data-bs-dismiss="modal">Close</button>                         
-                               </div>
-                            </form>
+                
+                                    <!-- Modal footer -->
+                                    <!-- <div class="modal-footer">
+                                        <button type="button" data-bs-dismiss="modal">Close</button>
+                                        <button type="submit">Continue</button>
+                                    </div> -->
+                                    <div class="modal-footer">
+                                              <button type="submit">Submit</button>
+                                             <button type="button" data-bs-dismiss="modal">Close</button>                         
+                                   </div>
+                                </form>
+                            </div>
             
                         </div>
                     </div>
@@ -488,20 +491,21 @@
                             <div class="modal-header">
                                 <h4 class="modal-title">Child</h4>
                             </div>
+                            <div class="model-body">
                             <form action="{{ route('marketcomplaint.rca_action_child', $data->id) }}" method="POST">
                                 @csrf
                                 <!-- Modal body -->
                                 <div class="modal-body">
                                     <div class="group-input">
-                                        <label for="capa-child">
+                                        <label style="  display: flex;     gap: 18px; width: 60px;" for="capa-child">
                                             <input type="radio" name="revision" id="capa-child" value="rca-child">
                                            RCA
                                         </label>
                                     </div>
                                     <div class="group-input">
-                                        <label for="root-item">
+                                        <label style=" display: flex;     gap: 16px; width: 60px;" for="root-item">
                                             <input type="radio" name="revision" id="root-item" value="Action-Item">
-                                            Action Item
+                                          <span style="width: 100px;">  Action Item</span>
                                         </label>
                                     </div>
                                    
@@ -513,7 +517,7 @@
                                          <button type="button" data-bs-dismiss="modal">Close</button>                         
                                </div>
                             </form>
-            
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -527,31 +531,34 @@
             <div class="modal-header">
                 <h4 class="modal-title">Child</h4>
             </div>
-            <form action="{{ route('marketcomplaint.Regu_Effec_child', $data->id) }}" method="POST">
-                @csrf
-                <!-- Modal body -->
-                <div class="modal-body">
-                    <div class="group-input">
-                        <label for="capa-child">
-                            <input type="radio" name="revision" id="rca-child" value="regulatory-child">
-                            Regulatory Reporting
-                        </label>
-                    </div>
-                    <div class="group-input">
-                        <label for="root-item">
-                            <input type="radio" name="revision" id="root-item" value="Effectiveness-child">
-                            Effectiveness Check
-                        </label>
-                    </div>
-                   
-                </div>
+            <div class="model-body">
 
-               
-                <div class="modal-footer">
-                          <button type="submit">Submit</button>
-                         <button type="button" data-bs-dismiss="modal">Close</button>                         
-               </div>
-            </form>
+                <form action="{{ route('marketcomplaint.Regu_Effec_child', $data->id) }}" method="POST">
+                    @csrf
+                    <!-- Modal body -->
+                    <div class="modal-body">
+                        <div class="group-input">
+                            <label style=" display: flex;     gap: 16px; width: 60px;" for="capa-child">
+                                <input type="radio" name="revision" id="rca-child" value="regulatory-child">
+                                Regulatory Reporting
+                            </label>
+                        </div>
+                        <div class="group-input">
+                            <label style="  display: flex;     gap: 18px; width: 60px;"for="root-item">
+                                <input type="radio" name="revision" id="root-item" value="Effectiveness-child">
+                                Effectiveness Check
+                            </label>
+                        </div>
+                       
+                    </div>
+    
+                   
+                    <div class="modal-footer">
+                              <button type="submit">Submit</button>
+                             <button type="button" data-bs-dismiss="modal">Close</button>                         
+                   </div>
+                </form>
+            </div>
 
         </div>
     </div>
@@ -812,7 +819,7 @@
                                     {{-- <input disabled type="text" name="record"
                                         value="{{ $data->record }}"> --}}
                                         <input disabled type="text" name="record"
-                                        value="{{ Helpers::getDivisionName($data->division_id) }}/LI/{{ Helpers::year($data->created_at) }}/{{ $data->record }}">
+                                        value="{{ $data->initiator_group_code_gi}}/LI/{{ Helpers::year($data->created_at) }}/{{ $data->record }}">
 
                                 </div>
                             </div>
@@ -2057,7 +2064,9 @@
                                             @if (!empty($product_materialDetails) && is_array($product_materialDetails->data))
                                                 @foreach ($product_materialDetails->data as $index => $Prodmateriyal)
                                                     <tr>
-                                                        <td><input disabled type="text" name="Product_MaterialDetails[{{ $index }}][serial]" value="{{ $productmateIndex++ }}"></td>
+
+                                                        <td>{{  $productmateIndex++ }}</td>
+                                                        {{-- <td><input disabled type="text" name="Product_MaterialDetails[{{ $index }}][serial]" value="{{ $productmateIndex++ }}"></td> --}}
                                                         <td><input type="text" name="Product_MaterialDetails[{{ $index }}][product_name_ca]" value="{{ array_key_exists('product_name_ca', $Prodmateriyal) ? $Prodmateriyal['product_name_ca'] : '' }}"></td>
                                                         <td><input type="text" name="Product_MaterialDetails[{{ $index }}][batch_no_pmd_ca]" value="{{ array_key_exists('batch_no_pmd_ca', $Prodmateriyal) ? $Prodmateriyal['batch_no_pmd_ca'] : '' }}"></td>
                                                         <td>
@@ -2145,6 +2154,7 @@
                                                 '<td><button type="text" class="removeRowBtn" >Remove</button></td>' +
 
                                             '</tr>';
+                                            indexMaetDetails++;
                                         return html;
                                     }
 

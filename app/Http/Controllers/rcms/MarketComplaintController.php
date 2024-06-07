@@ -1967,7 +1967,7 @@ public function MarketComplaintRca_actionChild(Request $request,$id)
     if ($request->revision == "Action-Item") {
         // return "test";
         $cc->originator = User::where('id', $cc->initiator_id)->value('name');
-        return view('frontend.forms.action-item', compact('record', 'due_date', 'parent_id','old_record', 'parent_type','parent_intiation_date','parent_record','parent_initiator_id'));
+        return view('frontend.action-item.action-item', compact('record', 'due_date', 'parent_id','old_record', 'parent_type','parent_intiation_date','parent_record','parent_initiator_id'));
 
     }
     
@@ -2006,7 +2006,7 @@ public function MarketComplaintRca_actionChild(Request $request,$id)
         if ($request->revision == "Action-Item") {
             // return "test";
             $cc->originator = User::where('id', $cc->initiator_id)->value('name');
-            return view('frontend.forms.action-item', compact('record', 'due_date', 'parent_id','old_record', 'parent_type','parent_intiation_date','parent_record','parent_initiator_id'));
+            return view('frontend.action-item.action-item', compact('record', 'due_date', 'parent_id','old_record', 'parent_type','parent_intiation_date','parent_record','parent_initiator_id'));
 
         }
         
