@@ -1080,7 +1080,8 @@ class FailureInvestigationController extends Controller
         $pre = FailureInvestigation::all();
         $divisionName = DB::table('q_m_s_divisions')->where('id', $data->division_id)->value('name');
 
-        $investigation_data = FailureInvestigationGridData::where(['failure_investigation_id' => $id, 'identifier' => 'investication'])->first();
+        $investigationTeamData = FailureInvestigationGridData::where(['failure_investigation_id' => $id, 'identifier' => 'investigation'])->first();
+        // dd($investigation_data);
         $root_cause_data = FailureInvestigationGridData::where(['failure_investigation_id' => $id, 'identifier' => 'rootCause'])->first();
         $why_data = FailureInvestigationGridData::where(['failure_investigation_id' => $id, 'identifier' => 'why'])->first();
         $fishbone_data = FailureInvestigationGridData::where(['failure_investigation_id' => $id, 'identifier' => 'fishbone'])->first();
@@ -1093,7 +1094,7 @@ class FailureInvestigationController extends Controller
         $investigationExtension = FailureInvestigationLaunchExtension::where(['failure_investigation_id' => $id, "extension_identifier" => "Investigation"])->first();
         $failureInvestigationExtension = FailureInvestigationLaunchExtension::where(['failure_investigation_id' => $id, "extension_identifier" => "FailureInvestigation"])->first();
 
-        return view('frontend.failure-investigation.failure-inv-view', compact('data','userData', 'grid_data_qrms','grid_data_matrix_qrms', 'capaExtension','qrmExtension','investigationExtension','failureInvestigationExtension', 'old_record', 'pre', 'data1', 'divisionName','grid_data','grid_data1','grid_data2','investigation_data','root_cause_data', 'why_data', 'fishbone_data'));
+        return view('frontend.failure-investigation.failure-inv-view', compact('data','userData', 'grid_data_qrms','grid_data_matrix_qrms', 'capaExtension','qrmExtension','investigationExtension','failureInvestigationExtension', 'old_record', 'pre', 'data1', 'divisionName','grid_data','grid_data1','grid_data2','investigationTeamData','root_cause_data', 'why_data', 'fishbone_data'));
     }
 
     public function update(Request $request,$id)
@@ -2043,10 +2044,10 @@ class FailureInvestigationController extends Controller
             $failureInvestigation->who_rationable = $request->who_rationable;
 
             // dd($id);
-            $newDataGridInvestication = FailureInvestigationGridData::where(['failure_investigation_id' => $id, 'identifier' => 'investication'])->firstOrCreate();
+            $newDataGridInvestication = FailureInvestigationGridData::where(['failure_investigation_id' => $id, 'identifier' => 'investigation'])->firstOrCreate();
             $newDataGridInvestication->failure_investigation_id = $id;
-            $newDataGridInvestication->identifier = 'investication';
-            $newDataGridInvestication->data = $request->investication;
+            $newDataGridInvestication->identifier = 'investigation';
+            $newDataGridInvestication->data = $request->investigation;
             $newDataGridInvestication->save();
 
             $newDataGridRCA = FailureInvestigationGridData::where(['failure_investigation_id' => $id, 'identifier' => 'rootCause'])->firstOrCreate();
@@ -4419,7 +4420,7 @@ class FailureInvestigationController extends Controller
             $grid_data = FailureInvestigationGrid::where('failure_investigation_grid_id', $id)->where('type', "FailureInvestigation")->first();
             $grid_data1 = FailureInvestigationGrid::where('failure_investigation_grid_id', $id)->where('type', "Document")->first();
 
-            $investigation_data = FailureInvestigationGridData::where(['failure_investigation_id' => $id, 'identifier' => 'investication'])->first();
+            $investigation_data = FailureInvestigationGridData::where(['failure_investigation_id' => $id, 'identifier' => 'investigation'])->first();
             $root_cause_data = FailureInvestigationGridData::where(['failure_investigation_id' => $id, 'identifier' => 'rootCause'])->first();
             $why_data = FailureInvestigationGridData::where(['failure_investigation_id' => $id, 'identifier' => 'why'])->first();
 

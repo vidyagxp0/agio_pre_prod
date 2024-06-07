@@ -354,10 +354,12 @@
                                                     <div><small class="text-primary">If revising Due Date, kindly mention
                                                             revision reason in "Due Date Extension Justification" data
                                                             field.</small></div>
-                                                    <input readonly type="text"
+                                                    <input type="date" name="due_date" value="{{ $data->due_date }}"
+                                                        class="" >
+                                                    <!-- <input readonly type="text"
                                                         value="{{ Helpers::getdateFormat($data->due_date) }}"
                                                         name="due_date"
-                                                        {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>
+                                                        {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}> -->
                                                 </div>
                                             </div>
                                             <div class="col-lg-6">
@@ -7196,6 +7198,13 @@
             // Update the result field within the row
             document.getElementById('analysisRPN').value = result;
         }
+    </script>
+    <script>
+        // JavaScript
+        document.getElementById('initiator_group').addEventListener('change', function() {
+            var selectedValue = this.value;
+            document.getElementById('initiator_group_code').value = selectedValue;
+        });
     </script>
     <script>
         var maxLength = 255;

@@ -858,13 +858,7 @@ class DashboardController extends Controller
 
         $division_name = "NA";
 
-        if ($type == "Change-Control") {
-            $data = CC::find($id);
-            $single = "change_control_single_pdf/" . $data->id;
-            $audit = "audit/" . $data->id;
-            $division = QMSDivision::find($data->division_id);
-            $division_name = $division->name;
-        } elseif ($type == "OOT") {
+        if ($type == "OOT") {
             $data = Ootc::find($id);
             $single = "ootcSingleReport/" . $data->id;
             $audit = "audit_pdf/".$data->id;
@@ -1005,13 +999,21 @@ class DashboardController extends Controller
 
         }
 
+        elseif ($type == "Change-Control") {
+            $data = CC::find($id);
+            $audit = "audit/" . $data->id;
+            $single = "change_control_single_pdf/" . $data->id;
+            $division = QMSDivision::find($data->division_id);
+            $division_name = $division->name;
+        }
+
 
         $type = $type == 'Capa' ? 'CAPA' : $type;
 
         $html = '';
         $html = '<div class="block">
         <div class="record_no">
-            Record No. ' . str_pad($data->record_number, 4, '0', STR_PAD_LEFT) .
+            Record No. ' . str_pad($data->record, 4, '0', STR_PAD_LEFT) .
             '</div>
         <div class="division">
         ' . $division_name . '/ ' . $type . '
