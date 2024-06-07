@@ -1589,7 +1589,7 @@ class OOSService
             if ($lastOosRecod->if_others_gi != $request->if_others_gi){
                 $history = new OosAuditTrial();
                 $history->oos_id = $oos->id;
-                $history->previous = "Null";
+                $history->previous = $lastOosRecod->if_others_gi;
                 $history->comment = "Not Applicable";
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
@@ -1606,7 +1606,7 @@ class OOSService
             if ($lastOosRecod->is_repeat_gi != $request->is_repeat_gi){
                 $history = new OosAuditTrial();
                 $history->oos_id = $oos->id;
-                $history->previous = "Null";
+                $history->previous = $lastOosRecod->is_repeat_gi;
                 $history->comment = "Not Applicable";
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
@@ -1623,7 +1623,7 @@ class OOSService
             if ($lastOosRecod->nature_of_change_gi != $request->nature_of_change_gi){
                 $history = new OosAuditTrial();
                 $history->oos_id = $oos->id;
-                $history->previous = "Null";
+                $history->previous = $lastOosRecod->nature_of_change_gi;
                 $history->comment = "Not Applicable";
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
@@ -1637,10 +1637,10 @@ class OOSService
                 $history->current = $request->nature_of_change_gi;
                 $history->save();
             }
-            if ($lastOosRecod->nature_of_change_gi != $request->nature_of_change_gi){
+            if ($lastOosRecod->deviation_occured_on_gi != $request->deviation_occured_on_gi){
                 $history = new OosAuditTrial();
                 $history->oos_id = $oos->id;
-                $history->previous = "Null";
+                $history->previous = $lastOosRecod->deviation_occured_on_gi;
                 $history->comment = "Not Applicable";
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
@@ -1654,10 +1654,10 @@ class OOSService
                 $history->current = $request->deviation_occured_on_gi;
                 $history->save();
             }
-            if ($lastOosRecod->nature_of_change_gi != $request->nature_of_change_gi){
+            if ($lastOosRecod->source_document_type_gi != $request->source_document_type_gi){
                 $history = new OosAuditTrial();
                 $history->oos_id = $oos->id;
-                $history->previous = "Null";
+                $history->previous = $lastOosRecod->source_document_type_gi;
                 $history->comment = "Not Applicable";
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
@@ -1671,10 +1671,10 @@ class OOSService
                 $history->current = $request->source_document_type_gi;
                 $history->save();
             }
-            if ($lastOosRecod->nature_of_change_gi != $request->nature_of_change_gi){
+            if ($lastOosRecod->sample_type_gi != $request->sample_type_gi){
                 $history = new OosAuditTrial();
                 $history->oos_id = $oos->id;
-                $history->previous = "Null";
+                $history->previous = $lastOosRecod->sample_type_gi;
                 $history->comment = "Not Applicable";
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
@@ -1683,15 +1683,15 @@ class OOSService
                 $history->stage = $oos->stage;
                 $history->change_to =   "Opened";
                 $history->change_from = "Initiator";
-                $history->action_name = 'Create';
+                $history->action_name = 'Update';
                 $history->activity_type = 'Sample Type';
                 $history->current = $request->sample_type_gi;
                 $history->save();
             }
-            if ($lastOosRecod->nature_of_change_gi != $request->nature_of_change_gi){
+            if ($lastOosRecod->product_material_name_gi != $request->product_material_name_gi){
                 $history = new OosAuditTrial();
                 $history->oos_id = $oos->id;
-                $history->previous = "Null";
+                $history->previous = $lastOosRecod->product_material_name_gi;
                 $history->comment = "Not Applicable";
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
@@ -1700,15 +1700,15 @@ class OOSService
                 $history->stage = $oos->stage;
                 $history->change_to =   "Opened";
                 $history->change_from = "Initiator";
-                $history->action_name = 'Create';
+                $history->action_name = 'Update';
                 $history->activity_type = 'Product / Material Name';
                 $history->current = $request->product_material_name_gi;
                 $history->save();
             }
-            if ($lastOosRecod->nature_of_change_gi != $request->nature_of_change_gi){
+            if ($lastOosRecod->market_gi != $request->market_gi){
                 $history = new OosAuditTrial();
                 $history->oos_id = $oos->id;
-                $history->previous = "Null";
+                $history->previous = $lastOosRecod->market_gi;
                 $history->comment = "Not Applicable";
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
@@ -1717,15 +1717,15 @@ class OOSService
                 $history->stage = $oos->stage;
                 $history->change_to =   "Opened";
                 $history->change_from = "Initiator";
-                $history->action_name = 'Create';
+                $history->action_name = 'Update';
                 $history->activity_type = 'Market';
                 $history->current = $request->market_gi;
                 $history->save();
             }
-            if ($lastOosRecod->nature_of_change_gi != $request->nature_of_change_gi){
+            if ($lastOosRecod->customer_gi != $request->customer_gi){
                 $history = new OosAuditTrial();
                 $history->oos_id = $oos->id;
-                $history->previous = "Null";
+                $history->previous = $lastOosRecod->customer_gi;
                 $history->comment = "Not Applicable";
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
@@ -1734,16 +1734,16 @@ class OOSService
                 $history->stage = $oos->stage;
                 $history->change_to =   "Opened";
                 $history->change_from = "Initiator";
-                $history->action_name = 'Create';
+                $history->action_name = 'Update';
                 $history->activity_type = 'Customer';
                 $history->current = $oos->customer_gi;
                 $history->save();
             }
             // TapII
-            if ($lastOosRecod->nature_of_change_gi != $request->nature_of_change_gi){
+            if ($lastOosRecod->Comments_plidata != $request->Comments_plidata){
                 $history = new OosAuditTrial();
                 $history->oos_id = $oos->id;
-                $history->previous = "Null";
+                $history->previous = $lastOosRecod->Comments_plidata;
                 $history->comment = "Not Applicable";
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
@@ -1752,15 +1752,15 @@ class OOSService
                 $history->stage = $oos->stage;
                 $history->change_to =   "Opened";
                 $history->change_from = "Initiator";
-                $history->action_name = 'Create';
+                $history->action_name = 'Update';
                 $history->activity_type = 'Comments Plidata';
                 $history->current = $oos->Comments_plidata;
                 $history->save();
             }
-            if ($lastOosRecod->nature_of_change_gi != $request->nature_of_change_gi){
+            if ($lastOosRecod->justify_if_no_field_alert_pli != $request->justify_if_no_field_alert_pli){
                 $history = new OosAuditTrial();
                 $history->oos_id = $oos->id;
-                $history->previous = "Null";
+                $history->previous = $lastOosRecod->justify_if_no_field_alert_pli;
                 $history->comment = "Not Applicable";
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
@@ -1769,15 +1769,15 @@ class OOSService
                 $history->stage = $oos->stage;
                 $history->change_to =   "Opened";
                 $history->change_from = "Initiator";
-                $history->action_name = 'Create';
+                $history->action_name = 'Update';
                 $history->activity_type = 'Justify If No Field Alert Pli';
                 $history->current = $oos->justify_if_no_field_alert_pli;
                 $history->save();
             }
-            if ($lastOosRecod->nature_of_change_gi != $request->nature_of_change_gi){
+            if ($lastOosRecod->justify_if_no_analyst_int_pli != $request->justify_if_no_analyst_int_pli){
                 $history = new OosAuditTrial();
                 $history->oos_id = $oos->id;
-                $history->previous = "Null";
+                $history->previous = $lastOosRecod->justify_if_no_analyst_int_pli;
                 $history->comment = "Not Applicable";
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
@@ -1786,15 +1786,15 @@ class OOSService
                 $history->stage = $oos->stage;
                 $history->change_to =   "Opened";
                 $history->change_from = "Initiator";
-                $history->action_name = 'Create';
+                $history->action_name = 'Update';
                 $history->activity_type = 'Justify if no Analyst Int';
                 $history->current = $request->justify_if_no_analyst_int_pli;
                 $history->save();
             }
-            if ($lastOosRecod->nature_of_change_gi != $request->nature_of_change_gi){
+            if ($lastOosRecod->phase_i_investigation_pli != $request->phase_i_investigation_pli){
                 $history = new OosAuditTrial();
                 $history->oos_id = $oos->id;
-                $history->previous = "Null";
+                $history->previous = $lastOosRecod->phase_i_investigation_pli;
                 $history->comment = "Not Applicable";
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
@@ -1803,15 +1803,15 @@ class OOSService
                 $history->stage = $oos->stage;
                 $history->change_to =   "Opened";
                 $history->change_from = "Initiator";
-                $history->action_name = 'Create';
+                $history->action_name = 'Update';
                 $history->activity_type = 'Phase I Investigation';
                 $history->current = $request->phase_i_investigation_pli;
                 $history->save();
             }
-            if ($lastOosRecod->nature_of_change_gi != $request->nature_of_change_gi){
+            if ($lastOosRecod->phase_i_investigation_ref_pli != $request->phase_i_investigation_ref_pli){
                 $history = new OosAuditTrial();
                 $history->oos_id = $oos->id;
-                $history->previous = "Null";
+                $history->previous = $lastOosRecod->phase_i_investigation_ref_pli;
                 $history->comment = "Not Applicable";
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
@@ -1820,16 +1820,16 @@ class OOSService
                 $history->stage = $oos->stage;
                 $history->change_to =   "Opened";
                 $history->change_from = "Initiator";
-                $history->action_name = 'Create';
+                $history->action_name = 'Update';
                 $history->activity_type = 'Phase I Investigation Ref';
                 $history->current = $request->phase_i_investigation_ref_pli;
                 $history->save();
             }
             // TapIV
-            if ($lastOosRecod->nature_of_change_gi != $request->nature_of_change_gi){
+            if ($lastOosRecod->summary_of_prelim_investiga_plic != $request->summary_of_prelim_investiga_plic){
                 $history = new OosAuditTrial();
                 $history->oos_id = $oos->id;
-                $history->previous = "Null";
+                $history->previous = $lastOosRecod->summary_of_prelim_investiga_plic;
                 $history->comment = "Not Applicable";
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
@@ -1838,15 +1838,15 @@ class OOSService
                 $history->stage = $oos->stage;
                 $history->change_to =   "Opened";
                 $history->change_from = "Initiator";
-                $history->action_name = 'Create';
+                $history->action_name = 'Update';
                 $history->activity_type = 'Summary of Preliminary Investigation';
                 $history->current = $request->summary_of_prelim_investiga_plic;
                 $history->save();
             }
-            if ($lastOosRecod->nature_of_change_gi != $request->nature_of_change_gi){
+            if ($lastOosRecod->root_cause_identified_plic != $request->root_cause_identified_plic){
                 $history = new OosAuditTrial();
                 $history->oos_id = $oos->id;
-                $history->previous = "Null";
+                $history->previous = $lastOosRecod->root_cause_identified_plic;
                 $history->comment = "Not Applicable";
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
@@ -1855,15 +1855,15 @@ class OOSService
                 $history->stage = $oos->stage;
                 $history->change_to =   "Opened";
                 $history->change_from = "Initiator";
-                $history->action_name = 'Create';
+                $history->action_name = 'Update';
                 $history->activity_type = 'Root Cause Identified';
                 $history->current = $request->root_cause_identified_plic;
                 $history->save();
             }
-            if ($lastOosRecod->nature_of_change_gi != $request->nature_of_change_gi){
+            if ($lastOosRecod->oos_category_root_cause_ident_plic != $request->oos_category_root_cause_ident_plic){
                 $history = new OosAuditTrial();
                 $history->oos_id = $oos->id;
-                $history->previous = "Null";
+                $history->previous = $lastOosRecod->oos_category_root_cause_ident_plic;
                 $history->comment = "Not Applicable";
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
@@ -1872,15 +1872,15 @@ class OOSService
                 $history->stage = $oos->stage;
                 $history->change_to =   "Opened";
                 $history->change_from = "Initiator";
-                $history->action_name = 'Create';
+                $history->action_name = 'Update';
                 $history->activity_type = 'OOS Category-Root Cause Ident';
                 $history->current = $request->oos_category_root_cause_ident_plic;
                 $history->save();
             }
-            if ($lastOosRecod->nature_of_change_gi != $request->nature_of_change_gi){
+            if ($lastOosRecod->root_cause_details_plic != $request->root_cause_details_plic){
                 $history = new OosAuditTrial();
                 $history->oos_id = $oos->id;
-                $history->previous = "Null";
+                $history->previous = $lastOosRecod->root_cause_details_plic;
                 $history->comment = "Not Applicable";
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
@@ -1889,15 +1889,15 @@ class OOSService
                 $history->stage = $oos->stage;
                 $history->change_to =   "Opened";
                 $history->change_from = "Initiator";
-                $history->action_name = 'Create';
+                $history->action_name = 'Update';
                 $history->activity_type = 'OOS Category Others';
                 $history->current = $request->root_cause_details_plic;
                 $history->save();
             }
-            if ($lastOosRecod->nature_of_change_gi != $request->nature_of_change_gi){
+            if ($lastOosRecod->oos_category_others_plic != $request->oos_category_others_plic){
                 $history = new OosAuditTrial();
                 $history->oos_id = $oos->id;
-                $history->previous = "Null";
+                $history->previous = $lastOosRecod->oos_category_others_plic;
                 $history->comment = "Not Applicable";
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
@@ -1906,15 +1906,15 @@ class OOSService
                 $history->stage = $oos->stage;
                 $history->change_to =   "Opened";
                 $history->change_from = "Initiator";
-                $history->action_name = 'Create';
+                $history->action_name = 'Update';
                 $history->activity_type = 'Root Cause Details';
                 $history->current = $request->oos_category_others_plic;
                 $history->save();
             }
-            if ($lastOosRecod->nature_of_change_gi != $request->nature_of_change_gi){
+            if ($lastOosRecod->oos_category_others_plic != $request->oos_category_others_plic){
                 $history = new OosAuditTrial();
                 $history->oos_id = $oos->id;
-                $history->previous = "Null";
+                $history->previous = $lastOosRecod->oos_category_others_plic;
                 $history->comment = "Not Applicable";
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
@@ -1923,15 +1923,15 @@ class OOSService
                 $history->stage = $oos->stage;
                 $history->change_to =   "Opened";
                 $history->change_from = "Initiator";
-                $history->action_name = 'Create';
+                $history->action_name = 'Update';
                 $history->activity_type = 'OOS Category-Root Cause Ident';
                 $history->current = $request->oos_category_others_plic;
                 $history->save();
             }
-            if ($lastOosRecod->nature_of_change_gi != $request->nature_of_change_gi){
+            if ($lastOosRecod->capa_required_plic != $request->capa_required_plic){
                 $history = new OosAuditTrial();
                 $history->oos_id = $oos->id;
-                $history->previous = "Null";
+                $history->previous = $lastOosRecod->capa_required_plic;
                 $history->comment = "Not Applicable";
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
@@ -1940,15 +1940,15 @@ class OOSService
                 $history->stage = $oos->stage;
                 $history->change_to =   "Opened";
                 $history->change_from = "Initiator";
-                $history->action_name = 'Create';
+                $history->action_name = 'Update';
                 $history->activity_type = 'CAPA Required';
                 $history->current = $request->capa_required_plic;
                 $history->save();
             }
-            if ($lastOosRecod->nature_of_change_gi != $request->nature_of_change_gi){
+            if ($lastOosRecod->reference_capa_no_plic != $request->reference_capa_no_plic){
                 $history = new OosAuditTrial();
                 $history->oos_id = $oos->id;
-                $history->previous = "Null";
+                $history->previous = $lastOosRecod->reference_capa_no_plic;
                 $history->comment = "Not Applicable";
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
@@ -1957,15 +1957,15 @@ class OOSService
                 $history->stage = $oos->stage;
                 $history->change_to =   "Opened";
                 $history->change_from = "Initiator";
-                $history->action_name = 'Create';
+                $history->action_name = 'Update';
                 $history->activity_type = 'Reference CAPA No';
                 $history->current = $request->reference_capa_no_plic;
                 $history->save();
             }
-            if ($lastOosRecod->nature_of_change_gi != $request->nature_of_change_gi){
+            if ($lastOosRecod->delay_justification_for_pi_plic != $request->delay_justification_for_pi_plic){
                 $history = new OosAuditTrial();
                 $history->oos_id = $oos->id;
-                $history->previous = "Null";
+                $history->previous = $lastOosRecod->delay_justification_for_pi_plic;
                 $history->comment = "Not Applicable";
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
@@ -1974,16 +1974,16 @@ class OOSService
                 $history->stage = $oos->stage;
                 $history->change_to =   "Opened";
                 $history->change_from = "Initiator";
-                $history->action_name = 'Create';
+                $history->action_name = 'Update';
                 $history->activity_type = 'Delay Justification for Preliminary Investigation';
                 $history->current = $request->delay_justification_for_pi_plic;
                 $history->save();
             }
             // TapV5
-            if ($lastOosRecod->nature_of_change_gi != $request->nature_of_change_gi){
+            if ($lastOosRecod->review_comments_plir != $request->review_comments_plir){
                 $history = new OosAuditTrial();
                 $history->oos_id = $oos->id;
-                $history->previous = "Null";
+                $history->previous = $lastOosRecod->review_comments_plir;
                 $history->comment = "Not Applicable";
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
@@ -1992,15 +1992,15 @@ class OOSService
                 $history->stage = $oos->stage;
                 $history->change_to =   "Opened";
                 $history->change_from = "Initiator";
-                $history->action_name = 'Create';
+                $history->action_name = 'Update';
                 $history->activity_type = 'Review Comments';
                 $history->current = $request->review_comments_plir;
                 $history->save();
             }
-            if ($lastOosRecod->nature_of_change_gi != $request->nature_of_change_gi){
+            if ($lastOosRecod->phase_ii_inv_required_plir != $request->phase_ii_inv_required_plir){
                 $history = new OosAuditTrial();
                 $history->oos_id = $oos->id;
-                $history->previous = "Null";
+                $history->previous = $lastOosRecod->phase_ii_inv_required_plir;
                 $history->comment = "Not Applicable";
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
@@ -2009,16 +2009,16 @@ class OOSService
                 $history->stage = $oos->stage;
                 $history->change_to =   "Opened";
                 $history->change_from = "Initiator";
-                $history->action_name = 'Create';
+                $history->action_name = 'Update';
                 $history->activity_type = 'Phase II Inv. Required';
                 $history->current = $request->phase_ii_inv_required_plir;
                 $history->save();
             }
             // TapVI6
-            if ($lastOosRecod->nature_of_change_gi != $request->nature_of_change_gi){
+            if ($lastOosRecod->qa_approver_comments_piii != $request->qa_approver_comments_piii){
                 $history = new OosAuditTrial();
                 $history->oos_id = $oos->id;
-                $history->previous = "Null";
+                $history->previous = $lastOosRecod->qa_approver_comments_piii;
                 $history->comment = "Not Applicable";
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
@@ -2032,10 +2032,10 @@ class OOSService
                 $history->current = $request->qa_approver_comments_piii;
                 $history->save();
             }
-            if ($lastOosRecod->nature_of_change_gi != $request->nature_of_change_gi){
+            if ($lastOosRecod->qa_approver_comments_piii != $request->qa_approver_comments_piii){
                 $history = new OosAuditTrial();
                 $history->oos_id = $oos->id;
-                $history->previous = "Null";
+                $history->previous = $lastOosRecod->qa_approver_comments_piii;
                 $history->comment = "Not Applicable";
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
@@ -2044,14 +2044,14 @@ class OOSService
                 $history->stage = $oos->stage;
                 $history->change_to =   "Opened";
                 $history->change_from = "Initiator";
-                $history->action_name = 'Create';
+                $history->action_name = 'Update';
                 $history->activity_type = 'Manufact. Invest. Required?';
                 $history->current = $request->qa_approver_comments_piii;
             }
-            if ($lastOosRecod->nature_of_change_gi != $request->nature_of_change_gi){
+            if ($lastOosRecod->manufact_invest_required_piii != $request->manufact_invest_required_piii){
                 $history = new OosAuditTrial();
                 $history->oos_id = $oos->id;
-                $history->previous = "Null";
+                $history->previous = $lastOosRecod->manufact_invest_required_piii;
                 $history->comment = "Not Applicable";
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
@@ -2060,15 +2060,15 @@ class OOSService
                 $history->stage = $oos->stage;
                 $history->change_to =   "Opened";
                 $history->change_from = "Initiator";
-                $history->action_name = 'Create';
+                $history->action_name = 'Update';
                 $history->activity_type = ' Manufacturing Invest. Type';
                 $history->current = $request->manufact_invest_required_piii;
                 $history->save();
             }
-            if ($lastOosRecod->nature_of_change_gi != $request->nature_of_change_gi){
+            if ($lastOosRecod->manufacturing_invest_type_piii != $request->manufacturing_invest_type_piii){
                 $history = new OosAuditTrial();
                 $history->oos_id = $oos->id;
-                $history->previous = "Null";
+                $history->previous = $lastOosRecod->manufacturing_invest_type_piii;
                 $history->comment = "Not Applicable";
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
@@ -2077,11 +2077,11 @@ class OOSService
                 $history->stage = $oos->stage;
                 $history->change_to =   "Opened";
                 $history->change_from = "Initiator";
-                $history->action_name = 'Create';
+                $history->action_name = 'Update';
                 $history->activity_type = 'manufacturing_invest_type_piii';
                 $history->current = $request->manufacturing_invest_type_piii;
             }
-            if ($lastOosRecod->nature_of_change_gi != $request->nature_of_change_gi){
+            if ($lastOosRecod->audit_comments_piii != $request->audit_comments_piii){
                 $history = new OosAuditTrial();
                 $history->oos_id = $oos->id;
                 $history->previous = "Null";
@@ -2093,15 +2093,15 @@ class OOSService
                 $history->stage = $oos->stage;
                 $history->change_to =   "Opened";
                 $history->change_from = "Initiator";
-                $history->action_name = 'Create';
+                $history->action_name = 'Update';
                 $history->activity_type = 'Audit Comments';
                 $history->current = $request->audit_comments_piii;
                 $history->save();
             }
-            if ($lastOosRecod->nature_of_change_gi != $request->nature_of_change_gi){
+            if ($lastOosRecod->hypo_exp_required_piii != $request->hypo_exp_required_piii){
                 $history = new OosAuditTrial();
                 $history->oos_id = $oos->id;
-                $history->previous = "Null";
+                $history->previous = $lastOosRecod->hypo_exp_required_piii;
                 $history->comment = "Not Applicable";
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
@@ -2110,15 +2110,15 @@ class OOSService
                 $history->stage = $oos->stage;
                 $history->change_to =   "Opened";
                 $history->change_from = "Initiator";
-                $history->action_name = 'Create';
+                $history->action_name = 'Update';
                 $history->activity_type = 'Hypo/Exp. Required';
                 $history->current = $request->hypo_exp_required_piii;
                 $history->save();
             }
-            if ($lastOosRecod->nature_of_change_gi != $request->nature_of_change_gi){
+            if ($lastOosRecod->hypo_exp_reference_piii != $request->hypo_exp_reference_piii){
                 $history = new OosAuditTrial();
                 $history->oos_id = $oos->id;
-                $history->previous = "Null";
+                $history->previous = $lastOosRecod->hypo_exp_reference_piii;
                 $history->comment = "Not Applicable";
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
@@ -2127,16 +2127,16 @@ class OOSService
                 $history->stage = $oos->stage;
                 $history->change_to =   "Opened";
                 $history->change_from = "Initiator";
-                $history->action_name = 'Create';
+                $history->action_name = 'Update';
                 $history->activity_type = 'Hypo/Exp. Reference';
                 $history->current = $request->hypo_exp_reference_piii;
                 $history->save();
             }
             // TapVIII8
-            if ($lastOosRecod->nature_of_change_gi != $request->nature_of_change_gi){
+            if ($lastOosRecod->summary_of_exp_hyp_piiqcr != $request->summary_of_exp_hyp_piiqcr){
                 $history = new OosAuditTrial();
                 $history->oos_id = $oos->id;
-                $history->previous = "Null";
+                $history->previous = $lastOosRecod->summary_of_exp_hyp_piiqcr;
                 $history->comment = "Not Applicable";
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
@@ -2145,15 +2145,15 @@ class OOSService
                 $history->stage = $oos->stage;
                 $history->change_to =   "Opened";
                 $history->change_from = "Initiator";
-                $history->action_name = 'Create';
+                $history->action_name = 'Update';
                 $history->activity_type = 'Summary of Exp./Hyp.';
                 $history->current = $request->summary_of_exp_hyp_piiqcr;
                 $history->save();
             }
-            if ($lastOosRecod->nature_of_change_gi != $request->nature_of_change_gi){
+            if ($lastOosRecod->summary_mfg_investigation_piiqcr != $request->summary_mfg_investigation_piiqcr){
                 $history = new OosAuditTrial();
                 $history->oos_id = $oos->id;
-                $history->previous = "Null";
+                $history->previous = $lastOosRecod->summary_mfg_investigation_piiqcr;
                 $history->comment = "Not Applicable";
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
@@ -2167,10 +2167,10 @@ class OOSService
                 $history->current = $request->summary_mfg_investigation_piiqcr;
                 $history->save();
             }
-            if ($lastOosRecod->nature_of_change_gi != $request->nature_of_change_gi){
+            if ($lastOosRecod->root_casue_identified_piiqcr != $request->root_casue_identified_piiqcr){
                 $history = new OosAuditTrial();
                 $history->oos_id = $oos->id;
-                $history->previous = "Null";
+                $history->previous = $lastOosRecod->root_casue_identified_piiqcr;
                 $history->comment = "Not Applicable";
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
@@ -2179,15 +2179,15 @@ class OOSService
                 $history->stage = $oos->stage;
                 $history->change_to =   "Opened";
                 $history->change_from = "Initiator";
-                $history->action_name = 'Create';
+                $history->action_name = 'Update';
                 $history->activity_type = 'Root Casue Identified';
                 $history->current = $request->root_casue_identified_piiqcr;
                 $history->save();
             }
-            if ($lastOosRecod->nature_of_change_gi != $request->nature_of_change_gi){
+            if ($lastOosRecod->oos_category_reason_identified_piiqcr != $request->oos_category_reason_identified_piiqcr){
                 $history = new OosAuditTrial();
                 $history->oos_id = $oos->id;
-                $history->previous = "Null";
+                $history->previous = $lastOosRecod->oos_category_reason_identified_piiqcr;
                 $history->comment = "Not Applicable";
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
@@ -2202,10 +2202,10 @@ class OOSService
                 $history->save();
             }
             
-            if ($lastOosRecod->nature_of_change_gi != $request->nature_of_change_gi){
+            if ($lastOosRecod->others_oos_category_piiqcr != $request->others_oos_category_piiqcr){
                 $history = new OosAuditTrial();
                 $history->oos_id = $oos->id;
-                $history->previous = "Null";
+                $history->previous = $lastOosRecod->others_oos_category_piiqcr;
                 $history->comment = "Not Applicable";
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
@@ -2214,7 +2214,7 @@ class OOSService
                 $history->stage = $oos->stage;
                 $history->change_to =   "Opened";
                 $history->change_from = "Initiator";
-                $history->action_name = 'Create';
+                $history->action_name = 'Update';
                 $history->activity_type = 'Others (OOS category)';
                 $history->current = $request->others_oos_category_piiqcr;
                 $history->save();
@@ -2222,7 +2222,7 @@ class OOSService
             if ($lastOosRecod->nature_of_change_gi != $request->nature_of_change_gi){
                 $history = new OosAuditTrial();
                 $history->oos_id = $oos->id;
-                $history->previous = "Null";
+                $history->previous = $lastOosRecod->nature_of_change_gi;
                 $history->comment = "Not Applicable";
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
@@ -2231,15 +2231,15 @@ class OOSService
                 $history->stage = $oos->stage;
                 $history->change_to =   "Opened";
                 $history->change_from = "Initiator";
-                $history->action_name = 'Create';
+                $history->action_name = 'Update';
                 $history->activity_type = 'Details of Root Cause';
                 $history->current = $request->details_of_root_cause_piiqcr;
                 $history->save();
             }
-            if ($lastOosRecod->nature_of_change_gi != $request->nature_of_change_gi){
+            if ($lastOosRecod->impact_assessment_piiqcr != $request->impact_assessment_piiqcr){
                 $history = new OosAuditTrial();
                 $history->oos_id = $oos->id;
-                $history->previous = "Null";
+                $history->previous = $lastOosRecod->impact_assessment_piiqcr ;
                 $history->comment = "Not Applicable";
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
@@ -2248,17 +2248,17 @@ class OOSService
                 $history->stage = $oos->stage;
                 $history->change_to =   "Opened";
                 $history->change_from = "Initiator";
-                $history->action_name = 'Create';
+                $history->action_name = 'Update';
                 $history->activity_type = 'Impact Assessment.';
                 $history->current = $request->impact_assessment_piiqcr;
                 $history->save();
             }
 
             // ======= Additional Testing Proposal ============
-            if ($lastOosRecod->nature_of_change_gi != $request->nature_of_change_gi){
+            if ($lastOosRecod->review_comment_atp != $request->review_comment_atp){
                 $history = new OosAuditTrial();
                 $history->oos_id = $oos->id;
-                $history->previous = "Null";
+                $history->previous = $lastOosRecod->review_comment_atp;
                 $history->comment = "Not Applicable";
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
@@ -2267,12 +2267,12 @@ class OOSService
                 $history->stage = $oos->stage;
                 $history->change_to =   "Opened";
                 $history->change_from = "Initiator";
-                $history->action_name = 'Create';
+                $history->action_name = 'Update';
                 $history->activity_type = 'Review Comment Atp.';
                 $history->current = $request->review_comment_atp;
                 $history->save();
             }
-            if ($lastOosRecod->nature_of_change_gi != $request->nature_of_change_gi){
+            if ($lastOosRecod->additional_test_proposal_atp != $request->additional_test_proposal_atp){
                 $history = new OosAuditTrial();
                 $history->oos_id = $oos->id;
                 $history->previous = "Null";
@@ -2284,15 +2284,15 @@ class OOSService
                 $history->stage = $oos->stage;
                 $history->change_to =   "Opened";
                 $history->change_from = "Initiator";
-                $history->action_name = 'Create';
+                $history->action_name = 'Update';
                 $history->activity_type = 'Additional Test Proposal Atp.';
                 $history->current = $request->additional_test_proposal_atp;
                 $history->save();
             }
-            if ($lastOosRecod->nature_of_change_gi != $request->nature_of_change_gi){
+            if ($lastOosRecod->additional_test_reference_atp != $request->additional_test_reference_atp){
                 $history = new OosAuditTrial();
                 $history->oos_id = $oos->id;
-                $history->previous = "Null";
+                $history->previous = $lastOosRecod->additional_test_reference_atp;
                 $history->comment = "Not Applicable";
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
@@ -2301,7 +2301,7 @@ class OOSService
                 $history->stage = $oos->stage;
                 $history->change_to =   "Opened";
                 $history->change_from = "Initiator";
-                $history->action_name = 'Create';
+                $history->action_name = 'Update';
                 $history->activity_type = 'additional Test Reference Atp.';
                 $history->current = $request->additional_test_reference_atp;
                 $history->save();
@@ -2309,7 +2309,7 @@ class OOSService
             if ($lastOosRecod->nature_of_change_gi != $request->nature_of_change_gi){
                 $history = new OosAuditTrial();
                 $history->oos_id = $oos->id;
-                $history->previous = "Null";
+                $history->previous = $lastOosRecod->nature_of_change_gi;
                 $history->comment = "Not Applicable";
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
@@ -2318,16 +2318,16 @@ class OOSService
                 $history->stage = $oos->stage;
                 $history->change_to =   "Opened";
                 $history->change_from = "Initiator";
-                $history->action_name = 'Create';
+                $history->action_name = 'Update';
                 $history->activity_type = 'Any Other Actions Required Atp.';
                 $history->current = $request->any_other_actions_required_atp;
                 $history->save();
             }
             // =============== OOS Conclusion  =====================
-            if ($lastOosRecod->nature_of_change_gi != $request->nature_of_change_gi){
+            if ($lastOosRecod->conclusion_comments_oosc != $request->conclusion_comments_oosc){
                 $history = new OosAuditTrial();
                 $history->oos_id = $oos->id;
-                $history->previous = "Null";
+                $history->previous = $lastOosRecod->conclusion_comments_oosc;
                 $history->comment = "Not Applicable";
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
@@ -2336,15 +2336,15 @@ class OOSService
                 $history->stage = $oos->stage;
                 $history->change_to =   "Opened";
                 $history->change_from = "Initiator";
-                $history->action_name = 'Create';
+                $history->action_name = 'Update';
                 $history->activity_type = 'Conclusion Comments.';
                 $history->current = $request->conclusion_comments_oosc;
                 $history->save();
             }
-            if ($lastOosRecod->nature_of_change_gi != $request->nature_of_change_gi){
+            if ($lastOosRecod->specification_limit_oosc != $request->specification_limit_oosc){
                 $history = new OosAuditTrial();
                 $history->oos_id = $oos->id;
-                $history->previous = "Null";
+                $history->previous = $lastOosRecod->specification_limit_oosc;
                 $history->comment = "Not Applicable";
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
@@ -2358,10 +2358,10 @@ class OOSService
                 $history->current = $request->specification_limit_oosc;
                 $history->save();
             }
-            if ($lastOosRecod->nature_of_change_gi != $request->nature_of_change_gi){
+            if ($lastOosRecod->results_to_be_reported_oosc != $request->results_to_be_reported_oosc){
                 $history = new OosAuditTrial();
                 $history->oos_id = $oos->id;
-                $history->previous = "Null";
+                $history->previous = $lastOosRecod->results_to_be_reported_oosc;
                 $history->comment = "Not Applicable";
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
@@ -2370,15 +2370,15 @@ class OOSService
                 $history->stage = $oos->stage;
                 $history->change_to =   "Opened";
                 $history->change_from = "Initiator";
-                $history->action_name = 'Create';
+                $history->action_name = 'Update';
                 $history->activity_type = 'Results to be Reported.';
                 $history->current = $request->results_to_be_reported_oosc;
                 $history->save();
             }
-            if ($lastOosRecod->nature_of_change_gi != $request->nature_of_change_gi){
+            if ($lastOosRecod->final_reportable_results_oosc != $request->final_reportable_results_oosc){
                 $history = new OosAuditTrial();
                 $history->oos_id = $oos->id;
-                $history->previous = "Null";
+                $history->previous = $lastOosRecod->final_reportable_results_oosc;
                 $history->comment = "Not Applicable";
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
@@ -2392,10 +2392,10 @@ class OOSService
                 $history->current = $request->final_reportable_results_oosc;
                 $history->save();
             } 
-            if ($lastOosRecod->nature_of_change_gi != $request->nature_of_change_gi){
+            if ($lastOosRecod->justifi_for_averaging_results_oosc != $request->justifi_for_averaging_results_oosc){
                 $history = new OosAuditTrial();
                 $history->oos_id = $oos->id;
-                $history->previous = "Null";
+                $history->previous = $lastOosRecod->justifi_for_averaging_results_oosc;
                 $history->comment = "Not Applicable";
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
@@ -2409,10 +2409,10 @@ class OOSService
                 $history->current = $request->justifi_for_averaging_results_oosc;
                 $history->save();
             } 
-            if ($lastOosRecod->nature_of_change_gi != $request->nature_of_change_gi){
+            if ($lastOosRecod->oos_stands_oosc != $request->oos_stands_oosc){
                 $history = new OosAuditTrial();
                 $history->oos_id = $oos->id;
-                $history->previous = "Null";
+                $history->previous = $lastOosRecod->oos_stands_oosc;
                 $history->comment = "Not Applicable";
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
@@ -2427,10 +2427,10 @@ class OOSService
                 $history->save();
             }
             
-            if ($lastOosRecod->nature_of_change_gi != $request->nature_of_change_gi){
+            if ($lastOosRecod->reference_record != $request->reference_record){
                 $history = new OosAuditTrial();
                 $history->oos_id = $oos->id;
-                $history->previous = "Null";
+                $history->previous = $lastOosRecod->reference_record;
                 $history->comment = "Not Applicable";
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
@@ -2439,15 +2439,15 @@ class OOSService
                 $history->stage = $oos->stage;
                 $history->change_to =   "Opened";
                 $history->change_from = "Initiator";
-                $history->action_name = 'Create';
+                $history->action_name = 'Update';
                 $history->activity_type = 'CAPA Ref No.';
                 $history->current = $request->reference_record;
                 $history->save();
             }
-            if ($lastOosRecod->nature_of_change_gi != $request->nature_of_change_gi){
+            if ($lastOosRecod->justify_if_capa_not_required_oosc != $request->justify_if_capa_not_required_oosc){
                 $history = new OosAuditTrial();
                 $history->oos_id = $oos->id;
-                $history->previous = "Null";
+                $history->previous = $lastOosRecod->justify_if_capa_not_required_oosc;
                 $history->comment = "Not Applicable";
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
@@ -2456,12 +2456,12 @@ class OOSService
                 $history->stage = $oos->stage;
                 $history->change_to =   "Opened";
                 $history->change_from = "Initiator";
-                $history->action_name = 'Create';
+                $history->action_name = 'Updade';
                 $history->activity_type = 'Justify if CAPA not required.';
                 $history->current = $request->justify_if_capa_not_required_oosc;
                 $history->save();
             } 
-            if ($lastOosRecod->nature_of_change_gi != $request->nature_of_change_gi){
+            if ($lastOosRecod->action_plan_req_oosc != $request->action_plan_req_oosc){
                 $history = new OosAuditTrial();
                 $history->oos_id = $oos->id;
                 $history->previous = "Null";
@@ -2478,7 +2478,7 @@ class OOSService
                 $history->current = $request->action_plan_req_oosc;
                 $history->save();
             }
-            if ($lastOosRecod->nature_of_change_gi != $request->nature_of_change_gi){
+            if ($lastOosRecod->justification_for_delay_oosc != $request->justification_for_delay_oosc){
                 $history = new OosAuditTrial();
                 $history->oos_id = $oos->id;
                 $history->previous = "Null";
