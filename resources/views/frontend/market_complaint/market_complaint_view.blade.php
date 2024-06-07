@@ -809,9 +809,9 @@
                             <div class="col-lg-6">
                                 <div class="group-input">
                                     <label for="RLS Record Number"><b>Record Number</b></label>
-                                    {{-- <input disabled type="text" name="record_number"
-                                        value="{{ $data->record_number }}"> --}}
-                                        <input disabled type="text" name="record_number"
+                                    {{-- <input disabled type="text" name="record"
+                                        value="{{ $data->record }}"> --}}
+                                        <input disabled type="text" name="record"
                                         value="{{ Helpers::getDivisionName($data->division_id) }}/LI/{{ Helpers::year($data->created_at) }}/{{ $data->record }}">
 
                                 </div>
@@ -873,7 +873,7 @@
                                             <span id="rchars">255</span>
                                         <div><small class="text-primary">Please insert "NA" in the data field if it does
                                                 not require completion</small></div>
-                                        <input  name="description_gi" id="summernote-1" required value="{{ $data->description_gi }}" >
+                                        <input  name="description_gi" {{ $data->stage == 0 || $data->stage == 8 ? "disabled" : "" }} id="summernote-1" required value="{{ $data->description_gi }}"  >
                                     
                                     </div>
                                 </div>
@@ -882,7 +882,7 @@
                             <div class="col-lg-6">
                                 <div class="group-input">
                                     <label for="Short Description">Initiator Group <span class="text-danger"></span></label>
-                                    <select name="initiator_group" id="initiator_group">
+                                    <select name="initiator_group" id="initiator_group" {{ $data->stage == 0 || $data->stage == 8 ? "disabled" : "" }}>
                                         <option selected disabled>---select---</option>
                                         @foreach (Helpers::getInitiatorGroups() as $code => $initiator_group)
                                             <option value="{{ $code }}" @if ($data->initiator_group == $code) selected @endif>
@@ -896,7 +896,7 @@
                             <div class="col-lg-12">
                                 <div class="group-input">
                                     <label for="Initiator Group Code">Initiator Group Code</label>
-                                    <input readonly type="text" name="initiator_group_code_gi" id="initiator_group_code_gi" value="{{ $data->initiator_group_code_gi ?? '' }}">
+                                    <input readonly type="text" name="initiator_group_code_gi" id="initiator_group_code_gi" value="{{ $data->initiator_group_code_gi ?? '' }}" {{ $data->stage == 0 || $data->stage == 8 ? "disabled" : "" }}>
                                 </div>
                             </div>
 
@@ -919,7 +919,7 @@
                                 <div class="group-input">
                                     <label for="Initiator Group">Initiated Through</label>
                                     <div><small class="text-primary">Please select related information</small></div>
-                                    <select name="initiated_through_gi" id="initiated_through_gi">
+                                    <select name="initiated_through_gi" {{ $data->stage == 0 || $data->stage == 8 ? "disabled" : "" }} id="initiated_through_gi">
                                         <option value="0">-- select --</option>
                                         <option value="recall"
                                             {{ $data->initiated_through_gi == 'recall' ? 'selected' : '' }}>Recall</option>
@@ -951,7 +951,7 @@
                                     <label for="If Other">If Other</label>
                                     <div><small class="text-primary">Please insert "NA" in the data field if it does
                                             not require completion</small></div>
-                                    <textarea class="summernote" name="if_other_gi" id="summernote-1">{{ $data->if_other_gi }}
+                                    <textarea class="summernote" name="if_other_gi" id="summernote-1" {{ $data->stage == 0 || $data->stage == 8 ? "disabled" : "" }}>{{ $data->if_other_gi }}
                                     </textarea>
                                 </div>
                             </div>
@@ -959,7 +959,7 @@
                             <div class="col-lg-12">
                                 <div class="group-input">
                                     <label for="is_repeat_gi">Is Repeat</label>
-                                    <select name="is_repeat_gi">
+                                    <select name="is_repeat_gi" {{ $data->stage == 0 || $data->stage == 8 ? "disabled" : "" }}>
                                         <option value="" {{ $data->is_repeat_gi == '0' ? 'selected' : '' }}>--
                                             select --</option>
                                         <option value="yes" {{ $data->is_repeat_gi == 'yes' ? 'selected' : '' }}>Yes
@@ -976,7 +976,7 @@
                                     <label for="Repeat Nature">Repeat Nature</label>
                                     <div><small class="text-primary">Please insert "NA" in the data field if it does
                                             not require completion</small></div>
-                                    <textarea class="summernote" name="repeat_nature_gi" id="summernote-1">{{ $data->repeat_nature_gi }}
+                                    <textarea class="summernote" name="repeat_nature_gi" {{ $data->stage == 0 || $data->stage == 8 ? "disabled" : "" }} id="summernote-1">{{ $data->repeat_nature_gi }}
 
                                     </textarea>
                                 </div>
@@ -1018,7 +1018,7 @@
                                         </div>
                                         <div class="add-btn">
                                             <div>Add</div>
-                                            <input type="file" id="initial_attachment_gi"
+                                            <input type="file" id="initial_attachment_gi" {{ $data->stage == 0 || $data->stage == 8 ? "disabled" : "" }}
                                                 name="initial_attachment_gi[]"
                                                 oninput="addMultipleFiles(this,'initial_attachment_gi')" multiple>
                                         </div>
@@ -1029,7 +1029,7 @@
                             <div class="col-lg-6">
                                 <div class="group-input">
                                     <label for="Initiator Group">Complainant</label>
-                                    <select name="complainant_gi" onchange="">
+                                    <select name="complainant_gi" onchange="" {{ $data->stage == 0 || $data->stage == 8 ? "disabled" : "" }}>
                                         <option value=""{{ $data->complainant_gi == 'o' ? 'selected' : '' }}>--
                                             select --</option>
                                         <option value="person"{{ $data->complainant_gi == 'person' ? 'selected' : '' }}>
@@ -1058,10 +1058,10 @@
                                 <div class="group-input input-date">
                                     <label for="OOC Logged On">Complaint Reported On</label>
                                     <div class="calenderauditee">
-                                        <input type="text" id="compalint_dat" readonly placeholder="DD-MMM-YYYY" value="{{ $data->complaint_reported_on_gi ? \Carbon\Carbon::parse($data->complaint_reported_on_gi)->format('d-M-Y') : '' }}" />
+                                        <input type="text" id="compalint_dat" readonly placeholder="DD-MMM-YYYY" value="{{ $data->complaint_reported_on_gi ? \Carbon\Carbon::parse($data->complaint_reported_on_gi)->format('d-M-Y') : '' }}" {{ $data->stage == 0 || $data->stage == 8 ? "disabled" : "" }} />
                                         <input type="date" name="complaint_reported_on_gi"
                                         min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
-                                        value="{{ $data->complaint_reported_on_gi }}" class="hide-input" oninput="handleDateInput(this, 'compalint_dat')" />
+                                        value="{{ $data->complaint_reported_on_gi }}"  class="hide-input" oninput="handleDateInput(this, 'compalint_dat')" />
                                     </div>
                                 </div>
                             </div>
@@ -1607,7 +1607,27 @@
 
 
                             <div class="button-block">
-                                <button type="submit" class="saveButton">Save</button>
+                                <button type="submit" class="saveButton" id="saveButton"
+                            @if ($data->stage == 8) onclick="showAlert(event)" @endif>Save</button>
+
+                        <div id="alert-message" style="display:none;">
+                            Your stage is Closed - Done You Cannot Edit or Save.
+                        </div>
+
+                        <script>
+                            function showAlert(event) {
+                                event.preventDefault(); // Prevent form submission
+                                var alertMessage = document.getElementById('alert-message').innerText;
+                                alert(alertMessage);
+                            }
+                        
+                            document.addEventListener('DOMContentLoaded', function () {
+                                var stage = {{ $data->stage }};
+                                
+                              
+                            });
+                        </script>
+                        
                                 <button type="button" class="nextButton" onclick="nextStep()">Next</button>
 
                                 <button type="button"> <a class="text-white" href="{{ url('rcms/qms-dashboard') }}">
@@ -2809,12 +2829,12 @@
     {{-- ====================script for record number and intir--code ===================== --}}
 <script>
     document.addEventListener('DOMContentLoaded', function() {
-var originalRecordNumber = document.getElementById('record_number').value;
+var originalRecordNumber = document.getElementById('record').value;
 var initialPlaceholder = '---';
 
 document.getElementById('initiator_group').addEventListener('change', function() {
     var selectedValue = this.value;
-    var recordNumberElement = document.getElementById('record_number');
+    var recordNumberElement = document.getElementById('record');
     var initiatorGroupCodeElement = document.getElementById('initiator_group_code');
 
     // Update the initiator group code

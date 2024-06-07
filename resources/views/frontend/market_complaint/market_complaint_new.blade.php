@@ -200,10 +200,10 @@
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="RLS Record Number"><b>Record Number</b></label>
-                                        {{-- <input disabled type="text" name="record_number" value=""> --}}
-                                        {{-- <input disabled type="text" name="record_number" value=" {{ Helpers::getDivisionName(session()->get('division')) }}/LI/{{ date('Y') }}/{{ $record_number}}"> --}}
-                                        <input disabled type="text" name="record_number" id="record_number" 
-                                        value="---/LI/{{ date('y') }}/{{ $record_number }}"></div>
+                                        {{-- <input disabled type="text" name="record" value=""> --}}
+                                        {{-- <input disabled type="text" name="record" value=" {{ Helpers::getDivisionName(session()->get('division')) }}/LI/{{ date('Y') }}/{{ $record}}"> --}}
+                                        <input disabled type="text" name="record" id="record" 
+                                        value="---/LI/{{ date('y') }}/{{ $record }}"></div>
                                     </div>
                                
 
@@ -383,21 +383,7 @@
                                         <div class="file-attachment-field">
                                             <div class="file-attachment-list" id="initial_attachment_gi">
 
-                                                {{-- @if (initial_attachment_gi)
-                                                @foreach (json_decode($data->initial_attachment_gi) as $file)
-                                                    <h6 type="button" class="file-container text-dark"
-                                                        style="background-color: rgb(243, 242, 240);">
-                                                        <b>{{ $file }}</b>
-                                                        <a href="{{ asset('upload/' . $file) }}"
-                                                            target="_blank"><i class="fa fa-eye text-primary"
-                                                                style="font-size:20px; margin-right:-10px;"></i></a>
-                                                        <a type="button" class="remove-file"
-                                                            data-file-name="{{ $file }}"><i
-                                                                class="fa-solid fa-circle-xmark"
-                                                                style="color:red; font-size:20px;"></i></a>
-                                                    </h6>
-                                                @endforeach
-                                            @endif --}}
+                                              
                                             </div>
                                             <div class="add-btn">
                                                 <div>Add</div>
@@ -1975,12 +1961,12 @@
 {{-- ---------------------======================record number script  --}}
 <script>
     document.addEventListener('DOMContentLoaded', function() {
-var originalRecordNumber = document.getElementById('record_number').value;
+var originalRecordNumber = document.getElementById('record').value;
 var initialPlaceholder = '---';
 
 document.getElementById('initiator_group').addEventListener('change', function() {
     var selectedValue = this.value;
-    var recordNumberElement = document.getElementById('record_number');
+    var recordNumberElement = document.getElementById('record');
     var initiatorGroupCodeElement = document.getElementById('initiator_group_code');
 
     // Update the initiator group code
