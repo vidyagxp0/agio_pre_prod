@@ -5,7 +5,9 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Models\Deviation;
 use App\Models\Document;
+use App\Models\RiskManagement;
 use App\Models\QMSDivision;
+use App\Models\RootCauseAnalysis;
 use Carbon\Carbon;
 use Helpers;
 use Illuminate\Http\Request;
@@ -40,6 +42,7 @@ class ChartController extends Controller
                 \App\Models\MarketComplaint::class,
                 \App\Models\NonConformance::class,
                 \App\Models\FailureInvestigation::class,
+                \App\Models\RiskManagement::class,
                 // \App\Models\ERRATA::class,
                 // \App\Models\OOS_micro::class
             ];
@@ -168,6 +171,7 @@ class ChartController extends Controller
             {
                 $monthly_data = [];
                 $month = Carbon::now()->subMonths($i);
+                
 
                 foreach ($departments as $department)
                 {
@@ -188,7 +192,6 @@ class ChartController extends Controller
             $res['status'] = 'error';
             $res['message'] = $e->getMessage();
         }
-
         return response()->json($res);
     }
     
@@ -292,5 +295,238 @@ class ChartController extends Controller
         } catch (\Exception $e) {
             return 0;
         }
+    }
+
+    public function deviationSeverityLevel()
+    {
+        $res = Helpers::getDefaultResponse();
+
+        try {
+
+            $data = [];
+
+            for ($i = 5; $i >= 0; $i--)
+            {
+                $monthly_data = [];
+                $month = Carbon::now()->subMonths($i);
+
+                $negligible_deviations = Deviation::where('severity_rate', 'negligible')
+                                    ->whereDate('created_at', '>=', $month->startOfMonth())
+                                    ->whereDate('created_at', '<=', $month->endOfMonth())
+                                    ->get()->count();
+                $moderate_deviations = Deviation::where('severity_rate', 'moderate')
+                                    ->whereDate('created_at', '>=', $month->startOfMonth())
+                                    ->whereDate('created_at', '<=', $month->endOfMonth())
+                                    ->get()->count();
+                $major_deviations = Deviation::where('severity_rate', 'major')
+                                    ->whereDate('created_at', '>=', $month->startOfMonth())
+                                    ->whereDate('created_at', '<=', $month->endOfMonth())
+                                    ->get()->count();
+                $fatal_deviations = Deviation::where('severity_rate', 'fatal')
+                                    ->whereDate('created_at', '>=', $month->startOfMonth())
+                                    ->whereDate('created_at', '<=', $month->endOfMonth())
+                                    ->get()->count();
+
+
+                $monthly_data['month'] = $month->format('M');
+                $monthly_data['negligible'] = $negligible_deviations;
+                $monthly_data['moderate'] = $moderate_deviations;
+                $monthly_data['major'] = $major_deviations;
+                $monthly_data['fatal'] = $fatal_deviations;
+
+                array_push($data, $monthly_data);
+                
+            }
+
+            $res['body'] = $data;
+
+        } catch (\Exception $e) {
+            $res['status'] = 'error';
+            $res['message'] = $e->getMessage();
+        }
+
+        return response()->json($res);
+    }
+
+    public function documentByPriority()
+    {
+        $res = Helpers::getDefaultResponse();
+
+        try {
+
+            $data = [];
+
+            for ($i = 5; $i >= 0; $i--)
+            {
+                $monthly_data = [];
+                $month = Carbon::now()->subMonths($i);
+
+                $low_priority = RiskManagement::where('priority_level', 'low')
+                                    ->whereDate('created_at', '>=', $month->startOfMonth())
+                                    ->whereDate('created_at', '<=', $month->endOfMonth())
+                                    ->get()->count();
+                $medium_priority = RiskManagement::where('priority_level', 'medium')
+                                    ->whereDate('created_at', '>=', $month->startOfMonth())
+                                    ->whereDate('created_at', '<=', $month->endOfMonth())
+                                    ->get()->count();
+                $high_priority = RiskManagement::where('priority_level', 'high')
+                                    ->whereDate('created_at', '>=', $month->startOfMonth())
+                                    ->whereDate('created_at', '<=', $month->endOfMonth())
+                                    ->get()->count();
+
+
+                $monthly_data['month'] = $month->format('M');
+                $monthly_data['low'] = $low_priority;
+                $monthly_data['medium'] = $medium_priority;
+                $monthly_data['high'] = $high_priority;
+
+                array_push($data, $monthly_data);
+                
+            }
+
+            $res['body'] = $data;
+
+        } catch (\Exception $e) {
+            $res['status'] = 'error';
+            $res['message'] = $e->getMessage();
+        }
+
+        return response()->json($res);
+    }
+
+    public function documentByPriorityRca()
+    {
+        $res = Helpers::getDefaultResponse();
+
+        try {
+
+            $data = [];
+
+            for ($i = 5; $i >= 0; $i--)
+            {
+                $monthly_data = [];
+                $month = Carbon::now()->subMonths($i);
+
+                $low_priority = RootCauseAnalysis::where('priority_level', 'low')
+                                    ->whereDate('created_at', '>=', $month->startOfMonth())
+                                    ->whereDate('created_at', '<=', $month->endOfMonth())
+                                    ->get()->count();
+                $medium_priority = RootCauseAnalysis::where('priority_level', 'medium')
+                                    ->whereDate('created_at', '>=', $month->startOfMonth())
+                                    ->whereDate('created_at', '<=', $month->endOfMonth())
+                                    ->get()->count();
+                $high_priority = RootCauseAnalysis::where('priority_level', 'high')
+                                    ->whereDate('created_at', '>=', $month->startOfMonth())
+                                    ->whereDate('created_at', '<=', $month->endOfMonth())
+                                    ->get()->count();
+
+
+                $monthly_data['month'] = $month->format('M');
+                $monthly_data['low'] = $low_priority;
+                $monthly_data['medium'] = $medium_priority;
+                $monthly_data['high'] = $high_priority;
+
+                array_push($data, $monthly_data);
+                
+            }
+
+            $res['body'] = $data;
+
+        } catch (\Exception $e) {
+            $res['status'] = 'error';
+            $res['message'] = $e->getMessage();
+        }
+
+        return response()->json($res);
+    }
+
+    public function documentDelayed()
+    {
+        $res = Helpers::getDefaultResponse();
+
+        try {
+
+            $data = [];
+
+            for ($i = 5; $i >= 0; $i--)
+            {
+                $monthly_data = [];
+                $month = Carbon::now()->subMonths($i);
+
+                $delayedDoc = Deviation::where('stage', '<', 9)
+                                    ->where('due_date', '<' , Carbon::now())
+                                    ->whereDate('created_at', '>=', $month->startOfMonth())
+                                    ->whereDate('created_at', '<=', $month->endOfMonth())
+                                    ->get()->count();
+
+                $onTimeDoc = Deviation::where('stage', '=', 9)
+                                    ->where('due_date', '<' , Carbon::now())
+                                    ->whereDate('created_at', '>=', $month->startOfMonth())
+                                    ->whereDate('created_at', '<=', $month->endOfMonth())
+                                    ->get()->count();
+
+                $monthly_data['month'] = $month->format('M');
+                $monthly_data['delayed'] = $delayedDoc;
+                $monthly_data['onTime'] = $onTimeDoc;
+
+                array_push($data, $monthly_data);
+                
+            }
+
+            $res['body'] = $data;
+
+        } catch (\Exception $e) {
+            $res['status'] = 'error';
+            $res['message'] = $e->getMessage();
+        }
+
+        return response()->json($res);
+    }
+
+    public function siteWiseDocument()
+    {
+        $res = Helpers::getDefaultResponse();
+
+        try {
+
+            $data = [];
+
+            for ($i = 5; $i >= 0; $i--)
+            {
+                $monthly_data = [];
+                $month = Carbon::now()->subMonths($i);
+
+                $corporateDoc = DB::table('deviations')
+                                ->join('q_m_s_divisions', 'deviations.division_id', '=', 'q_m_s_divisions.id')
+                                ->select('deviations.*', 'q_m_s_divisions.name as division_name')
+                                ->whereDate('deviations.created_at', '>=', $month->startOfMonth())
+                                ->whereDate('deviations.created_at', '<=', $month->endOfMonth())
+                                ->where('q_m_s_divisions.name', 'Corporate')
+                                ->get()->count();
+
+                $plantDoc = DB::table('deviations')
+                            ->join('q_m_s_divisions', 'deviations.division_id', '=', 'q_m_s_divisions.id')
+                            ->select('deviations.*', 'q_m_s_divisions.name as division_name')
+                            ->whereDate('deviations.created_at', '>=', $month->startOfMonth())
+                            ->whereDate('deviations.created_at', '<=', $month->endOfMonth())
+                            ->where('q_m_s_divisions.name', 'Plant')
+                            ->get()->count();
+
+                $monthly_data['month'] = $month->format('M');
+                $monthly_data['corporate'] = $corporateDoc;
+                $monthly_data['plant'] = $plantDoc;
+
+                array_push($data, $monthly_data);
+                
+            }
+
+            $res['body'] = $data;
+
+        } catch (\Exception $e) {
+            $res['status'] = 'error';
+            $res['message'] = $e->getMessage();
+        }
+
+        return response()->json($res);
     }
 }
