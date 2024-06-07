@@ -76,7 +76,7 @@ class CapaController extends Controller
         $capa->general_initiator_group = $request->initiator_group;
         $capa->short_description = $request->short_description;
         $capa->problem_description = $request->problem_description;
-        $capa->due_date= $request->due_date;
+        $capa->due_date = $request->due_date;
         $capa->assign_to = $request->assign_to;
        $capa->capa_team = implode(',', $request->capa_team);
         $capa->capa_type = $request->capa_type;
@@ -195,6 +195,7 @@ class CapaController extends Controller
         $capa->status = 'Opened';
         $capa->stage = 1;
         $capa->save();
+        
 
         $data1 = new CapaGrid();
         $data1->capa_id = $capa->id;
@@ -804,6 +805,7 @@ class CapaController extends Controller
             $capa->closure_attachment = json_encode($files);
         }
         $capa->update();
+        // dd($capa);
 
 
         // -----------------------grid--------------------
@@ -1789,7 +1791,7 @@ class CapaController extends Controller
         if ($request->child_type == "Action_Item") {
             $parent_name = "CAPA";
 
-            return view('frontend.forms.action-item', compact('old_record','parent_short_description', 'parent_initiator_id', 'parent_intiation_date', 'parent_name', 'parent_division_id', 'parent_record', 'record_number', 'due_date', 'parent_id', 'parent_type'));
+            return view('frontend.capa.child_action_item', compact('old_record','parent_short_description', 'parent_initiator_id', 'parent_intiation_date', 'parent_name', 'parent_division_id', 'parent_record', 'record_number', 'due_date', 'parent_id', 'parent_type'));
         } else {
             return view('frontend.forms.effectiveness-check', compact('old_record','parent_short_description', 'parent_initiator_id', 'parent_intiation_date', 'parent_division_id', 'parent_record', 'record_number', 'due_date', 'parent_id', 'parent_type'));
         }
@@ -1809,6 +1811,7 @@ class CapaController extends Controller
     public static function singleReport($id)
     {
         $data = Capa::find($id);
+        // dd($data);
         if (!empty($data)) {
             $data->Product_Details = CapaGrid::where('capa_id', $id)->where('type', "Product_Details")->first();
             $data->Instruments_Details = CapaGrid::where('capa_id', $id)->where('type', "Instruments_Details")->first();

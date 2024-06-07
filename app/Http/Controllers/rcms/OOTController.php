@@ -65,10 +65,7 @@ class OOTController extends Controller
 
     public function store(Request $request)
     {
-            // dd($request->oot_result);
-
-        // return dd($request->all());
-         
+        
         $data = new Ootc();
         $data->initiator_id          = Auth::user()->id;
         $data->record_number         = ((RecordNumber::first()->value('counter')) + 1);
@@ -203,8 +200,8 @@ class OOTController extends Controller
 
         $data->status = 'Opened';                 
         $data->stage = 1;
-    //   dd($data);
         $data->save();
+        
 
         $record = RecordNumber::first();
         $record->counter = ((RecordNumber::first()->value('counter'))+1);

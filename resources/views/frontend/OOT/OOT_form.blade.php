@@ -432,10 +432,13 @@
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Reference Recores">Sample Type </label>
-                                        <select multiple id="reference_record" name="reference_record[]" id="">
-                                            <option>Select Option</option>
-                                            <option value="pankaj">Pankaj</option>
-                                            <option value="gaurav">Gourav</option>
+                                        <select name="reference_record">
+                                            <option>Enter Your Selection Here</option>
+                                            <option value="raw_material">Raw Material</option>
+                                            <option value="packing_material">Packing Material</option>
+                                            <option value="finished_product">Finished Product</option>
+                                            <option value="stability_sample">Stability Sample</option>
+                                            <option  value="others"> Others</option>
                                         </select>
                                     </div>
                                 </div>
@@ -1804,7 +1807,7 @@
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="group-input">
-                                        <label for="search">Lab-Charge <span class="text-danger"></span> </label>
+                                        <label for="search">LanIN-Charge <span class="text-danger"></span> </label>
 
                                         <select id="select-state" placeholder="Select..." name="in_charge">
                                             <option value="">Select a value</option>

@@ -656,7 +656,7 @@
 
 
                                          <tbody>
-                                                <td><input disabled type="text" name="serial_number[]" value="1">
+                                                <td><input disabled type="" name="serial_number[]" value="1">
                                                 </td>
                                                 <td><input type="text" name="equipment[]"></td>
                                                 <td><input type="text" name="equipment_instruments[]"></td>
