@@ -73,18 +73,15 @@
                     </select>
                 </div>
             </div>
-
             <div class="col-lg-6">
                 <div class="group-input">
                     <label for="Reference Records">CAPA Reference</label>
-                    <select multiple id="reference_record" name="capa_refer_ocr[]">
-                        <option value="0" {{ in_array('0', $data->capa_refer_ocr ?? []) ? 'selected' : ''
-                            }}>--Select---</option>
-                        <option value="1" {{ in_array('1', $data->capa_refer_ocr ?? []) ? 'selected' : '' }}>1
-                        </option>
-                        <option value="2" {{ in_array('2', $data->capa_refer_ocr ?? []) ? 'selected' : '' }}>2
-                        </option>
-                    </select>
+                    <select multiple id="reference_record" name="capa_refer_ocr[]" id="">
+                    <option value="o">Enter Your Selection Here</option>
+                    <option value="1" {{ (!empty($data->capa_refer_ocr) && in_array('1', explode(',', $data->capa_refer_ocr[0]))) ? 'selected' : '' }}>1</option>
+                    <option value="2" {{ (!empty($data->capa_refer_ocr) && in_array('2', explode(',', $data->capa_refer_ocr[0]))) ? 'selected' : '' }}>2</option>
+                  </select>
+                 
                 </div>
             </div>
 

@@ -147,27 +147,22 @@
                     </select>
                 </div>
             </div>
-
             <div class="col-lg-6">
                 <div class="group-input">
-                    <label for="Reference Records">Action Item Ref.</label>
-                    <select multiple id="reference_record" name="action_plan_ref_oosc[]">
-                        <option value="0" {{ in_array('0', $data->action_plan_ref_oosc ?? []) ? 'selected' : ''
-                            }}>--Select---</option>
-                        <option value="1" {{ in_array('1', $data->action_plan_ref_oosc ?? []) ? 'selected' : '' }}>1
-                        </option>
-                        <option value="2" {{ in_array('2', $data->action_plan_ref_oosc ?? []) ? 'selected' : '' }}>2
-                        </option>
-                    </select>
+                    <label for="Reference Recores">Action Item Ref.</label>
+                    <select multiple id="reference_record" name="action_plan_ref_oosc[]" id="">
+                    <option value="o">Enter Your Selection Here</option>
+                    <option value="1" {{ (!empty($data->action_plan_ref_oosc) && in_array('1', explode(',', $data->action_plan_ref_oosc[0]))) ? 'selected' : '' }}>1</option>
+                    <option value="2" {{ (!empty($data->action_plan_ref_oosc) && in_array('2', explode(',', $data->action_plan_ref_oosc[0]))) ? 'selected' : '' }}>2</option>
+                  </select>
                 </div>
             </div>
-
             <div class="col-md-12 mb-4">
                 <div class="group-input">
                     <label for="Description Deviation">Justification for Delay</label>
                     <textarea class="summernote" name="justification_for_delay_oosc" id="summernote-1">
                                 {{ $data->justification_for_delay_oosc ?? '' }}
-                            </textarea>
+                    </textarea>
                 </div>
             </div>
 

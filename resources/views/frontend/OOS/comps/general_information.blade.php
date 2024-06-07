@@ -324,21 +324,22 @@
                                     <td><input type="text" name="info_product_material[{{ $loop->index }}][info_others_specify]" value="{{ $info_product_material['info_others_specify'] ?? '' }}"></td>
                                     <td><input type="text" name="info_product_material[{{ $loop->index }}][info_process_sample_stage]" value="{{ $info_product_material['info_process_sample_stage'] ?? '' }}"></td>
                                     <td>
-                                    <select class="facility-name" name="info_product_material[{{ $loop->index }}][info_packing_material_type]" id="info_packing_material_type">
+                                    <select class="facility-name" name="info_product_material[{{ $loop->index }}][info_packing_material_type]" id="facility_name">
                                         <option value="">--Select--</option>
-                                        <option value="Primary" >Primary</option>
-                                        <option value="Secondary">Secondary</option>
-                                        <option value="Tertiary">Tertiary</option>
-                                        <option value="Not Applicable">Not Applicable</option> 
+                                        <option value="Primary" {{ $info_product_material['info_packing_material_type'] === 'Primary' ? 'selected' : '' }}>Primary</option>
+                                        <option value="Secondary" {{ $info_product_material['info_packing_material_type'] === 'Secondary' ? 'selected' : '' }}>Secondary</option>
+                                        <option value="Tertiary" {{ $info_product_material['info_packing_material_type'] === 'Tertiary' ? 'selected' : '' }}>Tertiary</option>
+                                        <option value="Not Applicable" {{ $info_product_material['info_packing_material_type'] === 'Not Applicable' ? 'selected' : '' }}>Not Applicable</option>
                                     </select>
                                    </td>
                                     <td>
                                         <select class="facility-name" name="info_product_material[{{ $loop->index }}][info_stability_for]" id="info_product_material">
                                             <option value="">--Select--</option>
-                                            <option value="Submission" >Submission</option>
-                                            <option value="Commercial">Commercial</option>
-                                            <option value="Pack Evaluation">Pack Evaluation</option>
-                                            <option value="Not Applicable">Not Applicable</option>
+                                            <option value="Submission" {{ $info_product_material['info_stability_for'] === 'Submission' ? 'selected' : '' }}>Submission</option>
+                                            <option value="Commercial" {{ $info_product_material['info_stability_for'] === 'Commercial' ? 'selected' : '' }}>Commercial</option>
+                                            <option value="Pack Evaluation" {{ $info_product_material['info_stability_for'] === 'Pack Evaluation' ? 'selected' : '' }}>Pack Evaluation</option>
+                                            <option value="Not Applicable" {{ $info_product_material['info_stability_for'] === 'Not Applicable' ? 'selected' : '' }}>Not Applicable</option>
+                                    
                                         </select>
                                     </td>
                                 </tr>

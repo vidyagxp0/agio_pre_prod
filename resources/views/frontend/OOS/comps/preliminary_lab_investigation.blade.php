@@ -73,6 +73,7 @@
                                         </td>
                                         <td>
                                             <select name="oos_capa[{{ $loop->index }}][info_oos_capa_requirement]">
+                                                <option vlaue="">--select--</option>
                                                 <option value="yes" {{ Helpers::getArrayKey($oos_capa, 'info_oos_capa_requirement') == 'yes' ? 'selected' : '' }}>Yes</option>
                                                 <option value="No" {{ Helpers::getArrayKey($oos_capa, 'info_oos_capa_requirement') == 'No' ? 'selected' : '' }}>No</option>
                                             </select></td>
