@@ -17,5 +17,9 @@ class lab_incidents_grid extends Model
         return $this->belongsTo(LabIncident::class,'labincident_id ');
     }
 
+    public function getDataAttribute($value)
+    {
+        return json_decode($value, true);
+    }
     
 }

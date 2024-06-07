@@ -13,9 +13,9 @@ class LabIncident extends Model
     //     return $this->hasMany(lab_incidents_grid::class);
     // }
 
-    public function labIncidentSeconds()
+    public function incidentInvestigationReports()
     {
-        return $this->hasMany(lab_incidents_grid::class);
+        return $this->hasMany(lab_incidents_grid::class,'labincident_id');
     }
 
 

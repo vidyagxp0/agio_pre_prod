@@ -142,21 +142,42 @@
                                 <table class="table table-bordered" style="width: 120%;">
                                     <thead>
                                         <tr>
+                                            <th rowspan="2">Sr. No.</th>
+                                            <th rowspan="2">Date of Initiation</th>
+                                            <th rowspan="2">Incident Report No.</th>
+                                            <th rowspan="2">Originator</th>
+                                            <th rowspan="2">Department</th>
+                                            <th rowspan="2">Division</th>
+                                            <th rowspan="2">Description of Incident</th>
+                                            <th colspan="2" style="text-align: center">Incident Investigation Report</th>
+                                            <th rowspan="2">Type of Incident</th>
+                                            {{-- <th rowspan="2">Category of complaint</th> --}}
+                                            <th rowspan="2">Name of Analyst</th>
+                                            <th rowspan="2">Due Date</th>
+                                            <th rowspan="2">Clouser Date</th>
+                                            <th rowspan="2">Status</th>
+                                        </tr>
+                                        <tr>
+                                            <th>Product Name</th>
+                                            <th>Batch No. / A.R No.</th>
+                                           </tr>
+                                       
+                                        {{-- <tr>
                                             <th style="width: 5%;">Sr.No.</th>
                                             <th>Date of Initiation</th>
                                             <th>Incident Report No.</th>
-                                            <th>Originator</th>
-                                            <th>Department</th>
-                                            <th>Division</th>
-                                            <th>Description of Incident</th>
-                                            <th>Type of Incident </th>
-                                            <th>Name of Product</th>
-                                            <th>Batch Number / A.R No. </th>
-                                            <th>Name of Analyst</th>
+                                            <th></th>
+                                            <th></th>
+                                            <th></th>
+                                            <th></th>
+                                            <th> </th>
+                                            <th></th>
+                                            <th>Batch Number  </th>
+                                            <th></th>
                                             <th>Due Date </th>
                                             <th>Clouser Date </th>
                                             <th>Status</th>
-                                        </tr>
+                                        </tr> --}}
                                     </thead>
                                     <tbody id="tableData">
                                         @include('frontend.forms.logs.comps.labincident_data');

@@ -63,7 +63,7 @@ class LogController extends Controller
                 
         
                 // $outOfCalibrations = OutOfCalibration::with('labincident')->get();
-                $labincident = LabIncident::with('labIncidentSeconds')->get();
+                $labincident =LabIncident::with('incidentInvestigationReports')->get();
 
                                             
                                         
