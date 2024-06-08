@@ -482,7 +482,7 @@
                                 <div class="col-md-6">
                                     <div class="group-input">
                                         <label for="search">
-                                            Analyst Name <span class="text-danger"></span>
+                                            Section Head Name <span class="text-danger"></span>
                                         </label>
                                         <select id="select-state" placeholder="Select..." name="analyst_sign_date_gi">
                                             <option value="">Select a value</option>
