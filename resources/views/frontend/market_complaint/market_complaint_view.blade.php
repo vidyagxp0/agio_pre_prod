@@ -818,7 +818,7 @@
                                     <label for="RLS Record Number"><b>Record Number</b></label>
                                     {{-- <input disabled type="text" name="record"
                                         value="{{ $data->record }}"> --}}
-                                        <input disabled type="text" name="record"
+                                        <input disabled type="text" name="record" id="record"
                                         value="{{ $data->initiator_group_code_gi}}/LI/{{ Helpers::year($data->created_at) }}/{{ $data->record }}">
 
                                 </div>
@@ -827,7 +827,7 @@
                             <div class="col-lg-6">
                                 <div class="group-input">
                                     <label for="Division Code"><b>Division Code </b></label>
-                                    <input disabled type="text" name="division_code" value="{{ $data->division_id }}">
+                                    <input disabled type="text" name="division_code" value="{{ Helpers::getDivisionName(session()->get('division')) }}">
                                     <input type="hidden" name="division_id" value="{{ $data->division_id }}">
 
                                 </div>

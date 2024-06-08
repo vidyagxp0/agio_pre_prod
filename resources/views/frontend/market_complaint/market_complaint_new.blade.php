@@ -203,8 +203,9 @@
                                         {{-- <input disabled type="text" name="record" value=""> --}}
                                         {{-- <input disabled type="text" name="record" value=" {{ Helpers::getDivisionName(session()->get('division')) }}/LI/{{ date('Y') }}/{{ $record}}"> --}}
                                         <input disabled type="text" name="record" id="record" 
-                                        value="---/LI/{{ date('y') }}/{{ $record }}"></div>
+                                        value="---/LI/{{ date('y') }}/{{ $record }}">
                                     </div>
+                                </div>
                                
 
 
@@ -254,10 +255,11 @@
                                             <span id="rchars">255</span>
                                         <div><small class="text-primary">Please insert "NA" in the data field if it does
                                                 not require completion</small></div>
-                                        <input  name="description_gi" id="summernote-1" required >
+                                        <input  name="description_gi" id="docname" maxlength="255" required >
                                     
                                     </div>
                                 </div>
+
 
                                 <div class="col-lg-6">
                                     <div class="group-input">
@@ -1129,9 +1131,12 @@
                                                                 <div class="new-date-data-field">
                                                                     <div class="group-input input-date">
                                                                         <div class="calenderauditee">
-                                                                            <input id="date_0_date_rrv" type="text" name="Report_Approval[0][date_rrv]" placeholder="DD-MMM-YYYY" />
+                                                                            <input id="date_0_date_rrv"
+                                                                             type="text"
+                                                                              name="Report_Approval[0][date_rrv]"
+                                                                               placeholder="DD-MMM-YYYY" />
                                                                             <input type="date" name="Report_Approval[0][date_rrv]"
-                                                                                min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" value="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
+                                                                                min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" 
                                                                                 id="date_0_date_rrv"
                                                                                 class="hide-input show_date" style="position: absolute; top: 0; left: 0; opacity: 0;" oninput="handleDateInput(this, 'date_0_date_rrv')" />
                                                                         </div>
@@ -1286,9 +1291,12 @@
                                                     <td><div class="new-date-data-field">
                                                         <div class="group-input input-date">
                                                         <div class="calenderauditee">
-                                                             <input id="date_0_mfg_date_pmd_ca" type="text" name="Product_MaterialDetails[0][mfg_date_pmd_ca]" placeholder="DD-MMM-YYYY" />
+                                                             <input id="date_0_mfg_date_pmd_ca"
+                                                              type="text"
+                                                               name="Product_MaterialDetails[0][mfg_date_pmd_ca]"
+                                                                placeholder="DD-MMM-YYYY" />
                                                              <input type="date" name="Product_MaterialDetails[0][mfg_date_pmd_ca]"
-                                                             min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" value="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
+                                                             min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" 
                                                              id="date_0_mfg_date_pmd_ca"
                                                              class="hide-input show_date" style="position: absolute; top: 0; left: 0; opacity: 0;" oninput="handleDateInput(this, 'date_0_mfg_date_pmd_ca')" />
                                                         </div>
@@ -1301,9 +1309,12 @@
                                                         <div class="calenderauditee">
                                                              <input
                                                              class="click_date"
-                                                             id="date_0_expiry_date_pmd_ca" type="text" name="Product_MaterialDetails[0][expiry_date_pmd_ca]" placeholder="DD-MMM-YYYY" />
+                                                             id="date_0_expiry_date_pmd_ca"
+                                                              type="text"
+                                                               name="Product_MaterialDetails[0][expiry_date_pmd_ca]"
+                                                                placeholder="DD-MMM-YYYY" />
                                                              <input type="date" name="Product_MaterialDetails[0][expiry_date_pmd_ca]"
-                                                             min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" value="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
+                                                             min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" 
                                                              id="date_0_expiry_date_pmd_ca"
                                                              class="hide-input show_date" style="position: absolute; top: 0; left: 0; opacity: 0;" oninput="handleDateInput(this, 'date_0_expiry_date_pmd_ca')" />
                                                         </div>
@@ -1343,7 +1354,8 @@
                                                 '<td><input disabled type="text" name="Product_MaterialDetails[' + productserialno + '][serial]" value="' + (productserialno + 1) + '"></td>' +
                                                 '<td><input type="text" name="Product_MaterialDetails[' + productserialno + '][product_name_ca]"></td>' +
                                                 '<td><input type="text" name="Product_MaterialDetails[' + productserialno + '][batch_no_pmd_ca]"></td>' +
-                                                '<td> <div class="new-date-data-field"><div class="group-input input-date"><div class="calenderauditee"><input id="date_'+ productserialno +'_mfg_date_pmd_ca" type="text" name="Product_MaterialDetails[' + productserialno + '][mfg_date_pmd_ca]" placeholder="DD-MMM-YYYY" /> <input type="date" name="Product_MaterialDetails[' + productserialno + '][mfg_date_pmd_ca]" min="{{ \Carbon\Carbon::now()->format("Y-m-d") }}" value="{{ \Carbon\Carbon::now()->format("Y-m-d") }}" id="date_'+ productserialno +'_mfg_date_pmd_ca" class="hide-input show_date" style="position: absolute; top: 0; left: 0; opacity: 0;" oninput="handleDateInput(this, \'date_'+ productserialno +'_mfg_date_pmd_ca\')" /> </div> </div></div></td>' +
+                                                '<td> <div class="new-date-data-field"><div class="group-input input-date">
+                                                <div class="calenderauditee"><input id="date_'+ productserialno +'_mfg_date_pmd_ca" type="text" name="Product_MaterialDetails[' + productserialno + '][mfg_date_pmd_ca]" placeholder="DD-MMM-YYYY" /> <input type="date" name="Product_MaterialDetails[' + productserialno + '][mfg_date_pmd_ca]" min="{{ \Carbon\Carbon::now()->format("Y-m-d") }}" value="{{ \Carbon\Carbon::now()->format("Y-m-d") }}" id="date_'+ productserialno +'_mfg_date_pmd_ca" class="hide-input show_date" style="position: absolute; top: 0; left: 0; opacity: 0;" oninput="handleDateInput(this, \'date_'+ productserialno +'_mfg_date_pmd_ca\')" /> </div> </div></div></td>' +
                                                 '<td> <div class="new-date-data-field"><div class="group-input input-date"><div class="calenderauditee"><input id="date_'+ productserialno +'_expiry_date_pmd_ca" type="text" name="Product_MaterialDetails[' + productserialno + '][expiry_date_pmd_ca]" placeholder="DD-MMM-YYYY" /> <input type="date" name="Product_MaterialDetails[' + productserialno + '][expiry_date_pmd_ca]" min="{{ \Carbon\Carbon::now()->format("Y-m-d") }}" value="{{ \Carbon\Carbon::now()->format("Y-m-d") }}" id="date_'+ productserialno +'_expiry_date_pmd_ca" class="hide-input show_date" style="position: absolute; top: 0; left: 0; opacity: 0;" oninput="handleDateInput(this, \'date_'+ productserialno +'_expiry_date_pmd_ca\')" /> </div></div></div></td>' +
                                                 '<td><input type="text" name="Product_MaterialDetails[' + productserialno + '][batch_size_pmd_ca]"></td>' +
                                                 '<td><input type="text" name="Product_MaterialDetails[' + productserialno + '][pack_profile_pmd_ca]"></td>' +

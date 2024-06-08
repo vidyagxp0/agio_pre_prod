@@ -33,12 +33,12 @@ class ActionItemController extends Controller
     public function showAction()
     {
         $old_record = ActionItem::select('id', 'division_id', 'record')->get();
-        $record_number = ((RecordNumber::first()->value('counter')) + 1);
-        $record_number = str_pad($record_number, 4, '0', STR_PAD_LEFT);
+        $record = ((RecordNumber::first()->value('counter')) + 1);
+        $record = str_pad($record, 4, '0', STR_PAD_LEFT);
         $currentDate = Carbon::now();
         $formattedDate = $currentDate->addDays(30);
         $due_date = $formattedDate->format('Y-m-d');
-        return view('frontend.action-item.action-item', compact('due_date', 'record_number','old_record'));
+        return view('frontend.action-item.action-item', compact('due_date', 'record','old_record'));
     }
     public function index()
     {
@@ -49,7 +49,7 @@ class ActionItemController extends Controller
             $cc = CC::find($data->cc_id);
             $data->originator = User::where('id', $cc->initiator_id)->value('name');
         }
-        return view('frontend.action-item.action-item.at', compact('document', 'record_number','old_record'));
+        return view('frontend.action-item.action-item.at', compact('document', 'record','old_record'));
     }
 
     public function create()
@@ -484,20 +484,18 @@ class ActionItemController extends Controller
 
         // $openState->status = 'Opened';
         // $openState->stage = 1;
-
-        if (!empty($request->file_attach)) {
-            $files = [];
+             $files = [];
             if ($request->hasfile('file_attach')) {
                 foreach ($request->file('file_attach') as $file) {
                     if ($file instanceof \Illuminate\Http\UploadedFile) {  
-                    $name = $request->name . 'file_attach' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $name = $request->name . 'file_attach' . uniqid() . '.' . $file->getClientOriginalExtension();
                     $file->move('upload/', $name);
                     $files[] = $name;
                 }
             }
             }
             $openState->file_attach = json_encode($files);
-        }
+        
 
         if (!empty($request->Support_doc)) {
             $files = [];
