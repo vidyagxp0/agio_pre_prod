@@ -1,8 +1,8 @@
 @forelse ($deviation as $deviations)
     <tr>
         <td>{{$loop->index+1}}</td>
-        <td>{{$deviations->initiation_date}}</td>
-        <td>{{ Helpers::getDivisionName($deviations->division_id) }}/CC/{{ date('Y') }}/{{ str_pad($deviations->record, 4, '0', STR_PAD_LEFT) }}</td>
+        <td>{{$deviations->intiation_date}}</td>
+        <td>{{ $deviations->division ? $deviations->division->name:'-'}}/CC/{{ date('Y') }}/{{ str_pad($deviations->record, 4, '0', STR_PAD_LEFT) }}</td>
         <td>{{$deviations->short_description}}</td>
         <td>{{ $deviations->division ? $deviations->division->name : '-' }}</td>
         <td>{{$deviations->Initiator_Group}}</td>

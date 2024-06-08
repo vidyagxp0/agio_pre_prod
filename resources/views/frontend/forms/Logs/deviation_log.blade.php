@@ -70,14 +70,34 @@
                                             </select>
                                         </div></th>
                                         
-                                        <th><div class="filter-item">
+                                        {{-- <th>
                                             <label for="date_from_dev">Date From</label>
-                                            <input type="date" class="custom-select" id="date_from_dev">
+                                            <input type="date" class="custom-select" id="date_from_deviaton">
+                                        </div> --}}
+
+                                       <th> <div class="col-lg-12 new-date-data-field" style="padding:10%">
+                                            <div class="group-input input-date">
+                                                <label for="Date From">Date From</label>
+                                                 <div class="calenderauditee">
+                                                    <input type="text" id="date_from" readonly placeholder="DD-MM-YYYY" />
+                                                    <input type="date" name="date_from_deviaton" id="date_from_deviaton"
+                                                         class="hide-input"
+                                                        oninput="handleDateInput(this, 'date_from')" />
+                                                </div>
+                                            </div>
                                         </div>
-                                       </th><th>
-                                        <div class="filter-item">
-                                            <label for="date_to_dev">Date To</label>
-                                            <input type="date" class="custom-select" id="date_to_dev">
+                                       </th>
+                                       <th>
+                                        <div class="col-lg-12 new-date-data-field" style="padding:10%">
+                                            <div class="group-input input-date">
+                                                <label for="date_to">Date To</label>
+                                                <div class="calenderauditee">
+                                                    <input type="text" id="date_to" readonly placeholder="DD-MM-YYYY" />
+                                                    <input type="date" name="date_toDeviation" id="date_to_deviation"
+                                                        class="hide-input"
+                                                        oninput="handleDateInput(this, 'date_to')" />
+                                                </div>
+                                            </div>
                                         </div></th><th>
                                         <div class="filter-item" style="flex: 1; min-width: 200px;">
                                             <label for="originator" style="margin-right: 10px;">Deviation Related to</label>
@@ -104,7 +124,7 @@
                                             
                                         <div class="filter-item" style="flex: 1; min-width: 200px;">
                                             <label for="datewise">Select Period</label>
-                                            <select class="custom-select" id="datewise">
+                                            <select class="custom-select" id="datewise_deviation">
                                                 <option value="all">Select</option>
                                                 <option value="all">Yearly</option>
                                                 <option value="all">Quarterly</option>
@@ -175,9 +195,10 @@
         const filterData = {
             departmentDeviation: null,
             division_idDeviation: null,
-            deviationDate:null,
             date_fromDeviation: null,
-            date_toDeviation: null
+            date_toDeviation: null,
+            datewisedeviation:null
+
 
 
         }
@@ -202,15 +223,24 @@
          });
 
          
-         $('#date_from_dev').change(function() {
+         $('#date_from_deviaton').change(function() {
         filterData.date_fromDeviation = $(this).val();
-        filterRecords();
-        });
+         filterRecords();
+    });
 
-        $('#date_to_dev').change(function() {
-            filterData.date_toDeviation = $(this).val();
-            filterRecords();
-        });
+    $('#date_to_deviation').change(function() {
+        filterData.date_toDeviation = $(this).val();
+        filterRecords();
+    });
+
+    
+    $('#datewise_deviation').change(function() {
+        filterData.datewisedeviation = $(this).val();
+        $('#date_to').val(new Date($(this).val()).toLocaleDateString('en-GB'));
+        filterRecords();
+    });
+
+
 
 
 
@@ -240,4 +270,29 @@
 
         
     </script>
+     <style>
+        .calenderauditee {
+            position: relative;
+        }
+
+        .new-date-data-field input.hide-input {
+            position: absolute;
+            top: 0;
+            left: 0;
+            opacity: 0;
+        }
+
+        .new-date-data-field input {
+            border: 1px solid grey;
+            border-radius: 5px;
+            padding: 5px 15px;
+            display: block;
+            width: 100%;
+            background: white;
+        }
+
+        .calenderauditee input::-webkit-calendar-picker-indicator {
+            width: 100%;
+        }
+    </style>
 @endsection

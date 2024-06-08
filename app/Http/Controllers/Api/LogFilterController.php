@@ -10,6 +10,7 @@ use App\Models\FailureInvestigation;
 use App\Models\MarketComplaint;
 use App\Models\OutOfCalibration;
 use App\Models\LabIncident;
+use App\Models\Capa;
 use App\Models\InternalAudit;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
@@ -17,6 +18,63 @@ use Carbon\Carbon;
 
 class LogFilterController extends Controller
 {
+    public function capa_filter(Request $request)
+    {
+        $res = [
+            'status' => 'ok',
+            'message' => 'success',
+            'body' => []
+        ];
+
+        try {
+
+            
+            $query = Capa::query();
+            
+            if ($request->departmentCapa)
+            {
+                $query->where('Initiator_Group', $request->departmentCapa);
+            }
+
+            if ($request->division_idCapa) {
+                $query->where('division_id', $request->division_idCapa);
+            }
+
+            if($request->capa_types)
+            {
+                $query->where('capa_type',$request->capa_types);
+            }
+
+            if ($request->date_fromCapa) {
+               
+                $dateFrom = Carbon::parse($request->date_fromCapa)->startOfDay();
+               
+                $query->whereDate('intiation_date', '>=', $dateFrom);
+            }
+    
+            if ($request->date_toCapa) {
+              
+                $dateTo = Carbon::parse($request->date_toCapa)->endOfDay();
+              
+                $query->whereDate('intiation_date', '<=', $dateTo);
+            }
+
+           
+            $capa = $query->get();
+
+            $htmlData = view('frontend.forms.Logs.comps.capa_data', compact('capa'))->render();
+
+            $res['body'] = $htmlData;
+
+
+        } catch (\Exception $e) {
+            $res['status'] = 'error';
+            $res['message'] = $e->getMessage();
+        }
+
+
+        return response()->json($res);
+    }
     public function deviation_filter(Request $request)
     {
         $res = [
@@ -43,6 +101,29 @@ class LogFilterController extends Controller
             {
                 $query->where('audit_type',$request->audit_type);
             }
+
+            if ($request->period) {
+                $currentDate = Carbon::now();
+                switch ($request->period) {
+                    case 'Yearly':
+                        $startDate = $currentDate->startOfYear();
+                        break;
+                    case 'Quarterly':
+                        $startDate = $currentDate->firstOfQuarter();
+                        break;
+                    case 'Monthly':
+                        $startDate = $currentDate->startOfMonth();
+                        break;
+                    default:
+                        $startDate = null;
+                        break;
+                }
+                if ($startDate) {
+                    $query->whereDate('intiation_date', '>=', $startDate);
+                }
+            }
+
+            
 
             if ($request->date_fromDeviation) {
                
@@ -258,14 +339,14 @@ class LogFilterController extends Controller
             
             $query = FailureInvestigation::query();
             
-            if ($request->department)
+            if ($request->department_failure)
             {
-                $query->where('Initiator_Group', $request->department);
+                $query->where('Initiator_Group', $request->department_failure);
             }
 
-            if($request->division_id)
+            if($request->div_idfailure)
             {
-                $query->where('division_id',$request->division_id);
+                $query->where('division_id',$request->div_idfailure);
             }
 
             
@@ -296,12 +377,12 @@ class LogFilterController extends Controller
                 }
             }
 
-            if ($request->date_from) {
-                $query->whereDate('intiation_date', '>=', Carbon::parse($request->date_from));
+            if ($request->date_From_failure) {
+                $query->whereDate('intiation_date', '>=', Carbon::parse($request->date_From_failure));
             }
             
-            if ($request->date_to) {
-                $query->whereDate('intiation_date', '<=', Carbon::parse($request->date_to));
+            if ($request->date_To_failure) {
+                $query->whereDate('intiation_date', '<=', Carbon::parse($request->date_To_failure));
             }
             
             // if($request->error_er)

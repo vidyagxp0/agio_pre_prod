@@ -110,12 +110,12 @@
                                         </div>
                                         <div class="filter-item">
                                             <label for="date_from">Date From</label>
-                                            <input type="date" class="custom-select" id="date_from">
+                                            <input type="date" class="custom-select" id="date_from_failure">
                                         </div>
                                         
                                         <div class="filter-item">
                                             <label for="date_to">Date To</label>
-                                            <input type="date" class="custom-select" id="date_to">
+                                            <input type="date" class="custom-select" id="date_to_failure">
                                         </div> 
                                         <div class="filter-item">
                                             <label for="originator">Nature Of Change</label>
@@ -202,32 +202,35 @@
         $('#spinner').hide();
 
 const filterData = {
-    department_lab: null,
-    div_id: null,
+    department_failure: null,
+    div_idfailure: null,
     period: null,
-    date_from: null,
-    date_to: null
+    date_From_failure: null,
+    date_To_failure: null
 
 }
 
 $('#initiator_group').change(function() {
-    filterData.department_lab = $(this).val();
+    filterData.department_failure = $(this).val();
     filterRecords()
 });
 
  // Division ID change event
 
   $('#division_id').change(function() {
-    filterData.div_id = $(this).val();
+    filterData.div_idfailure = $(this).val();
     filterRecords();
  });
- $('#date_from, #date_to').change(function() {
-        filterData.date_from = $('#date_from').val();
-        filterData.date_to = $('#date_to').val();
-        // console.log('Date From:', filterData.dateFrom);
-        // console.log('Date To:', filterData.dateTo);
-        filterRecords();
-    });
+ 
+
+    $('#date_from_failure').change(function() {
+    filterData.date_From_failure = $(this).val();
+    filterRecords();
+ }); 
+ $('#date_to_failure').change(function() {
+    filterData.date_To_failure = $(this).val();
+    filterRecords();
+ }); 
 
  $('#datewise').change(function() {
 filterData.period_lab = $(this).val();
@@ -251,7 +254,7 @@ async function filterRecords()
     try {
 
 
-        const postUrl = "{{ route('api.laboratoryincident.filter') }}";
+        const postUrl = "{{ route('api.failureInv.filter') }}";
 
         const res = await axios.post(postUrl, filterData);
 

@@ -44,6 +44,7 @@ Route::post('/inernal-audit',[LogFilterController::class,'internal_audit_filter'
 Route::post('/lab-incident',[LogFilterController::class,'labincident_filter'])->name('api.laboratoryincident.filter');
 Route::post('/marketcomplaint_data',[LogFilterController::class,'marketcomplaint_filter'])->name('api.marketcomplaint.filter');
 Route::post('/ooc',[LogFilterController::class,'ooc_filter'])->name('api.ooc.filter');
+Route::post('/capa',[LogFilterController::class,'capa_filter'])->name('api.capa.filter');
 
 
 

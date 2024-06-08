@@ -11,7 +11,7 @@
         @foreach(collect($secondIncident['data']) as $dataaas)
             <tr>
                 @if (!$firstLablogPrinted)
-                    <td rowspan="{{ $rowSpanCount }}">{{ $loop->parent->parent->index + 1 }}</td> <!-- Adjusted to get the index from the parent loop -->
+                    <td rowspan="{{ $rowSpanCount }}">{{ $loop->parent->parent->index + 1 }}</td> 
                     <td rowspan="{{ $rowSpanCount }}">{{ $lablog->intiation_date }}</td>
                     <td rowspan="{{ $rowSpanCount }}">{{ $lablog->Initiator_Group}}/CC/{{ date('Y') }}/{{ str_pad($lablog->record, 4, '0', STR_PAD_LEFT) }}</td>
                     <td rowspan="{{ $rowSpanCount }}">{{ $lablog->initiator ? $lablog->initiator->name : '-' }}</td>

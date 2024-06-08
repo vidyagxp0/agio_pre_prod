@@ -22,4 +22,10 @@ class InternalAudit extends Model
     {
         return $this->belongsTo(User::class,'initiator_id');
     }
+
+    public function leadAuditor()
+    {
+        return $this->belongsTo(User::class,'lead_auditor');
+    }
+    
 }

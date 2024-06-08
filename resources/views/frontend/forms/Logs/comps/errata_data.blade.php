@@ -15,8 +15,8 @@
                                             <td>{{$logs->document_type}}</td>
                                             <td>{{$logs->type_of_error}}</td>
                                             <td>{{$logs->Date_and_time_of_correction}}</td>
-                                            <td>{{$logs->due_date}}</td>
-                                            <td>{{$logs->qa_head_approval_completed_on}}</td>
+                                            <td>{{$logs->due_date ? $logs->due_data : 'Not Available'}}</td>
+                                            <td>{{$logs->qa_head_approval_completed_on ? $logs->qa_head_approval_completed_on : '-'}}</td>
                                             <td>{{$logs->status}}</td>
                                             
                                         </tr>
