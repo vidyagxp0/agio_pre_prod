@@ -2070,6 +2070,7 @@ class DocumentController extends Controller
             //$newdoc->purpose = $request->purpose;
             $newdoc->stage = 1;
             $newdoc->status = Stage::where('id', 1)->value('name');
+            $newdoc->hods = $document->hods;
             $newdoc->save();
     
             $doc_content = new DocumentContent();

@@ -44,5 +44,15 @@ Route::post('upload-files', [HelperController::class, 'upload_file'])->name('api
  Route::get('/charts/documents-by-type', [ChartController::class, 'documents_type_charts'])->name('api.document.type.chart');
  Route::get('/charts/documents-in-review/{months}', [ChartController::class, 'documents_review_charts'])->name('api.document.review.chart');
  Route::get('/charts/documents-in-stage/{stage}', [ChartController::class, 'documents_stage_charts'])->name('api.document.stage.chart');
+ Route::get('/charts/pending-reviewers', [ChartController::class, 'document_pending_review_charts'])->name('api.document.pending.reviewers.chart');
+ Route::get('/charts/pending-approvers', [ChartController::class, 'document_pending_approve_charts'])->name('api.document.pending.approvers.chart');
+ Route::get('/charts/pending-hod', [ChartController::class, 'document_pending_hod_charts'])->name('api.document.pending.hod.chart');
+ Route::get('/charts/pending-training', [ChartController::class, 'document_pending_training_charts'])->name('api.document.pending.training.chart');
+
+ Route::get('/charts/documents-by-severity', [ChartController::class, 'deviationSeverityLevel'])->name('api.document_by_severity.chart');
+ Route::get('/charts/documents-by-priority', [ChartController::class, 'documentByPriority'])->name('api.document_by_priority.chart');
+ Route::get('/charts/documents-by-priority-rca', [ChartController::class, 'documentByPriorityRca'])->name('api.document_by_priority_rca.chart');
+ Route::get('/charts/documents-by-delayed', [ChartController::class, 'documentDelayed'])->name('api.document_by_delayed.chart');
+ Route::get('/charts/documents-by-site', [ChartController::class, 'siteWiseDocument'])->name('api.document_by_site.chart');
 
 
