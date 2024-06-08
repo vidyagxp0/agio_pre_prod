@@ -85,6 +85,7 @@ class LabIncidentController extends Controller
         $data->status = 'Opened';
         $data->stage = 1;
         $data->incident_involved_others_gi =$request->incident_involved_others_gi;
+        $data->Root_Cause = $request->Root_Cause;
         $data->description_incidence_gi =$request->description_incidence_gi;
         $data->stage_stage_gi =$request->stage_stage_gi;
         $data->incident_stability_cond_gi =$request->incident_stability_cond_gi;
@@ -464,7 +465,7 @@ class LabIncidentController extends Controller
         if (!empty($data->stage_stage_gi)) {
             $history = new LabIncidentAuditTrial();
             $history->LabIncident_id = $data->id;
-            $history->activity_type = 'Instrument Involved';
+            $history->activity_type = 'Stage';
             $history->previous = "NA";
             $history->current = $data->stage_stage_gi;
             $history->comment = "Not Applicable";
@@ -1053,6 +1054,23 @@ class LabIncidentController extends Controller
             $history->origin_state = $data->status;
             $history->save();
         }
+
+        if(!empty($data->attachments_ia)) {
+            $history = new LabIncidentAuditTrial();
+            $history->LabIncident_id = $data->id;
+            $history->activity_type = 'Immediate Action';
+            $history->previous = "Null";
+            $history->current = $data->attachments_ia;
+            $history->comment = "No Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $data->status;
+            $history->change_to = "Opened";
+            $history->change_from = "Initiator";
+            $history->action_name = "Create";
+            $history->save();
+        }
         
 
         toastr()->success('Record is created Successfully');
@@ -1086,6 +1104,7 @@ class LabIncidentController extends Controller
         $data->Incident_Details = $request->Incident_Details;
         $data->Document_Details = $request->Document_Details;
         $data->Instrument_Details = $request->Instrument_Details;
+        $data->Root_Cause = $request->Root_Cause;
         $data->Involved_Personnel = $request->Involved_Personnel;
         $data->Product_Details = $request->Product_Details;
         $data->Supervisor_Review_Comments = $request->Supervisor_Review_Comments;
@@ -1210,7 +1229,7 @@ class LabIncidentController extends Controller
             $data->attachments_gi = json_encode($files);
         }
 
-        if (!empty($request->attachments_ia)) {
+
             $files = [];
             if ($request->hasfile('attachments_ia')) {
                 foreach ($request->file('attachments_ia') as $file) {
@@ -1220,7 +1239,7 @@ class LabIncidentController extends Controller
                 }
             }
             $data->attachments_ia = json_encode($files);
-        }
+        
         
 
         if (!empty($request->Initial_Attachment)) {
@@ -1279,7 +1298,7 @@ class LabIncidentController extends Controller
             $data->QA_Head_Attachment = json_encode($files);
         }
         
-        if ($lastDocument->incident_interval_others_gi != $data->incident_interval_others_gi || !empty($request->incident_interval_others_gi)) {
+        if ($lastDocument->incident_interval_others_gi != $data->incident_interval_others_gi ) {
             $history = new LabIncidentAuditTrial();
             $history->LabIncident_id = $data->id;
             $history->activity_type = 'Interval';
@@ -1295,7 +1314,7 @@ class LabIncidentController extends Controller
             $history->action_name = "Update";
             $history->save();
         }
-        if ($lastDocument->test_gi != $data->test_gi || !empty($request->test_gi)) {
+        if ($lastDocument->test_gi != $data->test_gi ) {
             $history = new LabIncidentAuditTrial();
             $history->LabIncident_id = $data->id;
             $history->activity_type = 'Test';
@@ -1312,13 +1331,13 @@ class LabIncidentController extends Controller
             $history->save();
         }
 
-        if ($lastDocument->incident_date_analysis_gi_gi != $data->incident_date_analysis_gi || !empty($request->incident_date_analysis_gi)) {
+        if ($lastDocument->attachments_ia != $data->attachments_ia ) {
             $history = new LabIncidentAuditTrial();
-            $history->LabIncident_id = $data->id;
-            $history->activity_type = 'Date Of Analysis';
-            $history->previous = $lastDocument->incident_date_analysis_gi;
-            $history->current = $data->incident_date_analysis_gi;
-            $history->comment = $request->incident_date_analysis_gi_comment;
+            $history->LabIncident_id = $id;
+            $history->activity_type = 'Immediate Action Attachment';
+            $history->previous = $lastDocument->attachments_ia;
+            $history->current = $data->attachments_ia;
+            $history->comment = $request->attachments_ia_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -1327,8 +1346,13 @@ class LabIncidentController extends Controller
             $history->change_from = $lastDocument->status;
             $history->action_name = "Update";
             $history->save();
+        
         }
-        if ($lastDocument->incident_specification_no_gi != $data->incident_specification_no_gi || !empty($request->incident_specification_no_gi)) {
+
+        
+       
+        // dd($lastDocument, $data);
+        if ($lastDocument->incident_specification_no_gi != $data->incident_specification_no_gi ) {
             $history = new LabIncidentAuditTrial();
             $history->LabIncident_id = $data->id;
             $history->activity_type = 'Specification Number';
@@ -1346,7 +1370,7 @@ class LabIncidentController extends Controller
 
         }
 
-        if ($lastDocument->incident_stp_no_gi != $data->incident_stp_no_gi || !empty($request->incident_stp_no_gi)) {
+        if ($lastDocument->incident_stp_no_gi != $data->incident_stp_no_gi ) {
             $history = new LabIncidentAuditTrial();
             $history->LabIncident_id = $data->id;
             $history->activity_type = 'STP Number';
@@ -1362,7 +1386,7 @@ class LabIncidentController extends Controller
             $history->action_name = "Update";
             $history->save();
         }
-        if ($lastDocument->Incident_name_analyst_no_gi != $data->Incident_name_analyst_no_gi || !empty($request->Incident_name_analyst_no_gi)) {
+        if ($lastDocument->Incident_name_analyst_no_gi != $data->Incident_name_analyst_no_gi ) {
             $history = new LabIncidentAuditTrial();
             $history->LabIncident_id = $data->id;
             $history->activity_type = 'Name Of Analyst';
@@ -1378,7 +1402,7 @@ class LabIncidentController extends Controller
             $history->action_name = "Update";
             $history->save();
         }
-        if ($lastDocument->incident_date_incidence_gi != $data->incident_date_incidence_gi || !empty($request->incident_date_incidence_gi)) {
+        if ($lastDocument->incident_date_incidence_gi != $data->incident_date_incidence_gi ) {
             $history = new LabIncidentAuditTrial();
             $history->LabIncident_id = $data->id;
             $history->activity_type = 'Date Of Incidence';
@@ -1394,7 +1418,7 @@ class LabIncidentController extends Controller
             $history->action_name = "Update";
             $history->save();
         }
-        if ($lastDocument->description_incidence_gi != $data->description_incidence_gi || !empty($request->description_incidence_gi)) {
+        if ($lastDocument->description_incidence_gi != $data->description_incidence_gi ) {
             $history = new LabIncidentAuditTrial();
             $history->LabIncident_id = $data->id;
             $history->activity_type = 'Description Of Incidence';
@@ -1410,7 +1434,7 @@ class LabIncidentController extends Controller
             $history->action_name = "Update";
             $history->save();
         }
-        if ($lastDocument->analyst_sign_date_gi != $data->analyst_sign_date_gi || !empty($request->analyst_sign_date_gi)) {
+        if ($lastDocument->analyst_sign_date_gi != $data->analyst_sign_date_gi ) {
             $history = new LabIncidentAuditTrial();
             $history->LabIncident_id = $data->id;
             $history->activity_type = 'Analyst Date';
@@ -1426,7 +1450,7 @@ class LabIncidentController extends Controller
             $history->action_name = "Update";
             $history->save();
         }
-        if ($lastDocument->section_sign_date_gi != $data->section_sign_date_gi || !empty($request->section_sign_date_gi)) {
+        if ($lastDocument->section_sign_date_gi != $data->section_sign_date_gi ) {
             $history = new LabIncidentAuditTrial();
             $history->LabIncident_id = $data->id;
             $history->activity_type = 'Section Date';
@@ -1442,7 +1466,7 @@ class LabIncidentController extends Controller
             $history->action_name = "Update";
             $history->save();
         }
-        if ($lastDocument->severity_level2 != $data->severity_level2 || !empty($request->severity_level2)) {
+        if ($lastDocument->severity_level2 != $data->severity_level2 ) {
             $history = new LabIncidentAuditTrial();
             $history->LabIncident_id = $data->id;
             $history->activity_type = 'Severity Level';
@@ -1458,7 +1482,7 @@ class LabIncidentController extends Controller
             $history->action_name = "Update";
             $history->save();
         }
-        if ($lastDocument->Incident_Category_others != $data->Incident_Category_others || !empty($request->Incident_Category_others)) {
+        if ($lastDocument->Incident_Category_others != $data->Incident_Category_others ) {
             $history = new LabIncidentAuditTrial();
             $history->LabIncident_id = $data->id;
             $history->activity_type = 'Others';
@@ -1474,7 +1498,7 @@ class LabIncidentController extends Controller
             $history->action_name = "Update";
             $history->save();
         }
-        if ($lastDocument->attachments_gi != $data->attachments_gi || !empty($request->attachments_gi)) {
+        if ($lastDocument->attachments_gi != $data->attachments_gi ) {
             $history = new LabIncidentAuditTrial();
             $history->LabIncident_id = $data->id;
             $history->activity_type = 'Initial Attachment';
@@ -1590,7 +1614,7 @@ class LabIncidentController extends Controller
                     
        
 
-        if ($lastDocument->short_desc != $data->short_desc || !empty($request->short_desc_comment)) {
+        if ($lastDocument->short_desc != $data->short_desc ) {
 
             $history = new LabIncidentAuditTrial();
             $history->LabIncident_id = $id;
@@ -1607,7 +1631,7 @@ class LabIncidentController extends Controller
             $history->action_name = "Update";
             $history->save();
         }
-        if ($lastDocument->Initiator_Group != $data->Initiator_Group || !empty($request->Initiator_Group_comment)) {
+        if ($lastDocument->Initiator_Group != $data->Initiator_Group ) {
 
             $history = new LabIncidentAuditTrial();
             $history->LabIncident_id = $id;
@@ -1624,7 +1648,7 @@ class LabIncidentController extends Controller
             $history->action_name = "Update";
             $history->save();
         }
-        if ($lastDocument->Other_Ref != $data->Other_Ref || !empty($request->Other_Ref_comment)) {
+        if ($lastDocument->Other_Ref != $data->Other_Ref ) {
 
             $history = new LabIncidentAuditTrial();
             $history->LabIncident_id = $id;
@@ -1641,7 +1665,7 @@ class LabIncidentController extends Controller
             $history->action_name = "Update";
             $history->save();
         }
-        if ($lastDocument->due_date != $data->due_date || !empty($request->due_date_comment)) {
+        if ($lastDocument->due_date != $data->due_date ) {
 
             $history = new LabIncidentAuditTrial();
             $history->LabIncident_id = $id;
@@ -1658,7 +1682,7 @@ class LabIncidentController extends Controller
             $history->action_name = "Update";
             $history->save();
         }
-        if ($lastDocument->assign_to != $data->assign_to || !empty($request->assign_to_comment)) {
+        if ($lastDocument->assign_to != $data->assign_to ) {
 
             $history = new LabIncidentAuditTrial();
             $history->LabIncident_id = $id;
@@ -1672,7 +1696,7 @@ class LabIncidentController extends Controller
             $history->origin_state = $lastDocument->status;
             $history->save();
         }
-        if ($lastDocument->Incident_Category != $data->Incident_Category || !empty($request->Incident_Category_comment)) {
+        if ($lastDocument->Incident_Category != $data->Incident_Category ) {
 
             $history = new LabIncidentAuditTrial();
             $history->LabIncident_id = $id;
@@ -1689,7 +1713,7 @@ class LabIncidentController extends Controller
             $history->action_name = "Update";
             $history->save();
         }
-        if ($lastDocument->Invocation_Type != $data->Invocation_Type || !empty($request->Invocation_Type_comment)) {
+        if ($lastDocument->Invocation_Type != $data->Invocation_Type ) {
 
             $history = new LabIncidentAuditTrial();
             $history->LabIncident_id = $id;
@@ -1706,7 +1730,7 @@ class LabIncidentController extends Controller
             $history->action_name = "Update";
             $history->save();
         }
-        if ($lastDocument->incident_involved_others_gi != $data->incident_involved_others_gi || !empty($request->incident_involved_others_gi)) {
+        if ($lastDocument->incident_involved_others_gi != $data->incident_involved_others_gi ) {
             $history = new LabIncidentAuditTrial();
             $history->LabIncident_id = $data->id;
             $history->activity_type = 'Instrument Involved';
@@ -1722,7 +1746,7 @@ class LabIncidentController extends Controller
             $history->action_name = "Update";
             $history->save();
         }
-        if ($lastDocument->stage_stage_gi != $data->stage_stage_gi || !empty($request->stage_stage_gi)) {
+        if ($lastDocument->stage_stage_gi != $data->stage_stage_gi ) {
             $history = new LabIncidentAuditTrial();
             $history->LabIncident_id = $data->id;
             $history->activity_type = 'Stage';
@@ -1738,7 +1762,7 @@ class LabIncidentController extends Controller
             $history->action_name = "Update";
             $history->save();
         }
-        if ($lastDocument->incident_stability_cond_gi != $data->incident_stability_cond_gi || !empty($request->incident_stability_cond_gi)) {
+        if ($lastDocument->incident_stability_cond_gi != $data->incident_stability_cond_gi ) {
             $history = new LabIncidentAuditTrial();
             $history->LabIncident_id = $data->id;
             $history->activity_type = 'Stability';
@@ -1754,7 +1778,7 @@ class LabIncidentController extends Controller
             $history->action_name = "Update";
             $history->save();
         }
-        if ($lastDocument->Incident_Details != $data->Incident_Details || !empty($request->Incident_Details_comment)) {
+        if ($lastDocument->Incident_Details != $data->Incident_Details ) {
 
             $history = new LabIncidentAuditTrial();
             $history->LabIncident_id = $id;
@@ -1768,7 +1792,7 @@ class LabIncidentController extends Controller
             $history->origin_state = $lastDocument->status;
             $history->save();
         }
-        if ($lastDocument->Document_Details != $data->Document_Details || !empty($request->Document_Details_comment)) {
+        if ($lastDocument->Document_Details != $data->Document_Details ) {
 
             $history = new LabIncidentAuditTrial();
             $history->LabIncident_id = $id;
@@ -1782,7 +1806,7 @@ class LabIncidentController extends Controller
             $history->origin_state = $lastDocument->status;
             $history->save();
         }
-        if ($lastDocument->Instrument_Details != $data->Instrument_Details || !empty($request->Instrument_Details_comment)) {
+        if ($lastDocument->Instrument_Details != $data->Instrument_Details ) {
 
             $history = new LabIncidentAuditTrial();
             $history->LabIncident_id = $id;
@@ -1796,7 +1820,7 @@ class LabIncidentController extends Controller
             $history->origin_state = $lastDocument->status;
             $history->save();
         }
-        if ($lastDocument->Involved_Personnel != $data->Involved_Personnel || !empty($request->Involved_Personnel_comment)) {
+        if ($lastDocument->Involved_Personnel != $data->Involved_Personnel ) {
 
             $history = new LabIncidentAuditTrial();
             $history->LabIncident_id = $id;
@@ -1810,7 +1834,7 @@ class LabIncidentController extends Controller
             $history->origin_state = $lastDocument->status;
             $history->save();
         }
-        if ($lastDocument->Product_Details != $data->Product_Details || !empty($request->Product_Details_comment)) {
+        if ($lastDocument->Product_Details != $data->Product_Details ) {
 
             $history = new LabIncidentAuditTrial();
             $history->LabIncident_id = $id;
@@ -1824,7 +1848,7 @@ class LabIncidentController extends Controller
             $history->origin_state = $lastDocument->status;
             $history->save();
         }
-        if ($lastDocument->Supervisor_Review_Comments != $data->Supervisor_Review_Comments || !empty($request->Supervisor_Review_Comments_comment)) {
+        if ($lastDocument->Supervisor_Review_Comments != $data->Supervisor_Review_Comments ) {
 
             $history = new LabIncidentAuditTrial();
             $history->LabIncident_id = $id;
@@ -1838,7 +1862,7 @@ class LabIncidentController extends Controller
             $history->origin_state = $lastDocument->status;
             $history->save();
         }
-        if ($lastDocument->Cancelation_Remarks != $data->Cancelation_Remarks || !empty($request->Cancelation_Remarks_comment)) {
+        if ($lastDocument->Cancelation_Remarks != $data->Cancelation_Remarks ) {
 
             $history = new LabIncidentAuditTrial();
             $history->LabIncident_id = $id;
@@ -1852,7 +1876,7 @@ class LabIncidentController extends Controller
             $history->origin_state = $lastDocument->status;
             $history->save();
         }
-        if ($lastDocument->Investigation_Details != $data->Investigation_Details || !empty($request->Investigation_Details_comment)) {
+        if ($lastDocument->Investigation_Details != $data->Investigation_Details ) {
 
             $history = new LabIncidentAuditTrial();
             $history->LabIncident_id = $id;
@@ -1866,7 +1890,7 @@ class LabIncidentController extends Controller
             $history->origin_state = $lastDocument->status;
             $history->save();
         }
-        if ($lastDocument->Action_Taken != $data->Action_Taken || !empty($request->Action_Taken_comment)) {
+        if ($lastDocument->Action_Taken != $data->Action_Taken ) {
 
             $history = new LabIncidentAuditTrial();
             $history->LabIncident_id = $id;
@@ -1880,7 +1904,7 @@ class LabIncidentController extends Controller
             $history->origin_state = $lastDocument->status;
             $history->save();
         }
-        if ($lastDocument->Root_Cause != $data->Root_Cause || !empty($request->Root_Cause_comment)) {
+        if ($lastDocument->Root_Cause != $data->Root_Cause ) {
 
             $history = new LabIncidentAuditTrial();
             $history->LabIncident_id = $id;
@@ -1894,7 +1918,7 @@ class LabIncidentController extends Controller
             $history->origin_state = $lastDocument->status;
             $history->save();
         }
-        if ($lastDocument->Currective_Action != $data->Currective_Action || !empty($request->Currective_Action_comment)) {
+        if ($lastDocument->Currective_Action != $data->Currective_Action ) {
 
             $history = new LabIncidentAuditTrial();
             $history->LabIncident_id = $id;
@@ -1908,7 +1932,7 @@ class LabIncidentController extends Controller
             $history->origin_state = $lastDocument->status;
             $history->save();
         }
-        if ($lastDocument->Preventive_Action != $data->Preventive_Action || !empty($request->Preventive_Action_comment)) {
+        if ($lastDocument->Preventive_Action != $data->Preventive_Action ) {
 
             $history = new LabIncidentAuditTrial();
             $history->LabIncident_id = $id;
@@ -1923,7 +1947,7 @@ class LabIncidentController extends Controller
             $history->save();
         }
 
-        if ($lastDocument->Corrective_Preventive_Action != $data->Corrective_Preventive_Action || !empty($request->Corrective_Preventive_Action_comment)) {
+        if ($lastDocument->Corrective_Preventive_Action != $data->Corrective_Preventive_Action ) {
 
             $history = new LabIncidentAuditTrial();
             $history->LabIncident_id = $id;
@@ -1938,7 +1962,7 @@ class LabIncidentController extends Controller
             $history->save();
         }
 
-        if ($lastDocument->QA_Review_Comments != $data->QA_Review_Comments || !empty($request->QA_Review_Comments_comment)) {
+        if ($lastDocument->QA_Review_Comments != $data->QA_Review_Comments ) {
 
             $history = new LabIncidentAuditTrial();
             $history->LabIncident_id = $id;
@@ -1952,7 +1976,7 @@ class LabIncidentController extends Controller
             $history->origin_state = $lastDocument->status;
             $history->save();
         }
-        if ($lastDocument->QA_Head != $data->QA_Head || !empty($request->QA_Head_comment)) {
+        if ($lastDocument->QA_Head != $data->QA_Head ) {
 
             $history = new LabIncidentAuditTrial();
             $history->LabIncident_id = $id;
@@ -1966,7 +1990,7 @@ class LabIncidentController extends Controller
             $history->origin_state = $lastDocument->status;
             $history->save();
         }
-        if ($lastDocument->Effectiveness_Check != $data->Effectiveness_Check || !empty($request->Effectiveness_Check_comment)) {
+        if ($lastDocument->Effectiveness_Check != $data->Effectiveness_Check ) {
 
             $history = new LabIncidentAuditTrial();
             $history->LabIncident_id = $id;
@@ -1980,7 +2004,7 @@ class LabIncidentController extends Controller
             $history->origin_state = $lastDocument->status;
             $history->save();
         }
-        if ($lastDocument->Incident_Type != $data->Incident_Type || !empty($request->Incident_Type_comment)) {
+        if ($lastDocument->Incident_Type != $data->Incident_Type ) {
 
             $history = new LabIncidentAuditTrial();
             $history->LabIncident_id = $id;
@@ -1994,7 +2018,7 @@ class LabIncidentController extends Controller
             $history->origin_state = $lastDocument->status;
             $history->save();
         }
-        if ($lastDocument->Conclusion != $data->Conclusion || !empty($request->Conclusion_comment)) {
+        if ($lastDocument->Conclusion != $data->Conclusion ) {
 
             $history = new LabIncidentAuditTrial();
             $history->LabIncident_id = $id;
@@ -2008,7 +2032,7 @@ class LabIncidentController extends Controller
             $history->origin_state = $lastDocument->status;
             $history->save();
         }
-        if ($lastDocument->Initial_Attachment != $data->Initial_Attachment || !empty($request->Initial_Attachment_comment)) {
+        if ($lastDocument->Initial_Attachment != $data->Initial_Attachment ) {
 
             $history = new LabIncidentAuditTrial();
             $history->LabIncident_id = $id;
@@ -2022,7 +2046,7 @@ class LabIncidentController extends Controller
             $history->origin_state = $lastDocument->status;
             $history->save();
         }
-        if ($lastDocument->Attachments != $data->Attachments || !empty($request->Attachments_comment)) {
+        if ($lastDocument->Attachments != $data->Attachments ) {
 
             $history = new LabIncidentAuditTrial();
             $history->LabIncident_id = $id;
@@ -2036,7 +2060,7 @@ class LabIncidentController extends Controller
             $history->origin_state = $lastDocument->status;
             $history->save();
         }
-        if ($lastDocument->Inv_Attachment != $data->Inv_Attachment || !empty($request->Inv_Attachment_comment)) {
+        if ($lastDocument->Inv_Attachment != $data->Inv_Attachment ) {
 
             $history = new LabIncidentAuditTrial();
             $history->LabIncident_id = $id;
@@ -2050,7 +2074,7 @@ class LabIncidentController extends Controller
             $history->origin_state = $lastDocument->status;
             $history->save();
         }
-        if ($lastDocument->CAPA_Attachment != $data->CAPA_Attachment || !empty($request->CAPA_Attachment_comment)) {
+        if ($lastDocument->CAPA_Attachment != $data->CAPA_Attachment ) {
 
             $history = new LabIncidentAuditTrial();
             $history->LabIncident_id = $id;
@@ -2064,7 +2088,7 @@ class LabIncidentController extends Controller
             $history->origin_state = $lastDocument->status;
             $history->save();
         }
-        if ($lastDocument->QA_Head_Attachment != $data->QA_Head_Attachment || !empty($request->QA_Head_Attachment_comment)) {
+        if ($lastDocument->QA_Head_Attachment != $data->QA_Head_Attachment ) {
 
             $history = new LabIncidentAuditTrial();
             $history->LabIncident_id = $id;
@@ -2078,7 +2102,7 @@ class LabIncidentController extends Controller
             $history->origin_state = $lastDocument->status;
             $history->save();
         }
-        if ($lastDocument->effect_check_date != $data->effect_check_date || !empty($request->effect_check_date_comment)) {
+        if ($lastDocument->effect_check_date != $data->effect_check_date ) {
 
             $history = new LabIncidentAuditTrial();
             $history->LabIncident_id = $id;
@@ -2092,7 +2116,7 @@ class LabIncidentController extends Controller
             $history->origin_state = $lastDocument->status;
             $history->save();
         }
-        if ($lastDocument->occurance_date != $data->occurance_date || !empty($request->occurance_date_comment)) {
+        if ($lastDocument->occurance_date != $data->occurance_date ) {
 
             $history = new LabIncidentAuditTrial();
             $history->LabIncident_id = $id;

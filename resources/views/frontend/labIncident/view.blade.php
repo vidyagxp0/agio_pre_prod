@@ -312,7 +312,7 @@
                                         <label for="search">
                                             Assigned To <span class="text-danger"></span>
                                         </label>
-                                        <select id="select-state" placeholder="Select..." name="assign_to" {{ $data->stage == 0 || $data->stage == 8 ? "disabled" : "" }}>
+                                        <select id="select-state" placeholder="Select..." name="assign_to" {{ $data->stage == 0 || $data->stage == 3 ? "disabled" : "" }}>
                                             {{-- <option value="">Select a value</option> --}}
                                             @foreach ($users as $key=> $value)
                                                 <option  @if ($data->assign_to == $value->id) selected @endif  value="{{ $value->id }}">{{ $value->name }}</option>
@@ -331,7 +331,7 @@
                                         </div>
                                         <div class="calenderauditee">
                                             <input type="text" id="due_date" readonly
-                                                placeholder="DD-MMM-YYYY" value="{{ Helpers::getdateFormat($data->due_date) }}" {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : ''}}/>
+                                                placeholder="DD-MMM-YYYY" value="{{ Helpers::getdateFormat($data->due_date) }}" {{ $data->stage == 0 || $data->stage == 3 ? 'disabled' : ''}}/>
                                             <input type="date" name="due_date" {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : ''}}  min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input"
                                                 oninput="handleDateInput(this, 'due_date')" />
                                         </div>
@@ -341,7 +341,7 @@
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Initiator Group"><b>Initiator Group</b></label>
-                                        <select name="Initiator_Group" {{ $data->stage == 0 || $data->stage == 8 ? "disabled" : "" }}
+                                        <select name="Initiator_Group" {{ $data->stage == 0 || $data->stage == 3 ? "disabled" : "" }}
                                              id="initiator_group">
                                             <option value="Corporate Quality Assurance"
                                                 @if ($data->Initiator_Group== 'Corporate Quality Assurance') selected @endif>Corporate
@@ -401,7 +401,7 @@
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Initiator Group Code">Initiator Group Code</label>
-                                        <input type="text" id="initiator_group_code"  name="initiator_group_code" value="{{$data->initiator_group_code}}" readonly>
+                                        <input type="text" id="initiator_group_code"  name="initiator_group_code" {{ $data->stage == 0 || $data->stage == 3 ? "disabled" : "" }} value="{{$data->initiator_group_code}}" readonly>
                                     </div>
                                 </div>
                                
@@ -411,7 +411,7 @@
                                                 class="text-danger">*</span></label><span id="rchars">255</span>
                                         characters remaining
                                         
-                                        <textarea name="short_desc"   id="docname" type="text"    maxlength="255" required  {{ $data->stage == 0 || $data->stage == 8 ? "disabled" : "" }}>{{ $data->short_desc }}</textarea>
+                                        <textarea name="short_desc"   id="docname" type="text"    maxlength="255" required  {{ $data->stage == 0 || $data->stage == 3 ? "disabled" : "" }}>{{ $data->short_desc }}</textarea>
                                     </div>
                                     <p id="docnameError" style="color:red">**Short Description is required</p>
 
@@ -440,7 +440,7 @@
                                             <th>Name of Product</th>
                                             <th>B No./A.R. No.</th>
                                             <th>Remarks</th>
-                                            {{-- <th>Action</th> --}}
+                                            <th>Action</th>
     
     
                                         </tr>
@@ -455,11 +455,11 @@
                                             {{-- <td style="width: 6%"><input type="text" name="investrecord[0][s_no]" value="{{ $r['s_no']}}"> --}}
                                               <td style="width: 6%"> {{ $serialNumber++ }} </td>
                                            
-                                              <td><input type="text" name="investrecord[0][name_of_product]" value=" {{$r['name_of_product']}}">
+                                              <td><input type="text" name="investrecord[0][name_of_product]" {{ $data->stage == 0 || $data->stage == 3 ? "disabled" : "" }} value=" {{$r['name_of_product']}}">
                                                </td>                                           
-                                            <td><input type="text" name="investrecord[0][batch_no]" value="{{$r['batch_no']}}"></td>
-                                             <td><input type="text" name="investrecord[0][remarks]" value="{{$r['remarks']}}" ></td>
-                                             
+                                            <td><input type="text" name="investrecord[0][batch_no]" {{ $data->stage == 0 || $data->stage == 3 ? "disabled" : "" }} value="{{$r['batch_no']}}"></td>
+                                             <td><input type="text" name="investrecord[0][remarks]" {{ $data->stage == 0 || $data->stage == 3 ? "disabled" : "" }} value="{{$r['remarks']}}" ></td>
+                                             <td><button class="removeRowBtn" {{ $data->stage == 0 || $data->stage == 10 ? "disabled" : "" }}>Remove</button></td>
     
                                         </tr>
                                        @endforeach
@@ -526,7 +526,7 @@
                         '<td><input type="text" name="investrecord['+ investdetails +'][name_of_product]" value=""></td/>' +
                         '<td><input type="text" name="investrecord['+ investdetails +'][batch_no]" value=""></td>' +
                         '<td><input type="text" name="investrecord['+ investdetails +'][remarks]" value=""></td>' +
-                        // '<td><button class="removeRowBtn">Remove</button></td>' +
+                        '<td><button class="removeRowBtn">Remove</button></td>' +
     
     
                         '</tr>';
@@ -562,7 +562,7 @@
                             <div class="group-input" id="incident_involved_others_gi">
                                 <label for="incident_involved_others_gi">Instrument Involved<span
                                         class="text-danger d-none">*</span></label>
-                                <textarea name="incident_involved_others_gi">{{ $data->incident_involved_others_gi }}</textarea>
+                                <textarea name="incident_involved_others_gi" {{ $data->stage == 0 || $data->stage == 3 ? "disabled" : "" }}>{{ $data->incident_involved_others_gi }}</textarea>
                             </div>
 
                         </div>
@@ -571,7 +571,7 @@
                             <div class="group-input" id="stage_stage_gi">
                                 <label for="stage_stage_gi">Stage<span
                                         class="text-danger d-none">*</span></label>
-                                <input type="text" name="stage_stage_gi" value="{{ $data->stage_stage_gi }}">
+                                <input type="text" name="stage_stage_gi" {{ $data->stage == 0 || $data->stage == 3 ? "disabled" : "" }} value="{{ $data->stage_stage_gi }}">
                             </div>
 
                         </div><br>
@@ -580,7 +580,7 @@
                             <div class="group-input" id="incident_stability_cond_gi">
                                 <label for="incident_stability_cond_gi">Stability Condition (If Applicable)<span
                                         class="text-danger d-none">*</span></label>
-                                <input type="text" name="incident_stability_cond_gi" value="{{ $data->incident_stability_cond_gi }}">
+                                <input type="text" name="incident_stability_cond_gi" {{ $data->stage == 0 || $data->stage == 3 ? "disabled" : "" }} value="{{ $data->incident_stability_cond_gi }}">
                             </div>
 
                         </div>
@@ -589,7 +589,7 @@
                             <div class="group-input" id="incident_interval_others_gi">
                                 <label for="incident_interval_others_gi">Interval (If Applicable)<span
                                         class="text-danger d-none">*</span></label>
-                                <input type="text" name="incident_interval_others_gi" value="{{ $data->incident_interval_others_gi }}">
+                                <input type="text" name="incident_interval_others_gi" {{ $data->stage == 0 || $data->stage == 3 ? "disabled" : "" }} value="{{ $data->incident_interval_others_gi }}">
                             </div>
 
                         </div>
@@ -598,7 +598,7 @@
                             <div class="group-input" id="test_gi">
                                 <label for="test_gi">Test<span
                                         class="text-danger d-none">*</span></label>
-                                <input type="text" name="test_gi" value="{{ $data->test_gi }}" >
+                                <input type="text" name="test_gi" {{ $data->stage == 0 || $data->stage == 3 ? "disabled" : "" }} value="{{ $data->test_gi }}" >
                             </div>
 
                         </div>
@@ -631,7 +631,7 @@
                                 <div class="calenderauditee">
                                     <input type="text" id="incident_date_analysis_gi" readonly
                                         placeholder="DD-MMM-YYYY" value="{{ Helpers::getdateFormat($data->incident_date_analysis_gi) }}"/>
-                                    <input type="date" name="incident_date_analysis_gi"  class="hide-input"
+                                    <input type="date" name="incident_date_analysis_gi" {{ $data->stage == 0 || $data->stage == 3 ? "disabled" : "" }} class="hide-input"
                                         oninput="handleDateInput(this, 'incident_date_analysis_gi')" />
                                 </div>
                             </div>
@@ -644,7 +644,7 @@
                             <div class="group-input" id="incident_specification_no_gi">
                                 <label for="Incident_specification_no">Specification Number<span
                                         class="text-danger d-none">*</span></label>
-                                <input type="text" name="incident_specification_no_gi" value="{{ $data->incident_specification_no_gi }}">
+                                <input type="text" name="incident_specification_no_gi"  {{ $data->stage == 0 || $data->stage == 3 ? "disabled" : "" }} value="{{ $data->incident_specification_no_gi }}">
                             </div>
 
                         </div>
@@ -652,7 +652,7 @@
                             <div class="group-input" id="incident_stp_no_gi">
                                 <label for="incident_stp_no_gi">STP Number<span
                                         class="text-danger d-none">*</span></label>
-                                <input type="text" name="incident_stp_no_gi" value="{{ $data->incident_stp_no_gi }}">
+                                <input type="text" name="incident_stp_no_gi" {{ $data->stage == 0 || $data->stage == 3 ? "disabled" : "" }} value="{{ $data->incident_stp_no_gi }}">
                             </div>
 
                         </div>
@@ -683,7 +683,7 @@
                                 <div class="calenderauditee">
                                     <input type="text" id="incident_date_incidence_gi" readonly
                                         placeholder="DD-MMM-YYYY" value="{{ Helpers::getdateFormat($data->incident_date_incidence_gi) }}"/>
-                                    <input type="date" name="incident_date_incidence_gi" class="hide-input"
+                                    <input type="date" name="incident_date_incidence_gi"  {{ $data->stage == 0 || $data->stage == 3 ? "disabled" : "" }}  class="hide-input"
                                         oninput="handleDateInput(this, 'incident_date_incidence_gi')" />
                                 </div>
                             </div>
@@ -695,7 +695,7 @@
                             <div class="group-input" id="description_incidence_gi">
                                 <label for="Description_incidence"> Description Of Incidence<span
                                         class="text-danger d-none">*</span></label>
-                                <textarea name="description_incidence_gi">{{ $data->description_incidence_gi }}</textarea>
+                                <textarea name="description_incidence_gi" {{ $data->stage == 0 || $data->stage == 3 ? "disabled" : "" }} >{{ $data->description_incidence_gi }}</textarea>
                             </div>
 
                         </div>
@@ -704,10 +704,10 @@
                                 <label for="search">
                                     Analyst Name <span class="text-danger"></span>
                                 </label>
-                                <select id="select-state" placeholder="Select..." name="analyst_sign_date_gi" {{ $data->stage == 0 || $data->stage == 8 ? "disabled" : "" }}>
+                                <select id="select-state" placeholder="Select..." name="analyst_sign_date_gi" {{ $data->stage == 0 || $data->stage == 3 ? "disabled" : "" }}>
                                     {{-- <option value="">Select a value</option> --}}
                                     @foreach ($users as $key=> $value)
-                                        <option  @if ($data->assign_to == $value->id) selected @endif  value="{{ $value->id }}">{{ $value->name }}</option>
+                                        <option  @if ($data->analyst_sign_date_gi == $value->id) selected @endif  value="{{ $value->id }}">{{ $value->name }}</option>
                                     @endforeach
                                 </select>
                                 @error('analyst_sign_date_gi')
@@ -721,7 +721,7 @@
                                 <label for="search">
                                     Section Head Name <span class="text-danger"></span>
                                 </label>
-                                <select id="select-state" placeholder="Select..." name="section_sign_date_gi" {{ $data->stage == 0 || $data->stage == 8 ? "disabled" : "" }}>
+                                <select id="select-state" placeholder="Select..." name="section_sign_date_gi" {{ $data->stage == 0 || $data->stage == 3 ? "disabled" : "" }}>
                                     {{-- <option value="">Select a value</option> --}}
                                     @foreach ($users as $key=> $value)
                                         <option  @if ($data->assign_to == $value->id) selected @endif  value="{{ $value->id }}">{{ $value->name }}</option>
@@ -740,7 +740,7 @@
                                     <div class="group-input">
                                         <label for="severity-level">Severity Level</label>
                                         <span class="text-primary">Severity levels in a QMS record gauge issue seriousness, guiding priority for corrective actions. Ranging from low to high, they ensure quality standards and mitigate critical risks.</span>
-                                        <select name="severity_level2" >
+                                        <select name="severity_level2" {{ $data->stage == 0 || $data->stage == 3 ? "disabled" : "" }} >
                                             <option value="0">-- Select --</option>
                                             <option @if ($data->severity_level2=='minor') selected @endif  value="minor">Minor</option>
                                             <option @if ($data->severity_level2=='major') selected @endif value="major">Major</option>
@@ -776,7 +776,7 @@
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Incident Category">Incident Category</label>
-                                        <select {{ $data->stage == 0 || $data->stage == 8 ? "disabled" : "" }} name="Incident_Category">
+                                        <select {{ $data->stage == 0 || $data->stage == 3 ? "disabled" : "" }} name="Incident_Category">
                                             <option value="">Enter Your Selection Here</option>
                                             <option value="Biological" @if ($data->Incident_Category== 'Biological') selected @endif>
                                                 Biological
@@ -794,13 +794,13 @@
                                             <div class="group-input" id="initiated_through_req1">
                                                 <label for="Incident_Category_others">Others<span
                                                         class="text-danger d-none">*</span></label>
-                                                <textarea name="Incident_Category_others" {{ $data->stage == 0 || $data->stage == 8 ? "disabled" : "" }}>{{ $data->Incident_Category_others }}</textarea>
+                                                <textarea name="Incident_Category_others" {{ $data->stage == 0 || $data->stage == 3 ? "disabled" : "" }}>{{ $data->Incident_Category_others }}</textarea>
                                             </div>
                                         </div>
                                 <div class="col-lg-12">
                                     <div class="group-input">
                                         <label for="Invocation Type">Invocation Type</label>
-                                        <select  name="Invocation_Type" {{ $data->stage == 0 || $data->stage == 8 ? "disabled" : "" }}>
+                                        <select  name="Invocation_Type" {{ $data->stage == 0 || $data->stage == 3 ? "disabled" : "" }}>
                                             <option value="">Enter Your Selection Here</option>
                                             <option value="1" @if ($data->Invocation_Type== '1') selected @endif>1
                                             </option>
@@ -816,7 +816,7 @@
                                     <div class="group-input">
                                         <label for="Initial Attachments">Initial Attachment</label>
                                         <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
-                                        {{-- <input type="file" id="myfile" name="Initial_Attachment" {{ $data->stage == 0 || $data->stage == 8 ? "disabled" : "" }}
+                                        {{-- <input type="file" id="myfile" name="Initial_Attachment" {{ $data->stage == 0 || $data->stage == 10 ? "disabled" : "" }}
                                             value="{{ $data->Initial_Attachment }}"> --}}
                                             <div class="file-attachment-field">
                                                 <div class="file-attachment-list" id="attachments_gi">
@@ -838,7 +838,7 @@
                                                 </div>
                                                 <div class="add-btn">
                                                     <div>Add</div>
-                                                    <input {{ $data->stage == 0 || $data->stage == 8 ? "disabled" : "" }} type="file" id="attachments_gi" name="attachments_gi[]"
+                                                    <input {{ $data->stage == 0 || $data->stage == 3 ? "disabled" : "" }} type="file" id="attachments_gi" name="attachments_gi[]"
                                                         oninput="addMultipleFiles(this, 'attachments_gi')" multiple>
                                                 </div>
                                             </div>
@@ -846,7 +846,7 @@
                                 </div>
                             </div>
                             <div class="button-block">
-                                <button type="submit" id="ChangesaveButton" class="saveButton" {{ $data->stage == 0 || $data->stage == 8 ? "disabled" : "" }}>Save</button>
+                                <button type="submit" id="ChangesaveButton" class="saveButton" {{ $data->stage == 0 || $data->stage == 3 ? "disabled" : "" }}>Save</button>
                                 <button type="button" id="ChangeNextButton" class="nextButton">Next</button>
                                 <button type="button"> <a class="text-white" href="{{ url('rcms/qms-dashboard') }}"> Exit </a> </button>
                             </div>
@@ -859,7 +859,7 @@
                                 <div class="col-12">
                                     <div class="group-input">
                                         <label for="Immediate_action">Immediate Action</label>
-                                        <textarea name="immediate_action_ia">{{$data->immediate_action_ia}}</textarea>
+                                        <textarea name="immediate_action_ia" {{ $data->stage == 0 || $data->stage == 10 ? "disabled" : "" }}>{{$data->immediate_action_ia}}</textarea>
                                     </div>
                                 </div>
                                 
@@ -880,13 +880,13 @@
                                <div class="col-12">
                                 <div class="group-input">
                                     <label for="detail investigation ">Detail Investigation / Probable Root Cause</label>
-                                <textarea name="details_investigation_ia">{{$data->details_investigation_ia}}</textarea>
+                                <textarea name="details_investigation_ia" {{ $data->stage == 0 || $data->stage == 10 ? "disabled" : "" }}>{{$data->details_investigation_ia}}</textarea>
                             </div>
                         </div>
                         <div class="col-12">
                             <div class="group-input">
                                 <label for="proposed corrective action ">Proposed Corrective Action/Corrective Action Taken</label>
-                            <textarea name="proposed_correctivei_ia">{{$data->proposed_correctivei_ia}}</textarea>
+                            <textarea name="proposed_correctivei_ia" {{ $data->stage == 0 || $data->stage == 10 ? "disabled" : "" }}>{{$data->proposed_correctivei_ia}}</textarea>
                         </div>
                      </div>
                 
@@ -894,7 +894,7 @@
                      <div class="col-12">
                         <div class="group-input">
                             <label for="Repeat Analysis Plan ">Repeat Analysis Plan</label>
-                        <textarea name="repeat_analysis_plan_ia">{{$data->repeat_analysis_plan_ia}}</textarea>
+                        <textarea name="repeat_analysis_plan_ia" {{ $data->stage == 0 || $data->stage == 10 ? "disabled" : "" }}>{{$data->repeat_analysis_plan_ia}}</textarea>
                       </div>
                          </div>
 
@@ -907,26 +907,26 @@
                 <div class="col-12">
                     <div class="group-input">
                         <label for="Result Of Repeat Analysis ">Result Of Repeat Analysis</label>
-                    <textarea name="result_of_repeat_analysis_ia">{{$data->result_of_repeat_analysis_ia}}</textarea>
+                    <textarea name="result_of_repeat_analysis_ia" {{ $data->stage == 0 || $data->stage == 10 ? "disabled" : "" }}>{{$data->result_of_repeat_analysis_ia}}</textarea>
                 </div>
             </div>
             <div class="col-12">
                 <div class="group-input">
                     <label for="Corrective and Preventive Action">Corrective and Preventive Action</label>
-                <textarea name="corrective_and_preventive_action_ia">{{$data->corrective_and_preventive_action_ia}}</textarea>
+                <textarea name="corrective_and_preventive_action_ia" {{ $data->stage == 0 || $data->stage == 10 ? "disabled" : "" }}>{{$data->corrective_and_preventive_action_ia}}</textarea>
             </div>
         </div>
         <div class="col-12">
             <div class="group-input">
                 <label for="CAPA Number">CAPA Number</label>
-            <input type="text" name="capa_number_im" value="{{$data->capa_number_im}}">
+            <input type="text" name="capa_number_im" {{ $data->stage == 0 || $data->stage == 10 ? "disabled" : "" }} value="{{$data->capa_number_im}}">
         </div>
          </div>
 
          <div class="col-12">
             <div class="group-input">
                 <label for="Investigation Summary">Investigation Summary</label>
-            <textarea name="investigation_summary_ia">{{$data->investigation_summary_ia}}</textarea>
+            <textarea name="investigation_summary_ia" {{ $data->stage == 0 || $data->stage == 10 ? "disabled" : "" }}>{{$data->investigation_summary_ia}}</textarea>
         </div>
     </div>
 
@@ -937,8 +937,8 @@
     <div class="col-lg-12">
         <div class="group-input">
             <label for="Type Of Incidence"><b>Type Of Incidence</b></label>
-            <select name="type_incidence_ia" id="initiator_group">
-                <option value="0">-- Select --</option>
+            <select name="type_incidence_ia" {{ $data->stage == 0 || $data->stage == 10 ? "disabled" : "" }} id="initiator_group">
+                <option value="Null">-- Select --</option>
                 <option value="Analyst Error" @if($data->type_incidence_ia == "Analyst Error") selected @endif>Analyst Error</option>
                 <option value="Instrument Error" @if($data->type_incidence_ia == "Instrument Error") selected @endif>Instrument Error</option>
                 <option value="Atypical Error" @if($data->type_incidence_ia == "Atypical Error") selected @endif>Atypical Error</option>
@@ -956,7 +956,7 @@
                         <label for="search">
                             Investigator(QC) <span class="text-danger"></span>
                         </label>
-                        <select id="select-state" placeholder="Select..." name="investigator_qc" {{ $data->stage == 0 || $data->stage == 8 ? "disabled" : "" }}>
+                        <select id="select-state" placeholder="Select..." name="investigator_qc" {{ $data->stage == 0 || $data->stage == 10 ? "disabled" : "" }}>
                             <option value="">Select a value</option>
                             @foreach ($users as $key=> $value)
                                 <option  @if ($data->investigator_qc == $value->id) selected @endif  value="{{ $value->id }}">{{ $value->name }}</option>
@@ -972,7 +972,7 @@
                         <label for="search">
                             QC Review <span class="text-danger"></span>
                         </label>
-                        <select id="select-state" placeholder="Select..." name="qc_review_to" {{ $data->stage == 0 || $data->stage == 8 ? "disabled" : "" }}>
+                        <select id="select-state" placeholder="Select..." name="qc_review_to" {{ $data->stage == 0 || $data->stage == 10 ? "disabled" : "" }}>
                             <option value="">Select a value</option>
                             @foreach ($users as $key=> $value)
                                 <option  @if ($data->qc_review_to == $value->id) selected @endif  value="{{ $value->id }}">{{ $value->name }}</option>
@@ -988,7 +988,7 @@
                         <label for="search">
                             QC Approved By <span class="text-danger"></span>
                         </label>
-                        <select id="select-state" placeholder="Select..." name="qc_approved_to" {{ $data->stage == 0 || $data->stage == 8 ? "disabled" : "" }}>
+                        <select id="select-state" placeholder="Select..." name="qc_approved_to" {{ $data->stage == 0 || $data->stage == 10 ? "disabled" : "" }}>
                             <option value="">Select a value</option>
                             @foreach ($users as $key=> $value)
                                 <option  @if ($data->qc_approved_to == $value->id) selected @endif  value="{{ $value->id }}">{{ $value->name }}</option>
@@ -1029,7 +1029,7 @@
                                             </div>
                                             <div class="add-btn">
                                                 <div>Add</div>
-                                                <input {{ $data->stage == 0 || $data->stage == 8 ? "disabled" : "" }} type="file" id="attachments_ia" name="attachments_ia[]"
+                                                <input {{ $data->stage == 0 || $data->stage == 10 ? "disabled" : "" }} type="file" id="attachments_ia" name="attachments_ia[]"
                                                     oninput="addMultipleFiles(this, 'attachments_ia')" multiple>
                                             </div>
                                         </div>
@@ -1060,7 +1060,7 @@
                              <div class="col-12">
                                  <div class="group-input">
                                      <label for="Incident Details">Reason For Extension</label>
-                                     <textarea name="reasoon_for_extension_e">{{$data->reasoon_for_extension_e}}</textarea>
+                                     <textarea name="reasoon_for_extension_e" {{ $data->stage == 0 || $data->stage == 10 ? "disabled" : "" }}>{{$data->reasoon_for_extension_e}}</textarea>
                                  </div>
                              </div>
  
@@ -1079,7 +1079,7 @@
                                     <div class="calenderauditee">
                                         <input type="text" id="extension_date_esc" readonly
                                             placeholder="DD-MMM-YYYY" value="{{ Helpers::getdateFormat($data->extension_date_esc) }}"/>
-                                        <input type="date" name="extension_date_esc"  class="hide-input"
+                                        <input type="date" name="extension_date_esc"  {{ $data->stage == 0 || $data->stage == 10 ? "disabled" : "" }} class="hide-input"
                                             oninput="handleDateInput(this, 'extension_date_esc')" />
                                     </div>
                                 </div>
@@ -1105,7 +1105,7 @@
                                     <div class="calenderauditee">
                                         <input type="text" id="extension_date_initiator" readonly
                                             placeholder="DD-MMM-YYYY" value="{{ Helpers::getdateFormat($data->extension_date_initiator) }}" />
-                                        <input type="date" name="extension_date_initiator" class="hide-input"
+                                        <input type="date" name="extension_date_initiator" {{ $data->stage == 0 || $data->stage == 10 ? "disabled" : "" }} class="hide-input"
                                             oninput="handleDateInput(this, 'extension_date_initiator')" />
                                     </div>
                                 </div>
@@ -1117,7 +1117,7 @@
                                     <label for="search">
                                         Extension HOD <span class="text-danger"></span>
                                     </label>
-                                    <select id="select-state" placeholder="Select..." name="assign_to" {{ $data->stage == 0 || $data->stage == 8 ? "disabled" : "" }}>
+                                    <select id="select-state" placeholder="Select..." name="assign_to" {{ $data->stage == 0 || $data->stage == 10 ? "disabled" : "" }}>
                                         <option value="">Select a value</option>
                                         @foreach ($users as $key=> $value)
                                             <option  @if ($data->assign_to == $value->id) selected @endif  value="{{ $value->id }}">{{ $value->name }}</option>
@@ -1134,7 +1134,7 @@
                                     <label for="search">
                                         Extension Approved By <span class="text-danger"></span>
                                     </label>
-                                    <select id="select-state" placeholder="Select..." name="assign_to" {{ $data->stage == 0 || $data->stage == 8 ? "disabled" : "" }}>
+                                    <select id="select-state" placeholder="Select..." name="assign_to" {{ $data->stage == 0 || $data->stage == 10 ? "disabled" : "" }}>
                                         <option value="">Select a value</option>
                                         @foreach ($users as $key=> $value)
                                             <option  @if ($data->assign_to == $value->id) selected @endif  value="{{ $value->id }}">{{ $value->name }}</option>
@@ -1161,7 +1161,7 @@
                               <div class="col-12">
                                   <div class="group-input">
                                  <label for="reason for extension sc">Reason For Extension</label>
-                                 <textarea name="reasoon_for_extension_esc">{{$data->reasoon_for_extension_esc}}</textarea>
+                                 <textarea name="reasoon_for_extension_esc" {{ $data->stage == 0 || $data->stage == 10 ? "disabled" : "" }}>{{$data->reasoon_for_extension_esc}}</textarea>
                                  </div>
                               </div>
  
@@ -1181,7 +1181,7 @@
                                     <div class="calenderauditee">
                                         <input type="text" id="extension_date_e" readonly
                                             placeholder="DD-MMM-YYYY" value="{{ Helpers::getdateFormat($data->extension_date_e) }}" />
-                                        <input type="date" name="extension_date_e"  class="hide-input"
+                                        <input type="date" name="extension_date_e"  {{ $data->stage == 0 || $data->stage == 10 ? "disabled" : "" }} class="hide-input"
                                             oninput="handleDateInput(this, 'extension_date_e')" />
                                     </div>
                                 </div>
@@ -1195,7 +1195,7 @@
                                     <div class="calenderauditee">
                                         <input type="text" id="extension_date_idsc" readonly
                                             placeholder="DD-MMM-YYYY" value="{{ Helpers::getdateFormat($data->extension_date_idsc) }}" >
-                                        <input type="date" name="extension_date_idsc"  class="hide-input"
+                                        <input type="date" name="extension_date_idsc"  {{ $data->stage == 0 || $data->stage == 10 ? "disabled" : "" }}  class="hide-input"
                                             oninput="handleDateInput(this, 'extension_date_idsc')" />
                                     </div>
                                 </div>
@@ -1228,7 +1228,7 @@
                                                         <label for="search">
                                                             Extension Approved By <span class="text-danger"></span>
                                                         </label>
-                                                        <select id="select-state" placeholder="Select..." name="assign_to" {{ $data->stage == 0 || $data->stage == 8 ? "disabled" : "" }}>
+                                                        <select id="select-state" placeholder="Select..." name="assign_to" {{ $data->stage == 0 || $data->stage == 10 ? "disabled" : "" }}>
                                                             <option value="">Select a value</option>
                                                             @foreach ($users as $key=> $value)
                                                                 <option  @if ($data->assign_to == $value->id) selected @endif  value="{{ $value->id }}">{{ $value->name }}</option>
@@ -1253,7 +1253,7 @@
                            <div class="col-12">
                                <div class="group-input">
                               <label for="reason for extension tc">Reason For Extension</label>
-                              <textarea name="reasoon_for_extension_tc">{{$data->reasoon_for_extension_tc}}</textarea>
+                              <textarea name="reasoon_for_extension_tc" {{ $data->stage == 0 || $data->stage == 10 ? "disabled" : "" }}>{{$data->reasoon_for_extension_tc}}</textarea>
                               </div>
                            </div>
  
@@ -1267,7 +1267,7 @@
                                 <div class="calenderauditee">
                                     <input type="text" id="extension_date__tc" readonly
                                         placeholder="DD-MMM-YYYY" value="{{ Helpers::getdateFormat($data->extension_date__tc) }}"/>
-                                    <input type="date" name="extension_date__tc"   class="hide-input"
+                                    <input type="date" name="extension_date__tc" {{ $data->stage == 0 || $data->stage == 10 ? "disabled" : "" }}   class="hide-input"
                                         oninput="handleDateInput(this, 'extension_date__tc')" />
                                 </div>
                             </div>
@@ -1283,7 +1283,7 @@
                                     <div class="calenderauditee">
                                         <input type="text" id="extension_date_idtc" readonly
                                             placeholder="DD-MMM-YYYY" value="{{ Helpers::getdateFormat($data->extension_date_idtc) }}" />
-                                        <input type="date" name="extension_date_idtc"  class="hide-input"
+                                        <input type="date" name="extension_date_idtc"  {{ $data->stage == 0 || $data->stage == 10 ? "disabled" : "" }}  class="hide-input"
                                             oninput="handleDateInput(this, 'extension_date_idtc')" />
                                     </div>
                                 </div>
@@ -1295,7 +1295,7 @@
                                             <label for="search">
                                                 Extension Approved By QA <span class="text-danger"></span>
                                             </label>
-                                            <select id="select-state" placeholder="Select..." name="assign_to" {{ $data->stage == 0 || $data->stage == 8 ? "disabled" : "" }}>
+                                            <select id="select-state" placeholder="Select..." name="assign_to" {{ $data->stage == 0 || $data->stage == 10 ? "disabled" : "" }}>
                                                 <option value="">Select a value</option>
                                                 @foreach ($users as $key=> $value)
                                                     <option  @if ($data->assign_to == $value->id) selected @endif  value="{{ $value->id }}">{{ $value->name }}</option>
@@ -1312,7 +1312,7 @@
                                             <label for="search">
                                                 Extension Approved By CQA <span class="text-danger"></span>
                                             </label>
-                                            <select id="select-state" placeholder="Select..." name="assign_to" {{ $data->stage == 0 || $data->stage == 8 ? "disabled" : "" }}>
+                                            <select id="select-state" placeholder="Select..." name="assign_to" {{ $data->stage == 0 || $data->stage == 10 ? "disabled" : "" }}>
                                                 <option value="">Select a value</option>
                                                 @foreach ($users as $key=> $value)
                                                     <option  @if ($data->assign_to == $value->id) selected @endif  value="{{ $value->id }}">{{ $value->name }}</option>
@@ -1348,7 +1348,7 @@
                                 </div>
                                 <div class="add-btn">
                                     <div>Add</div>
-                                    <input {{ $data->stage == 0 || $data->stage == 8 ? "disabled" : "" }} type="file" id="extension_attachments_e" name="extension_attachments_e[]"
+                                    <input {{ $data->stage == 0 || $data->stage == 10 ? "disabled" : "" }} type="file" id="extension_attachments_e" name="extension_attachments_e[]"
                                         oninput="addMultipleFiles(this, 'extension_attachments_e')" multiple>
                                 </div>
                             </div>
@@ -1377,44 +1377,44 @@
                                 <div class="col-12">
                                     <div class="group-input">
                                         <label for="Incident Details">Incident Details</label>
-                                        <textarea name="Incident_Details" {{ $data->stage == 0 || $data->stage == 8 ? "disabled" : "" }}>{{ $data->Incident_Details }}</textarea>
+                                        <textarea name="Incident_Details" {{ $data->stage == 0 || $data->stage == 10 ? "disabled" : "" }}>{{ $data->Incident_Details }}</textarea>
                                     </div>
                                 </div>
                                 <div class="col-12">
                                     <div class="group-input">
                                         <label for="Document Details ">Document Details</label>
-                                        <textarea name="Document_Details" {{ $data->stage == 0 || $data->stage == 8 ? "disabled" : "" }}>{{ $data->Document_Details }}</textarea>
+                                        <textarea name="Document_Details" {{ $data->stage == 0 || $data->stage == 10 ? "disabled" : "" }}>{{ $data->Document_Details }}</textarea>
                                     </div>
                                 </div>
                                 <div class="col-12">
                                     <div class="group-input">
                                         <label for="Instrument Details">Instrument Details</label>
-                                        <textarea name="Instrument_Details" {{ $data->stage == 0 || $data->stage == 8 ? "disabled" : "" }}>{{ $data->Instrument_Details }}</textarea>
+                                        <textarea name="Instrument_Details" {{ $data->stage == 0 || $data->stage == 10 ? "disabled" : "" }}>{{ $data->Instrument_Details }}</textarea>
                                     </div>
                                 </div>
                                 <div class="col-12">
                                     <div class="group-input">
                                         <label for="Involved Personnel">Involved Personnel</label>
-                                        <textarea name="Involved_Personnel" {{ $data->stage == 0 || $data->stage == 8 ? "disabled" : "" }}>{{ $data->Involved_Personnel }}</textarea>
+                                        <textarea name="Involved_Personnel" {{ $data->stage == 0 || $data->stage == 10 ? "disabled" : "" }}>{{ $data->Involved_Personnel }}</textarea>
                                     </div>
                                 </div>
                                 <div class="col-12">
                                     <div class="group-input">
                                         <label for="Product Details,If Any">Product Details,If Any</label>
-                                        <textarea name="Product_Details" {{ $data->stage == 0 || $data->stage == 8 ? "disabled" : "" }}>{{ $data->Product_Details }}</textarea>
+                                        <textarea name="Product_Details" {{ $data->stage == 0 || $data->stage == 10 ? "disabled" : "" }}>{{ $data->Product_Details }}</textarea>
                                     </div>
                                 </div>
                                 <div class="col-12">
                                     <div class="group-input">
                                         <label for="Supervisor Review Comments">Supervisor Review Comments</label>
-                                        <textarea name="Supervisor_Review_Comments" {{ $data->stage == 0 || $data->stage == 8 ? "disabled" : "" }}>{{ $data->Supervisor_Review_Comments }}</textarea>
+                                        <textarea name="Supervisor_Review_Comments" {{ $data->stage == 0 || $data->stage == 10 ? "disabled" : "" }}>{{ $data->Supervisor_Review_Comments }}</textarea>
                                     </div>
                                 </div>
                                 <div class="col-12">
                                     <div class="group-input">
                                         <label for="Attachments">Attachments</label>
                                         <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
-                                        {{-- <input type="file" id="myfile" name="Attachments" {{ $data->stage == 0 || $data->stage == 8 ? "disabled" : "" }}
+                                        {{-- <input type="file" id="myfile" name="Attachments" {{ $data->stage == 0 || $data->stage == 10 ? "disabled" : "" }}
                                             value="{{ $data->Attachments }}"> --}}
                                             <div class="file-attachment-field">
                                                 <div class="file-attachment-list" id="Attachments">
@@ -1436,7 +1436,7 @@
                                                 </div>
                                                 <div class="add-btn">
                                                     <div>Add</div>
-                                                    <input {{ $data->stage == 0 || $data->stage == 8 ? "disabled" : "" }} type="file" id="myfile" name="Attachments[]"
+                                                    <input {{ $data->stage == 0 || $data->stage == 10 ? "disabled" : "" }} type="file" id="myfile" name="Attachments[]"
                                                         oninput="addMultipleFiles(this, 'Attachments')" multiple>
                                                 </div>
                                             </div>
@@ -1448,12 +1448,12 @@
                                 <div class="col-12">
                                     <div class="group-input">
                                         <label for="Cancelation Remarks">Cancelation Remarks</label>
-                                        <textarea name="Cancelation_Remarks" {{ $data->stage == 0 || $data->stage == 8 ? "disabled" : "" }}>{{ $data->Cancelation_Remarks }}</textarea>
+                                        <textarea name="Cancelation_Remarks" {{ $data->stage == 0 || $data->stage == 10 ? "disabled" : "" }}>{{ $data->Cancelation_Remarks }}</textarea>
                                     </div>
                                 </div> --}}
                             </div>
                             <div class="button-block">
-                                <button type="submit" class="saveButton" {{ $data->stage == 0 || $data->stage == 8 ? "disabled" : "" }}>Save</button>
+                                <button type="submit" class="saveButton" {{ $data->stage == 0 || $data->stage == 10 ? "disabled" : "" }}>Save</button>
                                 <button type="button" class="backButton" onclick="previousStep()">Back</button>
                                 <button type="button" class="nextButton" onclick="nextStep()">Next</button>
                                 <button type="button"> <a class="text-white" href="{{ url('rcms/qms-dashboard') }}"> Exit </a> </button>
@@ -1478,7 +1478,7 @@
                                     <div class="group-input">
                                         <label for="Inv Attachments">Inv Attachment</label>
                                         <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
-                                        {{-- <input type="file" id="myfile" name="Inv_Attachment" {{ $data->stage == 0 || $data->stage == 8 ? "disabled" : "" }}
+                                        {{-- <input type="file" id="myfile" name="Inv_Attachment" {{ $data->stage == 0 || $data->stage == 10 ? "disabled" : "" }}
                                             value="{{ $data->Inv_Attachment }}"> --}}
                                             <div class="file-attachment-field">
                                                 <div class="file-attachment-list" id="Inv_Attachment">
@@ -1500,7 +1500,7 @@
                                                 </div>
                                                 <div class="add-btn">
                                                     <div>Add</div>
-                                                    <input {{ $data->stage == 0 || $data->stage == 8 ? "disabled" : "" }} type="file" id="myfile" name="Inv_Attachment[]"
+                                                    <input {{ $data->stage == 0 || $data->stage == 10 ? "disabled" : "" }} type="file" id="myfile" name="Inv_Attachment[]"
                                                         oninput="addMultipleFiles(this, 'Inv_Attachment')" multiple>
                                                 </div>
                                             </div>
@@ -1509,24 +1509,24 @@
                                 <div class="col-12">
                                     <div class="group-input">
                                         <label for="Investigation Details ">Investigation Details</label>
-                                        <textarea name="Investigation_Details" {{ $data->stage == 0 || $data->stage == 8 ? "disabled" : "" }}>{{ $data->Investigation_Details }}</textarea>
+                                        <textarea name="Investigation_Details" {{ $data->stage == 0 || $data->stage == 10 ? "disabled" : "" }}>{{ $data->Investigation_Details }}</textarea>
                                     </div>
                                 </div>
                                 <div class="col-12">
                                     <div class="group-input">
                                         <label for="Action Taken">Action Taken</label>
-                                        <textarea name="Action_Taken" {{ $data->stage == 0 || $data->stage == 8 ? "disabled" : "" }}>{{ $data->Action_Taken }}</textarea>
+                                        <textarea name="Action_Taken" {{ $data->stage == 0 || $data->stage == 10 ? "disabled" : "" }}>{{ $data->Action_Taken }}</textarea>
                                     </div>
                                 </div>
                                 <div class="col-12">
                                     <div class="group-input">
                                         <label for="Root Cause">Root Cause</label>
-                                        <textarea name="Root_Cause" {{ $data->stage == 0 || $data->stage == 8 ? "disabled" : "" }}>{{ $data->root_cause }}</textarea>
+                                        <textarea name="Root_Cause" {{ $data->stage == 0 || $data->stage == 10 ? "disabled" : "" }}>{{ $data->Root_Cause }}</textarea>
                                     </div>
                                 </div>
                             </div>
                             <div class="button-block">
-                                <button type="submit" class="saveButton" {{ $data->stage == 0 || $data->stage == 8 ? "disabled" : "" }}>Save</button>
+                                <button type="submit" class="saveButton" {{ $data->stage == 0 || $data->stage == 10 ? "disabled" : "" }}>Save</button>
                                 <button type="button" class="backButton" onclick="previousStep()">Back</button>
                                 <button type="button" class="nextButton" onclick="nextStep()">Next</button>
                                 <button type="button"> <a class="text-white" href="{{ url('rcms/qms-dashboard') }}"> Exit </a> </button>
@@ -1546,33 +1546,33 @@
                                 <div class="col-12">
                                     <div class="group-input">
                                         <label for="Currective Action">Capa</label>
-                                        <textarea name="Currective_Action" {{ $data->stage == 0 || $data->stage == 8 ? "disabled" : "" }}>{{ $data->capa_capa }}</textarea>
+                                        <textarea name="capa_capa" {{ $data->stage == 0 || $data->stage == 10 ? "disabled" : "" }}>{{ $data->capa_capa }}</textarea>
                                     </div>
                                 </div>
 
                                 <div class="col-12">
                                     <div class="group-input">
                                         <label for="Currective Action">Corrective Action</label>
-                                        <textarea name="Currective_Action" {{ $data->stage == 0 || $data->stage == 8 ? "disabled" : "" }}>{{ $data->Currective_Action }}</textarea>
+                                        <textarea name="Currective_Action" {{ $data->stage == 0 || $data->stage == 10 ? "disabled" : "" }}>{{ $data->Currective_Action }}</textarea>
                                     </div>
                                 </div>
                                 <div class="col-12">
                                     <div class="group-input">
                                         <label for="Preventive Action">Preventive Action</label>
-                                        <textarea name="Preventive_Action" {{ $data->stage == 0 || $data->stage == 8 ? "disabled" : "" }}>{{ $data->Preventive_Action }}</textarea>
+                                        <textarea name="Preventive_Action" {{ $data->stage == 0 || $data->stage == 10 ? "disabled" : "" }}>{{ $data->Preventive_Action }}</textarea>
                                     </div>
                                 </div>
                                 <div class="col-12">
                                     <div class="group-input">
                                         <label for="Corrective & Preventive Action">Corrective & Preventive Action</label>
-                                        <textarea name="Corrective_Preventive_Action" {{ $data->stage == 0 || $data->stage == 8 ? "disabled" : "" }}>{{ $data->Corrective_Preventive_Action }}</textarea>
+                                        <textarea name="Corrective_Preventive_Action" {{ $data->stage == 0 || $data->stage == 10 ? "disabled" : "" }}>{{ $data->Corrective_Preventive_Action }}</textarea>
                                     </div>
                                 </div>
                                 <div class="col-12">
                                     <div class="group-input">
                                         <label for="CAPA Attachments">CAPA Attachment</label>
                                         <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
-                                        {{-- <input type="file" id="myfile" name="CAPA_Attachment" {{ $data->stage == 0 || $data->stage == 8 ? "disabled" : "" }}
+                                        {{-- <input type="file" id="myfile" name="CAPA_Attachment" {{ $data->stage == 0 || $data->stage == 10 ? "disabled" : "" }}
                                             value="{{ $data->CAPA_Attachment }}"> --}}
                                             <div class="file-attachment-field">
                                                 <div class="file-attachment-list" id="CAPA_Attachment">
@@ -1594,7 +1594,7 @@
                                                 </div>
                                                 <div class="add-btn">
                                                     <div>Add</div>
-                                                    <input {{ $data->stage == 0 || $data->stage == 8 ? "disabled" : "" }} type="file" id="myfile" name="CAPA_Attachment[]"
+                                                    <input {{ $data->stage == 0 || $data->stage == 10 ? "disabled" : "" }} type="file" id="myfile" name="CAPA_Attachment[]"
                                                         oninput="addMultipleFiles(this, 'CAPA_Attachment')" multiple>
                                                 </div>
                                             </div>
@@ -1602,7 +1602,7 @@
                                 </div>
                             </div>
                             <div class="button-block">
-                                <button type="submit" class="saveButton" {{ $data->stage == 0 || $data->stage == 8 ? "disabled" : "" }}>Save</button>
+                                <button type="submit" class="saveButton" {{ $data->stage == 0 || $data->stage == 10 ? "disabled" : "" }}>Save</button>
                                 <button type="button" class="backButton" onclick="previousStep()">Back</button>
                                 <button type="button" class="nextButton" onclick="nextStep()">Next</button>
                                 <button type="button"> <a class="text-white" href="{{ url('rcms/qms-dashboard') }}"> Exit </a> </button>
@@ -1617,14 +1617,14 @@
                                 <div class="col-12">
                                     <div class="group-input">
                                         <label for="QA Review Comments">QA Review Comments</label>
-                                        <textarea name="QA_Review_Comments" {{ $data->stage == 0 || $data->stage == 8 ? "disabled" : "" }}>{{ $data->QA_Review_Comments }}</textarea>
+                                        <textarea name="QA_Review_Comments" {{ $data->stage == 0 || $data->stage == 10 ? "disabled" : "" }}>{{ $data->QA_Review_Comments }}</textarea>
                                     </div>
                                 </div>
                                 <div class="col-12">
                                     <div class="group-input">
                                         <label for="QA Head Attachments">QA Review Attachment</label>
                                         <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
-                                        {{-- <input type="file" id="myfile" name="QA_Head_Attachment" {{ $data->stage == 0 || $data->stage == 8 ? "disabled" : "" }}
+                                        {{-- <input type="file" id="myfile" name="QA_Head_Attachment" {{ $data->stage == 0 || $data->stage == 10 ? "disabled" : "" }}
                                             value="{{ $data->QA_Head_Attachment }}"> --}}
                                             <div class="file-attachment-field">
                                                 <div class="file-attachment-list" id="QA_Head_Attachment">
@@ -1646,7 +1646,7 @@
                                                 </div>
                                                 <div class="add-btn">
                                                     <div>Add</div>
-                                                    <input {{ $data->stage == 0 || $data->stage == 8 ? "disabled" : "" }} type="file" id="myfile" name="QA_Head_Attachment[]"
+                                                    <input {{ $data->stage == 0 || $data->stage == 10 ? "disabled" : "" }} type="file" id="myfile" name="QA_Head_Attachment[]"
                                                         oninput="addMultipleFiles(this, 'QA_Head_Attachment')" multiple>
                                                 </div>
                                             </div>
@@ -1654,7 +1654,7 @@
                                 </div>
                             </div>
                             <div class="button-block">
-                                <button type="submit" class="saveButton" {{ $data->stage == 0 || $data->stage == 8 ? "disabled" : "" }}>Save</button>
+                                <button type="submit" class="saveButton" {{ $data->stage == 0 || $data->stage == 10 ? "disabled" : "" }}>Save</button>
                                 <button type="button" class="backButton" onclick="previousStep()">Back</button>
                                 <button type="button" class="nextButton" onclick="nextStep()">Next</button>
                                 <button type="button"> <a class="text-white" href="{{ url('rcms/qms-dashboard') }}"> Exit </a> </button>
@@ -1672,14 +1672,14 @@
                                 <div class="col-12">
                                     <div class="group-input">
                                         <label for="QA Head/Designee Comments">QA Head/Designee Comments</label>
-                                        <textarea name="QA_Head" {{ $data->stage == 0 || $data->stage == 8 ? "disabled" : "" }}>{{ $data->QA_Head }}</textarea>
+                                        <textarea name="QA_Head" {{ $data->stage == 0 || $data->stage == 10 ? "disabled" : "" }}>{{ $data->QA_Head }}</textarea>
                                     </div>
                                 </div>
                             <div class="col-lg-6">
                                     <!-- <div class="group-input">
                                         <label for="Effectiveness Check required?">Effectiveness Check
                                             required?</label>
-                                        <select name="Effectiveness_Check" {{ $data->stage == 0 || $data->stage == 8 ? "disabled" : "" }}>
+                                        <select name="Effectiveness_Check" {{ $data->stage == 0 || $data->stage == 10 ? "disabled" : "" }}>
                                             <option value="">Enter Your Selection Here</option>
                                             <option value="yes" @if ($data->Effectiveness_Check == 'yes') selected @endif>yes
                                             </option>
@@ -1700,7 +1700,7 @@
                                         <label for="Date Due">Effectiveness Check Creation Date</label>
                                         <div class="calenderauditee">
                                             <input type="text" id="effectivess_check_creation_date" readonly
-                                                placeholder="DD-MMM-YYYY" {{ $data->stage == 0 || $data->stage == 8 ? "disabled" : "" }} value="{{ Helpers::getdateFormat($data->effectivess_check_creation_date) }}"/>
+                                                placeholder="DD-MMM-YYYY" {{ $data->stage == 0 || $data->stage == 10 ? "disabled" : "" }} value="{{ Helpers::getdateFormat($data->effectivess_check_creation_date) }}"/>
                                             <input type="date" name="effectivess_check_creation_date"  value="{{ $data->effectivess_check_creation_date }} "class="hide-input"
                                                 oninput="handleDateInput(this, 'effectivess_check_creation_date')" />
                                         </div>
@@ -1709,7 +1709,7 @@
                                 <div class="col-12">
                                     <div class="group-input">
                                         <label for="Incident Type">Incident Type</label>
-                                        <select name="Incident_Type" {{ $data->stage == 0 || $data->stage == 8 ? "disabled" : "" }}>
+                                        <select name="Incident_Type" {{ $data->stage == 0 || $data->stage == 10 ? "disabled" : "" }}>
                                             <option value="">Enter Your Selection Here</option>
                                             <option value="1" @if ($data->Incident_Type == '1') selected @endif>Type
                                                 A
@@ -1726,7 +1726,7 @@
                                 <div class="col-12">
                                     <div class="group-input">
                                         <label for="Conclusion">Conclusion</label>
-                                        <textarea name="Conclusion"{{ $data->stage == 0 || $data->stage == 8 ? "disabled" : "" }} >{{ $data->Conclusion }}</textarea>
+                                        <textarea name="Conclusion"{{ $data->stage == 0 || $data->stage == 10 ? "disabled" : "" }} >{{ $data->Conclusion }}</textarea>
                                     </div>
                                 </div>
                                 <div class="col-12 sub-head">
@@ -1738,12 +1738,12 @@
                                         <div><small class="text-primary">Please Mention justification if due date is crossed</small></div>
                                         {{-- <span id="rchar">240</span> --}}
                                         {{-- characters remaining --}}
-                                        <textarea name="due_date_extension" id="duedoc" type="text"    maxlength="240"{{ $data->stage == 0 || $data->stage == 8 ? "disabled" : "" }}>{{$data->due_date_extension}}</textarea>
+                                        <textarea name="due_date_extension" id="duedoc" type="text"    maxlength="240"{{ $data->stage == 0 || $data->stage == 10 ? "disabled" : "" }}>{{$data->due_date_extension}}</textarea>
                                     </div>
                                 </div>
                             </div>
                             <div class="button-block">
-                                <button type="submit" class="saveButton" {{ $data->stage == 0 || $data->stage == 8 ? "disabled" : "" }}>Save</button>
+                                <button type="submit" class="saveButton" {{ $data->stage == 0 || $data->stage == 10 ? "disabled" : "" }}>Save</button>
                                 <button type="button" class="backButton" onclick="previousStep()">Back</button>
                                 <button type="button" class="nextButton" onclick="nextStep()">Next</button>
                                 <button type="button"> <a class="text-white" href="{{ url('rcms/qms-dashboard') }}"> Exit </a> </button>
@@ -1804,9 +1804,9 @@
                                         {{-- <td><input type="text" name="investigation[0][s_no]" value=" {{ $lab['s_no']}}">
                                            </td> --}}
                                        
-                                          <td><input type="text" name="investigation[0][name_of_product_ssfi]" value=" {{isset($lab['name_of_product_ssfi']) ? $lab['name_of_product_ssfi']:''}}"></td> 
-                                          <td><input type="text" name="investigation[0][batch_no_ssfi]" value=" {{isset($lab['batch_no_ssfi']) ? $lab['batch_no_ssfi']:''}}"></td>   
-                                          <td><input type="text" name="investigation[0][remarks_ssfi]" value=" {{isset($lab['remarks_ssfi']) ? $lab['remarks_ssfi' ]:''}}"></td>                                           
+                                          <td><input type="text" name="investigation[0][name_of_product_ssfi]" {{ $data->stage == 0 || $data->stage == 10 ? "disabled" : "" }} value=" {{isset($lab['name_of_product_ssfi']) ? $lab['name_of_product_ssfi']:''}}"></td> 
+                                          <td><input type="text" name="investigation[0][batch_no_ssfi]" {{ $data->stage == 0 || $data->stage == 10 ? "disabled" : "" }} value=" {{isset($lab['batch_no_ssfi']) ? $lab['batch_no_ssfi']:''}}"></td>   
+                                          <td><input type="text" name="investigation[0][remarks_ssfi]" {{ $data->stage == 0 || $data->stage == 10 ? "disabled" : "" }} value=" {{isset($lab['remarks_ssfi']) ? $lab['remarks_ssfi' ]:''}}"></td>                                           
 
 
                                         {{-- <td><input type="text" name="investigation[0][batch_no_ssfi]" value="{{$lab['batch_no_ssfi']}}"></td> --}}
@@ -1878,7 +1878,7 @@
                     '<td><input type="text" name="investigation['+ suitaBility +'][name_of_product_ssfi]" value=""></td/>' +
                     '<td><input type="text" name="investigation['+ suitaBility +'][batch_no_ssfi]" value=""></td>' +
                     '<td><input type="text" name="investigation['+ suitaBility +'][remarks_ssfi]" value=""></td>' +
-                    // '<td><button class="removeRowBtn">Remove</button></td>' +
+                    '<td><button class="removeRowBtn">Remove</button></td>' +
 
 
                     '</tr>';
@@ -1917,7 +1917,7 @@
                                                                 <div class="group-input" id="Incident_invlvolved_others">
                                                                     <label for="Incident_Involved">Instrument Involved<span
                                                                             class="text-danger d-none">*</span></label>
-                                                                    <textarea name="involved_ssfi">{{$labnew->involved_ssfi}}</textarea>
+                                                                    <textarea name="involved_ssfi" {{ $data->stage == 0 || $data->stage == 10 ? "disabled" : "" }}>{{$labnew->involved_ssfi}}</textarea>
                                                                 </div>
                             
                                                             </div>
@@ -1927,7 +1927,7 @@
                                                                 <div class="group-input" id="Incident_stage">
                                                                     <label for="Incident_stage">Stage<span
                                                                             class="text-danger d-none">*</span></label>
-                                                                    <input type="text" name="stage_stage_ssfi" value="{{$labnew->stage_stage_ssfi}}">
+                                                                    <input type="text" name="stage_stage_ssfi" {{ $data->stage == 0 || $data->stage == 10 ? "disabled" : "" }} value="{{$labnew->stage_stage_ssfi}}">
                                                                 </div>
                             
                                                             </div><br>
@@ -1935,7 +1935,7 @@
                                                                 <div class="group-input" id="Incident_stability_cond">
                                                                     <label for="Incident_stability_cond">Stability Condition (If Applicable)<span
                                                                             class="text-danger d-none">*</span></label>
-                                                                    <input type="text" name="Incident_stability_cond_ssfi" value="{{$labnew->Incident_stability_cond_ssfi}}">
+                                                                    <input type="text" name="Incident_stability_cond_ssfi" {{ $data->stage == 0 || $data->stage == 10 ? "disabled" : "" }} value="{{$labnew->Incident_stability_cond_ssfi}}">
                                                                 </div>
                             
                                                             </div>
@@ -1943,7 +1943,7 @@
                                                                 <div class="group-input" id="Incident_interval_others">
                                                                     <label for="Incident_interval_others">Interval (If Applicable)<span
                                                                             class="text-danger d-none">*</span></label>
-                                                                    <input type="text" name="Incident_interval_ssfi" value="{{$labnew->Incident_interval_ssfi}}">
+                                                                    <input type="text" name="Incident_interval_ssfi" {{ $data->stage == 0 || $data->stage == 10 ? "disabled" : "" }} value="{{$labnew->Incident_interval_ssfi}}">
                                                                 </div>
                             
                                                             </div>
@@ -1952,7 +1952,7 @@
                                                                 <div class="group-input" id="Incident_test_others">
                                                                     <label for="Incident_test_others">Test<span
                                                                             class="text-danger d-none">*</span></label>
-                                                                    <input type="text" name="test_ssfi" value="{{$labnew->test_ssfi}}">
+                                                                    <input type="text" name="test_ssfi" {{ $data->stage == 0 || $data->stage == 10 ? "disabled" : "" }} value="{{$labnew->test_ssfi}}">
                                                                 </div>
                             
                                                             </div>
@@ -1968,7 +1968,7 @@
                                                                     <div class="calenderauditee">
                                                                         <input type="text" id="Incident_date_analysis_ssfi" readonly
                                                                             placeholder="DD-MMM-YYYY" value="{{ Helpers::getdateFormat($labnew->Incident_date_analysis_ssfi) }}" />
-                                                                        <input type="date" name="Incident_date_analysis_ssfi" class="hide-input"
+                                                                        <input type="date" name="Incident_date_analysis_ssfi"  {{ $data->stage == 0 || $data->stage == 10 ? "disabled" : "" }} class="hide-input"
                                                                             oninput="handleDateInput(this, 'Incident_date_analysis_ssfi')" />
                                                                     </div>
                                                                 </div>
@@ -1978,7 +1978,7 @@
                                                                 <div class="group-input" id="Incident_specification_no">
                                                                     <label for="Incident_specification_no">Specification Number<span
                                                                             class="text-danger d-none">*</span></label>
-                                                                    <input type="text" name="Incident_specification_ssfi" value="{{$labnew->Incident_specification_ssfi}}">
+                                                                    <input type="text" name="Incident_specification_ssfi" {{ $data->stage == 0 || $data->stage == 10 ? "disabled" : "" }} value="{{$labnew->Incident_specification_ssfi}}">
                                                                 </div>
                             
                                                             </div>
@@ -1986,7 +1986,7 @@
                                                                 <div class="group-input" id="Incident_stp_no">
                                                                     <label for="Incident_stp_no">STP Number<span
                                                                             class="text-danger d-none">*</span></label>
-                                                                    <input type="text" name="Incident_stp_ssfi" value="{{$labnew->Incident_stp_ssfi}}">
+                                                                    <input type="text" name="Incident_stp_ssfi" {{ $data->stage == 0 || $data->stage == 10 ? "disabled" : "" }} value="{{$labnew->Incident_stp_ssfi}}">
                                                                 </div>
                             
                                                             </div>
@@ -1996,7 +1996,7 @@
                                                                     <label for="search">
                                                                         Name Of Analyst<span class="text-danger"></span>
                                                                     </label>
-                                                                    <select id="select-state" placeholder="Select..." name="assign_to" {{ $data->stage == 0 || $data->stage == 8 ? "disabled" : "" }}>
+                                                                    <select id="select-state" placeholder="Select..." name="assign_to" {{ $data->stage == 0 || $data->stage == 10 ? "disabled" : "" }}>
                                                                         <option value="">Select a value</option>
                                                                         @foreach ($users as $key=> $value)
                                                                             <option  @if ($data->assign_to == $value->id) selected @endif  value="{{ $value->id }}">{{ $value->name }}</option>
@@ -2041,7 +2041,7 @@
                                                                     <div class="calenderauditee">
                                                                         <input type="text" id="Incident_date_incidence_ssfi" readonly
                                                                             placeholder="DD-MMM-YYYY" value="{{ Helpers::getdateFormat($labnew->Incident_date_incidence_ssfi) }}"/>
-                                                                        <input type="date" name="Incident_date_incidence_ssfi"  class="hide-input"
+                                                                        <input type="date" name="Incident_date_incidence_ssfi" {{ $data->stage == 0 || $data->stage == 10 ? "disabled" : "" }} class="hide-input"
                                                                             oninput="handleDateInput(this, 'Incident_date_incidence_ssfi')" />
                                                                     </div>
                                                                 </div>
@@ -2055,7 +2055,7 @@
                                                                     <label for="search">
                                                                         QC Reviewer<span class="text-danger"></span>
                                                                     </label>
-                                                                    <select id="select-state" placeholder="Select..." name="suit_qc_review_to" {{ $data->stage == 0 || $data->stage == 8 ? "disabled" : "" }}>
+                                                                    <select id="select-state" placeholder="Select..." name="suit_qc_review_to" {{ $data->stage == 0 || $data->stage == 10 ? "disabled" : "" }}>
                                                                         <option value="">Select a value</option>
                                                                         @foreach ($users as $key=> $value)
                                                                             <option  @if ($data->suit_qc_review_to == $value->id) selected @endif  value="{{ $value->id }}">{{ $value->name }}</option>
@@ -2071,7 +2071,7 @@
                                                                 <div class="group-input" id="Description_incidence">
                                                                     <label for="Description_incidence"> Description Of Incidence<span
                                                                             class="text-danger d-none">*</span></label>
-                                                                    <textarea name="Description_incidence_ssfi">{{ $labnew->Description_incidence_ssfi }}</textarea>
+                                                                    <textarea name="Description_incidence_ssfi" {{ $data->stage == 0 || $data->stage == 10 ? "disabled" : "" }}>{{ $labnew->Description_incidence_ssfi }}</textarea>
                                                                 </div>
                             
                                                             </div>
@@ -2079,7 +2079,7 @@
                                                                 <div class="group-input" id="Detail_investigation">
                                                                     <label for="Detail_investigation"> Detail Investigation<span
                                                                             class="text-danger d-none">*</span></label>
-                                                                    <textarea name="Detail_investigation_ssfi">{{$labnew->Detail_investigation_ssfi}}</textarea>
+                                                                    <textarea name="Detail_investigation_ssfi" {{ $data->stage == 0 || $data->stage == 10 ? "disabled" : "" }}>{{$labnew->Detail_investigation_ssfi}}</textarea>
                                                                 </div>
                             
                                                             </div>
@@ -2088,16 +2088,16 @@
                                                                 <div class="group-input" id="proposed corrective">
                                                                     <label for="Detail_investigation"> Proposed Corrective Action<span
                                                                             class="text-danger d-none">*</span></label>
-                                                                    <textarea name="proposed_corrective_ssfi">{{$labnew->proposed_corrective_ssfi}}</textarea>
+                                                                    <textarea name="proposed_corrective_ssfi" {{ $data->stage == 0 || $data->stage == 10 ? "disabled" : "" }}>{{$labnew->proposed_corrective_ssfi}}</textarea>
                                                                 </div>
                             
                                                             </div>
     
                                                             <div class="col-lg-12">
                                                                 <div class="group-input" id="root cause">
-                                                                    <label for="root_cause"> Root Cause<span
+                                                                    <label for="root_cause"> Root Cause Assessment<span
                                                                             class="text-danger d-none">*</span></label>
-                                                                    <textarea name="root_cause_ssfi">{{$labnew->root_cause_ssfi}}</textarea>
+                                                                    <textarea name="root_cause_ssfi" {{ $data->stage == 0 || $data->stage == 10 ? "disabled" : "" }}>{{$labnew->root_cause_ssfi}}</textarea>
                                                                 </div>
                             
                                                             </div>
@@ -2106,7 +2106,7 @@
                                                                 <div class="group-input" id="incident summary ssfi">
                                                                     <label for="incident summary ssfi"> Incident Summary<span
                                                                             class="text-danger d-none">*</span></label>
-                                                                    <textarea name="incident_summary_ssfi">{{$labnew->incident_summary_ssfi}}</textarea>
+                                                                    <textarea name="incident_summary_ssfi" {{ $data->stage == 0 || $data->stage == 10 ? "disabled" : "" }}>{{$labnew->incident_summary_ssfi}}</textarea>
                                                                 </div>
                             
                                                             </div>
@@ -2134,7 +2134,7 @@
                                                         <div class="group-input">
                                                             <label for="system_suitable_attachments">Intial Attachment</label>
                                                             <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
-                                                            {{-- <input type="file" id="myfile" name="Initial_Attachment" {{ $data->stage == 0 || $data->stage == 8 ? "disabled" : "" }}
+                                                            {{-- <input type="file" id="myfile" name="Initial_Attachment" {{ $data->stage == 0 || $data->stage == 10 ? "disabled" : "" }}
                                                                 value="{{ $data->Initial_Attachment }}"> --}}
                                                                 <div class="file-attachment-field">
                                                                     <div class="file-attachment-list" id="system_suitable_attachments">
@@ -2156,7 +2156,7 @@
                                                                     </div>
                                                                     <div class="add-btn ">
                                                                         <div>Add</div>
-                                                                        <input {{ $data->stage == 0 || $data->stage == 8 ? "disabled" : "" }} type="file" id="system_suitable_attachments" name="system_suitable_attachments[]"
+                                                                        <input {{ $data->stage == 0 || $data->stage == 10 ? "disabled" : "" }} type="file" id="system_suitable_attachments" name="system_suitable_attachments[]"
                                                                             oninput="addMultipleFiles(this, 'system_suitable_attachments')" multiple>
                                                                     </div>
                                                                 </div>
@@ -2192,7 +2192,7 @@
                             <div class="col-lg-12">
                                 <div class="group-input">
                                     <label for="closure_incident">Closure Of Incident</label>
-                                    <input type="text" name="closure_incident_c" value="{{$labnew->closure_incident_c}}">
+                                    <input type="text" name="closure_incident_c" {{ $data->stage == 0 || $data->stage == 10 ? "disabled" : "" }} value="{{$labnew->closure_incident_c}}">
                                 </div>
 
                             </div>
@@ -2200,7 +2200,7 @@
                             <div class="col-lg-12">
                                 <div class="group-input">
                                     <label for="affected documents closed"><b>Affected Documents Closed</b></label>
-                                    <select  id="initiator_group" name="affected_document_closure">
+                                    <select  id="initiator_group" name="affected_document_closure" {{ $data->stage == 0 || $data->stage == 10 ? "disabled" : "" }}>
                                         <option value="0" {{ $labnew->affected_document_closure == '0' ? 'selected' : '' }}>-- Select --</option>
                                         <option value="Yes" {{ $labnew->affected_document_closure == 'Yes' ? 'selected' : '' }}>Yes</option>
                                         <option value="No" {{ $labnew->affected_document_closure == 'No' ? 'selected' : '' }}>No</option>
@@ -2212,7 +2212,7 @@
                             <div class="col-lg-12">
                                 <div class="group-input">
                                     <label for="head remark"><b>QC Head Remark</b></label>
-                                   <textarea name="qc_hear_remark_c">{{$labnew->qc_hear_remark_c}}</textarea>
+                                   <textarea name="qc_hear_remark_c" {{ $data->stage == 0 || $data->stage == 10 ? "disabled" : "" }}>{{$labnew->qc_hear_remark_c}}</textarea>
                                 </div>
                             </div>
 
@@ -2239,7 +2239,7 @@
                         <div class="col-lg-12">
                             <div class="group-input">
                                 <label for=" qa head remark"><b>QA Head Remark</b></label>
-                               <textarea name="qa_hear_remark_c">{{$labnew->qa_hear_remark_c}}</textarea>
+                               <textarea name="qa_hear_remark_c" {{ $data->stage == 0 || $data->stage == 10 ? "disabled" : "" }}>{{$labnew->qa_hear_remark_c}}</textarea>
                             </div>
                         </div>
 
@@ -2248,7 +2248,7 @@
                             <div class="group-input">
                                 <label for="closure_attachment_c">Closure Attachment</label>
                                 <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
-                                {{-- <input type="file" id="myfile" name="Initial_Attachment" {{ $data->stage == 0 || $data->stage == 8 ? "disabled" : "" }}
+                                {{-- <input type="file" id="myfile" name="Initial_Attachment" {{ $data->stage == 0 || $data->stage == 10 ? "disabled" : "" }}
                                     value="{{ $data->Initial_Attachment }}"> --}}
                                     <div class="file-attachment-field">
                                         <div class="file-attachment-list" id="closure_attachment_c">
@@ -2270,7 +2270,7 @@
                                         </div>
                                         <div class="add-btn">
                                             <div>Add</div>
-                                            <input {{ $data->stage == 0 || $data->stage == 8 ? "disabled" : "" }} type="file" id="closure_attachment_c" name="closure_attachment_c[]"
+                                            <input {{ $data->stage == 0 || $data->stage == 10 ? "disabled" : "" }} type="file" id="closure_attachment_c" name="closure_attachment_c[]"
                                                 oninput="addMultipleFiles(this, 'closure_attachment_c')" multiple>
                                         </div>
                                     </div>
@@ -2568,9 +2568,9 @@
                                 </div> --}}
                             </div>
                             <div class="button-block">
-                                <button type="submit" class="saveButton" {{ $data->stage == 0 || $data->stage == 8 ? "disabled" : "" }}>Save</button>
+                                <button type="submit" class="saveButton" {{ $data->stage == 0 || $data->stage == 10 ? "disabled" : "" }}>Save</button>
                                 <button type="button" class="backButton" onclick="previousStep()">Back</button>
-                                <button type="submit" {{ $data->stage == 0 || $data->stage == 8 ? "disabled" : "" }}>Submit</button>
+                                <button type="submit" {{ $data->stage == 0 || $data->stage == 10 ? "disabled" : "" }}>Submit</button>
                                 <button type="button"> <a class="text-white" href="{{ url('rcms/qms-dashboard') }}"> Exit </a> </button>
                             </div>
                         </div>

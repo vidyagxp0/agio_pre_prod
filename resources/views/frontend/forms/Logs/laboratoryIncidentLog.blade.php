@@ -117,9 +117,11 @@
                                         </div>
                                         <div class="filter-item">
                                             <label for="originator">Type of Incident</label>
-                                            <select class="custom-select" id="originator">
-                                                <option value="all">All Records</option>
-
+                                            <select name="type_incidence_ia"  id="typeofincidence">
+                                                <option value="Null">-- Select --</option>
+                                                <option value="Analyst Error">Analyst Error</option>
+                                                <option value="Instrument Error" >Instrument Error</option>
+                                                <option value="Atypical Error" >Atypical Error</option>
                                             </select>
                                         </div>
                                         <div class="filter-item">
@@ -162,22 +164,6 @@
                                             <th>Batch No. / A.R No.</th>
                                            </tr>
                                        
-                                        {{-- <tr>
-                                            <th style="width: 5%;">Sr.No.</th>
-                                            <th>Date of Initiation</th>
-                                            <th>Incident Report No.</th>
-                                            <th></th>
-                                            <th></th>
-                                            <th></th>
-                                            <th></th>
-                                            <th> </th>
-                                            <th></th>
-                                            <th>Batch Number  </th>
-                                            <th></th>
-                                            <th>Due Date </th>
-                                            <th>Clouser Date </th>
-                                            <th>Status</th>
-                                        </tr> --}}
                                     </thead>
                                     <tbody id="tableData">
                                         @include('frontend.forms.logs.comps.labincident_data');
@@ -210,23 +196,29 @@
         $('#spinner').hide();
         
         const filterData = {
-    department: null,
-    division_id: null,
+    department_Lab: null,
+    divivisionLab_id: null,
     period: null,
     dateFrom: null,
-    dateTo: null
+    dateTo: null,
+    TypeOFIncidence:null
 
 }
 
 $('#initiator_group').change(function() {
-    filterData.department = $(this).val();
+    filterData.department_Lab = $(this).val();
     filterRecords()
 });
 
  // Division ID change event
 
   $('#division_id').change(function() {
-    filterData.division_id = $(this).val();
+    filterData.divivisionLab_id = $(this).val();
+    filterRecords();
+ });
+
+ $('#typeofincidence').change(function() {
+    filterData.TypeOFIncidence = $(this).val();
     filterRecords();
  });
 

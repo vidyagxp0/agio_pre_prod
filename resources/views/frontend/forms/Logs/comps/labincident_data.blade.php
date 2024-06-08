@@ -1,21 +1,34 @@
 @forelse ($labincident as $lablog)
-    @foreach($lablog->incidentInvestigationReports as $secondIncident)
-        @foreach($secondIncident->data as $dataaas)
+    @php
+        $incidentReportsCollection = collect($lablog->incidentInvestigationReports);
+        $firstLablogPrinted = false;
+        $rowSpanCount = $incidentReportsCollection->sum(function($secondIncident) {
+            return collect($secondIncident['data'])->count();
+        });
+    @endphp
+
+    @foreach($incidentReportsCollection as $secondIncident)
+        @foreach(collect($secondIncident['data']) as $dataaas)
             <tr>
-                <td>{{ $loop->parent->parent->index + 1 }}</td> <!-- Adjusted to get the index from the parent loop -->
-                <td>{{ $lablog->intiation_date }}</td>
-                <td>{{ $lablog->division ? $lablog->division->name : '-' }}/CC/{{ date('Y') }}/{{ str_pad($lablog->record, 4, '0', STR_PAD_LEFT) }}</td>
-                <td>{{ $lablog->initiator ? $lablog->initiator->name : '-' }}</td>
-                <td>{{ $lablog->Initiator_Group }}</td>
-                <td>{{ $lablog->division ? $lablog->division->name : '-' }}</td>
-                <td>{{ $lablog->short_desc }}</td>
+                @if (!$firstLablogPrinted)
+                    <td rowspan="{{ $rowSpanCount }}">{{ $loop->parent->parent->index + 1 }}</td> <!-- Adjusted to get the index from the parent loop -->
+                    <td rowspan="{{ $rowSpanCount }}">{{ $lablog->intiation_date }}</td>
+                    <td rowspan="{{ $rowSpanCount }}">{{ $lablog->Initiator_Group}}/CC/{{ date('Y') }}/{{ str_pad($lablog->record, 4, '0', STR_PAD_LEFT) }}</td>
+                    <td rowspan="{{ $rowSpanCount }}">{{ $lablog->initiator ? $lablog->initiator->name : '-' }}</td>
+                    <td rowspan="{{ $rowSpanCount }}">{{ $lablog->Initiator_Group }}</td>
+                    <td rowspan="{{ $rowSpanCount }}">{{ $lablog->division ? $lablog->division->name : '-' }}</td>
+                    <td rowspan="{{ $rowSpanCount }}">{{ $lablog->short_desc }}</td>
+                    @php
+                        $firstLablogPrinted = true;
+                    @endphp
                 <td>{{ isset($dataaas['name_of_product']) ? $dataaas['name_of_product'] : '' }}</td>
                 <td>{{ isset($dataaas['batch_no']) ? $dataaas['batch_no'] : '' }}</td>
-                <td>type of incidence</td>
+                <td>{{$lablog->type_incidence_ia}}</td>
                 <td></td>
                 <td>{{ $lablog->due_date }}</td>
                 <td>{{ $lablog->closure_completed_on }}</td>
                 <td>{{ $lablog->status }}</td>
+                @endif
             </tr>
         @endforeach
     @endforeach

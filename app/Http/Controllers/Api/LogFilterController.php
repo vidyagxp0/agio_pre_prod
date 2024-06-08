@@ -433,14 +433,18 @@ class LogFilterController extends Controller
             
             $query = LabIncident::query();
             
-            if ($request->department_lab)
+            if ($request->department_Lab)
             {
-                $query->where('Initiator_Group', $request->department_lab);
+                $query->where('Initiator_Group', $request->department_Lab);
             }
 
-            if($request->div_id)
+            if($request->divivisionLab_id)
             {
-                $query->where('division_id',$request->div_id);
+                $query->where('division_id',$request->divivisionLab_id);
+            }
+            if($request->TypeOFIncidence)
+            {
+                $query->where('type_incidence_ia',$request->TypeOFIncidence);
             }
 
             if ($request->period_lab) {
