@@ -609,7 +609,7 @@
         var options = {
             series,
             chart: {
-            width: 350,
+            width: 450,
             type: 'pie',
             },
             labels,
