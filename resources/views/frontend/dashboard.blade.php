@@ -55,32 +55,6 @@
             
                             </div>
 
-                            <div class="chart-grid">
-                                <div class="inner-block chart-block">
-                                    <div class="chart-container">
-                                        <div class="head">
-                                            Batch Failure Rate (Term)
-                                        </div>
-                                        <div id="chart-18"></div>
-                                    </div>
-                                </div>
-                                <div class="inner-block chart-block">
-                                    <div class="chart-container">
-                                        <div class="head">
-                                            Batch Failure Rate (Term)
-                                        </div>
-                                        <div id="chart-19"></div>
-                                    </div>
-                                </div>
-                                <div class="inner-block chart-block">
-                                    <div class="chart-container">
-                                        <div class="head">
-                                            Batch Failure Rate (Term)
-                                        </div>
-                                        <div id="chart-20"></div>
-                                    </div>
-                                </div>
-                            </div> 
                             <div class="row">
                                  <div class="col-12">
                                     <div class="inner-block search-block">
