@@ -587,90 +587,6 @@
 
                
 
-                <script>
-                    function openCity(evt, cityName) {
-                        var i, cctabcontent, cctablinks;
-                        cctabcontent = document.getElementsByClassName("cctabcontent");
-                        for (i = 0; i < cctabcontent.length; i++) {
-                            cctabcontent[i].style.display = "none";
-                        }
-                        cctablinks = document.getElementsByClassName("cctablinks");
-                        for (i = 0; i < cctablinks.length; i++) {
-                            cctablinks[i].className = cctablinks[i].className.replace(" active", "");
-                        }
-                        document.getElementById(cityName).style.display = "block";
-                        evt.currentTarget.className += " active";
-                    }
-
-
-
-                    function openCity(evt, cityName) {
-                        var i, cctabcontent, cctablinks;
-                        cctabcontent = document.getElementsByClassName("cctabcontent");
-                        for (i = 0; i < cctabcontent.length; i++) {
-                            cctabcontent[i].style.display = "none";
-                        }
-                        cctablinks = document.getElementsByClassName("cctablinks");
-                        for (i = 0; i < cctablinks.length; i++) {
-                            cctablinks[i].className = cctablinks[i].className.replace(" active", "");
-                        }
-                        document.getElementById(cityName).style.display = "block";
-                        evt.currentTarget.className += " active";
-
-                        // Find the index of the clicked tab button
-                        const index = Array.from(cctablinks).findIndex(button => button === evt.currentTarget);
-
-                        // Update the currentStep to the index of the clicked tab
-                        currentStep = index;
-                    }
-
-                    const saveButtons = document.querySelectorAll(".saveButton");
-                    const nextButtons = document.querySelectorAll(".nextButton");
-                    const form = document.getElementById("step-form");
-                    const stepButtons = document.querySelectorAll(".cctablinks");
-                    const steps = document.querySelectorAll(".cctabcontent");
-                    let currentStep = 0;
-
-                    function nextStep() {
-                        // Check if there is a next step
-                        if (currentStep < steps.length - 1) {
-                            // Hide current step
-                            steps[currentStep].style.display = "none";
-
-                            // Show next step
-                            steps[currentStep + 1].style.display = "block";
-
-                            // Add active class to next button
-                            stepButtons[currentStep + 1].classList.add("active");
-
-                            // Remove active class from current button
-                            stepButtons[currentStep].classList.remove("active");
-
-                            // Update current step
-                            currentStep++;
-                        }
-                    }
-
-                    function previousStep() {
-                        // Check if there is a previous step
-                        if (currentStep > 0) {
-                            // Hide current step
-                            steps[currentStep].style.display = "none";
-
-                            // Show previous step
-                            steps[currentStep - 1].style.display = "block";
-
-                            // Add active class to previous button
-                            stepButtons[currentStep - 1].classList.add("active");
-
-                            // Remove active class from current button
-                            stepButtons[currentStep].classList.remove("active");
-
-                            // Update current step
-                            currentStep--;
-                        }
-                    }
-                </script>
 
                 <script>
                     document.addEventListener('DOMContentLoaded', function() {
@@ -995,43 +911,40 @@
 
 
                             <div class="col-12">
-                                <div class="group-input">
-                                    <label for="Inv Attachments">Initial Attachment</label>
-                                    <div>
-                                        <small class="text-primary">
-                                            Please Attach all relevant or supporting documents
-                                        </small>
-                                    </div>
-                                    <div class="file-attachment-field">
-                                        <div class="file-attachment-list" id="initial_attachment_gi">
+                    <div class="group-input">
+                        <label for="Inv Attachments">Initial Attachment</label>
+                        <div>
+                            <small class="text-primary">
+                                Please Attach all relevant or supporting documents
+                            </small>
+                        </div>
+                        <div class="file-attachment-field">
+                            <div class="file-attachment-list" id="initial_attachment_gi">
 
-
-                                            @if ($data->initial_attachment_gi)
-                                                @foreach (json_decode($data->initial_attachment_gi) as $file)
-                                                    <h6 type="button" class="file-container text-dark"
-                                                        style="background-color: rgb(243, 242, 240);">
-                                                        <b>{{ $file }}</b>
-                                                        <a href="{{ asset('upload/' . $file) }}" target="_blank"><i
-                                                                class="fa fa-eye text-primary"
-                                                                style="font-size:20px; margin-right:-10px;"></i></a>
-                                                        <a type="button" class="remove-file"
-                                                            data-file-name="{{ $file }}"><i
-                                                                class="fa-solid fa-circle-xmark"
-                                                                style="color:red; font-size:20px;"></i></a>
-                                                    </h6>
-                                                @endforeach
-                                            @endif
-
-                                        </div>
-                                        <div class="add-btn">
-                                            <div>Add</div>
-                                            <input type="file" id="initial_attachment_gi" {{ $data->stage == 0 || $data->stage == 8 ? "disabled" : "" }}
-                                                name="initial_attachment_gi[]"
-                                                oninput="addMultipleFiles(this,'initial_attachment_gi')" multiple>
-                                        </div>
-                                    </div>
-                                </div>
+                                @if ($data->initial_attachment_gi)
+                                    @foreach (json_decode($data->initial_attachment_gi) as $file)
+                                        <h6 type="button" class="file-container text-dark"
+                                            style="background-color: rgb(243, 242, 240);">
+                                            <b>{{ $file }}</b>
+                                            <a href="{{ asset('upload/' . $file) }}" target="_blank"><i
+                                                    class="fa fa-eye text-primary"
+                                                    style="font-size:20px; margin-right:-10px;"></i></a>
+                                            <a type="button" class="remove-file"
+                                                data-file-name="{{ $file }}"><i
+                                                    class="fa-solid fa-circle-xmark"
+                                                    style="color:red; font-size:20px;"></i></a>
+                                        </h6>
+                                    @endforeach
+                                @endif
                             </div>
+                            <div class="add-btn">
+                                <div>Add</div>
+                                <input type="file" id="initial_attachment_gi" name="initial_attachment_gi[]"
+                                    oninput="addMultipleFiles(this,'initial_attachment_gi')" multiple>
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
                             <div class="col-lg-6">
                                 <div class="group-input">
@@ -1956,42 +1869,42 @@
 
 
 
-                            <div class="col-12">
-                                <div class="group-input">
-                                    <label for="Inv Attachments">Initial Attachment</label>
-                                    <div>
-                                        <small class="text-primary">
-                                            Please Attach all relevant or supporting documents
-                                        </small>
-                                    </div>
-                                    <div class="file-attachment-field">
-                                        <div class="file-attachment-list" id="initial_attachment_hodsr">
+                           
+                <div class="col-12">
+                    <div class="group-input">
+                        <label for="Inv Attachments">Initial Attachment</label>
+                        <div>
+                            <small class="text-primary">
+                                Please Attach all relevant or supporting documents
+                            </small>
+                        </div>
+                        <div class="file-attachment-field">
+                            <div class="file-attachment-list" id="initial_attachment_hodsr">
 
-                                            @if ($data->initial_attachment_hodsr)
-                                                @foreach (json_decode($data->initial_attachment_hodsr) as $file)
-                                                    <h6 type="button" class="file-container text-dark"
-                                                        style="background-color: rgb(243, 242, 240);">
-                                                        <b>{{ $file }}</b>
-                                                        <a href="{{ asset('upload/' . $file) }}" target="_blank"><i
-                                                                class="fa fa-eye text-primary"
-                                                                style="font-size:20px; margin-right:-10px;"></i></a>
-                                                        <a type="button" class="remove-file"
-                                                            data-file-name="{{ $file }}"><i
-                                                                class="fa-solid fa-circle-xmark"
-                                                                style="color:red; font-size:20px;"></i></a>
-                                                    </h6>
-                                                @endforeach
-                                            @endif
-                                        </div>
-                                        <div class="add-btn">
-                                            <div>Add</div>
-                                            <input type="file" id="initial_attachment_hodsr"
-                                                name="initial_attachment_hodsr[]"
-                                                oninput="aadMultipuleFiles(this,'initial_attachment_hodsr')" multiple>
-                                        </div>
-                                    </div>
-                                </div>
+                                @if ($data->initial_attachment_hodsr)
+                                    @foreach (json_decode($data->initial_attachment_hodsr) as $file)
+                                        <h6 type="button" class="file-container text-dark"
+                                            style="background-color: rgb(243, 242, 240);">
+                                            <b>{{ $file }}</b>
+                                            <a href="{{ asset('upload/' . $file) }}" target="_blank"><i
+                                                    class="fa fa-eye text-primary"
+                                                    style="font-size:20px; margin-right:-10px;"></i></a>
+                                            <a type="button" class="remove-file"
+                                                data-file-name="{{ $file }}"><i
+                                                    class="fa-solid fa-circle-xmark"
+                                                    style="color:red; font-size:20px;"></i></a>
+                                        </h6>
+                                    @endforeach
+                                @endif
                             </div>
+                            <div class="add-btn">
+                                <div>Add</div>
+                                <input type="file" id="initial_attachment_hodsr" name="initial_attachment_hodsr[]"
+                                    oninput="addMultipleFiles(this,'initial_attachment_hodsr')" multiple>
+                            </div>
+                        </div>
+                    </div>
+                </div>
                             <div class="col-md-12 mb-3">
                                 <div class="group-input">
                                     <label for="Comments">Comments(if Any)</label>
