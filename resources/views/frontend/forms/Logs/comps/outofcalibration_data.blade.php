@@ -1,11 +1,16 @@
 @forelse ($oocs as $ooclog)
-                                            
+           @php
+                    $productDetails= $ooclog->InstrumentDetails;
+               
+           @endphp          
+                    @foreach ($productDetails['data'] as $data) 
+
                                         <tr>
                                             
                                             <td>{{$loop->index+1}}</td>
                                             <td>{{$ooclog->intiation_date}}</td>
-                                            <td>grid</td>
-                                            <td>grid</td>
+                                            <td>{{$data['instrument_name']}}</td>
+                                            <td>{{$data['instrument_id']}}</td>
                                             <td>{{$ooclog->description_ooc}}</td>
                                             <td>{{$ooclog->initiator ? $ooclog->initiator->name: '-'}}</td>
                                             <td>{{$ooclog->division ? $ooclog->division->name:'-'}}</td>
@@ -17,6 +22,7 @@
                                             <td>{{$ooclog->status}}</td>
                                             
                                         </tr>
+                                        @endforeach
                                         @empty
                                         <tr>
                                             <td colspan="12" class="text-center">
@@ -25,4 +31,4 @@
                                                 </div>
                                             </td>
                                         </tr>
-                                                                               @endforelse
+                                        @endforelse

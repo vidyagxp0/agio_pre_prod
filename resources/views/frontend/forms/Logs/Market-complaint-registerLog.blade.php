@@ -201,7 +201,7 @@
         
         const filterData = {
     departmentcomplaint: null,
-    division_id: null,
+    div_idcomplaint: null,
     period: null,
     dateMarketFrom: null,
     dateMarketTo: null,
@@ -217,7 +217,7 @@ $('#initiator_group').change(function() {
  // Division ID change event
 
   $('#division_id').change(function() {
-    filterData.division_id = $(this).val();
+    filterData.div_idcomplaint = $(this).val();
     filterRecords();
  });
 

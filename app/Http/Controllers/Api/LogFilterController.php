@@ -601,9 +601,9 @@ class LogFilterController extends Controller
                 $query->where('Initiator_Group', $request->departmentcomplaint);
             }
 
-            if($request->div_id)
+            if($request->div_idcomplaint)
             {
-                $query->where('division_id',$request->div_id);
+                $query->where('division_id',$request->div_idcomplaint);
             }
             if($request->categoryofcomplaints)
             {
@@ -687,6 +687,13 @@ class LogFilterController extends Controller
             if($request->div_id)
             {
                 $query->where('division_id',$request->div_id);
+            }
+
+            if($request->instrmentGrid)
+            {
+             $querys = OutOfCalibration::with('InstrumentDetails')->get();
+
+                $querys->where('InstrumentDetails',$request->instrmentGrid);
             }
             // if($request->categoryofcomplaints)
             // {

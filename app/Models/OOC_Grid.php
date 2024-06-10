@@ -14,4 +14,13 @@ class OOC_Grid extends Model
 
     protected $casts = ['data' => 'array'];
 
+
+
+    public function OutOfCalibration()
+    {
+        return $this->hasMany(OutOfCalibration::class);
+    }
+
 }
+
+

@@ -88,6 +88,11 @@ class OutOfCalibration extends Model
         return $this->belongsTo(User::class,'initiator_id');
     }
 
+    public function InstrumentDetails()
+    {
+        return $this->hasOne(OOC_Grid::class,'ooc_id');
+    }
+
    
     
 }

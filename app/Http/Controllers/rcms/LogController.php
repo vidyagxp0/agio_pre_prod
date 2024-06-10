@@ -111,9 +111,26 @@ class LogController extends Controller
                         
             case 'ooc':
             
-            $oocs = OutOfCalibration::get();
-                    return view('frontend.forms.logs.OOC_log' , compact('oocs'));
-              
+            $oocs = OutOfCalibration::with('InstrumentDetails')->get();
+
+
+            // $complaintData = [];
+            // foreach ($oocs as $marketlog)
+            // {
+            //         $productDetails= $marketlog->InstrumentDetails;
+            //         foreach ($productDetails['data'] as $data) {
+            //                 $complaintData = [];
+            //                 return [
+            //                         'instrument_id' => $data['instrument_id'],
+            //                         'instrument_name' => $data['instrument_name'],
+                                   
+            //             ];
+            //         }
+                    
+            //         // foreach($m as $mms)
+                
+            //     }
+                return view('frontend.forms.logs.OOC_log' , compact('oocs'));
                                               
             case 'oot':
             

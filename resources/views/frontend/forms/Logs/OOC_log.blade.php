@@ -117,9 +117,11 @@
                                             <input type="date" class="custom-select" id="date_ooc_to">
                                         </div>
                                         <div class="filter-item">
-                                            <label for="originator">Equipment / Instrument</label>
-                                            <select class="custom-select" id="originator">
-                                                <option value="all">All Records</option>
+                                            <label for="originator">Equipment /Instrument</label>
+                                            <select class="custom-select" id="instrument_equipment">
+                                                <option value="Null">Select Records</option>
+                                                <option value="instrument_name">Instrument Name</option>
+                                                <option value="instrument_id">Instrument Id</option>
 
                                             </select>
                                         </div>
@@ -197,7 +199,8 @@ const filterData = {
     div_id: null,
     period: null,
     date_OOC_from: null,
-    date_OOC_to: null
+    date_OOC_to: null,
+    instrmentGrid:null
 
 }
 
@@ -219,6 +222,12 @@ $('#initiator_group').change(function() {
         // console.log('Date To:', filterData.dateTo);
         filterRecords();
     });
+
+    
+$('#instrument_equipment').change(function() {
+    filterData.instrmentGrid = $(this).val();
+    filterRecords()
+});
 
  $('#datewise').change(function() {
 filterData.period_lab = $(this).val();
