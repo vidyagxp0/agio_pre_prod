@@ -962,7 +962,7 @@ class DashboardController extends Controller
         } elseif ($type == "Action-Item") {
             $data = ActionItem::find($id);
             $single = "actionitemSingleReport/"  . $data->id;
-            $audit = "actionitemAuditReport/" . $data->id;
+            $audit = "actionitemauditTrailPdf/" . $data->id;
             $division = QMSDivision::find($data->division_id);
             $division_name = $division->name;
         } elseif ($type == "Extension") {
@@ -1033,7 +1033,7 @@ class DashboardController extends Controller
         $html = '';
         $html = '<div class="block">
         <div class="record_no">
-            Record No. ' . str_pad($data->record_number, 4, '0', STR_PAD_LEFT) .
+            Record No. ' . str_pad($data->record, 4, '0', STR_PAD_LEFT) .
             '</div>
         <div class="division">
         ' . $division_name . '/ ' . $type . '

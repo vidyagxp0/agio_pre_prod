@@ -22,14 +22,14 @@ class MarketComplaintController extends Controller
 {
     public function index()
     {
-        $record_number = ((RecordNumber::first()->value('counter')) + 1);
-        $record_number = str_pad($record_number, 4, '0', STR_PAD_LEFT);
+        $record = ((RecordNumber::first()->value('counter')) + 1);
+        $record = str_pad($record, 4, '0', STR_PAD_LEFT);
         $currentDate = Carbon::now();
         $formattedDate = $currentDate->addDays(30);
         $due_date = $formattedDate->format('Y-m-d');
         
 
-        return view('frontend.market_complaint.market_complaint_new',compact('due_date', 'record_number'));
+        return view('frontend.market_complaint.market_complaint_new',compact('due_date', 'record'));
     }
 
 
@@ -55,7 +55,7 @@ class MarketComplaintController extends Controller
         $marketComplaint->intiation_date = $request->intiation_date;
         $marketComplaint->due_date_gi = $request->due_date_gi;
         $marketComplaint->initiator_group_code_gi = $request->initiator_group_code_gi;
-        $marketComplaint->record_number =((RecordNumber::first()->value('counter')) + 1);
+        $marketComplaint->record =((RecordNumber::first()->value('counter')) + 1);
         $marketComplaint->initiated_through_gi = $request->initiated_through_gi;
         $marketComplaint->if_other_gi = $request->if_other_gi;
         $marketComplaint->is_repeat_gi = $request->is_repeat_gi;
@@ -107,7 +107,7 @@ class MarketComplaintController extends Controller
 
 
 
-        //  dd($marketComplaint->record_number);
+        //  dd($marketComplaint->record);
             $marketComplaint->form_type="Market Complaint";
       
             // {{----.File attachemenet   }}
@@ -841,7 +841,7 @@ public function update(Request $request,$id)
     }
     $marketComplaint->if_other_gi = $request->input('if_other_gi');
     $marketComplaint->initiator_group_code_gi = $request->initiator_group_code_gi;
-    $marketComplaint->record_number =((RecordNumber::first()->value('counter')) + 1);
+    $marketComplaint->record =((RecordNumber::first()->value('counter')) + 1);
     $marketComplaint->initiated_through_gi = $request->initiated_through_gi;
     $marketComplaint->due_date_gi = $request->due_date_gi;
 
@@ -903,55 +903,75 @@ public function update(Request $request,$id)
         // {{----.File attachemenet   }}
 
 
-        if (!empty($request->initial_attachment_gi)) {
-            $files = [];
-            if ($request->hasfile('initial_attachment_gi')) {
-                foreach ($request->file('initial_attachment_gi') as $file) {
-                    $name = $request->name . 'initial_attachment_gi' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
-                    $file->move('upload/', $name);
-                    $files[] = $name;
-                }
+        $files = [];
+        if ($request->hasFile('initial_attachment_gi')) {
+            foreach ($request->file('initial_attachment_gi') as $file) {
+                // Generate a unique name for the file
+                $name = $request->name . 'initial_attachment_gi' . uniqid() . '.' . $file->getClientOriginalExtension();
+                
+                // Move the file to the upload directory
+                $file->move(public_path('upload/'), $name);
+                
+                // Add the file name to the array
+                $files[] = $name;
             }
-            $marketComplaint->initial_attachment_gi = json_encode($files);
         }
+        // Encode the file names array to JSON and assign it to the model
+        $marketComplaint->initial_attachment_gi = json_encode($files);
 
 
-
-        if (!empty($request->initial_attachment_hodsr)) {
-            $files = [];
-            if ($request->hasfile('initial_attachment_hodsr')) {
-                foreach ($request->file('initial_attachment_hodsr') as $file) {
-                    $name = $request->name . 'initial_attachment_hodsr' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
-                    $file->move('upload/', $name);
-                    $files[] = $name;
-                }
+        $files = [];
+        if ($request->hasFile('initial_attachment_hodsr')) {
+            foreach ($request->file('initial_attachment_hodsr') as $file) {
+                // Generate a unique name for the file
+                $name = $request->name . 'initial_attachment_hodsr' . uniqid() . '.' . $file->getClientOriginalExtension();
+                
+                // Move the file to the upload directory
+                $file->move(public_path('upload/'), $name);
+                
+                // Add the file name to the array
+                $files[] = $name;
             }
-            $marketComplaint->initial_attachment_hodsr = json_encode($files);
         }
+        // Encode the file names array to JSON and assign it to the model
+        $marketComplaint->initial_attachment_hodsr = json_encode($files);
+       
+        $files = [];
+        if ($request->hasFile('initial_attachment_ca')) {
+            foreach ($request->file('initial_attachment_ca') as $file) {
+                // Generate a unique name for the file
+                $name = $request->name . 'initial_attachment_ca' . uniqid() . '.' . $file->getClientOriginalExtension();
+                
+                // Move the file to the upload directory
+                $file->move(public_path('upload/'), $name);
+                
+                // Add the file name to the array
+                $files[] = $name;
+            }
+        }
+        // Encode the file names array to JSON and assign it to the model
+        $marketComplaint->initial_attachment_ca = json_encode($files);
+
+        
+        $files = [];
+        if ($request->hasFile('initial_attachment_c')) {
+            foreach ($request->file('initial_attachment_c') as $file) {
+                // Generate a unique name for the file
+                $name = $request->name . 'initial_attachment_c' . uniqid() . '.' . $file->getClientOriginalExtension();
+                
+                // Move the file to the upload directory
+                $file->move(public_path('upload/'), $name);
+                
+                // Add the file name to the array
+                $files[] = $name;
+            }
+        }
+        // Encode the file names array to JSON and assign it to the model
+        $marketComplaint->initial_attachment_c = json_encode($files);
 
 
-        if (!empty($request->initial_attachment_ca)) {
-            $files = [];
-            if ($request->hasfile('initial_attachment_ca')) {
-                foreach ($request->file('initial_attachment_ca') as $file) {
-                    $name = $request->name . 'initial_attachment_ca' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
-                    $file->move('upload/', $name);
-                    $files[] = $name;
-                }
-            }
-            $marketComplaint->initial_attachment_ca = json_encode($files);
-        }
-        if (!empty($request->initial_attachment_c)) {
-            $files = [];
-            if ($request->hasfile('initial_attachment_c')) {
-                foreach ($request->file('initial_attachment_c') as $file) {
-                    $name = $request->name . 'initial_attachment_c' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
-                    $file->move('upload/', $name);
-                    $files[] = $name;
-                }
-            }
-            $marketComplaint->initial_attachment_c = json_encode($files);
-        }
+       
+       
         // dd($marketComplaint);
 
 
@@ -1929,8 +1949,8 @@ public function MarketComplaintRca_actionChild(Request $request,$id)
     $parent_id = $id;
     $parent_type = "Capa";
     $old_record = Capa::select('id', 'division_id', 'record')->get();
-    $record_number = ((RecordNumber::first()->value('counter')) + 1);
-    $record_number = str_pad($record_number, 4, '0', STR_PAD_LEFT);
+    $record = ((RecordNumber::first()->value('counter')) + 1);
+    $record = str_pad($record, 4, '0', STR_PAD_LEFT);
     $currentDate = Carbon::now();
     $formattedDate = $currentDate->addDays(30);
     $due_date = $formattedDate->format('d-M-Y');
@@ -1941,13 +1961,13 @@ public function MarketComplaintRca_actionChild(Request $request,$id)
    
     if ($request->revision == "rca-child") {
         $cc->originator = User::where('id', $cc->initiator_id)->value('name');
-        return view('frontend.forms.root-cause-analysis', compact('record_number', 'due_date', 'parent_id','old_record', 'parent_type','parent_intiation_date','parent_record','parent_initiator_id','cft'));
+        return view('frontend.forms.root-cause-analysis', compact('record', 'due_date', 'parent_id','old_record', 'parent_type','parent_intiation_date','parent_record','parent_initiator_id','cft'));
 
     }
     if ($request->revision == "Action-Item") {
         // return "test";
         $cc->originator = User::where('id', $cc->initiator_id)->value('name');
-        return view('frontend.forms.action-item', compact('record_number', 'due_date', 'parent_id','old_record', 'parent_type','parent_intiation_date','parent_record','parent_initiator_id'));
+        return view('frontend.action-item.action-item', compact('record', 'due_date', 'parent_id','old_record', 'parent_type','parent_intiation_date','parent_record','parent_initiator_id'));
 
     }
     
@@ -1968,8 +1988,8 @@ public function MarketComplaintRca_actionChild(Request $request,$id)
         $parent_id = $id;
         $parent_type = "Capa";
         $old_record = Capa::select('id', 'division_id', 'record')->get();
-        $record_number = ((RecordNumber::first()->value('counter')) + 1);
-        $record_number = str_pad($record_number, 4, '0', STR_PAD_LEFT);
+        $record = ((RecordNumber::first()->value('counter')) + 1);
+        $record = str_pad($record, 4, '0', STR_PAD_LEFT);
         $currentDate = Carbon::now();
         $formattedDate = $currentDate->addDays(30);
         $due_date = $formattedDate->format('d-M-Y');
@@ -1980,13 +2000,13 @@ public function MarketComplaintRca_actionChild(Request $request,$id)
        
         if ($request->revision == "capa-child") {
             $cc->originator = User::where('id', $cc->initiator_id)->value('name');
-            return view('frontend.forms.capa', compact('record_number', 'due_date', 'parent_id','old_record', 'parent_type','parent_intiation_date','parent_record','parent_initiator_id','cft'));
+            return view('frontend.forms.capa', compact('record', 'due_date', 'parent_id','old_record', 'parent_type','parent_intiation_date','parent_record','parent_initiator_id','cft'));
 
         }
         if ($request->revision == "Action-Item") {
             // return "test";
             $cc->originator = User::where('id', $cc->initiator_id)->value('name');
-            return view('frontend.forms.action-item', compact('record_number', 'due_date', 'parent_id','old_record', 'parent_type','parent_intiation_date','parent_record','parent_initiator_id'));
+            return view('frontend.action-item.action-item', compact('record', 'due_date', 'parent_id','old_record', 'parent_type','parent_intiation_date','parent_record','parent_initiator_id'));
 
         }
         
@@ -2003,8 +2023,8 @@ public function MarketComplaintRca_actionChild(Request $request,$id)
             $parent_id = $id;
             $parent_type = "Capa";
             $old_record = Capa::select('id', 'division_id', 'record')->get();
-            $record_number = ((RecordNumber::first()->value('counter')) + 1);
-            $record_number = str_pad($record_number, 4, '0', STR_PAD_LEFT);
+            $record = ((RecordNumber::first()->value('counter')) + 1);
+            $record = str_pad($record, 4, '0', STR_PAD_LEFT);
             $currentDate = Carbon::now();
             $formattedDate = $currentDate->addDays(30);
             $due_date = $formattedDate->format('d-M-Y');
@@ -2016,13 +2036,13 @@ public function MarketComplaintRca_actionChild(Request $request,$id)
             if ($request->revision == "regulatory-child") {
                 $cc->originator = User::where('id', $cc->initiator_id)->value('name');
                 return "test";
-                // return view('frontend.forms.capa', compact('record_number', 'due_date', 'parent_id','old_record', 'parent_type','parent_intiation_date','parent_record','parent_initiator_id','cft'));
+                // return view('frontend.forms.capa', compact('record', 'due_date', 'parent_id','old_record', 'parent_type','parent_intiation_date','parent_record','parent_initiator_id','cft'));
 
             }
             if ($request->revision == "Effectiveness-child") {
                 // return "test";
                 $cc->originator = User::where('id', $cc->initiator_id)->value('name');
-                return view('frontend.forms.effectiveness-check', compact('record_number', 'due_date', 'parent_id','old_record', 'parent_type','parent_intiation_date','parent_record','parent_initiator_id'));
+                return view('frontend.forms.effectiveness-check', compact('record', 'due_date', 'parent_id','old_record', 'parent_type','parent_intiation_date','parent_record','parent_initiator_id'));
 
             }
             
