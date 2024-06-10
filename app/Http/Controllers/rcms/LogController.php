@@ -72,8 +72,38 @@ class LogController extends Controller
                 
 
              case 'market-complaint':
-                
-             $marketcomplaint = MarketComplaint::get();
+            
+                $marketcomplaint = MarketComplaint::with('product_details')->get();
+                // $complaintData = [];
+                // foreach ($marketcomplaint as $marketlog)
+                // {
+                //     $productDetails= $marketlog->product_details;
+                //     foreach ($productDetails['data'] as $data) {
+                //         $complaintData = [];
+                //         return [
+                //             'info_product_name' => $data['info_product_name'],
+                //             'info_batch_no' => $data['info_batch_no'],
+                //             'info_mfg_date' => $data['info_mfg_date'],
+                //             'info_expiry_date' => $data['info_expiry_date'],
+                //             'info_batch_size' => $data['info_batch_size'],
+                //             'info_pack_size' => $data['info_pack_size'],
+                //             'info_dispatch_quantity' => $data['info_dispatch_quantity'],
+                //             'info_remarks' => $data['info_remarks'],
+                //         ];
+                //     }
+                    
+                //     // foreach($m as $mms)
+                    
+                // }
+
+            
+            
+
+           
+            
+
+
+
 
                     return view('frontend.forms.logs.Market-complaint-registerLog',compact('marketcomplaint'));
                         

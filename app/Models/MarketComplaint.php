@@ -189,4 +189,11 @@ class MarketComplaint extends Model
     {
       return $this->belongsTo(User::class,'initiator_id');
     }
+
+    
+    public function product_details()
+    {
+        return $this->hasOne(MarketComplaintGrids::class, 'mc_id');
+    }
+
 }
