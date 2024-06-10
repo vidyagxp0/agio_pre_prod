@@ -232,8 +232,8 @@ Route::group(['prefix' => 'rcms'], function () {
             Route::post('nonConformaceCftnotreqired/{id}', [NonConformaceController::class, 'cftnotreqired'])->name('nonConformaceCftnotreqired');
             Route::post('nonConformaceQaMoreInfo/{id}', [NonConformaceController::class, 'failure_inv_qa_more_info'])->name('nonConformaceQaMoreInfo');
 
-            Route::get('non-conformance-audit-trail/{id}', [NonConformaceController::class, 'NonConformaceAuditTrail'])->name('non-conformance-audit-trail');
-            Route::get('non-conformance-audit-pdf/{id}', [NonConformaceController::class, 'NonConformaceAuditTrailPdf'])->name('non-conformance-audit-pdf');
+            Route::get('non-conformance-audit-trail/{id}', [NonConformaceController::class, 'NonConformanceAuditTrails'])->name('non-conformance-audit-trail');
+            Route::get('non-conformance-audit-pdf/{id}', [NonConformaceController::class, 'NonConformanceAuditTrailPdf'])->name('non-conformance-audit-pdf');
             Route::get('non-conformance-single-report/{id}', [NonConformaceController::class, 'singleReport'])->name('non-conformance-single-report');
 
             Route::post('launch-extension-non-conformance/{id}', [NonConformaceController::class, 'launchExtensionDeviation'])->name('launch-extension-non-conformance');

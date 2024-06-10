@@ -549,7 +549,7 @@
                                 ->get();
                             $userRoleIds = $userRoles->pluck('q_m_s_roles_id')->toArray();
                             $cftRolesAssignUsers = collect($userRoleIds); //->contains(fn ($roleId) => $roleId >= 22 && $roleId <= 33);
-                            $cftUsers = DB::table('non_conformances_cfts')
+                            $cftUsers = DB::table('non_conformance_c_f_ts')
                                 ->where(['non_conformances_id' => $data->id])
                                 ->first();
 
@@ -580,7 +580,7 @@
                                     $valuesArray[] = $value;
                                 }
                             }
-                            $cftCompleteUser = DB::table('non_conformances_cft_responses')
+                            $cftCompleteUser = DB::table('non_conformance_c_f_t_responses')
                                 ->whereIn('status', ['In-progress', 'Completed'])
                                 ->where('non_conformances_id', $data->id)
                                 ->where('cft_user_id', Auth::user()->id)
@@ -890,8 +890,8 @@
                                         <div class="group-input">
                                             <label for="record_number"><b>Record Number</b></label>
                                             @if ($data->stage >= 3)
-                                                <input disabled type="text"
-                                                    value="{{ Helpers::getDivisionName($data->division_id) }}/Non Conformance/{{ date('Y') }}/{{ str_pad($data->record, 4, '0', STR_PAD_LEFT) }}">
+                                            <input disabled type="text" name="record" id="record" value="{{$data->initiator_group_code}}/LI/{{ date('y') }}/{{ $data->record}}">
+                                                {{-- <input disabled type="text" value="{{ Helpers::getDivisionName($data->division_id) }}/Non Conformance/{{ date('Y') }}/{{ str_pad($data->record, 4, '0', STR_PAD_LEFT) }}"> --}}
                                             @else
                                                 <input disabled type="text" name="record">
                                             @endif
@@ -2724,7 +2724,7 @@
                                     });
                                 </script>
                                 @php
-                                    $data1 = DB::table('non_conformances_cfts')
+                                    $data1 = DB::table('non_conformance_c_f_ts')
                                         ->where('non_conformances_id', $data->id)
                                         ->first();
                                 @endphp
@@ -10390,12 +10390,12 @@
                         Non Conformance Extension
                     </div>
 
-                    @if($failureInvestigationExtension && $failureInvestigationExtension->dev_proposed_due_date)
+                    @if($NonConformanceExtension && $NonConformanceExtension->dev_proposed_due_date)
                         <div class="col-lg-6 new-date-data-field">
                             <div class="group-input input-date">
                                 <label for="Audit Schedule End Date">Proposed Due Date (Non Conformance)</label>
                                 <div class="calenderauditee">
-                                    <input type="text" id="dev_proposed_due_date" id="dev_proposed_due_date" readonly value="{{Helpers::getdateFormat($failureInvestigationExtension->dev_proposed_due_date)}}" />
+                                    <input type="text" id="dev_proposed_due_date" id="dev_proposed_due_date" readonly value="{{Helpers::getdateFormat($NonConformanceExtension->dev_proposed_due_date)}}" />
                                 </div>
                             </div>
                         </div>
@@ -10411,12 +10411,12 @@
                     @endif
 
 
-                    @if($failureInvestigationExtension && $failureInvestigationExtension->dev_extension_justification)
+                    @if($NonConformanceExtension && $NonConformanceExtension->dev_extension_justification)
                         <div class="col-md-12 mb-3">
                             <div class="group-input">
                                 <label for="Extension_Justification_non_conformances">Extension Justification (Non Conformance)</label>
                                 <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
-                                <textarea name="dev_extension_justification" placeholder="Non Conformance Extension Justification" disabled id="dev_extension_justification" value="{{$failureInvestigationExtension->dev_extension_justification}}">{{$failureInvestigationExtension->dev_extension_justification}}</textarea>
+                                <textarea name="dev_extension_justification" placeholder="Non Conformance Extension Justification" disabled id="dev_extension_justification" value="{{$NonConformanceExtension->dev_extension_justification}}">{{$NonConformanceExtension->dev_extension_justification}}</textarea>
                             </div>
                         </div>
                     @else
@@ -10429,14 +10429,14 @@
                         </div>
                     @endif
 
-                    @if($failureInvestigationExtension && $failureInvestigationExtension->dev_extension_completed_by)
+                    @if($NonConformanceExtension && $NonConformanceExtension->dev_extension_completed_by)
                         <div class="col-lg-6">
                             <div class="group-input">
                                 <label for=" dev_extension_completed_by"> Non Conformance Extension Completed By </label>
                                 <select name="dev_extension_completed_by" id="dev_extension_completed_by" disabled>
                                     <option value="">-- Select --</option>
                                     @foreach ($users as $user)
-                                        <option value="{{ $user->id }}" @if($user->id == $failureInvestigationExtension->dev_extension_completed_by) selected @endif >{{ $user->name }}</option>
+                                        <option value="{{ $user->id }}" @if($user->id == $NonConformanceExtension->dev_extension_completed_by) selected @endif >{{ $user->name }}</option>
                                     @endforeach
                                 </select>
                             </div>
@@ -10455,12 +10455,12 @@
                         </div>
                     @endif
 
-                    @if($failureInvestigationExtension && $failureInvestigationExtension->dev_completed_on)
+                    @if($NonConformanceExtension && $NonConformanceExtension->dev_completed_on)
                         <div class="col-lg-6 new-date-data-field">
                             <div class="group-input input-date">
                                 <label for="Audit Schedule End Date">Non Conformance Extension Completed On</label>
                                 <div class="calenderauditee">
-                                    <input type="text" id="dev_completed_on" readonly name="dev_completed_on" placeholder="DD-MMM-YYYY" value="{{Helpers::getdateFormat($failureInvestigationExtension->dev_completed_on)}}" />
+                                    <input type="text" id="dev_completed_on" readonly name="dev_completed_on" placeholder="DD-MMM-YYYY" value="{{Helpers::getdateFormat($NonConformanceExtension->dev_completed_on)}}" />
                                 </div>
                             </div>
                         </div>
@@ -11521,7 +11521,7 @@
                             </li>
                             <li>
                                 <div>
-                                    @if($failureInvestigationExtension && $failureInvestigationExtension->counter == 3)
+                                    @if($NonConformanceExtension && $NonConformanceExtension->counter == 3)
                                         <a>-------</a>
                                     @else
                                         <a href="" data-bs-toggle="modal" data-bs-target="#non_conformances_extension"> Non Conformance</a>
@@ -12404,7 +12404,7 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                 </div>
 
-                <form action="{{ route('non_conformances_reject', $data->id) }}" method="POST">
+                <form action="{{ route('non_conformance_reject', $data->id) }}" method="POST">
                     @csrf
                     <!-- Modal body -->
                     <div class="modal-body">
@@ -12415,15 +12415,15 @@
                         </div>
                         <div class="group-input">
                             <label for="username">Username <span class="text-danger">*</span></label>
-                            <input type="text" name="username" required>
+                            <input type="text" class="form-control" name="username" required>
                         </div>
                         <div class="group-input">
                             <label for="password">Password <span class="text-danger">*</span></label>
-                            <input type="password" name="password" required>
+                            <input type="password" class="form-control" name="password" required>
                         </div>
                         <div class="group-input">
                             <label for="comment">Comment <span class="text-danger">*</span></label>
-                            <input type="comment" name="comment" required>
+                            <input type="comment" class="form-control" name="comment" required>
                         </div>
                     </div>
 
@@ -12464,15 +12464,15 @@
                         </div>
                         <div class="group-input">
                             <label for="username">Username <span class="text-danger">*</span></label>
-                            <input type="text" name="username" required>
+                            <input type="text" class="form-control" name="username" required>
                         </div>
                         <div class="group-input">
                             <label for="password">Password <span class="text-danger">*</span></label>
-                            <input type="password" name="password" required>
+                            <input type="password" class="form-control" name="password" required>
                         </div>
                         <div class="group-input">
                             <label for="comment">Comment <span class="text-danger">*</span></label>
-                            <input type="comment" name="comment" required>
+                            <input type="comment" class="form-control" name="comment" required>
                         </div>
                     </div>
 
@@ -12512,15 +12512,15 @@
                         </div>
                         <div class="group-input">
                             <label for="username">Username <span class="text-danger">*</span></label>
-                            <input type="text" name="username" required>
+                            <input type="text"   class="form-control" name="username" required>
                         </div>
                         <div class="group-input">
                             <label for="password">Password <span class="text-danger">*</span></label>
-                            <input type="password" name="password" required>
+                            <input type="password" class="form-control" name="password" required>
                         </div>
                         <div class="group-input">
                             <label for="comment">Comment <span class="text-danger">*</span></label>
-                            <input type="comment" name="comment" required>
+                            <input type="comment" class="form-control" name="comment" required>
                         </div>
                     </div>
 
@@ -12547,7 +12547,7 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                 </div>
 
-                <form action="{{ route('failureInvestigationCheck', $data->id) }}" method="POST">
+                <form action="{{ route('nonConformaceCheck', $data->id) }}" method="POST">
                     @csrf
                     <!-- Modal body -->
                     <div class="modal-body">
@@ -12558,15 +12558,15 @@
                         </div>
                         <div class="group-input">
                             <label for="username">Username <span class="text-danger">*</span></label>
-                            <input type="text" name="username" required>
+                            <input type="text" class="form-control" name="username" required>
                         </div>
                         <div class="group-input">
                             <label for="password">Password <span class="text-danger">*</span></label>
-                            <input type="password" name="password" required>
+                            <input type="password" class="form-control" name="password" required>
                         </div>
                         <div class="group-input">
                             <label for="comment">Comment <span class="text-danger">*</span></label>
-                            <input type="comment" name="comment" required>
+                            <input type="comment" class="form-control" name="comment" required>
                         </div>
                     </div>
 
@@ -12593,7 +12593,7 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                 </div>
 
-                <form action="{{ route('failureInvestigationCheck2', $data->id) }}" method="POST">
+                <form action="{{ route('nonConformaceCheck2', $data->id) }}" method="POST">
                     @csrf
                     <!-- Modal body -->
                     <div class="modal-body">
@@ -12604,15 +12604,15 @@
                         </div>
                         <div class="group-input">
                             <label for="username">Username <span class="text-danger">*</span></label>
-                            <input type="text" name="username" required>
+                            <input type="text" class="form-control" name="username" required>
                         </div>
                         <div class="group-input">
                             <label for="password">Password <span class="text-danger">*</span></label>
-                            <input type="password" name="password" required>
+                            <input type="password" class="form-control" name="password" required>
                         </div>
                         <div class="group-input">
                             <label for="comment">Comment <span class="text-danger">*</span></label>
-                            <input type="comment" name="comment" required>
+                            <input type="comment" class="form-control" name="comment" required>
                         </div>
                     </div>
 
@@ -12639,7 +12639,7 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                 </div>
 
-                <form action="{{ route('failureInvestigationCheck3', $data->id) }}" method="POST">
+                <form action="{{ route('nonConformaceCheck3', $data->id) }}" method="POST">
                     @csrf
                     <!-- Modal body -->
                     <div class="modal-body">
@@ -12650,15 +12650,15 @@
                         </div>
                         <div class="group-input">
                             <label for="username">Username <span class="text-danger">*</span></label>
-                            <input type="text" name="username" required>
+                            <input type="text" class="form-control" name="username" required>
                         </div>
                         <div class="group-input">
                             <label for="password">Password <span class="text-danger">*</span></label>
-                            <input type="password" name="password" required>
+                            <input type="password" class="form-control" name="password" required>
                         </div>
                         <div class="group-input">
                             <label for="comment">Comment <span class="text-danger">*</span></label>
-                            <input type="comment" name="comment" required>
+                            <input type="comment" class="form-control" name="comment" required>
                         </div>
                     </div>
 
@@ -12695,15 +12695,15 @@
                         </div>
                         <div class="group-input">
                             <label for="username">Username <span class="text-danger">*</span></label>
-                            <input type="text" name="username" required>
+                            <input type="text" class="form-control" name="username" required>
                         </div>
                         <div class="group-input">
                             <label for="password">Password <span class="text-danger">*</span></label>
-                            <input type="password" name="password" required>
+                            <input type="password"  class="form-control" name="password" required>
                         </div>
                         <div class="group-input">
                             <label for="comment">Comment</label>
-                            <input type="comment" name="comment">
+                            <input type="comment" class="form-control" name="comment">
                         </div>
                     </div>
                     <div class="modal-footer">
@@ -12728,7 +12728,7 @@
                     <h4 class="modal-title">E-Signature</h4>
                     <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                 </div>
-                <form action="{{ route('failureInvestigationStageChange', $data->id) }}" method="POST"
+                <form action="{{ route('nonConformaceStageChange', $data->id) }}" method="POST"
                     id="signatureModalForm">
                     @csrf
                     <div class="modal-body">
@@ -12739,15 +12739,15 @@
                         </div>
                         <div class="group-input">
                             <label for="username">Username <span class="text-danger">*</span></label>
-                            <input type="text" name="username" required>
+                            <input type="text" class="form-control" name="username" required>
                         </div>
                         <div class="group-input">
                             <label for="password">Password <span class="text-danger">*</span></label>
-                            <input type="password" name="password" required>
+                            <input type="password" class="form-control" name="password" required>
                         </div>
                         <div class="group-input">
                             <label for="comment">Comment</label>
-                            <input type="comment" name="comment">
+                            <input type="comment" class="form-control" name="comment">
                         </div>
                     </div>
                     <div class="modal-footer">
@@ -12773,7 +12773,7 @@
                     <h4 class="modal-title">E-Signature</h4>
                     <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                 </div>
-                <form action="{{ route('failureInvestigationCftnotreqired', $data->id) }}" method="POST">
+                <form action="{{ route('nonConformaceCftnotreqired', $data->id) }}" method="POST">
                     @csrf
                     <!-- Modal body -->
                     <div class="modal-body">
@@ -12784,15 +12784,15 @@
                         </div>
                         <div class="group-input">
                             <label for="username">Username <span class="text-danger">*</span></label>
-                            <input type="text" name="username" required>
+                            <input type="text" class="form-control" name="username" required>
                         </div>
                         <div class="group-input">
                             <label for="password">Password <span class="text-danger">*</span></label>
-                            <input type="password" name="password" required>
+                            <input type="password" class="form-control" name="password" required>
                         </div>
                         <div class="group-input">
                             <label for="comment">Comment</label>
-                            <input type="comment" name="comment">
+                            <input type="comment" class="form-control" name="comment">
                         </div>
                     </div>
 
@@ -12829,15 +12829,15 @@
                         </div>
                         <div class="group-input">
                             <label for="username">Username</label>
-                            <input type="text" name="username" required>
+                            <input type="text" class="fomr-control" name="username" required>
                         </div>
                         <div class="group-input">
                             <label for="password">Password</label>
-                            <input type="password" name="password" required>
+                            <input type="password" class="form-control" name="password" required>
                         </div>
                         <div class="group-input">
                             <label for="comment">Comment</label>
-                            <input type="comment" name="comment">
+                            <input type="comment" class="form-control" name="comment">
                         </div>
                     </div>
 

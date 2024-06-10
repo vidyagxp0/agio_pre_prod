@@ -23,7 +23,7 @@ use Helpers;
 use Illuminate\Support\Facades\Hash;
 
 class OOTController extends Controller
-{
+{  
     public function index(Request $request)
     {
         $cft = [];

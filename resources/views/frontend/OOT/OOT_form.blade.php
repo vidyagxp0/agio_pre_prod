@@ -92,8 +92,7 @@
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="RLS Record Number"><b>Record Number</b></label>
-                                        <input disabled type="text" name="record_number" id="record_number"
-                                            value="---/LI/{{ date('y') }}/{{ $data }}">
+                                        <input disabled type="text" name="record_number" id="record_number" value="---/LI/{{ date('y') }}/{{ $data }}">
 
                                     </div>
                                 </div>

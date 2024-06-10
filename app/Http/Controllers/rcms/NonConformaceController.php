@@ -41,12 +41,16 @@ use Illuminate\Support\Facades\Validator;
 class NonConformaceController extends Controller
 {
     public function index(){
+        
+        
         $old_record = NonConformance::select('id', 'division_id', 'record')->get();
+        $data = ((RecordNumber::first()->value('counter')) + 1);
+        $data = str_pad($data, 4, '0', STR_PAD_LEFT);
         $currentDate = Carbon::now();
         $formattedDate = $currentDate->addDays(30);
         $due_date = $formattedDate->format('d-M-Y');
         $pre = NonConformance::all();
-        return response()->view('frontend.non-conformance.failure-inv-new', compact('formattedDate', 'due_date', 'old_record', 'pre'));
+        return response()->view('frontend.non-conformance.failure-inv-new', compact('formattedDate', 'due_date', 'old_record', 'pre','data'));
     }
 
     public function store(Request $request)
@@ -1783,7 +1787,7 @@ class NonConformaceController extends Controller
 
         $Cft->save();
                 $IsCFTRequired = NonConformanceCFTResponse::withoutTrashed()->where(['is_required' => 1, 'non_conformances_id' => $id])->latest()->first();
-                $cftUsers = DB::table('non_conformances_cfts')->where(['non_conformances_id' => $id])->first();
+                $cftUsers = DB::table('non_conformance_c_f_ts')->where(['non_conformances_id' => $id])->first();
                 // Define the column names
                 $columns = ['Production_person', 'Warehouse_notification', 'Quality_Control_Person', 'QualityAssurance_person', 'Engineering_person', 'Analytical_Development_person', 'Kilo_Lab_person', 'Technology_transfer_person', 'Environment_Health_Safety_person', 'Human_Resource_person', 'Information_Technology_person', 'Project_management_person','Other1_person','Other2_person','Other3_person','Other4_person','Other5_person'];
 
@@ -2696,7 +2700,7 @@ class NonConformaceController extends Controller
         return back();
     }
 
-    public function NonConformanceReject(Request $request, $id)
+    public function nonConformaceReject(Request $request, $id)
     {
 
         if ($request->username == Auth::user()->email && Hash::check($request->password, Auth::user()->password)) {
@@ -3051,7 +3055,7 @@ class NonConformaceController extends Controller
         }
     }
 
-    public function NonConformanceCheck(Request $request, $id)
+    public function nonConformaceCheck(Request $request, $id)
     {
         if ($request->username == Auth::user()->email && Hash::check($request->password, Auth::user()->password)) {
             $NonConformance = NonConformance::find($id);
@@ -3119,7 +3123,7 @@ class NonConformaceController extends Controller
         }
     }
 
-    public function NonConformanceCheck2(Request $request, $id)
+    public function nonConformaceCheck2(Request $request, $id)
     {
         if ($request->username == Auth::user()->email && Hash::check($request->password, Auth::user()->password)) {
             $NonConformance = NonConformance::find($id);
@@ -3186,7 +3190,7 @@ class NonConformaceController extends Controller
         }
     }
 
-    public function NonConformanceCheck3(Request $request, $id)
+    public function nonConformaceCheck3(Request $request, $id)
     {
         if ($request->username == Auth::user()->email && Hash::check($request->password, Auth::user()->password)) {
             $NonConformance = NonConformance::find($id);
@@ -3321,7 +3325,7 @@ class NonConformaceController extends Controller
         }
     }
 
-    public function non_conformances_send_stage(Request $request, $id)
+    public function non_conformance_send_stage(Request $request, $id)
     { 
         try {
             if ($request->username == Auth::user()->email && Hash::check($request->password, Auth::user()->password)) {
@@ -3333,7 +3337,7 @@ class NonConformaceController extends Controller
                 if ($NonConformance->stage == 1) {
                     if ($NonConformance->form_progress !== 'general-open')
                     {
-                        dd('emnter');
+                       
                         Session::flash('swal', [
                             'type' => 'warning',
                             'title' => 'Mandatory Fields!',
@@ -3650,7 +3654,7 @@ class NonConformaceController extends Controller
     
     
                     $IsCFTRequired = NonConformanceCFTResponse::withoutTrashed()->where(['is_required' => 1, 'non_conformances_id' => $id])->latest()->first();
-                    $cftUsers = DB::table('non_conformances_cfts')->where(['non_conformances_id' => $id])->first();
+                    $cftUsers = DB::table('non_conformance_c_f_ts')->where(['non_conformances_id' => $id])->first();
                     // Define the column names
                     $columns = ['Production_person', 'Warehouse_notification', 'Quality_Control_Person', 'QualityAssurance_person', 'Engineering_person', 'Analytical_Development_person', 'Kilo_Lab_person', 'Technology_transfer_person', 'Environment_Health_Safety_person', 'Human_Resource_person', 'Information_Technology_person', 'Project_management_person','Other1_person','Other2_person','Other3_person','Other4_person','Other5_person'];
                     // $columns2 = ['Production_review', 'Warehouse_review', 'Quality_Control_review', 'QualityAssurance_review', 'Engineering_review', 'Analytical_Development_review', 'Kilo_Lab_review', 'Technology_transfer_review', 'Environment_Health_Safety_review', 'Human_Resource_review', 'Information_Technology_review', 'Project_management_review'];

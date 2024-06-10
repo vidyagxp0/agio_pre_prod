@@ -583,7 +583,7 @@
 
                     <div id="CCForm1" class="inner-block cctabcontent">
                         <div class="inner-block-content">
-                            <div class="row">
+                            <div class="row"> 
 
                                 @if (!empty($parent_id))
                                     <input type="hidden" name="parent_id" value="{{ $parent_id }}">
@@ -593,7 +593,9 @@
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="RLS Record Number"><b>Record Number</b></label>
-                                        <input disabled type="text" name="record_number">
+                                        {{-- <input disabled type="text" name="record_number"> --}}
+                                        <input disabled type="text" name="record" id="record" value="---/LI/{{ date('y') }}/{{ $data }}">
+
                                         {{-- value="{{ Helpers::getDivisionName(session()->get('division')) }}/DEV/{{ date('Y') }}/{{ $record_number }}"> --}}
                                         {{-- <div class="static">QMS-EMEA/CAPA/{{ date('Y') }}/{{ $record_number }}</div> --}}
                                     </div>

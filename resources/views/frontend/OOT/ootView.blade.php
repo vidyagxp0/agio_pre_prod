@@ -231,8 +231,7 @@
                             <div class="col-lg-6">
                                 <div class="group-input">
                                     <label for="record_number"><b>Record Number</b></label>
-                                    <input disabled type="text" name="record_number" id="record_number" 
-                                            value="{{$data->initiator_group_code}}/LI/{{ date('y') }}/{{ $record_number}}">
+                                    <input disabled type="text" name="record_number" id="record_number" value="{{$data->initiator_group_code}}/LI/{{ date('y') }}/{{ $record_number}}">
                                         
                                 </div>
                             </div>
