@@ -191,7 +191,9 @@
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="RLS Record Number">Record Number</label>
-                                        <input disabled type="text" name="record">
+                                        <input disabled type="text" name="record_no"
+                                        value="{{  Helpers::getDivisionName(session()->get('division')) }}/ERRATA/{{ Helpers::year($showdata->created_at) }}/{{ str_pad($showdata->record, 4, '0', STR_PAD_LEFT) }}">
+                                        {{-- <input disabled type="text" name="record"> --}}
                                         {{-- value="{{ Helpers::getDivisionName(session()->get('division')) }}/ERRATA/{{ date('Y') }}/{{ $record }}"> --}}
                                         {{-- <div class="static">QMS-EMEA/CAPA/{{ date('Y') }}/{{ $record_number }}</div> --}}
                                     </div>
@@ -528,7 +530,7 @@
 
                                     </div>
                                 </div> --}}
-                                <div class="new-date-data-field">
+                                {{-- <div class="new-date-data-field">
                                     <div class="group-input input-date">
                                         <label for="Errata_date">Date And Time of Correction</label>
                                         <div class="calenderauditee">
@@ -536,6 +538,19 @@
                                             <input type="text" id="displayErrataDate" nmae="Date_and_time_of_correction" readonly placeholder="DD-MM-YYYY HH:MM" value="{{ $showdata->Date_and_time_of_correction }}"/>
 
                                             <input type="datetime-local" id="Errata_date" name="Date_and_time_of_correction" max="{{ \Carbon\Carbon::now()->format('Y-m-d\TH:i') }}" onchange="updateDisplayDateTime(this)" class="hide-input" />
+                                        </div>
+                                    </div>
+                                    @error('Errata_date')
+                                        <div class="text-danger">{{ $message }}</div>
+                                    @enderror
+                                </div> --}}
+
+                                <div class="new-date-data-field">
+                                    <div class="group-input input-date">
+                                        <label for="Errata_date">Date And Time of Correction</label>
+                                        <div class="calenderauditee">
+                                            <input type="text" id="displayErrataDate" name="Date_and_time_of_correction" readonly placeholder="DD-MM-YYYY HH:MM" value="{{ old('Date_and_time_of_correction', $showdata->Date_and_time_of_correction) }}"/>
+                                            <input type="datetime-local" id="Errata_date" name="Date_and_time_of_correction" onchange="updateDisplayDateTime(this)" class="hide-input" />
                                         </div>
                                     </div>
                                     @error('Errata_date')
@@ -554,12 +569,13 @@
                                         const day = String(date.getDate()).padStart(2, '0');
                                         const monthIndex = date.getMonth();
                                         const monthNames = ["Jan", "Feb", "March", "April", "May", "June",
-                                                            "July", "Aug", "Sep", "Oct", "Nov", "Dec"];
+                                            "July", "Aug", "Sep", "Oct", "Nov", "Dec"];
                                         const month = monthNames[monthIndex];
                                         const year = date.getFullYear();
                                         let hours = date.getHours();
                                         let minutes = date.getMinutes();
 
+                                        hours = String(hours).padStart(2, '0');
                                         minutes = String(minutes).padStart(2, '0');
 
                                         const formattedDateTime = `${day}-${month}-${year} ${hours}:${minutes}`;

@@ -159,8 +159,10 @@ Route::group(['prefix' => 'rcms'], function () {
             Route::post('RejectStateChange/{id}', [ObservationController::class, 'RejectStateChange'])->name('RejectStateChangeObservation');
             Route::post('observation_child/{id}', [ObservationController::class, 'observation_child'])->name('observationchild');
             Route::post('boostStage/{id}', [ObservationController::class, 'boostStage'])->name('updatestageobservation');
-            Route::get('ObservationAuditTrialShow/{id}', [ObservationController::class, 'ObservationAuditTrialShow'])->name('ShowObservationAuditTrial');
+            Route::get('Observation_AuditTrial_Show/{id}', [ObservationController::class, 'ObservationAuditTrialShow'])->name('ShowObservationAuditTrial');
             Route::get('ObservationAuditTrialDetails/{id}', [ObservationController::class, 'ObservationAuditTrialDetails'])->name('showaudittrialobservation');
+            Route::get('ObservationSingleReport/{id}', [ObservationController::class, 'ObservationSingleReport']);
+            Route::get('ObservationAuditTrialShow/{id}', [ObservationController::class, 'ObservationAuditTrailPdf'])->name('Observationaudit.pdf');
 
 
             //----------------------------------------------By PRIYA SHRIVASTAVA------------------
