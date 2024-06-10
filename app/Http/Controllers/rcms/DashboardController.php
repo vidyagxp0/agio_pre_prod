@@ -880,13 +880,7 @@ class DashboardController extends Controller
 
         $division_name = "NA";
 
-        if ($type == "Change-Control") {
-            $data = CC::find($id);
-            $single = "change_control_single_pdf/" . $data->id;
-            $audit = "audit/" . $data->id;
-            $division = QMSDivision::find($data->division_id);
-            $division_name = $division->name;
-        } elseif ($type == "OOT") {
+        if ($type == "OOT") {
             $data = Ootc::find($id);
             $single = "ootcSingleReport/" . $data->id;
             $audit = "audit_pdf/".$data->id;
@@ -1025,6 +1019,14 @@ class DashboardController extends Controller
             $division = QMSDivision::find($data->division_id);
             $division_name = $division->name;
 
+        }
+
+        elseif ($type == "Change-Control") {
+            $data = CC::find($id);
+            $audit = "audit/" . $data->id;
+            $single = "change_control_single_pdf/" . $data->id;
+            $division = QMSDivision::find($data->division_id);
+            $division_name = $division->name;
         }
 
 
