@@ -438,13 +438,13 @@
                                                             </div>
                                                         </a>
                                                     @endif
-                                                    @elseif($datas->type == 'errata')
-                                                    <a href="{{ route('errata.show', $datas->id) }}">
-                                                        {{ str_pad($datas->record, 4, '0', STR_PAD_LEFT) }}{{ $datas->id }}
+                                                    @elseif($datas->type == 'ERRATA')
+                                                    <a href="{{ route('errata.show', $datas->id) }}" style="color: blue" style="color: blue">
+                                                        {{ str_pad($datas->record, 4, '0', STR_PAD_LEFT) }}
                                                     </a>
                                                     @if (!empty($datas->parent_id))
                                                         <a
-                                                            href="{{ url('rcms/qms-dashboard_new', $datas->id) }}/management_review">
+                                                            href="{{ url('rcms/qms-dashboard_new', $datas->id) }}/errata">
                                                             <div class="icon" onclick="showChild()"
                                                                 data-bs-toggle="tooltip" title="Related Records">
                                                                 {{-- <img src="{{ asset('user/images/parent.png') }}"
@@ -466,7 +466,7 @@
                                                         </a>
                                                     @endif
 
-                                                    @elseif($datas->type == 'errata')
+                                                    @elseif($datas->type == 'ERRATA')
                                                     <a href="{{ route('errata.show', $datas->id) }}">
                                                         {{ str_pad($datas->record, 4, '0', STR_PAD_LEFT) }}{{ $datas->id }}
                                                     </a>
