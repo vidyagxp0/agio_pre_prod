@@ -344,7 +344,8 @@
         });
     </script>
 
-    <script>
+
+<script>
         $(document).ready(function() {
             $('#investigationTeamResponsibilityDetails').click(function(e) {
                 function generateTableRow(serialNumber) {
@@ -358,10 +359,14 @@
 
                     var html =
                         '<tr>' +
-                        '<td><input disabled type="text" name="serial[]" value="' + serialNumber + '"></td>' +
-                        '<td> <select name="investigation[' + serialNumber + '][investioncation_team]" id="" class="investioncation_team"> <option value="">-- Select --</option>'+ userOptionsHtml +' </select> </td>' +
-                        '<td><input type="text" class="numberDetail" name="investigation[' + serialNumber +'][responsibility]"></td>' +
-                        '<td><input type="text" class="numberDetail" name="investigation[' + serialNumber +'][remarks]"></td>' +
+                        '<td><input disabled type="text" name="investigation[' + serialNumber +
+                        '][serial]" value="' + serialNumber + '"></td>' +
+                        '<td> <select name="investigation[' + serialNumber +
+                        '][investioncation_team]" id="" class="investioncation_team"> <option value="">-- Select --</option>'+ userOptionsHtml +' </select> </td>' +
+                        '<td><input type="text" class="numberDetail" name="investigation[' + serialNumber +
+                        '][responsibility]"></td>' +
+                        '<td><input type="text" class="Document_Remarks" name="investigation[' +
+                        serialNumber + '][remarks]"></td>' +
                         '<td><button type="text" class="removeRowBtn" ">Remove</button></td>' +
 
                         '</tr>';
@@ -7922,98 +7927,97 @@
 
 
 
+                    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
                     <div class="col-lg-12">
-                        <div class="group-input">
-                            <label for="agenda">
-                                    Investigation team and Responsibilities
-                                <button type="button" name="agenda" id="investigationTeamResponsibilityDetails">+</button>
-                                <span class="text-primary" style="font-size: 0.8rem; font-weight: 400;" data-bs-toggle="modal"
-                                            data-bs-target="#investigationTeam">
+                        <div class="group-input" id="documentsRowna">
+                            <label for="audit-agenda-grid">
+                                Investigation team and Responsibilities
+                                <button type="button" name="audit-agenda-grid" id="investigationTeamResponsibilityDetails">+</button>
+                                <span class="text-primary" data-bs-toggle="modal" data-bs-target="#investigationn-team-responsibilities"
+                                    style="font-size: 0.8rem; font-weight: 400; cursor: pointer;">
                                     (Launch Instruction)
                                 </span>
                             </label>
                             <div class="table-responsive">
-                                <table class="table table-bordered" style="width: 150%"
-                                    id="investigationTeamResponsibilityDetailsDetails">
+                                <table class="table table-bordered" id="investigationTeamResponsibilityDetailsDetails" style="width: 100%;">
                                     <thead>
                                         <tr>
-                                            <th>Sr.No #</th>
-                                            <th>Investigation Team</th>
-                                            <th>Responsibility</th>
-                                            <th>Remarks</th>
-                                            <th>Action</th>
+                                            <th style="width: 4%">Row#</th>
+                                            <th style="width: 12%">Investigation Team</th>
+                                            <th style="width: 16%">Responsibility</th>
+                                            <th style="width: 16%">Remarks</th>
+                                            <th style="width: 8%">Action</th>
                                         </tr>
                                     </thead>
                                     <tbody>
 
                                         @if ($investigationTeamData && is_array($investigationTeamData->data))
-                                            @foreach ($investigationTeamData->data as $investigationData)
+                                            @foreach ($investigationTeamData->data as $investigation_data)
                                                 <tr>
                                                     <td>
-                                                        <input disabled type="text"name="serial[]" {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }} value="{{ $key + 1 }}">
+                                                        <input disabled type="text" name="investigation[{{ $loop->index }}][serial]" value="{{ $loop->index + 1 }}">
                                                     </td>
-
                                                     <td>
-                                                        <select name="investication[{{ $loop->index }}][investioncation_team]" id="">
+                                                        <select name="investigation[{{ $loop->index }}][investioncation_team]" id="" class="investioncation_team">
                                                             <option value="">-- Select --</option>
-                                                                @foreach ($users as $user)
-                                                                    <option value="{{ $user->id }}" {{ $investigationData['investioncation_team'] == $user->id ? 'selected' : '' }}>{{ $user->name }}</option>
-                                                                @endforeach
+                                                            @foreach ($users as $user)
+                                                                <option value="{{ $user->id }}"
+                                                                    {{ $investigation_data['investioncation_team'] == $user->id ? 'selected' : '' }}>
+                                                                    {{ $user->name }}</option>
+                                                            @endforeach
                                                         </select>
                                                     </td>
                                                     <td>
-                                                        <input type="text" name="investigation[{{ $loop->index }}][responsibility]" value="{{ isset($investigationData['responsibility']) ? $investigationData['responsibility'] : '' }}">
+                                                        <input type="text" class="numberDetail" name="investigation[{{ $loop->index }}][responsibility]"
+                                                            value="{{ $investigation_data['responsibility'] }}">
                                                     </td>
                                                     <td>
-                                                        <input type="text" name="investigation[{{ $loop->index }}][remarks]" value="{{ isset($investigationData['remarks']) ? $investigationData['remarks'] : '' }}">
+                                                        <input type="text" class="Document_Remarks" name="investigation[{{ $loop->index }}][remarks]"
+                                                            value="{{ $investigation_data['remarks'] }}">
                                                     </td>
-
                                                     <td><input type="text" class="Action" name=""></td>
                                                 </tr>
                                             @endforeach
                                         @else
-                                            <td>
-                                                <input disabled type="text"name="serial[]" {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }} value="{{ $key + 1 }}">
-                                            </td>
-                                            <td>
-                                                <select name="investigation[0][investioncation_team]" id=""> 
-                                                    <option value="">-- Select --</option>
-                                                        @foreach ($users as $user)
-                                                            <option value="{{ $user->id }}">{{ $user->name }}</option> 
-                                                        @endforeach
-                                                </select>
-                                            </td>
-                                            <td><input type="text" class="Document_Remarks" name="investigation[0][responsibility]"></td>
+                                            <td><input disabled type="text" name="investigation[0][serial]" value="1"></td>
+                                                @foreach ($users as $user)
+                                                    <td> 
+                                                        <select name="investigation[0][investioncation_team]" id="">
+                                                            <option value="">-- Select --</option>
+                                                            <option value="{{ $user->id }}">{{ $user->name }}</option>
+                                                        </select>
+                                                    </td>
+                                                @endforeach
+                                            <td><input type="text" class="numberDetail" name="investigation[0][responsibility]"></td>
                                             <td><input type="text" class="Document_Remarks" name="investigation[0][remarks]"></td>
-                                            <td><input type="text" class="Action" name="" disabled></td>
+                                            <td><input type="text" class="Action" name=""></td>
                                         @endif
                                     </tbody>
                                 </table>
                             </div>
                         </div>
                     </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

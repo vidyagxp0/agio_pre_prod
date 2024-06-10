@@ -1081,7 +1081,8 @@ class FailureInvestigationController extends Controller
         $divisionName = DB::table('q_m_s_divisions')->where('id', $data->division_id)->value('name');
 
         $investigationTeamData = FailureInvestigationGridData::where(['failure_investigation_id' => $id, 'identifier' => 'investigation'])->first();
-        // dd($investigation_data);
+        // $investigationTeamData = json_decode($test, true);
+        // dd($investigationTeamData->data);
         $root_cause_data = FailureInvestigationGridData::where(['failure_investigation_id' => $id, 'identifier' => 'rootCause'])->first();
         $why_data = FailureInvestigationGridData::where(['failure_investigation_id' => $id, 'identifier' => 'why'])->first();
         $fishbone_data = FailureInvestigationGridData::where(['failure_investigation_id' => $id, 'identifier' => 'fishbone'])->first();

@@ -1,5 +1,8 @@
 @extends('frontend.rcms.layout.main_rcms')
 @section('rcms_container')
+    @php
+        $users = DB::table('users')->select('id', 'name')->get();
+    @endphp
 
     <style>
         #step-form>div {
@@ -57,6 +60,41 @@
                 blockTextarea.removeAttribute('required');
             }
         }
+    </script>
+    <script>
+        $(document).ready(function() {
+            $('#DocDetailbtn').click(function(e) {
+                function generateTableRow(serialNumber) {
+                    var users = @json($users);
+
+                    var html =
+                        '<tr>' +
+                        '<td><input disabled type="text" name="serial[]" value="' + serialNumber + '"></td>' +
+                        '<td><input type="text" name="current_doc_no[]"{{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}></td>' +
+                        '<td><input type="text" name="current_version_no[]"{{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}></td>' +
+                        '<td><input type="text" name="new_doc_no[]"{{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}></td>' +
+                        '<td><input type="text" name="new_version_no[]"{{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}></td>' +
+                        '<td><button class="removeRowBtn">Remove</button></td>' +
+
+                        '</tr>';
+
+                    for (var i = 0; i < users.length; i++) {
+                        html += '<option value="' + users[i].id + '">' + users[i].name + '</option>';
+                    }
+
+                    html += '</select></td>' +
+
+                        '</tr>';
+
+                    return html;
+                }
+
+                var tableBody = $('#DocDetailbtn_details tbody');
+                var rowCount = tableBody.children('tr').length;
+                var newRow = generateTableRow(rowCount + 1);
+                tableBody.append(newRow);
+            });
+        });
     </script>
     <div id="rcms_form-head">
         <div class="container-fluid">
@@ -643,7 +681,7 @@
                                                         Document Details<button type="button" name="ann"
                                                             id="DocDetailbtn">+</button>
                                                     </label>
-                                                    <table class="table-bordered table" id="doc-detail">
+                                                    <table class="table-bordered table" id="DocDetailbtn_details">
                                                         <thead>
                                                             <tr>
                                                                 <th>Sr. No.</th>
@@ -655,31 +693,26 @@
                                                             </tr>
                                                         </thead>
                                                         <tbody>
-                                                            @if (!empty($docdetail->sno))
+                                                            @if (!empty($docdetail->current_doc_no))
                                                                 @foreach (unserialize($docdetail->current_doc_no) as $key => $datas)
                                                                     <tr>
-                                                                        <td><input type="text" name="serial_number[]" readonly
-                                                                                value="{{ $key ? $key + 1 : '1' }}"></td>
-                                                                        <td><input type="text"
-                                                                                name="current_doc_number[]"
-                                                                                value="{{ unserialize($docdetail->current_doc_no)[$key] }}">
+                                                                        <td><input disabled type="text" name="serial_number[]" value="{{ $key + 1 }}"></td>
+                                                                        <td>
+                                                                            <input class="currentDocNumber" type="text" name="current_doc_number[]" value="{{ (unserialize($docdetail->current_doc_no)[$key]) ? (unserialize($docdetail->current_doc_no)[$key]) : '' }}">
                                                                         </td>
-                                                                        <td><input type="text" name="current_version[]"
-                                                                                value="{{ unserialize($docdetail->current_version_no)[$key] }}">
+                                                                        <td>
+                                                                            <input class="currentVersion" type="text" name="current_version_no[]" value="{{ (unserialize($docdetail->current_version_no)[$key]) ? (unserialize($docdetail->current_version_no)[$key]) : '' }}">
                                                                         </td>
-                                                                        <td><input type="text" name="new_doc_number[]"
-                                                                                value="{{ unserialize($docdetail->new_doc_no)[$key] }}">
+                                                                        <td>
+                                                                            <input class="newDocNumber" type="text" name="new_doc_no[]" value="{{ (unserialize($docdetail->new_doc_no)[$key]) ? (unserialize($docdetail->new_doc_no)[$key]) : '' }}">
                                                                         </td>
-                                                                        <td><input type="text" name="new_version[]"
-                                                                                value="{{ unserialize($docdetail->new_version_no)[$key] }}">
+                                                                        <td>
+                                                                            <input class="newVersionNumber" type="text" name="new_version_no[]" value="{{ (unserialize($docdetail->new_version_no)[$key]) ? (unserialize($docdetail->new_version_no)[$key]) : '' }}">
                                                                         </td>
-                                                                        <td><input type="text" class="Removebtn"
-                                                                            name="Action[]" readonly></td>
-
+                                                                        <td><input type="text" class="Removebtn" name="Action[]" readonly></td>
                                                                     </tr>
                                                                 @endforeach
                                                             @endif
-                                                            <div id="docdetaildiv"></div>
                                                         </tbody>
                                                     </table>
                                                 </div>
@@ -1079,19 +1112,8 @@
                                                                 </td>
 
                                                                 <td>
-                                                                    <div class="group-input new-date-data-field ">
-                                                                        <div class="  input-date  ">
-                                                                            <div class="calenderauditee">
-                                                                                <input type="text"
-                                                                                    id="implementation_date{{ $key }}"
-                                                                                     />
-                                                                                <input type="date"
-                                                                                    id="implementation_date{{ $key }}"
-                                                                                    name="implementation_date[]"
-                                                                                    oninput="handleDateInput(this, `implementation_date{{ $key }}`)" />
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
+                                                                    <input type="date" name="implementation_date[]" value="{{ unserialize($closure->implementation_date)[$key] }}"
+                                                                            oninput="handleDateInput(this, `implementation_date{{ $key }}`)">
                                                                 </td>
                                         </div>
                                     </div>
@@ -7198,6 +7220,11 @@
             // Update the result field within the row
             document.getElementById('analysisRPN').value = result;
         }
+    </script>
+    <script>
+        $(document).on('click', '.removeRowBtn', function() {
+            $(this).closest('tr').remove();
+        })
     </script>
     <script>
         // JavaScript
