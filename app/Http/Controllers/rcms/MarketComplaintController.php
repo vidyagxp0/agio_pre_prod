@@ -26,7 +26,7 @@ class MarketComplaintController extends Controller
 
 
     public function store(Request $request)
-    {
+    {   
 // ============================================by using insta====================================
 
 $marketComplaint = new MarketComplaint();
@@ -97,9 +97,9 @@ $marketComplaint->stage = 1;
         //  dd($marketComplaint);
         $marketComplaint->form_type="Market Complaint";
 //    dd($marketComplaint);
-
+        
 //  dd($marketComplaint);
-
+        
 
 
 // $marketComplaint->save();
@@ -258,7 +258,7 @@ $marketComplaint->stage = 1;
                     $history->action_name = "store";
                 $history->save();
             }
-
+            
             if (!empty($marketComplaint->review_of_raw_materials_used_in_batch_manufacturing_gi)) {
                 $history = new MarketComplaintAuditTrial();
                 $history->market_id = $marketComplaint->id;
@@ -308,7 +308,7 @@ $marketComplaint->stage = 1;
                 $history->save();
             }
 
-
+            
             if (!empty($marketComplaint->review_of_control_sample_gi)) {
                 $history = new MarketComplaintAuditTrial();
                 $history->market_id = $marketComplaint->id;
@@ -379,7 +379,7 @@ $marketComplaint->stage = 1;
                     $history->action_name = "store";
                 $history->save();
             }
-
+    
               if (!empty($marketComplaint->initiated_through_gi)) {
                 $history = new MarketComplaintAuditTrial();
                 $history->market_id = $marketComplaint->id;
@@ -396,7 +396,7 @@ $marketComplaint->stage = 1;
                     $history->action_name = "store";
                 $history->save();
             }
-
+    
             if (!empty($marketComplaint->if_other_gi)) {
                 $history = new MarketComplaintAuditTrial();
                 $history->market_id = $marketComplaint->id;
@@ -464,7 +464,7 @@ $marketComplaint->stage = 1;
                     $history->action_name = "store";
                 $history->save();
             }
-
+    
 
             if (!empty($marketComplaint->complainant_gi)) {
                 $history = new MarketComplaintAuditTrial();
@@ -714,59 +714,59 @@ $marketComplaint->stage = 1;
 
 
 
-// -----------------------------------------------------grid string data
+// -----------------------------------------------------grid string data 
 
 
             // For "Product Details"
             $griddata = $marketComplaint->id;
 
-            $product = MarketComplaintGrids::where(['mc_id' => $griddata, 'identifer' => 'ProductDetails'])->firstOrNew();
+            $product = MarketComplaintGrids::where(['mc_id' => $griddata, 'identifier' => 'ProductDetails'])->firstOrNew();
             $product->mc_id = $griddata;
-            $product->identifer = 'ProductDetails';
+            $product->identifier = 'ProductDetails';
             $product->data = $request->serial_number_gi;
             $product->save();
         // dd($marketrproducts->data);
-        //Traceability
+        //Traceability 
                     // $griddata = $marketComplaint->id;
 
-            $gitracebilty = MarketComplaintGrids::where(['mc_id' => $griddata, 'identifer' => 'Traceability'])->firstOrNew();
+            $gitracebilty = MarketComplaintGrids::where(['mc_id' => $griddata, 'identifier' => 'Traceability'])->firstOrNew();
             $gitracebilty->mc_id = $griddata;
-            $gitracebilty->identifer = 'Traceability';
+            $gitracebilty->identifier = 'Traceability';
             $gitracebilty->data = $request->trace_ability;
             $gitracebilty->save();
 
                 // {{-- Investing_team --}}
-            $giinvesting = MarketComplaintGrids::where(['mc_id' => $griddata, 'identifer' => 'Investing_team'])->firstOrNew();
+            $giinvesting = MarketComplaintGrids::where(['mc_id' => $griddata, 'identifier' => 'Investing_team'])->firstOrNew();
             $giinvesting->mc_id = $griddata;
-            $giinvesting->identifer = 'Investing_team';
+            $giinvesting->identifier = 'Investing_team';
             $giinvesting->data = $request->Investing_team;
             // dd($giinvesting);
             $giinvesting->save();
                 // {{-- Brain stroming Session --}}
 
-            $brain = MarketComplaintGrids::where(['mc_id' => $griddata, 'identifer' => 'brain_stroming_details'])->firstOrNew();
+            $brain = MarketComplaintGrids::where(['mc_id' => $griddata, 'identifier' => 'brain_stroming_details'])->firstOrNew();
             $brain->mc_id = $griddata;
-            $brain->identifer = 'brain_stroming_details';
+            $brain->identifier = 'brain_stroming_details';
             $brain->data = $request->brain_stroming_details;
             $brain->save();
                 // {{ Team Members }}
-            $hodteammembers = MarketComplaintGrids::where(['mc_id' => $griddata, 'identifer' => 'Team_Members'])->firstOrNew();
+            $hodteammembers = MarketComplaintGrids::where(['mc_id' => $griddata, 'identifier' => 'Team_Members'])->firstOrNew();
             $hodteammembers->mc_id = $griddata;
-            $hodteammembers->identifer = 'Team_Members';
+            $hodteammembers->identifier = 'Team_Members';
             $hodteammembers->data = $request->Team_Members ;
-
+            
             $hodteammembers->save();
                 // {{ Report_Approval }}
-            $hodreportapproval = MarketComplaintGrids::where(['mc_id' => $griddata, 'identifer' => 'Report_Approval'])->firstOrNew();
+            $hodreportapproval = MarketComplaintGrids::where(['mc_id' => $griddata, 'identifier' => 'Report_Approval'])->firstOrNew();
             $hodreportapproval->mc_id = $griddata;
-            $hodreportapproval->identifer = 'Report_Approval';
+            $hodreportapproval->identifier = 'Report_Approval';
             $hodreportapproval->data = $request->Report_Approval ;
             $hodreportapproval->save();
 
             // {{ Product_MaterialDetails }}
-            $caprduct = MarketComplaintGrids::where(['mc_id' => $griddata, 'identifer' => 'Product_MaterialDetails'])->firstOrNew();
+            $caprduct = MarketComplaintGrids::where(['mc_id' => $griddata, 'identifier' => 'Product_MaterialDetails'])->firstOrNew();
             $caprduct->mc_id = $griddata;
-            $caprduct->identifer = 'Product_MaterialDetails';
+            $caprduct->identifier = 'Product_MaterialDetails';
             $caprduct->data = $request->Product_MaterialDetails;
             // dd($caprduct);
             $caprduct->save();
@@ -783,39 +783,39 @@ $marketComplaint->stage = 1;
                 'QRM Approach' => ['qrm1' => $request->qrm1, 'qrm2' => $request->qrm2],
                 'Others' => ['oth1' => $request->oth1, 'oth2' => $request->oth2]
             ];
-
-            $marketrproducts = MarketComplaintGrids::where(['mc_id' => $griddata, 'identifer' => 'Proposal_to_accomplish_investigation'])->firstOrNew();
+        
+            $marketrproducts = MarketComplaintGrids::where(['mc_id' => $griddata, 'identifier' => 'Proposal_to_accomplish_investigation'])->firstOrNew();
             $marketrproducts->mc_id = $griddata;
-            $marketrproducts->identifer = 'Proposal_to_accomplish_investigation';
+            $marketrproducts->identifier = 'Proposal_to_accomplish_investigation';
             $marketrproducts->data = json_encode($investigationData); // Encode data to JSON
             $marketrproducts->save();
+        
+           
+        
 
-
-
-
-// return redirect()->route('qms-dashboard')->with('success', 'Market Complaint created successfully.');
-return redirect()->to('rcms/qms-dashboard')->with('success', 'Market Complaint created successfully.');
-
+// return redirect()->route('qms-dashboard')->with('success', 'Market Complaint created successfully.');    
+return redirect()->to('rcms/qms-dashboard')->with('success', 'Market Complaint created successfully.');    
+               
     }
 
 
     public function show($id)
     {
             $data = MarketComplaint::find($id);
-    $productsgi = MarketComplaintGrids::where('mc_id',$id)->where('identifer','ProductDetails')->first();
-    $traceability_gi = MarketComplaintGrids::where('mc_id',$id)->where('identifer','Traceability')->first();
-    $investing_team = MarketComplaintGrids::where('mc_id',$id)->where('identifer','Investing_team')->first();
-    $brain_stroming_details = MarketComplaintGrids::where('mc_id',$id)->where('identifer','brain_stroming_details')->first();
-    $team_members = MarketComplaintGrids::where('mc_id',$id)->where('identifer','Team_Members')->first();
-    $report_approval = MarketComplaintGrids::where('mc_id',$id)->where('identifer','Report_Approval')->first();
-    $product_materialDetails = MarketComplaintGrids::where('mc_id',$id)->where('identifer','Product_MaterialDetails')->first();
+    $productsgi = MarketComplaintGrids::where('mc_id',$id)->where('identifier','ProductDetails')->first();
+    $traceability_gi = MarketComplaintGrids::where('mc_id',$id)->where('identifier','Traceability')->first();
+    $investing_team = MarketComplaintGrids::where('mc_id',$id)->where('identifier','Investing_team')->first();
+    $brain_stroming_details = MarketComplaintGrids::where('mc_id',$id)->where('identifier','brain_stroming_details')->first();
+    $team_members = MarketComplaintGrids::where('mc_id',$id)->where('identifier','Team_Members')->first();
+    $report_approval = MarketComplaintGrids::where('mc_id',$id)->where('identifier','Report_Approval')->first();
+    $product_materialDetails = MarketComplaintGrids::where('mc_id',$id)->where('identifier','Product_MaterialDetails')->first();
     // dd($product_materialDetails->data);
     // dd($product_materialDetails);
-    // $productsgi = MarketComplaintGrids::where('mc_id',$id)->where('identifer','ProductDetails')->first();
+    // $productsgi = MarketComplaintGrids::where('mc_id',$id)->where('identifier','ProductDetails')->first();
 
-    $proposal_to_accomplish_investigation = MarketComplaintGrids::where('mc_id', $id)->where('identifer', 'Proposal_to_accomplish_investigation')->first();
+    $proposal_to_accomplish_investigation = MarketComplaintGrids::where('mc_id', $id)->where('identifier', 'Proposal_to_accomplish_investigation')->first();
     $proposalData = $proposal_to_accomplish_investigation ? json_decode($proposal_to_accomplish_investigation->data, true) : [];
-
+        
 
 // dd( $brain_stroming_session);
     return view('frontend.market_complaint.market_complaint_view',compact(
@@ -840,8 +840,6 @@ public function update(Request $request,$id){
     $marketComplaint->initiator_group_code_gi = $request->initiator_group_code_gi;
     $marketComplaint->record_number =((RecordNumber::first()->value('counter')) + 1);
     $marketComplaint->initiated_through_gi = $request->initiated_through_gi;
-    $marketComplaint->due_date_gi = $request->due_date_gi;
-
     $marketComplaint->if_other_gi = $request->if_other_gi;
     $marketComplaint->is_repeat_gi = $request->is_repeat_gi;
     $marketComplaint->repeat_nature_gi = $request->repeat_nature_gi;
@@ -892,10 +890,10 @@ public function update(Request $request,$id){
 
 
 
-
+    
     $marketComplaint->form_type="Market Complaint";
     //    dd($marketComplaint);
-
+    
 
         // {{----.File attachemenet   }}
 
@@ -1156,7 +1154,7 @@ public function update(Request $request,$id){
             $history->save();
         }
 
-
+        
 
         if ( $marketComplaint->initiator_group != $marketComplaint->initiator_group || !empty($request->initiator_group)) {
             $history = new MarketComplaintAuditTrial();
@@ -1226,7 +1224,7 @@ public function update(Request $request,$id){
             $history->save();
         }
 
-
+        
         if ( $marketComplaint->repeat_nature_gi != $marketComplaint->repeat_nature_gi || !empty($request->repeat_nature_gi)) {
             $history = new MarketComplaintAuditTrial();
             $history->market_id = $marketComplaint->id;
@@ -1540,62 +1538,62 @@ public function update(Request $request,$id){
         // For "Product Details"
         $griddata = $marketComplaint->id;
 
-        // $marketrproducts = MarketComplaintGrids::where(['mc_id' => $griddata, 'identifer' => 'Product Details'])->firstOrNew();
+        // $marketrproducts = MarketComplaintGrids::where(['mc_id' => $griddata, 'identifier' => 'Product Details'])->firstOrNew();
         // $marketrproducts->mc_id = $griddata;
-        // $marketrproducts->identifer = 'ProductDetails';
+        // $marketrproducts->identifier = 'ProductDetails';
         // $marketrproducts->data = $request->serial_number_gi;
         // $marketrproducts->update();
 
-        $product = MarketComplaintGrids::where(['mc_id' => $griddata, 'identifer' => 'ProductDetails'])->firstOrNew();
+        $product = MarketComplaintGrids::where(['mc_id' => $griddata, 'identifier' => 'ProductDetails'])->firstOrNew();
         $product->mc_id = $griddata;
-        $product->identifer = 'ProductDetails';
+        $product->identifier = 'ProductDetails';
         $product->data = $request->serial_number_gi;
         // dd( $product->data);
-
+        
         $product->update();
 
-
+       
 //Traceability
         // $griddata = $marketComplaint->id;
 
-        $marketrproducts = MarketComplaintGrids::where(['mc_id' => $griddata, 'identifer' => 'Traceability'])->firstOrNew();
+        $marketrproducts = MarketComplaintGrids::where(['mc_id' => $griddata, 'identifier' => 'Traceability'])->firstOrNew();
         $marketrproducts->mc_id = $griddata;
-        $marketrproducts->identifer = 'Traceability';
+        $marketrproducts->identifier = 'Traceability';
         $marketrproducts->data = $request->trace_ability;
         // dd($marketrproducts);
         $marketrproducts->update();
 
             // {{-- Investing_team --}}
-        $marketrproducts = MarketComplaintGrids::where(['mc_id' => $griddata, 'identifer' => 'Investing_team'])->firstOrNew();
+        $marketrproducts = MarketComplaintGrids::where(['mc_id' => $griddata, 'identifier' => 'Investing_team'])->firstOrNew();
         $marketrproducts->mc_id = $griddata;
-        $marketrproducts->identifer = 'Investing_team';
+        $marketrproducts->identifier = 'Investing_team';
         $marketrproducts->data = $request->Investing_team;
         $marketrproducts->update();
             // {{-- Brain stroming Session --}}
 
-            $brain = MarketComplaintGrids::where(['mc_id' => $griddata, 'identifer' => 'brain_stroming_details'])->firstOrNew();
+            $brain = MarketComplaintGrids::where(['mc_id' => $griddata, 'identifier' => 'brain_stroming_details'])->firstOrNew();
             $brain->mc_id = $griddata;
-            $brain->identifer = 'brain_stroming_details';
+            $brain->identifier = 'brain_stroming_details';
             $brain->data = $request->brain_stroming_details;
             $brain->update();
                 // {{ Team Member
             // {{ Team Members }}
-        $marketrproducts = MarketComplaintGrids::where(['mc_id' => $griddata, 'identifer' => 'Team_Members'])->firstOrNew();
+        $marketrproducts = MarketComplaintGrids::where(['mc_id' => $griddata, 'identifier' => 'Team_Members'])->firstOrNew();
         $marketrproducts->mc_id = $griddata;
-        $marketrproducts->identifer = 'Team_Members';
+        $marketrproducts->identifier = 'Team_Members';
         $marketrproducts->data = $request->Team_Members ;
         $marketrproducts->update();
             // {{ Report_Approval }}
-        $marketrproducts = MarketComplaintGrids::where(['mc_id' => $griddata, 'identifer' => 'Report_Approval'])->firstOrNew();
+        $marketrproducts = MarketComplaintGrids::where(['mc_id' => $griddata, 'identifier' => 'Report_Approval'])->firstOrNew();
         $marketrproducts->mc_id = $griddata;
-        $marketrproducts->identifer = 'Report_Approval';
+        $marketrproducts->identifier = 'Report_Approval';
         $marketrproducts->data = $request->Report_Approval ;
         $marketrproducts->update();
 
         // {{ Product_MaterialDetails }}
-        $marketrproducts = MarketComplaintGrids::where(['mc_id' => $griddata, 'identifer' => 'Product_MaterialDetails'])->firstOrNew();
+        $marketrproducts = MarketComplaintGrids::where(['mc_id' => $griddata, 'identifier' => 'Product_MaterialDetails'])->firstOrNew();
         $marketrproducts->mc_id = $griddata;
-        $marketrproducts->identifer = 'Product_MaterialDetails';
+        $marketrproducts->identifier = 'Product_MaterialDetails';
         $marketrproducts->data = $request->Product_MaterialDetails ;
         // dd($marketrproducts->data);
         $marketrproducts->update();
@@ -1612,20 +1610,20 @@ public function update(Request $request,$id){
             'QRM Approach' => ['qrm1' => $request->qrm1, 'qrm2' => $request->qrm2],
             'Others' => ['oth1' => $request->oth1, 'oth2' => $request->oth2]
         ];
-
-        $marketrproducts = MarketComplaintGrids::where(['mc_id' => $griddata, 'identifer' => 'Proposal_to_accomplish_investigation'])->firstOrNew();
+    
+        $marketrproducts = MarketComplaintGrids::where(['mc_id' => $griddata, 'identifier' => 'Proposal_to_accomplish_investigation'])->firstOrNew();
         $marketrproducts->mc_id = $griddata;
-        $marketrproducts->identifer = 'Proposal_to_accomplish_investigation';
+        $marketrproducts->identifier = 'Proposal_to_accomplish_investigation';
         $marketrproducts->data = json_encode($investigationData); // Encode data to JSON
         $marketrproducts->update();
-
-
-
+    
+       
+   
 
 
     toastr()->success('Record is updated Successfully');
     return redirect()->back();
-    //  return redirect()->route('marketcomplaint.marketcomplaintupdate' ,['id'=> $marketComplaint->id])->with('success', 'Market Complaint updated successfully.');
+    //  return redirect()->route('marketcomplaint.marketcomplaintupdate' ,['id'=> $marketComplaint->id])->with('success', 'Market Complaint updated successfully.');    
 
 }
 
@@ -1647,8 +1645,8 @@ public function marketComplaintStateChange(Request $request,$id)
             $marketstat->submitted_by = Auth::user()->name;
             $marketstat->submitted_on = Carbon::now()->format('d-M-Y');
             $marketstat->submitted_comment = $request->comment;
-
-
+            
+           
             $marketstat->status = "Opened";
             $history = new MarketComplaintAuditTrial();
             $history->market_id = $id;
@@ -1674,7 +1672,7 @@ public function marketComplaintStateChange(Request $request,$id)
             $marketstat->complete_review_by = Auth::user()->name;
             $marketstat->complete_review_on = Carbon::now()->format('d-M-Y');
             $marketstat->complete_review_comment = $request->comment;
-
+           
 
             $marketstat->status ="Supervisor Review";
             $history = new MarketComplaintAuditTrial();
@@ -1704,7 +1702,7 @@ public function marketComplaintStateChange(Request $request,$id)
             $marketstat->investigation_completed_by = Auth::user()->name;
             $marketstat->investigation_completed_on = Carbon::now()->format('d-M-Y');
             $marketstat->investigation_completed_comment = $request->comment;
-
+            
 
 
             $marketstat->status ="Investigation and Root Cause Analysis";
@@ -1755,7 +1753,7 @@ public function marketComplaintStateChange(Request $request,$id)
             $marketstat->update();
             return redirect()->back();
            }
-
+           
            if( $marketstat->stage == 5)
            {
             $marketstat->stage = "6";
@@ -1823,7 +1821,7 @@ public function marketComplaintStateChange(Request $request,$id)
             $marketstat->closed_done_comment = $request->comment;
 
 
-            $marketstat->status ="Closed Done";
+            $marketstat->status ="Pending Response Letter";
             $history = new MarketComplaintAuditTrial();
             $history->market_id = $id;
             $history->activity_type = 'Activity Log';
@@ -1842,7 +1840,7 @@ public function marketComplaintStateChange(Request $request,$id)
             $marketstat->update();
             return redirect()->back();
            }
-
+       
 
 
         }else {
@@ -1860,14 +1858,14 @@ public function marketComplaintStateChange(Request $request,$id)
                 $changeControl->stage = "1";
                 $changeControl->status = "Opened";
                 $changeControl->update();
-
+                
                 return back();
             }
             if ($changeControl->stage == 3) {
                 $changeControl->stage = "1";
                 $changeControl->status = "Opened";
                 $changeControl->update();
-
+                
                 return back();
             }
 
@@ -1875,7 +1873,7 @@ public function marketComplaintStateChange(Request $request,$id)
                 $changeControl->stage = "4";
                 $changeControl->status = "CAPA Plan";
                 $changeControl->update();
-
+                
                 return back();
             }
         }
@@ -1920,8 +1918,8 @@ public function marketComplaintStateChange(Request $request,$id)
     public function singleReport(Request $request, $id){
 
         $data = MarketComplaint::find($id);
-        $prductgigrid =MarketComplaintGrids::where(['mc_id' => $id,'identifer' => 'ProductDetails'])->first();
-        // $martab_grid =MarketComplaintGrids::where(['mc_id' => $id,'identifer'=> 'Sutability'])->first();
+        $prductgigrid =MarketComplaintGrids::where(['mc_id' => $id,'identifier' => 'ProductDetails'])->first();
+        // $martab_grid =MarketComplaintGrids::where(['mc_id' => $id,'identifier'=> 'Sutability'])->first();
 
 
 
@@ -1946,7 +1944,7 @@ public function marketComplaintStateChange(Request $request,$id)
             $canvas->page_text($width / 4, $height / 2, $data->status, null, 25, [0, 0, 0], 2, 6, -20);
             return $pdf->stream('MarketComplainta' . $id . '.pdf');
         }
-
+        
 
         return view('frontend.market_complaint.singleReport',compact('data','prductgigrid'));
 
@@ -1963,7 +1961,7 @@ public function marketComplaintStateChange(Request $request,$id)
 
 
 return view('frontend.market_complaint.audit-trial',compact('audit', 'document', 'today'));
-
+        
     }
 
 

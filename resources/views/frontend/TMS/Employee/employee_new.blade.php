@@ -4,7 +4,6 @@
         $users = DB::table('users')->select('id', 'name')->where('active', 1)->get();
         $userRoles = DB::table('user_roles')->select('user_id')->where('q_m_s_roles_id', 4)->distinct()->get();
         $departments = DB::table('departments')->select('id', 'name')->get();
-        $divisions = DB::table('q_m_s_divisions')->select('id', 'name')->get();
 
         $userIds = DB::table('user_roles')
             ->where('q_m_s_roles_id', 4)
@@ -63,12 +62,12 @@
     </script>
     <div class="form-field-head">
         <div class="pr-id">
-            New Employee
+            New Document
         </div>
-        {{-- <div class="division-bar">
+        <div class="division-bar">
             <strong>Site Division/Project</strong> :
             Plant
-        </div> --}}
+        </div>
         {{-- <div class="button-bar">
             <button type="button">Save</button>
             <button type="button">Cancel</button>
@@ -107,19 +106,8 @@
                         <div class="row">
                             <div class="col-lg-6">
                                 <div class="group-input">
-                                    <label for="Site Division/Project">Site Division/Project <span class="text-danger">*</span></label>
-                                    <select name="division_id" required>
-                                        <option value="">-- Select --</option>
-                                        @foreach ($divisions as $division)
-                                            <option value="{{ $division->id }}">{{ $division->name }}</option>
-                                        @endforeach
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="col-lg-6">
-                                <div class="group-input">
-                                    <label for="Assigned To">Assigned To <span class="text-danger">*</span></label>
-                                    <select name="assigned_to" required>
+                                    <label for="Assigned To">Assigned To</label>
+                                    <select name="assigned_to">
                                         <option value="">-- Select --</option>
                                         @foreach ($users as $user)
                                             <option value="{{ $user->id }}">{{ $user->name }}</option>
@@ -141,8 +129,8 @@
                             </div>
                             <div class="col-lg-6">
                                 <div class="group-input">
-                                    <label for="Employee ID">Employee ID <span class="text-danger">*</span></label>
-                                    <input type="text" name="employee_id" required>
+                                    <label for="Employee ID">Employee ID</label>
+                                    <input type="text" name="employee_id">
                                 </div>
                             </div>
                             <div class="col-lg-6">
@@ -157,9 +145,9 @@
                             </div>
                             <div class="col-lg-6">
                                 <div class="group-input">
-                                    <label for="Department">Department <span class="text-danger">*</span></label>
-                                    <select name="department" required>
-                                        <option value="">-- Select --</option>
+                                    <label for="Department">Department</label>
+                                    <select name="department">
+                                        <option>-- Select --</option>
                                         @foreach ($departments as $department)
                                             <option value="{{ $department->id }}">{{ $department->name }}</option>
                                         @endforeach
@@ -168,25 +156,11 @@
                             </div>
                             <div class="col-lg-6">
                                 <div class="group-input">
-                                    <label for="Job Title">Job Title <span class="text-danger">*</span></label>
-                                    <select name="job_title" required>
-                                        <option value="">Enter Your Selection Here</option>
-                                        <option value="Administrator">Administrator</option>
-                                        <option value="Cleaning Technician">Cleaning Technician</option>
-                                        <option value="Compliance Training Manager">Compliance Training Manager</option>
-                                        <option value="Doc. Control Officer">Doc. Control Officer</option>
-                                        <option value="GMP Training Administator">GMP Training Administator</option>
-                                        <option value="GMT Trainer">GMT Trainer</option>
-                                        <option value="Manager / Shift Manager">Manager / Shift Manager</option>
-                                        <option value="QA Officer">QA Officer</option>
-                                        <option value="Secretary / Administrator">Secretary / Administrator</option>
-                                        <option value="Senior QA Officer">Senior QA Officer</option>
-                                        <option value="Shift Technician">Shift Technician</option>
-                                        <option value="Project Manager">Project Manager</option>
-                                        <option value="Customer Support">Customer Support</option>
-                                        <option value="HR Manager">HR Manager</option>
-                                        <option value="IT Manager">IT Manager</option>
-                                        <option value="Purchase Manager">Purchase Manager</option>
+                                    <label for="Job Title">Job Title</label>
+                                    <select name="job_title">
+                                        <option>Enter Your Selection Here</option>
+                                        <option value="1">1</option>
+                                        <option value="2">2</option>
                                     </select>
                                 </div>
                             </div>
@@ -225,7 +199,7 @@
                                     <label for="Country">Country</label>
                                     <select name="country" class="form-select country" aria-label="Default select example"
                                         onchange="loadStates()">
-                                        <option selected>Select Country</option>
+                                        <option value="Country" selected>Select Country</option>
                                     </select>
                                 </div>
                             </div>
@@ -234,7 +208,7 @@
                                     <label for="City">State</label>
                                     <select name="state" class="form-select state" aria-label="Default select example"
                                         onchange="loadCities()">
-                                        <option selected>Select State/District</option>
+                                        <option value="State" selected>Select State/District</option>
                                     </select>
                                 </div>
                             </div>
@@ -242,7 +216,7 @@
                                 <div class="group-input">
                                     <label for="State/District">City</label>
                                     <select name="city" class="form-select city" aria-label="Default select example">
-                                        <option selected>Select City</option>
+                                        <option value="City" selected>Select City</option>
                                     </select>
                                 </div>
                             </div>
@@ -336,7 +310,7 @@
                                 <div class="group-input">
                                     <label for="Site Name">Site Name</label>
                                     <select name="site_name">
-                                        <option value="">Enter Your Selection Here</option>
+                                        <option value="Enter Your Selection Here">Enter Your Selection Here</option>
                                         <option value="City MFR A">City MFR A</option>
                                         <option value="City MFR B">City MFR B</option>
                                         <option value="City MFR C">City MFR C</option>
@@ -465,7 +439,7 @@
                         <div class="group-input" id="external-details-grid">
                             <label for="audit-agenda-grid">
                                 External Training Details
-                                <button disabled type="button" name="audit-agenda-grid" id="details-grid">+</button>
+                                <button type="button" name="audit-agenda-grid" id="details-grid">+</button>
                                 <span class="text-primary" data-bs-toggle="modal"
                                     data-bs-target="#observation-field-instruction-modal"
                                     style="font-size: 0.8rem; font-weight: 400; cursor: pointer;">
@@ -491,12 +465,12 @@
                                     <tbody>
                                         <tr>
                                             <td><input disabled type="text" name="external_training[0][serial]" value="1"></td>
-                                            <td><input disabled type="text" name="external_training[0][topic]"></td>
-                                            <td><input disabled type="date" name="external_training[0][external_training_date]"></td>
-                                            <td><input disabled type="text" name="external_training[0][external_trainer]"></td>
-                                            <td><input disabled type="text" name="external_training[0][external_agency]"></td>
-                                            <td><input disabled type="file" name="external_training[0][certificate]"></td>
-                                            <td><input disabled type="file" name="external_training[0][supproting_documents]"></td>
+                                            <td><input type="text" name="external_training[0][topic]"></td>
+                                            <td><input type="date" name="external_training[0][external_training_date]"></td>
+                                            <td><input type="text" name="external_training[0][external_trainer]"></td>
+                                            <td><input type="text" name="external_training[0][external_agency]"></td>
+                                            <td><input type="file" name="external_training[0][certificate]"></td>
+                                            <td><input type="file" name="external_training[0][supproting_documents]"></td>
                                         </tr>
 
                                     </tbody>
@@ -506,13 +480,13 @@
                             <div class="col-12">
                                 <div class="group-input">
                                     <label for="External Comments">External Comments</label>
-                                    <textarea disabled name="external_comment"></textarea>
+                                    <textarea name="external_comment"></textarea>
                                 </div>
                             </div>
                             <div class="col-12">
                                 <div class="group-input">
                                     <label for="External Attachment">External Attachment</label>
-                                    <input disabled type="file" id="myfile" name="external_attachment">
+                                    <input type="file" id="myfile" name="external_attachment">
                                 </div>
                             </div>
                         </div>

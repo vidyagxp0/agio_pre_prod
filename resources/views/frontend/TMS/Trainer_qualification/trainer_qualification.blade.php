@@ -2,32 +2,8 @@
 @section('container')
     @php
         $users = DB::table('users')->select('id', 'name')->get();
-        $divisions = DB::table('q_m_s_divisions')->select('id', 'name')->get();
-        $departments = DB::table('departments')->select('id', 'name')->get();
 
     @endphp
-
-    <style>
-        label.error {
-            color: red;
-        }
-    </style>
-
-    <script>
-        $(document).ready(function() {
-            let auditForm = $('form#auditform')
-
-            $('#ChangesaveButton').on('click', function(e) {
-                console.log('submit test')
-                let isValid = auditForm.validate();
-
-                if (!isValid) {
-                    e.preventDefault();
-                }
-            })
-
-        });
-    </script>
     <style>
         textarea.note-codable {
             display: none !important;
@@ -308,9 +284,8 @@
     <div class="form-field-head">
 
         <div class="division-bar">
-            <strong>New Trainer Qualification</strong>
-            {{-- <strong>Site Division/Project</strong> : --}}
-            {{-- {{ Helpers::getDivisionName(session()->get('division')) }} Trainer Qualification --}}
+            <strong>Site Division/Project</strong> :
+            {{ Helpers::getDivisionName(session()->get('division')) }} Trainer Qualification
         </div>
     </div>
 
@@ -349,17 +324,6 @@
                                 @endif
                                 <div class="col-lg-6">
                                     <div class="group-input">
-                                        <label for="Site Division/Project">Site Division/Project <span class="text-danger">*</span></label>
-                                        <select  name="division_id" required>
-                                            <option value="">-- Select --</option>
-                                            @foreach ($divisions as $division)
-                                                <option value="{{ $division->id }}">{{ $division->name }}</option>
-                                            @endforeach
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="col-lg-6">
-                                    <div class="group-input">
                                         <label for="RLS Record Number"><b>Record Number</b></label>
                                         <input disabled type="text" name="record_number" value="PL-01-109">
                                         <input type="hidden" name="record_number" value="PL-01-109">
@@ -374,14 +338,14 @@
                                     </div>
                                 </div> --}}
 
-                                {{-- <div class="col-lg-6">
+                                <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Initiator"><b>Site/Location Code</b></label>
                                         <input disabled type="text" name="site_code" value="PLANT">
                                         <input type="hidden" name="site_code" value="PLANT">
 
                                     </div>
-                                </div> --}}
+                                </div>
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Initiator"><b>Initiator</b></label>
@@ -400,9 +364,9 @@
                                 <div class="col-md-6">
                                     <div class="group-input">
                                         <label for="search">
-                                            Assigned To <span class="text-danger">*</span>
+                                            Assigned To <span class="text-danger"></span>
                                         </label>
-                                        <select id="select-state" placeholder="Select..." name="assigned_to" required>
+                                        <select id="select-state" placeholder="Select..." name="assigned_to">
                                             <option value="">Select</option>
                                             @foreach ($users as $data)
                                                 <option value="{{ $data->id }}">{{ $data->name }}</option>
@@ -417,11 +381,11 @@
 
                                 <div class="col-lg-6 new-date-data-field">
                                     <div class="group-input input-date">
-                                        <label for="Date Due">Due Date <span class="text-danger">*</span></label>
+                                        <label for="Date Due">Due Date</label>
                                         <div class="calenderauditee">
                                             <input type="text" name= "due_date" id="due_date" readonly
-                                                placeholder="DD-MM-YYYY" />
-                                            <input required type="date" name="due_date"
+                                                placeholder="DD-MMM-YYYY" />
+                                            <input type="date" name="due_date"
                                                 min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input"
                                                 oninput="handleDateInput(this, 'due_date')" />
                                         </div>
@@ -431,11 +395,11 @@
 
                                 <div class="col-12">
                                     <div class="group-input">
-                                        <label for="Short Description">Short Description <span class="text-danger">*</span></label><span
+                                        <label for="Short Description">Short Description</label><span
                                             id="rchars">255</span>
                                         characters remaining
                                         <input id="short_description" type="text" name="short_description"
-                                            maxlength="255" required>
+                                            maxlength="255">
                                     </div>
                                 </div>
 
@@ -446,7 +410,7 @@
                                     <div class="group-input">
                                         <label for="trainer">Trainer Name</label>
                                         <select name="trainer_name" id="trainer_name">
-                                            <option value="">Select</option>
+                                            <option value="0">Select</option>
                                             <option value="trainer1">Trainer 1</option>
                                         </select>
                                     </div>
@@ -463,7 +427,7 @@
                                     <div class="group-input">
                                         <label for="Designation">Designation</label>
                                         <select name="designation" id="designation">
-                                            <option value="">Select</option>
+                                            <option value="0">Select</option>
                                             <option value="lead_trainer">Lead Trainer</option>
                                             <option value="senior_trainer">Senior Trainer</option>
                                             <option value="Instructor">Instructor</option>
@@ -475,11 +439,13 @@
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Department">Department</label>
-                                        <select name="department">
-                                            <option value="">-- Select --</option>
-                                            @foreach ($departments as $department)
-                                                <option value="{{ $department->id }}">{{ $department->name }}</option>
-                                            @endforeach
+                                        <select name="department" id="department">
+                                            <option value="0">Select</option>
+                                            <option value="quality_assurance">Quality Assurance (QA)</option>
+                                            <option value="operations">Operations</option>
+                                            <option value="learning_deve">Learning and Development (L&D)</option>
+                                            <option value="it">Information Technology (IT)</option>
+                                            <option value="Finance">Finance</option>
                                         </select>
                                     </div>
                                 </div>
@@ -770,12 +736,7 @@
                                 </div>
                             </div>
 
-                            <div class="col-12">
-                                <div class="group-input">
-                                    <label for="Inv Attachments">Initial Attachment</label>
-                                    <input type="file" id="myfile" name="initial_attachment">
-                                </div>
-                            </div>
+
 
                             <script>
                                 VirtualSelect.init({
@@ -837,12 +798,12 @@
 
 
 
-                            {{-- <div class="col-12">
+                            <div class="col-12">
                                 <div class="group-input">
                                     <label for="Inv Attachments">Initial Attachment</label>
                                     <div><small class="text-primary">Please Attach all relevant or supporting
                                             documents</small></div>
-                                    <input type="file" id="myfile" name="inv_attachment[]" multiple>
+                                    {{-- <input type="file" id="myfile" name="inv_attachment[]" multiple> --}}
                                     <div class="file-attachment-field">
                                         <div class="file-attachment-list" id="audit_file_attachment"></div>
                                         <div class="add-btn">
@@ -853,7 +814,7 @@
                                     </div>
 
                                 </div>
-                            </div> --}}
+                            </div>
                         </div>
                         <div class="button-block">
                             <button type="submit" id="ChangesaveButton" class="saveButton">Save</button>
@@ -1053,10 +1014,4 @@
             $('#rchars').text(textlen);
         });
     </script>
-@endsection
-
-
-@section('footer_cdn')
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.20.0/jquery.validate.min.js" integrity="sha512-WMEKGZ7L5LWgaPeJtw9MBM4i5w5OSBlSjTjCtSnvFJGSVD26gE5+Td12qN5pvWXhuWaWcVwF++F7aqu9cvqP0A==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.20.0/additional-methods.min.js" integrity="sha512-TiQST7x/0aMjgVTcep29gi+q5Lk5gVTUPE9XgN0g96rwtjEjLpod4mlBRKWHeBcvGBAEvJBmfDqh2hfMMmg+5A==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 @endsection

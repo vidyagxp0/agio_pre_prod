@@ -3,22 +3,11 @@
 namespace App\Http\Controllers\rcms;
 
 use App\Http\Controllers\Controller;
-use App\Models\OOC_Grid;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\App;
-use App\Models\User;
 use App\Models\OutOfCalibration;
-use App\Models\OOCAuditTrail;
-use App\Models\RoleGroup;
 use App\Models\RecordNumber;
 use Carbon\Carbon;
-use PDF;
 use Illuminate\Http\Request;
-use App\Models\Capa;
-use App\Models\OpenStage;
-
-
 
 class OOCController extends Controller
 {
@@ -36,6 +25,7 @@ class OOCController extends Controller
 
     public function create(request $request)
     {
+        // return dd($request->all());
         if (!$request->description_ooc) {
             toastr()->info("Short Description is required");
             return redirect()->back();
@@ -99,8 +89,6 @@ class OOCController extends Controller
         $data->initiated_through_hodreview_ooc = $request->initiated_through_hodreview_ooc;
         $data->initiated_through_rootcause_ooc = $request->initiated_through_rootcause_ooc;
         $data->initiated_through_impact_closure_ooc = $request->initiated_through_impact_closure_ooc;
-        $data->status = 'Opened';
-        $data->stage = 1;
 
 
         if (!empty($request->initial_attachment_ooc)) {

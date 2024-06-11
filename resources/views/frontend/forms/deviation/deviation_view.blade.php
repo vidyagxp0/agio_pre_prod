@@ -2709,6 +2709,8 @@
                                 </div>
                                 <script>
                                     $(document).ready(function() {
+                                        @if($data1->Production_Review !== 'yes')
+
                                         $('.p_erson').hide();
 
                                         $('[name="Production_Review"]').change(function() {
@@ -2721,6 +2723,7 @@
                                                 $('.p_erson span').hide();
                                             }
                                         });
+                                        @endif
                                     });
                                 </script>
                                 @php
@@ -2755,7 +2758,7 @@
                                             ])
                                             ->get();
                                         $userRoleIds = $userRoles->pluck('user_id')->toArray();
-                                        $users = DB::table('users')->whereIn('id', $userRoleIds)->get(); // Fetch user data based on user IDs
+                                        // $users = DB::table('users')->whereIn('id', $userRoleIds)->get(); // Fetch user data based on user IDs
                                     @endphp
                                     <div class="col-lg-6 p_erson">
                                         <div class="group-input">
@@ -2912,7 +2915,7 @@
                                             ])
                                             ->get();
                                         $userRoleIds = $userRoles->pluck('user_id')->toArray();
-                                        $users = DB::table('users')->whereIn('id', $userRoleIds)->get(); // Fetch user data based on user IDs
+                                        //$users = DB::table('users')->whereIn('id', $userRoleIds)->get(); // Fetch user data based on user IDs
                                     @endphp
                                     <div class="col-lg-6 p_erson">
                                         <div class="group-input">
@@ -3076,7 +3079,7 @@
                                             ])
                                             ->get();
                                         $userRoleIds = $userRoles->pluck('user_id')->toArray();
-                                        $users = DB::table('users')->whereIn('id', $userRoleIds)->get(); // Fetch user data based on user IDs
+                                        //$users = DB::table('users')->whereIn('id', $userRoleIds)->get(); // Fetch user data based on user IDs
                                     @endphp
                                     <div class="col-lg-6 warehouse">
                                         <div class="group-input">
@@ -3223,7 +3226,7 @@
                                             ])
                                             ->get();
                                         $userRoleIds = $userRoles->pluck('user_id')->toArray();
-                                        $users = DB::table('users')->whereIn('id', $userRoleIds)->get(); // Fetch user data based on user IDs
+                                        //$users = DB::table('users')->whereIn('id', $userRoleIds)->get(); // Fetch user data based on user IDs
                                     @endphp
                                     <div class="col-lg-6 warehouse">
                                         <div class="group-input">
@@ -3330,6 +3333,8 @@
                             </div>
                             <script>
                                 $(document).ready(function() {
+                                    @if($data1->Quality_review !== 'yes')
+
                                     $('.quality_control').hide();
 
                                     $('[name="Quality_review"]').change(function() {
@@ -3341,6 +3346,7 @@
                                             $('.quality_control span').hide();
                                         }
                                     });
+                                    @endif
                                 });
                             </script>
                             @if ($data->stage == 3 || $data->stage == 4)
@@ -3367,7 +3373,7 @@
                                         ->where(['q_m_s_roles_id' => 24, 'q_m_s_divisions_id' => $data->division_id])
                                         ->get();
                                     $userRoleIds = $userRoles->pluck('user_id')->toArray();
-                                    $users = DB::table('users')->whereIn('id', $userRoleIds)->get(); // Fetch user data based on user IDs
+                                    //$users = DB::table('users')->whereIn('id', $userRoleIds)->get(); // Fetch user data based on user IDs
                                 @endphp
                                 <div class="col-lg-6 quality_control">
                                     <div class="group-input">
@@ -3529,7 +3535,7 @@
                                         ->where(['q_m_s_roles_id' => 26, 'q_m_s_divisions_id' => $data->division_id])
                                         ->get();
                                     $userRoleIds = $userRoles->pluck('user_id')->toArray();
-                                    $users = DB::table('users')->whereIn('id', $userRoleIds)->get(); // Fetch user data based on user IDs
+                                    //$users = DB::table('users')->whereIn('id', $userRoleIds)->get(); // Fetch user data based on user IDs
                                 @endphp
                                 <div class="col-lg-6 quality_assurance">
                                     <div class="group-input">
@@ -3699,7 +3705,7 @@
                                         ->where(['q_m_s_roles_id' => 25, 'q_m_s_divisions_id' => $data->division_id])
                                         ->get();
                                     $userRoleIds = $userRoles->pluck('user_id')->toArray();
-                                    $users = DB::table('users')->whereIn('id', $userRoleIds)->get(); // Fetch user data based on user IDs
+                                    //$users = DB::table('users')->whereIn('id', $userRoleIds)->get(); // Fetch user data based on user IDs
                                 @endphp
                                 <div class="col-lg-6 engineering">
                                     <div class="group-input">
@@ -3860,7 +3866,7 @@
                                         ->where(['q_m_s_roles_id' => 27, 'q_m_s_divisions_id' => $data->division_id])
                                         ->get();
                                     $userRoleIds = $userRoles->pluck('user_id')->toArray();
-                                    $users = DB::table('users')->whereIn('id', $userRoleIds)->get(); // Fetch user data based on user IDs
+                                    //$users = DB::table('users')->whereIn('id', $userRoleIds)->get(); // Fetch user data based on user IDs
                                 @endphp
                                 <div class="col-lg-6 analytical_development">
                                     <div class="group-input">
@@ -4026,7 +4032,7 @@
                                         ->where(['q_m_s_roles_id' => 28, 'q_m_s_divisions_id' => $data->division_id])
                                         ->get();
                                     $userRoleIds = $userRoles->pluck('user_id')->toArray();
-                                    $users = DB::table('users')->whereIn('id', $userRoleIds)->get(); // Fetch user data based on user IDs
+                                    //$users = DB::table('users')->whereIn('id', $userRoleIds)->get(); // Fetch user data based on user IDs
                                 @endphp
                                 <div class="col-lg-6 kilo_lab">
                                     <div class="group-input">
@@ -4186,7 +4192,7 @@
                                         ->where(['q_m_s_roles_id' => 29, 'q_m_s_divisions_id' => $data->division_id])
                                         ->get();
                                     $userRoleIds = $userRoles->pluck('user_id')->toArray();
-                                    $users = DB::table('users')->whereIn('id', $userRoleIds)->get(); // Fetch user data based on user IDs
+                                    //$users = DB::table('users')->whereIn('id', $userRoleIds)->get(); // Fetch user data based on user IDs
                                 @endphp
                                 <div class="col-lg-6 technology_transfer">
                                     <div class="group-input">
@@ -4352,7 +4358,7 @@
                                         ->where(['q_m_s_roles_id' => 30, 'q_m_s_divisions_id' => $data->division_id])
                                         ->get();
                                     $userRoleIds = $userRoles->pluck('user_id')->toArray();
-                                    $users = DB::table('users')->whereIn('id', $userRoleIds)->get(); // Fetch user data based on user IDs
+                                    //$users = DB::table('users')->whereIn('id', $userRoleIds)->get(); // Fetch user data based on user IDs
                                 @endphp
                                 <div class="col-lg-6 environmental_health">
                                     <div class="group-input">
@@ -4519,7 +4525,7 @@
                                         ->where(['q_m_s_roles_id' => 31, 'q_m_s_divisions_id' => $data->division_id])
                                         ->get();
                                     $userRoleIds = $userRoles->pluck('user_id')->toArray();
-                                    $users = DB::table('users')->whereIn('id', $userRoleIds)->get(); // Fetch user data based on user IDs
+                                    //$users = DB::table('users')->whereIn('id', $userRoleIds)->get(); // Fetch user data based on user IDs
                                 @endphp
                                 <div class="col-lg-6 human_resources">
                                     <div class="group-input">
@@ -4682,7 +4688,7 @@
                                         ->where(['q_m_s_roles_id' => 32, 'q_m_s_divisions_id' => $data->division_id])
                                         ->get();
                                     $userRoleIds = $userRoles->pluck('user_id')->toArray();
-                                    $users = DB::table('users')->whereIn('id', $userRoleIds)->get(); // Fetch user data based on user IDs
+                                    //$users = DB::table('users')->whereIn('id', $userRoleIds)->get(); // Fetch user data based on user IDs
                                 @endphp
                                 <div class="col-lg-6 information_technology">
                                     <div class="group-input">
@@ -4693,7 +4699,7 @@
                                         <select name=" Information_Technology_person"
                                             class="Information_Technology_person" id=" Information_Technology_person"
                                             @if ($data->stage == 4) disabled @endif>
-                                            <option value="0">-- Select --</option>
+                                            <option value="">-- Select --</option>
                                             @foreach ($users as $user)
                                                 <option
                                                     {{ $data1->Information_Technology_person == $user->id ? 'selected' : '' }}
@@ -4844,7 +4850,7 @@
                                         ->where(['q_m_s_roles_id' => 33, 'q_m_s_divisions_id' => $data->division_id])
                                         ->get();
                                     $userRoleIds = $userRoles->pluck('user_id')->toArray();
-                                    $users = DB::table('users')->whereIn('id', $userRoleIds)->get(); // Fetch user data based on user IDs
+                                    //$users = DB::table('users')->whereIn('id', $userRoleIds)->get(); // Fetch user data based on user IDs
                                 @endphp
                                 <div class="col-lg-6 project_management">
                                     <div class="group-input">
@@ -4981,7 +4987,7 @@
                                         ->where(['q_m_s_roles_id' => 24, 'q_m_s_divisions_id' => $data->division_id])
                                         ->get();
                                     $userRoleIds = $userRoles->pluck('user_id')->toArray();
-                                    $users = DB::table('users')->whereIn('id', $userRoleIds)->get(); // Fetch user data based on user IDs
+                                    //$users = DB::table('users')->whereIn('id', $userRoleIds)->get(); // Fetch user data based on user IDs
                                 @endphp
                                 <div class="col-lg-6">
                                     <div class="group-input">
@@ -5090,7 +5096,7 @@
                                         ->where(['q_m_s_roles_id' => 26, 'q_m_s_divisions_id' => $data->division_id])
                                         ->get();
                                     $userRoleIds = $userRoles->pluck('user_id')->toArray();
-                                    $users = DB::table('users')->whereIn('id', $userRoleIds)->get(); // Fetch user data based on user IDs
+                                    //$users = DB::table('users')->whereIn('id', $userRoleIds)->get(); // Fetch user data based on user IDs
                                 @endphp
                                 <div class="col-lg-6">
                                     <div class="group-input">
@@ -5200,7 +5206,7 @@
                                         ->where(['q_m_s_roles_id' => 25, 'q_m_s_divisions_id' => $data->division_id])
                                         ->get();
                                     $userRoleIds = $userRoles->pluck('user_id')->toArray();
-                                    $users = DB::table('users')->whereIn('id', $userRoleIds)->get(); // Fetch user data based on user IDs
+                                    //$users = DB::table('users')->whereIn('id', $userRoleIds)->get(); // Fetch user data based on user IDs
                                 @endphp
                                 <div class="col-lg-6">
                                     <div class="group-input">
@@ -5309,7 +5315,7 @@
                                         ->where(['q_m_s_roles_id' => 27, 'q_m_s_divisions_id' => $data->division_id])
                                         ->get();
                                     $userRoleIds = $userRoles->pluck('user_id')->toArray();
-                                    $users = DB::table('users')->whereIn('id', $userRoleIds)->get(); // Fetch user data based on user IDs
+                                    //$users = DB::table('users')->whereIn('id', $userRoleIds)->get(); // Fetch user data based on user IDs
                                 @endphp
                                 <div class="col-lg-6">
                                     <div class="group-input">
@@ -5424,7 +5430,7 @@
                                         ->where(['q_m_s_roles_id' => 28, 'q_m_s_divisions_id' => $data->division_id])
                                         ->get();
                                     $userRoleIds = $userRoles->pluck('user_id')->toArray();
-                                    $users = DB::table('users')->whereIn('id', $userRoleIds)->get(); // Fetch user data based on user IDs
+                                    //$users = DB::table('users')->whereIn('id', $userRoleIds)->get(); // Fetch user data based on user IDs
                                 @endphp
                                 <div class="col-lg-6">
                                     <div class="group-input">
@@ -5533,7 +5539,7 @@
                                         ->where(['q_m_s_roles_id' => 29, 'q_m_s_divisions_id' => $data->division_id])
                                         ->get();
                                     $userRoleIds = $userRoles->pluck('user_id')->toArray();
-                                    $users = DB::table('users')->whereIn('id', $userRoleIds)->get(); // Fetch user data based on user IDs
+                                    //$users = DB::table('users')->whereIn('id', $userRoleIds)->get(); // Fetch user data based on user IDs
                                 @endphp
                                 <div class="col-lg-6">
                                     <div class="group-input">
@@ -5648,7 +5654,7 @@
                                         ->where(['q_m_s_roles_id' => 30, 'q_m_s_divisions_id' => $data->division_id])
                                         ->get();
                                     $userRoleIds = $userRoles->pluck('user_id')->toArray();
-                                    $users = DB::table('users')->whereIn('id', $userRoleIds)->get(); // Fetch user data based on user IDs
+                                    //$users = DB::table('users')->whereIn('id', $userRoleIds)->get(); // Fetch user data based on user IDs
                                 @endphp
                                 <div class="col-lg-6">
                                     <div class="group-input">
@@ -5762,7 +5768,7 @@
                                         ->where(['q_m_s_roles_id' => 31, 'q_m_s_divisions_id' => $data->division_id])
                                         ->get();
                                     $userRoleIds = $userRoles->pluck('user_id')->toArray();
-                                    $users = DB::table('users')->whereIn('id', $userRoleIds)->get(); // Fetch user data based on user IDs
+                                    //$users = DB::table('users')->whereIn('id', $userRoleIds)->get(); // Fetch user data based on user IDs
                                 @endphp
                                 <div class="col-lg-6">
                                     <div class="group-input">
@@ -5874,7 +5880,7 @@
                                         ->where(['q_m_s_roles_id' => 32, 'q_m_s_divisions_id' => $data->division_id])
                                         ->get();
                                     $userRoleIds = $userRoles->pluck('user_id')->toArray();
-                                    $users = DB::table('users')->whereIn('id', $userRoleIds)->get(); // Fetch user data based on user IDs
+                                    //$users = DB::table('users')->whereIn('id', $userRoleIds)->get(); // Fetch user data based on user IDs
                                 @endphp
                                 <div class="col-lg-6">
                                     <div class="group-input">
@@ -5987,7 +5993,7 @@
                                         ->where(['q_m_s_roles_id' => 33, 'q_m_s_divisions_id' => $data->division_id])
                                         ->get();
                                     $userRoleIds = $userRoles->pluck('user_id')->toArray();
-                                    $users = DB::table('users')->whereIn('id', $userRoleIds)->get(); // Fetch user data based on user IDs
+                                    //$users = DB::table('users')->whereIn('id', $userRoleIds)->get(); // Fetch user data based on user IDs
                                 @endphp
                                 <div class="col-lg-6">
                                     <div class="group-input">
@@ -6117,7 +6123,7 @@
                                         ->where(['q_m_s_divisions_id' => $data->division_id])
                                         ->get();
                                     $userRoleIds = $userRoles->pluck('user_id')->toArray();
-                                    $users = DB::table('users')->whereIn('id', $userRoleIds)->get(); // Fetch user data based on user IDs
+                                    //$users = DB::table('users')->whereIn('id', $userRoleIds)->get(); // Fetch user data based on user IDs
                                 @endphp
                                 <div class="col-lg-6 other1_reviews ">
                                     <div class="group-input">
@@ -6316,7 +6322,7 @@
                                         ->where(['q_m_s_divisions_id' => $data->division_id])
                                         ->get();
                                     $userRoleIds = $userRoles->pluck('user_id')->toArray();
-                                    $users = DB::table('users')->whereIn('id', $userRoleIds)->get(); // Fetch user data based on user IDs
+                                    //$users = DB::table('users')->whereIn('id', $userRoleIds)->get(); // Fetch user data based on user IDs
                                 @endphp
                                 <div class="col-lg-6 Other2_reviews">
                                     <div class="group-input">
@@ -6514,7 +6520,7 @@
                                         ->where(['q_m_s_divisions_id' => $data->division_id])
                                         ->get();
                                     $userRoleIds = $userRoles->pluck('user_id')->toArray();
-                                    $users = DB::table('users')->whereIn('id', $userRoleIds)->get(); // Fetch user data based on user IDs
+                                    //$users = DB::table('users')->whereIn('id', $userRoleIds)->get(); // Fetch user data based on user IDs
                                 @endphp
                                 <div class="col-lg-6 Other3_reviews">
                                     <div class="group-input">
@@ -6710,7 +6716,7 @@
                                         ->where(['q_m_s_divisions_id' => $data->division_id])
                                         ->get();
                                     $userRoleIds = $userRoles->pluck('user_id')->toArray();
-                                    $users = DB::table('users')->whereIn('id', $userRoleIds)->get(); // Fetch user data based on user IDs
+                                    //$users = DB::table('users')->whereIn('id', $userRoleIds)->get(); // Fetch user data based on user IDs
                                 @endphp
                                 <div class="col-lg-6 Other4_reviews">
                                     <div class="group-input">
@@ -6908,7 +6914,7 @@
                                         ->where(['q_m_s_divisions_id' => $data->division_id])
                                         ->get();
                                     $userRoleIds = $userRoles->pluck('user_id')->toArray();
-                                    $users = DB::table('users')->whereIn('id', $userRoleIds)->get(); // Fetch user data based on user IDs
+                                    //$users = DB::table('users')->whereIn('id', $userRoleIds)->get(); // Fetch user data based on user IDs
                                 @endphp
                                 <div class="col-lg-6 Other5_reviews">
                                     <div class="group-input">
@@ -7090,7 +7096,7 @@
                                         ->where(['q_m_s_divisions_id' => $data->division_id])
                                         ->get();
                                     $userRoleIds = $userRoles->pluck('user_id')->toArray();
-                                    $users = DB::table('users')->whereIn('id', $userRoleIds)->get(); // Fetch user data based on user IDs
+                                    //$users = DB::table('users')->whereIn('id', $userRoleIds)->get(); // Fetch user data based on user IDs
                                 @endphp
                                 <div class="col-lg-6">
                                     <div class="group-input">
@@ -7237,7 +7243,7 @@
                                         ->where(['q_m_s_divisions_id' => $data->division_id])
                                         ->get();
                                     $userRoleIds = $userRoles->pluck('user_id')->toArray();
-                                    $users = DB::table('users')->whereIn('id', $userRoleIds)->get(); // Fetch user data based on user IDs
+                                    //$users = DB::table('users')->whereIn('id', $userRoleIds)->get(); // Fetch user data based on user IDs
                                 @endphp
                                 <div class="col-lg-6">
                                     <div class="group-input">
@@ -7384,7 +7390,7 @@
                                         ->where(['q_m_s_divisions_id' => $data->division_id])
                                         ->get();
                                     $userRoleIds = $userRoles->pluck('user_id')->toArray();
-                                    $users = DB::table('users')->whereIn('id', $userRoleIds)->get(); // Fetch user data based on user IDs
+                                    //$users = DB::table('users')->whereIn('id', $userRoleIds)->get(); // Fetch user data based on user IDs
                                 @endphp
                                 <div class="col-lg-6">
                                     <div class="group-input">
@@ -7528,7 +7534,7 @@
                                         ->where(['q_m_s_divisions_id' => $data->division_id])
                                         ->get();
                                     $userRoleIds = $userRoles->pluck('user_id')->toArray();
-                                    $users = DB::table('users')->whereIn('id', $userRoleIds)->get(); // Fetch user data based on user IDs
+                                    //$users = DB::table('users')->whereIn('id', $userRoleIds)->get(); // Fetch user data based on user IDs
                                 @endphp
                                 <div class="col-lg-6">
                                     <div class="group-input">
@@ -7674,7 +7680,7 @@
                                         ->where(['q_m_s_divisions_id' => $data->division_id])
                                         ->get();
                                     $userRoleIds = $userRoles->pluck('user_id')->toArray();
-                                    $users = DB::table('users')->whereIn('id', $userRoleIds)->get(); // Fetch user data based on user IDs
+                                    //$users = DB::table('users')->whereIn('id', $userRoleIds)->get(); // Fetch user data based on user IDs
                                 @endphp
                                 <div class="col-lg-6">
                                     <div class="group-input">

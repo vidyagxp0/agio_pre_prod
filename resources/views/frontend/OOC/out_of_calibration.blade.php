@@ -332,7 +332,7 @@ $users = DB::table('users')->get();
                                     <label for="Initiator Group">Initiated Through</label>
                                     <div><small class="text-primary">Please select related information</small></div>
                                     <select name="initiated_through" onchange="">
-                                        <option value="0">-- select --</option>
+                                        <option value="">-- select --</option>
                                         <option value="recall">Recall</option>
                                         <option value="return">Return</option>
                                         <option value="deviation">Deviation</option>
@@ -370,19 +370,7 @@ $users = DB::table('users')->get();
 
                             <div class="col-lg-12">
                                 <div class="group-input">
-                                    <label for="Is Repeat"><b>Is Repeat</b></label>
-                                    <select name="is_repeat_ooc" id="is_repeat_ooc">
-                                        <option value="0">-- Select --</option>
-                                        <option value="Yes">Yes</option>
-                                        <option value="No">No</option>
-                                        {{-- <option value="NA">NA</option> --}}
-                                      
-                                    </select>
-                                </div>
-                            </div>
-                            {{-- <div class="col-lg-12">
-                                <div class="group-input">
-                                    <label for="Initiator Group"></label>
+                                    <label for="Initiator Group">Is Repeat</label>
                                     <select name="is_repeat_ooc" onchange="">
                                         <option value="0">-- select --</option>
                                         <option value="YES">Yes</option>
@@ -390,7 +378,7 @@ $users = DB::table('users')->get();
 
                                     </select>
                                 </div>
-                            </div> --}}
+                            </div>
 
                             
                             <div class="col-md-12 mb-3">
@@ -454,124 +442,45 @@ $users = DB::table('users')->get();
                                     
                                 </div>
                             </div>
-{{-- grid added new --}}
-
-<div class="col-12">
-    <div class="group-input" id="IncidentRow">
-        <label for="root_cause">
-            Instrument Details
-            <button type="button" name="audit-incident-grid" id="IncidentAdd">+</button>
-            <span class="text-primary" data-bs-toggle="modal" data-bs-target="#observation-field-instruction-modal" style="font-size: 0.8rem; font-weight: 400; cursor: pointer;">
-                (Launch Instruction)
-            </span>
-        </label>
-        
-            <table class="table table-bordered" id="onservation-incident-table">
-                <thead>
-                    <tr>
-                        <th>Row #</th>
-                        <th>Instrument Name</th>
-                        <th>Instrument ID</th>
-                        <th>Remarks</th>
-                        <th>Calibration Parameter</th>
-                        <th>Acceptance Criteria</th>
-                        <th>Results</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @php
-                        $serialNumber =1;
-                    @endphp
-                    <tr>
-                    <td disabled >{{ $serialNumber++ }}</td>
-                    <td><input type="text" name="instrumentdetails[0][instrument_name]"></td>
-                    <td><input type="text" name="instrumentdetails[0][instrument_id]"></td>
-                    <td><input type="text" name="instrumentdetails[0][remarks]"></td>
-                    <td><input type="text" name="instrumentdetails[0][calibration]"></td>
-                    <td><input type="text" name="instrumentdetails[0][acceptancecriteria]"></td>
-                    <td><input type="text" name="instrumentdetails[0][results]"></td>
-                    </tr>
-                </tbody>
-            </table>
-        
-    </div>
-</div>
 
 
-<script>
-    document.addEventListener('DOMContentLoaded', function() {
-        var selectField = document.getElementById('Facility_Equipment');
-        var inputsToToggle = [];
+                            <div class="col-12">
+                                <div class="group-input">
+                                    <label for="root_cause">
+                                        Instrument Details
+                                        <button type="button" onclick="add4Input('root-cause-first-table')">+</button>
+                                        <span class="text-primary" data-bs-toggle="modal" data-bs-target="#document-details-field-instruction-modal" style="font-size: 0.8rem; font-weight: 400; cursor: pointer;">
+                                            (Launch Instruction)
+                                        </span>
+                                    </label>
+                                    <div class="table-responsive">
+                                        <table class="table table-bordered" id="root-cause-first-table">
+                                            <thead>
+                                                <tr>
+                                                    <th>Row #</th>
+                                                    <th>Instrument Name</th>
+                                                    <th>Instrument ID</th>
+                                                    <th>Remarks</th>
+                                                    <th>Calibration Parameter</th>
+                                                    <th>Acceptance Criteria</th>
+                                                    <th>Results</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <td><input disabled type="text" name="serial_number[]" value="1">
+                                                </td>
+                                                <td><input type="text" name="Instrument_Name[]"></td>
+                                                <td><input type="text" name="Instrument_ID[]"></td>
+                                                <td><input type="text" name="Remarks[]"></td>
+                                                <td><input type="text" name="Calibration_Parameter[]"></td>
+                                                <td><input type="text" name="Acceptance_Criteria[]"></td>
+                                                <td><input type="text" name="Results[]"></td>
 
-        // Add elements with class 'facility-name' to inputsToToggle
-        var facilityNameInputs = document.getElementsByClassName('facility-name');
-        for (var i = 0; i < facilityNameInputs.length; i++) {
-            inputsToToggle.push(facilityNameInputs[i]);
-        }
-
-        // Add elements with class 'id-number' to inputsToToggle
-        var idNumberInputs = document.getElementsByClassName('id-number');
-        for (var j = 0; j < idNumberInputs.length; j++) {
-            inputsToToggle.push(idNumberInputs[j]);
-        }
-
-        // Add elements with class 'remarks' to inputsToToggle
-        var remarksInputs = document.getElementsByClassName('remarks');
-        for (var k = 0; k < remarksInputs.length; k++) {
-            inputsToToggle.push(remarksInputs[k]);
-        }
-
-
-        selectField.addEventListener('change', function() {
-            var isRequired = this.value === 'yes';
-            console.log(this.value, isRequired, 'value');
-
-            inputsToToggle.forEach(function(input) {
-                input.required = isRequired;
-                console.log(input.required, isRequired, 'input req');
-            });
-
-            document.getElementById('facilityRow').style.display = isRequired ? 'block' : 'none';
-            // Show or hide the asterisk icon based on the selected value
-            var asteriskIcon = document.getElementById('asteriskInvi');
-            asteriskIcon.style.display = isRequired ? 'inline' : 'none';
-        });
-    });
-       </script>
-
-
-<script>
-$(document).ready(function() {
-    let investdetails = 1;
-    $('#IncidentAdd').click(function(e) {
-        function generateTableRow(serialNumber) {
-            var html =
-                '<tr>' +
-                '<td><input disabled type="text" value="' + serialNumber + '"></td>' +
-                '<td><input type="text" name="instrumentdetails[' + investdetails + '][instrument_name]" value=""></td>' +
-                '<td><input type="text" name="instrumentdetails[' + investdetails + '][instrument_id]" value=""></td>' +
-                '<td><input type="text" name="instrumentdetails[' + investdetails + '][remarks]" value=""></td>' +
-                '<td><input type="text" name="instrumentdetails[' + investdetails + '][calibration]" value=""></td>' +
-                '<td><input type="text" name="instrumentdetails[' + investdetails + '][acceptancecriteria]" value=""></td>' +
-                '<td><input type="text" name="instrumentdetails[' + investdetails + '][results]" value=""></td>' +
-                '</tr>';
-            investdetails++; // Increment the row number here
-            return html;
-        }
-
-        var tableBody = $('#onservation-incident-table tbody');
-        var rowCount = tableBody.children('tr').length;
-        var newRow = generateTableRow(rowCount + 1);
-        tableBody.append(newRow);
-    });
-});
-
-    </script>
-
-{{-- grid added new --}}
-
-
-
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
 
                             <div class="sub-head"> Delay Justfication for Reporting</div>
 
@@ -610,7 +519,6 @@ $(document).ready(function() {
                             </div>
 
 
-                            
                             <div class="col-lg-12">
                                 <div class="group-input">
                                     <label for="Initial Attachments">HOD Attachement</label>
@@ -677,24 +585,6 @@ $(document).ready(function() {
                     </div>
                 </div>
             </div>
-
-
-
-
-            @php
-                $oocevaluations = array(
-    "Status of calibration for other instrument(s) used for performing calibration of the referred instrument",
-    "Verification of calibration standards used Primary Standard: Physical appearance, validity, certificate. Secondary standard: Physical appearance, validity",
-    "Verification of dilution, calculation, weighing, Titer values and readings",
-    "Verification of glassware used",
-    "Verification of chromatograms/spectrums/other instrument",
-    "Adequacy of system suitability checks",
-    "Instrument Malfunction",
-    "Check for adherence to the calibration method",
-    "Previous History of instrument",
-    "Others"
-                )
-            @endphp
             <div id="CCForm3" class="inner-block cctabcontent">
                 <div class="inner-block-content">
                     <div class="row">
@@ -715,45 +605,36 @@ $(document).ready(function() {
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            @foreach ($oocevaluations as $item)
-                                                
                                             <tr>
-                                                <td>{{$loop->index+1}}</td>
-                                                {{-- <td >Status of calibration for other instrument(s) used for performing calibration of the referred instrument</td>
-                                                 --}}
-                                                 <td style="background: #DCD8D8">{{$item}}</td>
+                                                <td></td>
+                                                <td style="background: #DCD8D8">Status of calibration for other instrument(s) used for performing calibration of the referred instrument</td>
                                                 <td>
-                                                    <textarea name="oocevoluation[{{$loop->index}}][response]"></textarea>
+                                                    <textarea name="what_will_be"></textarea>
                                                 </td>
                                                 <td>
-                                                    <textarea name="oocevoluation[{{$loop->index}}][remarks]"></textarea>
+                                                    <textarea name="what_will_not_be"></textarea>
                                                 </td>
 
                                             </tr>
-                                            @endforeach
-                                            {{-- @foreach ($oocevaluations as $item) --}}
-
-                                            {{-- <tr>
+                                            <tr>
                                                 <td></td>
-                                                    <td style="background: #DCD8D8"></td>
-                                                    <td>
-                                                    <textarea name="where_will_be_qII"></textarea>
+                                                <td style="background: #DCD8D8">Verification of calibration standards used Primary Standard: Physical apperance, validity, certificate. Secondary standard: Physical appearance, validity</td>
+                                                <td>
+                                                    <textarea name="where_will_be"></textarea>
                                                 </td>
                                                 <td>
-                                                    <textarea name="where_will_not_be_qII"></textarea>
+                                                    <textarea name="where_will_not_be"></textarea>
                                                 </td>
 
-                                            </tr> --}}
-                                            {{-- @endforeach --}}
-
-                                            {{-- <tr>
+                                            </tr>
+                                            <tr>
                                                 <td></td>
                                                 <td style="background: #DCD8D8">Verification of dilution, calculation, weighing, Titer values and readings</td>
                                                 <td>
-                                                    <textarea name="when_will_be_qIII"></textarea>
+                                                    <textarea name="when_will_be"></textarea>
                                                 </td>
                                                 <td>
-                                                    <textarea name="when_will_not_be_qIII"></textarea>
+                                                    <textarea name="when_will_not_be"></textarea>
                                                 </td>
 
                                             </tr>
@@ -761,10 +642,10 @@ $(document).ready(function() {
                                                 <td></td>
                                                 <td style="background: #DCD8D8">Verification of glassware used</td>
                                                 <td>
-                                                    <textarea name="coverage_will_be_qIv"></textarea>
+                                                    <textarea name="coverage_will_be"></textarea>
                                                 </td>
                                                 <td>
-                                                    <textarea name="coverage_will_not_be_qIv"></textarea>
+                                                    <textarea name="coverage_will_not_be"></textarea>
                                                 </td>
 
                                             </tr>
@@ -772,10 +653,10 @@ $(document).ready(function() {
                                                 <td></td>
                                                 <td style="background: #DCD8D8">Verification of chromatograms/spectrums/other instrument</td>
                                                 <td>
-                                                    <textarea name="who_will_be_qv"></textarea>
+                                                    <textarea name="who_will_be"></textarea>
                                                 </td>
                                                 <td>
-                                                    <textarea name="who_will_not_be_qv"></textarea>
+                                                    <textarea name="who_will_not_be"></textarea>
                                                 </td>
 
                                             </tr>
@@ -783,10 +664,10 @@ $(document).ready(function() {
                                                 <td></td>
                                                 <td style="background: #DCD8D8">Adequacy of system suitability checks</td>
                                                 <td>
-                                                    <textarea name="who_will_be_vi"></textarea>
+                                                    <textarea name="who_will_be"></textarea>
                                                 </td>
                                                 <td>
-                                                    <textarea name="who_will_not_be_vi"></textarea>
+                                                    <textarea name="who_will_not_be"></textarea>
                                                 </td>
 
                                             </tr>
@@ -794,10 +675,10 @@ $(document).ready(function() {
                                                 <td></td>
                                                 <td style="background: #DCD8D8">Instrument Malfunction</td>
                                                 <td>
-                                                    <textarea name="who_will_be_vii"></textarea>
+                                                    <textarea name="who_will_be"></textarea>
                                                 </td>
                                                 <td>
-                                                    <textarea name="who_will_not_be_vii"></textarea>
+                                                    <textarea name="who_will_not_be"></textarea>
                                                 </td>
 
                                             </tr>
@@ -805,10 +686,10 @@ $(document).ready(function() {
                                                 <td></td>
                                                 <td style="background: #DCD8D8">Check for adherence to the calibration method</td>
                                                 <td>
-                                                    <textarea name="who_will_be_viii"></textarea>
+                                                    <textarea name="who_will_be"></textarea>
                                                 </td>
                                                 <td>
-                                                    <textarea name="who_will_not_be_viii"></textarea>
+                                                    <textarea name="who_will_not_be"></textarea>
                                                 </td>
 
                                             </tr>
@@ -816,10 +697,10 @@ $(document).ready(function() {
                                                 <td></td>
                                                 <td style="background: #DCD8D8">Previous History of instrument</td>
                                                 <td>
-                                                    <textarea name="who_will_be_ix"></textarea>
+                                                    <textarea name="who_will_be"></textarea>
                                                 </td>
                                                 <td>
-                                                    <textarea name="who_will_not_be_ix"></textarea>
+                                                    <textarea name="who_will_not_be"></textarea>
                                                 </td>
 
                                             </tr>
@@ -827,14 +708,13 @@ $(document).ready(function() {
                                                 <td></td>
                                                 <td style="background: #DCD8D8">Others</td>
                                                 <td>
-                                                    <textarea name="who_will_be_x"></textarea>
+                                                    <textarea name="who_will_be"></textarea>
                                                 </td>
                                                 <td>
-                                                    <textarea name="who_will_not_be_x"></textarea>
+                                                    <textarea name="who_will_not_be"></textarea>
                                                 </td>
 
-                                            </tr> --}}
-
+                                            </tr>
                                         </tbody>
                                     </table>
                                 </div>
@@ -856,8 +736,8 @@ $(document).ready(function() {
                             <div class="group-input">
                                 <label for="Initiator Group">Assignable root cause found?</label>
                                 <select name="is_repeat_assingable_ooc" onchange="">
-                                    <option value="YES">YES</option>
-                                    <option value="NO">NO</option>
+                                    <option value="YES">-- select --</option>
+                                    <option value="NO"></option>
 
                                 </select>
                             </div>
@@ -1184,8 +1064,8 @@ $(document).ready(function() {
                                 <label for="Initiator Group">CAPA Type?</label>
                                 <select name="is_repeat_capas_ooc" onchange="">
                                     <option value="0">-- select --</option>
-                                    <option value="Yes">Yes</option>
-                                    <option value="No">No</option>
+                                    <option value="Yes"></option>
+                                    <option value="No"></option>
                                     
 
                                 </select>
@@ -1301,21 +1181,16 @@ $(document).ready(function() {
                                 <label for="Initial Attachments">Details of Equipment Rectification</label>
                                 <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
                                 {{-- <input type="file" id="myfile" name="Initial_Attachment"> --}}
-                                
                                 <div class="file-attachment-field">
-                                    <div class="file-attachment-list" id="initial_attachment_closuress_ooc"></div>
+                                    <div class="file-attachment-list" id="initial_attachment_closure_ooc"></div>
                                     <div class="add-btn">
                                         <div>Add</div>
-                                        <input type="file" id="initial_attachment_closuress_ooc" name="initial_attachment_closuress_ooc[]"
-                                            oninput="addMultipleFiles(this, 'initial_attachment_closuress_ooc')" multiple>
+                                        <input type="file" id="initial_attachment_closure_ooc" name="initial_attachment_closure_ooc[]"
+                                            oninput="addMultipleFiles(this, 'initial_attachment_closure_ooc')" multiple>
                                     </div>
                                 </div>
-                                
                             </div>
                         </div>
-                       
-                       
-                        
                         <div class="col-6">
                             <div class="group-input">
                                 <label for="Short Description">Document Code

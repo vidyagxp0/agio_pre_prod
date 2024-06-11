@@ -186,7 +186,7 @@
                             ->get();
                         $userRoleIds = $userRoles->pluck('q_m_s_roles_id')->toArray();
                         $auditCollect = DB::table('audit_reviewers_details')
-                            ->where(['doc_id' => $document->id, 'user_id' => Auth::user()->id])
+                            ->where(['deviation_id' => $document->id, 'user_id' => Auth::user()->id])
                             ->latest()
                             ->first();
                     @endphp
@@ -234,7 +234,7 @@
 
                                 @php
                                     $reviewer = DB::table('audit_reviewers_details')
-                                        ->where(['doc_id' => $document->id, 'type' => 'Change Control'])
+                                        ->where(['deviation_id' => $document->id, 'type' => 'Change Control'])
                                         ->get();
                                 @endphp
                                 <!-- Customer grid view -->
@@ -375,7 +375,7 @@
                             <td>
                                 <div>
                                     <strong> Data Field Name :</strong><a
-                                        href="#">{{ $dataDemo->activity_type ? $dataDemo->activity_type : 'Not Applicable' }}</a>
+                                        href="{{ url('DeviationAuditTrialDetails', $dataDemo->id) }}">{{ $dataDemo->activity_type ? $dataDemo->activity_type : 'Not Applicable' }}</a>
                                 </div>
                                 <div style="margin-top: 5px;">
                                     @if($dataDemo->activity_type == "Activity Log")

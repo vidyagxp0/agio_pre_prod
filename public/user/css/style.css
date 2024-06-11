@@ -2755,11 +2755,11 @@ section#pdf-page .watermark {
 }
 
 #tms-dashboard .tms-block td a {
-    /* border: 1px solid #a3a0a0a6; */
-    color: #2b6ae9;
+    border: 1px solid #a3a0a0a6;
+    color: #355cab;
     display: grid;
-    /* width: 30px; */
-    /* height: 30px; */
+    width: 30px;
+    height: 30px;
     place-items: center;
     margin: 0 auto;
     border-radius: 50%;

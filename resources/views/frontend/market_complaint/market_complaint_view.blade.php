@@ -18,7 +18,7 @@
         </div> --}}
         <div class="division-bar">
             <strong>Site Division/Project</strong> :
-            {{ Helpers::getDivisionName(session()->get('division')) }}/ Market Complaint
+            / Market Complaint
         </div>
     </div>
 
@@ -227,7 +227,7 @@
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                 Investigation Completed
                             </button>
-                            {{-- <div class="btn-group">
+                            <div class="btn-group">
                                 <button type="button" class="button_theme1" data-bs-toggle="dropdown"
                                     aria-expanded="false">
                                     Additional Selections
@@ -243,14 +243,14 @@
                                     </li>
                                     <!-- Add more selections as needed -->
                                 </ul>
-                            </div> --}}
+                            </div>
                         @elseif($data->stage == 4 && (in_array(4, $userRoleIds) || in_array(18, $userRoleIds)))
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                 Propose Plan
                             </button>
 
 
-                            {{-- <div class="btn-group">
+                            <div class="btn-group">
                                 <button type="button" class="button_theme1" data-bs-toggle="dropdown"
                                     aria-expanded="false">
                                     Additional Selections
@@ -266,7 +266,7 @@
                                     </li>
                                     <!-- Add more selections as needed -->
                                 </ul>
-                            </div> --}}
+                            </div>
                         @elseif($data->stage == 5 && (in_array(4, $userRoleIds) || in_array(18, $userRoleIds)))
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                 Approve Plan
@@ -279,7 +279,8 @@
                                 All CAPA Closed
                             </button>
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#">
-                                Regulatory Reporting child
+                                Regulatory
+                                Reporting child
 
                             </button>
                         @elseif($data->stage == 7 && (in_array(4, $userRoleIds) || in_array(18, $userRoleIds)))
@@ -287,7 +288,7 @@
                                 Send Letter
                             </button>
 
-                            {{-- <div class="btn-group">
+                            <div class="btn-group">
                                 <button type="button" class="button_theme1" data-bs-toggle="dropdown"
                                     aria-expanded="false">
                                     child
@@ -304,10 +305,135 @@
                                     </li>
                                     <!-- Add more selections as needed -->
                                 </ul>
-                            </div> --}}
+                            </div>
                         @endif
                         <button class="button_theme1"> <a class="text-white" href="{{ url('rcms/qms-dashboard') }}"> Exit
                             </a> </button>
+
+                        {{-- <button class="button_theme1"> <a class="text-white" href="{{ url('rcms/qms-dashboard') }}"> Exit
+                        </a> </button> --}}
+
+
+
+                        {{-- <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
+                                Verification Complete
+                            </button> --}}
+
+
+                        {{-- <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#cancel-modal">
+                                Cancellation Request
+                            </button>
+                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#rejection-modal">
+                                Request More Info
+                            </button> --}}
+
+
+
+                        {{-- <button class="button_theme1"> <a class="text-white" href=""> --}}
+                        {{-- {{ url('DeviationAuditTrial', $data->id) }} --}}
+
+                        {{-- add here url for auditTrail i.e. href="{{ url('CapaAuditTrial', $data->id) }}"
+                                Audit Trail </a> </button> --}}
+
+                        {{--    @if ($data->stage == 1 && (in_array(3, $userRoleIds) || in_array(18, $userRoleIds))) --}}
+                        {{-- <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
+                            Submit
+                        </button>
+                        <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#cancel-modal">
+                            Cancel
+                        </button> --}}
+                        {{-- @elseif($data->stage == 2 && (in_array(4, $userRoleIds) || in_array(18, $userRoleIds))) --}}
+                        {{-- <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#more-info-required-modal">
+                            More Info Required
+                        </button> --}}
+
+
+                        {{-- 
+                        <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
+                            HOD Review Complete
+                        </button>
+                        <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#cancel-modal">
+                            Cancel
+                        </button> --}}
+
+
+
+
+
+                        {{-- @elseif($data->stage == 3 && (in_array(7, $userRoleIds) || in_array(18, $userRoleIds))) --}}
+                        {{-- <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#more-info-required-modal">
+                            More Info Required
+                        </button>
+                        <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
+                            QA Initial Review Complete
+                        </button>
+
+                        <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal">
+                            Child
+                        </button> --}}
+                        {{-- @elseif(
+                            $data->stage == 4 &&
+                                (in_array(5, $userRoleIds) || in_array(18, $userRoleIds) || in_array(Auth::user()->id, $valuesArray)))
+                            @if (!$cftCompleteUser) --}}
+                        {{-- <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#more-info-required-modal">
+                            More Info Required
+                        </button> --}}
+
+                        {{-- @elseif($data->stage == 5 && (in_array(7, $userRoleIds) || in_array(18, $userRoleIds))) --}}
+                        {{-- <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#sendToInitiator">
+                            Send to Initiator
+                        </button>
+                        <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#hodsend">
+                            Send to HOD
+                        </button>
+                        <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#qasend">
+                            Send to QA Initial Review
+                        </button>
+                        <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
+                            QA Final Review Complete
+                        </button>
+                        <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal">
+                            Child
+                        </button> --}}
+                        {{-- @elseif($data->stage == 6 && (in_array(39, $userRoleIds) || in_array(18, $userRoleIds))) --}}
+                        {{-- <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#more-info-required-modal">
+                            More Info Required
+                        </button>
+                        <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
+                            Approved
+                        </button> --}}
+                        {{-- @elseif($data->stage == 7 && (in_array(3, $userRoleIds) || in_array(18, $userRoleIds))) --}}
+                        {{-- <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#sendToInitiator">
+                            Send to Opened
+                        </button>
+                        <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#hodsend">
+                            Send to HOD Review
+                        </button>
+                        <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#qasend">
+                            Send to QA Initial Review
+                        </button>
+                        <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
+                            Initiator Updated Complete
+                        </button> --}}
+                        {{-- @elseif($data->stage == 8 && (in_array(39, $userRoleIds) || in_array(18, $userRoleIds))) --}}
+                        {{-- <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#sendToInitiator">
+                            Send to Opened
+                        </button>
+                        <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#hodsend">
+                            Send to HOD Review
+                        </button> --}}
+                        {{-- <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#qasend">
+                            Send to QA Initial Review
+                        </button>
+                        <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#pending-initiator-update">
+                            Send to Pending Initiator Update
+                        </button>
+                        <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
+                            QA Final Review Complete
+                        </button> --}}
+                        {{-- @endif --}}
+                        {{-- <button class="button_theme1"> <a class="text-white" href="{{ url('rcms/qms-dashboard') }}"> Exit
+                            </a> </button> --}}
 
 
                     </div>
@@ -487,9 +613,9 @@
                                             Root Cause Analysis
                                         </label>
                                     </div>
-
+            
                                 </div>
-
+            
                                 <!-- Modal footer -->
                                 <!-- <div class="modal-footer">
                                     <button type="button" data-bs-dismiss="modal">Close</button>
@@ -497,7 +623,7 @@
                                 </div> -->
                                 <div class="modal-footer">
                                           <button type="submit">Submit</button>
-                                         <button type="button" data-bs-dismiss="modal">Close</button>
+                                         <button type="button" data-bs-dismiss="modal">Close</button>                         
                                </div>
                             </form>
              --}}
@@ -526,9 +652,9 @@
                                             CAPA
                                         </label>
                                     </div>
-
+            
                                 </div>
-
+            
                                 <!-- Modal footer -->
                                 <!-- <div class="modal-footer">
                                     <button type="button" data-bs-dismiss="modal">Close</button>
@@ -536,7 +662,7 @@
                                 </div> -->
                                 <div class="modal-footer">
                                           <button type="submit">Submit</button>
-                                         <button type="button" data-bs-dismiss="modal">Close</button>
+                                         <button type="button" data-bs-dismiss="modal">Close</button>                         
                                </div>
                             </form> --}}
 
@@ -642,7 +768,13 @@
                         }
                     }
                 </script>
-
+                <script>
+                    // JavaScript
+                    document.getElementById('initiator_group').addEventListener('change', function() {
+                        var selectedValue = this.value;
+                        document.getElementById('initiator_group_code_gi').value = selectedValue;
+                    });
+                </script>
                 <script>
                     document.addEventListener('DOMContentLoaded', function() {
                         const removeButtons = document.querySelectorAll('.remove-file');
@@ -823,7 +955,7 @@
                                     <p class="text-primary"> last date this record should be closed by</p>
 
                                     <div class="calenderauditee">
-                                        <input type="text" id="due_date" readonly placeholder="DD-MMM-YYYY" value="{{ $data->due_date_gi ? \Carbon\Carbon::parse($data->due_date_gi)->format('d-M-Y') : '' }}" />
+                                        <input type="text" id="due_date" readonly placeholder="DD-MMM-YYYY" />
                                         <input type="date" name="due_date_gi"
                                             min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
                                             value="{{ $data->due_date_gi ?? '' }}" class="hide-input"
@@ -832,53 +964,32 @@
                                 </div>
                             </div>
 
-                            <script>
-                            function handleDateInput(input, targetId) {
-                                const target = document.getElementById(targetId);
-                                const date = new Date(input.value);
-                                const options = { day: '2-digit', month: 'short', year: 'numeric' };
-                                const formattedDate = date.toLocaleDateString('en-US', options).replace(/ /g, '-');
-                                target.value = formattedDate;
-                            }
-                            </script>
-
-
 
                             <div class="col-lg-6">
                                 <div class="group-input">
-                                    <label for="Short Description">Initiator Group <span class="text-danger"></span></label>
-                                    <select name="initiator_group" id="initiator_group">
+                                    <label for="Short Description">Initiator Group <span
+                                            class="text-danger"></span></label>
+                                    <select name="initiator_group">
                                         <option selected disabled>---select---</option>
                                         @foreach (Helpers::getInitiatorGroups() as $code => $initiator_group)
-                                            <option value="{{ $code }}" @if ($data->initiator_group == $code) selected @endif>
-                                                {{ $initiator_group }}
+                                            <option value="{{ $code }}"
+                                                @if ($data->initiator_group == $code) selected @endif>{{ $initiator_group }}
                                             </option>
                                         @endforeach
                                     </select>
                                 </div>
                             </div>
 
+
+
+
                             <div class="col-lg-12">
                                 <div class="group-input">
                                     <label for="Initiator Group Code">Initiator Group Code</label>
-                                    <input readonly type="text" name="initiator_group_code_gi" id="initiator_group_code_gi" value="{{ $data->initiator_group_code_gi ?? '' }}">
+                                    <input type="text" name="initiator_group_code_gi" id="initiator_group_code_gi"
+                                        readonly value="{{ $data->initiator_group_code_gi ?? '' }}">
                                 </div>
                             </div>
-
-                            <script>
-                                document.getElementById('initiator_group').addEventListener('change', function() {
-                                    var selectedValue = this.value;
-                                    document.getElementById('initiator_group_code_gi').value = selectedValue;
-                                });
-
-                                // Set the group code on page load if a value is already selected
-                                document.addEventListener('DOMContentLoaded', function() {
-                                    var initiatorGroupElement = document.getElementById('initiator_group');
-                                    if (initiatorGroupElement.value) {
-                                        document.getElementById('initiator_group_code_gi').value = initiatorGroupElement.value;
-                                    }
-                                });
-                            </script>
 
                             <div class="col-lg-12">
                                 <div class="group-input">
@@ -1012,7 +1123,7 @@
                                 </div>
                             </div>
 
-                            {{-- <div class="col-lg-6 new-date-data-field">
+                            <div class="col-lg-6 new-date-data-field">
                                 <div class="group-input input-date">
                                     <label for="OOC Logged On"> Complaint Reported On </label>
 
@@ -1021,49 +1132,14 @@
                                             min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" readonly
                                             placeholder="DD-MM-YYYY" name="complaint_reported_on_gi"
                                             value="{{ $data->complaint_reported_on_gi }}" />
-
+                                        {{-- <input type="date" name="complaint_reported_on_gi"
+                                                min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" 
+                                                oninput=""  /> --}}
                                     </div>
 
 
-                                </div>
-                            </div> --}}
-                            <div class="col-lg-6 new-date-data-field">
-                                <div class="group-input input-date">
-                                    <label for="OOC Logged On">Complaint Reported On</label>
-                                    <div class="calenderauditee">
-                                        <input type="text" id="compalint_dat" readonly placeholder="DD-MMM-YYYY" value="{{ $data->complaint_reported_on_gi ? \Carbon\Carbon::parse($data->complaint_reported_on_gi)->format('d-M-Y') : '' }}" />
-                                        <input type="date" name="complaint_reported_on_gi"
-                                        min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
-                                        value="{{ $data->complaint_reported_on_gi }}" class="hide-input" oninput="handleDateInput(this, 'compalint_dat')" />
-                                    </div>
                                 </div>
                             </div>
-
-                            <script>
-                                document.addEventListener('DOMContentLoaded', (event) => {
-                                    const dateInput = document.getElementById('complaint_date_picker');
-                                    const today = new Date().toISOString().split('T')[0];
-                                    dateInput.setAttribute('max', today);
-
-                                    // Show the date picker when clicking on the readonly input
-                                    const readonlyInput = document.getElementById('compalint_dat');
-                                    readonlyInput.addEventListener('click', () => {
-                                        dateInput.style.display = 'block';
-                                        dateInput.focus();
-                                    });
-
-                                    // Update the readonly input when a date is selected
-                                    dateInput.addEventListener('change', () => {
-                                        readonlyInput.value = new Date(dateInput.value).toLocaleDateString('en-GB');
-                                        dateInput.style.display = 'none';
-                                    });
-
-                                    // If there is an existing date, set the readonly input's value
-                                    if (dateInput.value) {
-                                        readonlyInput.value = new Date(dateInput.value).toLocaleDateString('en-GB');
-                                    }
-                                });
-                            </script>
 
                             <div class="col-md-12 mb-3">
                                 <div class="group-input">
@@ -1100,8 +1176,6 @@
                                                 <th>Pack Size</th>
                                                 <th>Dispatch Quantity</th>
                                                 <th>Remarks</th>
-                                                <th>Action</th>
-
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -1110,41 +1184,19 @@
                                             @endphp
                                            @if (!empty($productsgi) && is_array($productsgi->data))
                                                 @foreach ($productsgi->data as $index => $detail)
-
-
+                                                
+                                              
                                                     <tr>
                                                         {{-- <td><input disabled type="text" name="serial_number_gi[]" value="1"></td> --}}
                                                         <td>{{ $productsdetails++ }}</td>
-                                                        <td><input type="text" name="serial_number_gi[{{ $loop->index }}][info_product_name]" value="{{ array_key_exists('info_product_name', $detail) ? $detail['info_product_name'] : '' }}"></td>
-                                                        <td><input type="text" name="serial_number_gi[{{ $loop->index }}][info_batch_no]" value="{{ array_key_exists('info_batch_no', $detail) ? $detail['info_batch_no'] : '' }}"></td>
-                                                        <td>
-                                                            <div class="calenderauditee">
-                                                                 <input
-                                                                 class="click_date"
-                                                                 id="date_{{ $loop->index }}_mfg_date" type="text" name="serial_number_gi[{{ $loop->index }}][info_mfg_date]" placeholder="DD-MMM-YYYY" value="{{ array_key_exists('info_mfg_date', $detail) ? \Carbon\Carbon::parse($detail['info_mfg_date'])->format('d-M-Y') : '' }}" />
-                                                                 <input type="date" name="serial_number_gi[{{ $loop->index }}][info_mfg_date]"
-                                                                 min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" value="{{ array_key_exists('info_mfg_date', $detail) ? \Carbon\Carbon::parse($detail['info_mfg_date'])->format('Y-m-d') : '' }}"
-                                                                 id="date_{{ $loop->index }}_mfg_date"
-                                                                 class="hide-input show_date" style="position: absolute; top: 0; left: 0; opacity: 0;" oninput="handleDateInput(this, 'date_{{ $loop->index }}_mfg_date')" />
-                                                            </div>
-                                                        </td>
-                                                        <td>
-                                                            <div class="calenderauditee">
-                                                                 <input
-                                                                 class="click_date"
-                                                                 id="date_{{ $loop->index }}_expiry_date" type="text" name="serial_number_gi[{{ $loop->index }}][info_expiry_date]" placeholder="DD-MMM-YYYY" value="{{ array_key_exists('info_expiry_date', $detail) ? \Carbon\Carbon::parse($detail['info_expiry_date'])->format('d-M-Y') : '' }}" />
-                                                                 <input type="date" name="serial_number_gi[{{ $loop->index }}][info_expiry_date]"
-                                                                 min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" value="{{ array_key_exists('info_expiry_date', $detail) ? \Carbon\Carbon::parse($detail['info_expiry_date'])->format('Y-m-d') : '' }}"
-                                                                 id="date_{{ $loop->index }}_expiry_date"
-                                                                 class="hide-input show_date" style="position: absolute; top: 0; left: 0; opacity: 0;" oninput="handleDateInput(this, 'date_{{ $loop->index }}_expiry_date')" />
-                                                            </div>
-                                                        </td>
-                                                        <td><input type="text" name="serial_number_gi[{{ $loop->index }}][info_batch_size]" value="{{ array_key_exists('info_batch_size', $detail) ? $detail['info_batch_size'] : '' }}"></td>
-                                                        <td><input type="text" name="serial_number_gi[{{ $loop->index }}][info_pack_size]" value="{{ array_key_exists('info_pack_size', $detail) ? $detail['info_pack_size'] : '' }}"></td>
-                                                        <td><input type="text" name="serial_number_gi[{{ $loop->index }}][info_dispatch_quantity]" value="{{ array_key_exists('info_dispatch_quantity', $detail) ? $detail['info_dispatch_quantity'] : '' }}"></td>
-                                                        <td><input type="text" name="serial_number_gi[{{ $loop->index }}][info_remarks]" value="{{ array_key_exists('info_remarks', $detail) ? $detail['info_remarks'] : '' }}"></td>
-                                                        <td><button type="text" class="removeRowBtn" >Remove</button></td>
-
+                                                        <td><input type="text" name="serial_number_gi[{{ $index }}][info_product_name]" value="{{ $detail['info_product_name'] }}"></td>
+                                                        <td><input type="text" name="serial_number_gi[{{ $index }}][info_batch_no]" value="{{ $detail['info_batch_no'] }}"></td>
+                                                        <td><input type="date" name="serial_number_gi[{{ $index }}][info_mfg_date]" value="{{ $detail['info_mfg_date'] }}"></td>
+                                                        <td><input type="date" name="serial_number_gi[{{ $index }}][info_expiry_date]" value="{{ $detail['info_expiry_date'] }}"></td>
+                                                        <td><input type="text" name="serial_number_gi[{{ $index }}][info_batch_size]" value="{{ $detail['info_batch_size'] }}"></td>
+                                                        <td><input type="text" name="serial_number_gi[{{ $index }}][info_pack_size]" value="{{ $detail['info_pack_size'] }}"></td>
+                                                        <td><input type="text" name="serial_number_gi[{{ $index }}][info_dispatch_quantity]" value="{{ $detail['info_dispatch_quantity'] }}"></td>
+                                                        <td><input type="text" name="serial_number_gi[{{ $index }}][info_remarks]" value="{{ $detail['info_remarks'] }}"></td>
                                                     </tr>
                                                 @endforeach
                                             @else
@@ -1158,31 +1210,30 @@
                                 </div>
                             </div>
 
-
+                         
                             <script>
                                 $(document).ready(function() {
                                     let indexDetail = {{ ($productsgi && is_array($productsgi->data)) ? count($productsgi->data) : 0 }};
                                     $('#Details').click(function(e) {
                                         e.preventDefault();
-
+                            
                                         function generateTableRow(serialNumber) {
                                             var html =
                                                 '<tr>' +
                                                 '<td><input disabled type="text" name="serial_number_gi[' + serialNumber + '][serial]" value="' + (serialNumber + 1) + '"></td>' +
                                                 '<td><input type="text" name="serial_number_gi[' + indexDetail + '][info_product_name]"></td>' +
                                                 '<td><input type="text" name="serial_number_gi[' + indexDetail + '][info_batch_no]"></td>' +
-                                                '<td> <div class="calenderauditee"><input id="date_'+ indexDetail +'_mfg_date" type="text" name="serial_number_gi[' + indexDetail + '][info_mfg_date]" placeholder="DD-MMM-YYYY" /> <input type="date" name="serial_number_gi[' + indexDetail + '][info_mfg_date]" min="{{ \Carbon\Carbon::now()->format("Y-m-d") }}" value="{{ \Carbon\Carbon::now()->format("Y-m-d") }}" id="date_'+ indexDetail +'_mfg_date" class="hide-input show_date" style="position: absolute; top: 0; left: 0; opacity: 0;" oninput="handleDateInput(this, \'date_'+ indexDetail +'_mfg_date\')" /> </div> </td>' +
-                                                '<td> <div class="calenderauditee"><input id="date_'+ indexDetail +'_expiry_date" type="text" name="serial_number_gi[' + indexDetail + '][info_expiry_date]" placeholder="DD-MMM-YYYY" /> <input type="date" name="serial_number_gi[' + indexDetail + '][info_expiry_date]" min="{{ \Carbon\Carbon::now()->format("Y-m-d") }}" value="{{ \Carbon\Carbon::now()->format("Y-m-d") }}" id="date_'+ indexDetail +'_expiry_date" class="hide-input show_date" style="position: absolute; top: 0; left: 0; opacity: 0;" oninput="handleDateInput(this, \'date_'+ indexDetail +'_expiry_date\')" /> </div> </td>' +
+                                                '<td><input type="date" name="serial_number_gi[' + indexDetail + '][info_mfg_date]"></td>' +
+                                                '<td><input type="date" name="serial_number_gi[' + indexDetail + '][info_expiry_date]"></td>' +
                                                 '<td><input type="text" name="serial_number_gi[' + indexDetail + '][info_batch_size]"></td>' +
                                                 '<td><input type="text" name="serial_number_gi[' + indexDetail + '][info_pack_size]"></td>' +
                                                 '<td><input type="text" name="serial_number_gi[' + indexDetail + '][info_dispatch_quantity]"></td>' +
                                                 '<td><input type="text" name="serial_number_gi[' + indexDetail + '][info_remarks]"></td>' +
-                                                '<td><button type="text" class="removeRowBtn" ">Remove</button></td>' +
                                                 '</tr>';
                                                 indexDetail++;
                                             return html;
                                         }
-
+                            
                                         var tableBody = $('#ProductsDetails tbody');
                                         var rowCount = tableBody.children('tr').length;
                                         var newRow = generateTableRow(rowCount+1);
@@ -1209,7 +1260,6 @@
                                                     <th>Batch No.</th>
                                                     <th>Manufacturing Location</th>
                                                     <th>Remarks</th>
-                                                    <th>Action</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -1224,26 +1274,24 @@
                                                             <td><input type="text" name="trace_ability[{{ $index }}][batch_no_tr]" value="{{ $tracebil['batch_no_tr'] }}"></td>
                                                             <td><input type="text" name="trace_ability[{{ $index }}][manufacturing_location_tr]" value="{{ $tracebil['manufacturing_location_tr'] }}"></td>
                                                             <td><input type="text" name="trace_ability[{{ $index }}][remarks_tr]" value="{{ $tracebil['remarks_tr'] }}"></td>
-                                                           <td><button type="text" class="removeRowBtn" >Remove</button></td>
-
                                                         </tr>
                                                     @endforeach
                                                 @else
                                                     <tr>
                                                         <td colspan="5">No found</td>
-                                                     </tr>
+                                                    </tr>
                                                 @endif
                                             </tbody>
                                         </table>
                                     </div>
                                 </div>
                             </div>
-
+                            
                             <script>
                                 $(document).ready(function() {
                                     $('#traceblity_add').click(function(e) {
                                         e.preventDefault();
-
+                            
                                         function generateTableRow(serialNumber) {
                                             var html =
                                                 '<tr>' +
@@ -1252,12 +1300,10 @@
                                                 '<td><input type="text" name="trace_ability[' + serialNumber + '][batch_no_tr]"></td>' +
                                                 '<td><input type="text" name="trace_ability[' + serialNumber + '][manufacturing_location_tr]"></td>' +
                                                 '<td><input type="text" name="trace_ability[' + serialNumber + '][remarks_tr]"></td>' +
-                                                '<td><button type="text" class="removeRowBtn" >Remove</button></td>' +
-
                                                 '</tr>';
                                             return html;
                                         }
-
+                            
                                         var tableBody = $('#traceblity tbody');
                                         var rowCount = tableBody.children('tr').length;
                                         var newRow = generateTableRow(rowCount);
@@ -1265,7 +1311,7 @@
                                     });
                                 });
                             </script>
-
+                            
 
                             <div class="col-lg-12">
                                 <div class="group-input">
@@ -1323,8 +1369,6 @@
                                                     <th>Name</th>
                                                     <th>Department</th>
                                                     <th>Remarks</th>
-                                                    <th>Action</th>
-
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -1338,8 +1382,6 @@
                                                             <td><input type="text" name="Investing_team[{{ $index }}][name_inv_tem]" value="{{ $inves['name_inv_tem'] }}"></td>
                                                             <td><input type="text" name="Investing_team[{{ $index }}][department_inv_tem]" value="{{ $inves['department_inv_tem'] }}"></td>
                                                             <td><input type="text" name="Investing_team[{{ $index }}][remarks_inv_tem]" value="{{ $inves['remarks_inv_tem'] }}"></td>
-                                                             <td><button type="text" class="removeRowBtn" >Remove</button></td>
-
                                                         </tr>
                                                     @endforeach
                                                 @else
@@ -1352,12 +1394,12 @@
                                     </div>
                                 </div>
                             </div>
-
+                            
                             <script>
                                 $(document).ready(function() {
                                     $('#investigation_team_add').click(function(e) {
                                         e.preventDefault();
-
+                            
                                         function generateTableRow(serialNumber) {
                                             var html =
                                                 '<tr>' +
@@ -1365,12 +1407,10 @@
                                                 '<td><input type="text" name="Investing_team[' + serialNumber + '][name_inv_tem]"></td>' +
                                                 '<td><input type="text" name="Investing_team[' + serialNumber + '][department_inv_tem]"></td>' +
                                                 '<td><input type="text" name="Investing_team[' + serialNumber + '][remarks_inv_tem]"></td>' +
-                                                '<td><button type="text" class="removeRowBtn" >Remove</button></td>' +
-
                                                 '</tr>';
                                             return html;
                                         }
-
+                            
                                         var tableBody = $('#Investing_team tbody');
                                         var rowCount = tableBody.children('tr').length;
                                         var newRow = generateTableRow(rowCount);
@@ -1378,7 +1418,7 @@
                                     });
                                 });
                             </script>
-
+                            
                             <div class="col-md-12 mb-3">
                                 <div class="group-input">
                                     <label for="Review of Batch manufacturing record (BMR)">Review
@@ -1500,8 +1540,6 @@
                                                     <th>Facts/Controls</th>
                                                     <th>Probable Cause</th>
                                                     <th>Remarks</th>
-                                                    <th>Action</th>
-
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -1516,8 +1554,6 @@
                                                             <td><input type="text" name="brain_stroming_details[{{ $index }}][factscontrols_bssd]" value="{{ $bra_st_s['factscontrols_bssd'] }}"></td>
                                                             <td><input type="text" name="brain_stroming_details[{{ $index }}][probable_cause_bssd]" value="{{ $bra_st_s['probable_cause_bssd'] }}"></td>
                                                             <td><input type="text" name="brain_stroming_details[{{ $index }}][remarks_bssd]" value="{{ $bra_st_s['remarks_bssd'] }}"></td>
-                                                              <td><button type="button" class="removeRowBtn">Remove</button></td>
-
                                                         </tr>
                                                     @endforeach
                                                 @else
@@ -1530,12 +1566,12 @@
                                     </div>
                                 </div>
                             </div>
-
+                            
                             <script>
                                 $(document).ready(function() {
                                     $('#brain-stroming').click(function(e) {
                                         e.preventDefault();
-
+                            
                                         function generateTableRow(serialNumber) {
                                             var html =
                                                 '<tr>' +
@@ -1544,12 +1580,10 @@
                                                 '<td><input type="text" name="brain_stroming_details[' + serialNumber + '][factscontrols_bssd]"></td>' +
                                                 '<td><input type="text" name="brain_stroming_details[' + serialNumber + '][probable_cause_bssd]"></td>' +
                                                 '<td><input type="text" name="brain_stroming_details[' + serialNumber + '][remarks_bssd]"></td>' +
-                                                '<td><button type="button" class="removeRowBtn">Remove</button></td>' +
-
                                                 '</tr>';
                                             return html;
                                         }
-
+                            
                                         var tableBody = $('#brain_stroming_details tbody');
                                         var rowCount = tableBody.children('tr').length;
                                         var newRow = generateTableRow(rowCount);
@@ -1557,7 +1591,7 @@
                                     });
                                 });
                             </script>
-
+                            
 
                             <div class="button-block">
                                 <button type="submit" class="saveButton">Save</button>
@@ -1683,24 +1717,15 @@
                                                 @if (!empty($team_members))
                                                     @foreach ($team_members->data as $index  => $tem_meb)
                                                     <tr>
-                                                        <td><input disabled type="text" name="serial_number[{{ $loop->index }}]" value="{{ $teammebindex++ }}"> </td>
-                                                        <td><input type="text" name="Team_Members[{{ $loop->index }}][names_tm]" value="{{ array_key_exists('names_tm', $tem_meb) ? $tem_meb['names_tm'] : '' }}"></td>
-                                                        <td><input type="text" name="Team_Members[{{ $loop->index }}][department_tm]" value="{{ array_key_exists('department_tm', $tem_meb) ? $tem_meb['department_tm'] : '' }}"></td>
-                                                        <td><input type="text" name="Team_Members[{{ $loop->index }}][sign_tm]" value="{{ array_key_exists('sign_tm', $tem_meb) ? $tem_meb['sign_tm'] : '' }}"></td>
-                                                        <td>
-                                                            <div class="calenderauditee">
-                                                                 <input
-                                                                 class="click_date"
-                                                                 id="date_{{ $loop->index }}_date_tm" type="text" name="Team_Members[{{ $loop->index }}][date_tm]" placeholder="DD-MMM-YYYY" value="{{ array_key_exists('date_tm', $tem_meb) ? \Carbon\Carbon::parse($tem_meb['date_tm'])->format('d-M-Y') : '' }}" />
-                                                                 <input type="date" name="Team_Members[{{ $loop->index }}][date_tm]"
-                                                                 min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" value="{{ array_key_exists('date_tm', $tem_meb) ? \Carbon\Carbon::parse($tem_meb['date_tm'])->format('Y-m-d') : '' }}"
-                                                                 id="date_{{ $loop->index }}_date_tm"
-                                                                 class="hide-input show_date" style="position: absolute; top: 0; left: 0; opacity: 0;" oninput="handleDateInput(this, 'date_{{ $loop->index }}_date_tm')" />
-                                                            </div>
-                                                        </td>
+
+                                                        <td><input disabled type="text" name="serial_number[{{ $index }}]" value="{{ $teammebindex++ }}"> </td>
+                                                        <td><input type="text" name="Team_Members[{{ $index }}][names_tm]" value="{{ $tem_meb['names_tm'] }}"></td>
+                                                        <td><input type="text" name="Team_Members[{{ $index }}][department_tm]" value="{{ $tem_meb['department_tm'] }}"></td>
+                                                        <td><input type="text" name="Team_Members[{{ $index }}][sign_tm]" value="{{ $tem_meb['sign_tm'] }}"></td>
+                                                        <td><input type="date" name="Team_Members[{{ $index }}][date_tm]" value="{{ $tem_meb['date_tm'] }}"></td>
                                                     </tr>
 
-
+                                                       
                                                     @endforeach
                                                 @else
                                                     <tr>
@@ -1719,7 +1744,7 @@
                                 $(document).ready(function() {
                                     $('#team_members').click(function(e) {
                                         e.preventDefault();
-
+                            
                                         function generateTableRow(teamserialNumber) {
                                             var html =
                                                 '<tr>' +
@@ -1727,12 +1752,11 @@
                                                 '<td><input type="text" name="Team_Members[' + teamserialNumber + '][names_tm]"></td>' +
                                                 '<td><input type="text" name="Team_Members[' + teamserialNumber + '][department_tm]"></td>' +
                                                 '<td><input type="text" name="Team_Members[' + teamserialNumber + '][sign_tm]"></td>' +
-                                                '<td> <div class="calenderauditee"><input id="date_'+ teamserialNumber +'_date_tm" type="text" name="Team_Members[' + teamserialNumber + '][date_tm]" placeholder="DD-MMM-YYYY" /> <input type="date" name="Team_Members[' + teamserialNumber + '][date_tm]" min="{{ \Carbon\Carbon::now()->format("Y-m-d") }}" value="{{ \Carbon\Carbon::now()->format("Y-m-d") }}" id="date_'+ teamserialNumber +'_date_tm" class="hide-input show_date" style="position: absolute; top: 0; left: 0; opacity: 0;" oninput="handleDateInput(this, \'date_'+ teamserialNumber +'_date_tm\')" /> </div> </td>' +
-
+                                                '<td><input type="text" name="Team_Members[' + teamserialNumber + '][date_tm]"></td>' +
                                                 '</tr>';
                                             return html;
                                         }
-
+                            
                                         var tableBody = $('#team_members_details tbody');
                                         var rowCount = tableBody.children('tr').length;
                                         var newRow = generateTableRow(rowCount);
@@ -1740,10 +1764,10 @@
                                     });
                                 });
                             </script>
+                            
 
 
-
-
+                           
 
                             <div class="col-12">
                                 <div class="group-input">
@@ -1781,17 +1805,7 @@
                                                         <td><input type="text" name="Report_Approval[{{ $index }}][names_rrv]" value="{{ $rep_ap['names_rrv'] }}"></td>
                                                         <td><input type="text" name="Report_Approval[{{ $index }}][department_rrv]"value="{{ $rep_ap['department_rrv'] }}"></td>
                                                         <td><input type="text" name="Report_Approval[{{ $index }}][sign_rrv]" value="{{ $rep_ap['sign_rrv'] }}"></td>
-                                                            <td>
-                                                                <div class="calenderauditee">
-                                                                    <input
-                                                                    class="click_date"
-                                                                    id="date_{{ $loop->index }}_date_rrv" type="text" name="Report_Approval[{{ $loop->index }}][date_rrv]" placeholder="DD-MMM-YYYY" value="{{ array_key_exists('date_rrv', $rep_ap) ? \Carbon\Carbon::parse($rep_ap['date_rrv'])->format('d-M-Y') : '' }}" />
-                                                                    <input type="date" name="Report_Approval[{{ $loop->index }}][date_rrv]"
-                                                                    min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" value="{{ array_key_exists('date_rrv', $rep_ap) ? \Carbon\Carbon::parse($rep_ap['date_rrv'])->format('Y-m-d') : '' }}"
-                                                                    id="date_{{ $loop->index }}_date_rrv"
-                                                                    class="hide-input show_date" style="position: absolute; top: 0; left: 0; opacity: 0;" oninput="handleDateInput(this, 'date_{{ $loop->index }}_date_rrv')" />
-                                                                </div>
-                                                            </td>
+                                                        <td><input type="date" name="Report_Approval[{{ $index }}][date_rrv]"value="{{ $rep_ap['date_rrv'] }}"></td>
                                                     </tr>
                                                     @endforeach
 
@@ -1806,7 +1820,7 @@
                                 $(document).ready(function() {
                                     $('#report_approval').click(function(e) {
                                         e.preventDefault();
-
+                            
                                         function generateTableRow(serialNumber) {
                                             var html =
                                                 '<tr>' +
@@ -1814,12 +1828,11 @@
                                                 '<td><input type="text" name="Report_Approval[' + serialNumber + '][names_rrv]"></td>' +
                                                 '<td><input type="text" name="Report_Approval[' + serialNumber + '][department_rrv]"></td>' +
                                                 '<td><input type="text" name="Report_Approval[' + serialNumber + '][sign_rrv]"></td>' +
-                                                '<td> <div class="calenderauditee"><input id="date_'+ serialNumber +'_date_rrv" type="text" name="Report_Approval[' + serialNumber + '][date_rrv]" placeholder="DD-MMM-YYYY" /> <input type="date" name="Report_Approval[' + serialNumber + '][date_rrv]" min="{{ \Carbon\Carbon::now()->format("Y-m-d") }}" value="{{ \Carbon\Carbon::now()->format("Y-m-d") }}" id="date_'+ serialNumber +'_date_rrv" class="hide-input show_date" style="position: absolute; top: 0; left: 0; opacity: 0;" oninput="handleDateInput(this, \'date_'+ serialNumber +'_date_rrv\')" /> </div> </td>' +
-
+                                                '<td><input type="text" name="Report_Approval[' + serialNumber + '][date_rrv]"></td>' +
                                                 '</tr>';
                                             return html;
                                         }
-
+                            
                                         var tableBody = $('#report_approval_details tbody');
                                         var rowCount = tableBody.children('tr').length;
                                         var newRow = generateTableRow(rowCount);
@@ -1827,7 +1840,7 @@
                                     });
                                 });
                             </script>
-
+                            
 
 
 
@@ -1954,35 +1967,15 @@
                                             @if (!empty($product_materialDetails))
                                                 @foreach ($product_materialDetails->data as $index => $Prodmateriyal)
                                                     <tr>
-                                                        <td><input disabled type="text" name="Product_MaterialDetails[{{ $loop->index }}][serial]" value="{{ $productmateIndex++ }}"></td>
-                                                        <td><input type="text" name="Product_MaterialDetails[{{ $loop->index }}][product_name_ca]" value="{{ array_key_exists('product_name_ca', $Prodmateriyal) ? $Prodmateriyal['product_name_ca'] : '' }}"></td>
-                                                        <td><input type="text" name="Product_MaterialDetails[{{ $loop->index }}][batch_no_pmd_ca]" value="{{ array_key_exists('batch_no_pmd_ca', $Prodmateriyal) ? $Prodmateriyal['batch_no_pmd_ca'] : '' }}"></td>
-                                                        <td>
-                                                            <div class="calenderauditee">
-                                                                 <input
-                                                                 class="click_date"
-                                                                 id="date_{{ $loop->index }}_mfg_date_pmd_ca" type="text" name="Product_MaterialDetails[{{ $loop->index }}][mfg_date_pmd_ca]" placeholder="DD-MMM-YYYY" value="{{ array_key_exists('mfg_date_pmd_ca', $Prodmateriyal) ? \Carbon\Carbon::parse($Prodmateriyal['mfg_date_pmd_ca'])->format('d-M-Y') : '' }}" />
-                                                                 <input type="date" name="Product_MaterialDetails[{{ $loop->index }}][mfg_date_pmd_ca]"
-                                                                 min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" value="{{ array_key_exists('mfg_date_pmd_ca', $Prodmateriyal) ? \Carbon\Carbon::parse($Prodmateriyal['mfg_date_pmd_ca'])->format('Y-m-d') : '' }}"
-                                                                 id="date_{{ $loop->index }}_mfg_date_pmd_ca"
-                                                                 class="hide-input show_date" style="position: absolute; top: 0; left: 0; opacity: 0;" oninput="handleDateInput(this, 'date_{{ $loop->index }}_mfg_date_pmd_ca')" />
-                                                            </div>
-                                                        </td>
-                                                        <td>
-                                                            <div class="calenderauditee">
-                                                                 <input
-                                                                 class="click_date"
-                                                                 id="date_{{ $loop->index }}_expiry_date_pmd_ca" type="text" name="Product_MaterialDetails[{{ $loop->index }}][expiry_date_pmd_ca]" placeholder="DD-MMM-YYYY" value="{{ array_key_exists('expiry_date_pmd_ca', $Prodmateriyal) ? \Carbon\Carbon::parse($Prodmateriyal['expiry_date_pmd_ca'])->format('d-M-Y') : '' }}" />
-                                                                 <input type="date" name="Product_MaterialDetails[{{ $loop->index }}][expiry_date_pmd_ca]"
-                                                                 min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" value="{{ array_key_exists('expiry_date_pmd_ca', $Prodmateriyal) ? \Carbon\Carbon::parse($Prodmateriyal['expiry_date_pmd_ca'])->format('Y-m-d') : '' }}"
-                                                                 id="date_{{ $loop->index }}_expiry_date_pmd_ca"
-                                                                 class="hide-input show_date" style="position: absolute; top: 0; left: 0; opacity: 0;" oninput="handleDateInput(this, 'date_{{ $loop->index }}_expiry_date_pmd_ca')" />
-                                                            </div>
-                                                        </td>
-                                                        <td><input type="text" name="Product_MaterialDetails[{{ $loop->index }}][batch_size_pmd_ca]" value="{{ array_key_exists('batch_size_pmd_ca', $Prodmateriyal) ? $Prodmateriyal['batch_size_pmd_ca'] : '' }}"></td>
-                                                        <td><input type="text" name="Product_MaterialDetails[{{ $loop->index }}][pack_profile_pmd_ca]" value="{{ array_key_exists('pack_profile_pmd_ca', $Prodmateriyal) ? $Prodmateriyal['pack_profile_pmd_ca'] : '' }}"></td>
-                                                        <td><input type="text" name="Product_MaterialDetails[{{ $loop->index }}][released_quantity_pmd_ca]" value="{{ array_key_exists('released_quantity_pmd_ca', $Prodmateriyal) ? $Prodmateriyal['released_quantity_pmd_ca'] : '' }}"></td>
-                                                        <td><input type="text" name="Product_MaterialDetails[{{ $loop->index }}][remarks_ca]" value="{{ array_key_exists('remarks_ca', $Prodmateriyal) ? $Prodmateriyal['remarks_ca'] : '' }}"></td>
+                                                        <td><input disabled type="text" name="Product_MaterialDetails[{{ $index }}][serial]" value="{{ $productmateIndex++ }}"></td>
+                                                        <td><input type="text" name="Product_MaterialDetails[{{ $index }}][product_name_ca]" value="{{ $Prodmateriyal['product_name_ca'] }}"></td>
+                                                        <td><input type="text" name="Product_MaterialDetails[{{ $index }}][batch_no_pmd_ca]" value="{{ $Prodmateriyal['batch_no_pmd_ca'] }}"></td>
+                                                        <td><input type="date" name="Product_MaterialDetails[{{ $index }}][mfg_date_pmd_ca]" value="{{ $Prodmateriyal['mfg_date_pmd_ca'] }}"></td>
+                                                        <td><input type="date" name="Product_MaterialDetails[{{ $index }}][expiry_date_pmd_ca]" value="{{ $Prodmateriyal['expiry_date_pmd_ca'] }}"></td>
+                                                        <td><input type="text" name="Product_MaterialDetails[{{ $index }}][batch_size_pmd_ca]" value="{{ $Prodmateriyal['batch_size_pmd_ca'] }}"></td>
+                                                        <td><input type="text" name="Product_MaterialDetails[{{ $index }}][pack_profile_pmd_ca]" value="{{ $Prodmateriyal['pack_profile_pmd_ca'] }}"></td>
+                                                        <td><input type="text" name="Product_MaterialDetails[{{ $index }}][released_quantity_pmd_ca]" value="{{ $Prodmateriyal['released_quantity_pmd_ca'] }}"></td>
+                                                        <td><input type="text" name="Product_MaterialDetails[{{ $index }}][remarks_ca]" value="{{ $Prodmateriyal['remarks_ca'] }}"></td>
                                                     </tr>
                                                 @endforeach
                                             @else
@@ -1995,20 +1988,20 @@
                                 </div>
                             </div>
                         </div>
-
+                        
                         <script>
                             $(document).ready(function() {
                                 $('#promate_add').click(function(e) {
                                     e.preventDefault();
-
+                        
                                     function generateTableRow(productserialno) {
                                         var html =
                                             '<tr>' +
                                                 '<td><input disabled type="text" name="Product_MaterialDetails[' + productserialno + '][serial]" value="' + (productserialno + 1) + '"></td>' +
                                                 '<td><input type="text" name="Product_MaterialDetails[' + productserialno + '][product_name_ca]"></td>' +
                                                 '<td><input type="text" name="Product_MaterialDetails[' + productserialno + '][batch_no_pmd_ca]"></td>' +
-                                                '<td> <div class="calenderauditee"><input id="date_'+ productserialno +'_mfg_date_pmd_ca" type="text" name="Product_MaterialDetails[' + productserialno + '][mfg_date_pmd_ca]" placeholder="DD-MMM-YYYY" /> <input type="date" name="Product_MaterialDetails[' + productserialno + '][mfg_date_pmd_ca]" min="{{ \Carbon\Carbon::now()->format("Y-m-d") }}" value="{{ \Carbon\Carbon::now()->format("Y-m-d") }}" id="date_'+ productserialno +'_mfg_date_pmd_ca" class="hide-input show_date" style="position: absolute; top: 0; left: 0; opacity: 0;" oninput="handleDateInput(this, \'date_'+ productserialno +'_mfg_date_pmd_ca\')" /> </div> </td>' +
-                                                '<td> <div class="calenderauditee"><input id="date_'+ productserialno +'_expiry_date_pmd_ca" type="text" name="Product_MaterialDetails[' + productserialno + '][expiry_date_pmd_ca]" placeholder="DD-MMM-YYYY" /> <input type="date" name="Product_MaterialDetails[' + productserialno + '][expiry_date_pmd_ca]" min="{{ \Carbon\Carbon::now()->format("Y-m-d") }}" value="{{ \Carbon\Carbon::now()->format("Y-m-d") }}" id="date_'+ productserialno +'_expiry_date_pmd_ca" class="hide-input show_date" style="position: absolute; top: 0; left: 0; opacity: 0;" oninput="handleDateInput(this, \'date_'+ productserialno +'_expiry_date_pmd_ca\')" /> </div> </td>' +
+                                                '<td><input type="date" name="Product_MaterialDetails[' + productserialno + '][mfg_date_pmd_ca]"></td>' +
+                                                '<td><input type="date" name="Product_MaterialDetails[' + productserialno + '][expiry_date_pmd_ca]"></td>' +
                                                 '<td><input type="text" name="Product_MaterialDetails[' + productserialno + '][batch_size_pmd_ca]"></td>' +
                                                 '<td><input type="text" name="Product_MaterialDetails[' + productserialno + '][pack_profile_pmd_ca]"></td>' +
                                                 '<td><input type="text" name="Product_MaterialDetails[' + productserialno + '][released_quantity_pmd_ca]"></td>' +
@@ -2020,7 +2013,7 @@
                                             '</tr>';
                                         return html;
                                     }
-
+                        
                                     var tableBody = $('#prod_mate_details tbody');
                                     var rowCount = tableBody.children('tr').length;
                                     var newRow = generateTableRow(rowCount);
@@ -2028,6 +2021,7 @@
                                 });
                             });
                         </script>
+                       
 
 
 
@@ -2035,8 +2029,7 @@
 
 
 
-
-
+                   
                         <div class="col-lg-12">
                             <div class="group-input">
                                 <label for="Complaint Sample Required">Complaint Sample Required</label>

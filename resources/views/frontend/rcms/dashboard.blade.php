@@ -69,12 +69,7 @@
             querySelect.options.add(new Option('Pending QA Review', '5'));
             querySelect.options.add(new Option('Close - Done', '6'));
 
-        }else if (scopeValue === 'Out_Of_Calibration') {
-            querySelect.options.add(new Option('Opened', '1'));
-            querySelect.options.add(new Option('In Progress', '2'));
-            querySelect.options.add(new Option('Close - Done', '3'));
-
-        }else if (scopeValue === 'management_review') {
+        } else if (scopeValue === 'management_review') {
             querySelect.options.add(new Option('Opened', '1'));
             querySelect.options.add(new Option('In Progress', '2'));
             querySelect.options.add(new Option('Close - Done', '3'));
@@ -123,7 +118,6 @@
             // }
 
 
-
         // Add more conditions based on other scope values
 
     }
@@ -142,11 +136,10 @@
         <div class="container-fluid">
             <div class="dash-grid">
 
-
                 <div>
                     <div class="inner-block scope-table" style="height: calc(100vh - 170px); padding: 0;">
 
-                       <div class="grid-block">
+                        <div class="grid-block">
                             <div class="group-input">
                                 <label for="scope">Process</label>
                                 <select id="scope" name="form">
@@ -187,21 +180,21 @@
                         </div>
 
                         <style>
-.table-container {
-  overflow: auto;
-  max-height: 350px;
-}
+                            .table-container {
+                                overflow: auto;
+                                max-height: 350px;
+                            }
 
-.table-header11 {
-  position: sticky;
-  top: 0;
-  background-color: white;
-  z-index: 1;
-}
+                            .table-header11 {
+                                position: sticky;
+                                top: 0;
+                                background-color: white;
+                                z-index: 1;
+                            }
 
-.table-body-new {
-  margin-top: 30px;
-}
+                            .table-body-new {
+                                margin-top: 30px;
+                            }
                         </style>
                         <div class="main-scope-table table-container">
                             <table class="table table-bordered" id="auditTable">
@@ -273,7 +266,7 @@
 
 
 
-
+                                                    
 
                                                 @elseif ($datas->type == 'Risk-Assesment')
                                                     <a href="{{ route('showRiskManagement', $datas->id) }}" style="color: blue">
@@ -303,21 +296,6 @@
                                                             </div>
                                                         </a>
                                                     @endif
-
-                                                    @elseif ($datas->type == 'Out_Of_Calibration')
-                                                    <a href="{{ route('ShowOutofCalibration', $datas->id) }}" style="color: blue">
-                                                        {{ str_pad($datas->record, 4, '0', STR_PAD_LEFT) }}
-                                                    </a>
-                                                    @if (!empty($datas->parent_id))
-                                                        <a
-                                                            href="{{ url('rcms/qms-dashboard_new', $datas->id) }}/Out_Of_Calibration">
-                                                            <div class="icon" onclick="showChild()"
-                                                                data-bs-toggle="tooltip" title="Related Records">
-                                                                {{-- <img src="{{ asset('user/images/parent.png') }}"
-                                                                    alt="..." class="w-100 h-100"> --}}
-                                                            </div>
-                                                        </a>
-                                                    @endif
                                                 @elseif ($datas->type == 'External-Audit')
                                                     <a href="{{ route('showExternalAudit', $datas->id) }}" style="color: blue">
                                                         {{ str_pad($datas->record, 4, '0', STR_PAD_LEFT) }}
@@ -332,7 +310,6 @@
                                                             </div>
                                                         </a>
                                                     @endif
-
                                                 @elseif ($datas->type == 'Audit-Program')
                                                     <a href="{{ route('ShowAuditProgram', $datas->id) }}" style="color: blue">
                                                         {{ str_pad($datas->record, 4, '0', STR_PAD_LEFT) }}
@@ -377,7 +354,7 @@
                                                         </a>
                                                     @endif
                                                 @elseif($datas->type == 'Extension')
-                                                    <a href="{{ route('extension.show', $datas->id) }}" style="color: blue">
+                                                    <a href="{{ url('extension_newshow', $datas->id) }}" style="color: blue" style="color: blue">
                                                         {{ str_pad($datas->record, 4, '0', STR_PAD_LEFT) }}
                                                     </a>
                                                     @if (!empty($datas->parent_id))
@@ -443,7 +420,6 @@
                                                             </div>
                                                         </a>
                                                     @endif
-
                                                 @elseif($datas->type == 'Management-Review')
                                                     <a href="{{ route('manageshow', $datas->id) }}" style="color: blue">
                                                         {{ str_pad($datas->record, 4, '0', STR_PAD_LEFT) }}
@@ -460,20 +436,6 @@
                                                     @endif
                                                     @elseif($datas->type == 'Deviation')
                                                     <a href="{{ route('devshow', $datas->id) }}" style="color: blue">
-                                                        {{ str_pad($datas->record, 4, '0', STR_PAD_LEFT) }}
-                                                    </a>
-                                                    @if (!empty($datas->parent_id))
-                                                        <a
-                                                            href="{{ url('rcms/qms-dashboard_new', $datas->id) }}/deviation">
-                                                            <div class="icon" onclick="showChild()"
-                                                                data-bs-toggle="tooltip" title="Related Records">
-                                                                {{-- <img src="{{ asset('user/images/parent.png') }}"
-                                                                    alt="..." class="w-100 h-100"> --}}
-                                                            </div>
-                                                        </a>
-                                                    @endif
-                                                    @elseif($datas->type == 'Failure Investigation')
-                                                    <a href="{{ route('failure-investigation-show', $datas->id) }}" style="color: blue">
                                                         {{ str_pad($datas->record, 4, '0', STR_PAD_LEFT) }}
                                                     </a>
                                                     @if (!empty($datas->parent_id))
@@ -524,23 +486,22 @@
                                                         <td>
                                                             -
                                                         </td>
-                                                    @endif
-                                            <td
-                                            class="viewdetails" data-id="{{ $datas->id }}"
+                                            @endif
+                                            <td class="viewdetails" data-id="{{ $datas->id }}"
                                                 data-type="{{ $datas->type }}" data-bs-toggle="modal"
                                                 data-bs-target="#record-modal">
                                                 @if ($datas->division_id)
                                                     {{ Helpers::getDivisionName($datas->division_id) }}
                                                 @else
                                                     KSA
-                                                    KSA
                                                 @endif
                                             </td>
                                             <td class="viewdetails" data-id="{{ $datas->id }}"
                                                 data-type="{{ $datas->type }}" data-bs-toggle="modal"
-                                                data-bs-target="#record-modal" style="{{ $datas->type == 'Capa' ? 'text-transform: uppercase' : '' }}">
+                                                data-bs-target="#record-modal">
                                                 {{ $datas->type }}
                                             </td>
+
 
                                             <td class="viewdetails" data-id="{{ $datas->id }}"
                                                 data-type="{{ $datas->type }}" data-bs-toggle="modal"
@@ -548,7 +509,7 @@
                                                 {{ ucwords(str_replace('_', ' ', $datas->initiated_through)) }}
                                             </td>
 
-                                            <td id="short_width" class="viewdetails" data-id="{{ $datas->id }}"
+                                            <td class="viewdetails" data-id="{{ $datas->id }}"
                                                 data-type="{{ $datas->type }}" data-bs-toggle="modal"
                                                 data-bs-target="#record-modal">
                                                 {{ $datas->short_description }}
