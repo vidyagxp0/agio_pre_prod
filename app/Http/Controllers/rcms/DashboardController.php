@@ -535,6 +535,7 @@ class DashboardController extends Controller
         $table  = collect($table)->sortBy('record')->reverse()->toArray();
         $datag = $this->paginate($table);
 
+
         return view('frontend.rcms.dashboard', compact('datag'));
     }
 
@@ -944,10 +945,10 @@ class DashboardController extends Controller
             $division = QMSDivision::find($data->division_id);
             $division_name = $division->name;
         } elseif ($type == "Extension") {
-            $data = Extension::find($id);
-            $single = "extensionSingleReport/" .$data->id;
+            $data = extension_new::find($id);
+            $single = "singleReportNew/" .$data->id;
             $audit = "extensionAuditReport/" .$data->id;
-            $division = QMSDivision::find($data->division_id);
+            $division = QMSDivision::find($data->site_location_code);
             $division_name = $division->name;
         } elseif ($type == "Observation") {
             $data = Observation::find($id);

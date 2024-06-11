@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ErrataController;
+use App\Http\Controllers\ExtensionNewController;
 use App\Http\Controllers\rcms\ActionItemController;
 use App\Http\Controllers\rcms\AuditeeController;
 use App\Http\Controllers\rcms\CCController;
@@ -72,7 +73,7 @@ Route::group(['prefix' => 'rcms'], function () {
             Route::post('send-cancel-extention/{id}', [ExtensionController::class, 'stagecancel']);
             Route::get('extension-audit-trial/{id}', [ExtensionController::class, 'extensionAuditTrial']);
             Route::get('extension-audit-trial-details/{id}', [ExtensionController::class, 'extensionAuditTrialDetails']);
-            Route::get('extensionSingleReport/{id}', [ExtensionController::class, 'singleReport'])->name('extensionSingleReport');
+            // Route::get('extensionSingleReport/{id}', [ExtensionController::class, 'singleReport'])->name('extensionSingleReport');
             Route::get('extensionAuditReport/{id}', [ExtensionController::class, 'auditReport'])->name('extensionAuditReport');
 
 
@@ -272,6 +273,11 @@ Route::group(['prefix' => 'rcms'], function () {
             /********************* Fallure Investigation Routes Ends *******************/
 
 
+            // =====================extensionnew report ==============================
+            Route::get('singleReportNew/{id}', [ExtensionNewController::class, 'singleReport'])->name('singleReportNew');
+            Route::get('audit_trailNew/{id}', [ExtensionNewController::class, 'extensionNewAuditTrail']);
+
+            // =========================================================================================
             //----------------------------------- OOT ----------------------------------//
 
             Route::get('oot/', [OOTController::class, 'index']);

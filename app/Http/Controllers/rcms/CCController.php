@@ -831,7 +831,8 @@ class CCController extends Controller
             $history->change_from = "Initiator";
             $history->action_name = 'Create';
         $history->save();
-
+        
+if(!empty($request->Initiator_Group)){
         $history = new RcmDocHistory;
         $history->cc_id = $openState->id;
         $history->activity_type = 'Inititator Group';
@@ -846,7 +847,7 @@ class CCController extends Controller
             $history->change_from = "Initiator";
             $history->action_name = 'Create';
         $history->save();
-
+    }
         $history = new RcmDocHistory;
         $history->cc_id = $openState->id;
         $history->activity_type = 'Assigned To';
@@ -4057,7 +4058,7 @@ class CCController extends Controller
                     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                     $history->origin_state = $lastDocument->status;
                     $history->change_to =   "QA Initial Review";
-                    $history->change_from = $lastDocument->status;
+                    $history->change_from = $changeControl->status;
                     $history->stage = 'Plan Proposed';
                     $history->save();
                     //  $list = Helpers::getHodUserList();

@@ -109,9 +109,8 @@
                         <div class="col-lg-6">
                             <div class="group-input">
                                 <label for="RLS Record Number"><b>Record Number</b></label>
-                                <input disabled type="text" name="record_number">
-                                {{-- value="{{ Helpers::getDivisionName(session()->get('division')) }}/DEV/{{ date('Y') }}/{{ $record_number }}"> --}}
-                                {{-- <div class="static">QMS-EMEA/CAPA/{{ date('Y') }}/{{ $record_number }}</div> --}}
+                                 <input disabled type="text" name="record_number"
+                                value="{{ Helpers::getDivisionName(session()->get('division')) }}/Extension/{{ date('Y') }}/{{ $record_number }}">
                             </div>
                         </div>
                         <div class="col-lg-6">
