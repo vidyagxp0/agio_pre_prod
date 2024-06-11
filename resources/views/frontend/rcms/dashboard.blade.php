@@ -138,7 +138,7 @@
     }
     .table-container {
   overflow: auto;
-  max-height: 350px;
+  /* max-height: 350px; */
 }
 
 .table-header11 {
