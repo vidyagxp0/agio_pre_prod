@@ -97,8 +97,8 @@
                     <div class="d-flex" style="gap:20px;">
                         {{-- <button class="button_theme1" onclick="window.print();return false;"
                             class="new-doc-btn">Print</button> --}}
-                        {{-- <button class="button_theme1"> <a class="text-white"
-                                href=""> Audit Trail </a> </button> --}}
+                        <button class="button_theme1"> <a class="text-white"
+                                href="{{ url('rcms/audit_trailNew' , $extensionNew->id) }}"> Audit Trail </a> </button>
 
                         @if ($extensionNew->stage == 1 && (in_array(3, $userRoleIds) || in_array(18, $userRoleIds)))
                         <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
@@ -126,9 +126,9 @@
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                Approve
                             </button>
-                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#more-info-required-modal">
+                            {{-- <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#more-info-required-modal">
                                 More Info Required
-                            </button>
+                            </button> --}}
                         @elseif($extensionNew->stage == 4 && (in_array(10, $userRoleIds) || in_array(18, $userRoleIds) || in_array(13, $userRoleIds)))
 
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
@@ -138,8 +138,8 @@
                                 More Info Required
                             </button> --}}
                         @endif
-                        <button class="button_theme1"> <a class="text-white" href="{{ url('rcms/qms-dashboard') }}"> Exit
-                            </a> </button>
+                         <a class="text-white" href="{{ url('rcms/qms-dashboard') }}"><button class="button_theme1"> Exit
+                        </button>  </a> 
 
 
                     </div>
@@ -217,9 +217,8 @@
                         <div class="col-lg-6">
                             <div class="group-input">
                                 <label for="RLS Record Number"><b>Record Number</b></label>
-                                <input disabled type="text" name="record_number">
-                                {{-- value="{{ Helpers::getDivisionName(session()->get('division')) }}/DEV/{{ date('Y') }}/{{ $record_number }}"> --}}
-                                {{-- <div class="static">QMS-EMEA/CAPA/{{ date('Y') }}/{{ $record_number }}</div> --}}
+                                <input disabled type="text" name="record_number"
+                                value="{{ Helpers::getDivisionName(session()->get('division')) }}/Extension/{{ Helpers::year($extensionNew->created_at) }}/{{ $extensionNew->record_number }}">
                             </div>
                         </div>
                         <div class="col-lg-6">
@@ -335,8 +334,7 @@
                             </div>
                             <div class="col-12">
                                 <div class="group-input">
-                                    <label for="Short Description"> Description<span
-                                            class="text-danger">*</span></label><span id="rchars">255</span>
+                                    <label for="Short Description"> Description</label><span id="rchars">255</span>
                                     Characters remaining
                                     <input id="docname" type="text" name="description" value="{{$extensionNew->description}}" maxlength="255" >
                                 </div>
@@ -346,7 +344,7 @@
                             </div>
                             <div class="col-12">
                                 <div class="group-input">
-                                    <label for="Inv Attachments">Attachment Extension</label>
+                                    <label for="Inv Attachments"> Extension Attachment</label>
                                     <div><small class="text-primary">Please Attach all relevant or supporting
                                             documents</small></div>
                                     <div class="file-attachment-field">
@@ -463,7 +461,7 @@
                     <div class="row">
                         <div class="col-lg-12">
                             <div class="group-input">
-                                <label for="Assigned To">Reviewer Remarks</label>
+                                <label for="Assigned To">Approver Remarks</label>
                                <input type="text" name="approver_remarks" id="approver_remarks" value="{{$extensionNew->approver_remarks}}">
                             </div>
                         </div>
@@ -471,7 +469,7 @@
                     
                         <div class="col-12">
                             <div class="group-input">
-                                <label for="Inv Attachments">Attachment Extension</label>
+                                <label for="Inv Attachments"> Approver Attachment</label>
                                 <div><small class="text-primary">Please Attach all relevant or supporting
                                         documents</small></div>
                                 <div class="file-attachment-field">
