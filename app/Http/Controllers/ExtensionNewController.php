@@ -2,18 +2,29 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Deviation;
 use App\Models\extension_new;
+use App\Models\extension_new_audit_trail;
+use App\Models\ExtensionAuditTrail;
+use App\Models\ExtensionNewAuditTrail;
+use App\Models\RecordNumber;
+use App\Models\RoleGroup;
+use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use PDF;
 
 class ExtensionNewController extends Controller
 {
 
     public function index(Request $request){
         $data = "test";
+        $record_numbers = (RecordNumber::first()->value('counter')) + 1;
+        $record_number = str_pad($record_numbers, 4, '0', STR_PAD_LEFT);
         $reviewer = DB::table('user_roles')
                 ->join('users', 'user_roles.user_id', '=', 'users.id')
                 ->select('user_roles.q_m_s_processes_id', 'users.id','users.role','users.name') // Include all selected columns in the select statement
@@ -30,7 +41,7 @@ class ExtensionNewController extends Controller
                 ->get();
 
 
-        return View('frontend.extension.extension_new', compact('data', 'reviewer', 'approvers'));
+        return View('frontend.extension.extension_new', compact('data', 'reviewer', 'approvers', 'record_number'));
     }
     public function store(Request $request)
     {
@@ -52,7 +63,7 @@ class ExtensionNewController extends Controller
         ]);
     
         $extensionNew = new extension_new();
-        $extensionNew->form_type = "Extension";
+        $extensionNew->type = "Extension";
         $extensionNew->stage = "1";
         $extensionNew->status = "Initiator";
 
@@ -126,7 +137,135 @@ class ExtensionNewController extends Controller
 
 
         $extensionNew->save();
-    
+        if (!empty ($request->record_number)){
+            $history = new ExtensionNewAuditTrail();
+            $history->extension_id = $extensionNew->id;
+            $history->activity_type = 'Record Number';
+            $history->previous = "Null";
+            $history->current = $extensionNew->record_number;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $extensionNew->status;
+            $history->change_to =   "Opened";
+            $history->change_from = "Initiator";
+            $history->action_name = 'Create';
+            $history->save();
+        }
+        if (!empty ($request->initiator)){
+            $history = new ExtensionNewAuditTrail();
+            $history->extension_id = $extensionNew->id;
+            $history->activity_type = 'Initiator';
+            $history->previous = "Null";
+            $history->current = $extensionNew->initiator;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $extensionNew->status;
+            $history->change_to =   "Opened";
+            $history->change_from = "Initiator";
+            $history->action_name = 'Create';
+            $history->save();
+        }
+        if (!empty ($request->short_description)){
+            $history = new ExtensionNewAuditTrail();
+            $history->extension_id = $extensionNew->id;
+            $history->activity_type = 'Short Description';
+            $history->previous = "Null";
+            $history->current = $extensionNew->short_description;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $extensionNew->status;
+            $history->change_to =   "Opened";
+            $history->change_from = "Initiator";
+            $history->action_name = 'Create';
+            $history->save();
+        }
+        if (!empty ($request->current_due_date)){
+            $history = new ExtensionNewAuditTrail();
+            $history->extension_id = $extensionNew->id;
+            $history->activity_type = 'Current Due Date (Parent)';
+            $history->previous = "Null";
+            $history->current = $extensionNew->current_due_date;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $extensionNew->status;
+            $history->change_to =   "Opened";
+            $history->change_from = "Initiator";
+            $history->action_name = 'Create';
+            $history->save();
+        }
+        if (!empty ($request->proposed_due_date)){
+            $history = new ExtensionNewAuditTrail();
+            $history->extension_id = $extensionNew->id;
+            $history->activity_type = 'Proposed Due Date';
+            $history->previous = "Null";
+            $history->current = $extensionNew->proposed_due_date;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $extensionNew->status;
+            $history->change_to =   "Opened";
+            $history->change_from = "Initiator";
+            $history->action_name = 'Create';
+            $history->save();
+        }
+        if (!empty ($request->description)){
+            $history = new ExtensionNewAuditTrail();
+            $history->extension_id = $extensionNew->id;
+            $history->activity_type = 'Description';
+            $history->previous = "Null";
+            $history->current = $extensionNew->description;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $extensionNew->status;
+            $history->change_to =   "Opened";
+            $history->change_from = "Initiator";
+            $history->action_name = 'Create';
+            $history->save();
+        }
+        if (!empty ($request->reviewer_remarks)){
+            $history = new ExtensionNewAuditTrail();
+            $history->extension_id = $extensionNew->id;
+            $history->activity_type = 'Reviewer Remarks';
+            $history->previous = "Null";
+            $history->current = $extensionNew->reviewer_remarks;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $extensionNew->status;
+            $history->change_to =   "Opened";
+            $history->change_from = "Initiator";
+            $history->action_name = 'Create';
+            $history->save();
+        }
+
+        if (!empty ($request->approver_remarks)){
+            $history = new ExtensionNewAuditTrail();
+            $history->extension_id = $extensionNew->id;
+            $history->activity_type = 'Approver Remarks';
+            $history->previous = "Null";
+            $history->current = $extensionNew->approver_remarks;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $extensionNew->status;
+            $history->change_to =   "Opened";
+            $history->change_from = "Initiator";
+            $history->action_name = 'Create';
+            $history->save();
+        }
         // return redirect()->back()->with('success', 'Induction training data saved successfully!');
         // return redirect()->route('TMS.index')->with('success', 'Induction training data saved successfully!');
         return redirect(url('rcms/qms-dashboard'))->with('success', 'Extension data saved successfully!');
@@ -200,6 +339,136 @@ class ExtensionNewController extends Controller
             $extensionNew->file_attachment_approver = json_encode($files);
         }
         $extensionNew->save();
+
+        if (!empty ($request->record_number)){
+            $history = new ExtensionNewAuditTrail();
+            $history->extension_id = $extensionNew->id;
+            $history->activity_type = 'Record Number';
+            $history->previous = "Null";
+            $history->current = $extensionNew->record_number;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $extensionNew->status;
+            $history->change_to =   "Opened";
+            $history->change_from = "Initiator";
+            $history->action_name = 'Create';
+            $history->save();
+        }
+        if (!empty ($request->initiator)){
+            $history = new ExtensionNewAuditTrail();
+            $history->extension_id = $extensionNew->id;
+            $history->activity_type = 'Initiator';
+            $history->previous = "Null";
+            $history->current = $extensionNew->initiator;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $extensionNew->status;
+            $history->change_to =   "Opened";
+            $history->change_from = "Initiator";
+            $history->action_name = 'Create';
+            $history->save();
+        }
+        if (!empty ($request->short_description)){
+            $history = new ExtensionNewAuditTrail();
+            $history->extension_id = $extensionNew->id;
+            $history->activity_type = 'Short Description';
+            $history->previous = "Null";
+            $history->current = $extensionNew->short_description;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $extensionNew->status;
+            $history->change_to =   "Opened";
+            $history->change_from = "Initiator";
+            $history->action_name = 'Create';
+            $history->save();
+        }
+        if (!empty ($request->current_due_date)){
+            $history = new ExtensionNewAuditTrail();
+            $history->extension_id = $extensionNew->id;
+            $history->activity_type = 'Current Due Date (Parent)';
+            $history->previous = "Null";
+            $history->current = $extensionNew->current_due_date;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $extensionNew->status;
+            $history->change_to =   "Opened";
+            $history->change_from = "Initiator";
+            $history->action_name = 'Create';
+            $history->save();
+        }
+        if (!empty ($request->proposed_due_date)){
+            $history = new ExtensionNewAuditTrail();
+            $history->extension_id = $extensionNew->id;
+            $history->activity_type = 'Proposed Due Date';
+            $history->previous = "Null";
+            $history->current = $extensionNew->proposed_due_date;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $extensionNew->status;
+            $history->change_to =   "Opened";
+            $history->change_from = "Initiator";
+            $history->action_name = 'Create';
+            $history->save();
+        }
+        if (!empty ($request->description)){
+            $history = new ExtensionNewAuditTrail();
+            $history->extension_id = $extensionNew->id;
+            $history->activity_type = 'Description';
+            $history->previous = "Null";
+            $history->current = $extensionNew->description;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $extensionNew->status;
+            $history->change_to =   "Opened";
+            $history->change_from = "Initiator";
+            $history->action_name = 'Create';
+            $history->save();
+        }
+        if (!empty ($request->reviewer_remarks)){
+            $history = new ExtensionNewAuditTrail();
+            $history->extension_id = $extensionNew->id;
+            $history->activity_type = 'Reviewer Remarks';
+            $history->previous = "Null";
+            $history->current = $extensionNew->reviewer_remarks;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $extensionNew->status;
+            $history->change_to =   "Opened";
+            $history->change_from = "Initiator";
+            $history->action_name = 'Create';
+            $history->save();
+        }
+
+        if (!empty ($request->approver_remarks)){
+            $history = new ExtensionNewAuditTrail();
+            $history->extension_id = $extensionNew->id;
+            $history->activity_type = 'Approver Remarks';
+            $history->previous = "Null";
+            $history->current = $extensionNew->approver_remarks;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $extensionNew->status;
+            $history->change_to =   "Opened";
+            $history->change_from = "Initiator";
+            $history->action_name = 'Create';
+            $history->save();
+        }
         return redirect()->back()->with('success', 'Extension data saved successfully!');
 
 
@@ -517,5 +786,39 @@ class ExtensionNewController extends Controller
             ], 500);
         }
     }
+
     
+    public static function singleReport($id)
+    {
+        $data = extension_new::find($id);
+        if (!empty($data)) {
+            $data->originator = User::where('id', $data->initiator)->value('name');
+            $pdf = App::make('dompdf.wrapper');
+            $time = Carbon::now();
+            $pdf = PDF::loadview('frontend.extension.singleReportNew', compact('data'))
+                ->setOptions([
+                    'defaultFont' => 'sans-serif',
+                    'isHtml5ParserEnabled' => true,
+                    'isRemoteEnabled' => true,
+                    'isPhpEnabled' => true,
+                ]);
+            $pdf->setPaper('A4');
+            $pdf->render();
+            $canvas = $pdf->getDomPDF()->getCanvas();
+            $height = $canvas->get_height();
+            $width = $canvas->get_width();
+            $canvas->page_script('$pdf->set_opacity(0.1,"Multiply");');
+            $canvas->page_text($width / 4, $height / 2, $data->status, null, 25, [0, 0, 0], 2, 6, -20);
+            return $pdf->stream('Extension' . $id . '.pdf');
+        }
+    }
+    public function extensionNewAuditTrail($id)
+    {
+        $audit = ExtensionNewAuditTrail::where('extension_id', $id)->orderByDesc('id')->paginate(5);
+        // dd($audit);
+        $today = Carbon::now()->format('d-m-y');
+        $document = extension_new::where('id', $id)->first();
+        $document->initiator = User::where('id', $document->initiator_id)->value('name');
+        return view('frontend.extension.audit_trailNew', compact('audit', 'document', 'today'));
+    }
 }
