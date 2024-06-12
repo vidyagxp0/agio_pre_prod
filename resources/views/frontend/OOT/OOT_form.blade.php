@@ -138,9 +138,7 @@
                                                 reason in "Due Date Extension Justification" data field.</small></div>
                                         <div class="calenderauditee">
                                             <input type="text" id="due_date" readonly placeholder="DD-MM-YYYY" />
-                                            <input type="date" name="due_date"
-                                                min="{{ \Carbon\Carbon::now()->format('d-M-Y') }}" class="hide-input"
-                                                oninput="handleDateInput(this, 'due_date')" />
+                                            <input type="date" name="due_date"  min="{{ \Carbon\Carbon::now()->format('d-M-Y') }}" class="hide-input" oninput="handleDateInput(this, 'due_date')" />
                                         </div>
                                     </div>
                                 </div>
@@ -199,7 +197,8 @@
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="group-input">
-                                        <label for="Initiator Group"> Short Description</label>
+                                        <label for="Short Description">Short Description<span class="text-danger">*</span></label>
+                                        
                                         <textarea name="short_description" value="" required></textarea>
                                     </div>
                                 </div>
@@ -481,6 +480,7 @@
                                                     <th style="width: 15%">Interval</th>
                                                     <th style="width: 15%">Orientation</th>
                                                     <th style="width: 15%">Pack Details (if any) </th>
+                                                    <th style="width: 15%">Action</th>
 
                                                 </tr>
                                             </thead>
@@ -536,6 +536,7 @@
                                                     <th style="width: 15%">Previous Interval Details </th>
                                                     <th style="width: 15%">% Difference Of Results</th>
                                                     <th style="width: 15%">Trend Limit</th>
+                                                    <th style="width: 15%">Action</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -4015,6 +4016,11 @@
                 originalRecordNumber = newRecordNumber;
                 initialPlaceholder = selectedValue;
             });
+        });
+
+        document.getElementById("dynamicSelectType").addEventListener("change", function() {
+            var selectedRoute = this.value;
+            window.location.href = selectedRoute; // Redirect to the selected route
         });
     </script>
 

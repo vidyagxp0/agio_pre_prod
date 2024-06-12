@@ -189,7 +189,7 @@
                                     <div class="group-input">
                                         <label for="initiator-group">Initiator Group <span
                                                 class="text-danger">*</span></label>
-                                        <select name="Initiator_Group" id="initiator_group">
+                                        <select name="Initiator_Group" id="initiator_group" required>
                                             <option value="">-- Select --</option>
                                             <option value="CQA" @if (old('Initiator_Group') == 'CQA') selected @endif>
                                                 Corporate Quality Assurance</option>
@@ -379,6 +379,7 @@
                                                 <div>Add</div>
                                                 <input type="file" id="myfile" name="in_attachment[]"
                                                     oninput="addMultipleFiles(this, 'in_attachment')" multiple>
+                                                    
                                             </div>
                                         </div>
 

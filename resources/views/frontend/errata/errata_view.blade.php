@@ -15,8 +15,7 @@
             New Child
         </div> --}}
         <div class="division-bar">
-            <strong>Site Division/Project</strong> :
-            / ERRATA
+            <strong>Site Division/Project</strong> : {{ Helpers::getDivisionName(session()->get('division')) }}/ERRATA
         </div>
     </div>
 
@@ -188,11 +187,13 @@
                     <div id="CCForm1" class="inner-block cctabcontent">
                         <div class="inner-block-content">
                             <div class="row">
-                                <div class="sub-head">Parent Record Information</div>   
+                                <div class="sub-head">Parent Record Information</div>
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="RLS Record Number">Record Number</label>
-                                        <input disabled type="text" name="record">
+                                        <input disabled type="text" name="record_no"
+                                        value="{{  Helpers::getDivisionName(session()->get('division')) }}/ERRATA/{{ Helpers::year($showdata->created_at) }}/{{ str_pad($showdata->record, 4, '0', STR_PAD_LEFT) }}">
+                                        {{-- <input disabled type="text" name="record"> --}}
                                         {{-- value="{{ Helpers::getDivisionName(session()->get('division')) }}/ERRATA/{{ date('Y') }}/{{ $record }}"> --}}
                                         {{-- <div class="static">QMS-EMEA/CAPA/{{ date('Y') }}/{{ $record_number }}</div> --}}
                                     </div>
@@ -205,7 +206,7 @@
                                             value="{{ Helpers::getDivisionName(session()->get('division')) }}">
                                         <input type="hidden" name="division_id"
                                             value="{{ session()->get('division') }}">
-                                        {{-- <div class="static">QMS-North America</div> --}}
+                                        {{-- <div class="static">{{ Helpers::getDivisionName(session()->get('division')) }}</div> --}}
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
@@ -237,9 +238,14 @@
                                             {{ Helpers::disabledErrataFields($showdata->stage) }}>
                                             <option value="{{ $showdata->initiated_by }}">
                                                 {{ $showdata->initiated_by }}</option>
-                                            {{-- <option value="Pankaj Jat">Pankaj Jat</option>
-                                            <option value="Gaurav">Gaurav</option>
-                                            <option value="Manish">Manish</option> --}}
+                                            <option value="Recall ">Recall </option>
+                                            <option value="Return ">Return </option>
+                                            <option value="Deviation">Deviation</option>
+                                            <option value="Complaint">Complaint</option>
+                                            <option value="Regulatory">Regulatory</option>
+                                            <option value="Lab Incident">Lab Incident</option>
+                                            <option value="Improvement">Improvement</option>
+                                            <option value="Others">Others</option>
                                         </select>
                                     </div>
                                 </div>
@@ -353,9 +359,15 @@
                                             {{ Helpers::disabledErrataFields($showdata->stage) }}>
                                             <option value="{{ $showdata->document_type }}">
                                                 {{ $showdata->document_type }}</option>
-                                            <option value="D01">D01</option>
-                                            <option value="D02">D02</option>
-                                            <option value="D03">D03</option>
+                                            <option value="Procedure Document">Procedure Document</option>
+                                            <option value="Work Instruction">Work Instruction</option>
+                                            <option value="Form">Form</option>
+                                            <option value="Template">Template</option>
+                                            <option value="Policy Document">Policy Document</option>
+                                            <option value="Quality Record">Quality Record</option>
+                                            <option value="Specification Document">Specification Document</option>
+                                            <option value="Training Material">Training Material</option>
+                                            <option value="Other">Other</option>
                                         </select>
                                     </div>
                                 </div>
@@ -393,7 +405,7 @@
                                             @foreach ($old_record as $new)
                                                 <option value="{{ $new->id }}"
                                                     {{ in_array($new->id, $reference_documents) ? 'selected' : '' }}>
-                                                    {{ Helpers::getDivisionName($new->division_id) }}/ERRATA/{{ date('Y') }}/{{ $new->short_description }}
+                                                    {{ Helpers::getDivisionName($new->division_id) }}/ERRATA/{{ date('Y') }}/{{ $new->id }}
                                                     {{-- to add record number{{ Helpers::recordFormat($new->record) }}/ --}}
                                                 </option>
                                             @endforeach
@@ -508,17 +520,17 @@
                                     </div>
                                 </div>
 
-                                <div class="">
+                                {{-- <div class="">
                                     <div class="group-input">
                                         <label for="Date And Time of Correction"><b>Date And Time of Correction
                                             </b></label>
-                                        <input type="date" name="Date_and_time_of_correction"
+                                        <input type="datetime-local" name="Date_and_time_of_correction"
                                             value="{{ $showdata->Date_and_time_of_correction }}"
                                             {{ Helpers::disabledErrataFields($showdata->stage) }}>
 
                                     </div>
                                 </div> --}}
-                                <div class="new-date-data-field">
+                                {{-- <div class="new-date-data-field">
                                     <div class="group-input input-date">
                                         <label for="Errata_date">Date And Time of Correction</label>
                                         <div class="calenderauditee">
@@ -531,7 +543,48 @@
                                     @error('Errata_date')
                                         <div class="text-danger">{{ $message }}</div>
                                     @enderror
+                                </div> --}}
+
+                                <div class="new-date-data-field">
+                                    <div class="group-input input-date">
+                                        <label for="Errata_date">Date And Time of Correction</label>
+                                        <div class="calenderauditee">
+                                            <input type="text" id="displayErrataDate" name="Date_and_time_of_correction" readonly placeholder="DD-MM-YYYY HH:MM" value="{{ old('Date_and_time_of_correction', $showdata->Date_and_time_of_correction) }}"/>
+                                            <input type="datetime-local" id="Errata_date" name="Date_and_time_of_correction" onchange="updateDisplayDateTime(this)" class="hide-input" />
+                                        </div>
+                                    </div>
+                                    @error('Errata_date')
+                                        <div class="text-danger">{{ $message }}</div>
+                                    @enderror
                                 </div>
+
+                                <script>
+                                    function updateDisplayDateTime(input) {
+                                        const selectedDateTime = new Date(input.value);
+                                        const formattedDateTime = formatDate(selectedDateTime);
+                                        document.getElementById('displayErrataDate').value = formattedDateTime;
+                                    }
+
+                                    function formatDate(date) {
+                                        const day = String(date.getDate()).padStart(2, '0');
+                                        const monthIndex = date.getMonth();
+                                        const monthNames = ["Jan", "Feb", "March", "April", "May", "June",
+                                            "July", "Aug", "Sep", "Oct", "Nov", "Dec"];
+                                        const month = monthNames[monthIndex];
+                                        const year = date.getFullYear();
+                                        let hours = date.getHours();
+                                        let minutes = date.getMinutes();
+
+                                        hours = String(hours).padStart(2, '0');
+                                        minutes = String(minutes).padStart(2, '0');
+
+                                        const formattedDateTime = `${day}-${month}-${year} ${hours}:${minutes}`;
+
+                                        return formattedDateTime;
+                                    }
+                                </script>
+
+
 
 
 
@@ -539,7 +592,11 @@
 
                             </div>
                             <div class="button-block">
+                                @if ($showdata->stage >= 6)
+                                <button type="submit" class="saveButton" disabled>Save</button>
+                                @else
                                 <button type="submit" class="saveButton">Save</button>
+                                @endif
                                 <button type="button" class="nextButton" onclick="nextStep()">Next</button>
                                 <button type="button"> <a class="text-white" href="{{ url('rcms/qms-dashboard') }}">
                                         Exit </a> </button>
@@ -590,7 +647,11 @@
 
 
                                 <div class="button-block">
+                                    @if ($showdata->stage >= 6)
+                                    <button type="submit" class="saveButton" disabled>Save</button>
+                                    @else
                                     <button type="submit" class="saveButton">Save</button>
+                                    @endif
                                     <button type="button" class="backButton" onclick="previousStep()">Back</button>
                                     <button type="button" class="nextButton" onclick="nextStep()">Next</button>
 
@@ -1867,7 +1928,11 @@
 
 
                                 <div class="button-block">
+                                    @if ($showdata->stage >= 6)
+                                    <button type="submit" class="saveButton" disabled>Save</button>
+                                    @else
                                     <button type="submit" class="saveButton">Save</button>
+                                    @endif
                                     <button type="button" class="backButton" onclick="previousStep()">Back</button>
                                     <button type="button" class="nextButton" onclick="nextStep()">Next</button>
 
@@ -1885,14 +1950,22 @@
                         <div class="inner-block-content">
                             <div class="row">
 
-                                <div class="col-6">
+                                <div class="col-12">
+                                    <div class="group-input">
+                                        <label class="mt-4" for="Audit Comments">Closure Comments</label>
+                                        <textarea class="summernote" name="Closure_Comments" id="summernote-16">{{$showdata->Closure_Comments}}</textarea>
+                                    </div>
+                                </div>
+
+
+                                {{-- <div class="col-6">
                                     <div class="group-input">
                                         <label class="" for="Closure Comments">Closure Comments</label>
                                         <input type="text" name="Closure_Comments"
                                             value="{{ $showdata->Closure_Comments }}"
                                             {{ Helpers::disabledErrataFields($showdata->stage) }} />
                                     </div>
-                                </div>
+                                </div> --}}
 
                                 <div class="col-md-6">
                                     <div class="group-input">
@@ -1952,7 +2025,11 @@
 
 
                                 <div class="button-block">
+                                    @if ($showdata->stage >= 6)
+                                    <button type="submit" class="saveButton" disabled>Save</button>
+                                    @else
                                     <button type="submit" class="saveButton">Save</button>
+                                    @endif
                                     <button type="button" class="backButton" onclick="previousStep()">Back</button>
                                     <button type="button" class="nextButton" onclick="nextStep()">Next</button>
 
@@ -2136,7 +2213,11 @@
 
 
                                 <div class="button-block">
+                                    @if ($showdata->stage >= 6)
+                                    <button type="submit" class="saveButton" disabled>Save</button>
+                                    @else
                                     <button type="submit" class="saveButton">Save</button>
+                                    @endif
                                     <button type="button" class="backButton" onclick="previousStep()">Back</button>
                                     <button type="button" class="nextButton" onclick="nextStep()">Next</button>
 

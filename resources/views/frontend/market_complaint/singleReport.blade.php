@@ -177,10 +177,10 @@
                     {{-- <strong>Lab Incident No.</strong> --}}
                 </td>
                 <td class="w-40">
-                   {{ Helpers::divisionNameForQMS($data->division_id) }}/{{ Helpers::year($data->created_at) }}/{{ str_pad($data->record_number, 4, '0', STR_PAD_LEFT) }}
+                   {{ Helpers::divisionNameForQMS($data->division_id) }}/{{ Helpers::year($data->created_at) }}/{{ str_pad($data->record, 4, '0', STR_PAD_LEFT) }}
                 </td>
                 <td class="w-30">
-                    <strong>Record No.</strong> {{ str_pad($data->record_number, 4, '0', STR_PAD_LEFT) }}
+                    <strong>Record No.</strong> {{ str_pad($data->record, 4, '0', STR_PAD_LEFT) }}
                 </td>
             </tr>
         </table>
@@ -576,10 +576,10 @@
                         <td class="w-30">{{ $data->submitted_on }}</td>
                     </tr>
                     <tr>
-                        <th class="w-20">Incident Review Completed By</th>
-                        <td class="w-30">{{ $data->incident_review_completed_by }}</td>
-                        <th class="w-20">Incident Review Completed On</th>
-                        <td class="w-30">{{ $data->incident_review_completed_on }}</td>
+                        <th class="w-20">Complete Review By :</th>
+                        <td class="w-30">{{  $data->complete_review_by }}</td>
+                        <th class="w-20">Complete Review On :</th>
+                        <td class="w-30">{{ $data->complete_review_on }}</td>
                     </tr>
                     <tr>
                         <th class="w-20">Investigation Completed By</th>
@@ -588,22 +588,34 @@
                         <td class="w-30">{{ $data->investigation_completed_on}}</td>
                     </tr>
                     <tr>
-                        <th class="w-20">QA Review Completed By</th>
-                        <td class="w-30">{{ $data->qA_review_completed_by }}</td>
-                        <th class="w-20">QA Review Completed On</th>
-                        <td class="w-30">{{ $data->qA_review_completed_on }}</td>
+                        <th class="w-20">Propose Plan By :</th>
+                        <td class="w-30">{{ $data->propose_plan_by }}</td>
+                        <th class="w-20">Propose Plan On :</th>
+                        <td class="w-30">{{ $data->propose_plan_on }}</td>
                     </tr>
-                    <tr>
+                    {{-- <tr>
                         <th class="w-20">QA Head Approval Completed By</th>
                         <td class="w-30">{{ $data->qA_head_approval_completed_by }}</td>
                         <th class="w-20">QA Head Approval Completed On</th>
                         <td class="w-30">{{ $data->qA_head_approval_completed_on }}</td>
+                    </tr> --}}
+                    <tr>
+                        <th class="w-20">Approve Plan By</th>
+                        <td class="w-30">{{ $data->approve_plan_by }}</td>
+                        <th class="w-20">Approve Plan On</th>
+                        <td class="w-30">{{ $data->approve_plan_on }}</td>
                     </tr>
                     <tr>
-                        <th class="w-20">All Activities Completed By</th>
-                        <td class="w-30">{{ $data->all_activities_completed_by }}</td>
-                        <th class="w-20">All Activities Completed On</th>
-                        <td class="w-30">{{ $data->all_activities_completed_on }}</td>
+                        <th class="w-20">All CAPA Closed By</th>
+                        <td class="w-30">{{ $data->all_capa_closed_by }}</td>
+                        <th class="w-20">All CAPA Closed On</th>
+                        <td class="w-30">{{ $data->all_capa_closed_on }}</td>
+                    </tr>
+                    <tr>
+                        <th class="w-20">Closure Done By</th>
+                        <td class="w-30">{{ $data->closed_done_by }}</td>
+                        <th class="w-20">Closure Done On</th>
+                        <td class="w-30">{{ $data->closed_done_on }}</td>
                     </tr>
                     <tr>
                         <th class="w-20">Cancelled By</th>

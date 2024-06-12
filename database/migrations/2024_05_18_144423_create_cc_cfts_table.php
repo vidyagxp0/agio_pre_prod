@@ -156,6 +156,14 @@ return new class extends Migration
             $table->string('Other5_attachment')->nullable();
             $table->text('Other5_by')->nullable();
             $table->date('Other5_on')->nullable();
+
+            $table->text('RA_Comments')->nullable();
+            $table->text('RA_person')->nullable();
+            $table->longtext('RA_assessment')->nullable();
+            $table->longtext('RA_feedback')->nullable();
+            $table->string('RA_attachment')->nullable();
+            $table->text('RA_by')->nullable();
+            $table->date('RA_on')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });
