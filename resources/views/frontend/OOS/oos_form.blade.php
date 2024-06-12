@@ -92,15 +92,15 @@ $users = DB::table('users')
     <!-- -----------------------------grid-1----------------------------script -->
     <script>
         $(document).ready(function() {
-            $('#info_product_material').click(function(e) {
+            $('#Info_Product_Material').click(function(e) {
                 function generateTableRow(serialNumber) {
                     var users = @json($users); 
                     var html =
                     '<tr>' +
-                        '<td><input disabled type="text" name="info_product_material[' + serialNumber + '][serial]" value="' + serialNumber +
+                        '<td><input disabled type="text" name="Info_Product_Material[' + serialNumber + '][serial]" value="' + serialNumber +
                         '"></td>' +
-                        '<td><input type="text" id="info_product_code" name="info_product_material[' + serialNumber + ']info_product_code[]" value=""></td>' +
-                        '<td><input type="text" name="info_product_material[' + serialNumber + '][info_batch_no]" value=""></td>'+
+                        '<td><input type="text" id="info_product_code" name="Info_Product_Material[' + serialNumber + ']info_product_code[]" value=""></td>' +
+                        '<td><input type="text" name="Info_Product_Material[' + serialNumber + '][info_batch_no]" value=""></td>'+
                         '<td>' +
                         '<div class="col-lg-6 new-date-data-field">' +
                         '<div class="group-input input-date">' +
@@ -121,13 +121,13 @@ $users = DB::table('users')
                         '</div>' +
                         '</div>' +
                         '</td>' +
-                        '<td><input type="text" name="info_product_material[' + serialNumber + '][info_label_claim]" value=""></td>' +
-                        '<td><input type="text" name="info_product_material[' + serialNumber + '][info_pack_size]" value=""></td>' +
-                        '<td><input type="text" name="info_product_material[' + serialNumber + '][info_analyst_name]" value=""></td>' +
-                        '<td><input type="text" name="info_product_material[' + serialNumber + '][info_others_specify]" value=""></td>' +
-                        '<td><input type="text" name="info_product_material[' + serialNumber + '][info_process_sample_stage]" value=""></td>' +
-                        '<td><select name="info_product_material[' + serialNumber + '][info_packing_material_type]"><option value="">--Select--</option><option value="Primary">Primary</option><option value="Secondary">Secondary</option><option value="Tertiary">Tertiary</option><option value="Not Applicable">Not Applicable</option></select></td>' +
-                        '<td><select name="info_product_material[' + serialNumber + '][info_stability_for]"><option value="">--Select--</option><option vlaue="Submission">Submission</option><option vlaue="Commercial">Commercial</option><option vlaue="Pack Evaluation">Pack Evaluation</option><option vlaue="Not Applicable">Not Applicable</option></select></td>' +
+                        '<td><input type="text" name="Info_Product_Material[' + serialNumber + '][info_label_claim]" value=""></td>' +
+                        '<td><input type="text" name="Info_Product_Material[' + serialNumber + '][info_pack_size]" value=""></td>' +
+                        '<td><input type="text" name="Info_Product_Material[' + serialNumber + '][info_analyst_name]" value=""></td>' +
+                        '<td><input type="text" name="Info_Product_Material[' + serialNumber + '][info_others_specify]" value=""></td>' +
+                        '<td><input type="text" name="Info_Product_Material[' + serialNumber + '][info_process_sample_stage]" value=""></td>' +
+                        '<td><select name="Info_Product_Material[' + serialNumber + '][info_packing_material_type]"><option value="Primary">Primary</option><option value="Secondary">Secondary</option><option value="Tertiary">Tertiary</option><option value="Not Applicable">Not Applicable</option></select></td>' +
+                        '<td><select name="Info_Product_Material[' + serialNumber + '][info_stability_for]"><option vlaue="Submission">Submission</option><option vlaue="Commercial">Commercial</option><option vlaue="Pack Evaluation">Pack Evaluation</option><option vlaue="Not Applicable">Not Applicable</option></select></td>' +
                     '</tr>';
                     for (var i = 0; i < users.length; i++) {
                         html += '<option value="' + users[i].id + '">' + users[i].name + '</option>';
@@ -140,7 +140,7 @@ $users = DB::table('users')
                     return html;
                 }
 
-                var tableBody = $('#info_product_material_details tbody');
+                var tableBody = $('#Info_Product_Material_details tbody');
                 var rowCount = tableBody.children('tr').length;
                 var newRow = generateTableRow(rowCount + 1);
                 tableBody.append(newRow);
@@ -151,7 +151,7 @@ $users = DB::table('users')
     <!-- --------------------------------grid-2--------------------------->
     <script>
         $(document).ready(function() {
-            $('#details_stability').click(function(e) {
+            $('#Details_Stability').click(function(e) {
                 function generateTableRow(serialNumber) {
                     var html =
                         '<tr>' +
@@ -172,7 +172,7 @@ $users = DB::table('users')
                     return html;
                 }
 
-                var tableBody = $('#details_stability_details tbody');
+                var tableBody = $('#Details_Stability_details tbody');
                 var rowCount = tableBody.children('tr').length;
                 var newRow = generateTableRow(rowCount + 1);
                 tableBody.append(newRow);
@@ -182,7 +182,7 @@ $users = DB::table('users')
     <!-- ------------------------------grid-3-------------------------script -->
     <script>
         $(document).ready(function() {
-            $('#oos_details').click(function(e) {
+            $('#OOS_Details').click(function(e) {
                 function generateTableRow(serialNumber) {
                     var html =
                         '<tr>' +
@@ -195,16 +195,7 @@ $users = DB::table('users')
                             '<td><input type="text" name="oos_detail['+ serialNumber +'][oos_details_obvious_error]"></td>' +
                             '<td><input type="file" name="oos_detail['+ serialNumber +'][oos_file_attachment]"></td>' +
                             '<td><input type="text" name="oos_detail['+ serialNumber +'][oos_submit_by]"></td>' +
-                            '<td>' +
-                            '<div class="col-lg-6 new-date-data-field">' +
-                            '<div class="group-input input-date">' +
-                            '<div class="calenderauditee">' +
-                            '<input type="text" readonly id="oos_submit_on' + serialNumber + '" placeholder="DD-MMM-YYYY" />' +
-                            '<input type="date" name="oos_details[' + serialNumber + '][oos_submit_on]" value="" class="hide-input" oninput="handleDateInput(this, \'oos_submit_on' + serialNumber + '\')">' +
-                            '</div>' +
-                            '</div>' +
-                            '</div>' +
-                            '</td>' +
+                            '<td><input type="date" name="oos_detail['+ serialNumber +'][oos_submit_on]"></td>' +
                         '</tr>';
                     // for (var i = 0; i < users.length; i++) {
                     //     html += '<option value="' + users[i].id + '">' + users[i].name + '</option>';
@@ -214,7 +205,7 @@ $users = DB::table('users')
                     return html;
                 }
 
-                var tableBody = $('#oos_details_details tbody');
+                var tableBody = $('#OOS_Details_details tbody');
                 var rowCount = tableBody.children('tr').length;
                 var newRow = generateTableRow(rowCount + 1);
                 tableBody.append(newRow);
@@ -274,6 +265,13 @@ $users = DB::table('users')
                         '<td><input type="text" name="oos_conclusion[' + serialNumber + '][summary_results_analyst_name]"></td>' +
                         '<td><input type="text" name="oos_conclusion[' + serialNumber + '][summary_results_remarks]"></td>' +
                         '</tr>';
+
+                    // for (var i = 0; i < users.length; i++) {
+                    //     html += '<option value="' + users[i].id + '">' + users[i].name + '</option>';
+                    // }
+
+                    // html += '</select></td>' + 
+
                     '</tr>';
 
                     return html;
@@ -303,6 +301,12 @@ $users = DB::table('users')
                         '<td><input type="text" name="oos_conclusion_review[' + serialNumber + '][conclusion_review_any_other_information]"></td>' +
                         '<td><input type="text" name="oos_conclusion_review[' + serialNumber + '][conclusion_review_action_affecte_batch]"></td>' +
                         '</tr>';
+                    // for (var i = 0; i < users.length; i++) {
+                    //     html += '<option value="' + users[i].id + '">' + users[i].name + '</option>';
+                    // }
+
+                    // html += '</select></td>' + 
+
                     '</tr>';
 
                     return html;
@@ -387,7 +391,7 @@ $users = DB::table('users')
                                 <select id="dynamicSelectType" name="type">
                                     <option value="{{ route('oos.index') }}">OOS Chemical</option>
                                     <option value="{{ route('oos_micro.index') }}">OOS Micro</option>
-                                    <option value="{{ route('oot.index')  }}">OOT</option>
+                                    <option value="{{ route('oot.index');  }}">OOT</option>
                                 </select>
                             </div>
                         </div>
@@ -461,7 +465,7 @@ $users = DB::table('users')
                             <div class="group-input">
                                 <label for="Short Description">Initiator Group <span class="text-danger"></span></label>
                                 
-                                <select name="initiator_group" id="initiator_group">
+                                <select name="initiator_Group" id="initiator_group">
                                 <option>Enter Your Selection Here</option>
                                 @foreach (Helpers::getInitiatorGroups() as $code => $initiator_group) 
                                 <option value="{{ $code }}" @if (old('initiator_group') == $code) selected @endif>{{ $initiator_group }}</option> 
@@ -481,7 +485,7 @@ $users = DB::table('users')
                                 <label for="If Others">If Others
                                     <span class="text-danger">*</span></label>
                                     <span id="rchars">255</span>characters remaining
-                                <textarea id="docname"  name="if_others_gi" ></textarea>
+                                <textarea id="docname"  name="if_others_gi" required></textarea>
                             </div>
                         </div>
                         <div class="col-lg-6">
@@ -501,7 +505,7 @@ $users = DB::table('users')
                                 <label for="Initiator Group"></label>
                                 <label for="Repeat Nature">Repeat Nature<span class="text-danger">*</span></label>
                                  <span id="rchars">255</span>characters remaining
-                                <textarea id="docname"  name="repeat_nature_gi" ></textarea>
+                                <textarea id="docname"  name="repeat_nature_gi" required></textarea>
                             </div>
                         </div>
                         <div class="col-lg-6">
@@ -593,14 +597,15 @@ $users = DB::table('users')
                         <div class="col-lg-6">
                             <div class="group-input ">
                                 <label for="Short Description ">Market</label>
+
                                 <input type="text" name="market_gi">
                             </div>
                         </div>
-                        <div class="col-lg-6">
+                        <div class="col-6">
                             <div class="group-input">
                                 <label for="Initiator Group">Customer*</label>
                                 <select name="customer_gi">
-                                    <option value="">Enter Your Selection Here</option>
+                                     <option value="0">Enter Your Selection Here</option>
                                     <option name="yes">Yes</option>
                                     <option name="no">No</option>
                                 </select>
@@ -612,7 +617,7 @@ $users = DB::table('users')
                         <div class="group-input">
                             <label for="audit-agenda-grid">
                                 Info. On Product/ Material
-                                <button type="button" name="audit-agenda-grid" id="info_product_material">+</button>
+                                <button type="button" name="audit-agenda-grid" id="Info_Product_Material">+</button>
 
                                 <span class="text-primary" data-bs-toggle="modal"
                                     data-bs-target="#document-details-field-instruction-modal"
@@ -621,7 +626,7 @@ $users = DB::table('users')
                                 </span>
                             </label>
                             <div class="table-responsive">
-                                <table class="table table-bordered" id="info_product_material_details" style="width: 100%;">
+                                <table class="table table-bordered" id="Info_Product_Material_details" style="width: 100%;">
                                     <thead>
                                         <tr>
                                             <th style="width: 4%">Row#</th>
@@ -704,7 +709,7 @@ $users = DB::table('users')
                         <div class="group-input">
                             <label for="audit-agenda-grid">
                                 Details of Stability Study
-                                <button type="button" name="audit-agenda-grid" id="details_stability">+</button>
+                                <button type="button" name="audit-agenda-grid" id="Details_Stability">+</button>
                                 <span class="text-primary" data-bs-toggle="modal"
                                     data-bs-target="#document-details-field-instruction-modal"
                                     style="font-size: 0.8rem; font-weight: 400; cursor: pointer;">
@@ -712,7 +717,7 @@ $users = DB::table('users')
                                 </span>
                             </label>
                             <div class="table-responsive">
-                                <table class="table table-bordered" id="details_stability_details" style="width: 100%;">
+                                <table class="table table-bordered" id="Details_Stability_details" style="width: 100%;">
                                     <thead>
                                         <tr>
                                             <th style="width: 4%">Row#</th>
@@ -745,7 +750,7 @@ $users = DB::table('users')
                         <div class="group-input">
                             <label for="audit-agenda-grid">
                                 OOS Details
-                                <button type="button" name="audit-agenda-grid" id="oos_details">+</button>
+                                <button type="button" name="audit-agenda-grid" id="OOS_Details">+</button>
                                 <span class="text-primary" data-bs-toggle="modal"
                                     data-bs-target="#document-details-field-instruction-modal"
                                     style="font-size: 0.8rem; font-weight: 400; cursor: pointer;">
@@ -753,7 +758,7 @@ $users = DB::table('users')
                                 </span>
                             </label>
                             <div class="table-responsive">
-                                <table class="table table-bordered" id="oos_details_details" style="width: 100%;">
+                                <table class="table table-bordered" id="OOS_Details_details" style="width: 100%;">
                                     <thead>
                                         <tr>
                                             <th style="width: 4%">Row#</th>
@@ -1489,8 +1494,9 @@ $users = DB::table('users')
                     <div class="col-md-12 mb-4">
                         <div class="group-input">
                             <label for="Description Deviation">Impact Assessment.</label>
+                            <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
                             <textarea class="summernote" name="impact_assessment_piiqcr" id="summernote-1">
-                            </textarea>
+                                    </textarea>
                         </div>
                     </div>
                     <div class="col-12">

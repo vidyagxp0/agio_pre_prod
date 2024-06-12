@@ -102,14 +102,16 @@
                     <div class="inner-block-content">
                         <div class="row">
                             @if (!empty($parent_id))
-                            <input type="hidden" name="parent_id" id="parent_id" value="{{ $parent_id }}">
-                            <input type="hidden" name="parent_record" id="parent_record" value="{{ $parent_record }}">
+                            <input type="hidden" name="parent_id" value="{{ $parent_id }}">
+                            <input type="hidden" name="parent_type" value="{{ $parent_type }}">
+                            <input type="hidden" name="parent_record" value="{{ $parent_record }}">
                         @endif
                         <div class="col-lg-6">
                             <div class="group-input">
                                 <label for="RLS Record Number"><b>Record Number</b></label>
-                                 <input disabled type="text" name="record_number"
-                                value="{{ Helpers::getDivisionName(session()->get('division')) }}/Extension/{{ date('Y') }}/{{ $record_number }}">
+                                <input disabled type="text" name="record_number">
+                                {{-- value="{{ Helpers::getDivisionName(session()->get('division')) }}/DEV/{{ date('Y') }}/{{ $record_number }}"> --}}
+                                {{-- <div class="static">QMS-EMEA/CAPA/{{ date('Y') }}/{{ $record_number }}</div> --}}
                             </div>
                         </div>
                         <div class="col-lg-6">
@@ -185,8 +187,8 @@
                                         name="approvers" placeholder="Select Approvers" >
                                         <option value="">-- Select --</option>
 
-                                        @if (!empty($users))
-                                            @foreach ($users as $lan)
+                                        @if (!empty($approvers))
+                                            @foreach ($approvers as $lan)
                                                 @if(Helpers::checkUserRolesApprovers($lan))
                                                     <option value="{{ $lan->id }}">
                                                         {{ $lan->name }}

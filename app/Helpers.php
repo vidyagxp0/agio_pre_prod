@@ -1,5 +1,5 @@
 <?php
-// namespace App;
+
 use App\Models\ActionItem;
 use App\Models\Division;
 use App\Models\QMSDivision;
@@ -307,7 +307,7 @@ class Helpers
 
     public static function year($createdAt)
     {
-        return Carbon::parse($createdAt)->format('y');
+        return Carbon::parse($createdAt)->format('Y');
     }
 
     public static function getDivisionName($id)

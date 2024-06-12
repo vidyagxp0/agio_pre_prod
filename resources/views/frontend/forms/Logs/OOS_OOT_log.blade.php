@@ -148,23 +148,19 @@
                                     </thead>
 
                                     <tbody>
-                                        @foreach ($oots as $ootlog)
-                                            
                                         <tr>
-                                            
-                                            <td>{{$loop->index+1}}</td>
-                                            <td>{{$ootlog->intiation_date}}</td>
-                                            <td>{{$ootlog->record_number}}</td>
-                                            <td>{{$ootlog->description_of_oot_details}}</td>
+
                                             <td></td>
                                             <td></td>
-                                            <td>{{$ootlog->closure_date}}</td>
-                                            <td>{{$ootlog->due_date}}</td>
-                                            <td>{{$ootlog->Final_Approval_on}}</td>
-                                            <td>{{$ootlog->status}}</td>
-                                            
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+
                                         </tr>
-                                        @endforeach
 
                                     </tbody>
                                 </table>

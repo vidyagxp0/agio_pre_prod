@@ -14,7 +14,7 @@ return new class extends Migration
     public function up()
     {
         Schema::table('extension_news', function (Blueprint $table) {
-            $table->string('type')->nullable();
+            $table->string('form_type')->nullable();
         });
     }
 

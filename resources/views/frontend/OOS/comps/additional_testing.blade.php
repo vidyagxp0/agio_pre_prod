@@ -7,9 +7,10 @@
             <div class="col-md-12 mb-4">
                 <div class="group-input">
                     <label for="Description Deviation">Review Comment</label>
-                     <textarea class="summernote" name="review_comment_atp" id="summernote-1">
-                      {{ $data->review_comment_atp ? $data->review_comment_atp : ''}}
-                     </textarea>
+                    <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
+                    <textarea class="summernote" name="review_comment_atp" id="summernote-1">
+                {{ $data->review_comment_atp ? $data->review_comment_atp : ''}}
+            </textarea>
                 </div>
             </div>
             <div class="col-lg-6">

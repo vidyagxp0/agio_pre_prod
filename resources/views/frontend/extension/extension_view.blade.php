@@ -60,11 +60,6 @@
             border-radius: 0px 20px 20px 0px;
 
         }
-        .new-moreinfo{
-            width: 100%;
-            border-radius: 5px;
-
-        }
     </style>
     </style>
 
@@ -97,8 +92,8 @@
                     <div class="d-flex" style="gap:20px;">
                         {{-- <button class="button_theme1" onclick="window.print();return false;"
                             class="new-doc-btn">Print</button> --}}
-                        <button class="button_theme1"> <a class="text-white"
-                                href="{{ url('rcms/audit_trailNew' , $extensionNew->id) }}"> Audit Trail </a> </button>
+                        {{-- <button class="button_theme1"> <a class="text-white"
+                                href=""> Audit Trail </a> </button> --}}
 
                         @if ($extensionNew->stage == 1 && (in_array(3, $userRoleIds) || in_array(18, $userRoleIds)))
                         <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
@@ -118,28 +113,28 @@
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#more-info-required-modal">
                                 More Info Required
                             </button>
-                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#reject-required-modal">
-                                Reject
-                            </button>
+                            {{-- <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal1">
+                                Child
+                            </button> --}}
                         @elseif($extensionNew->stage == 3 && (in_array(10, $userRoleIds) || in_array(18, $userRoleIds) || in_array(13, $userRoleIds)))
 
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                Approve
                             </button>
-                            {{-- <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#more-info-required-modal">
+                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#more-info-required-modal">
                                 More Info Required
-                            </button> --}}
+                            </button>
                         @elseif($extensionNew->stage == 4 && (in_array(10, $userRoleIds) || in_array(18, $userRoleIds) || in_array(13, $userRoleIds)))
 
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                Approved
                             </button>
-                            {{-- <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#more-info-required-modal">
+                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#more-info-required-modal">
                                 More Info Required
-                            </button> --}}
+                            </button>
                         @endif
-                         <a class="text-white" href="{{ url('rcms/qms-dashboard') }}"><button class="button_theme1"> Exit
-                        </button>  </a> 
+                        <button class="button_theme1"> <a class="text-white" href="{{ url('rcms/qms-dashboard') }}"> Exit
+                            </a> </button>
 
 
                     </div>
@@ -147,7 +142,7 @@
                 </div>
                 <div class="status">
                     <div class="head">Current Status</div>
-                    {{-- ------------------------------By nilesh-------------------------------- --}}
+                    {{-- ------------------------------By Pankaj-------------------------------- --}}
                     @if ($extensionNew->stage == 0)
                         <div class="progress-bars">
                             <div class="bg-danger">Closed-Cancelled</div>
@@ -217,8 +212,9 @@
                         <div class="col-lg-6">
                             <div class="group-input">
                                 <label for="RLS Record Number"><b>Record Number</b></label>
-                                <input disabled type="text" name="record_number"
-                                value="{{ Helpers::getDivisionName(session()->get('division')) }}/Extension/{{ Helpers::year($extensionNew->created_at) }}/{{ $extensionNew->record_number }}">
+                                <input disabled type="text" name="record_number">
+                                {{-- value="{{ Helpers::getDivisionName(session()->get('division')) }}/DEV/{{ date('Y') }}/{{ $record_number }}"> --}}
+                                {{-- <div class="static">QMS-EMEA/CAPA/{{ date('Y') }}/{{ $record_number }}</div> --}}
                             </div>
                         </div>
                         <div class="col-lg-6">
@@ -334,7 +330,8 @@
                             </div>
                             <div class="col-12">
                                 <div class="group-input">
-                                    <label for="Short Description"> Description</label><span id="rchars">255</span>
+                                    <label for="Short Description"> Description<span
+                                            class="text-danger">*</span></label><span id="rchars">255</span>
                                     Characters remaining
                                     <input id="docname" type="text" name="description" value="{{$extensionNew->description}}" maxlength="255" >
                                 </div>
@@ -344,11 +341,11 @@
                             </div>
                             <div class="col-12">
                                 <div class="group-input">
-                                    <label for="Inv Attachments"> Extension Attachment</label>
+                                    <label for="Inv Attachments">Attachment Extension</label>
                                     <div><small class="text-primary">Please Attach all relevant or supporting
                                             documents</small></div>
                                     <div class="file-attachment-field">
-                                        <div disabled class="file-attachment-list" id="file_attachment_extension">
+                                        <div disabled class="file-attachment-list" id="Audit_file">
                                             @if ($extensionNew->file_attachment_extension)
                                                 @foreach (json_decode($extensionNew->file_attachment_extension) as $file)
                                                     <h6 class="file-container text-dark"
@@ -399,49 +396,17 @@
                             </div>
                         </div>
                        
-                        {{-- <div class="col-12">
+                        <div class="col-12">
                             <div class="group-input">
                                 <label for="Guideline Attachment">Reviewer Attachment  </label>
                                 <div><small class="text-primary">Please Attach all relevant or supporting
                                         documents</small></div>
                                 <div class="file-attachment-field">
-                                    <div class="file-attachment-list" id="file_attachment_reviewer"></div>
+                                    <div class="file-attachment-list" id="file_attachment_guideline"></div>
                                     <div class="add-btn">
                                         <div>Add</div>
-                                        <input type="file" id="myfile" name="file_attachment_reviewer[]"
-                                            oninput="addMultipleFiles(this, 'file_attachment_reviewer')" multiple>
-                                    </div>
-                                </div>
-                            </div>
-                        </div> --}}
-                        <div class="col-12">
-                            <div class="group-input">
-                                <label for="Inv Attachments">Reviewer Attachment </label>
-                                <div><small class="text-primary">Please Attach all relevant or supporting
-                                        documents</small></div>
-                                <div class="file-attachment-field">
-                                    <div disabled class="file-attachment-list" id="file_attachment_reviewer">
-                                        @if ($extensionNew->file_attachment_reviewer)
-                                            @foreach (json_decode($extensionNew->file_attachment_reviewer) as $file)
-                                                <h6 class="file-container text-dark"
-                                                    style="background-color: rgb(243, 242, 240);">
-                                                    <b>{{ $file }}</b>
-                                                    <a href="{{ asset('upload/' . $file) }}"
-                                                        target="_blank"><i class="fa fa-eye text-primary"
-                                                            style="font-size:20px; margin-right:-10px;"></i></a>
-                                                    <a class="remove-file"
-                                                        data-file-name="{{ $file }}"><i
-                                                            class="fa-solid fa-circle-xmark"
-                                                            style="color:red; font-size:20px;"></i></a>
-                                                </h6>
-                                            @endforeach
-                                        @endif
-                                    </div>
-                                    <div class="add-btn">
-                                        <div>Add</div>
-                                        <input type="file" id="HOD_Attachments"
-                                            name="file_attachment_reviewer[]"
-                                            oninput="addMultipleFiles(this, 'file_attachment_reviewer')" multiple>
+                                        <input type="file" id="myfile" name="file_attachment_guideline[]"
+                                            oninput="addMultipleFiles(this, 'file_attachment_guideline')" multiple>
                                     </div>
                                 </div>
                             </div>
@@ -461,40 +426,22 @@
                     <div class="row">
                         <div class="col-lg-12">
                             <div class="group-input">
-                                <label for="Assigned To">Approver Remarks</label>
+                                <label for="Assigned To">Reviewer Remarks</label>
                                <input type="text" name="approver_remarks" id="approver_remarks" value="{{$extensionNew->approver_remarks}}">
                             </div>
                         </div>
                        
-                    
                         <div class="col-12">
                             <div class="group-input">
-                                <label for="Inv Attachments"> Approver Attachment</label>
+                                <label for="Guideline Attachment">Approver Attachment  </label>
                                 <div><small class="text-primary">Please Attach all relevant or supporting
                                         documents</small></div>
                                 <div class="file-attachment-field">
-                                    <div disabled class="file-attachment-list" id="file_attachment_approver">
-                                        @if ($extensionNew->file_attachment_approver)
-                                            @foreach (json_decode($extensionNew->file_attachment_approver) as $file)
-                                                <h6 class="file-container text-dark"
-                                                    style="background-color: rgb(243, 242, 240);">
-                                                    <b>{{ $file }}</b>
-                                                    <a href="{{ asset('upload/' . $file) }}"
-                                                        target="_blank"><i class="fa fa-eye text-primary"
-                                                            style="font-size:20px; margin-right:-10px;"></i></a>
-                                                    <a class="remove-file"
-                                                        data-file-name="{{ $file }}"><i
-                                                            class="fa-solid fa-circle-xmark"
-                                                            style="color:red; font-size:20px;"></i></a>
-                                                </h6>
-                                            @endforeach
-                                        @endif
-                                    </div>
+                                    <div class="file-attachment-list" id="file_attachment_guideline"></div>
                                     <div class="add-btn">
                                         <div>Add</div>
-                                        <input type="file" id="HOD_Attachments"
-                                            name="file_attachment_approver[]"
-                                            oninput="addMultipleFiles(this, 'file_attachment_approver')" multiple>
+                                        <input type="file" id="myfile" name="file_attachment_guideline[]"
+                                            oninput="addMultipleFiles(this, 'file_attachment_guideline')" multiple>
                                     </div>
                                 </div>
                             </div>
@@ -515,37 +462,37 @@
                         <div class="col-lg-6">
                             <div class="group-input">
                                 <label for="Activated By">Initiated By</label>
-                                <div class="static">{{ $extensionNew->submit_by }}</div>
+                                <div class="static"></div>
                             </div>
                         </div>
                         <div class="col-lg-6">
                             <div class="group-input">
                                 <label for="Activated On">Initiated On</label>
-                                <div class="static">{{ $extensionNew->submit_on }}</div>
+                                <div class="static"></div>
                             </div>
                         </div>
                         <div class="col-lg-6">
                             <div class="group-input">
                                 <label for=" Rejected By">Reviewed By</label>
-                                <div class="static">{{ $extensionNew->submit_by_review }}</div>
+                                <div class="static"></div>
                             </div>
                         </div>
                         <div class="col-lg-6">
                             <div class="group-input">
                                 <label for="Rejected On">Reviewed On</label>
-                                <div class="static">{{ $extensionNew->submit_on_review }}</div>
+                                <div class="static"></div>
                             </div>
                         </div>
                         <div class="col-lg-6">
                             <div class="group-input">
                                 <label for=" Rejected By">Approved By</label>
-                                <div class="static">{{ $extensionNew->submit_by_approved }}</div>
+                                <div class="static"></div>
                             </div>
                         </div>
                         <div class="col-lg-6">
                             <div class="group-input">
                                 <label for="Rejected On">Approved On</label>
-                                <div class="static">{{ $extensionNew->submit_on_approved }}</div>
+                                <div class="static"></div>
                             </div>
                         </div>
 
@@ -607,168 +554,6 @@
             </div>
         </div>
     </div>
-    <div class="modal fade" id="more-info-required-modal">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content">
-
-                <!-- Modal Header -->
-                <div class="modal-header">
-                    <h4 class="modal-title">E-Signature</h4>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                </div>
-
-                <form action="{{ route('moreinfoState_extension', $extensionNew->id) }}" method="POST">
-                    @csrf
-                    <!-- Modal body -->
-                    <div class="modal-body">
-                        <div class="mb-3 text-justify">
-                            Please select a meaning and a outcome for this task and enter your username
-                            and password for this task. You are performing an electronic signature,
-                            which is legally binding equivalent of a hand written signature.
-                        </div>
-                        <div class="group-input">
-                            <label for="username">Username <span class="text-danger">*</span></label>
-                            <input class="new-moreinfo" type="text" name="username" required>
-                        </div>
-                        <div class="group-input">
-                            <label for="password">Password <span class="text-danger">*</span></label>
-                            <input class="new-moreinfo" type="password" name="password" required>
-                        </div>
-                        <div class="group-input">
-                            <label for="comment">Comment <span class="text-danger">*</span></label>
-                            <input class="new-moreinfo" type="comment" name="comment" required>
-                        </div>
-                    </div>
-
-                    <!-- Modal footer -->
-                    <!-- <div class="modal-footer">
-                            <button type="submit" data-bs-dismiss="modal">Submit</button>
-                            <button>Close</button>
-                        </div> -->
-                    <div class="modal-footer">
-                        <button type="submit">
-                            Submit
-                        </button>
-                        <button type="button" data-bs-dismiss="modal">Close</button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-    <div class="modal fade" id="reject-required-modal">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content">
-
-                <!-- Modal Header -->
-                <div class="modal-header">
-                    <h4 class="modal-title">E-Signature</h4>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                </div>
-
-                <form action="{{ route('RejectState_extension', $extensionNew->id) }}" method="POST">
-                    @csrf
-                    <!-- Modal body -->
-                    <div class="modal-body">
-                        <div class="mb-3 text-justify">
-                            Please select a meaning and a outcome for this task and enter your username
-                            and password for this task. You are performing an electronic signature,
-                            which is legally binding equivalent of a hand written signature.
-                        </div>
-                        <div class="group-input">
-                            <label for="username">Username <span class="text-danger">*</span></label>
-                            <input class="new-moreinfo" type="text" name="username" required>
-                        </div>
-                        <div class="group-input">
-                            <label for="password">Password <span class="text-danger">*</span></label>
-                            <input class="new-moreinfo" type="password" name="password" required>
-                        </div>
-                        <div class="group-input">
-                            <label for="comment">Comment <span class="text-danger">*</span></label>
-                            <input class="new-moreinfo" type="comment" name="comment" required>
-                        </div>
-                    </div>
-
-                    <!-- Modal footer -->
-                    <!-- <div class="modal-footer">
-                            <button type="submit" data-bs-dismiss="modal">Submit</button>
-                            <button>Close</button>
-                        </div> -->
-                    <div class="modal-footer">
-                        <button type="submit">
-                            Submit
-                        </button>
-                        <button type="button" data-bs-dismiss="modal">Close</button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-    <script>
-        console.log('Script working')
-
-        $(document).ready(function() {
-
-
-            function submitForm() {
-
-                let auditForm = document.getElementById('auditForm');
-
-
-                console.log('sumitting form')
-
-                document.querySelectorAll('.saveAuditFormBtn').forEach(function(button) {
-                    button.disabled = true;
-                })
-
-                document.querySelectorAll('.auditFormSpinner').forEach(function(spinner) {
-                    spinner.style.display = 'flex';
-                })
-
-                extensionForm.submit();
-            }
-
-           
-        });
-
-        document.addEventListener('DOMContentLoaded', function() {
-            var signatureForm = document.getElementById('signatureModalForm');
-
-            signatureForm.addEventListener('submit', function(e) {
-
-                var submitButton = signatureForm.querySelector('.signatureModalButton');
-                var spinner = signatureForm.querySelector('.signatureModalSpinner');
-
-                submitButton.disabled = true;
-
-                spinner.style.display = 'inline-block';
-            });
-        });
-
-        document.addEventListener('DOMContentLoaded', function() {
-            var signatureForm = document.getElementById('pendingInitiatorForm');
-
-            signatureForm.addEventListener('submit', function(e) {
-
-                var submitButton = signatureForm.querySelector('.pendingInitiatorModalButton');
-                var spinner = signatureForm.querySelector('.pendingInitiatorModalSpinner');
-
-                submitButton.disabled = true;
-
-                spinner.style.display = 'inline-block';
-            });
-        });
-
-
-        // =========================
-        wow = new WOW({
-            boxClass: 'wow', // default
-            animateClass: 'animated', // default
-            offset: 0, // default
-            mobile: true, // default
-            live: true // default
-        })
-        wow.init();
-    </script>
     <script>
         function openCity(evt, cityName) {
             var i, cctabcontent, cctablinks;

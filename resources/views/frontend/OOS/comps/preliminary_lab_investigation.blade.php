@@ -31,13 +31,13 @@
                             <tr>
                                 <th style="width: 4%">Row#</th>
                                 <th style="width: 8%">OOS Number</th>
-                                <th style="width: 14%"> OOS Reported Date</th>
+                                <th style="width: 8%"> OOS Reported Date</th>
                                 <th style="width: 12%">Description of OOS</th>
-                                <th style="width: 12%">Previous OOS Root Cause</th>
-                                <th style="width: 12%"> CAPA</th>
-                                <th style="width: 14% pt-3">Closure Date of CAPA</th>
-                                <th style="width: 12%">CAPA Requirement</th>
-                                <th style="width: 10%">Reference CAPA Number</th>
+                                <th style="width: 16%">Previous OOS Root Cause</th>
+                                <th style="width: 16%"> CAPA</th>
+                                <th style="width: 16% pt-3">Closure Date of CAPA</th>
+                                <th style="width: 16%">CAPA Requirement</th>
+                                <th style="width: 16%">Reference CAPA Number</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -46,33 +46,12 @@
                                     <tr>
                                         <td><input disabled type="text" name="oos_capa[{{ $loop->index }}][serial]" value="{{ $loop->index + 1 }}"></td>
                                         <td><input type="text" id="info_oos_number" name="oos_capa[{{ $loop->index }}][info_oos_number]" value="{{ Helpers::getArrayKey($oos_capa, 'info_oos_number') }}"></td>
-                                        <td>
-                                        <div class="col-lg-6 new-date-data-field">
-                                            <div class="group-input input-date">
-                                                <div class="calenderauditee">
-                                                    <input type="text" id="info_oos_reported_date_{{ $loop->index }}" value="{{ Helpers::getdateFormat($oos_capa['info_oos_reported_date'] ?? '') }}" readonly placeholder="DD-MMM-YYYY" />
-                                                    <input type="date" name="oos_capa[{{ $loop->index }}][info_oos_reported_date]" value="{{ $info_product_material['info_oos_reported_date'] ?? '' }}" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input"
-                                                     oninput="handleDateInput(this, 'info_oos_reported_date_{{ $loop->index }}')">
-                                                </div>
-                                            </div>
-                                        </div>
-                                        </td>
+                                        <td><input type="date" name="oos_capa[{{ $loop->index }}][info_oos_reported_date]" value="{{ Helpers::getArrayKey($oos_capa, 'info_oos_reported_date') }}"></td>
                                         <td><input type="text" name="oos_capa[{{ $loop->index }}][info_oos_description]" value="{{ Helpers::getArrayKey($oos_capa, 'info_oos_description') }}"></td>
                                         <td><input type="text" name="oos_capa[{{ $loop->index }}][info_oos_previous_root_cause]" value="{{ Helpers::getArrayKey($oos_capa, 'info_oos_previous_root_cause') }}"></td>
                                         <td><input type="text" name="oos_capa[{{ $loop->index }}][info_oos_capa]" value="{{ Helpers::getArrayKey($oos_capa, 'info_oos_capa') }}"></td>
-                                        <td>
-                                        <div class="col-lg-6 new-date-data-field">
-                                            <div class="group-input input-date">
-                                                <div class="calenderauditee">
-                                                    <input type="text" id="info_oos_closure_date_{{ $loop->index }}" value="{{ Helpers::getdateFormat($oos_capa['info_oos_closure_date'] ?? '') }}" readonly placeholder="DD-MMM-YYYY" />
-                                                    <input type="date" name="oos_capa[{{ $loop->index }}][info_oos_closure_date]" value="{{ $oos_capa['info_oos_closure_date'] ?? '' }}" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input"
-                                                     oninput="handleDateInput(this, 'info_oos_closure_date_{{ $loop->index }}')">
-                                                </div>
-                                            </div>
-                                        </div>
-                                        </td>
-                                        <td>
-                                            <select name="oos_capa[{{ $loop->index }}][info_oos_capa_requirement]">
+                                        <td><input type="date" name="oos_capa[{{ $loop->index }}][info_oos_closure_date]" value="{{ Helpers::getArrayKey($oos_capa, 'info_oos_closure_date') }}"></td>
+                                        <td><select name="oos_capa[{{ $loop->index }}][info_oos_capa_requirement]">
                                                 <option value="yes" {{ Helpers::getArrayKey($oos_capa, 'info_oos_capa_requirement') == 'yes' ? 'selected' : '' }}>Yes</option>
                                                 <option value="No" {{ Helpers::getArrayKey($oos_capa, 'info_oos_capa_requirement') == 'No' ? 'selected' : '' }}>No</option>
                                             </select></td>

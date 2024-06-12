@@ -125,7 +125,7 @@
     <!-- -----------------------------grid-1----------------------------script -->
     <script>
         $(document).ready(function() {
-            $('#info_product_material').click(function(e) {
+            $('#Info_Product_Material').click(function(e) {
                 function generateTableRow(serialNumber) {
                     var html =
                     '<tr>' +
@@ -157,8 +157,8 @@
                         '<td><input type="text" name="info_product_material[' + serialNumber + '][info_analyst_name]" value=""></td>' +
                         '<td><input type="text" name="info_product_material[' + serialNumber + '][info_others_specify]" value=""></td>' +
                         '<td><input type="text" name="info_product_material[' + serialNumber + '][info_process_sample_stage]" value=""></td>' +
-                        '<td><select name="info_product_material[' + serialNumber + '][info_packing_material_type]"><option value="">--Select--</option><option value="Primary">Primary</option><option value="Secondary">Secondary</option><option value="Tertiary">Tertiary</option><option value="Not Applicable">Not Applicable</option></select></td>' +
-                        '<td><select name="info_product_material[' + serialNumber + '][info_stability_for]"><option value="">--Select--</option><option vlaue="Submission">Submission</option><option vlaue="Commercial">Commercial</option><option vlaue="Pack Evaluation">Pack Evaluation</option><option vlaue="Not Applicable">Not Applicable</option></select></td>' +
+                        '<td><select name="info_product_material[' + serialNumber + '][info_packing_material_type]"><option value="Primary">Primary</option><option value="Secondary">Secondary</option><option value="Tertiary">Tertiary</option><option value="Not Applicable">Not Applicable</option></select></td>' +
+                        '<td><select name="info_product_material[' + serialNumber + '][info_stability_for]"><option vlaue="Submission">Submission</option><option vlaue="Commercial">Commercial</option><option vlaue="Pack Evaluation">Pack Evaluation</option><option vlaue="Not Applicable">Not Applicable</option></select></td>' +
                     '</tr>';
                     // for (var i = 0; i < users.length; i++) {
                     //     html += '<option value="' + users[i].id + '">' + users[i].name + '</option>';
@@ -167,7 +167,7 @@
                     return html;
                 }
 
-                var tableBody = $('#info_product_material_details tbody');
+                var tableBody = $('#Info_Product_Material_details tbody');
                 var rowCount = tableBody.children('tr').length;
                 var newRow = generateTableRow(rowCount + 1);
                 tableBody.append(newRow);
@@ -177,22 +177,29 @@
     <!-- --------------------------------grid-2--------------------------->
     <script>
         $(document).ready(function() {
-            $('#details_stability').click(function(e) {
+            $('#Details_Stability').click(function(e) {
                 function generateTableRow(serialNumber) {
                     var html =
                         '<tr>' +
-                        '<td><input disabled type="text" name="serial[]" value="' + serialNumber +'"></td>' +
-                        '<td><input type="text" name="details_stability[' + serialNumber + '][stability_study_arnumber]"></td>'+
-                        '<td><input type="text" name="details_stability[' + serialNumber + '][stability_study_condition_temprature_rh]"></td>'+
-                        '<td><input type="text" name="details_stability[' + serialNumber + '][stability_study_Interval]"></td>'+
-                        '<td><input type="text" name="details_stability[' + serialNumber + '][stability_study_orientation]"></td>'+
-                        '<td><input type="text" name="details_stability[' + serialNumber + '][stability_study_pack_details]"></td>'+
-                        '<td><input type="text" name="details_stability[' + serialNumber + '][stability_study_specification_no]"></td>'+
-                        '<td><input type="text" name="details_stability[' + serialNumber + '][stability_study_sample_description]"></td>'+
+                        '<td><input disabled type="text" name="serial[]" value="' + serialNumber +
+                        '"></td>' +
+                        '<td><input type="hidden" name="identifier_details_stability[]" value="Details_Stability"><input type="text" id="stability_study_arnumber" name="stability_study_arnumber[]"></td>'+
+                        '<td><input type="text" name="stability_study_condition_temprature_rh[]"></td>'+
+                        '<td><input type="text" name="stability_study_Interval[]"></td>'+
+                        '<td><input type="text" name="stability_study_orientation[]"></td>'+
+                        '<td><input type="text" name="stability_study_pack_details[]"></td>'+
+                        '<td><input type="text" name="stability_study_specification_no[]"></td>'+
+                        '<td><input type="text" name="stability_study_sample_description[]"></td>'+
                         '</tr>';
+                    // for (var i = 0; i < users.length; i++) {
+                    //     html += '<option value="' + users[i].id + '">' + users[i].name + '</option>';
+                    // }
+
+                    // html += '</select></td>' + 
                     return html;
                 }
-                var tableBody = $('#details_stability_details tbody');
+
+                var tableBody = $('#Details_Stability_details tbody');
                 var rowCount = tableBody.children('tr').length;
                 var newRow = generateTableRow(rowCount + 1);
                 tableBody.append(newRow);
@@ -202,33 +209,30 @@
     <!-- ------------------------------grid-3-------------------------script -->
     <script>
         $(document).ready(function() {
-            $('#oos_details').click(function(e) {
+            $('#OOS_Details').click(function(e) {
                 function generateTableRow(serialNumber) {
                     var html =
                         '<tr>' +
-                            '<td><input disabled type="text" name="serial[]" value="' + serialNumber + '"></td>' +
-                            '<td><input type="text"  name="oos_details[' + serialNumber + '][oos_arnumber]"value=""></td>'+
-                            '<td><input type="text" name="oos_details[' + serialNumber + '][oos_test_name]"></td>' +
-                            '<td><input type="text" name="oos_details[' + serialNumber + '][oos_results_obtained]"></td>' +
-                            '<td><input type="text" name="oos_details[' + serialNumber + '][oos_specification_limit]"></td>' +
-                            '<td><input type="text" name="oos_details[' + serialNumber + '][oos_details_obvious_error]"></td>' +
-                            '<td><input type="file" name="oos_details[' + serialNumber + '][oos_file_attachment]"></td>' +
-                            '<td>' +
-                            '<div class="col-lg-6 new-date-data-field">' +
-                            '<div class="group-input input-date">' +
-                            '<div class="calenderauditee">' +
-                            '<input type="text" readonly id="oos_submit_on' + serialNumber + '" placeholder="DD-MMM-YYYY" />' +
-                            '<input type="date" name="oos_details[' + serialNumber + '][oos_submit_on]" value="" class="hide-input" oninput="handleDateInput(this, \'oos_submit_on' + serialNumber + '\')">' +
-                            '</div>' +
-                            '</div>' +
-                            '</div>' +
-                            '</td>' +
-                            '<td><input type="text" name="oos_details[' + serialNumber + '][oos_submit_by]"></td>' +
+                            '<td><input disabled type="text" name="serial[]" value="' + serialNumber +
+                            '"></td>' +
+                            '<td><input type="hidden" id="identifier_oos_detail" name="identifier_oos_detail[]" value="OOS Details"><input type="text" id="oos_arnumber" name="oos_arnumber[]"></td>'+
+                            '<td><input type="text" name="oos_test_name[]"></td>' +
+                            '<td><input type="text" name="oos_results_obtained[]"></td>' +
+                            '<td><input type="text" name="oos_specification_limit[]"></td>' +
+                            '<td><input type="text" name="oos_details_obvious_error[]"></td>' +
+                            '<td><input type="file" name="oos_file_attachment[]"></td>' +
+                            '<td><input type="text" name="oos_submit_by[]"></td>' +
+                            '<td><input type="date" name="oos_submit_on[]"></td>' +
                         '</tr>';
-                   return html;
+                    // for (var i = 0; i < users.length; i++) {
+                    //     html += '<option value="' + users[i].id + '">' + users[i].name + '</option>';
+                    // }
+
+                    // html += '</select></td>' + 
+                    return html;
                 }
 
-                var tableBody = $('#oos_details_details tbody');
+                var tableBody = $('#OOS_Details_details tbody');
                 var rowCount = tableBody.children('tr').length;
                 var newRow = generateTableRow(rowCount + 1);
                 tableBody.append(newRow);
@@ -244,34 +248,21 @@
                 function generateTableRow(serialNumber) {
                     var html =
                         '<tr>' +
-                        '<td><input disabled type="text" name="serial[]" value="' + serialNumber +'"></td>' +
-                        '<td><input type="text" name="oos_capa[' + serialNumber + '][info_oos_number]" value=""></td>' +
-                        '<td>' +
-                            '<div class="col-lg-6 new-date-data-field">' +
-                            '<div class="group-input input-date">' +
-                            '<div class="calenderauditee">' +
-                            '<input type="text" readonly id="info_oos_reported_date' + serialNumber + '" placeholder="DD-MMM-YYYY" />' +
-                            '<input type="date" name="oos_capa[' + serialNumber + '][info_oos_reported_date]" value="" class="hide-input" oninput="handleDateInput(this, \'info_oos_reported_date' + serialNumber + '\')">' +
-                            '</div>' +
-                            '</div>' +
-                            '</div>' +
-                        '</td>' +
-                        '<td><input type="text" name="oos_capa[' + serialNumber + '][info_oos_description]" value=""></td>' +
-                        '<td><input type="text" name="oos_capa[' + serialNumber + '][info_oos_previous_root_cause]" value=""></td>' +
-                        '<td><input type="text" name="oos_capa[' + serialNumber + '][info_oos_capa]" value=""></td>' +
-                        '<td>' +
-                            '<div class="col-lg-6 new-date-data-field">' +
-                            '<div class="group-input input-date">' +
-                            '<div class="calenderauditee">' +
-                            '<input type="text" readonly id="info_oos_closure_date' + serialNumber + '" placeholder="DD-MMM-YYYY" />' +
-                            '<input type="date" name="oos_capa[' + serialNumber + '][info_oos_closure_date]" value="" class="hide-input" oninput="handleDateInput(this, \'info_oos_closure_date' + serialNumber + '\')">' +
-                            '</div>' +
-                            '</div>' +
-                            '</div>' +
-                        '</td>' +
-                        '<td><select name="oos_capa['+ serialNumber +'][info_oos_capa_requirement]"><option value="yes">Yes</option><option value="No">No</option></select></td>' +
-                        '<td><input type="text" name="oos_capa[' + serialNumber + '][info_oos_capa_reference_number]" value=""></td>' +
+                        '<td><input disabled type="text" name="serial[]" value="' + serialNumber +
+                        '"></td>' +
+                        '<td><input type="hidden" id="identifier_oos_capa" name="identifier_oos_capa[]" value="OOS Capa"><input type="text" id="info_oos_number" name="info_oos_number[]" value=""></td>' +
+                        '<td><input type="text" name="info_oos_reported_date[]" value=""></td>' +
+                        '<td><input type="text" name="info_oos_description[]" value=""></td>' +
+                        '<td><input type="text" name="info_oos_previous_root_cause[]"value=""></td>' +
+                        '<td><input type="text" name="info_oos_capa[]" value=""></td>' +
+                        '<td><input type="date" name="info_oos_closure_date[]" value=""></td><option value="yes">Yes</option><option value="No">No</option></select></td>' +
+                        '<td><input type="text" name="info_oos_capa_reference_number[]" value=""></td>' +
                         '</tr>';
+                    // for (var i = 0; i < users.length; i++) {
+                    //     html += '<option value="' + users[i].id + '">' + users[i].name + '</option>';
+                    // }
+
+                    // html += '</select></td>' + 
                     return html;
                 }
 
@@ -291,13 +282,22 @@
             $('#oos_conclusion').click(function(e) {
                 function generateTableRow(serialNumber) {
                     var html =
-                    '<tr>' +
-                        '<td><input disabled type="text" name="serial[]" value="' + serialNumber +'"></td>' +
-                        '<td><input type="text" name="oos_conclusion[' + serialNumber + '][summary_results_analysis_detials]"></td>' +
-                        '<td><input type="text" name="oos_conclusion[' + serialNumber + '][summary_results_hypothesis_experimentation_test_pr_no]"></td>' +
-                        '<td><input type="text" name="oos_conclusion[' + serialNumber + '][summary_results]"></td>' +
-                        '<td><input type="text" name="oos_conclusion[' + serialNumber + '][summary_results_analyst_name]"></td>' +
-                        '<td><input type="text" name="oos_conclusion[' + serialNumber + '][summary_results_remarks]"></td>' +
+                        '<tr>' +
+                        '<td><input disabled type="text" name="serial[]" value="' + serialNumber +
+                        '"></td>' +
+                        '<td><input type="hidden" name="identifier_oos_conclusion[]" value="identifier_oos_conclusion"><input type="text" name="summary_results_analysis_detials[]"></td>' +
+                        '<td><input type="text" name="summary_results_hypothesis_experimentation_test_pr_no[]"></td>' +
+                        '<td><input type="text" name="summary_results[]"></td>' +
+                        '<td><input type="text" name="summary_results_analyst_name[]"></td>' +
+                        '<td><input type="text" name="summary_results_remarks[]"></td>' +
+                        '</tr>';
+
+                    // for (var i = 0; i < users.length; i++) {
+                    //     html += '<option value="' + users[i].id + '">' + users[i].name + '</option>';
+                    // }
+
+                    // html += '</select></td>' + 
+
                     '</tr>';
 
                     return html;
@@ -322,11 +322,13 @@
                         '<tr>' +
                         '<td><input disabled type="text" name="serial[]" value="' + serialNumber +
                         '"></td>' +
-                        '<td><input type="text" name="oos_conclusion_review[' + serialNumber + '][conclusion_review_product_name]"></td>' +
-                        '<td><input type="text" name="oos_conclusion_review[' + serialNumber + '][conclusion_review_batch_no]"></td>' +
-                        '<td><input type="text" name="oos_conclusion_review[' + serialNumber + '][conclusion_review_any_other_information]"></td>' +
-                        '<td><input type="text" name="oos_conclusion_review[' + serialNumber + '][conclusion_review_action_affecte_batch]"></td>' +
+                        '<td><input type="hidden" name="identifier_oos_conclusion_review[]" value="identifier_oos_conclusion_review"><input type="text" name="conclusion_review_product_name[]"></td>' +
+                        '<td><input type="text" name="conclusion_review_batch_no[]"></td>' +
+                        '<td><input type="text" name="conclusion_review_any_other_information[]"></td>' +
+                        '<td><input type="text" name="conclusion_review_action_affecte_batch[]"></td>' +
+                        '</tr>';
                     '</tr>';
+
                     return html;
                 }
 

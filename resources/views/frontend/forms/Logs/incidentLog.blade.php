@@ -151,11 +151,8 @@
                                         
                                     </thead>
                                     <tbody>
-                                        {{-- @foreach ($labincident as $lablogs) --}}
                                         <tr>
-                                            
-                                            <td></td>
-                                            
+
                                             <td></td>
                                             <td></td>
                                             <td></td>
@@ -163,14 +160,14 @@
                                             <td></td>
                                             <td></td>
                                             <td></td>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
                                             <td></td>
                                             <td></td>
-                                            
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+
                                         </tr>
-                                        {{-- @endforeach --}}
 
                                     </tbody>
                                 </table>

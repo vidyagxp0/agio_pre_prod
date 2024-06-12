@@ -153,12 +153,8 @@
                                         
                                     </thead>
                                     <tbody>
-                                        @foreach ($internal_audi as $logs)
-                                            
                                         <tr>
-                                            
-                                            <td>{{$loop->index+1}}</td>
-                                            <td>{{$logs->intiation_date}}</td>
+
                                             <td></td>
                                             <td></td>
                                             <td></td>
@@ -170,9 +166,10 @@
                                             <td></td>
                                             <td></td>
                                             <td></td>
-                                            
+                                            <td></td>
+                                            <td></td>
+
                                         </tr>
-                                        @endforeach
 
                                     </tbody>
                                 </table>

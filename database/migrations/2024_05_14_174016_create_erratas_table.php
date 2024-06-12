@@ -15,7 +15,7 @@ return new class extends Migration
     {
         Schema::create('erratas', function (Blueprint $table) {
             $table->id();
-            $table->integer('record')->nullable();
+            $table->integer('record_no')->nullable();
             $table->string('division_id')->nullable();
             $table->longText('initiator_id')->nullable();
             $table->string('intiation_date')->nullable();

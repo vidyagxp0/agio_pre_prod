@@ -22,7 +22,6 @@ use App\Models\QMSDivision;
 use App\Models\RiskAssessment;
 use App\Models\RcmDocHistory;
 use App\Models\RiskLevelKeywords;
-use App\Models\Capa;
 use App\Models\RoleGroup;
 use App\Models\User;
 // use Barryvdh\DomPDF\PDF;
@@ -832,8 +831,7 @@ class CCController extends Controller
             $history->change_from = "Initiator";
             $history->action_name = 'Create';
         $history->save();
-        
-if(!empty($request->Initiator_Group)){
+
         $history = new RcmDocHistory;
         $history->cc_id = $openState->id;
         $history->activity_type = 'Inititator Group';
@@ -848,7 +846,7 @@ if(!empty($request->Initiator_Group)){
             $history->change_from = "Initiator";
             $history->action_name = 'Create';
         $history->save();
-    }
+
         $history = new RcmDocHistory;
         $history->cc_id = $openState->id;
         $history->activity_type = 'Assigned To';
@@ -2863,21 +2861,20 @@ if(!empty($request->Initiator_Group)){
 
         $lastdocdetail = Docdetail::where('cc_id', $id)->first();
         $docdetail = Docdetail::where('cc_id', $id)->first();
-        // if (!empty($request->serial_number)) {
-        //     $docdetail->sno = serialize($request->serial_number);
-        // }
-        // dd($request->current_doc_no);
-        if (!empty($request->current_doc_no)) {
-            $docdetail->current_doc_no = serialize($request->current_doc_no);
+        if (!empty($request->serial_number)) {
+            $docdetail->sno = serialize($request->serial_number);
         }
-        if (!empty($request->current_version_no)) {
-            $docdetail->current_version_no = serialize($request->current_version_no);
+        if (!empty($request->current_doc_number)) {
+            $docdetail->current_doc_no = serialize($request->current_doc_number);
         }
-        if (!empty($request->new_doc_no)) {
-            $docdetail->new_doc_no = serialize($request->new_doc_no);
+        if (!empty($request->current_version)) {
+            $docdetail->current_version_no = serialize($request->current_version);
         }
-        if (!empty($request->new_version_no)) {
-            $docdetail->new_version_no = serialize($request->new_version_no);
+        if (!empty($request->new_doc_number)) {
+            $docdetail->new_doc_no = serialize($request->new_doc_number);
+        }
+        if (!empty($request->new_version)) {
+            $docdetail->new_version_no = serialize($request->new_version);
         }
         $docdetail->current_practice = $request->current_practice;
         $docdetail->proposed_change = $request->proposed_change;
@@ -4060,7 +4057,7 @@ if(!empty($request->Initiator_Group)){
                     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                     $history->origin_state = $lastDocument->status;
                     $history->change_to =   "QA Initial Review";
-                    $history->change_from = $changeControl->status;
+                    $history->change_from = $lastDocument->status;
                     $history->stage = 'Plan Proposed';
                     $history->save();
                     //  $list = Helpers::getHodUserList();
@@ -5030,7 +5027,7 @@ if(!empty($request->Initiator_Group)){
         }
         if ($request->revision == "Extension") {
             $cc->originator = User::where('id', $cc->initiator_id)->value('name');
-            return view('frontend.extension.extension_new', compact('parent_name','parent_id', 'record_number', 'parent_short_description', 'parent_initiator_id', 'parent_intiation_date', 'parent_division_id', 'parent_record', 'cc'));
+            return view('frontend.forms.extension', compact('parent_name','parent_id', 'record_number', 'parent_short_description', 'parent_initiator_id', 'parent_intiation_date', 'parent_division_id', 'parent_record', 'cc'));
         }
         if ($request->revision == "New Document") {
             $cc->originator = User::where('id', $cc->initiator_id)->value('name');

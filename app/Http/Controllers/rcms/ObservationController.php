@@ -17,8 +17,6 @@ use App\Models\InternalAuditGrid;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\App;
-use PDF;
 
 class ObservationController extends Controller
 {
@@ -44,14 +42,14 @@ class ObservationController extends Controller
             //return redirect()->back();
         }
         $data = new Observation();
-
+        
         $data->record = ((RecordNumber::first()->value('counter')) + 1);
         $data->initiator_id = Auth::user()->id;
         $data->parent_id = $request->parent_id;
         $data->parent_type = $request->parent_type;
         $data->division_code = $request->division_code;
         $data->intiation_date = $request->intiation_date;
-        $data->due_date = $request->input('due_date');
+        $data->due_date = $request->due_date;
         $data->short_description = $request->short_description;
         $data->assign_to = $request->assign_to;
         $data->grading = $request->grading;
@@ -121,7 +119,7 @@ class ObservationController extends Controller
 
             $data->related_observations = json_encode($files);
         }
-
+       
 
         if (!empty($request->attach_files2)) {
             $files = [];
@@ -159,7 +157,7 @@ class ObservationController extends Controller
         $record->counter = ((RecordNumber::first()->value('counter')) + 1);
         $record->update();
 
-        if (!empty($data->parent_id)) {
+
         $history = new AuditTrialObservation();
         $history->Observation_id = $data->id;
         $history->activity_type = 'Parent Id';
@@ -170,12 +168,8 @@ class ObservationController extends Controller
         $history->user_name = Auth::user()->name;
         $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
         $history->origin_state = $data->status;
-        $history->change_to =   "Opened";
-        $history->change_from = "Initiator";
-        $history->action_name = 'Create';
         $history->save();
-        }
-        if (!empty($data->parent_type)) {
+
         $history = new AuditTrialObservation();
         $history->Observation_id = $data->id;
         $history->activity_type = 'Parent Type';
@@ -186,12 +180,8 @@ class ObservationController extends Controller
         $history->user_name = Auth::user()->name;
         $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
         $history->origin_state = $data->status;
-        $history->change_to =   "Opened";
-        $history->change_from = "Initiator";
-        $history->action_name = 'Create';
         $history->save();
-    }
-    if (!empty($data->division_code)) {
+
         $history = new AuditTrialObservation();
         $history->Observation_id = $data->id;
         $history->activity_type = 'Division Code';
@@ -202,15 +192,11 @@ class ObservationController extends Controller
         $history->user_name = Auth::user()->name;
         $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
         $history->origin_state = $data->status;
-        $history->change_to =   "Opened";
-        $history->change_from = "Initiator";
-        $history->action_name = 'Create';
         $history->save();
-    }
-    if (!empty($data->intiation_date)) {
+
         $history = new AuditTrialObservation();
         $history->Observation_id = $data->id;
-        $history->activity_type = 'Date of Initiation';
+        $history->activity_type = 'Intiation Date';
         $history->previous ="Null";
         $history->current = $data->intiation_date;
         $history->comment = "NA";
@@ -218,15 +204,11 @@ class ObservationController extends Controller
         $history->user_name = Auth::user()->name;
         $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
         $history->origin_state = $data->status;
-        $history->change_to =   "Opened";
-        $history->change_from = "Initiator";
-        $history->action_name = 'Create';
         $history->save();
-    }
-    if (!empty($data->due_date)) {
+
         $history = new AuditTrialObservation();
         $history->Observation_id = $data->id;
-        $history->activity_type = 'Date Due';
+        $history->activity_type = 'Due Date';
         $history->previous ="Null";
         $history->current = $data->due_date;
         $history->comment = "NA";
@@ -234,9 +216,6 @@ class ObservationController extends Controller
         $history->user_name = Auth::user()->name;
         $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
         $history->origin_state = $data->status;
-        $history->change_to =   "Opened";
-        $history->change_from = "Initiator";
-        $history->action_name = 'Create';
         $history->save();
 
         // $history = new AuditTrialObservation();
@@ -250,27 +229,10 @@ class ObservationController extends Controller
         // $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
         // $history->origin_state = $data->status;
         // $history->save();
-    }
-    if (!empty($data->short_description)) {
+
         $history = new AuditTrialObservation();
         $history->Observation_id = $data->id;
-        $history->activity_type = 'Short Description';
-        $history->previous = "Null";
-        $history->current = $data->short_description;
-        $history->comment = "NA";
-        $history->user_id = Auth::user()->id;
-        $history->user_name = Auth::user()->name;
-        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-        $history->origin_state = $data->status;
-        $history->change_to =   "Opened";
-        $history->change_from = "Initiator";
-        $history->action_name = 'Create';
-        $history->save();
-    }
-    if (!empty($data->assign_to)) {
-        $history = new AuditTrialObservation();
-        $history->Observation_id = $data->id;
-        $history->activity_type = 'Assigned To';
+        $history->activity_type = 'Assign To1';
         $history->previous = "Null";
         $history->current = $data->assign_to;
         $history->comment = "NA";
@@ -278,12 +240,8 @@ class ObservationController extends Controller
         $history->user_name = Auth::user()->name;
         $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
         $history->origin_state = $data->status;
-        $history->change_to =   "Opened";
-        $history->change_from = "Initiator";
-        $history->action_name = 'Create';
         $history->save();
-    }
-    if (!empty($data->grading)) {
+
         $history = new AuditTrialObservation();
         $history->Observation_id = $data->id;
         $history->activity_type = 'Grading';
@@ -294,12 +252,8 @@ class ObservationController extends Controller
         $history->user_name = Auth::user()->name;
         $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
         $history->origin_state = $data->status;
-        $history->change_to =   "Opened";
-        $history->change_from = "Initiator";
-        $history->action_name = 'Create';
         $history->save();
-    }
-    if (!empty($data->category_observation)) {
+
         $history = new AuditTrialObservation();
         $history->Observation_id = $data->id;
         $history->activity_type = 'Category Observation';
@@ -310,12 +264,8 @@ class ObservationController extends Controller
         $history->user_name = Auth::user()->name;
         $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
         $history->origin_state = $data->status;
-        $history->change_to =   "Opened";
-        $history->change_from = "Initiator";
-        $history->action_name = 'Create';
         $history->save();
-    }
-    if (!empty($data->reference_guideline)) {
+
         $history = new AuditTrialObservation();
         $history->Observation_id = $data->id;
         $history->activity_type = 'Reference Guideline';
@@ -326,12 +276,8 @@ class ObservationController extends Controller
         $history->user_name = Auth::user()->name;
         $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
         $history->origin_state = $data->status;
-        $history->change_to =   "Opened";
-        $history->change_from = "Initiator";
-        $history->action_name = 'Create';
         $history->save();
-    }
-    if (!empty($data->description)) {
+
         $history = new AuditTrialObservation();
         $history->Observation_id = $data->id;
         $history->activity_type = 'Parent Type';
@@ -342,15 +288,11 @@ class ObservationController extends Controller
         $history->user_name = Auth::user()->name;
         $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
         $history->origin_state = $data->status;
-        $history->change_to =   "Opened";
-        $history->change_from = "Initiator";
-        $history->action_name = 'Create';
         $history->save();
-    }
-    if (!empty($data->attach_files1)) {
+
         $history = new AuditTrialObservation();
         $history->Observation_id = $data->id;
-        $history->activity_type = 'Attached Files';
+        $history->activity_type = 'Attach Files1';
         $history->previous = "Null";
         $history->current = $data->attach_files1;
         $history->comment = "NA";
@@ -358,15 +300,11 @@ class ObservationController extends Controller
         $history->user_name = Auth::user()->name;
         $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
         $history->origin_state = $data->status;
-        $history->change_to =   "Opened";
-        $history->change_from = "Initiator";
-        $history->action_name = 'Create';
         $history->save();
-    }
-    if (!empty($data->recomendation_capa_date_due)) {
+
         $history = new AuditTrialObservation();
         $history->Observation_id = $data->id;
-        $history->activity_type = 'Recomendation Due Date for CAPA';
+        $history->activity_type = 'Recomendation Capa Date Due';
         $history->previous = "Null";
         $history->current = $data->recomendation_capa_date_due;
         $history->comment = "NA";
@@ -374,12 +312,8 @@ class ObservationController extends Controller
         $history->user_name = Auth::user()->name;
         $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
         $history->origin_state = $data->status;
-        $history->change_to =   "Opened";
-        $history->change_from = "Initiator";
-        $history->action_name = 'Create';
         $history->save();
-    }
-    if (!empty($data->non_compliance)) {
+
         $history = new AuditTrialObservation();
         $history->Observation_id = $data->id;
         $history->activity_type = 'Non Compliance';
@@ -390,12 +324,8 @@ class ObservationController extends Controller
         $history->user_name = Auth::user()->name;
         $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
         $history->origin_state = $data->status;
-        $history->change_to =   "Opened";
-        $history->change_from = "Initiator";
-        $history->action_name = 'Create';
         $history->save();
-    }
-    if (!empty($data->recommend_action)) {
+
         $history = new AuditTrialObservation();
         $history->Observation_id = $data->id;
         $history->activity_type = 'Recommend Action';
@@ -406,15 +336,11 @@ class ObservationController extends Controller
         $history->user_name = Auth::user()->name;
         $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
         $history->origin_state = $data->status;
-        $history->change_to =   "Opened";
-        $history->change_from = "Initiator";
-        $history->action_name = 'Create';
         $history->save();
-    }
-    if (!empty($data->date_Response_due2)) {
+
         $history = new AuditTrialObservation();
         $history->Observation_id = $data->id;
-        $history->activity_type = 'Date Response Due';
+        $history->activity_type = 'Date Response Due2';
         $history->previous = "Null";
         $history->current = $data->date_Response_due2;
         $history->comment = "NA";
@@ -422,15 +348,11 @@ class ObservationController extends Controller
         $history->user_name = Auth::user()->name;
         $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
         $history->origin_state = $data->status;
-        $history->change_to =   "Opened";
-        $history->change_from = "Initiator";
-        $history->action_name = 'Create';
         $history->save();
-    }
-    if (!empty($data->capa_date_due)) {
+
         $history = new AuditTrialObservation();
         $history->Observation_id = $data->id;
-        $history->activity_type = 'Due Date';
+        $history->activity_type = 'capa_date_due';
         $history->previous = "Null";
         $history->current = $data->capa_date_due;
         $history->comment = "NA";
@@ -438,15 +360,11 @@ class ObservationController extends Controller
         $history->user_name = Auth::user()->name;
         $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
         $history->origin_state = $data->status;
-        $history->change_to =   "Opened";
-        $history->change_from = "Initiator";
-        $history->action_name = 'Create';
         $history->save();
-    }
-    if (!empty($data->assign_to2)) {
+
         $history = new AuditTrialObservation();
         $history->Observation_id = $data->id;
-        $history->activity_type = 'Assigned To';
+        $history->activity_type = 'Assign To2';
         $history->previous = "Null";
         $history->current = $data->assign_to2;
         $history->comment = "NA";
@@ -454,12 +372,8 @@ class ObservationController extends Controller
         $history->user_name = Auth::user()->name;
         $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
         $history->origin_state = $data->status;
-        $history->change_to =   "Opened";
-        $history->change_from = "Initiator";
-        $history->action_name = 'Create';
         $history->save();
-    }
-    if (!empty($data->cro_vendor)) {
+
         $history = new AuditTrialObservation();
         $history->Observation_id = $data->id;
         $history->activity_type = 'Cro Vendor ';
@@ -470,12 +384,8 @@ class ObservationController extends Controller
         $history->user_name = Auth::user()->name;
         $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
         $history->origin_state = $data->status;
-        $history->change_to =   "Opened";
-        $history->change_from = "Initiator";
-        $history->action_name = 'Create';
         $history->save();
-    }
-    if (!empty($data->comments)) {
+
         $history = new AuditTrialObservation();
         $history->Observation_id = $data->id;
         $history->activity_type = 'Comments ';
@@ -486,12 +396,8 @@ class ObservationController extends Controller
         $history->user_name = Auth::user()->name;
         $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
         $history->origin_state = $data->status;
-        $history->change_to =   "Opened";
-        $history->change_from = "Initiator";
-        $history->action_name = 'Create';
         $history->save();
-    }
-    if (!empty($data->impact)) {
+
         $history = new AuditTrialObservation();
         $history->Observation_id = $data->id;
         $history->activity_type = 'Impact ';
@@ -502,12 +408,8 @@ class ObservationController extends Controller
         $history->user_name = Auth::user()->name;
         $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
         $history->origin_state = $data->status;
-        $history->change_to =   "Opened";
-        $history->change_from = "Initiator";
-        $history->action_name = 'Create';
         $history->save();
-    }
-    if (!empty($data->impact_analysis)) {
+
         $history = new AuditTrialObservation();
         $history->Observation_id = $data->id;
         $history->activity_type = 'Impact Analysis ';
@@ -518,12 +420,8 @@ class ObservationController extends Controller
         $history->user_name = Auth::user()->name;
         $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
         $history->origin_state = $data->status;
-        $history->change_to =   "Opened";
-        $history->change_from = "Initiator";
-        $history->action_name = 'Create';
         $history->save();
-    }
-    if (!empty($data->severity_rate)) {
+
         $history = new AuditTrialObservation();
         $history->Observation_id = $data->id;
         $history->activity_type = 'Severity Rate ';
@@ -534,12 +432,8 @@ class ObservationController extends Controller
         $history->user_name = Auth::user()->name;
         $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
         $history->origin_state = $data->status;
-        $history->change_to =   "Opened";
-        $history->change_from = "Initiator";
-        $history->action_name = 'Create';
         $history->save();
-    }
-    if (!empty($data->occurrence)) {
+
         $history = new AuditTrialObservation();
         $history->Observation_id = $data->id;
         $history->activity_type = 'Occurrence ';
@@ -550,12 +444,8 @@ class ObservationController extends Controller
         $history->user_name = Auth::user()->name;
         $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
         $history->origin_state = $data->status;
-        $history->change_to =   "Opened";
-        $history->change_from = "Initiator";
-        $history->action_name = 'Create';
         $history->save();
-    }
-    if (!empty($data->detection)) {
+
         $history = new AuditTrialObservation();
         $history->Observation_id = $data->id;
         $history->activity_type = 'Detection ';
@@ -566,15 +456,11 @@ class ObservationController extends Controller
         $history->user_name = Auth::user()->name;
         $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
         $history->origin_state = $data->status;
-        $history->change_to =   "Opened";
-        $history->change_from = "Initiator";
-        $history->action_name = 'Create';
         $history->save();
-    }
-    if (!empty($data->analysisRPN)) {
+
         $history = new AuditTrialObservation();
         $history->Observation_id = $data->id;
-        $history->activity_type = 'RPN ';
+        $history->activity_type = 'AnalysisRPN ';
         $history->previous = "Null";
         $history->current = $data->analysisRPN;
         $history->comment = "NA";
@@ -582,12 +468,8 @@ class ObservationController extends Controller
         $history->user_name = Auth::user()->name;
         $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
         $history->origin_state = $data->status;
-        $history->change_to =   "Opened";
-        $history->change_from = "Initiator";
-        $history->action_name = 'Create';
         $history->save();
-    }
-    if (!empty($data->actual_start_date)) {
+
         $history = new AuditTrialObservation();
         $history->Observation_id = $data->id;
         $history->activity_type = 'Actual Start Date ';
@@ -598,12 +480,8 @@ class ObservationController extends Controller
         $history->user_name = Auth::user()->name;
         $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
         $history->origin_state = $data->status;
-        $history->change_to =   "Opened";
-        $history->change_from = "Initiator";
-        $history->action_name = 'Create';
         $history->save();
-    }
-    if (!empty($data->actual_end_date)) {
+
         $history = new AuditTrialObservation();
         $history->Observation_id = $data->id;
         $history->activity_type = 'Actual End Date ';
@@ -614,12 +492,8 @@ class ObservationController extends Controller
         $history->user_name = Auth::user()->name;
         $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
         $history->origin_state = $data->status;
-        $history->change_to =   "Opened";
-        $history->change_from = "Initiator";
-        $history->action_name = 'Create';
         $history->save();
-    }
-    if (!empty($data->action_taken)) {
+
         $history = new AuditTrialObservation();
         $history->Observation_id = $data->id;
         $history->activity_type = 'Action Taken ';
@@ -630,9 +504,6 @@ class ObservationController extends Controller
         $history->user_name = Auth::user()->name;
         $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
         $history->origin_state = $data->status;
-        $history->change_to =   "Opened";
-        $history->change_from = "Initiator";
-        $history->action_name = 'Create';
         $history->save();
 
         // $history = new AuditTrialObservation();
@@ -646,8 +517,7 @@ class ObservationController extends Controller
         // $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
         // $history->origin_state = $data->status;
         // $history->save();
-    }
-    if (!empty($data->response_date)) {
+
         $history = new AuditTrialObservation();
         $history->Observation_id = $data->id;
         $history->activity_type = 'Response Date ';
@@ -658,15 +528,11 @@ class ObservationController extends Controller
         $history->user_name = Auth::user()->name;
         $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
         $history->origin_state = $data->status;
-        $history->change_to =   "Opened";
-        $history->change_from = "Initiator";
-        $history->action_name = 'Create';
         $history->save();
-    }
-    if (!empty($data->attach_files2)) {
+
         $history = new AuditTrialObservation();
         $history->Observation_id = $data->id;
-        $history->activity_type = 'Attached Files ';
+        $history->activity_type = 'Attach Files2 ';
         $history->previous = "Null";
         $history->current = $data->attach_files2;
         $history->comment = "NA";
@@ -674,15 +540,11 @@ class ObservationController extends Controller
         $history->user_name = Auth::user()->name;
         $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
         $history->origin_state = $data->status;
-        $history->change_to =   "Opened";
-        $history->change_from = "Initiator";
-        $history->action_name = 'Create';
         $history->save();
-    }
-    if (!empty($data->related_url)) {
+
         $history = new AuditTrialObservation();
         $history->Observation_id = $data->id;
-        $history->activity_type = 'Related URL ';
+        $history->activity_type = 'Related Url ';
         $history->previous = "Null";
         $history->current = $data->related_url;
         $history->comment = "NA";
@@ -690,12 +552,8 @@ class ObservationController extends Controller
         $history->user_name = Auth::user()->name;
         $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
         $history->origin_state = $data->status;
-        $history->change_to =   "Opened";
-        $history->change_from = "Initiator";
-        $history->action_name = 'Create';
         $history->save();
-    }
-    if (!empty($data->response_summary)) {
+
         $history = new AuditTrialObservation();
         $history->Observation_id = $data->id;
         $history->activity_type = 'Response Summary ';
@@ -706,12 +564,8 @@ class ObservationController extends Controller
         $history->user_name = Auth::user()->name;
         $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
         $history->origin_state = $data->status;
-        $history->change_to =   "Opened";
-        $history->change_from = "Initiator";
-        $history->action_name = 'Create';
         $history->save();
-    }
-    if (!empty($data->response_summary)) {
+
 
         $history = new AuditTrialObservation();
         $history->Observation_id = $data->id;
@@ -723,15 +577,11 @@ class ObservationController extends Controller
         $history->user_name = Auth::user()->name;
         $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
         $history->origin_state = $data->status;
-        $history->change_to =   "Opened";
-        $history->change_from = "Initiator";
-        $history->action_name = 'Create';
         $history->save();
-    }
-    if (!empty($data->attach_files2)) {
+
         $history = new AuditTrialObservation();
         $history->Observation_id = $data->id;
-        $history->activity_type = 'Attached File ';
+        $history->activity_type = 'Attachm Files2 ';
         $history->previous = "Null";
         $history->current = $data->attach_files2;
         $history->comment = "NA";
@@ -739,11 +589,8 @@ class ObservationController extends Controller
         $history->user_name = Auth::user()->name;
         $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
         $history->origin_state = $data->status;
-        $history->change_to =   "Opened";
-        $history->change_from = "Initiator";
-        $history->action_name = 'Create';
         $history->save();
-    }
+
         toastr()->success("Record is created Successfully");
         return redirect(url('rcms/qms-dashboard'));
     }
@@ -751,7 +598,7 @@ class ObservationController extends Controller
 
     public function observationupdate(Request $request, $id)
     {
-
+       
 
         $data = Observation::find($id);
         $lastDocument = Observation::find($id);
@@ -776,34 +623,18 @@ class ObservationController extends Controller
         //     $data->attach_files1 = $image_name;
         // }
 
-        $files = [];
-            if ($request->hasFile('attach_files1')) {
+        if (!empty($request->attach_files1)) {
+            $files = [];
+            if ($request->hasfile('attach_files1')) {
                 foreach ($request->file('attach_files1') as $file) {
-                    // Generate a unique name for the file
-                    $name = $request->name . 'attach_files1' . uniqid() . '.' . $file->getClientOriginalExtension();
-
-                    // Move the file to the upload directory
-                    $file->move(public_path('upload/'), $name);
-
-                    // Add the file name to the array
+                    $name = $request->name . 'attach_files1' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $file->move('upload/', $name);
                     $files[] = $name;
                 }
             }
-            // Encode the file names array to JSON and assign it to the model
+
             $data->attach_files1 = json_encode($files);
-
-        // $files = [];
-        // if ($request->attach_files1) {
-        //     if ($request->hasfile('attach_files1')) {
-        //         foreach ($request->file('attach_files1') as $file) {
-        //             $name = $request->name . 'attach_files1' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
-        //             $file->move('upload/', $name);
-        //             $files[] = $name;
-        //         }
-        //     }
-
-        //     $data->attach_files1 = json_encode($files);
-        // }
+        }
         $data->recomendation_capa_date_due = $request->recomendation_capa_date_due;
         $data->non_compliance = $request->non_compliance;
         $data->recommend_action = $request->recommend_action;
@@ -836,29 +667,18 @@ class ObservationController extends Controller
         //     $image->move('upload/document/', $image_name);
         //     $data->related_observations = $image_name;
         // }
-
-
-        $files = [];
-            if ($request->hasFile('related_observations')) {
+        if (!empty($request->related_observations)) {
+            $files = [];
+            if ($request->hasfile('related_observations')) {
                 foreach ($request->file('related_observations') as $file) {
-                    $name = $request->name . 'related_observations' . uniqid() . '.' . $file->getClientOriginalExtension();
-                    $file->move(public_path('upload/'), $name);
+                    $name = $request->name . 'related_observations' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $file->move('upload/', $name);
                     $files[] = $name;
                 }
             }
-            $data->related_observations = json_encode($files);
-        // if (!empty($request->related_observations)) {
-        //     $files = [];
-        //     if ($request->hasfile('related_observations')) {
-        //         foreach ($request->file('related_observations') as $file) {
-        //             $name = $request->name . 'related_observations' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
-        //             $file->move('upload/', $name);
-        //             $files[] = $name;
-        //         }
-        //     }
 
-        //     $data->related_observations = json_encode($files);
-        // }
+            $data->related_observations = json_encode($files);
+        }
         // if ($request->hasfile('attach_files2')) {
         //     $image = $request->file('attach_files2');
         //     $ext = $image->getClientOriginalExtension();
@@ -866,34 +686,21 @@ class ObservationController extends Controller
         //     $image->move('upload/document/', $image_name);
         //     $data->attach_files2 = $image_name;
         // }
-
-
-
-        $files = [];
-            if ($request->hasFile('attach_files2')) {
+        if (!empty($request->attach_files2)) {
+            $files = [];
+            if ($request->hasfile('attach_files2')) {
                 foreach ($request->file('attach_files2') as $file) {
-                    $name = $request->name . 'attach_files2' . uniqid() . '.' . $file->getClientOriginalExtension();
-                    $file->move(public_path('upload/'), $name);
+                    $name = $request->name . 'attach_files2' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $file->move('upload/', $name);
                     $files[] = $name;
                 }
             }
+
             $data->attach_files2 = json_encode($files);
-
-        // if (!empty($request->attach_files2)) {
-        //     $files = [];
-        //     if ($request->hasfile('attach_files2')) {
-        //         foreach ($request->file('attach_files2') as $file) {
-        //             $name = $request->name . 'attach_files2' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
-        //             $file->move('upload/', $name);
-        //             $files[] = $name;
-        //         }
-        //     }
-
-        //     $data->attach_files2 = json_encode($files);
-        // }
-
-        // $data->status = 'Opened';
-        // $data->stage = 1;
+        }
+        
+        $data->status = 'Opened';
+        $data->stage = 1;
         $data->update();
         $data1 = ObservationGrid::find($id);
         $data1->observation_id = $data->id;
@@ -923,9 +730,6 @@ class ObservationController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastDocument->status;
-            $history->change_to =   "Not Applicable";
-            $history->change_from = $lastDocument->status;
-            $history->action_name = 'Update';
             $history->save();
         }
         if ($lastDocument->parent_type != $data->parent_type || !empty($request->parent_type_comment)) {
@@ -940,9 +744,6 @@ class ObservationController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastDocument->status;
-            $history->change_to =   "Not Applicable";
-            $history->change_from = $lastDocument->status;
-            $history->action_name = 'Update';
             $history->save();
         }
         if ($lastDocument->division_code != $data->division_code || !empty($request->division_code_comment)) {
@@ -957,9 +758,6 @@ class ObservationController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastDocument->status;
-            $history->change_to =   "Not Applicable";
-            $history->change_from = $lastDocument->status;
-            $history->action_name = 'Update';
             $history->save();
         }
         if (!empty($lastDocument->short_description)) {
@@ -973,9 +771,6 @@ class ObservationController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastDocument->status;
-            $history->change_to =   "Not Applicable";
-            $history->change_from = $lastDocument->status;
-            $history->action_name = 'Update';
             $history->save();
         }
         if ($lastDocument->intiation_date != $data->intiation_date || !empty($request->intiation_date_comment)) {
@@ -990,9 +785,6 @@ class ObservationController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastDocument->status;
-            $history->change_to =   "Not Applicable";
-            $history->change_from = $lastDocument->status;
-            $history->action_name = 'Update';
             $history->save();
         }
         if ($lastDocument->due_date != $data->due_date || !empty($request->due_date_comment)) {
@@ -1007,9 +799,6 @@ class ObservationController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastDocument->status;
-            $history->change_to =   "Not Applicable";
-            $history->change_from = $lastDocument->status;
-            $history->action_name = 'Update';
             $history->save();
         }
         if ($lastDocument->short_description != $data->short_description || !empty($request->short_description_comment)) {
@@ -1024,9 +813,6 @@ class ObservationController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastDocument->status;
-            $history->change_to =   "Not Applicable";
-            $history->change_from = $lastDocument->status;
-            $history->action_name = 'Update';
             $history->save();
         }
         if ($lastDocument->assign_to != $data->assign_to || !empty($request->assign_to_comment)) {
@@ -1041,9 +827,6 @@ class ObservationController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastDocument->status;
-            $history->change_to =   "Not Applicable";
-            $history->change_from = $lastDocument->status;
-            $history->action_name = 'Update';
             $history->save();
         }
         if ($lastDocument->grading != $data->grading || !empty($request->grading_comment)) {
@@ -1058,9 +841,6 @@ class ObservationController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastDocument->status;
-            $history->change_to =   "Not Applicable";
-            $history->change_from = $lastDocument->status;
-            $history->action_name = 'Update';
             $history->save();
         }
         if ($lastDocument->category_observation != $data->category_observation || !empty($request->category_observation_comment)) {
@@ -1075,9 +855,6 @@ class ObservationController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastDocument->status;
-            $history->change_to =   "Not Applicable";
-            $history->change_from = $lastDocument->status;
-            $history->action_name = 'Update';
             $history->save();
         }
         if ($lastDocument->reference_guideline != $data->reference_guideline || !empty($request->reference_guideline_comment)) {
@@ -1092,9 +869,6 @@ class ObservationController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastDocument->status;
-            $history->change_to =   "Not Applicable";
-            $history->change_from = $lastDocument->status;
-            $history->action_name = 'Update';
             $history->save();
         }
         if ($lastDocument->description != $data->description || !empty($request->description_comment)) {
@@ -1109,9 +883,6 @@ class ObservationController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastDocument->status;
-            $history->change_to =   "Not Applicable";
-            $history->change_from = $lastDocument->status;
-            $history->action_name = 'Update';
             $history->save();
         }
         if ($lastDocument->attach_files1 != $data->attach_files1 || !empty($request->attach_files1_comment)) {
@@ -1126,9 +897,6 @@ class ObservationController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastDocument->status;
-            $history->change_to =   "Not Applicable";
-            $history->change_from = $lastDocument->status;
-            $history->action_name = 'Update';
             $history->save();
         }
         if ($lastDocument->recomendation_capa_date_due != $data->recomendation_capa_date_due || !empty($request->recomendation_capa_date_due_comment)) {
@@ -1143,9 +911,6 @@ class ObservationController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastDocument->status;
-            $history->change_to =   "Not Applicable";
-            $history->change_from = $lastDocument->status;
-            $history->action_name = 'Update';
             $history->save();
         }
         if ($lastDocument->non_compliance != $data->non_compliance || !empty($request->non_compliance_comment)) {
@@ -1160,9 +925,6 @@ class ObservationController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastDocument->status;
-            $history->change_to =   "Not Applicable";
-            $history->change_from = $lastDocument->status;
-            $history->action_name = 'Update';
             $history->save();
         }
         if ($lastDocument->recommend_action != $data->recommend_action || !empty($request->recommend_action_comment)) {
@@ -1177,9 +939,6 @@ class ObservationController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastDocument->status;
-            $history->change_to =   "Not Applicable";
-            $history->change_from = $lastDocument->status;
-            $history->action_name = 'Update';
             $history->save();
         }
         if ($lastDocument->date_Response_due2 != $data->date_Response_due2 || !empty($request->date_Response_due2_comment)) {
@@ -1194,9 +953,6 @@ class ObservationController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastDocument->status;
-            $history->change_to =   "Not Applicable";
-            $history->change_from = $lastDocument->status;
-            $history->action_name = 'Update';
             $history->save();
         }
         if ($lastDocument->capa_date_due != $data->capa_date_due || !empty($request->capa_date_due_comment)) {
@@ -1211,9 +967,6 @@ class ObservationController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastDocument->status;
-            $history->change_to =   "Not Applicable";
-            $history->change_from = $lastDocument->status;
-            $history->action_name = 'Update';
             $history->save();
         }
         if ($lastDocument->assign_to2 != $data->assign_to2 || !empty($request->assign_to2_comment)) {
@@ -1228,9 +981,6 @@ class ObservationController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastDocument->status;
-            $history->change_to =   "Not Applicable";
-            $history->change_from = $lastDocument->status;
-            $history->action_name = 'Update';
             $history->save();
         }
         if ($lastDocument->cro_vendor != $data->cro_vendor || !empty($request->cro_vendor_comment)) {
@@ -1245,9 +995,6 @@ class ObservationController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastDocument->status;
-            $history->change_to =   "Not Applicable";
-            $history->change_from = $lastDocument->status;
-            $history->action_name = 'Update';
             $history->save();
         }
         if ($lastDocument->comments != $data->comments || !empty($request->comments_comment)) {
@@ -1262,9 +1009,6 @@ class ObservationController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastDocument->status;
-            $history->change_to =   "Not Applicable";
-            $history->change_from = $lastDocument->status;
-            $history->action_name = 'Update';
             $history->save();
         }
         if ($lastDocument->impact != $data->impact || !empty($request->impact_comment)) {
@@ -1279,9 +1023,6 @@ class ObservationController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastDocument->status;
-            $history->change_to =   "Not Applicable";
-            $history->change_from = $lastDocument->status;
-            $history->action_name = 'Update';
             $history->save();
         }
         if ($lastDocument->impact_analysis != $data->impact_analysis || !empty($request->impact_analysis_comment)) {
@@ -1296,9 +1037,6 @@ class ObservationController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastDocument->status;
-            $history->change_to =   "Not Applicable";
-            $history->change_from = $lastDocument->status;
-            $history->action_name = 'Update';
             $history->save();
         }
         if ($lastDocument->severity_rate != $data->severity_rate || !empty($request->severity_rate_comment)) {
@@ -1313,9 +1051,6 @@ class ObservationController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastDocument->status;
-            $history->change_to =   "Not Applicable";
-            $history->change_from = $lastDocument->status;
-            $history->action_name = 'Update';
             $history->save();
         }
         if ($lastDocument->occurrence != $data->occurrence || !empty($request->occurrence_comment)) {
@@ -1330,9 +1065,6 @@ class ObservationController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastDocument->status;
-            $history->change_to =   "Not Applicable";
-            $history->change_from = $lastDocument->status;
-            $history->action_name = 'Update';
             $history->save();
         }
         if ($lastDocument->detection != $data->detection || !empty($request->detection_comment)) {
@@ -1347,9 +1079,6 @@ class ObservationController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastDocument->status;
-            $history->change_to =   "Not Applicable";
-            $history->change_from = $lastDocument->status;
-            $history->action_name = 'Update';
             $history->save();
         }
         if ($lastDocument->analysisRPN != $data->analysisRPN || !empty($request->analysisRPN_comment)) {
@@ -1364,9 +1093,6 @@ class ObservationController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastDocument->status;
-            $history->change_to =   "Not Applicable";
-            $history->change_from = $lastDocument->status;
-            $history->action_name = 'Update';
             $history->save();
         }
         if ($lastDocument->actual_start_date != $data->actual_start_date || !empty($request->actual_start_date_comment)) {
@@ -1381,9 +1107,6 @@ class ObservationController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastDocument->status;
-            $history->change_to =   "Not Applicable";
-            $history->change_from = $lastDocument->status;
-            $history->action_name = 'Update';
             $history->save();
         }
         if ($lastDocument->actual_end_date != $data->actual_end_date || !empty($request->actual_end_date_comment)) {
@@ -1398,9 +1121,6 @@ class ObservationController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastDocument->status;
-            $history->change_to =   "Not Applicable";
-            $history->change_from = $lastDocument->status;
-            $history->action_name = 'Update';
             $history->save();
         }
         if ($lastDocument->action_taken != $data->action_taken || !empty($request->action_taken_comment)) {
@@ -1415,9 +1135,6 @@ class ObservationController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastDocument->status;
-            $history->change_to =   "Not Applicable";
-            $history->change_from = $lastDocument->status;
-            $history->action_name = 'Update';
             $history->save();
         }
         if ($lastDocument->date_response_due1 != $data->date_response_due1 || !empty($request->date_response_due1_comment)) {
@@ -1432,9 +1149,6 @@ class ObservationController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastDocument->status;
-            $history->change_to =   "Not Applicable";
-            $history->change_from = $lastDocument->status;
-            $history->action_name = 'Update';
             $history->save();
         }
         if ($lastDocument->response_date != $data->response_date || !empty($request->response_date_comment)) {
@@ -1449,9 +1163,6 @@ class ObservationController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastDocument->status;
-            $history->change_to =   "Not Applicable";
-            $history->change_from = $lastDocument->status;
-            $history->action_name = 'Update';
             $history->save();
         }
         if ($lastDocument->attach_files2 != $data->attach_files2 || !empty($request->attach_files2_comment)) {
@@ -1466,9 +1177,6 @@ class ObservationController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastDocument->status;
-            $history->change_to =   "Not Applicable";
-            $history->change_from = $lastDocument->status;
-            $history->action_name = 'Update';
             $history->save();
         }
         if ($lastDocument->related_url != $data->related_url || !empty($request->related_url_comment)) {
@@ -1483,9 +1191,6 @@ class ObservationController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastDocument->status;
-            $history->change_to =   "Not Applicable";
-            $history->change_from = $lastDocument->status;
-            $history->action_name = 'Update';
             $history->save();
         }
         if ($lastDocument->response_summary != $data->response_summary || !empty($request->response_summary_comment)) {
@@ -1500,9 +1205,6 @@ class ObservationController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastDocument->status;
-            $history->change_to =   "Not Applicable";
-            $history->change_from = $lastDocument->status;
-            $history->action_name = 'Update';
             $history->save();
         }
         if ($lastDocument->response_summary != $data->response_summary || !empty($request->response_summary_comment)) {
@@ -1517,9 +1219,6 @@ class ObservationController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastDocument->status;
-            $history->change_to =   "Not Applicable";
-            $history->change_from = $lastDocument->status;
-            $history->action_name = 'Update';
             $history->save();
         }
         if ($lastDocument->attach_files2 != $data->attach_files2 || !empty($request->attach_files2_comment)) {
@@ -1534,9 +1233,6 @@ class ObservationController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastDocument->status;
-            $history->change_to =   "Not Applicable";
-            $history->change_from = $lastDocument->status;
-            $history->action_name = 'Update';
             $history->save();
         }
 
@@ -1565,26 +1261,36 @@ class ObservationController extends Controller
             if ($changestage->stage == 1) {
                 $changestage->stage = "2";
                 $changestage->status = "Pending CAPA Plan";
-                $changestage->report_issued_by = Auth::user()->name;
-                $changestage->report_issued_on = Carbon::now()->format('d-M-Y');
-                $changestage->report_issued_comment = $request->comment;
-                $history = new AuditTrialObservation();
-                $history->Observation_id = $id;
-                $history->activity_type = 'Activity Log';
-                $history->previous = "";
-                $history->current = $changestage->submitted_by;
-                $history->comment = $request->comment;
-                $history->action = 'Pending Complete';
-                $history->user_id = Auth::user()->id;
-                $history->user_name = Auth::user()->name;
-                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-                $history->origin_state = $lastDocument->status;
-                $history->change_to =   "Pending CAPA Plan";
-                $history->change_from = $lastDocument->status;
-                $history->action_name = 'Submit';
-                $history->stage = 'Plan Approved';
-                $history->save();
-
+                $changestage->Completed_By = Auth::user()->name;
+                $changestage->completed_on = Carbon::now()->format('d-M-Y');
+                                $history = new AuditTrialObservation();
+                                $history->Observation_id = $id;
+                                $history->activity_type = 'Activity Log';
+                                $history->current = $changestage->Completed_By;
+                                $history->comment = $request->comment;
+                                $history->user_id = Auth::user()->id;
+                                $history->user_name = Auth::user()->name;
+                                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                                $history->origin_state = $lastDocument->status;
+                                $history->stage = "Completed";
+                                $history->save();
+                            //     $list = Helpers::getLeadAuditeeUserList();
+                            //     foreach ($list as $u) {
+                            //         if($u->q_m_s_divisions_id == $changestage->division_id){
+                            //             $email = Helpers::getInitiatorEmail($u->user_id);
+                            //              if ($email !== null) {
+                                      
+                            //               Mail::send(
+                            //                   'mail.view-mail',
+                            //                    ['data' => $changestage],
+                            //                 function ($message) use ($email) {
+                            //                     $message->to($email)
+                            //                         ->subject("Document sent ".Auth::user()->name);
+                            //                 }
+                            //               );
+                            //             }
+                            //      } 
+                            //   }
                 $changestage->update();
                 toastr()->success('Document Sent');
                 return back();
@@ -1592,31 +1298,12 @@ class ObservationController extends Controller
             if ($changestage->stage == 2) {
                 $changestage->stage = "3";
                 $changestage->status = "Pending Approval";
-                $changestage->complete_By = Auth::user()->name;
-                $changestage->complete_on = Carbon::now()->format('d-M-Y');
-                $changestage->complete_comment = $request->comment;
-                $history = new AuditTrialObservation();
-                $history->Observation_id = $id;
-                $history->activity_type = 'Activity Log';
-                $history->previous = "";
-                $history->current = $changestage->submitted_by;
-                $history->comment = $request->comment;
-                $history->action = 'Approval Complete';
-                $history->user_id = Auth::user()->id;
-                $history->user_name = Auth::user()->name;
-                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-                $history->origin_state = $lastDocument->status;
-                $history->change_to =   "Pending Approval";
-                $history->change_from = $lastDocument->status;
-                $history->action_name = 'Submit';
-                $history->stage = 'Plan Approval';
-                $history->save();
             //     $list = Helpers::getQAUserList();
             //     foreach ($list as $u) {
             //         if($u->q_m_s_divisions_id == $changestage->division_id){
             //             $email = Helpers::getInitiatorEmail($u->user_id);
             //              if ($email !== null) {
-
+                      
             //               Mail::send(
             //                   'mail.view-mail',
             //                    ['data' => $changestage],
@@ -1626,7 +1313,7 @@ class ObservationController extends Controller
             //                 }
             //               );
             //             }
-            //      }
+            //      } 
             //   }
                 $changestage->update();
                 toastr()->success('Document Sent');
@@ -1637,27 +1324,23 @@ class ObservationController extends Controller
                 $changestage->status = "CAPA Execution in Progress";
                 $changestage->QA_Approved_By = Auth::user()->name;
                 $changestage->QA_Approved_on = Carbon::now()->format('d-M-Y');
-                            // $history = new AuditTrialObservation();
-                            // $history->Observation_id = $id;
-                            // $history->activity_type = 'Activity Log';
-                            // $changestage->qa_appproval_by = Auth::user()->name;
-                            // $changestage->qa_appproval_on = Carbon::now()->format('d-M-Y');
-                            // $changestage->qa_appproval_comment = $request->comment;
-
-                            // $history->current = $changestage->QA_Approved_By;
-                            // $history->comment = $request->comment;
-                            // $history->user_id = Auth::user()->id;
-                            // $history->user_name = Auth::user()->name;
-                            // $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-                            // $history->origin_state = $lastDocument->status;
-                            // $history->stage = "QA Approved";
-                            // $history->save();
+                            $history = new AuditTrialObservation();
+                            $history->Observation_id = $id;
+                            $history->activity_type = 'Activity Log';
+                            $history->current = $changestage->QA_Approved_By;
+                            $history->comment = $request->comment;
+                            $history->user_id = Auth::user()->id;
+                            $history->user_name = Auth::user()->name;
+                            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                            $history->origin_state = $lastDocument->status;
+                            $history->stage = "QA Approved";
+                            $history->save();
                         //     $list = Helpers::getLeadAuditeeUserList();
                         //     foreach ($list as $u) {
                         //         if($u->q_m_s_divisions_id == $changestage->division_id){
                         //             $email = Helpers::getInitiatorEmail($u->user_id);
                         //              if ($email !== null) {
-
+                                  
                         //               Mail::send(
                         //                   'mail.view-mail',
                         //                    ['data' => $changestage],
@@ -1667,7 +1350,7 @@ class ObservationController extends Controller
                         //                 }
                         //               );
                         //             }
-                        //      }
+                        //      } 
                         //   }
                 $changestage->update();
                 toastr()->success('Document Sent');
@@ -1676,15 +1359,12 @@ class ObservationController extends Controller
             if ($changestage->stage == 4) {
                 $changestage->stage = "5";
                 $changestage->status = "Pending Final Approval";
-                $changestage->all_capa_closed_by = Auth::user()->name;
-                $changestage->all_capa_closed_on = Carbon::now()->format('d-M-Y');
-                $changestage->all_capa_closed_comment = $request->comment;
             //     $list = Helpers::getLeadAuditeeUserList();
             //     foreach ($list as $u) {
             //         if($u->q_m_s_divisions_id == $changestage->division_id){
             //             $email = Helpers::getInitiatorEmail($u->user_id);
             //              if ($email !== null) {
-
+                      
             //               Mail::send(
             //                   'mail.view-mail',
             //                    ['data' => $changestage],
@@ -1694,7 +1374,7 @@ class ObservationController extends Controller
             //                 }
             //               );
             //             }
-            //      }
+            //      } 
             //   }
                 $changestage->update();
                 toastr()->success('Document Sent');
@@ -1706,7 +1386,6 @@ class ObservationController extends Controller
                 $changestage->status = "Closed - Done";
                 $changestage->Final_Approval_By = Auth::user()->name;
                 $changestage->Final_Approval_on = Carbon::now()->format('d-M-Y');
-                $changestage->Final_Approval_comment = $request->comment;
                 $history = new AuditTrialObservation();
                 $history->Observation_id = $id;
                 $history->activity_type = 'Activity Log';
@@ -1723,7 +1402,7 @@ class ObservationController extends Controller
             //         if($u->q_m_s_divisions_id == $changestage->division_id){
             //             $email = Helpers::getInitiatorEmail($u->user_id);
             //              if ($email !== null) {
-
+                      
             //               Mail::send(
             //                   'mail.view-mail',
             //                    ['data' => $changestage],
@@ -1733,7 +1412,7 @@ class ObservationController extends Controller
             //                 }
             //               );
             //             }
-            //      }
+            //      } 
             //   }
                 $changestage->update();
                 toastr()->success('Document Sent');
@@ -1753,9 +1432,6 @@ class ObservationController extends Controller
             if ($changeControl->stage == 1) {
                 $changeControl->stage = "0";
                 $changeControl->status = "Closed - Cancelled";
-                $changeControl->cancel_by = Auth::user()->name;
-                $changeControl->cancel_on = Carbon::now()->format('d-M-Y');
-                $changeControl->cancel_comment = $request->comment;
                 $changeControl->update();
                 toastr()->success('Document Sent');
                 return back();
@@ -1772,30 +1448,16 @@ class ObservationController extends Controller
             $changeControl = Observation::find($id);
 
 
-            if ($changeControl->stage == 2) {
-                $changeControl->stage = "1";
-                $changeControl->status = "Opened";
-                $changeControl->more_info_required_by = Auth::user()->name;
-                $changeControl->more_info_required_on = Carbon::now()->format('d-M-Y');
-                $changeControl->more_info_required_comment = $request->comment;
-                $changeControl->update();
-                toastr()->success('Document Sent');
-                return back();
-            }
-
             if ($changeControl->stage == 3) {
                 $changeControl->stage = "2";
                 $changeControl->status = "Pending CAPA Plan";
-                $changeControl->reject_capa_plan_by = Auth::user()->name;
-                $changeControl->reject_capa_plan_on = Carbon::now()->format('d-M-Y');
-                $changeControl->reject_capa_plan_comment = $request->comment;
                 $changeControl->update();
             //     $list = Helpers::getLeadAuditeeUserList();
             //     foreach ($list as $u) {
             //         if($u->q_m_s_divisions_id == $changeControl->division_id){
             //             $email = Helpers::getInitiatorEmail($u->user_id);
             //              if ($email !== null) {
-
+                      
             //               Mail::send(
             //                   'mail.view-mail',
             //                    ['data' => $changeControl],
@@ -1805,24 +1467,20 @@ class ObservationController extends Controller
             //                 }
             //               );
             //             }
-            //      }
+            //      } 
             //   }
                 toastr()->success('Document Sent');
                 return back();
             }
-
             if ($changeControl->stage == 1) {
                 $changeControl->stage = "0";
                 $changeControl->status = "Closed - Cancelled";
-                $changeControl->cancel_by = Auth::user()->name;
-                $changeControl->cancel_on = Carbon::now()->format('d-M-Y');
-                $changeControl->cancel_comment = $request->comment;
             //     $list = Helpers::getQAUserList();
             //     foreach ($list as $u) {
             //         if($u->q_m_s_divisions_id == $changeControl->division_id){
             //             $email = Helpers::getInitiatorEmail($u->user_id);
             //              if ($email !== null) {
-
+                      
             //               Mail::send(
             //                   'mail.view-mail',
             //                    ['data' => $changeControl],
@@ -1832,7 +1490,7 @@ class ObservationController extends Controller
             //                 }
             //               );
             //             }
-            //      }
+            //      } 
             //   }
                 $changeControl->update();
                 toastr()->success('Document Sent');
@@ -1846,7 +1504,7 @@ class ObservationController extends Controller
             //         if($u->q_m_s_divisions_id == $changeControl->division_id){
             //             $email = Helpers::getInitiatorEmail($u->user_id);
             //              if ($email !== null) {
-
+                      
             //               Mail::send(
             //                   'mail.view-mail',
             //                    ['data' => $changeControl],
@@ -1856,7 +1514,7 @@ class ObservationController extends Controller
             //                 }
             //               );
             //             }
-            //      }
+            //      } 
             //   }
                 $changeControl->update();
                 toastr()->success('Document Sent');
@@ -1877,15 +1535,12 @@ class ObservationController extends Controller
             if ($changeControl->stage == 3) {
                 $changeControl->stage = "6";
                 $changeControl->status = "Closed - Done";
-                $changeControl->qa_approval_without_capa_by = Auth::user()->name;
-                $changeControl->qa_approval_without_capa_on = Carbon::now()->format('d-M-Y');
-                $changeControl->qa_approval_without_capa_comment = $request->comment;
             //     $list = Helpers::getLeadAuditeeUserList();
             //     foreach ($list as $u) {
             //         if($u->q_m_s_divisions_id == $changeControl->division_id){
             //             $email = Helpers::getInitiatorEmail($u->user_id);
             //              if ($email !== null) {
-
+                      
             //               Mail::send(
             //                   'mail.view-mail',
             //                    ['data' => $changeControl],
@@ -1895,7 +1550,7 @@ class ObservationController extends Controller
             //                 }
             //               );
             //             }
-            //      }
+            //      } 
             //   }
                 $changeControl->update();
                 toastr()->success('Document Sent');
@@ -1926,48 +1581,12 @@ class ObservationController extends Controller
 
     public function ObservationAuditTrialShow($id)
     {
-        $audit = AuditTrialObservation::where('Observation_id', $id)->orderByDESC('id')->paginate(5);
+        $audit = AuditTrialObservation::where('Observation_id', $id)->orderByDESC('id')->get()->unique('activity_type');
         $today = Carbon::now()->format('d-m-y');
         $document = Observation::where('id', $id)->first();
         $document->initiator = User::where('id', $document->initiator_id)->value('name');
 
         return view('frontend.observation.audit-trial', compact('audit', 'document', 'today'));
-    }
-
-
-    public function ObservationAuditTrailPdf($id){
-        $doc = Observation::find($id);
-        $doc->originator = User::where('id', $doc->initiator_id)->value('name');
-        $data = AuditTrialObservation::where('observation_id', $doc->id)->orderByDesc('id')->get();
-        $pdf = App::make('dompdf.wrapper');
-        $time = Carbon::now();
-        $pdf = PDF::loadview('frontend.observation.Obs_audittrail_PDF', compact('data', 'doc'))
-            ->setOptions([
-                'defaultFont' => 'sans-serif',
-                'isHtml5ParserEnabled' => true,
-                'isRemoteEnabled' => true,
-                'isPhpEnabled' => true,
-            ]);
-        $pdf->setPaper('A4');
-        $pdf->render();
-        $canvas = $pdf->getDomPDF()->getCanvas();
-        $height = $canvas->get_height();
-        $width = $canvas->get_width();
-
-        $canvas->page_script('$pdf->set_opacity(0.1,"Multiply");');
-
-        $canvas->page_text(
-            $width / 3,
-            $height / 2,
-            $doc->status,
-            null,
-            60,
-            [0, 0, 0],
-            2,
-            6,
-            -20
-        );
-        return $pdf->stream('SOP' . $id . '.pdf');
     }
 
     public function ObservationAuditTrialDetails($id)
@@ -1981,32 +1600,4 @@ class ObservationController extends Controller
         $doc->origiator_name = User::find($doc->initiator_id);
         return view('frontend.observation.audit-trial-inner', compact('detail', 'doc', 'detail_data'));
     }
-
-    public function ObservationSingleReport($id){
-        $data = Observation::find($id);
-        $griddata = ObservationGrid::where('observation_id',$data->id)->first();
-        if (!empty($data)) {
-            // $data->data = ObservationGrid::where('e_id', $id)->where('identifier', "details")->first();
-            // dd($data->all());
-            $data->originator = User::where('id', $data->initiator_id)->value('name');
-            $pdf = App::make('dompdf.wrapper');
-            $time = Carbon::now();
-            $pdf = PDF::loadview('frontend.observation.obs_single_report', compact('data','griddata'))
-                ->setOptions([
-                    'defaultFont' => 'sans-serif',
-                    'isHtml5ParserEnabled' => true,
-                    'isRemoteEnabled' => true,
-                    'isPhpEnabled' => true,
-                ]);
-            $pdf->setPaper('A4');
-            $pdf->render();
-            $canvas = $pdf->getDomPDF()->getCanvas();
-            $height = $canvas->get_height();
-            $width = $canvas->get_width();
-            $canvas->page_script('$pdf->set_opacity(0.1,"Multiply");');
-            $canvas->page_text($width / 4, $height / 2, $data->status, null, 25, [0, 0, 0], 2, 6, -20);
-            return $pdf->stream('errata' . $id . '.pdf');
-        }
-    }
-
 }

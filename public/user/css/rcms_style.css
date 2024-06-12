@@ -802,7 +802,7 @@ header .header_rcms_bottom .drop-block:hover .drop-items {
 
 #rcms-dashboard .scope-table .main-scope-table {
     overflow: auto;
-    height: 100%;
+    height: calc(100% - 88px);
 }
 
 #rcms-dashboard .scope-pagination {

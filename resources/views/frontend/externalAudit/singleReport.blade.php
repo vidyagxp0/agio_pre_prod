@@ -370,8 +370,8 @@
                     <tr>
                         <th class="w-20">Comments</th>
                         <td class="w-30">@if($data->Comments){{ $data->Comments }}@else Not Applicable @endif</td>
-                        {{-- <th class="w-20">Audit Comments</th>
-                        <td class="w-30">@if($data->Audit_Comments1){{ $data->Audit_Comments1 }}@else Not Applicable @endif</td> --}}
+                        <th class="w-20">Audit Comments</th>
+                        <td class="w-30">@if($data->Audit_Comments1){{ $data->Audit_Comments1 }}@else Not Applicable @endif</td>
                     </tr>
                 </table>
             </div>
@@ -468,8 +468,8 @@
                             <th class="w-20">S.N.</th>
                             <th class="w-60">Batch No</th>
                         </tr>
-                            @if($data->Audit_file)
-                            @foreach(json_decode($data->Audit_file) as $key => $file)
+                            @if($data->myfile)
+                            @foreach(json_decode($data->myfile) as $key => $file)
                                 <tr>
                                     <td class="w-20">{{ $key + 1 }}</td>
                                     <td class="w-20"><a href="{{ asset('upload/' . $file) }}" target="_blank"><b>{{ $file }}</b></a> </td>
@@ -496,7 +496,7 @@
 
                         <tr>
                         <th class="w-20">Reference Record</th>
-                        <td class="w-30">@if($data->Reference_Recores1){{ $data->Reference_Recores1 }}@else Not Applicable @endif</td>
+                        <td class="w-30">@if($data->refrence_record){{ $data->refrence_record }}@else Not Applicable @endif</td>
                         <th class="w-20">Due Date Extension Justification</th>
                         <td class="w-30">@if($data->due_date_extension){{ $data->due_date_extension }}@else Not Applicable @endif</td>
                     </tr>
@@ -527,8 +527,8 @@
                             <th class="w-20">S.N.</th>
                             <th class="w-60">File </th>
                         </tr>
-                            @if($data->myfile)
-                            @foreach(json_decode($data->myfile) as $key => $file)
+                            @if($data->Audit_file)
+                            @foreach(json_decode($data->Audit_file) as $key => $file)
                                 <tr>
                                     <td class="w-20">{{ $key + 1 }}</td>
                                     <td class="w-20"><a href="{{ asset('upload/' . $file) }}" target="_blank"><b>{{ $file }}</b></a> </td>

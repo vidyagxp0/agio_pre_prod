@@ -220,16 +220,6 @@
                         <div class="row">
                             <div class="col-lg-6">
                                 <div class="group-input">
-                                    <label for="Initiator Group">Type </label>
-                                    <select id="dynamicSelectType" name="type">
-                                        <option value="{{ route('oot.index') }}">OOT</option>
-                                        <option value="{{ route('oos_micro.index') }}">OOS Micro</option>
-                                        <option value="{{ route('oos.index') }}">OOS Chemical</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="col-lg-6">
-                                <div class="group-input">
                                     <label for="record_number"><b>Record Number</b></label>
                                     <input disabled type="text" name="record_number" id="record_number" 
                                             value="{{$data->initiator_group_code}}/LI/{{ date('y') }}/{{ $record_number}}">
@@ -260,24 +250,12 @@
                                 </div>
                             </div>
 
-                            {{-- <div class="col-md-6 ">
+                            <div class="col-md-6 ">
                                 <div class="group-input ">
                                     <label for="due-date">Due Date <span class="text-danger"></span></label>
                                     <input type="hidden" value="{{ $formattedDate }}" name="due_date">
-                                    <input disabled type="text" value="{{ $formattedDate }}" name="due_date_display">
-                                </div>
-                            </div> --}}
-
-                            <div class="col-md-6 new-date-data-field">
-                                <div class="group-input input-date">
-                                    <label for="due-date">Due Date <span class="text-danger"></span></label>
-                                    <p class="text-primary"> last date this record should be closed by</p>
-                                    
-                                    <div class="calenderauditee">
-                                        <input type="text" id="due_date"  value="{{ Helpers::getdateFormat($data->due_date) }}"/>
-                                        <input type="date" name="due_date"  min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input" oninput="handleDateInput(this, 'due_date')"  />
-                                    </div>
-                                    
+                                    <input type="date" value="{{ $data->due_date }}" name="due_date" id="due_date">
+                                    {{-- <input type="hidden" value="{{ Helpers::getdateFormat($data->due_date) }}" name="due_date"> --}}
                                 </div>
                             </div>
 
@@ -401,7 +379,7 @@
                                     <label for="Short Description">Initiated Through<span
                                             class="text-danger"></span></label>
                                     <select name="initiated_through" id="initiated_through">
-                                        <option value="">Select Option</option>
+                                        <option value="">---select---</option>
                                         <option value="oos_micro" @if ($data->initiated_through == 'oos_micro') selected @endif>OOS
                                             Micro</option>
                                         <option value="oos_chemical" @if ($data->initiated_through == 'oos_chemical') selected @endif>OOS
@@ -436,7 +414,7 @@
                                 <div class="group-input">
                                     <label for="Short Description">Is Repeat?<span class="text-danger"></span></label>
                                     <select id="is_repeat" name="is_repeat">
-                                        <option>select</option>
+                                        <option>---select---</option>
 
                                         <option value="yes" @if ($data->is_repeat == 'yes') selected @endif>Yes
                                         </option>
@@ -5211,11 +5189,6 @@ document.getElementById('initiator_group').addEventListener('change', function()
     initialPlaceholder = selectedValue;
 });
 });
-
-document.getElementById("dynamicSelectType").addEventListener("change", function() {
-            var selectedRoute = this.value;
-            window.location.href = selectedRoute; // Redirect to the selected route
-        });
 
 </script>
 

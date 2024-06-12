@@ -237,7 +237,7 @@
                                     <div class="col-lg-6">
                                         <div class="group-input">
                                             <label for="HOD Persons">HOD Persons</label>
-                                            <select  name="hod_preson[]" placeholder="Select HOD Persons" data-search="false"
+                                            <select multiple name="hod_preson[]" placeholder="Select HOD Persons" data-search="false"
                                                 data-silent-initial-value-set="true" id="hod" {{ $data->stage == 0 || $data->stage == 3 ? 'disabled' : '' }}>
                                                 @foreach ($users as $value)
                                                     <option  value="{{ $value->id }}"
@@ -637,77 +637,52 @@
                                     Electronic Signatures
                                 </div>
                                 <div class="row">
-                                    <div class="col-lg-4">
+                                    <div class="col-lg-6">
                                         <div class="group-input">
                                             <label for="submitted by">Submitted By</label>
                                             <div class="static">{{ $data->submitted_by }}</div>
                                         </div>
                                     </div>
-                                    <div class="col-lg-4">
+                                    <div class="col-lg-6">
                                         <div class="group-input">
                                             <label for="submitted on">Submitted On</label>
                                             <div class="Date">{{ $data->submitted_on }}</div>
                                         </div>
                                     </div>
-                                    <div class="col-lg-4">
-                                        <div class="group-input">
-                                            <label for="submitted on">Comment</label>
-                                            <div class="static">{{ $data->submitted_comment }}</div>
-                                        </div>
-                                    </div>
-
-                                    <div class="col-lg-4">
+                                    <div class="col-lg-6">
                                         <div class="group-input">
                                             <label for="cancelled by">Cancelled By</label>
                                             <div class="static">{{ $data->cancelled_by }}</div> 
                                         </div>
                                     </div>
-                                    <div class="col-lg-4">
+                                    <div class="col-lg-6">
                                         <div class="group-input">
                                             <label for="cancelled on">Cancelled On</label>
                                             <div class="Date">{{ $data->cancelled_on }}</div>
                                         </div>
                                     </div>
-                                    <div class="col-lg-4">
-                                        <div class="group-input">
-                                            <label for="submitted on">Comment</label>
-                                            <div class="static">{{ $data->cancelled_comment }}</div>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-4">
+                                    <div class="col-lg-6">
                                         <div class="group-input">
                                             <label for="More information required By">More information required By</label>
                                             <div class="static">{{ $data->more_information_required_by }}</div> 
                                         </div>
                                     </div>
-                                    <div class="col-lg-4">
+                                    <div class="col-lg-6">
                                         <div class="group-input">
                                             <label for="More information required On">More information required On</label>
                                             <div class="Date">{{ $data->more_information_required_on }}</div> 
                                         </div>
                                     </div>
-                                    <div class="col-lg-4">
-                                        <div class="group-input">
-                                            <label for="submitted on">Comment</label>
-                                            <div class="static">{{ $data->more_info_requ_comment }}</div>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-4">
+                                    <div class="col-lg-6">
                                         <div class="group-input">
                                             <label for="completed by">Completed By</label>
                                             <div class="static">{{ $data->completed_by }}</div> 
                                         </div>
                                     </div>
-                                    <div class="col-lg-4">
+                                    <div class="col-lg-6">
                                         <div class="group-input">
                                             <label for="completed on">Completed On</label>
                                             <div class="Date">{{ $data->completed_on }}</div> 
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-4">
-                                        <div class="group-input">
-                                            <label for="submitted on">Comment</label>
-                                            <div class="static">{{ $data->completed_comment }}</div>
                                         </div>
                                     </div>
                                    

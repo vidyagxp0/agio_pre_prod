@@ -59,10 +59,10 @@ return new class extends Migration
             $table->longText('initial_attachment_stageii_ooc')->nullable(); // Consider storing file paths or other relevant information here
             $table->text('is_repeat_compiled_stageii_ooc')->nullable();
             $table->text('is_repeat_realease_stageii_ooc')->nullable();
-            $table->longText('initiated_throug_stageii_ooc')->nullable();
-            $table->longtext('initiated_through_stageii_ooc')->nullable();
+            $table->text('initiated_throug_stageii_ooc')->nullable();
+            $table->text('initiated_through_stageii_ooc')->nullable();
             $table->text('is_repeat_reanalysis_stageii_ooc')->nullable();
-            $table->longtext('initiated_through_stageii_cause_failure_ooc')->nullable();
+            $table->text('initiated_through_stageii_cause_failure_ooc')->nullable();
             $table->text('is_repeat_capas_ooc')->nullable();
             $table->longText('initiated_through_capas_ooc')->nullable();
             $table->longText('initiated_through_capa_prevent_ooc')->nullable();
@@ -79,9 +79,6 @@ return new class extends Migration
             $table->longText('initial_attachment_hodreview_ooc')->nullable();
             $table->longText('initiated_through_rootcause_ooc')->nullable();
             $table->longText('initiated_through_impact_closure_ooc')->nullable();
-            $table->text('approved_ooc_completed_by')->nullable();
-            $table->text('approved_ooc_completed_on')->nullable();
-            $table->text('approved_ooc_comment')->nullable();
             $table->text('stage')->nullable();
             $table->text('status')->nullable();
             $table->text('submitted_by')->nullable();

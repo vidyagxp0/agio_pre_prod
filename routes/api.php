@@ -1,7 +1,6 @@
 <?php
 
 use App\Http\Controllers\Api\ChartController;
-use App\Http\Controllers\Api\ChartController;
 use App\Http\Controllers\Api\HelperController;
 use App\Http\Controllers\ApiController;
 use App\Http\Controllers\UserLoginController;

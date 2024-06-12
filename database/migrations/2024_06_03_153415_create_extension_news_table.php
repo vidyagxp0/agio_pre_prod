@@ -17,8 +17,6 @@ return new class extends Migration
             $table->id();
             $table->string('record_number')->nullable();
             $table->string('site_location_code')->nullable();
-            $table->string('parent_id')->nullable();
-            $table->string('parent_record')->nullable();
             $table->string('initiator')->nullable();
             $table->string('initiation_date')->nullable();
             $table->string('short_description')->nullable();

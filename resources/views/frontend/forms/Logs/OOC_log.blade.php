@@ -137,8 +137,8 @@
                                             <th>Originator</th>
                                             <th>Division</th>
                                             <th>Department</th>
-                                            <th>Calibration Logged By </th>
-                                            <th>Calibration Logged On</th>
+                                            <th>Action Taken </th>
+                                            <th>Calibration Required</th>
                                             <th>Due Date</th>
                                             <th>Date of Clouser</th>
                                             <th>Status</th>
@@ -148,26 +148,22 @@
                                     </thead>
 
                                     <tbody>
-                                        @foreach ($oocs as $ooclog)
-                                            
                                         <tr>
-                                            
-                                            <td>{{$loop->index+1}}</td>
-                                            <td>{{$ooclog->intiation_date}}</td>
+
                                             <td></td>
                                             <td></td>
-                                            <td>{{$ooclog->description_ooc}}</td>
-                                            <td>{{Auth::user()->name}}</td>
-                                            <td>{{Helpers::getDivisionName(session()->get('division'))}}</td>
-                                            <td>{{$ooclog->initiator_group_code}}</td>
-                                            <td>{{$ooclog->assign_to}} hold</td>
-                                            <td>{{$ooclog->ooc_due_date}}</td>
-                                            <td>{{$ooclog->due_date}}</td>
-                                            <td>{{$ooclog->approved_ooc_completed_on}}</td>
-                                            <td>{{$ooclog->status}}</td>
-                                            
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+
                                         </tr>
-                                        @endforeach
 
                                     </tbody>
                                 </table>

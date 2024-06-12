@@ -151,28 +151,23 @@
                                     </thead>
 
                                     <tbody>
-                                        @foreach ($riskmlog as $logs)
-                                            
                                         <tr>
-                                            
-                                            <td>{{$loop->index+1}}</td>
-                                            <td>{{$logs->intiation_date}}</td>
-                                            <td>{{ Helpers::getDivisionName($logs->division_id) }}/RM/{{ date('Y') }}/{{ str_pad($logs->record, 4, '0', STR_PAD_LEFT)}}</td>
-                                            <td>{{$logs->short_description}}</td>
-                                            <td>{{Auth::user()->name}}</td>
-                                            <td>{{$logs->Initiator_Group}}</td>
-                                            <td>{{Helpers::getDivisionName(session()->get('division')) }}</td>
-                                            <td>{{$logs->area_activity__process_system_other}}find</td>
-                                            <td>{{$logs->ann}}find</td>
-                                            <td>{{$logs->riskreview}}find</td>
-                                            <td>{{$logs->Output_of_Risk_Management_Review}}find</td>
-                                            <td>{{$logs->due_date}}</td>
-                                            <td>{{$logs->risk_analysis_completed_on}}</td>
-                                            <td>{{$logs->status}}</td>
-                                            
-                                            
+
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+
                                         </tr>
-                                        @endforeach
 
                                     </tbody>
                                 </table>

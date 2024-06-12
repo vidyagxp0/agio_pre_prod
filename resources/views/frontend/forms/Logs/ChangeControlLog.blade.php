@@ -137,7 +137,7 @@
                                             <th>Initiator</th>
                                             <th>Description of Change Control</th>
                                             <th>Proposed Change </th>
-                                            <th>Nature Of Change </th>
+                                            <th>Classification </th>
                                             <th>Approved / Reject </th>
                                             <th>No. of Extension </th>
                                             <th>Due Date</th>
@@ -146,27 +146,23 @@
                                     </thead>
 
                                     <tbody>
-                                        @foreach ($ccontrol as $control)
-                                            
                                         <tr>
 
-                                            <td>{{$loop->index+1}}</td>
-                                            <td>{{$control->intiation_date}}</td>
-                                            <td>{{ Helpers::getDivisionName($control->division_id) }}/CC/{{ date('Y') }}/{{ str_pad($control->record, 4, '0', STR_PAD_LEFT) }}</td>
-                                            <td>{{Helpers::getDivisionName(session()->get('division'))}}</td>
-                                            <td>{{$control->initiator_group_code}}</td>
-                                            <td>{{ Auth::user()->name }}</td>
-                                            <td>{{$control->short_description}}</td>
-                                            <td>{{$control->proposed_change}}</td>
-                                            <td>{{$control->doc_change}}</td>
                                             <td></td>
                                             <td></td>
-                                            <td>{{$control->due_date}}</td>
-                                            <td>{{$control->status}}</td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
 
                                         </tr>
 
-                                        @endforeach
                                     </tbody>
                                 </table>
                             </div>

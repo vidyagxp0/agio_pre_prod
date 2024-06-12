@@ -5,6 +5,7 @@
             <div class="col-md-12 mb-4">
                 <div class="group-input">
                     <label for="Description Deviation">Summary of Exp./Hyp.</label>
+                    <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
                     <textarea class="summernote" name="summary_of_exp_hyp_piiqcr" id="summernote-1">
                 {{$data->summary_of_exp_hyp_piiqcr ?  $data->summary_of_exp_hyp_piiqcr : ''}}
                 </textarea>
@@ -65,7 +66,7 @@
                     <label for="Description Deviation">Details of Root Cause</label>
                     <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
                     <textarea class="summernote" name="details_of_root_cause_piiqcr" id="summernote-1">
-                {{$data->details_of_root_cause_piiqcr ? $data->details_of_root_cause_piiqcr : ''}}
+                {{$data->impact_assessment_piiqcr ? $data->impact_assessment_piiqcr : ''}}
                 </textarea>
                 </div>
             </div>

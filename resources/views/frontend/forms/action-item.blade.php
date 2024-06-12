@@ -58,7 +58,7 @@
                                     <div class="group-input"> 
                                         <label for="RLS Record Number"><b>Record Number</b></label>
                                         <input disabled type="text" name="record_number"
-                                            value="{{ Helpers::getDivisionName(session()->get('division')) }}/AI/{{ date('Y') }}/{{ $record }}">
+                                            value="{{ Helpers::getDivisionName(session()->get('division')) }}/AI/{{ date('Y') }}/{{ isset($parent_record) ? $parent_record : '' }}">
                                         {{-- <div class="static">QMS-EMEA/CAPA/{{ date('Y') }}/{{ $record_number }}</div> --}}
                                     </div>
                                 </div>
@@ -68,7 +68,7 @@
                                         <input disabled type="text" name="division_code"
                                             value="{{ Helpers::getDivisionName(session()->get('division')) }}">
                                         <input type="hidden" name="division_id" value="{{ session()->get('division') }}">
-                                        {{-- <div class="static">{{ Helpers::getDivisionName(session()->get('division')) }}</div> --}}
+                                        {{-- <div class="static">QMS-North America</div> --}}
                                     </div>
                                 </div>
                                 <div class="col-lg-6">  
@@ -78,7 +78,7 @@
                                     <div class="group-input">
                                         <label for="originator">Initiator</label>
                                         <input disabled type="text"
-                                            value="{{ Auth::user()->name }}">
+                                            value="{{ isset($parent_initiator_id) ? Helpers::getInitiatorName($parent_initiator_id) : '' }}">
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
@@ -86,9 +86,9 @@
                                         <label for="Date Opened">Date of Initiation</label>
                                         {{-- <div class="static">{{ date('d-M-Y') }}</div> --}}
                                         <input disabled type="text"
-                                            value="{{ date('d-M-Y') }}"
+                                            value="{{ Helpers::getdateFormat($parent_intiation_date) }}"
                                             name="intiation_date">
-                                        <input type="hidden" value="{{ date('d-M-Y') }}" name="intiation_date">
+                                        <input type="hidden" value="{{ isset($parent_intiation_date) ? $parent_intiation_date : '' }}" name="intiation_date">
                                     </div>
                                 </div>
                                 {{-- <div class="col-lg-6">
@@ -119,35 +119,16 @@
                                 <div class="col-md-6 new-date-data-field">
                                     <div class="group-input input-date">
                                         <label for="due-date">Due Date <span class="text-danger"></span></label>
-                                        <div class="calenderauditee">
-                                            <!-- Display the formatted date in a readonly input -->
-                                            <input type="text" id="due_date_display" readonly placeholder="DD-MMM-YYYY" value="{{ Helpers::getDueDate(30, true) }}" />
-                                           
-                                            <input type="date" name="due_date" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" value="{{ Helpers::getDueDate(30, false) }}" class="hide-input" readonly />
+                                        <!-- <input type="date" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
+                                            value="" name="due_date"> -->
+                                        <div class="calenderauditee">                                     
+                                            <input type="text"  id="due_date_display" readonly placeholder="DD-MMM-YYYY" value="{{ Helpers::getDueDate(30, false) }}" />
+                                            <input type="date" name="due_date"  min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" value="{{ Helpers::getDueDate(30, false) }}"
+                                            class="hide-input"
+                                            oninput="handleDateInput(this, 'due_date_display')"/>
                                         </div>
                                     </div>
                                 </div>
-                                
-                                <script>
-                                function handleDateInput(dateInput, displayId) {
-                                    const date = new Date(dateInput.value);
-                                    const options = { day: '2-digit', month: 'short', year: 'numeric' };
-                                    document.getElementById(displayId).value = date.toLocaleDateString('en-GB', options).replace(/ /g, '-');
-                                }
-                                
-                                // Call this function initially to ensure the correct format is shown on page load
-                                document.addEventListener('DOMContentLoaded', function() {
-                                    const dateInput = document.querySelector('input[name="due_date"]');
-                                    handleDateInput(dateInput, 'due_date_display');
-                                });
-                                </script>
-                                
-                                <style>
-                                .hide-input {
-                                    display: none;
-                                }
-                                </style>
-                                
                              
                                 <div class="col-12">
                                     <div class="group-input">
@@ -176,7 +157,7 @@
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="HOD Persons">HOD Persons</label>
-                                        <select   name="hod_preson[]" placeholder="Select HOD Persons" data-search="false"
+                                        <select multiple  name="hod_preson[]" placeholder="Select HOD Persons" data-search="false"
                                             data-silent-initial-value-set="true" id="hod" >
                                             @foreach ($users as $value)
                                                 <option value="{{ $value->id }}">{{ $value->name }}</option>
