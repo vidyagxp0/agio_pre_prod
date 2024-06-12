@@ -2168,6 +2168,8 @@ class LabIncidentController extends Controller
                $parent_record =  ((RecordNumber::first()->value('counter')) + 1);
                $parent_record = str_pad($parent_record, 4, '0', STR_PAD_LEFT);
                $parent_initiator_id = $id;
+               $parent_name = $request->parent_name;
+
                $changeControl = OpenStage::find(1);
                if (!empty($changeControl->cft)) $cft = explode(',', $changeControl->cft);
            
@@ -2184,6 +2186,12 @@ class LabIncidentController extends Controller
                    $cc->originator = User::where('id', $cc->initiator_id)->value('name');
                   return view('frontend.forms.capa', compact('record_number', 'due_date', 'parent_id', 'parent_type', 'old_record', 'cft'));
                }
+               
+               if ($request->revision == "extension-child") {
+                $cc->originator = User::where('id', $cc->initiator_id)->value('name');
+                   
+                return view('frontend.forms.extension',compact('cft','parent_name','parent_id','parent_type','old_record','record_number','currentDate','formattedDate','due_date','parent_intiation_date','parent_record','parent_initiator_id'));
+            }
                
            }
 
@@ -2230,6 +2238,7 @@ class LabIncidentController extends Controller
         $parent_intiation_date = Capa::where('id', $id)->value('intiation_date');
         $parent_record =  ((RecordNumber::first()->value('counter')) + 1);
         $parent_record = str_pad($parent_record, 4, '0', STR_PAD_LEFT);
+        $parent_name = $request->parent_name;
         $parent_initiator_id = $id;
        
         if ($request->revision == "Action-Item") {
@@ -2247,7 +2256,14 @@ class LabIncidentController extends Controller
          $cc->originator = User::where('id', $cc->initiator_id)->value('name');
            return view('frontend.forms.effectiveness-check', compact( 'parent_id', 'parent_type','record_number','currentDate','formattedDate','due_date'));
         // return view('frontend.forms.root-cause-analysis', compact('record_number', 'due_date', 'parent_id', 'parent_type'));
-    };}
+    }
+    if ($request->revision == "extension-child") {
+        $cc->originator = User::where('id', $cc->initiator_id)->value('name');
+           
+        return view('frontend.forms.extension',compact('cft','parent_name','parent_id','parent_type','old_record','record_number','currentDate','formattedDate','due_date','parent_intiation_date','parent_record','parent_initiator_id'));
+    }
+
+}
 
     public function labincidentRiskChild(Request $request,$id)
     {
@@ -2265,11 +2281,18 @@ class LabIncidentController extends Controller
         $parent_record =  ((RecordNumber::first()->value('counter')) + 1);
         $parent_record = str_pad($parent_record, 4, '0', STR_PAD_LEFT);
         $parent_initiator_id = $id;
+        $parent_name = $request->parent_name;
+
        
         if ($request->revision == "risk-Item") {
             $cc->originator = User::where('id', $cc->initiator_id)->value('name');
             return view('frontend.forms.risk-management', compact('record_number', 'due_date', 'parent_id','old_record', 'parent_type','parent_intiation_date','parent_record','parent_initiator_id'));
 
+        }
+        if ($request->revision == "extension-child") {
+            $cc->originator = User::where('id', $cc->initiator_id)->value('name');
+               
+            return view('frontend.forms.extension',compact('cft','parent_name','parent_id','parent_type','old_record','record_number','currentDate','formattedDate','due_date','parent_intiation_date','parent_record','parent_initiator_id'));
         }
         
 

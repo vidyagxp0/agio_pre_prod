@@ -72,10 +72,10 @@
                              <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal1">
                                 Child
                             </button>
-                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal3">
+                            {{-- <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal3">
                                 Child
                             </button>
-                           
+                            --}}
                             
                         @elseif($data->stage == 4 && (in_array(9, $userRoleIds) || in_array(18, $userRoleIds)))
                        
@@ -139,9 +139,9 @@
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal2">
                                 Child
                             </button>
-                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal3">
+                            {{-- <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal3">
                                 Child
-                            </button>
+                            </button> --}}
 
                             @elseif($data->stage == 9 && (in_array(9, $userRoleIds) || in_array(18, $userRoleIds) || in_array(7, $userRoleIds)))
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
@@ -2808,6 +2808,12 @@
                                 Effectiveness check
                             </label>
                         </div>
+                        <div class="group-input">
+                            <label for="capa-child">
+                                <input type="radio" name="revision" id="capa-child" value="extension-child">
+                                Extension
+                            </label>
+                        </div>
                     </div>
 
                     <!-- Modal footer -->
@@ -2842,6 +2848,12 @@
                                 Risk Assessment
                             </label>
                         </div>
+                        <div class="group-input">
+                            <label for="capa-child">
+                                <input type="radio" name="revision" id="capa-child" value="extension-child">
+                                Extension
+                            </label>
+                        </div>
                         
                         <div class="modal-footer">
                             <button type="submit">Submit</button>
@@ -2873,6 +2885,12 @@
                                 Action Item
                             </label>
                         </div>
+                        <div class="group-input">
+                            <label for="capa-child">
+                                <input type="radio" name="revision" id="capa-child" value="extension-child">
+                                Extension
+                            </label>
+                        </div>
                         
                         <div class="modal-footer">
                             <button type="submit">Submit</button>
@@ -2898,12 +2916,12 @@
                                 Extension
                             </label>
                         </div>
-                        <div class="group-input">
+                        {{-- <div class="group-input">
                             <label for="root-item">
                                 <input type="radio" name="revision" id="root-item" value="Action-Item">
                                 Action Item
                             </label>
-                        </div>
+                        </div> --}}
                         
                         <div class="modal-footer">
                             <button type="submit">Submit</button>
