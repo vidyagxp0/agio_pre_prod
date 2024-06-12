@@ -110,7 +110,7 @@
 
                     var html =
                         '<tr>' +
-                        '<td><input disabled type="text" name="serial[]" value="' + serialNumber +
+                        '<td><input disabled type="text" name="serial[]" value="' + serialNumber+
                         '"></td>' +
                         '<td><input type="text" name="ProductName[]"></td>' +
                         '<td><input type="number" name="BatchNumber[]"></td>' +
@@ -192,19 +192,25 @@
                     <!-- Tab content -->
                     <div id="CCForm1" class="inner-block cctabcontent">
                         <div class="inner-block-content">
-                            <div class="sub-head">
-                                General Information
-                            </div> <!-- RECORD NUMBER -->
+                             <!-- RECORD NUMBER -->
                             <div class="row">
-
+                                <div class="sub-head">
+                                    General Information
+                                </div>
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="RLS Record Number"><b>Record Number</b></label>
-                                        <input disabled type="text" name="record_number" value="">
-                                        {{-- <input disabled type="text" name="record_number" value=" {{ Helpers::getDivisionName(session()->get('division')) }}/LI/{{ date('Y') }}/{{ $record_number}}"> --}}
-
+                                        {{-- <input disabled type="text" name="record" value=""> --}}
+                                        {{-- <input disabled type="text" name="record" value=" {{ Helpers::getDivisionName(session()->get('division')) }}/LI/{{ date('Y') }}/{{ $record}}"> --}}
+                                        <input disabled type="text" name="record" id="record" 
+                                        value="---/LI/{{ date('y') }}/{{ $record }}">
                                     </div>
                                 </div>
+                               
+
+
+
+                                
 
                                 <div class="col-lg-6">
                                     <div class="group-input">
@@ -231,7 +237,7 @@
                                 </div>
                                 <div class="col-md-6 new-date-data-field">
                                     <div class="group-input input-date">
-                                        <label for="due-date">Due Date <span class="text-danger"></span></label>
+                                        <label for="due-date">Due Date <span class="text-danger">*</span></label>
                                         <p class="text-primary"> last date this record should be closed by</p>
 
                                         <div class="calenderauditee">
@@ -240,6 +246,15 @@
                                                 min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" value=""
                                                 class="hide-input" oninput="handleDateInput(this, 'due_date')" />
                                         </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-12 mb-3">
+                                    <div class="group-input">
+                                        <label for="Short Description">Short Description<span
+                                            class="text-danger">*</span></label><span id="rchars">255</span>
+                                    Characters remaining
+                                        <input  name="description_gi" id="summernote-1" required >
+                                    
                                     </div>
                                 </div>
 
@@ -354,15 +369,7 @@
 
 
 
-                                <div class="col-md-12 mb-3">
-                                    <div class="group-input">
-                                        <label for="Description">Description</label>
-                                        <div><small class="text-primary">Please insert "NA" in the data field if it does
-                                                not require completion</small></div>
-                                        <textarea class="summernote" name="description_gi" id="summernote-1">
-                                    </textarea>
-                                    </div>
-                                </div>
+                                
 
 
                                 <div class="col-12">
@@ -376,21 +383,7 @@
                                         <div class="file-attachment-field">
                                             <div class="file-attachment-list" id="initial_attachment_gi">
 
-                                                {{-- @if (initial_attachment_gi)
-                                                @foreach (json_decode($data->initial_attachment_gi) as $file)
-                                                    <h6 type="button" class="file-container text-dark"
-                                                        style="background-color: rgb(243, 242, 240);">
-                                                        <b>{{ $file }}</b>
-                                                        <a href="{{ asset('upload/' . $file) }}"
-                                                            target="_blank"><i class="fa fa-eye text-primary"
-                                                                style="font-size:20px; margin-right:-10px;"></i></a>
-                                                        <a type="button" class="remove-file"
-                                                            data-file-name="{{ $file }}"><i
-                                                                class="fa-solid fa-circle-xmark"
-                                                                style="color:red; font-size:20px;"></i></a>
-                                                    </h6>
-                                                @endforeach
-                                            @endif --}}
+                                              
                                             </div>
                                             <div class="add-btn">
                                                 <div>Add</div>
@@ -489,35 +482,61 @@
                                                         <td><input disabled type="text" name="serial_number_gi[0][serial]" value="1"></td>
                                                         <td><input type="text" name="serial_number_gi[0][info_product_name]"></td>
                                                         <td><input type="text" name="serial_number_gi[0][info_batch_no]"></td>
-                                                        {{-- <td><input type="date" name="serial_number_gi[0][info_mfg_date]"></td> --}}
                                                         <td>
-                                                            <div class="calenderauditee">
-                                                                 <input
-                                                                 class="click_date"
-                                                                 id="date_0_mfg_date" type="text" name="serial_number_gi[0][info_mfg_date]" placeholder="DD-MMM-YYYY" />
-                                                                 <input type="date" name="serial_number_gi[0][info_mfg_date]"
-                                                                 min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" value="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
-                                                                 id="date_0_mfg_date"
-                                                                 class="hide-input show_date" style="position: absolute; top: 0; left: 0; opacity: 0;" oninput="handleDateInput(this, 'date_0_mfg_date')" />
+                                                            <div class="new-date-data-field">
+                                                                <div class="group-input input-date">
+                                                                    <div class="calenderauditee">
+                                                                        <input
+                                                                            class="click_date"
+                                                                            id="date_0_mfg_date"
+                                                                            type="text"
+                                                                            name="serial_number_gi[0][info_mfg_date]"
+                                                                            placeholder="DD-MMM-YYYY"
+                                                                        />
+                                                                        <input
+                                                                            type="date"
+                                                                            name="serial_number_gi[0][info_mfg_date]"
+                                                                            min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
+                                                                            id="date_0_mfg_date"
+                                                                            class="hide-input show_date"
+                                                                            style="position: absolute; top: 0; left: 0; opacity: 0;"
+                                                                            oninput="handleDateInput(this, 'date_0_mfg_date')"
+                                                                        />
+                                                                    </div>
+                                                                </div>
                                                             </div>
                                                         </td>
                                                         <td>
-                                                            <div class="calenderauditee">
-                                                                 <input
-                                                                 class="click_date"
-                                                                 id="date_0_expiry_date" type="text" name="serial_number_gi[0][info_expiry_date]" placeholder="DD-MMM-YYYY" />
-                                                                 <input type="date" name="serial_number_gi[0][info_expiry_date]"
-                                                                 min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" value="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
-                                                                 id="date_0_expiry_date"
-                                                                 class="hide-input show_date" style="position: absolute; top: 0; left: 0; opacity: 0;" oninput="handleDateInput(this, 'date_0_expiry_date')" />
+                                                            <div class="new-date-data-field">
+                                                                <div class="group-input input-date">
+                                                                    <div class="calenderauditee">
+                                                                        <input
+                                                                            class="click_date"
+                                                                            id="date_0_expiry_date"
+                                                                            type="text"
+                                                                            name="serial_number_gi[0][info_expiry_date]"
+                                                                            placeholder="DD-MMM-YYYY"
+                                                                        />
+                                                                        <input
+                                                                            type="date"
+                                                                            name="serial_number_gi[0][info_expiry_date]"
+                                                                            min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
+                                                                            id="date_0_expiry_date"
+                                                                            class="hide-input show_date"
+                                                                            style="position: absolute; top: 0; left: 0; opacity: 0;"
+                                                                            oninput="handleDateInput(this, 'date_0_expiry_date')"
+                                                                        />
+                                                                    </div>
+                                                                </div>
                                                             </div>
                                                         </td>
                                                         <td><input type="text" name="serial_number_gi[0][info_batch_size]"></td>
                                                         <td><input type="text" name="serial_number_gi[0][info_pack_size]"></td>
                                                         <td><input type="text" name="serial_number_gi[0][info_dispatch_quantity]"></td>
                                                         <td><input type="text" name="serial_number_gi[0][info_remarks]"></td>
-                                                        <td><button type="text" class="removeRowBtn" >Remove</button></td>
+                                                        <td><button type="text" class="removeRowBtn">Remove</button></td>
                                                     </tr>
+                                                    
                                                 </tbody>
                                             </table>
                                         </div>
@@ -538,8 +557,8 @@
                                                     '<td><input disabled type="text" name="serial_number_gi[' + serialNumber + '][serial]" value="' + (serialNumber + 1) + '"></td>' +
                                                     '<td><input type="text" name="serial_number_gi[' + serialNumber + '][info_product_name]"></td>' +
                                                     '<td><input type="text" name="serial_number_gi[' + serialNumber + '][info_batch_no]"></td>' +
-                                                    '<td> <div class="calenderauditee"><input id="date_'+ serialNumber +'_mfg_date" type="text" name="serial_number_gi[' + serialNumber + '][info_mfg_date]" placeholder="DD-MMM-YYYY" /> <input type="date" name="serial_number_gi[' + serialNumber + '][info_mfg_date]" min="{{ \Carbon\Carbon::now()->format("Y-m-d") }}" value="{{ \Carbon\Carbon::now()->format("Y-m-d") }}" id="date_'+ serialNumber +'_mfg_date" class="hide-input show_date" style="position: absolute; top: 0; left: 0; opacity: 0;" oninput="handleDateInput(this, \'date_'+ serialNumber +'_mfg_date\')" /> </div> </td>' +
-                                                    '<td> <div class="calenderauditee"><input id="date_'+ serialNumber +'_expiry_date" type="text" name="serial_number_gi[' + serialNumber + '][info_expiry_date]" placeholder="DD-MMM-YYYY" /> <input type="date" name="serial_number_gi[' + serialNumber + '][info_expiry_date]" min="{{ \Carbon\Carbon::now()->format("Y-m-d") }}" value="{{ \Carbon\Carbon::now()->format("Y-m-d") }}" id="date_'+ serialNumber +'_expiry_date" class="hide-input show_date" style="position: absolute; top: 0; left: 0; opacity: 0;" oninput="handleDateInput(this, \'date_'+ serialNumber +'_expiry_date\')" /> </div> </td>' +
+                                                    '<td>   <div class="new-date-data-field"><div class="group-input input-date"><div class="calenderauditee"><input id="date_'+ serialNumber +'_mfg_date" type="text" name="serial_number_gi[' + serialNumber + '][info_mfg_date]" placeholder="DD-MMM-YYYY" /> <input type="date" name="serial_number_gi[' + serialNumber + '][info_mfg_date]" min="{{ \Carbon\Carbon::now()->format("Y-m-d") }}" value="{{ \Carbon\Carbon::now()->format("Y-m-d") }}" id="date_'+ serialNumber +'_mfg_date" class="hide-input show_date" style="position: absolute; top: 0; left: 0; opacity: 0;" oninput="handleDateInput(this, \'date_'+ serialNumber +'_mfg_date\')" /> </div></div></div> </td>' +
+                                                    '<td>   <div class="new-date-data-field"><div class="group-input input-date"><div class="calenderauditee"><input id="date_'+ serialNumber +'_expiry_date" type="text" name="serial_number_gi[' + serialNumber + '][info_expiry_date]" placeholder="DD-MMM-YYYY" /> <input type="date" name="serial_number_gi[' + serialNumber + '][info_expiry_date]" min="{{ \Carbon\Carbon::now()->format("Y-m-d") }}" value="{{ \Carbon\Carbon::now()->format("Y-m-d") }}" id="date_'+ serialNumber +'_expiry_date" class="hide-input show_date" style="position: absolute; top: 0; left: 0; opacity: 0;" oninput="handleDateInput(this, \'date_'+ serialNumber +'_expiry_date\')" /> </div> </div></div></td>' +
                                                     '<td><input type="text" name="serial_number_gi[' + serialNumber + '][info_batch_size]"></td>' +
                                                     '<td><input type="text" name="serial_number_gi[' + serialNumber + '][info_pack_size]"></td>' +
                                                     '<td><input type="text" name="serial_number_gi[' + serialNumber + '][info_dispatch_quantity]"></td>' +
@@ -1026,12 +1045,16 @@
                                                     <td><input type="text" name="Team_Members[0][department_tm]"></td>
                                                     <td><input type="text" name="Team_Members[0][sign_tm]"></td>
                                                     <td>
+                                                        <div class="new-date-data-field">
+                                                            <div class="group-input input-date">
                                                         <div class="calenderauditee">
                                                              <input id="date_0_date_tm" type="text" name="Team_Members[0][date_tm]" placeholder="DD-MMM-YYYY" />
                                                              <input type="date" name="Team_Members[0][date_tm]"
-                                                             min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" value="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
+                                                             min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" value=""
                                                              id="date_0_date_tm"
                                                              class="hide-input show_date" style="position: absolute; top: 0; left: 0; opacity: 0;" oninput="handleDateInput(this, 'date_0_date_tm')" />
+                                                        </div>
+                                                            </div>
                                                         </div>
                                                     </td>
                                                     <td><button type="button" class="removeRowBtn">Remove</button></td>
@@ -1055,7 +1078,7 @@
                                                     '<td><input type="text" name="Team_Members[' + serialNumber + '][names_tm]"></td>' +
                                                     '<td><input type="text" name="Team_Members[' + serialNumber + '][department_tm]"></td>' +
                                                     '<td><input type="text" name="Team_Members[' + serialNumber + '][sign_tm]"></td>' +
-                                                    '<td> <div class="calenderauditee"><input id="date_'+ serialNumber +'_date_tm" type="text" name="Team_Members[' + serialNumber + '][date_tm]" placeholder="DD-MMM-YYYY" /> <input type="date" name="Team_Members[' + serialNumber + '][date_tm]" min="{{ \Carbon\Carbon::now()->format("Y-m-d") }}" value="{{ \Carbon\Carbon::now()->format("Y-m-d") }}" id="date_'+ serialNumber +'_date_tm" class="hide-input show_date" style="position: absolute; top: 0; left: 0; opacity: 0;" oninput="handleDateInput(this, \'date_'+ serialNumber +'_date_tm\')" /> </div> </td>' +
+                                                    '<td><div class="new-date-data-field"><div class="group-input input-date"> <div class="calenderauditee"><input id="date_'+ serialNumber +'_date_tm" type="text" name="Team_Members[' + serialNumber + '][date_tm]" placeholder="DD-MMM-YYYY" /> <input type="date" name="Team_Members[' + serialNumber + '][date_tm]" min="{{ \Carbon\Carbon::now()->format("Y-m-d") }}" value="{{ \Carbon\Carbon::now()->format("Y-m-d") }}" id="date_'+ serialNumber +'_date_tm" class="hide-input show_date" style="position: absolute; top: 0; left: 0; opacity: 0;" oninput="handleDateInput(this, \'date_'+ serialNumber +'_date_tm\')" /> </div> </div></div></td>' +
                                                    '<td><button type="button" class="removeRowBtn">Remove</button></td>' +
 
                                                     '</tr>';
@@ -1073,90 +1096,90 @@
 
 
 
-                                <div class="col-12">
-                                    <div class="group-input">
-                                        <label for="root_cause">
-                                            Report Approval
-                                            <button type="button" id="Report_Approval">+</button>
-                                            <span class="text-primary" data-bs-toggle="modal"
-                                                data-bs-target="#document-details-field-instruction-modal"
-                                                style="font-size: 0.8rem; font-weight: 400; cursor: pointer;">
-                                                (Launch Instruction)
-                                            </span>
-                                        </label>
-                                        <div class="table-responsive">
-                                            <table class="table table-bordered" id="Report_Approval"
-                                                style="width: %;">
-                                                <thead>
-                                                    <tr>
-                                                        <th style="width: 100px;">Row #</th>
-                                                        <th>Names</th>
-                                                        <th>Department</th>
-                                                        <th>Sign</th>
-                                                        <th>Date</th>
-                                                        <th>Action</th>
-
-
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                    <td><input disabled type="text" name="serial_number[0]"
-                                                            value="1">
-                                                    </td>
-                                                    <td><input type="text" name="Report_Approval[0][names_rrv]"></td>
-                                                    <td><input type="text" name="Report_Approval[0][department_rrv]"></td>
-                                                    <td><input type="text" name="Report_Approval[0][sign_rrv]"></td>
-                                                    <td>
-                                                        <div class="calenderauditee">
-                                                             <input id="date_0_date_rrv" type="text" name="Report_Approval[0][date_rrv]" placeholder="DD-MMM-YYYY" />
-                                                             <input type="date" name="Report_Approval[0][date_rrv]"
-                                                             min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" value="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
-                                                             id="date_0_date_rrv"
-                                                             class="hide-input show_date" style="position: absolute; top: 0; left: 0; opacity: 0;" oninput="handleDateInput(this, 'date_0_date_rrv')" />
-                                                        </div>
-                                                    </td>
-                                                    <td><button type="button" class="removeRowBtn">Remove</button></td>
-
-
-
-                                                </tbody>
-                                            </table>
+                                    <div class="col-12">
+                                        <div class="group-input">
+                                            <label for="root_cause">
+                                                Report Approval
+                                                <button type="button" id="add_report_approval_row">+</button>
+                                                <span class="text-primary" data-bs-toggle="modal"
+                                                    data-bs-target="#document-details-field-instruction-modal"
+                                                    style="font-size: 0.8rem; font-weight: 400; cursor: pointer;">
+                                                    (Launch Instruction)
+                                                </span>
+                                            </label>
+                                            <div class="table-responsive">
+                                                <table class="table table-bordered" id="report_approval_table">
+                                                    <thead>
+                                                        <tr>
+                                                            <th style="width: 100px;">Row #</th>
+                                                            <th>Names</th>
+                                                            <th>Department</th>
+                                                            <th>Sign</th>
+                                                            <th>Date</th>
+                                                            <th>Action</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr>
+                                                            <td><input disabled type="text" name="Report_Approval[0][serial]" value="1"></td>
+                                                            <td><input type="text" name="Report_Approval[0][names_rrv]"></td>
+                                                            <td><input type="text" name="Report_Approval[0][department_rrv]"></td>
+                                                            <td><input type="text" name="Report_Approval[0][sign_rrv]"></td>
+                                                            <td>
+                                                                <div class="new-date-data-field">
+                                                                    <div class="group-input input-date">
+                                                                        <div class="calenderauditee">
+                                                                            <input id="date_0_date_rrv"
+                                                                             type="text"
+                                                                              name="Report_Approval[0][date_rrv]"
+                                                                               placeholder="DD-MMM-YYYY" />
+                                                                            <input type="date" name="Report_Approval[0][date_rrv]"
+                                                                                min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" 
+                                                                                id="date_0_date_rrv"
+                                                                                class="hide-input show_date" style="position: absolute; top: 0; left: 0; opacity: 0;" oninput="handleDateInput(this, 'date_0_date_rrv')" />
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </td>
+                                                            <td><button type="button" class="removeRowBtn">Remove</button></td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
 
-                                <script>
-                                    $(document).on('click', '.removeRowBtn', function() {
-                                        $(this).closest('tr').remove();
-                                    });
-
-                                    $(document).ready(function() {
-                                        $('#Report_Approval').click(function(e) {
-                                            e.preventDefault();
-
-                                            function generateTableRow(reportNumber) {
-                                                var html =
-                                                    '<tr>' +
-                                                    '<td><input disabled type="text" name="Report_Approval[' + reportNumber + '][serial]" value="' + (reportNumber + 1) + '"></td>' +
-                                                    '<td><input type="text" name="Report_Approval[' + reportNumber + '][names_rrv]"></td>' +
-                                                    '<td><input type="text" name="Report_Approval[' + reportNumber + '][department_rrv]"></td>' +
-                                                    '<td><input type="text" name="Report_Approval[' + reportNumber + '][sign_rrv]"></td>' +
-                                                    '<td> <div class="calenderauditee"><input id="date_'+ reportNumber +'_date_rrv" type="text" name="Report_Approval[' + reportNumber + '][date_rrv]" placeholder="DD-MMM-YYYY" /> <input type="date" name="Report_Approval[' + reportNumber + '][date_rrv]" min="{{ \Carbon\Carbon::now()->format("Y-m-d") }}" value="{{ \Carbon\Carbon::now()->format("Y-m-d") }}" id="date_'+ reportNumber +'_date_rrv" class="hide-input show_date" style="position: absolute; top: 0; left: 0; opacity: 0;" oninput="handleDateInput(this, \'date_'+ reportNumber +'_date_rrv\')" /> </div> </td>' +
-
-                                                '<td><button type="button" class="removeRowBtn">Remove</button></td>' +
-
-                                                    '</tr>';
-                                                return html;
-                                            }
-
-                                            var tableBody = $('#Report_Approval tbody');
-                                            var rowCount = tableBody.children('tr').length;
-                                            var newRow = generateTableRow(rowCount);
-                                            tableBody.append(newRow);
+                                    <script>
+                                        $(document).on('click', '.removeRowBtn', function() {
+                                            $(this).closest('tr').remove();
                                         });
-                                    });
-                                </script>
 
+                                        $(document).ready(function() {
+                                            $('#add_report_approval_row').click(function(e) {
+                                                e.preventDefault();
+
+                                                function generateTableRow(reportNumber) {
+                                                    var html =
+                                                        '<tr>' +
+                                                        '<td><input disabled type="text" name="Report_Approval[' + reportNumber + '][serial]" value="' + (reportNumber + 1) + '"></td>' +
+                                                        '<td><input type="text" name="Report_Approval[' + reportNumber + '][names_rrv]"></td>' +
+                                                        '<td><input type="text" name="Report_Approval[' + reportNumber + '][department_rrv]"></td>' +
+                                                        '<td><input type="text" name="Report_Approval[' + reportNumber + '][sign_rrv]"></td>' +
+                                                        '<td><div class="new-date-data-field"><div class="group-input input-date"><div class="calenderauditee"><input id="date_'+ reportNumber +'_date_rrv" type="text" name="Report_Approval[' + reportNumber + '][date_rrv]" placeholder="DD-MMM-YYYY" /> <input type="date" name="Report_Approval[' + reportNumber + '][date_rrv]" min="{{ \Carbon\Carbon::now()->format("Y-m-d") }}" value="{{ \Carbon\Carbon::now()->format("Y-m-d") }}" id="date_'+ reportNumber +'_date_rrv" class="hide-input show_date" style="position: absolute; top: 0; left: 0; opacity: 0;" oninput="handleDateInput(this, \'date_'+ reportNumber +'_date_rrv\')" /> </div> </div></div></td>' +
+                                                        '<td><button type="button" class="removeRowBtn">Remove</button></td>' +
+                                                        '</tr>';
+                                                    return html;
+                                                }
+
+                                                var tableBody = $('#report_approval_table tbody');
+                                                var rowCount = tableBody.children('tr').length;
+                                                var newRow = generateTableRow(rowCount);
+                                                tableBody.append(newRow);
+                                            });
+                                        });
+                                    </script>
+
+ 
 
                                                            <div class="col-12">
                                     <div class="group-input">
@@ -1263,24 +1286,37 @@
                                                     <td><input disabled type="text" name="Product_MaterialDetails[0][serial]" value="1"></td>
                                                     <td><input type="text" name="Product_MaterialDetails[0][product_name_ca]"></td>
                                                     <td><input type="text" name="Product_MaterialDetails[0][batch_no_pmd_ca]"></td>
-                                                    <td>
+                                                    <td><div class="new-date-data-field">
+                                                        <div class="group-input input-date">
                                                         <div class="calenderauditee">
-                                                             <input id="date_0_mfg_date_pmd_ca" type="text" name="Product_MaterialDetails[0][mfg_date_pmd_ca]" placeholder="DD-MMM-YYYY" />
+                                                             <input id="date_0_mfg_date_pmd_ca"
+                                                              type="text"
+                                                               name="Product_MaterialDetails[0][mfg_date_pmd_ca]"
+                                                                placeholder="DD-MMM-YYYY" />
                                                              <input type="date" name="Product_MaterialDetails[0][mfg_date_pmd_ca]"
-                                                             min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" value="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
+                                                             min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" 
                                                              id="date_0_mfg_date_pmd_ca"
                                                              class="hide-input show_date" style="position: absolute; top: 0; left: 0; opacity: 0;" oninput="handleDateInput(this, 'date_0_mfg_date_pmd_ca')" />
                                                         </div>
+                                                        </div>
+                                                        </div>
                                                     </td>
                                                     <td>
+                                                        <div class="new-date-data-field">
+                                                            <div class="group-input input-date">
                                                         <div class="calenderauditee">
                                                              <input
                                                              class="click_date"
-                                                             id="date_0_expiry_date_pmd_ca" type="text" name="Product_MaterialDetails[0][expiry_date_pmd_ca]" placeholder="DD-MMM-YYYY" />
+                                                             id="date_0_expiry_date_pmd_ca"
+                                                              type="text"
+                                                               name="Product_MaterialDetails[0][expiry_date_pmd_ca]"
+                                                                placeholder="DD-MMM-YYYY" />
                                                              <input type="date" name="Product_MaterialDetails[0][expiry_date_pmd_ca]"
-                                                             min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" value="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
+                                                             min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" 
                                                              id="date_0_expiry_date_pmd_ca"
                                                              class="hide-input show_date" style="position: absolute; top: 0; left: 0; opacity: 0;" oninput="handleDateInput(this, 'date_0_expiry_date_pmd_ca')" />
+                                                        </div>
+                                                            </div>
                                                         </div>
                                                     </td>
                                                     <td><input type="text" name="Product_MaterialDetails[0][batch_size_pmd_ca]"></td>
@@ -1316,8 +1352,9 @@
                                                 '<td><input disabled type="text" name="Product_MaterialDetails[' + productserialno + '][serial]" value="' + (productserialno + 1) + '"></td>' +
                                                 '<td><input type="text" name="Product_MaterialDetails[' + productserialno + '][product_name_ca]"></td>' +
                                                 '<td><input type="text" name="Product_MaterialDetails[' + productserialno + '][batch_no_pmd_ca]"></td>' +
-                                                '<td> <div class="calenderauditee"><input id="date_'+ productserialno +'_mfg_date_pmd_ca" type="text" name="Product_MaterialDetails[' + productserialno + '][mfg_date_pmd_ca]" placeholder="DD-MMM-YYYY" /> <input type="date" name="Product_MaterialDetails[' + productserialno + '][mfg_date_pmd_ca]" min="{{ \Carbon\Carbon::now()->format("Y-m-d") }}" value="{{ \Carbon\Carbon::now()->format("Y-m-d") }}" id="date_'+ productserialno +'_mfg_date_pmd_ca" class="hide-input show_date" style="position: absolute; top: 0; left: 0; opacity: 0;" oninput="handleDateInput(this, \'date_'+ productserialno +'_mfg_date_pmd_ca\')" /> </div> </td>' +
-                                                '<td> <div class="calenderauditee"><input id="date_'+ productserialno +'_expiry_date_pmd_ca" type="text" name="Product_MaterialDetails[' + productserialno + '][expiry_date_pmd_ca]" placeholder="DD-MMM-YYYY" /> <input type="date" name="Product_MaterialDetails[' + productserialno + '][expiry_date_pmd_ca]" min="{{ \Carbon\Carbon::now()->format("Y-m-d") }}" value="{{ \Carbon\Carbon::now()->format("Y-m-d") }}" id="date_'+ productserialno +'_expiry_date_pmd_ca" class="hide-input show_date" style="position: absolute; top: 0; left: 0; opacity: 0;" oninput="handleDateInput(this, \'date_'+ productserialno +'_expiry_date_pmd_ca\')" /> </div> </td>' +
+                                                '<td> <div class="new-date-data-field"><div class="group-input input-date">
+                                                <div class="calenderauditee"><input id="date_'+ productserialno +'_mfg_date_pmd_ca" type="text" name="Product_MaterialDetails[' + productserialno + '][mfg_date_pmd_ca]" placeholder="DD-MMM-YYYY" /> <input type="date" name="Product_MaterialDetails[' + productserialno + '][mfg_date_pmd_ca]" min="{{ \Carbon\Carbon::now()->format("Y-m-d") }}" value="{{ \Carbon\Carbon::now()->format("Y-m-d") }}" id="date_'+ productserialno +'_mfg_date_pmd_ca" class="hide-input show_date" style="position: absolute; top: 0; left: 0; opacity: 0;" oninput="handleDateInput(this, \'date_'+ productserialno +'_mfg_date_pmd_ca\')" /> </div> </div></div></td>' +
+                                                '<td> <div class="new-date-data-field"><div class="group-input input-date"><div class="calenderauditee"><input id="date_'+ productserialno +'_expiry_date_pmd_ca" type="text" name="Product_MaterialDetails[' + productserialno + '][expiry_date_pmd_ca]" placeholder="DD-MMM-YYYY" /> <input type="date" name="Product_MaterialDetails[' + productserialno + '][expiry_date_pmd_ca]" min="{{ \Carbon\Carbon::now()->format("Y-m-d") }}" value="{{ \Carbon\Carbon::now()->format("Y-m-d") }}" id="date_'+ productserialno +'_expiry_date_pmd_ca" class="hide-input show_date" style="position: absolute; top: 0; left: 0; opacity: 0;" oninput="handleDateInput(this, \'date_'+ productserialno +'_expiry_date_pmd_ca\')" /> </div></div></div></td>' +
                                                 '<td><input type="text" name="Product_MaterialDetails[' + productserialno + '][batch_size_pmd_ca]"></td>' +
                                                 '<td><input type="text" name="Product_MaterialDetails[' + productserialno + '][pack_profile_pmd_ca]"></td>' +
                                                 '<td><input type="text" name="Product_MaterialDetails[' + productserialno + '][released_quantity_pmd_ca]"></td>' +
@@ -1345,9 +1382,9 @@
                                     <label for="Complaint Sample Required">Complaint Sample Required</label>
                                     <select name="complaint_sample_required_ca" onchange="">
                                         <option value="">-- select --</option>
-                                        <option value="">Yes</option>
-                                        <option value="">No</option>
-                                        <option value="">NA</option>
+                                        <option value="yes">Yes</option>
+                                        <option value="no">No</option>
+                                        <option value="na">NA</option>
                                     </select>
                                 </div>
                             </div>
@@ -1926,5 +1963,34 @@
             $('#effect_check_date').val('');
         }
     }
+</script>
+
+
+
+
+{{-- ---------------------======================record number script  --}}
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+var originalRecordNumber = document.getElementById('record').value;
+var initialPlaceholder = '---';
+
+document.getElementById('initiator_group').addEventListener('change', function() {
+    var selectedValue = this.value;
+    var recordNumberElement = document.getElementById('record');
+    var initiatorGroupCodeElement = document.getElementById('initiator_group_code');
+
+    // Update the initiator group code
+    initiatorGroupCodeElement.value = selectedValue;
+
+    // Update the record number by replacing the initial placeholder with the selected initiator group code
+    var newRecordNumber = originalRecordNumber.replace(initialPlaceholder, selectedValue);
+    recordNumberElement.value = newRecordNumber;
+
+    // Update the original record number to keep track of changes
+    originalRecordNumber = newRecordNumber;
+    initialPlaceholder = selectedValue;
+});
+});
+
 </script>
 @endsection

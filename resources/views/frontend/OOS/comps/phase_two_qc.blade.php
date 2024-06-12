@@ -5,7 +5,6 @@
             <div class="col-md-12 mb-4">
                 <div class="group-input">
                     <label for="Description Deviation">Summary of Exp./Hyp.</label>
-                    <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
                     <textarea class="summernote" name="summary_of_exp_hyp_piiqcr" id="summernote-1">
                 {{$data->summary_of_exp_hyp_piiqcr ?  $data->summary_of_exp_hyp_piiqcr : ''}}
                 </textarea>
@@ -66,7 +65,7 @@
                     <label for="Description Deviation">Details of Root Cause</label>
                     <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
                     <textarea class="summernote" name="details_of_root_cause_piiqcr" id="summernote-1">
-                {{$data->impact_assessment_piiqcr ? $data->impact_assessment_piiqcr : ''}}
+                {{$data->details_of_root_cause_piiqcr ? $data->details_of_root_cause_piiqcr : ''}}
                 </textarea>
                 </div>
             </div>
@@ -86,7 +85,7 @@
                         Please Attach all relevant or supporting documents
                     </small>
                     <div class="file-attachment-field">
-                        <div class="file-attachment-list" id="file_attach">
+                        <div class="file-attachment-list" id="attachments_piiqcr">
 
                             @if ($data->attachments_piiqcr)
                             @foreach($data->attachments_piiqcr as $file)
@@ -107,7 +106,7 @@
                         <div class="add-btn">
                             <div>Add</div>
                             <input type="file" id="myfile" name="attachments_piiqcr[]"
-                                oninput="addMultipleFiles(this, 'file_attach')" multiple>
+                                oninput="addMultipleFiles(this, 'attachments_piiqcr')" multiple>
                         </div>
                     </div>
 

@@ -1,9 +1,10 @@
 <?php
-
+// namespace App;
 use App\Models\ActionItem;
 use App\Models\Division;
 use App\Models\QMSDivision;
 use App\Models\User;
+use App\Models\OOS_micro;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
@@ -13,7 +14,6 @@ class Helpers
 {
     public static function getArrayKey(array $array, $key)
     {
-        return $array && is_array($array) && array_key_exists($key, $array) ? $array[$key] : '';
         return $array && is_array($array) && array_key_exists($key, $array) ? $array[$key] : '';
     }
 
@@ -76,6 +76,16 @@ class Helpers
 
 
     }}
+
+    public static function isRiskAssessment($data)
+    {   
+        if($data == 0 || $data  >= 7){
+            return 'disabled';
+        }else{
+            return  '';
+        }
+         
+    }
     // public static function getHodUserList(){
 
     //     return $hodUserList = DB::table('user_roles')->where(['q_m_s_roles_id' =>'4'])->get();
@@ -589,15 +599,31 @@ class Helpers
         return $isQA;
     }
 
+    // Helpers::getMicroGridData($micro, 'analyst_training', true, 'response', true, 0)
+    public static function getMicroGridData(OOS_micro $micro, $identifier, $getKey = false, $keyName = null, $byIndex = false, $index = 0)
+    {
+        $res = $getKey ? '' : [];
+            try {
+                $grid = $micro->grids()->where('identifier', $identifier)->first();
 
-    // public static function hodMail($data)
-    // {
-    //     Mail::send('hod-mail',['data' => $data],
-    // function ($message){
-    //         $message->to("shaleen.mishra@mydemosoftware.com")
-    //                 ->subject('Record is for Review');
-    //     });
-    // }
+                if($grid && is_array($grid->data)){
+
+                    $res = $grid->data;
+
+                    if ($getKey && !$byIndex) {
+                        $res = array_key_exists($keyName, $grid->data) ? $grid->data[$keyName] : '';
+                    }
+
+                    if ($getKey && $byIndex && is_array($grid->data[$index])) {
+                        $res = array_key_exists($keyName, $grid->data[$index]) ? $grid->data[$index][$keyName] : '';
+                    }
+                }
+
+            } catch(\Exception $e){
+
+            }
+        return $res;
+    }
 
     public static function disabledErrataFields($data)
     {

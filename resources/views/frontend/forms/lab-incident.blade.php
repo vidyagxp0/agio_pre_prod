@@ -42,7 +42,7 @@
                 <button class="cctablinks" onclick="openCity(event, 'CCForm10')">System Suitability Failure Inicidence</button>
                 <button class="cctablinks" onclick="openCity(event, 'CCForm11')">Closure</button>
                 <button class="cctablinks" onclick="openCity(event, 'CCForm7')">Activity Log</button>
-                
+
             </div>
 
             <form action="{{ route('labIncidentCreate') }}" method="post" enctype="multipart/form-data">
@@ -91,7 +91,7 @@
                                         <!-- {{-- <div class="static">{{ date('d-M-Y') }}</div> --}} -->
                                     </div>
                                 </div>
-                               
+
                                 <div class="col-md-6">
                                     <div class="group-input">
                                         <label for="search">
@@ -153,7 +153,7 @@
                                         <input type="text" name="initiator_group_code" id="initiator_group_code" value="" readonly>
                                     </div>
                                 </div>
-                               
+
                                 <div class="col-12">
                                     <div class="group-input">
                                         <label for="Short Description">Short Description<span
@@ -161,19 +161,19 @@
                                         characters remaining
                                         <input id="docname" type="text" name="short_desc" maxlength="255" required>
                                     </div>
-                                </div>  
+                                </div>
 
-                             
-                            
 
-                      
+
+
+
                             <!----------------------------------------------------------new table-------------------------------------------------------------------------->
-                            
-                        
+
+
                         <div class="col-12">
                             <div class="group-input" id="IncidentRow">
                                 <label for="audit-incident-grid">
-                                    Incident Investigation Report 
+                                    Incident Investigation Report
                                     <button type="button" name="audit-incident-grid" id="IncidentAdd">+</button>
                                     <span class="text-primary" data-bs-toggle="modal"
                                         data-bs-target="#observation-field-instruction-modal"
@@ -181,7 +181,7 @@
                                         (Launch Instruction)
                                     </span>
                                 </label>
-                                
+
                                 <table class="table table-bordered" id="onservation-incident-table">
                                     <thead>
                                         <tr>
@@ -190,8 +190,8 @@
                                             <th>B No./A.R. No.</th>
                                             <th>Remarks</th>
                                             {{-- <th>Action</th> --}}
-    
-    
+
+
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -206,53 +206,53 @@
                                               </td>
                                             --}}
                                               <td><input type="text" name="investrecord[0][name_of_product]" value="">
-                                               </td>                                           
+                                               </td>
                                             <td><input type="text" name="investrecord[0][batch_no]" value=""></td>
                                              <td><input type="text" name="investrecord[0][remarks]" value="" ></td>
-                                             
-    
+
+
                                         </tr>
                                        {{-- @endforeach --}}
                                      </tbody>
                                 </table>
                             </div>
                             </div>
-    
-    
-    
+
+
+
                   <script>
                     document.addEventListener('DOMContentLoaded', function() {
                         var selectField = document.getElementById('Facility_Equipment');
                         var inputsToToggle = [];
-    
+
                         // Add elements with class 'facility-name' to inputsToToggle
                         var facilityNameInputs = document.getElementsByClassName('facility-name');
                         for (var i = 0; i < facilityNameInputs.length; i++) {
                             inputsToToggle.push(facilityNameInputs[i]);
                         }
-    
+
                         // Add elements with class 'id-number' to inputsToToggle
                         var idNumberInputs = document.getElementsByClassName('id-number');
                         for (var j = 0; j < idNumberInputs.length; j++) {
                             inputsToToggle.push(idNumberInputs[j]);
                         }
-    
+
                         // Add elements with class 'remarks' to inputsToToggle
                         var remarksInputs = document.getElementsByClassName('remarks');
                         for (var k = 0; k < remarksInputs.length; k++) {
                             inputsToToggle.push(remarksInputs[k]);
                         }
-    
-    
+
+
                         selectField.addEventListener('change', function() {
                             var isRequired = this.value === 'yes';
                             console.log(this.value, isRequired, 'value');
-    
+
                             inputsToToggle.forEach(function(input) {
                                 input.required = isRequired;
                                 console.log(input.required, isRequired, 'input req');
                             });
-    
+
                             document.getElementById('facilityRow').style.display = isRequired ? 'block' : 'none';
                             // Show or hide the asterisk icon based on the selected value
                             var asteriskIcon = document.getElementById('asteriskInvi');
@@ -260,15 +260,15 @@
                         });
                     });
                 </script>
-    
-    
+
+
     <script>
         $(document).ready(function() {
             let investdetails = 1;
             $('#IncidentAdd').click(function(e) {
                 function generateTableRow(serialNumber) {
                     var users = @json($users);
-    
+
                     var html =
                         '<tr>' +
                         '<td><input  type="text" name="investrecord[]" value="' + serialNumber +
@@ -277,22 +277,22 @@
                         '<td><input type="text" name="investrecord['+ investdetails +'][batch_no]" value=""></td>' +
                         '<td><input type="text" name="investrecord['+ investdetails +'][remarks]" value=""></td>' +
                         // '<td><button class="removeRowBtn">Remove</button></td>' +
-    
-    
+
+
                         '</tr>';
-    
+
                     for (var i = 0; i < users.length; i++) {
                         html += '<option value="' + users[i].id + '">' + users[i].name + '</option>';
                     }
-    
+
                     html += '</select></td>' +
-    
+
                         '</tr>';
                         investdetails++;
-    
+
                     return html;
                 }
-    
+
                 var tableBody = $('#onservation-incident-table tbody');
                 var rowCount = tableBody.children('tr').length;
                 var newRow = generateTableRow(rowCount + 1);
@@ -300,14 +300,14 @@
             });
         });
         </script>
-    
-    
-    
-    
-    
+
+
+
+
+
 
                             <!-------------------------------incident grid----------------->
-                                 
+
                                 {{-- New Added --}}
                                 <div class="col-lg-12">
                                     <div class="group-input" id="incident_involved_others_gi">
@@ -318,7 +318,7 @@
 
                                 </div>
 
-                                
+
                                 <div class="col-lg-4">
                                     <div class="group-input" id="stage_stage_gi">
                                         <label for="stage_stage_gi">Stage<span
@@ -343,7 +343,7 @@
                                     </div>
 
                                 </div>
-                                
+
                                 <div class="col-lg-6">
                                     <div class="group-input" id="test_gi">
                                         <label for="test_gi">Test<span
@@ -567,7 +567,7 @@
                                             <option value="2">2</option>
                                             <option value="3">3</option>
                                         </select>
-                                    </div> 
+                                    </div>
                                 </div>
                                 
                                 <div class="col-12">
@@ -631,8 +631,8 @@
                             <textarea name="proposed_correctivei_ia"></textarea>
                         </div>
                      </div>
-                
-                    
+
+
                      <div class="col-12">
                         <div class="group-input">
                             <label for="Repeat Analysis Plan ">Repeat Analysis Plan</label>
@@ -641,7 +641,7 @@
                          </div>
 
 
-                          
+
                 <div class="col-12">
                     <div class="group-input">
                         <label for="Result Of Repeat Analysis ">Result Of Repeat Analysis</label>
@@ -680,15 +680,15 @@
                 <option value="Analyst Error">Analyst Error</option>
                 <option value="Instrument Error">Instrument Error</option>
                 <option value="Atypical Error">Atypical Error</option>
-              
+
             </select>
         </div>
     </div>
     {{-- type of incidence --}}
 
-    
+
                 {{-- selection field --}}
-                
+
                 <div class="col-md-6">
                     <div class="group-input">
                         <label for="search">
@@ -738,9 +738,9 @@
                     </div>
                 </div> --}}
                 {{-- selection field --}}
-                
 
-                               
+
+
                                 <div class="col-12">
                                     <div class="group-input">
                                         <label for="Attachments">Attachments</label>
@@ -756,7 +756,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                
+
                             </div>
                             <div class="button-block">
                                 <button type="submit" class="saveButton">Save</button>
@@ -766,13 +766,7 @@
                             </div>
                         </div>
                     </div>
-                    
 
-                  
-                   
-                    
-                    
-                    
                       <!-- Incident Details content -->
                       <div id="CCForm8" class="inner-block cctabcontent">
                         <div class="inner-block-content">
@@ -900,9 +894,9 @@
                                 <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"> Exit </a> </button>
                             </div>
                         </div>
-                   
+
                     </div>
-                    
+
 
                     <!-- CAPA content -->
                     <div id="CCForm4" class="inner-block cctabcontent">
@@ -1054,7 +1048,7 @@
                                 <div class="col-12 sub-head">
                                     Extension Justification
                                 </div>
-                               
+
                                 <div class="col-12">
                                     <div class="group-input">
                                         <label for="due_date_extension">Due Date Extension Justification</label>
@@ -1064,10 +1058,12 @@
                                     </div>
                                 </div>
                             </div>
-                            
+
                             <div class="button-block">
                                 <button type="submit" class="saveButton">Save</button>
                                 <button type="button" class="backButton" onclick="previousStep()">Back</button>
+
+
                                 <button type="button" class="nextButton" onclick="nextStep()">Next</button>
                                 <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"> Exit </a> </button>
                             </div>
@@ -1075,13 +1071,13 @@
                     </div>
 
                   <!-- Closure -->
-                  
+
                   <div id="CCForm10" class="inner-block cctabcontent">
                     <div class="inner-block-content">
                             <div class="row">
-                                        
+
                             <!----------------------------------------------------------new table-------------------------------------------------------------------------->
-                            
+
                         {{-- new added table --}}
                         <div class="col-12">
                             <div class="group-input" id="suitabilityRow">
@@ -1094,7 +1090,7 @@
                                         (Launch Instruction)
                                     </span>
                                 </label>
-                                
+
                                 <table class="table table-bordered" id="onservation-field-table">
                                     <thead>
                                         <tr>
@@ -1103,8 +1099,8 @@
                                             <th>B No./A.R. No.</th>
                                             <th>Remarks</th>
                                             {{-- <th>Action</th> --}}
-    
-    
+
+
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -1118,56 +1114,56 @@
                                             --}}
                                             <td>{{ $suitabilityNumber++ }}</td>
                                               <td><input type="text" name="investigation[0][name_of_product_ssfi]" value="">
-                                               </td>                                           
+                                               </td>
                                             <td><input type="text" name="investigation[0][batch_no_ssfi]" value=""></td>
                                              <td><input type="text" name="investigation[0][remarks_ssfi]" value="" ></td>
-                                             
-    
+
+
                                         </tr>
                                        {{-- @endforeach --}}
                                      </tbody>
                                 </table>
-    
-    
-                                
+
+
+
                 </div>
                             </div>
-    
-    
-    
+
+
+
                   <script>
                     document.addEventListener('DOMContentLoaded', function() {
                         var selectField = document.getElementById('Facility_Equipment');
                         var inputsToToggle = [];
-    
+
                         // Add elements with class 'facility-name' to inputsToToggle
                         var facilityNameInputs = document.getElementsByClassName('facility-name');
                         for (var i = 0; i < facilityNameInputs.length; i++) {
                             inputsToToggle.push(facilityNameInputs[i]);
                         }
-    
+
                         // Add elements with class 'id-number' to inputsToToggle
                         var idNumberInputs = document.getElementsByClassName('id-number');
                         for (var j = 0; j < idNumberInputs.length; j++) {
                             inputsToToggle.push(idNumberInputs[j]);
                         }
-    
+
                         // Add elements with class 'remarks' to inputsToToggle
                         var remarksInputs = document.getElementsByClassName('remarks');
                         for (var k = 0; k < remarksInputs.length; k++) {
                             inputsToToggle.push(remarksInputs[k]);
                         }
-    
-    
+
+
                         selectField.addEventListener('change', function() {
                             var isRequired = this.value === 'yes';
                             console.log(this.value, isRequired, 'value');
-    
+
                             inputsToToggle.forEach(function(input) {
                                 input.required = isRequired;
                                 console.log(input.required, isRequired, 'input req');
                             });
-    
+
                             document.getElementById('facilityRow').style.display = isRequired ? 'block' : 'none';
                             // Show or hide the asterisk icon based on the selected value
                             var asteriskIcon = document.getElementById('asteriskInvi');
@@ -1175,14 +1171,14 @@
                         });
                     });
     </script>
-    
-    
+
+
     <script>
         $(document).ready(function() {
             $('#ObservationAdd').click(function(e) {
                 function generateTableRow(serialNumber) {
                     var users = @json($users);
-    
+
                     var html =
                         '<tr>' +
                         '<td><input disabled type="text" name="serial[]" value="' + serialNumber +
@@ -1191,21 +1187,21 @@
                         '<td><input type="text" name="investigation[0][batch_no]" value=""></td>' +
                         '<td><input type="text" name="investigation[0][remarks]" value=""></td>' +
                         // '<td><button class="removeRowBtn">Remove</button></td>' +
-    
-    
+
+
                         '</tr>';
-    
+
                     for (var i = 0; i < users.length; i++) {
                         html += '<option value="' + users[i].id + '">' + users[i].name + '</option>';
                     }
-    
+
                     html += '</select></td>' +
-    
+
                         '</tr>';
-    
+
                     return html;
                 }
-    
+
                 var tableBody = $('#onservation-field-table tbody');
                 var rowCount = tableBody.children('tr').length;
                 var newRow = generateTableRow(rowCount + 1);
@@ -1213,59 +1209,59 @@
             });
         });
         </script>
-    
-    
-    
-    
-    
+
+
+
+
+
                             {{-- new added table --}}
                                 <!----------------------------------------------------------new table-------------------------------------------------------------------------->
 
-                      
+
 
                                                         {{-- New Added --}}
                                                         <div class="col-lg-12">
                                                             <div class="group-input" id="Incident_invlvolved_others">
-                                                                <label for="Incident_Involved">Instrument Involved<span
+                                                                <label for="instrument_involved_SSFI">Instrument Involved<span
                                                                         class="text-danger d-none">*</span></label>
-                                                                <textarea name="involved_ssfi"></textarea>
+                                                                <textarea name="instrument_involved_SSFI"></textarea>
                                                             </div>
-                        
+
                                                         </div>
-                        
-                                                        
+
+
                                                         <div class="col-lg-4">
                                                             <div class="group-input" id="Incident_stage">
-                                                                <label for="Incident_stage">Stage<span
+                                                                <label for="stage_SSFI">Stage<span
                                                                         class="text-danger d-none">*</span></label>
-                                                                <input type="text" name="stage_stage_ssfi">
+                                                                <input type="text" name="stage_SSFI">
                                                             </div>
-                        
+
                                                         </div><br>
                                                         <div class="col-lg-4">
-                                                            <div class="group-input" id="Incident_stability_cond">
-                                                                <label for="Incident_stability_cond">Stability Condition (If Applicable)<span
+                                                            <div class="group-input" id="stability_condition_SSFI">
+                                                                <label for="stability_condition_SSFI">Stability Condition (If Applicable)<span
                                                                         class="text-danger d-none">*</span></label>
-                                                                <input type="text" name="Incident_stability_cond_ssfi">
+                                                                <input type="text" name="stability_condition_SSFI">
                                                             </div>
-                        
+
                                                         </div>
                                                         <div class="col-lg-4">
-                                                            <div class="group-input" id="Incident_interval_others">
-                                                                <label for="Incident_interval_others">Interval (If Applicable)<span
+                                                            <div class="group-input" id="interval_SSFI">
+                                                                <label for="interval_SSFI">Interval (If Applicable)<span
                                                                         class="text-danger d-none">*</span></label>
-                                                                <input type="text" name="Incident_interval_ssfi">
+                                                                <input type="text" name="interval_SSFI">
                                                             </div>
-                        
+
                                                         </div>
-                                                        
+
                                                         <div class="col-lg-6">
-                                                            <div class="group-input" id="Incident_test_others">
-                                                                <label for="Incident_test_others">Test<span
+                                                            <div class="group-input" id="test_SSFI">
+                                                                <label for="test_SSFI">Test<span
                                                                         class="text-danger d-none">*</span></label>
-                                                                <input type="text" name="test_ssfi">
+                                                                <input type="text" name="test_SSFI">
                                                             </div>
-                        
+
                                                         </div>
                         
                                                          
@@ -1293,27 +1289,27 @@
                                                             </div>
                                                         </div>
                                                         <div class="col-lg-6">
-                                                            <div class="group-input" id="Incident_specification_no">
-                                                                <label for="Incident_specification_no">Specification Number<span
+                                                            <div class="group-input" id="specification_number_SSFI">
+                                                                <label for="specification_number_SSFI">Specification Number<span
                                                                         class="text-danger d-none">*</span></label>
-                                                                <input type="text" name="Incident_specification_ssfi">
+                                                                <input type="text" name="specification_number_SSFI">
                                                             </div>
-                        
+
                                                         </div>
                                                         <div class="col-lg-6">
-                                                            <div class="group-input" id="Incident_stp_no">
-                                                                <label for="Incident_stp_no">STP Number<span
+                                                            <div class="group-input" id="stp_number_SSFI">
+                                                                <label for="stp_number_SSFI">STP Number<span
                                                                         class="text-danger d-none">*</span></label>
-                                                                <input type="text" name="Incident_stp_ssfi">
+                                                                <input type="text" name="stp_number_SSFI">
                                                             </div>
-                        
+
                                                         </div>
                                                         
                                                         {{-- <div class="col-lg-4">
                                                             <div class="group-input" id="Incident_date_incidence">
                                                                 <label for="Incident_date_incidence"><span
                                                                         class="text-danger d-none">*</span></label>
-                                                                <input type="date" name="Incident_date_incidence_ssfi">
+                                                                <input type="date" name="date_of_incidence_SSFI">
                                                             </div>
                         
                                                         </div> --}}
@@ -1347,50 +1343,50 @@
                                                                     <p class="text-danger">{{ $message }}</p>
                                                                 @enderror
                                                             </div>
-                        
+
                                                         </div>
                                                         <div class="col-lg-12">
-                                                            <div class="group-input" id="Description_incidence">
-                                                                <label for="Description_incidence"> Description Of Incidence<span
+                                                            <div class="group-input" id="description_of_incidence_SSFI">
+                                                                <label for="description_of_incidence_SSFI"> Description Of Incidence<span
                                                                         class="text-danger d-none">*</span></label>
-                                                                <textarea name="Description_incidence_ssfi"></textarea>
+                                                                <textarea name="description_of_incidence_SSFI"></textarea>
                                                             </div>
-                        
+
                                                         </div>
                                                         <div class="col-lg-12">
-                                                            <div class="group-input" id="Detail_investigation">
-                                                                <label for="Detail_investigation"> Detail Investigation<span
+                                                            <div class="group-input" id="detail_investigation_SSFI">
+                                                                <label for="detail_investigation_SSFI"> Detail Investigation<span
                                                                         class="text-danger d-none">*</span></label>
-                                                                <textarea name="Detail_investigation_ssfi"></textarea>
+                                                                <textarea name="detail_investigation_SSFI"></textarea>
                                                             </div>
-                        
+
                                                         </div>
 
                                                         <div class="col-lg-12">
-                                                            <div class="group-input" id="proposed corrective">
-                                                                <label for="Detail_investigation"> Proposed Corrective Action<span
+                                                            <div class="group-input" id="proposed_corrective_action_SSFI">
+                                                                <label for="proposed_corrective_action_SSFI"> Proposed Corrective Action<span
                                                                         class="text-danger d-none">*</span></label>
-                                                                <textarea name="proposed_corrective_ssfi"></textarea>
+                                                                <textarea name="proposed_corrective_action_SSFI"></textarea>
                                                             </div>
-                        
+
                                                         </div>
 
                                                         <div class="col-lg-12">
-                                                            <div class="group-input" id="root cause">
-                                                                <label for="root_cause"> Root Cause<span
+                                                            <div class="group-input" id="root_cause_SSFI">
+                                                                <label for="root_cause_SSFI"> Root Cause<span
                                                                         class="text-danger d-none">*</span></label>
                                                                 <textarea name="root_cause_ssfi"></textarea>
                                                             </div>
-                        
+
                                                         </div>
 
                                                         <div class="col-lg-12">
                                                             <div class="group-input" id="incident summary ssfi">
                                                                 <label for="incident summary ssfi"> Incident Summary<span
                                                                         class="text-danger d-none">*</span></label>
-                                                                <textarea name="incident_summary_ssfi"></textarea>
+                                                                <textarea name="incident_summary_SSFI"></textarea>
                                                             </div>
-                        
+
                                                         </div>
 
                                                         {{-- <div class="col-md-6">
@@ -1398,13 +1394,13 @@
                                                                   <label for="search">
                                                               Investigator(QC) <span class="text-danger"></span>
                                                             </label>
-                                                            <select id="select-state" placeholder="Select..." name="assign_to">
+                                                            <select id="select-state" placeholder="Select..." name="investigator_qc_SSFI">
                                                               <option value="">Select a value</option>
                                                               @foreach ($users as $data)
                                                                   <option value="{{ $data->id }}">{{ $data->name }}</option>
                                                               @endforeach
                                                            </select>
-                                                            @error('assign_to')
+                                                            @error('investigator_qc_SSFI')
                                                               <p class="text-danger">{{ $message }}</p>
                                                             @enderror
                                                                      </div>
@@ -1428,7 +1424,7 @@
                                                 </div> --}}
                                                 <div class="col-lg-12">
                                                     <div class="group-input">
-                                                        <label for="system_suitable_attachments">File Attachment</label>
+                                                        <label for="file_attachment_SSFI">File Attachment</label>
                                                         <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
                                                         {{-- <input type="file" id="myfile" name="Initial_Attachment"> --}}
                                                         <div class="file-attachment-field">
@@ -1443,15 +1439,17 @@
                                                 </div>
 
                                                 <div class="button-block">
-                                                    <button type="submit" class="saveButton">Save</button>
+                                                    {{-- <button type="submit" class="saveButton">Save</button> --}}
+                                <button type="submit" id="ChangesaveButton" class="saveButton">Save</button>
+
                                                     <button type="button" class="backButton" onclick="previousStep()">Back</button>
                                                     <button type="button" class="nextButton" onclick="nextStep()">Next</button>
                                                     <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"> Exit </a> </button>
                                                 </div>
 
-     
-                                                        
-                                                        
+
+
+
                                                         {{-- New Added --}}
                         </div>
                     </div>
@@ -1463,8 +1461,8 @@
                             <div class="row">
                                 <div class="col-lg-12">
                                     <div class="group-input">
-                                        <label for="closure_incident">Closure Of Incident</label>
-                                        <input type="text" name="closure_incident_c">
+                                        <label for="closure_of_incident_closure">Closure Of Incident</label>
+                                        <input type="text" name="closure_of_incident_closure">
                                     </div>
 
                                 </div>
@@ -1477,7 +1475,7 @@
                                             <option value="Yes">Yes</option>
                                             <option value="No">No</option>
                                             <option value="NA">NA</option>
-                                          
+
                                         </select>
                                     </div>
                                 </div>
@@ -1485,7 +1483,7 @@
                                 <div class="col-lg-12">
                                     <div class="group-input">
                                         <label for="head remark"><b>QC Head Remark</b></label>
-                                       <textarea name="qc_hear_remark_c"></textarea>
+                                       <textarea name="qc_head_remark_closure"></textarea>
                                     </div>
                                 </div>
 
@@ -1496,13 +1494,13 @@
                                           <label for="search">
                                       QC Head <span class="text-danger"></span>
                                     </label>
-                                    <select id="select-state" placeholder="Select..." name="assign_to">
+                                    <select id="select-state" placeholder="Select..." name="qc_head_closure">
                                       <option value="">Select a value</option>
                                       @foreach ($users as $data)
                                           <option value="{{ $data->id }}">{{ $data->name }}</option>
                                       @endforeach
                                    </select>
-                                    @error('assign_to')
+                                    @error('qc_head_closure')
                                       <p class="text-danger">{{ $message }}</p>
                                     @enderror
                                              </div>
@@ -1512,7 +1510,7 @@
                             <div class="col-lg-12">
                                 <div class="group-input">
                                     <label for=" qa head remark"><b>QA Head Remark</b></label>
-                                   <textarea name="qa_hear_remark_c"></textarea>
+                                   <textarea name="qa_head_remark_closure"></textarea>
                                 </div>
                             </div>
 
@@ -1526,8 +1524,8 @@
                                         <div class="file-attachment-list" id="closure_attachment_c"></div>
                                         <div class="add-btn">
                                             <div>Add</div>
-                                            <input type="file" id="myfile" name="closure_attachment_c[]"
-                                                oninput="addMultipleFiles(this, 'closure_attachment_c')" multiple>
+                                            <input type="file" id="myfile" name="file_attachment_closure[]"
+                                                oninput="addMultipleFiles(this, 'file_attachment_closure')" multiple>
                                         </div>
                                     </div>
                                 </div>
@@ -1535,13 +1533,15 @@
 
 
                             <div class="button-block">
-                                <button type="submit" class="saveButton">Save</button>
+                                {{-- <button type="submit" class="saveButton">Save</button> --}}
+                                <button type="submit" id="ChangesaveButton" class="saveButton">Save</button>
+
                                 <button type="button" class="backButton" onclick="previousStep()">Back</button>
                                 <button type="button" class="nextButton" onclick="nextStep()">Next</button>
                                 <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"> Exit </a> </button>
                             </div>
 
-                                
+
                             </div>
                         </div>
                 </div>
@@ -1968,5 +1968,5 @@
 
 
 
-    
+
 @endsection

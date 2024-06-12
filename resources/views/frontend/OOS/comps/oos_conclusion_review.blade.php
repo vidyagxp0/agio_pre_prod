@@ -103,7 +103,7 @@
                         Please Attach all relevant or supporting documents
                     </small>
                     <div class="file-attachment-field">
-                        <div class="file-attachment-list" id="file_attach">
+                        <div class="file-attachment-list" id="conclusion_attachment_ocr">
 
                             @if ($data->conclusion_attachment_ocr)
                             @foreach ($data->conclusion_attachment_ocr as $file)
@@ -122,10 +122,9 @@
                         <div class="add-btn">
                             <div>Add</div>
                             <input type="file" id="myfile" name="conclusion_attachment_ocr[]"
-                                oninput="addMultipleFiles(this, 'file_attach')" multiple>
+                                oninput="addMultipleFiles(this, 'conclusion_attachment_ocr')" multiple>
                         </div>
                     </div>
-
                 </div>
             </div>
             <div class="col-lg-6">
@@ -134,7 +133,6 @@
                     <input type="text" name="cq_approver" value="{{$data->cq_approver ? $data->cq_approver : '' }}">
                 </div>
             </div>
-
             <div class="button-block">
                 <button type="submit" id="ChangesaveButton" class="saveButton">Save</button>
                 <button type="button" class="backButton" onclick="previousStep()">Back</button>

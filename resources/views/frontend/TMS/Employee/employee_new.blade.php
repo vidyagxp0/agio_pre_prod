@@ -127,22 +127,50 @@
                                     </select>
                                 </div>
                             </div>
-                            <div class="col-lg-6">
+                            <div class="col-lg-6 new-date-data-field">
+                                <div class="group-input input-date">
+                                    <label for="Actual Start Date">Actual Start Date</label>
+                                    <div class="calenderauditee">
+                                        <input type="text" id="start_date" readonly placeholder="DD-MMM-YYYY" />
+                                        <input type="date" name="start_date"
+                                            min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" value=""
+                                            class="hide-input" oninput="handleDateInput(this, 'start_date')" />
+                                    </div>
+                                </div>
+                            </div>
+                            {{-- <div class="col-lg-6">
                                 <div class="group-input">
                                     <label for="Actual Start Date">Actual Start Date</label>
                                     <input type="date" name="start_date">
                                 </div>
+                            </div> --}}
+                            <div class="col-lg-6 new-date-data-field">
+                                <div class="group-input input-date">
+                                    <label for="Joining Date">Joining Date</label>
+                                    <div class="calenderauditee">
+                                        <input type="text" id="joining_date" readonly placeholder="DD-MMM-YYYY" />
+                                        <input type="date" name="joining_date"
+                                            min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" value=""
+                                            class="hide-input" oninput="handleDateInput(this, 'joining_date')" />
+                                    </div>
+                                </div>
                             </div>
-                            <div class="col-lg-6">
+                            {{-- <div class="col-lg-6">
                                 <div class="group-input">
                                     <label for="Joining Date">Joining Date</label>
                                     <input type="date" name="joining_date">
                                 </div>
-                            </div>
+                            </div> --}}
                             <div class="col-lg-6">
                                 <div class="group-input">
                                     <label for="Employee ID">Employee ID <span class="text-danger">*</span></label>
                                     <input type="text" name="employee_id" required>
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="group-input">
+                                    <label for="employee_name">Employee Name <span class="text-danger">*</span></label>
+                                    <input type="text" name="employee_name" required>
                                 </div>
                             </div>
                             <div class="col-lg-6">

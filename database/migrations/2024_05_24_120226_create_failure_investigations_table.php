@@ -30,7 +30,7 @@ return new class extends Migration
             $table->string('Initiator_Group')->nullable();
             $table->longText('short_description')->nullable();
             $table->string('short_description_required')->nullable();
-            $table->string('nature_of_repeat')->nullable();
+            $table->longText('nature_of_repeat')->nullable();
             $table->date('failure_investigation_date')->nullable();
             $table->date('failure_investigation_reported_date')->nullable();
             $table->string('Facility')->nullable();
@@ -78,6 +78,7 @@ return new class extends Migration
             $table->longText('Capa_attachment')->nullable();
             $table->longText('QA_attachments')->nullable();
             $table->longText('closure_attachment')->nullable();
+            $table->longText('initial_file')->nullable();
 
             $table->string('submit_on')->nullable();
             $table->string('submit_by')->nullable();
@@ -107,7 +108,7 @@ return new class extends Migration
 
             $table->text('QA_head_approved_by')->nullable();
             $table->text('QA_head_approved_on')->nullable();
-            $table->longText('QA_head_approved_comment');
+            $table->longText('QA_head_approved_comment')->nullable();
             
             $table->text('pending_initiator_approved_by')->nullable();
             $table->text('pending_initiator_approved_on')->nullable();
@@ -115,7 +116,7 @@ return new class extends Migration
             
             $table->text('QA_final_approved_by')->nullable();
             $table->text('QA_final_approved_on')->nullable();
-            $table->longText('QA_final_approved_comment');
+            $table->longText('QA_final_approved_comment')->nullable();
 
             $table->string('capa_required')->nullable();
             $table->string('qrm_required')->nullable();

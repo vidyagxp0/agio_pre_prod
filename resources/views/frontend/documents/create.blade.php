@@ -139,7 +139,7 @@
                                         <label for="Division Code"><b>Site/Location Code</b></label>
                                         <input readonly type="text" name="division_id" value="{{ Helpers::getDivisionName($_GET['id'])}}">
                                         <input type="hidden" name="division_id" value="{{$_GET['id']}}">
-                                        {{-- <div class="static">QMS-North America</div> --}}
+                                        {{-- <div class="static">{{ Helpers::getDivisionName(session()->get('division')) }}</div> --}}
                                         @else
                                         <label for="Division Code"><b>Site/Location Code </b></label>
                                         {{-- <input readonly type="text" name="division_id"

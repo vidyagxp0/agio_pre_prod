@@ -55,10 +55,11 @@ $users = DB::table('users')->get();
     {{-- <div class="pr-id">
             New Child
         </div> --}}
-        <div class="division-bar">
-            <strong>Site Division/Project</strong> :
-            {{ Helpers::getDivisionName(session()->get('division')) }} / Out Of Calibration
-        </div>
+    <div class="division-bar">
+        <strong>Site Division/Project</strong> :
+        {{ Helpers::getDivisionName(session()->get('division')) }}
+        / Out Of Calibration
+    </div>
 </div>
 
 <script>

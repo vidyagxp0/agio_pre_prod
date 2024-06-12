@@ -361,8 +361,7 @@
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="RLS Record Number"><b>Record Number</b></label>
-                                        <input disabled type="text" name="record_number" value="PL-01-109">
-                                        <input type="hidden" name="record_number" value="PL-01-109">
+                                        <input disabled type="text" name="record_number" value="">
                                     </div>
                                 </div>
                                 {{-- <div class="col-lg-6">
@@ -445,10 +444,7 @@
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="trainer">Trainer Name</label>
-                                        <select name="trainer_name" id="trainer_name">
-                                            <option value="">Select</option>
-                                            <option value="trainer1">Trainer 1</option>
-                                        </select>
+                                        <input id="trainer_name" type="text" name="trainer_name" maxlength="255">
                                     </div>
                                 </div>
 

@@ -10,18 +10,21 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use App\Models\User;
+use App\Models\RecordNumber;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\App;
+use App\Models\QMSDivision;
 use PDF;
+use Helpers;
 class ErrataController extends Controller
 {
-    public function index($id)
+    public function index()
     {
         $old_record = errata::select('id', 'division_id', 'record')->get();
         // $showdata = errata::find($id);
-        $record_number = ((errata::first()->value('counter')) + 1);
+        $record_number = ((RecordNumber::first()->value('counter')) + 1);
         $record_number = str_pad($record_number, 4, '0', STR_PAD_LEFT);
-        return view('frontend.errata.errata_new', compact('old_record'));
+        return view('frontend.errata.errata_new', compact('record_number'));
         // $erratagridnew = ErrataGrid::where('id', $id)->latest()->first();
 
     }
@@ -30,7 +33,7 @@ class ErrataController extends Controller
     {
         // dd($request->all());
         $data = new errata();
-        $data->record_no = $request->record_no;
+        $data->record = ((RecordNumber::first()->value('counter')) + 1);
         $data->division_id = $request->division_id;
         $data->initiator_id = Auth::user()->id;
         $data->intiation_date = $request->intiation_date;
@@ -50,7 +53,7 @@ class ErrataController extends Controller
         // $data->details = !empty($request->details) ? implode(',', $request->details) : '';
 
         // $data->details = $request->details;
-        $data->Date_and_time_of_correction = $request->Date_and_time_of_correction;
+        $data->Date_and_time_of_correction = $request->Date_and_time_of_correction ? Carbon::parse($request->Date_and_time_of_correction)->format('d-M-Y H:i') : '';
         $data->QA_Feedbacks = $request->QA_Feedbacks;
         if (!empty($request->QA_Attachments)) {
             $files = [];
@@ -101,6 +104,11 @@ class ErrataController extends Controller
         $data->status = 'Opened';
         $data->stage = 1;
         $data->save();
+
+
+        $record = RecordNumber::first();
+        $record->counter = ((RecordNumber::first()->value('counter')) + 1);
+        $record->update();
 
         if (!empty($data->initiated_by)) {
             $history = new ErrataAuditTrail();
@@ -424,10 +432,13 @@ class ErrataController extends Controller
     public function show($id)
     {
         $showdata = errata::find($id);
+
         // dd($showdata);
+        $record_number = ((RecordNumber::first()->value('counter')) + 1);
+        $record_number = str_pad($record_number, 4, '0', STR_PAD_LEFT);
         $errata_id = $id;
         $grid_Data = ErrataGrid::where(['e_id' => $errata_id, 'identifier' => 'details'])->first();
-        return view('frontend.errata.errata_view', compact('showdata', 'grid_Data', 'errata_id'));
+        return view('frontend.errata.errata_view', compact('showdata', 'grid_Data', 'errata_id','record_number'));
     }
 
     public function stageChange(Request $request, $id)
@@ -753,7 +764,7 @@ class ErrataController extends Controller
         // dd($request->all());
         $lastData = errata::find($id);
         $data = errata::find($id);
-        $data->record_no = $request->record_no;
+        // $data->record_no = $request->record_no;
         $data->division_id = $request->division_id;
         $data->initiator_id = Auth::user()->id;
         $data->intiation_date = $request->intiation_date;
@@ -769,7 +780,10 @@ class ErrataController extends Controller
         $data->brief_description = $request->brief_description;
         $data->type_of_error = $request->type_of_error;
         // $data->details = $request->details;
-        $data->Date_and_time_of_correction = $request->Date_and_time_of_correction;
+        if($request->has('Date_and_time_of_correction')&& $request->Date_and_time_of_correction!== null){
+
+            $data->Date_and_time_of_correction = $request->Date_and_time_of_correction ? Carbon::parse($request->Date_and_time_of_correction)->format('d-M-Y H:i') : '';
+        }
         $data->QA_Feedbacks = $request->QA_Feedbacks;
 
 
@@ -1170,7 +1184,7 @@ class ErrataController extends Controller
         $newDataGridErrata->data = $request->details;
         $newDataGridErrata->save();
         //================================================================
-        toastr()->success("Record is created Successfully");
+        toastr()->success("Record is Updated Successfully");
         return back();
     }
 

@@ -9,7 +9,7 @@ use App\Models\User;
 use App\Models\RoleGroup;
 use App\Models\Oosgrids;
 use App\Models\OosAuditTrial;
-use App\Services\OOSService;
+use App\Services\Qms\OOSService;
 use App\Models\RecordNumber;
 use App\Models\Division;
 use App\Models\QMSDivision;
@@ -34,7 +34,6 @@ class OOSController extends Controller
         
         $record_number = ((RecordNumber::first()->value('counter')) + 1);
         $record_number = str_pad($record_number, 4, '0', STR_PAD_LEFT);
-        
         $division = QMSDivision::where('name', Helpers::getDivisionName(session()->get('division')))->first();
         
         if ($division) {
@@ -58,7 +57,7 @@ class OOSController extends Controller
     
     public function store(Request $request)
     { 
-        
+        // dd($request->all());
         $res = Helpers::getDefaultResponse();
 
         try {
@@ -87,7 +86,7 @@ class OOSController extends Controller
         $cft = [];
         $revised_date = "";
         $data = OOS::find($id);
-
+        // dd($data);
         $old_record = OOS::select('id', 'division_id', 'record_number')->get();
         // $revised_date = Extension::where('parent_id', $id)->where('parent_type', "OOS Chemical")->value('revised_date');
         $data->record_number = str_pad($data->record_number, 4, '0', STR_PAD_LEFT);
@@ -114,377 +113,6 @@ class OOSController extends Controller
         //     toastr()->error("Short description is required");
         //     return redirect()->back();
         // }
-        $lastOosRecod = OOS::findOrFail($id);
-        if(!empty($lastOosRecod))
-            {
-                    // ==========general===========
-                if (!empty($request->description_gi)){
-                    $history = new OosAuditTrial();
-                    $history->oos_id = $lastOosRecod->id;
-                    $history->user_id = Auth::user()->id;
-                    $history->user_name = Auth::user()->name;
-                    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-                    $history->origin_state = $lastOosRecod->status;
-                    $history->change_to =   "Not Applicable";
-                    $history->change_from = $lastOosRecod->status;
-                    $history->action_name = 'Update';
-                    $history->previous = $lastOosRecod->description_gi;
-                    $history->comment = "Not Applicable";
-                    $history->activity_type = 'Short Description';
-                    $history->current = $request->description_gi;
-                    $history->save();
-                }
-                if (!empty($request->initiator_Group)){
-                    $history = new OosAuditTrial();
-                    $history->oos_id = $lastOosRecod->id;
-                    $history->user_id = Auth::user()->id;
-                    $history->user_name = Auth::user()->name;
-                    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-                    $history->origin_state = $lastOosRecod->status;
-                    $history->change_to =   "Not Applicable";
-                    $history->change_from = $lastOosRecod->status;
-                    $history->action_name = 'Update';
-                    $history->previous = $lastOosRecod->initiator_Group;
-                    $history->comment = "Not Applicable";
-                    $history->activity_type = 'initiator Group';
-                    $history->current = $request->initiator_Group;
-                    $history->save();
-                }
-                if (!empty($request->initiator_group_code)){
-                    $history->previous = $lastOosRecod->initiator_group_code;
-                    $history->comment = "Not Applicable";
-                    $history->activity_type = 'Initiator Group Code';
-                    $history->current = $request->initiator_group_code;
-                    $history->save();
-                }
-                if (!empty($request->if_others_gi)){
-                    $history->previous = $lastOosRecod->if_others_gi;
-                    $history->comment = "Not Applicable";
-                    $history->activity_type = 'If Others';
-                    $history->current = $request->if_others_gi;
-                    $history->save();
-                }
-                if (!empty($request->is_repeat_gi)){
-                    $history->previous = $lastOosRecod->is_repeat_gi;
-                    $history->comment = "Not Applicable";
-                    $history->activity_type = 'Is Repeat';
-                    $history->current = $request->is_repeat_gi;
-                    $history->save();
-                }
-                if (!empty($request->repeat_nature_gi)){
-                    $history->previous = $lastOosRecod->repeat_nature_gi;
-                    $history->comment = "Not Applicable";
-                    $history->activity_type = 'Nature Of Change';
-                    $history->current = $request->nature_of_change_gi;
-                    $history->save();
-                }
-                if (!empty($request->deviation_occured_on_gi)){
-                    $history->previous = $lastOosRecod->deviation_occured_on_gi;
-                    $history->comment = "Not Applicable";
-                    $history->activity_type = 'Deviation Occured On';
-                    $history->current = $request->deviation_occured_on_gi;
-                    $history->save();
-                }
-                if (!empty($request->source_document_type_gi)){
-                    $history->previous = $lastOosRecod->source_document_type_gi;
-                    $history->comment = "Not Applicable";
-                    $history->activity_type = 'Source Document Type';
-                    $history->current = $request->source_document_type_gi;
-                    $history->save();
-                }
-                if (!empty($request->reference_system_document_gi)){
-                    $history->previous = $lastOosRecod->source_document_type_gi;
-                    $history->comment = "Not Applicable";
-                    $history->activity_type = 'Reference System Document';
-                    $history->current = $request->reference_system_document_gi;
-                    $history->save();
-                }
-                if (!empty($request->reference_document)){
-                    $history->previous = $lastOosRecod->reference_document;
-                    $history->comment = "Not Applicable";
-                    $history->activity_type = 'Reference Document';
-                    $history->current = $request->reference_document;
-                    $history->save();
-                }
-                if (!empty($request->sample_type_gi)){
-                    $history->previous = $lastOosRecod->sample_type_gi;
-                    $history->comment = "Not Applicable";
-                    $history->activity_type = 'Sample Type';
-                    $history->current = $request->sample_type_gi;
-                    $history->save();
-                }
-                if (!empty($request->product_material_name_gi)){
-                    $history->previous = $lastOosRecod->product_material_name_gi;
-                    $history->comment = "Not Applicable";
-                    $history->activity_type = 'Product / Material Name';
-                    $history->current = $request->product_material_name_gi;
-                    $history->save();
-                }
-                if (!empty($request->market_gi)){
-                    $history->previous = $lastOosRecod->market_gi;
-                    $history->comment = "Not Applicable";
-                    $history->activity_type = 'Market';
-                    $history->current = $request->market_gi;
-                    $history->save();
-                }
-                if (!empty($request->customer_gi)){
-                    $history->previous = $lastOosRecod->customer_gi;
-                    $history->comment = "Not Applicable";
-                    $history->activity_type = 'Customer';
-                    $history->current = $request->customer_gi;
-                    $history->save();
-                }
-                // TapII
-                if (!empty($request->Comments_plidata)){
-                    $history->previous = $lastOosRecod->Comments_plidata;
-                    $history->comment = "Not Applicable";
-                    $history->activity_type = 'Comments Plidata';
-                    $history->current = $oos->Comments_plidata;
-                    $history->save();
-                }
-                if (!empty($request->justify_if_no_field_alert_pli)){
-                    $history->previous = $lastOosRecod->justify_if_no_field_alert_pli;
-                    $history->comment = "Not Applicable";
-                    $history->activity_type = 'Justify If No Field Alert Pli';
-                    $history->current = $oos->justify_if_no_field_alert_pli;
-                    $history->save();
-                }
-                if (!empty($request->justify_if_no_analyst_int_pli)){
-                    $history->previous = $lastOosRecod->justify_if_no_analyst_int_pli;
-                    $history->comment = "Not Applicable";
-                    $history->activity_type = 'Justify if no Analyst Int';
-                    $history->current = $request->justify_if_no_analyst_int_pli;
-                    $history->save();
-                }
-                if (!empty($request->phase_i_investigation_pli)){
-                    $history->previous = $lastOosRecod->phase_i_investigation_pli;
-                    $history->comment = "Not Applicable";
-                    $history->activity_type = 'Phase I Investigation';
-                    $history->current = $request->phase_i_investigation_pli;
-                    $history->save();
-                }
-                if (!empty($request->phase_i_investigation_ref_pli)){
-                    $history->previous = $lastOosRecod->phase_i_investigation_ref_pli;
-                    $history->comment = "Not Applicable";
-                    $history->activity_type = 'Phase I Investigation Ref';
-                    $history->current = $request->phase_i_investigation_ref_pli;
-                    $history->save();
-                }
-                // TapIV
-                if (!empty($request->summary_of_prelim_investiga_plic)){
-                    $history->previous = $lastOosRecod->summary_of_prelim_investiga_plic;
-                    $history->comment = "Not Applicable";
-                    $history->activity_type = 'Summary of Preliminary Investigation';
-                    $history->current = $request->summary_of_prelim_investiga_plic;
-                    $history->save();
-                }
-                if (!empty($request->root_cause_identified_plic)){
-                    $history->previous = $lastOosRecod->root_cause_identified_plic;
-                    $history->comment = "Not Applicable";
-                    $history->activity_type = 'Root Cause Identified';
-                    $history->current = $request->root_cause_identified_plic;
-                    $history->save();
-                }
-                if (!empty($request->oos_category_root_cause_ident_plic)){
-                    $history->previous = $lastOosRecod->oos_category_root_cause_ident_plic;
-                    $history->comment = "Not Applicable";
-                    $history->activity_type = 'OOS Category-Root Cause Ident';
-                    $history->current = $request->oos_category_root_cause_ident_plic;
-                    $history->save();
-                }
-                if (!empty($request->oos_category_others_plic)){
-                    $history->previous = $lastOosRecod->oos_category_others_plic;
-                    $history->comment = "Not Applicable";
-                    $history->activity_type = 'OOS Category Others';
-                    $history->current = $request->oos_category_others_plic;
-                    $history->save();
-                }
-                if (!empty($request->root_cause_details_plic)){
-                    $history->previous = $lastOosRecod->root_cause_details_plic;
-                    $history->comment = "Not Applicable";
-                    $history->activity_type = 'Root Cause Details';
-                    $history->current = $request->root_cause_details_plic;
-                    $history->save();
-                }
-                if (!empty($request->oos_category_others_plic)){
-                    $history->previous = $lastOosRecod->oos_category_others_plic;
-                    $history->comment = "Not Applicable";
-                    $history->activity_type = 'OOS Category-Root Cause Ident';
-                    $history->current = $request->oos_category_others_plic;
-                    $history->save();
-                }
-                if (!empty($request->capa_required_plic)){
-                    $history->previous = $lastOosRecod->capa_required_plic;
-                    $history->comment = "Not Applicable";
-                    $history->activity_type = 'CAPA Required';
-                    $history->current = $request->capa_required_plic;
-                    $history->save();
-                }
-                if (!empty($request->reference_capa_no_plic)){
-                    $history->previous = $lastOosRecod->reference_capa_no_plic;
-                    $history->comment = "Not Applicable";
-                    $history->activity_type = 'Reference CAPA No';
-                    $history->current = $request->reference_capa_no_plic;
-                    $history->save();
-                }
-                if (!empty($request->delay_justification_for_pi_plic)){
-                    $history->previous = $lastOosRecod->delay_justification_for_pi_plic;
-                    $history->comment = "Not Applicable";
-                    $history->activity_type = 'Delay Justification for Preliminary Investigation';
-                    $history->current = $request->delay_justification_for_pi_plic;
-                    $history->save();
-                }
-                // TapV5
-                if (!empty($request->review_comments_plir)){
-                    $history->previous = $lastOosRecod->review_comments_plir;
-                    $history->comment = "Not Applicable";
-                    $history->activity_type = 'Review Comments';
-                    $history->current = $request->review_comments_plir;
-                    $history->save();
-                }
-                if (!empty($request->phase_ii_inv_required_plir)){
-                    $history->previous = $lastOosRecod->phase_ii_inv_required_plir;
-                    $history->comment = "Not Applicable";
-                    $history->activity_type = 'Phase II Inv. Required';
-                    $history->current = $request->phase_ii_inv_required_plir;
-                    $history->save();
-                }
-                // TapVI6
-                if (!empty($request->qa_approver_comments_piii)){
-                    $history->previous = $lastOosRecod->qa_approver_comments_piii;
-                    $history->comment = "Not Applicable";
-                    $history->activity_type = 'QA Approver Comments';
-                    $history->current = $request->qa_approver_comments_piii;
-                    $history->save();
-                }
-                if (!empty($request->qa_approver_comments_piii)){
-                    $history->previous = $lastOosRecod->qa_approver_comments_piii;
-                    $history->comment = "Not Applicable";
-                    $history->activity_type = 'Manufact. Invest. Required?';
-                    $history->current = $request->qa_approver_comments_piii;
-                    $history->save();
-                }
-                if (!empty($request->manufact_invest_required_piii)){
-                    $history->previous = $lastOosRecod->manufact_invest_required_piii;
-                    $history->comment = "Not Applicable";
-                    $history->activity_type = ' Manufacturing Invest. Type';
-                    $history->current = $request->manufact_invest_required_piii;
-                    $history->save();
-                }
-                if (!empty($request->manufacturing_invest_type_piii)){
-                    $history->previous = $lastOosRecod->manufacturing_invest_type_piii;
-                    $history->comment = "Not Applicable";
-                    $history->activity_type = 'manufacturing_invest_type_piii';
-                    $history->current = $request->manufacturing_invest_type_piii;
-                    $history->save();
-                } 
-                if (!empty($request->audit_comments_piii)){
-                    $history->previous = $lastOosRecod->audit_comments_piii;
-                    $history->comment = "Not Applicable";
-                    $history->activity_type = 'Audit Comments';
-                    $history->current = $request->audit_comments_piii;
-                    $history->save();
-                }
-                if (!empty($request->hypo_exp_required_piii)){
-                    $history->previous = $lastOosRecod->hypo_exp_required_piii;
-                    $history->comment = "Not Applicable";
-                    $history->activity_type = 'Hypo/Exp. Required';
-                    $history->current = $request->hypo_exp_required_piii;
-                    $history->save();
-                }
-                if (!empty($request->hypo_exp_reference_piii)){
-                    $history->previous = $lastOosRecod->hypo_exp_reference_piii;
-                    $history->comment = "Not Applicable";
-                    $history->activity_type = 'Hypo/Exp. Reference';
-                    $history->current = $request->hypo_exp_reference_piii;
-                    $history->save();
-                }
-                // TapVIII8
-                if (!empty($request->summary_of_exp_hyp_piiqcr)){
-                    $history->previous = $lastOosRecod->summary_of_exp_hyp_piiqcr;
-                    $history->comment = "Not Applicable";
-                    $history->activity_type = 'Summary of Exp./Hyp.';
-                    $history->current = $request->summary_of_exp_hyp_piiqcr;
-                    $history->save();
-                }
-                if (!empty($request->summary_mfg_investigation_piiqcr)){
-                    $history->previous = $lastOosRecod->summary_mfg_investigation_piiqcr;
-                    $history->comment = "Not Applicable";
-                    $history->activity_type = 'Summary Mfg. Investigation';
-                    $history->current = $request->summary_mfg_investigation_piiqcr;
-                    $history->save();
-                }
-                if (!empty($request->root_casue_identified_piiqcr)){
-                    $history->previous = $lastOosRecod->root_casue_identified_piiqcr;
-                    $history->comment = "Not Applicable";
-                    $history->activity_type = 'Root Casue Identified';
-                    $history->current = $request->root_casue_identified_piiqcr;
-                    $history->save();
-                }
-                if (!empty($request->oos_category_reason_identified_piiqcr)){
-                    $history->previous = $lastOosRecod->oos_category_reason_identified_piiqcr;
-                    $history->comment = "Not Applicable";
-                    $history->activity_type = 'OOS Category-Reason identified';
-                    $history->current = $request->oos_category_reason_identified_piiqcr;
-                    $history->save();
-                }
-                
-                if (!empty($request->others_oos_category_piiqcr)){
-                    $history->previous = $lastOosRecod->others_oos_category_piiqcr;
-                    $history->comment = "Not Applicable";
-                    $history->activity_type = 'Others (OOS category)';
-                    $history->current = $request->others_oos_category_piiqcr;
-                    $history->save();
-                }
-                if (!empty($request->details_of_root_cause_piiqcr)){
-                    $history->previous = $lastOosRecod->details_of_root_cause_piiqcr;
-                    $history->comment = "Not Applicable";
-                    $history->activity_type = 'Details of Root Cause';
-                    $history->current = $request->details_of_root_cause_piiqcr;
-                    $history->save();
-                }
-                if (!empty($request->impact_assessment_piiqcr)){
-                    $history->previous = $lastOosRecod->impact_assessment_piiqcr;
-                    $history->comment = "Not Applicable";
-                    $history->activity_type = 'Impact Assessment.';
-                    $history->current = $request->impact_assessment_piiqcr;
-                    $history->save();
-                }
-                
-                if (!empty($request->review_comment_atp)){
-                    $history->previous = $lastOosRecod->review_comment_atp;
-                    $history->comment = "Not Applicable";
-                    $history->activity_type = 'review_comment_atp.';
-                    $history->current = $request->review_comment_atp;
-                    $history->save();
-                }
-                
-                
-                if (!empty($request->additional_test_proposal_atp)){
-                    $history->previous = $lastOosRecod->additional_test_proposal_atp;
-                    $history->comment = "Not Applicable";
-                    $history->activity_type = 'additional_test_proposal_atp.';
-                    $history->current = $request->additional_test_proposal_atp;
-                    $history->save();
-                }
-                if (!empty($request->additional_test_reference_atp)){
-                    $history->previous = $lastOosRecod->additional_test_reference_atp;
-                    $history->comment = "Not Applicable";
-                    $history->activity_type = 'additional_test_reference_atp.';
-                    $history->current = $request->additional_test_reference_atp;
-                    $history->save();
-                }
-                if (!empty($request->any_other_actions_required_atp)){
-                    $history->previous = $lastOosRecod->any_other_actions_required_atp;
-                    $history->comment = "Not Applicable";
-                    $history->activity_type = 'any_other_actions_required_atp.';
-                    $history->current = $request->any_other_actions_required_atp;
-                    $history->save();
-                }
-                 
-                
-
-            }
         $res = Helpers::getDefaultResponse();
 
         try {
@@ -503,8 +131,9 @@ class OOSController extends Controller
                 'message' => $e->getMessage()
             ]);
         }
-
-        return redirect()->route('qms.dashboard');
+        toastr()->success('Record is Update Successfully');
+        return back();
+        // return redirect()->route('qms.dashboard');
         
         
     }
@@ -1204,6 +833,8 @@ class OOSController extends Controller
             if ($capa->stage == 2) {
                 $capa->stage = "1";
                 $capa->status = "Opened";
+                // $capa->rejected_by = Auth::user()->name;
+                // $capa->rejected_on = Carbon::now()->format('d-M-Y');
                 $capa->update();
                 $history = new CapaHistory();
                 $history->type = "Capa";
@@ -1332,16 +963,16 @@ class OOSController extends Controller
             $data->info_product_materials = $data->grids()->where('identifier', 'info_product_material')->first();
             $data->details_stabilities = $data->grids()->where('identifier', 'details_stability')->first();
             $data->oos_details = $data->grids()->where('identifier', 'oos_detail')->first();
-            $data->checklist_lab_invs = $data->grids()->where('identifier', 'checklist_lab_inv')->first();
-            $data->oos_capas = $data->grids()->where('identifier', 'oos_capa')->first();
-            $data->phase_two_invs = $data->grids()->where('identifier', 'phase_two_inv')->first();
-            $data->oos_conclusions = $data->grids()->where('identifier', 'oos_conclusion')->first();
-            $data->oos_conclusion_reviews = $data->grids()->where('identifier', 'oos_conclusion_review')->first();
+            $checklist_lab_invs = $data->grids()->where('identifier', 'checklist_lab_inv')->first();
+            $oos_capas = $data->grids()->where('identifier', 'oos_capa')->first();
+            $phase_two_invs = $data->grids()->where('identifier', 'phase_two_inv')->first();
+            $oos_conclusions = $data->grids()->where('identifier', 'oos_conclusion')->first();
+            $oos_conclusion_reviews = $data->grids()->where('identifier', 'oos_conclusion_review')->first();
     
             $data->originator = User::where('id', $data->initiator_id)->value('name');
             $pdf = App::make('dompdf.wrapper');
             $time = Carbon::now();
-            $pdf = PDF::loadview('frontend.OOS.comps.singleReport', compact('data'))
+            $pdf = PDF::loadview('frontend.OOS.comps.singleReport', compact('data','checklist_lab_invs','phase_two_invs','oos_capas','oos_conclusions','oos_conclusion_reviews'))
                 ->setOptions([
                     'defaultFont' => 'sans-serif',
                     'isHtml5ParserEnabled' => true,
@@ -1358,6 +989,5 @@ class OOSController extends Controller
             return $pdf->stream('OOS Cemical' . $id . '.pdf');
         }
     }
-    
-    
+       
 }

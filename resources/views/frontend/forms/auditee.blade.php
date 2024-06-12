@@ -238,7 +238,7 @@
                                         <input readonly type="text" name="division_code"
                                             value="{{ Helpers::getDivisionName(session()->get('division')) }}">
                                         <input type="hidden" name="division_id" value="{{ session()->get('division') }}">
-                                        {{-- <div class="static">QMS-North America</div> --}}
+                                        {{-- <div class="static">{{ Helpers::getDivisionName(session()->get('division')) }}</div> --}}
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
@@ -953,7 +953,7 @@
                                     <div class="group-input">
                                         <label for="Reference Recores">Reference Record</label>
                                         <select multiple id="reference_record" name="refrence_record[]" id="">
-                                            <option value="">--Select---</option>
+                                            {{-- <option value="">--Select---</option> --}}
                                             @foreach ($old_record as $new)
                                                 <option value="{{ $new->id }}">
                                                     {{ Helpers::getDivisionName($new->division_id) }}/IA/{{ date('Y') }}/{{ Helpers::recordFormat($new->record) }}

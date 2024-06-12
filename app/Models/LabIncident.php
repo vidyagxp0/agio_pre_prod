@@ -28,4 +28,5 @@ class LabIncident extends Model
     {
         return $this->belongsTo(User::class,'initiator_id');
     }
+    // protected $fillable=[];
 }

@@ -9,7 +9,6 @@
             <div class="col-md-12 mb-4">
                 <div class="group-input">
                     <label for="Description Deviation">QA Approver Comments</label>
-                    <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
                     <textarea class="summernote" name="qa_approver_comments_piii" id="summernote-1">
                     {{$data->qa_approver_comments_piii ? $data->qa_approver_comments_piii : ""}}</textarea>
                 </div>
@@ -30,8 +29,9 @@
             <div class="col-lg-6">
                 <div class="group-input">
                     <label for="Auditee"> Manufacturing Invest. Type </label>
-                    <select multiple name="manufacturing_invest_type_piii" placeholder="Select Nature of Deviation"
+                    <select  name="manufacturing_invest_type_piii" placeholder="Select Nature of Deviation"
                         data-search="false" data-silent-initial-value-set="true" id="auditee">
+                        <option value="0">Enter Your Selection Here</option>
                         <option value="1" {{ $data->root_casue_identified_piiqcr === '1' ? 'selected' :
                                 '' }}>Chemical</option>
                         <option value="2" {{ $data->root_casue_identified_piiqcr === '2' ? 'selected' : ''
@@ -76,7 +76,7 @@
                         Please Attach all relevant or supporting documents
                     </small>
                     <div class="file-attachment-field">
-                        <div class="file-attachment-list" id="file_attach">
+                        <div class="file-attachment-list" id="file_attachments_pII">
                         @if ($data->file_attachments_pII)
                             @foreach ($data->file_attachments_pII as $file)
                             <h6 type="button" class="file-container text-dark"
@@ -97,7 +97,7 @@
                         <div class="add-btn">
                             <div>Add</div>
                             <input type="file" id="myfile" name="file_attachments_pII[]"
-                                oninput="addMultipleFiles(this, 'file_attach')" multiple>
+                                oninput="addMultipleFiles(this, 'file_attachments_pII')" multiple>
                         </div>
                     </div>
 

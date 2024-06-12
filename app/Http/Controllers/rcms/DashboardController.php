@@ -14,8 +14,9 @@ use App\Models\OutOfCalibration;
 use App\Models\RiskManagement;
 use App\Models\LabIncident;
 use App\Models\Auditee;
+use App\Models\NonConformance;
 use App\Models\AuditProgram;
-use App\Models\{Division,Deviation};
+use App\Models\{Division,Deviation, extension_new};
 use App\Models\RootCauseAnalysis;
 use App\Models\Observation;
 use App\Models\QMSDivision;
@@ -34,6 +35,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\OOS;
 use App\Models\errata;
 use App\Models\MarketComplaint;
+use App\Models\OOS_micro;
 
 
 class DashboardController extends Controller
@@ -63,7 +65,7 @@ class DashboardController extends Controller
 
         $datas = CC::orderByDesc('id')->get();
         $datas1 = ActionItem::orderByDesc('id')->get();
-        $datas2 = Extension::orderByDesc('id')->get();
+        $datas2 = extension_new::orderByDesc('id')->get();
         $datas3 = EffectivenessCheck::orderByDesc('id')->get();
         $datas4 = InternalAudit::orderByDesc('id')->get();
         $datas5 = Capa::orderByDesc('id')->get();
@@ -82,6 +84,9 @@ class DashboardController extends Controller
         $failureInvestigation = FailureInvestigation::orderByDesc('id')->get();
         $datas15 = Ootc::orderByDesc('id')->get();
         $datas16 = errata::orderByDesc('id')->get();
+        $datas17 = OOS_micro::orderByDesc('id')->get();
+
+        $datas25 = NonConformance::orderByDesc('id')->get();
         foreach ($datas as $data) {
             $data->create = Carbon::parse($data->created_at)->format('d-M-Y h:i A');
 
@@ -113,6 +118,7 @@ class DashboardController extends Controller
                 "parent" => $data->cc_id ? $data->cc_id : "-",
                 "record" => $data->record,
                 "type" => "Action-Item",
+                "due_date" => $data->due_date,
                 "parent_id" => $data->parent_id,
                 "parent_type" => $data->parent_type,
                 "division_id" => $data->division_id,
@@ -131,17 +137,18 @@ class DashboardController extends Controller
             array_push($table, [
                 "id" => $data->id,
                 "parent" => $data->cc_id ? $data->cc_id : "-",
-                "record" => $data->record,
+                "record" => $data->record_number,
                 "type" => "Extension",
                 "parent_id" => $data->parent_id,
                 "parent_type" => $data->parent_type,
-                "division_id" => $data->division_id,
+                "division_id" => $data->site_location_code,
                 "short_description" => $data->short_description ? $data->short_description : "-",
-                "initiator_id" => $data->initiator_id,
+                "initiator_id" => $data->initiator,
                 "initiated_through" => $data->initiated_through,
                 "intiation_date" => $data->intiation_date,
                 "stage" => $data->status,
                 "date_open" => $data->create,
+                "due_date" => $data->due_date,
                 "date_close" => $data->updated_at,
             ]);
         }
@@ -312,6 +319,7 @@ class DashboardController extends Controller
                 "id" => $data->id,
                 "parent" => $data->parent_record ? $data->parent_record : "-",
                 "record" => $data->record,
+                "due_date" => $data->due_date,
                 "division_id" => $data->division_id,
                 "type" => "Root-Cause-Analysis",
                 "parent_id" => $data->parent_id,
@@ -327,12 +335,11 @@ class DashboardController extends Controller
         }
         foreach ($datas12 as $data) {
             $data->create = Carbon::parse($data->created_at)->format('d-M-Y h:i A');
-
             array_push($table, [
                 "id" => $data->id,
                 "parent" => $data->parent_record ? $data->parent_record : "-",
                 "record" => $data->record,
-                "division_id" => $data->division_id,
+                "division_id" => $data->division_code,
                 "type" => "Observation",
                 "parent_id" => $data->parent_id,
                 "parent_type" => $data->parent_type,
@@ -345,7 +352,6 @@ class DashboardController extends Controller
                 "date_close" => $data->updated_at,
             ]);
         }
-        // datas13
         foreach ($datas13 as $data) {
             $data->create = Carbon::parse($data->created_at)->format('d-M-Y h:i A');
             array_push($table, [
@@ -360,85 +366,13 @@ class DashboardController extends Controller
                 "initiator_id" => $data->initiator_id,
                 "initiated_through" => $data->initiated_through_gi,
                 "intiation_date" => $data->intiation_date,
-                // "status" => $data->status,
                 "stage" => $data->status,
-
                 "date_open" => $data->create,
                 "date_close" => $data->updated_at,
             ]);
         }
-
-        // foreach ($datas14 as $data) {
-        //     $data->create = Carbon::parse($data->created_at)->format('d-M-Y h:i A');
-
-        //     array_push($table, [
-        //         "id" => $data->id,
-        //         "parent" => $data->parent_record ? $data->parent_record : "-",
-        //         "record" => $data->record,
-        //         "division_id" => $data->division_id,
-        //         "type" => "Deviation",
-        //         "parent_id" => $data->parent_id,
-        //         "parent" => $data->parent_record? $data->parent_record : "-",
-        //         "parent_type" => $data->parent_type,
-        //         "short_description" => $data->short_description ? $data->short_description : "-",
-        //         "initiator_id" => $data->initiator_id,
-        //         "due_date" => $data->due_date,
-        //         "stage" => $data->status,
-        //         "initiated_through" => $data->initiated_through,
-        //         "date_open" => $data->create,
-        //         "date_close" => $data->updated_at,
-        //     ]);
-        // }
-        foreach ($ooc as $data) {
-            $data->create = Carbon::parse($data->created_at)->format('d-M-Y h:i A');
-
-            array_push($table, [
-                "id" => $data->id,
-                "due_date" => $data->due_date,
-                "parent" => $data->parent_record ? $data->parent_record : "-",
-                "record" => $data->id,
-                "type" => "Out_Of_Calibration",
-                "parent_id" => $data->parent_id,
-                "parent_type" => $data->parent_type,
-                "division_id" => $data->division_id,
-                "short_description" => $data->description_ooc ? $data->description_ooc : "-",
-                "initiator_id" => $data->initiator_id,
-                "initiated_through" => $data->initiated_through_gi,
-                "intiation_date" => $data->intiation_date,
-                // "status" => $data->status,
-                "stage" => $data->status,
-
-                "date_open" => $data->create,
-                "date_close" => $data->updated_at,
-            ]);
-        }
-
-
-        foreach ($deviation as $data) {
-            $data->create = Carbon::parse($data->created_at)->format('d-M-Y h:i A');
-
-            array_push($table, [
-                "id" => $data->id,
-                "parent" => $data->parent_record ? $data->parent_record : "-",
-                "record" => $data->record,
-                "division_id" => $data->division_id,
-                "type" => "Deviation",
-                "parent_id" => $data->parent_id,
-                "parent_type" => $data->parent_type,
-                "short_description" => $data->short_description ? $data->short_description : "-",
-                "initiator_id" => $data->initiator_id,
-                "intiation_date" => $data->intiation_date,
-                "stage" => $data->status,
-                "initiated_through" => $data->initiated_through,
-                "date_open" => $data->create,
-                "date_close" => $data->updated_at,
-                "due_date" => $data->due_date,
-            ]);
-        }
-
         foreach ($datas14 as $data) {
             $data->create = Carbon::parse($data->created_at)->format('d-M-Y h:i A');
-
             array_push($table, [
                 "id" => $data->id,
                 "parent" => $data->parent_record ? $data->parent_record : "-",
@@ -453,34 +387,11 @@ class DashboardController extends Controller
                 "initiated_through" => $data->initiated_through_gi,
                 "intiation_date" => $data->intiation_date,
                 "stage" => $data->status,
-                "initiated_through" => $data->initiated_through_gi,
+
                 "date_open" => $data->create,
                 "date_close" => $data->updated_at,
             ]);
         }
-
-        foreach ($failureInvestigation as $data) {
-            $data->create = Carbon::parse($data->created_at)->format('d-M-Y h:i A');
-
-            array_push($table, [
-                "id" => $data->id,
-                "parent" => $data->cc_id ? $data->cc_id : "-",
-                "record" => $data->record,
-                "type" => "Failure Investigation",
-                "parent_id" => $data->parent_id,
-                "parent_type" => $data->parent_type,
-                "division_id" => $data->division_id,
-                "short_description" => $data->short_description ? $data->short_description : "-",
-                "initiator_id" => $data->initiator_id,
-                "initiated_through" => $data->initiated_through,
-                "intiation_date" => $data->intiation_date,
-                "stage" => $data->status,
-                "date_open" => $data->create,
-                "due_date" => $data->due_date,
-                "date_close" => $data->updated_at,
-            ]);
-        }
-
         foreach ($datas15 as $data) {
             $data->create = Carbon::parse($data->created_at)->format('d-M-Y h:i A');
             array_push($table, [
@@ -506,9 +417,9 @@ class DashboardController extends Controller
             array_push($table, [
                 "id" => $data->id,
                 "parent" => $data->parent_record ? $data->parent_record : "-",
-                "record" => $data->record_number,
+                "record" => $data->record,
                 "division_id" => $data->division_id,
-                "type" => "errata",
+                "type" => "ERRATA",
                 "parent_id" => $data->parent_id,
                 "parent_type" => $data->parent_type,
                 "short_description" => $data->short_description ? $data->short_description : "-",
@@ -521,14 +432,108 @@ class DashboardController extends Controller
                 "date_close" => $data->updated_at,
             ]);
         }
-        // dd($data);
-        $table  = collect($table)->sortBy('record')->reverse()->toArray();
-        // return $table;
-        // $paginatedData = json_encode($table);
+         foreach ($datas17 as $data) {
+            $data->create = Carbon::parse($data->created_at)->format('d-M-Y h:i A');
+            array_push($table, [
+                "id" => $data->id,
+                "parent" => $data->parent_record ? $data->parent_record : "-",
+                "record" => $data->record,
+                "division_id" => $data->division_id,
+                "type" => "OOS Microbiology",
+                "parent_id" => $data->parent_id,
+                "parent_type" => $data->parent_type,
+                "short_description" => $data->description_gi ? $data->description_gi : "-",
+                "initiator_id" => $data->initiator_id,
+                "initiated_through" => $data->initiated_through_gi,
+                "intiation_date" => $data->intiation_date,
+                "stage" => $data->status,
+                "date_open" => $data->create,
+                "date_close" => $data->updated_at,
+            ]);
+        }
+        foreach ($deviation as $data) {
+            $data->create = Carbon::parse($data->created_at)->format('d-M-Y h:i A');
+            array_push($table, [
+                "id" => $data->id,
+                "parent" => $data->parent_record ? $data->parent_record : "-",
+                "record" => $data->record,
+                "division_id" => $data->division_id,
+                "type" => "Deviation",
+                "parent_id" => $data->parent_id,
+                "parent_type" => $data->parent_type,
+                "short_description" => $data->short_description ? $data->short_description : "-",
+                "initiator_id" => $data->initiator_id,
+                "intiation_date" => $data->intiation_date,
+                "stage" => $data->status,
+                "initiated_through" => $data->initiated_through,
+                "date_open" => $data->create,
+                "date_close" => $data->updated_at,
+                "due_date" => $data->due_date,
+            ]);
+        }
+        foreach ($ooc as $data) {
+            $data->create = Carbon::parse($data->created_at)->format('d-M-Y h:i A');
+            array_push($table, [
+                "id" => $data->id,
+                "due_date" => $data->due_date,
+                "parent" => $data->parent_record ? $data->parent_record : "-",
+                "record" => $data->record,
+                "type" => "Out Of Calibration",
+                "parent_id" => $data->parent_id,
+                "parent_type" => $data->parent_type,
+                "division_id" => $data->division_id,
+                "short_description" => $data->description_ooc ? $data->description_ooc : "-",
+                "initiator_id" => $data->initiator_id,
+                "initiated_through" => $data->initiated_through_gi,
+                "intiation_date" => $data->intiation_date,
+                "stage" => $data->status,
+                "date_open" => $data->create,
+                "date_close" => $data->updated_at,
+            ]);
+        }
+        foreach ($failureInvestigation as $data) {
+            $data->create = Carbon::parse($data->created_at)->format('d-M-Y h:i A');
 
-        //  $datag = $this->paginate($table);
+            array_push($table, [
+                "id" => $data->id,
+                "parent" => $data->cc_id ? $data->cc_id : "-",
+                "record" => $data->record,
+                "type" => "Failure Investigation",
+                "parent_id" => $data->parent_id,
+                "parent_type" => $data->parent_type,
+                "division_id" => $data->division_id,
+                "short_description" => $data->short_description ? $data->short_description : "-",
+                "initiator_id" => $data->initiator_id,
+                "initiated_through" => $data->initiated_through,
+                "intiation_date" => $data->intiation_date,
+                "stage" => $data->status,
+                "date_open" => $data->create,
+                "due_date" => $data->due_date,
+                "date_close" => $data->updated_at,
+            ]);
+        }
+        foreach ($datas25 as $data) {
+            $data->create = Carbon::parse($data->created_at)->format('d-M-Y h:i A');
+            array_push($table, [
+                "id" => $data->id,
+                "parent" => $data->cc_id ? $data->cc_id : "-",
+                "record" => $data->record,
+                "type" => "Non Conformance",
+                "parent_id" => $data->parent_id,
+                "parent_type" => $data->parent_type,
+                "division_id" => $data->division_id,
+                "short_description" => $data->short_description ? $data->short_description : "-",
+                "initiator_id" => $data->initiator_id,
+                "initiated_through" => $data->initiated_through,
+                "intiation_date" => $data->intiation_date,
+                "stage" => $data->status,
+                "date_open" => $data->create,
+                "due_date" => $data->due_date,
+                "date_close" => $data->updated_at,
+            ]);
+        }
+        $table  = collect($table)->sortBy('record')->reverse()->toArray();
         $datag = $this->paginate($table);
-        //   $paginatedData = json_encode($datag);
 
         return view('frontend.rcms.dashboard', compact('datag'));
     }
@@ -835,6 +840,28 @@ class DashboardController extends Controller
                     ]
                 );
             }
+            if ($data->parent_type == "ERRATA") {
+                $data2 = errata::where('id', $data->parent_id)->first();
+                $data2->create = Carbon::parse($data2->created_at)->format('d-M-Y h:i A');
+                array_push(
+                    $table,
+                    [
+                        "id" => $data2->id,
+                        "parent" => $data2->parent_record ? $data2->parent_record : "-",
+                        "record" => $data2->record,
+                        "type" => "ERRATA",
+                        "parent_id" => $data2->parent_id,
+                        "parent_type" => $data2->parent_type,
+                        "division_id" => $data2->division_id,
+                        "short_description" => $data2->short_description ? $data2->short_description : "-",
+                        "initiator_id" => $data->initiator_id,
+                        "intiation_date" => $data2->intiation_date,
+                        "stage" => $data2->status,
+                        "date_open" => $data2->create,
+                        "date_close" => $data2->updated_at,
+                    ]
+                );
+            }
         } else {
             return redirect(url('rcms/qms-dashboard'));
         }
@@ -853,13 +880,7 @@ class DashboardController extends Controller
 
         $division_name = "NA";
 
-        if ($type == "Change-Control") {
-            $data = CC::find($id);
-            $single = "change_control_single_pdf/" . $data->id;
-            $audit = "audit/" . $data->id;
-            $division = QMSDivision::find($data->division_id);
-            $division_name = $division->name;
-        } elseif ($type == "OOT") {
+        if ($type == "OOT") {
             $data = Ootc::find($id);
             $single = "ootcSingleReport/" . $data->id;
             $audit = "audit_pdf/".$data->id;
@@ -871,7 +892,7 @@ class DashboardController extends Controller
             $audit = "failure-investigation-audit-pdf/".$data->id;
             $division = QMSDivision::find($data->division_id);
             $division_name = $division->name;
-        } elseif ($type == "errata") {
+        } elseif ($type == "ERRATA") {
             $data = errata::find($id);
             $single = "errata_single_pdf/" . $data->id;
             $audit = "errata_audit/" . $data->id;
@@ -935,7 +956,7 @@ class DashboardController extends Controller
         } elseif ($type == "Action-Item") {
             $data = ActionItem::find($id);
             $single = "actionitemSingleReport/"  . $data->id;
-            $audit = "actionitemAuditReport/" . $data->id;
+            $audit = "actionitemauditTrailPdf/" . $data->id;
             $division = QMSDivision::find($data->division_id);
             $division_name = $division->name;
         } elseif ($type == "Extension") {
@@ -946,10 +967,10 @@ class DashboardController extends Controller
             $division_name = $division->name;
         } elseif ($type == "Observation") {
             $data = Observation::find($id);
-            $single = "#";
+            $single = "ObservationSingleReport/" .$data->id;
             $audit = "ObservationAuditTrialShow/" .$data->id;
             $division = QMSDivision::find($data->division_id);
-            $division_name = $division->name;
+            $division_name = $division ? $division->name : '';
         } elseif ($type == "Effectiveness-Check") {
             $data = EffectivenessCheck::find($id);
             $single = "effectiveSingleReport/" .$data->id;
@@ -968,7 +989,14 @@ class DashboardController extends Controller
             $audit = "oos/audit_report/" . $data->id;
             $division = QMSDivision::find($data->division_id);
             $division_name = $division->name;
-        } elseif ($type == "Root-Cause-Analysis") {
+        }elseif ($type == "OOS Microbiology") {
+            $data = OOS_micro::find($id);
+            $single = "oos_micro/single_report/" . $data->id;
+            $audit = "oos_micro/audit_report/" . $data->id;
+            $division = QMSDivision::find($data->division_id);
+            $division_name = $division->name;
+        }
+        elseif ($type == "Root-Cause-Analysis") {
             $data = RootCauseAnalysis::find($id);
             $single = "rootSingleReport/" . $data->id;
             $audit = "rootAuditReport/" . $data->id;
@@ -991,6 +1019,14 @@ class DashboardController extends Controller
             $division = QMSDivision::find($data->division_id);
             $division_name = $division->name;
 
+        }
+
+        elseif ($type == "Change-Control") {
+            $data = CC::find($id);
+            $audit = "audit/" . $data->id;
+            $single = "change_control_single_pdf/" . $data->id;
+            $division = QMSDivision::find($data->division_id);
+            $division_name = $division->name;
         }
 
 

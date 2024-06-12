@@ -1948,7 +1948,6 @@
                                    Supporting Attechment
                                 </div>
                                 <table>
-    
                                     <tr class="table_bg">
                                         <th class="w-20">S.N.</th>
                                         <th class="w-60">Attachment</th>
@@ -1977,9 +1976,7 @@
                                         Justification Of Delay
                                     </div>
                                     <table>
-        
                                         <tr>
-        
                                             <th class="w-20">Last Due Date</th>
                                             <td class="w-30">
                                                 <div>
@@ -2059,10 +2056,9 @@
                                         Closure Attachment
                                     </div>
                                     <table>
-        
                                         <tr>
-        
-                                            <th class="w-20"> Closure Comments    </th>
+       
+                                           <th class="w-20"> Closure Comments    </th>
                                             <td class="w-30">
                                                 <div>
                                                     @if ($data->closure_comments)
@@ -2101,22 +2097,14 @@
                                         </tr>
                                     @endif
                                 </table>
-                            </div>
-                           
-                        
+                            </div>                       
                         </div>
                     </div>
-        
-        
-
-                </div>
-        
-            </div>
-
+                  </div>
+           </div>
         </div>
 
     </div>
-
     <footer>
         <table>
             <tr>
@@ -2129,7 +2117,6 @@
             </tr>
         </table>
     </footer>
-
 </body>
 
 </html>

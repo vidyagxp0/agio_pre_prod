@@ -41,7 +41,7 @@
             <div class="inner-block">
                 {{-- <div class="head">PR-0001</div> --}}
                 <div class="slogan">
-                    <strong>Division / Project :</strong>
+                    <strong>Site Division/Project :</strong>
                     {{ Helpers::getDivisionName($data->division_id) }} / Action item
                 </div>
             </div>
@@ -60,8 +60,8 @@
                         $userRoles = DB::table('user_roles')->where(['user_id' => Auth::user()->id, 'q_m_s_divisions_id' => $data->division_id])->get();
                         $userRoleIds = $userRoles->pluck('q_m_s_roles_id')->toArray();
                     @endphp
-                        <button class="button_theme1" onclick="window.print();return false;"
-                            class="new-doc-btn">Print</button>
+                        {{-- <button class="button_theme1" onclick="window.print();return false;"
+                            class="new-doc-btn">Print</button> --}}
                         {{--  <button class="button_theme1"> <a class="text-white" href="{{ url('send-notification', $data->id) }}"> Send Notification </a> </button>  --}}
 {{-- {{ dd($data->stage);}} --}}
                         <button class="button_theme1"> <a class="text-white"
@@ -237,7 +237,7 @@
                                     <div class="col-lg-6">
                                         <div class="group-input">
                                             <label for="HOD Persons">HOD Persons</label>
-                                            <select multiple name="hod_preson[]" placeholder="Select HOD Persons" data-search="false"
+                                            <select  name="hod_preson[]" placeholder="Select HOD Persons" data-search="false"
                                                 data-silent-initial-value-set="true" id="hod" {{ $data->stage == 0 || $data->stage == 3 ? 'disabled' : '' }}>
                                                 @foreach ($users as $value)
                                                     <option  value="{{ $value->id }}"
@@ -637,52 +637,77 @@
                                     Electronic Signatures
                                 </div>
                                 <div class="row">
-                                    <div class="col-lg-6">
+                                    <div class="col-lg-4">
                                         <div class="group-input">
                                             <label for="submitted by">Submitted By</label>
                                             <div class="static">{{ $data->submitted_by }}</div>
                                         </div>
                                     </div>
-                                    <div class="col-lg-6">
+                                    <div class="col-lg-4">
                                         <div class="group-input">
                                             <label for="submitted on">Submitted On</label>
                                             <div class="Date">{{ $data->submitted_on }}</div>
                                         </div>
                                     </div>
-                                    <div class="col-lg-6">
+                                    <div class="col-lg-4">
+                                        <div class="group-input">
+                                            <label for="submitted on">Comment</label>
+                                            <div class="static">{{ $data->submitted_comment }}</div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-lg-4">
                                         <div class="group-input">
                                             <label for="cancelled by">Cancelled By</label>
                                             <div class="static">{{ $data->cancelled_by }}</div> 
                                         </div>
                                     </div>
-                                    <div class="col-lg-6">
+                                    <div class="col-lg-4">
                                         <div class="group-input">
                                             <label for="cancelled on">Cancelled On</label>
                                             <div class="Date">{{ $data->cancelled_on }}</div>
                                         </div>
                                     </div>
-                                    <div class="col-lg-6">
+                                    <div class="col-lg-4">
+                                        <div class="group-input">
+                                            <label for="submitted on">Comment</label>
+                                            <div class="static">{{ $data->cancelled_comment }}</div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-4">
                                         <div class="group-input">
                                             <label for="More information required By">More information required By</label>
                                             <div class="static">{{ $data->more_information_required_by }}</div> 
                                         </div>
                                     </div>
-                                    <div class="col-lg-6">
+                                    <div class="col-lg-4">
                                         <div class="group-input">
                                             <label for="More information required On">More information required On</label>
                                             <div class="Date">{{ $data->more_information_required_on }}</div> 
                                         </div>
                                     </div>
-                                    <div class="col-lg-6">
+                                    <div class="col-lg-4">
+                                        <div class="group-input">
+                                            <label for="submitted on">Comment</label>
+                                            <div class="static">{{ $data->more_info_requ_comment }}</div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-4">
                                         <div class="group-input">
                                             <label for="completed by">Completed By</label>
                                             <div class="static">{{ $data->completed_by }}</div> 
                                         </div>
                                     </div>
-                                    <div class="col-lg-6">
+                                    <div class="col-lg-4">
                                         <div class="group-input">
                                             <label for="completed on">Completed On</label>
                                             <div class="Date">{{ $data->completed_on }}</div> 
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-4">
+                                        <div class="group-input">
+                                            <label for="submitted on">Comment</label>
+                                            <div class="static">{{ $data->completed_comment }}</div>
                                         </div>
                                     </div>
                                    
@@ -1023,9 +1048,9 @@
                             </label>
                             <label for="minor">
                                 <input type="radio" name="revision" id="minor">
-                                Extention
+                                Extension
                             </label>
-
+                            
                             <label for="minor">
                                 <input type="radio" name="revision" id="minor">
                                 New Document

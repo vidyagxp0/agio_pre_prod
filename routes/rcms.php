@@ -19,6 +19,8 @@ use App\Http\Controllers\rcms\OOTController;
 use App\Http\Controllers\rcms\OOSController;
 use App\Http\Controllers\rcms\MarketComplaintController;
 use App\Http\Controllers\rcms\FailureInvestigationController;
+use App\Http\Controllers\OOSMicroController;
+use App\Http\Controllers\rcms\NonConformaceController;
 use App\Http\Controllers\rcms\RootCauseController;
 use App\Http\Controllers\RiskManagementController;
 use App\Http\Controllers\rcms\DeviationController;
@@ -37,7 +39,7 @@ Route::group(['prefix' => 'rcms'], function () {
     Route::view('rcms_dashboard', 'frontend.rcms.dashboard');
     Route::view('form-division', 'frontend.forms.form-division');
     Route::get('/logout', [UserLoginController::class, 'rcmslogout'])->name('rcms.logout');
-    
+
     Route::get('/qms-logs/{slug}', [LogController::class, 'index'])->name('rcms.logs.show');
     
 
@@ -57,10 +59,13 @@ Route::group(['prefix' => 'rcms'], function () {
             Route::get('action-item-audittrialdetails/{id}', [ActionItemController::class, 'actionItemAuditTrialDetails'])->name('showaudittrialactionItem');
             Route::get('actionitemSingleReport/{id}', [ActionItemController::class, 'singleReport'])->name('actionitemSingleReport');
             Route::get('actionitemAuditReport/{id}', [ActionItemController::class, 'auditReport'])->name('actionitemAuditReport');
+            Route::get('actionitemauditTrailPdf/{id}', [ActionItemController::class, 'auditTrailPdf'])->name('actionitemauditTrailPdf');
+
             Route::get('effective-audit-trial-show/{id}', [EffectivenessCheckController::class, 'effectiveAuditTrialShow'])->name('show_effective_AuditTrial');
             Route::get('effective-audit-trial-details/{id}', [EffectivenessCheckController::class, 'effectiveAuditTrialDetails'])->name('show_audittrial_effective');
             Route::get('effectiveSingleReport/{id}', [EffectivenessCheckController::class, 'singleReport'])->name('effectiveSingleReport');
             Route::get('effectiveAuditReport/{id}', [EffectivenessCheckController::class, 'auditReport'])->name('effectiveAuditReport');
+
 
             // ------------------extension _child---------------------------
             Route::post('extension_child/{id}', [ExtensionController::class, 'extension_child'])->name('extension_child');
@@ -135,6 +140,7 @@ Route::group(['prefix' => 'rcms'], function () {
             //------------------------------------
 
 
+
             Route::post('create', [AuditProgramController::class, 'create'])->name('createAuditProgram');
             Route::get('AuditProgramShow/{id}', [AuditProgramController::class, 'AuditProgramShow'])->name('ShowAuditProgram');
             Route::post('AuditStateChange/{id}', [AuditProgramController::class, 'AuditStateChange'])->name('StateChangeAuditProgram');
@@ -157,8 +163,10 @@ Route::group(['prefix' => 'rcms'], function () {
             Route::post('RejectStateChange/{id}', [ObservationController::class, 'RejectStateChange'])->name('RejectStateChangeObservation');
             Route::post('observation_child/{id}', [ObservationController::class, 'observation_child'])->name('observationchild');
             Route::post('boostStage/{id}', [ObservationController::class, 'boostStage'])->name('updatestageobservation');
-            Route::get('ObservationAuditTrialShow/{id}', [ObservationController::class, 'ObservationAuditTrialShow'])->name('ShowObservationAuditTrial');
+            Route::get('Observation_AuditTrial_Show/{id}', [ObservationController::class, 'ObservationAuditTrialShow'])->name('ShowObservationAuditTrial');
             Route::get('ObservationAuditTrialDetails/{id}', [ObservationController::class, 'ObservationAuditTrialDetails'])->name('showaudittrialobservation');
+            Route::get('ObservationSingleReport/{id}', [ObservationController::class, 'ObservationSingleReport']);
+            Route::get('ObservationAuditTrialShow/{id}', [ObservationController::class, 'ObservationAuditTrailPdf'])->name('Observationaudit.pdf');
 
 
             //----------------------------------------------By PRIYA SHRIVASTAVA------------------
@@ -176,6 +184,8 @@ Route::group(['prefix' => 'rcms'], function () {
             Route::post('child_management_Review/{id}', [ManagementReviewController::class, 'child_management_Review'])->name('childmanagementReview');
             Route::get('internalSingleReport/{id}', [InternalauditController::class, 'singleReport'])->name('internalSingleReport');
             Route::get('internalauditReport/{id}', [InternalauditController::class, 'auditReport'])->name('internalauditReport');
+            Route::get('oos_micro/audit_report/{id}', [OOSMicroController::class, 'auditReport'])->name('audit_report');
+            Route::get('oos_micro/single_report/{id}', [OOSMicroController::class, 'singleReport'])->name('oos_micro/single_report');
 
             Route::post('errata/stages/{id}',[ErrataController::class, 'stageChange'])->name('errata.stage');
             Route::post('errata/stagesreject/{id}',[ErrataController::class, 'stageReject'])->name('errata.stagereject');
@@ -208,6 +218,36 @@ Route::group(['prefix' => 'rcms'], function () {
             Route::post('launch-extension-investigation/{id}', [DeviationController::class, 'launchExtensionInvestigation'])->name('launch-extension-investigation');
 
             /********************* Deviation Routes Ends *******************/
+
+            Route::get('action-items-create', [ActionItemController::class, 'showAction']);
+
+            /********************* Non Conformance Routes Starts *******************/
+
+            Route::get('non-conformance', [NonConformaceController::class, 'index']);
+            Route::post('nonConformaceStore', [NonConformaceController::class, 'store'])->name('nonConformaceStore');
+            Route::get('non-conformance-show/{id}', [NonConformaceController::class, 'show'])->name('non-conformance-show');
+            Route::post('non-conformance-update/{id}', [NonConformaceController::class, 'update'])->name('non-conformance-update');
+            Route::post('non_conformance_reject/{id}', [NonConformaceController::class, 'nonConformaceReject'])->name('non_conformance_reject');
+            Route::post('nonConformaceCancel/{id}', [NonConformaceController::class, 'nonConformaceCancel'])->name('nonConformaceCancel');
+            Route::post('nonConformaceIsCFTRequired/{id}', [NonConformaceController::class, 'nonConformaceCftNotrequired'])->name('nonConformaceIsCFTRequired');
+            Route::post('nonConformaceCheck/{id}', [NonConformaceController::class, 'nonConformaceCheck'])->name('nonConformaceCheck');
+            Route::post('nonConformaceCheck2/{id}', [NonConformaceController::class, 'nonConformaceCheck2'])->name('nonConformaceCheck2');
+            Route::post('nonConformaceCheck3/{id}', [NonConformaceController::class, 'nonConformaceCheck3'])->name('nonConformaceCheck3');
+            // Route::post('pending_initiator_update/{id}', [NonConformaceController::class, 'pending_initiator_update'])->name('pending_initiator_update');
+            Route::post('nonConformaceStageChange/{id}', [NonConformaceController::class, 'non_conformance_send_stage'])->name('nonConformaceStageChange');
+            Route::post('nonConformaceCftnotreqired/{id}', [NonConformaceController::class, 'cftnotreqired'])->name('nonConformaceCftnotreqired');
+            Route::post('nonConformaceQaMoreInfo/{id}', [NonConformaceController::class, 'failure_inv_qa_more_info'])->name('nonConformaceQaMoreInfo');
+
+            Route::get('non-conformance-audit-trail/{id}', [NonConformaceController::class, 'NonConformaceAuditTrail'])->name('non-conformance-audit-trail');
+            Route::get('non-conformance-audit-pdf/{id}', [NonConformaceController::class, 'NonConformaceAuditTrailPdf'])->name('non-conformance-audit-pdf');
+            Route::get('non-conformance-single-report/{id}', [NonConformaceController::class, 'singleReport'])->name('non-conformance-single-report');
+
+            Route::post('launch-extension-non-conformance/{id}', [NonConformaceController::class, 'launchExtensionDeviation'])->name('launch-extension-non-conformance');
+            Route::post('launch-extension-capa/{id}', [NonConformaceController::class, 'launchExtensionCapa'])->name('launch-extension-capa');
+            Route::post('launch-extension-qrm/{id}', [NonConformaceController::class, 'launchExtensionQrm'])->name('launch-extension-qrm');
+            Route::post('launch-extension-investigation/{id}', [NonConformaceController::class, 'launchExtensionInvestigation'])->name('launch-extension-investigation');
+
+            /********************* Non Conformance Routes Ends *******************/
 
             /********************* Fallure Investigation Routes Starts *******************/
 
@@ -315,14 +355,36 @@ Route::group(['prefix' => 'rcms'], function () {
 
                 Route::get('MarketComplaintAuditReport/{id}', [MarketComplaintController::class, 'MarketAuditTrial'])->name('MarketComplaintAuditReport');
                 Route::get('MarketAuditReport/{id}', [MarketComplaintController::class, 'auditReport'])->name('marketAuditReport');
-                // Route::get('marketauditTrailPdf/{id}', [MarketComplaintController::class, 'auditTrailPdf'])->name('marketauditTrailPdf');
                 Route::get('marketauditTrailPdf/{id}', [MarketComplaintController::class, 'auditTrailPdf'])->name('marketauditTrailPdf');
+            Route::post('MarketComplaintC_AChild/{id}', [MarketComplaintController::class, 'MarketComplaintCapa_ActionChild'])->name('capa_action_child');
+            Route::post('MarketComplaintRCA_ActionChild/{id}', [MarketComplaintController::class, 'MarketComplaintRca_actionChild'])->name('rca_action_child');
+            Route::post('MarketComplaintRegul_Effec_Child/{id}', [MarketComplaintController::class, 'MarketComplaintRegu_Effec_Child'])->name('Regu_Effec_child');
+
             });
             // Route::get('rcms/marketComplaintSingleReport/{id}', [MarketComplaintController::class, 'singleReport']);
             Route::get('pdf-report/{id}', [MarketComplaintController::class, 'singleReport']);
 
-
-
+            //OOS Chemical
+            Route::group(['prefix' => 'oos', 'as' => 'oos.'], function() {
+                Route::get('/',[OOSController::class, 'index'])->name('index');
+                Route::post('/oosstore', [OOSController::class, 'store'])->name('oosstore');
+                Route::get('oos_view/{id}', [OOSController::class, 'show'])->name('oos_view');
+                Route::post('oosupdate/{id}', [OOSController::class, 'update'])->name('oosupdate');
+    
+                Route::post('sendstage/{id}',[OOSController::class,'send_stage'])->name('send_stage');
+                Route::post('requestmoreinfo_back_stage/{id}',[OOSController::class,'requestmoreinfo_back_stage'])->name('requestmoreinfo_back_stage');
+                Route::post('assignable_send_stage/{id}',[OOSController::class,'assignable_send_stage'])->name('assignable_send_stage');
+                Route::post('cancel_stage/{id}', [OOSController::class, 'cancel_stage'])->name('cancel_stage');;
+                Route::post('thirdStage/{id}', [OOSController::class, 'stageChange'])->name('thirdStage');
+                Route::post('reject_stage/{id}', [OOSController::class, 'reject_stage'])->name('reject_stage');
+                Route::post('capa_child/{id}', [CapaController::class, 'child_change_control'])->name('capa_child_changecontrol');
+                
+                Route::get('AuditTrial/{id}', [OOSController::class, 'AuditTrial'])->name('audit_trial');
+                Route::get('auditDetails/{id}', [OOSController::class, 'auditDetails'])->name('audit_details');
+                Route::get('audit_report/{id}', [OOSController::class, 'auditReport'])->name('audit_report');
+                Route::get('single_report/{id}', [OOSController::class, 'singleReport'])->name('single_report');
+    
+                });
         }
     );
 });

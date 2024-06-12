@@ -104,6 +104,7 @@ class AuditeeController extends Controller
         $internalAudit->stage = 1;
         $internalAudit->external_agencies = $request->external_agencies;
 
+
         if (!empty($request->file_attachment_guideline)) {
             $files = [];
             if ($request->hasfile('file_attachment_guideline')) {

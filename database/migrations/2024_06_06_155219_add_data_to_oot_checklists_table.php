@@ -13,8 +13,8 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::table('audit_reviewers_details', function (Blueprint $table) {
-            $table->text('type')->nullable();
+        Schema::table('oot_checklists', function (Blueprint $table) {
+            $table->longText('data')->nullable();
         });
     }
 
@@ -25,7 +25,7 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::table('audit_reviewers_details', function (Blueprint $table) {
+        Schema::table('oot_checklists', function (Blueprint $table) {
             //
         });
     }

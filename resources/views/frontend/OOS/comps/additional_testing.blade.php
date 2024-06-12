@@ -7,10 +7,9 @@
             <div class="col-md-12 mb-4">
                 <div class="group-input">
                     <label for="Description Deviation">Review Comment</label>
-                    <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
-                    <textarea class="summernote" name="review_comment_atp" id="summernote-1">
-                {{ $data->review_comment_atp ? $data->review_comment_atp : ''}}
-            </textarea>
+                     <textarea class="summernote" name="review_comment_atp" id="summernote-1">
+                      {{ $data->review_comment_atp ? $data->review_comment_atp : ''}}
+                     </textarea>
                 </div>
             </div>
             <div class="col-lg-6">
@@ -56,7 +55,7 @@
                     Please Attach all relevant or supporting documents
                 </small>
                 <div class="file-attachment-field">
-                    <div class="file-attachment-list" id="file_attach">
+                    <div class="file-attachment-list" id="additional_testing_attachment_atp">
 
                         @if ($data->additional_testing_attachment_atp)
                         @foreach($data->additional_testing_attachment_atp as $file)
@@ -76,7 +75,7 @@
                     <div class="add-btn">
                         <div>Add</div>
                         <input type="file" id="myfile" name="additional_testing_attachment_atp[]"
-                            oninput="addMultipleFiles(this, 'file_attach')" multiple>
+                            oninput="addMultipleFiles(this, 'additional_testing_attachment_atp')" multiple>
                     </div>
                 </div>
 
