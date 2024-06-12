@@ -19,7 +19,7 @@
         </div> --}}
         <div class="division-bar">
             <strong>Site Division/Project</strong> :
-            {{ Helpers::getDivisionName(session()->get('division')) }}/ Market Complaint
+            / Market Complaint
         </div>
     </div>
 
@@ -142,15 +142,7 @@
         });
     </script>
 
-    <script>
-        function handleDateInput(input, targetId) {
-            const target = document.getElementById(targetId);
-            const date = new Date(input.value);
-            const options = { day: '2-digit', month: 'short', year: 'numeric' };
-            const formattedDate = date.toLocaleDateString('en-US', options).replace(/ /g, '-');
-            target.value = formattedDate;
-        }
-    </script>
+
 
 
 
@@ -285,7 +277,7 @@
                                                 Molecular Medicine</option>
                                             <option value="CL" @if (old('initiator_Group') == 'CL') selected @endif>
                                                 Central Laboratory</option>
-
+        
                                             <option value="TT" @if (old('initiator_Group') == 'TT') selected @endif>Tech
                                                 team</option>
                                             <option value="QA" @if (old('initiator_Group') == 'QA') selected @endif>
@@ -305,7 +297,7 @@
                                         </select>
                                     </div>
                                 </div>
-
+        
 
                                 <div class="col-lg-12">
                                     <div class="group-input">
@@ -369,7 +361,15 @@
 
 
 
-                                
+                                <div class="col-md-12 mb-3">
+                                    <div class="group-input">
+                                        <label for="Description">Description</label>
+                                        <div><small class="text-primary">Please insert "NA" in the data field if it does
+                                                not require completion</small></div>
+                                        <textarea class="summernote" name="description_gi" id="summernote-1">
+                                    </textarea>
+                                    </div>
+                                </div>
 
 
                                 <div class="col-12">
@@ -407,36 +407,18 @@
 
                                 <div class="col-lg-6 new-date-data-field">
                                     <div class="group-input input-date">
-                                        <label for="OOC Logged On">Complaint Reported On</label>
+                                        <label for="OOC Logged On"> Complaint Reported On </label>
+
                                         <div class="calenderauditee">
-                                            <input type="text" id="compalint_dat" readonly placeholder="DD-MMM-YYYY" />
+                                            <input type="text" id="due_date" readonly placeholder="DD-MM-YYYY" />
                                             <input type="date" name="complaint_reported_on_gi"
-                                            min="{{ \Carbon\Carbon::now()->format('d-M-Y') }}" value=""
-                                            class="hide-input" oninput="handleDateInput(this, 'compalint_dat')" />
+                                                min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input"
+                                                oninput="" />
                                         </div>
+
+
                                     </div>
                                 </div>
-
-                                <script>
-                                    document.addEventListener('DOMContentLoaded', (event) => {
-                                        const dateInput = document.getElementById('complaint_date_picker');
-                                        const today = new Date().toISOString().split('T')[0];
-                                        dateInput.setAttribute('max', today);
-
-                                        // Show the date picker when clicking on the readonly input
-                                        const readonlyInput = document.getElementById('compalint_dat');
-                                        readonlyInput.addEventListener('click', () => {
-                                            dateInput.style.display = 'block';
-                                            dateInput.focus();
-                                        });
-
-                                        // Update the readonly input when a date is selected
-                                        dateInput.addEventListener('change', () => {
-                                            readonlyInput.value = new Date(dateInput.value).toLocaleDateString('en-GB');
-                                            dateInput.style.display = 'none';
-                                        });
-                                    });
-                                </script>
                                 <div class="col-md-12 mb-3">
                                     <div class="group-input">
                                         <label for="Details Of Nature Market Complaint">Details Of Nature Market
@@ -547,7 +529,7 @@
                                         $(this).closest('tr').remove();
                                     })
                                 </script>
-
+                            
                                 <script>
                                     $(document).ready(function() {
                                         $('#product_details').click(function(e) {
@@ -557,8 +539,8 @@
                                                     '<td><input disabled type="text" name="serial_number_gi[' + serialNumber + '][serial]" value="' + (serialNumber + 1) + '"></td>' +
                                                     '<td><input type="text" name="serial_number_gi[' + serialNumber + '][info_product_name]"></td>' +
                                                     '<td><input type="text" name="serial_number_gi[' + serialNumber + '][info_batch_no]"></td>' +
-                                                    '<td>   <div class="new-date-data-field"><div class="group-input input-date"><div class="calenderauditee"><input id="date_'+ serialNumber +'_mfg_date" type="text" name="serial_number_gi[' + serialNumber + '][info_mfg_date]" placeholder="DD-MMM-YYYY" /> <input type="date" name="serial_number_gi[' + serialNumber + '][info_mfg_date]" min="{{ \Carbon\Carbon::now()->format("Y-m-d") }}" value="{{ \Carbon\Carbon::now()->format("Y-m-d") }}" id="date_'+ serialNumber +'_mfg_date" class="hide-input show_date" style="position: absolute; top: 0; left: 0; opacity: 0;" oninput="handleDateInput(this, \'date_'+ serialNumber +'_mfg_date\')" /> </div></div></div> </td>' +
-                                                    '<td>   <div class="new-date-data-field"><div class="group-input input-date"><div class="calenderauditee"><input id="date_'+ serialNumber +'_expiry_date" type="text" name="serial_number_gi[' + serialNumber + '][info_expiry_date]" placeholder="DD-MMM-YYYY" /> <input type="date" name="serial_number_gi[' + serialNumber + '][info_expiry_date]" min="{{ \Carbon\Carbon::now()->format("Y-m-d") }}" value="{{ \Carbon\Carbon::now()->format("Y-m-d") }}" id="date_'+ serialNumber +'_expiry_date" class="hide-input show_date" style="position: absolute; top: 0; left: 0; opacity: 0;" oninput="handleDateInput(this, \'date_'+ serialNumber +'_expiry_date\')" /> </div> </div></div></td>' +
+                                                    '<td><input type="date" name="serial_number_gi[' + serialNumber + '][info_mfg_date]"></td>' +
+                                                    '<td><input type="date" name="serial_number_gi[' + serialNumber + '][info_expiry_date]"></td>' +
                                                     '<td><input type="text" name="serial_number_gi[' + serialNumber + '][info_batch_size]"></td>' +
                                                     '<td><input type="text" name="serial_number_gi[' + serialNumber + '][info_pack_size]"></td>' +
                                                     '<td><input type="text" name="serial_number_gi[' + serialNumber + '][info_dispatch_quantity]"></td>' +
@@ -568,7 +550,7 @@
                                                     '</tr>';
                                                 return html;
                                             }
-
+                                
                                             var tableBody = $('#product_details_details tbody');
                                             var rowCount = tableBody.children('tr').length;
                                             var newRow = generateTableRow(rowCount);
@@ -576,7 +558,7 @@
                                         });
                                     });
                                 </script>
-
+                                
 
                                                                 {{-- {{ ---end s code }} --}}
                             <div class="col-12">
@@ -609,7 +591,7 @@
                                                     <td><input type="text" name="trace_ability[0][manufacturing_location_tr]"></td>
                                                     <td><input type="text" name="trace_ability[0][remarks_tr]"></td>
                                                     <td><button type="text" class="removeRowBtn" >Remove</button></td>
-
+                                                    
                                                 </tr>
                                             </tbody>
                                         </table>
@@ -621,13 +603,13 @@
                                     $(this).closest('tr').remove();
                                 })
                             </script>
-
-
+                        
+                        
                             <script>
                                 $(document).ready(function() {
                                     $('#traceblity_add').click(function(e) {
                                         e.preventDefault();
-
+                                        
                                         function generateTableRow(serialNumber) {
                                             var html =
                                                 '<tr>' +
@@ -641,7 +623,7 @@
                                                 '</tr>';
                                             return html;
                                         }
-
+                            
                                         var tableBody = $('#traceblity tbody');
                                         var rowCount = tableBody.children('tr').length;
                                         var newRow = generateTableRow(rowCount);
@@ -725,7 +707,7 @@
                                     $(document).ready(function() {
                                         $('#investigation_team_add').click(function(e) {
                                             e.preventDefault();
-
+                                
                                             function generateTableRow(serialNumber) {
                                                 var html =
                                                     '<tr>' +
@@ -738,7 +720,7 @@
                                                     '</tr>';
                                                 return html;
                                             }
-
+                                
                                             var tableBody = $('#Investing_team tbody');
                                             var rowCount = tableBody.children('tr').length;
                                             var newRow = generateTableRow(rowCount);
@@ -746,7 +728,7 @@
                                         });
                                     });
                                 </script>
-
+                                
 
                                 <div class="col-md-12 mb-3">
                                     <div class="group-input">
@@ -886,16 +868,16 @@
                                         </div>
                                     </div>
                                 </div>
-
+                                
                                 <script>
                                     $(document).on('click', '.removeRowBtn', function() {
                                         $(this).closest('tr').remove();
                                     });
-
+                                
                                     $(document).ready(function() {
                                         $('#brain_storming_add').click(function(e) {
                                             e.preventDefault();
-
+                                
                                             function generateTableRow(serialNumber) {
                                                 var html =
                                                     '<tr>' +
@@ -908,7 +890,7 @@
                                                     '</tr>';
                                                 return html;
                                             }
-
+                                
                                             var tableBody = $('#brain_stroming_details tbody');
                                             var rowCount = tableBody.children('tr').length;
                                             var newRow = generateTableRow(rowCount);
@@ -916,7 +898,7 @@
                                         });
                                     });
                                 </script>
-
+                                
 
                                 <div class="button-block">
                                     <button type="submit" class="saveButton">Save</button>
@@ -1032,13 +1014,12 @@
                                                         <th>Department</th>
                                                         <th>Sign</th>
                                                         <th>Date</th>
-                                                        <th>Action</th>
 
 
                                                     </tr>
                                                 </thead>
                                                 <tbody>
-                                                    <td><input disabled type="text" name="Team_Members[0][serial]"
+                                                    <td><input disabled type="text" name="serial_number[0]"
                                                             value="1">
                                                     </td>
                                                     <td><input type="text" name="Team_Members[0][names_tm]"></td>
@@ -1074,13 +1055,12 @@
 
                                                 var html =
                                                     '<tr>' +
-                                                    '<td><input disabled type="text" name="Team_Members[' + serialNumber + '][serial]" value="' + (serialNumber + 1) + '"></td>' +
-                                                    '<td><input type="text" name="Team_Members[' + serialNumber + '][names_tm]"></td>' +
-                                                    '<td><input type="text" name="Team_Members[' + serialNumber + '][department_tm]"></td>' +
-                                                    '<td><input type="text" name="Team_Members[' + serialNumber + '][sign_tm]"></td>' +
-                                                    '<td><div class="new-date-data-field"><div class="group-input input-date"> <div class="calenderauditee"><input id="date_'+ serialNumber +'_date_tm" type="text" name="Team_Members[' + serialNumber + '][date_tm]" placeholder="DD-MMM-YYYY" /> <input type="date" name="Team_Members[' + serialNumber + '][date_tm]" min="{{ \Carbon\Carbon::now()->format("Y-m-d") }}" value="{{ \Carbon\Carbon::now()->format("Y-m-d") }}" id="date_'+ serialNumber +'_date_tm" class="hide-input show_date" style="position: absolute; top: 0; left: 0; opacity: 0;" oninput="handleDateInput(this, \'date_'+ serialNumber +'_date_tm\')" /> </div> </div></div></td>' +
-                                                   '<td><button type="button" class="removeRowBtn">Remove</button></td>' +
-
+                                                    '<td><input disabled type="text" name="serial[]" value="' + serialNumber +
+                                                    '"></td>' +
+                                                    '<td><input type="text" name="Names[]"></td>' +
+                                                    '<td><input type="text" name="Department[]"></td>' +
+                                                    '<td><input type="text" name="Sign[]"></td>' +
+                                                    '<td><input type="date" name="Date[]"></td>' +
                                                     '</tr>';
 
                                                 return html;
@@ -1276,7 +1256,7 @@
                                                     <th>Pack Profile</th>
                                                     <th>Released Quantity</th>
                                                     <th>Remarks</th>
-                                                    <th></th>
+
 
 
                                                 </tr>
@@ -1327,7 +1307,7 @@
 
 
                                                     <td><button type="text" class="removeRowBtn" >Remove</button></td>
-
+                                                    
                                                 </tr>
                                             </tbody>
                                         </table>
@@ -1339,13 +1319,13 @@
                                     $(this).closest('tr').remove();
                                 })
                             </script>
-
-
+                        
+                        
                             <script>
                                 $(document).ready(function() {
                                     $('#promate_add').click(function(e) {
                                         e.preventDefault();
-
+                                        
                                         function generateTableRow(productserialno) {
                                             var html =
                                                 '<tr>' +
@@ -1364,7 +1344,7 @@
                                                 '</tr>';
                                             return html;
                                         }
-
+                            
                                         var tableBody = $('#prod_mate_details tbody');
                                         var rowCount = tableBody.children('tr').length;
                                         var newRow = generateTableRow(rowCount);
@@ -1372,10 +1352,10 @@
                                     });
                                 });
                             </script>
+                           
 
 
-
-
+                            
 
                             <div class="col-lg-12">
                                 <div class="group-input">
@@ -1824,7 +1804,6 @@
             ele: '#related_records, #hod'
         });
 
-
         function openCity(evt, cityName) {
             var i, cctabcontent, cctablinks;
             cctabcontent = document.getElementsByClassName("cctabcontent");
@@ -1954,7 +1933,7 @@
         var selectedValue = this.value;
         document.getElementById('initiator_group_code').value = selectedValue;
     });
-
+    
     function setCurrentDate(item){
         if(item == 'yes'){
             $('#effect_check_date').val('{{ date('d-M-Y')}}');

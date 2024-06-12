@@ -10,6 +10,7 @@ use App\Models\RoleGroup;
 use App\Models\Oosgrids;
 use App\Models\OosAuditTrial;
 use App\Services\Qms\OOSService;
+use App\Services\Qms\OOSService;
 use App\Models\RecordNumber;
 use App\Models\Division;
 use App\Models\QMSDivision;
@@ -32,14 +33,17 @@ class OOSController extends Controller
 
         $old_record = OOS::select('id', 'division_id', 'record_number')->get();
         
+        
         $record_number = ((RecordNumber::first()->value('counter')) + 1);
         $record_number = str_pad($record_number, 4, '0', STR_PAD_LEFT);
         $division = QMSDivision::where('name', Helpers::getDivisionName(session()->get('division')))->first();
+        
         
         if ($division) {
             $last_oos = OOS::where('division_id', $division->id)->latest()->first();
             if ($last_oos) {
                 $record_number = $last_oos->record_number ? str_pad($last_oos->record_number + 1, 4, '0', STR_PAD_LEFT) : '0001';
+                
                 
             } else {
                 $record_number = '0001';
@@ -55,6 +59,7 @@ class OOSController extends Controller
 
     }
     
+    
     public function store(Request $request)
     { 
         // dd($request->all());
@@ -62,11 +67,13 @@ class OOSController extends Controller
 
         try {
             
+            
             $oos_record = OOSService::create_oss($request);
 
             if ($oos_record['status'] == 'error')
             {
                 throw new Error($oos_record['message']);
+            } 
             } 
 
         } catch (\Exception $e) {
@@ -87,9 +94,11 @@ class OOSController extends Controller
         $revised_date = "";
         $data = OOS::find($id);
         // dd($data);
+        // dd($data);
         $old_record = OOS::select('id', 'division_id', 'record_number')->get();
         // $revised_date = Extension::where('parent_id', $id)->where('parent_type', "OOS Chemical")->value('revised_date');
         $data->record_number = str_pad($data->record_number, 4, '0', STR_PAD_LEFT);
+        
         
         $data->assign_to_name = User::where('id', $data->assign_id)->value('name');
         $data->initiator_name = User::where('id', $data->initiator_id)->value('name');
@@ -102,6 +111,7 @@ class OOSController extends Controller
         $phase_two_invs = $data->grids()->where('identifier', 'phase_two_inv')->first();
         $oos_conclusions = $data->grids()->where('identifier', 'oos_conclusion')->first();
         $oos_conclusion_reviews = $data->grids()->where('identifier', 'oos_conclusion_review')->first();
+        return view('frontend.OOS.oos_form_view', 
         return view('frontend.OOS.oos_form_view', 
         compact('data', 'old_record','revised_date','cft' , 'info_product_materials', 'details_stabilities', 'oos_details', 'checklist_lab_invs', 'oos_capas', 'phase_two_invs', 'oos_conclusions', 'oos_conclusion_reviews'));
 
@@ -117,11 +127,13 @@ class OOSController extends Controller
 
         try {
             
+            
             $oos_record = OOSService::update_oss($request,$id);
 
             if ($oos_record['status'] == 'error')
             {
                 throw new Error($oos_record['message']);
+            } 
             } 
 
         } catch (\Exception $e) {
@@ -166,6 +178,7 @@ class OOSController extends Controller
                             //             $email = Helpers::getInitiatorEmail($u->user_id);
                             //              if ($email !== null) {
                                       
+                                      
                             //               Mail::send(
                             //                   'mail.view-mail',
                             //                    ['data' => $changestage],
@@ -175,6 +188,7 @@ class OOSController extends Controller
                             //                 }
                             //               );
                             //             }
+                            //      } 
                             //      } 
                             //   }
                 $changestage->update();
@@ -219,6 +233,7 @@ class OOSController extends Controller
                             $history->origin_state = $lastDocument->status;
                             $history->stage = "Lab Supervisor";
                             $history->save();
+                        
                         
                 $changestage->update();
                 toastr()->success('Document Sent');
@@ -354,12 +369,14 @@ class OOSController extends Controller
                 return back();
             }
            
+           
             if ($changestage->stage == 14) {
                 $changestage->stage = "15";
                 $changestage->status = "Close-Done";
                 $changestage->completed_by_close_done= Auth::user()->name;
                 $changestage->completed_on_close_done = Carbon::now()->format('d-M-Y');
                 $changestage->comment_close_done = $request->comment;
+                
                 
                 $history = new OosAuditTrial();
                 $history->oos_id = $id;
@@ -502,6 +519,7 @@ class OOSController extends Controller
                 $changestage->completed_on_under_phaseII_investigation = Carbon::now()->format('d-M-Y');
                 $changestage->comment_under_phaseII_investigation = $request->comment;
                 
+                
                 $history = new OosAuditTrial();
                 $history->oos_id = $id;
                 $history->activity_type = 'Activity Log';
@@ -523,6 +541,7 @@ class OOSController extends Controller
                 $changestage->completed_by_under_manufacturing_investigation_phaseIIA = Auth::user()->name;
                 $changestage->completed_on_under_manufacturing_investigation_phaseIIA = Carbon::now()->format('d-M-Y');
                 $changestage->comment_under_manufacturing_investigation_phaseIIA = $request->comment;
+                
                 
                 $history = new OosAuditTrial();
                 $history->oos_id = $id;
@@ -546,6 +565,7 @@ class OOSController extends Controller
                 $changestage->completed_on_under_phaseIIB_additional_lab_investigation = Carbon::now()->format('d-M-Y');
                 $changestage->comment_under_phaseIIB_additional_lab_investigation = $request->comment;
                 
+                
                 $history = new OosAuditTrial();
                 $history->oos_id = $id;
                 $history->activity_type = 'Activity Log';
@@ -567,6 +587,7 @@ class OOSController extends Controller
                 $changestage->completed_by_under_phaseIII_investigation= Auth::user()->name;
                 $changestage->completed_on_under_phaseIII_investigation = Carbon::now()->format('d-M-Y');
                 $changestage->comment_under_phaseIII_investigation = $request->comment;
+                
                 
                 $history = new OosAuditTrial();
                 $history->oos_id = $id;
@@ -835,6 +856,8 @@ class OOSController extends Controller
                 $capa->status = "Opened";
                 // $capa->rejected_by = Auth::user()->name;
                 // $capa->rejected_on = Carbon::now()->format('d-M-Y');
+                // $capa->rejected_by = Auth::user()->name;
+                // $capa->rejected_on = Carbon::now()->format('d-M-Y');
                 $capa->update();
                 $history = new CapaHistory();
                 $history->type = "Capa";
@@ -849,6 +872,7 @@ class OOSController extends Controller
                 //     $email = Helpers::getInitiatorEmail($u->user_id);
                 //     if ($email !== null) {
                        
+                       
                 //         Mail::send(
                 //             'mail.view-mail',
                 //             ['data' => $capa],
@@ -858,6 +882,7 @@ class OOSController extends Controller
                 //             }
                 //         );
                 //       }
+                //     } 
                 //     } 
                 // }
                 $history->save();
@@ -881,6 +906,7 @@ class OOSController extends Controller
                         $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                         $history->origin_state = $lastDocument->status;
                         $history->stage = 'Qa More Info Required';
+                        $history->save();   
                         $history->save();   
                 $capa->update();
                 $history = new CapaHistory();
@@ -925,8 +951,10 @@ class OOSController extends Controller
 
         $doc = OOS::where('id', $detail->oos_id)->first();
         
+        
 
         $doc->origiator_name = User::find($doc->initiator_id);
+        
         
         return view('frontend.OOS.comps.audit-trial-inner', compact('detail', 'doc', 'detail_data'));
     }
@@ -955,6 +983,7 @@ class OOSController extends Controller
             return $pdf->stream('OOS-Audit' . $id . '.pdf');
         }
     }
+    
     
     public static function singleReport($id)
     {
@@ -989,5 +1018,6 @@ class OOSController extends Controller
             return $pdf->stream('OOS Cemical' . $id . '.pdf');
         }
     }
+       
        
 }

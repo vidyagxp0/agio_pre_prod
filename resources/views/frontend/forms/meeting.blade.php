@@ -89,7 +89,7 @@
                                         @enderror
                                     </div>
                                 </div>
-
+                               
                                 <div class="col-lg-6 new-date-data-field">
                                     <div class="group-input input-date">
                                         <label for="Date Due">Date Due</label>
@@ -102,7 +102,7 @@
                                                 oninput="handleDateInput(this, 'due_date')" />
                                         </div>
                                     </div>
-                                </div>
+                                </div> 
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Initiator Group"><b>Initiator Group</b></label>
@@ -169,7 +169,7 @@
                                         <input id="docname" type="text" name="short_description" maxlength="255" required>
                                     </div>
                                 </div>
-
+                               
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="type">Type</label>
@@ -198,11 +198,11 @@
                                         </select>
                                     </div>
                                 </div>
-
-
+                             
+                                
                                 <div class="col-lg-6 new-date-data-field">
                                     <div class="group-input input-date">
-                                        <label for="Scheduled Start Date">Scheduled Start Date</label>
+                                        <label for="Scheduled Start Date">Scheduled Start Date</label>                                        
                                         <div class="calenderauditee">
                                             <input type="text" id="start_date" readonly placeholder="DD-MMM-YYYY" />
                                             <input type="date" id="start_date_checkdate"  name="start_date" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input"
@@ -210,7 +210,7 @@
                                         </div>
                                     </div>
                                 </div>
-
+                               
                                 <div class="col-lg-6 new-date-data-field">
                                     <div class="group-input input-date">
                                         <label for="Scheduled end date">Scheduled End Date</label>
@@ -235,30 +235,28 @@
                                         <table class="table table-bordered" id="meeting_agenda_body">
                                             <thead>
                                                 <tr>
-                                                    <th style="width:5%">Row #</th>
+                                                    <th>Row #</th>
                                                     <th>Date</th>
                                                     <th>Topic</th>
                                                     <th>Responsible</th>
                                                     <th>Time Start</th>
                                                     <th>Time End</th>
                                                     <th>Comment</th>
-                                                    <th>Action</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
                                                 <tr>
                                                     <td><input disabled type="text" name="serial_number[]" value="1"></td>
-
+                                               
                                            <td><div class="group-input new-date-data-field mb-0"><div class="input-date "><div class="calenderauditee">
                                                         <input type="text" id="agenda_date0" readonly placeholder="DD-MMM-YYYY" />
-                                                        <input type="date" name="date[]"   min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input"
-                                                        oninput="handleDateInput(this, `agenda_date0`);" /></div></div></div></td>
+                                                        <input type="date" name="date[]"   min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input" 
+                                                        oninput="handleDateInput(this, `agenda_date0`);" /></div></div></div></td>                                       
                                                     <td><input type="text" name="topic[]"></td>
                                                     <td><input type="text" name="responsible[]"></td>
                                                     <td><input type="time" name="start_time[]"></td>
                                                     <td><input type="time" name="end_time[]"></td>
                                                     <td><input type="text" name="comment[]"></td>
-                                                    <td></td>
                                                 </tr>
                                             </tbody>
                                         </table>
@@ -285,7 +283,7 @@
                                     <table class="table table-bordered" id="management_review_participants">
                                         <thead>
                                             <tr>
-                                                <th style="width:5%">Row #</th>
+                                                <th>Row #</th>
                                                 <th>Invited Person</th>
                                                 <th>Designee</th>
                                                 <th>Department</th>
@@ -293,12 +291,11 @@
                                                 <th>Designee Name</th>
                                                 <th>Designee Department/Designation</th>
                                                 <th>Remarks</th>
-                                                <th>Action</th>
                                             </tr>
                                         </thead>
                                         <tbody>
                                             <tr>
-                                            <td><input disabled type="text" name="serial_number[]" value="1"></td>
+                                            <td><input type="text" name="serial_number[]" value="1"></td>
                                             <td><input type="text" name="invited_Person[]"></td>
                                             <td><input type="text" name="designee[]"></td>
                                             <td><input type="text" name="department[]"></td>
@@ -306,7 +303,6 @@
                                             <td><input type="text" name="designee_Name[]"></td>
                                             <td><input type="text" name="designee_Department[]"></td>
                                             <td><input type="text" name="remarks[]"></td>
-                                            <td></td>
                                             </tr>
                                         </tbody>
                                     </table>
@@ -1012,12 +1008,11 @@
                                 <table class="table table-bordered" id="performance_evaluation">
                                     <thead>
                                         <tr>
-                                            <th style="width:5%">Row #</th>
+                                            <th>Row #</th>
                                             <th>Monitoring</th>
                                             <th>Measurement</th>
                                             <th>Analysis</th>
                                             <th>Evalutaion</th>
-                                            <th>Action</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -1027,7 +1022,6 @@
                                             <td><input type="text" name="measurement[]"></td>
                                             <td><input type="text" name="analysis[]"></td>
                                             <td><input type="text" name="evaluation[]"></td>
-                                            <td></td>
                                         </tr>
                                     </tbody>
 
@@ -1112,7 +1106,7 @@
                                 </label><table class="table table-bordered" id="action_item_details">
                                     <thead>
                                         <tr>
-                                            <th style="width:5%">Row #</th>
+                                            <th>Row #</th>
                                             <th>Short Description</th>
                                             <th>Due Date</th>
                                             <th>Site / Division</th>
@@ -1120,7 +1114,6 @@
                                             <th>Current Status</th>
                                             <th>Date Closed</th>
                                             <th>Remarks</th>
-                                            <th>Action</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -1131,7 +1124,7 @@
                                             <div class="input-date "><div
                                              class="calenderauditee">
                                             <input type="text" id="date_due0" readonly placeholder="DD-MMM-YYYY" />
-                                            <input type="date" name="date_due[]" id="date_due0_checkdate" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input"
+                                            <input type="date" name="date_due[]" id="date_due0_checkdate" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input" 
                                             oninput="handleDateInput(this, `date_due0`);checkDate('date_due0_checkdate','date_closed0_checkdate')" /></div></div></div></td>
                                         <td><input type="text" name="site[]"></td>
                                         <td>
@@ -1146,25 +1139,24 @@
                                         </td>
                                         <td><input type="text" name="current_status[]"></td>
                                         <td><div class="group-input new-date-data-field mb-0">
-                                            <div class="input-date ">
-                                                <div class="calenderauditee">
-                                                    <input type="text" id="date_closed0" readonly placeholder="DD-MMM-YYYY" />
-                                                    <input type="date" name="date_closed[]" id="date_closed0_checkdate" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input"
-                                                        oninput="handleDateInput(this, `date_closed0`);checkDate('date_due0_checkdate','date_closed0_checkdate')" /></div>
-                                                </div>
-                                            </div>
-                                        </td>
+                                            <div class="input-date "><div
+                                             class="calenderauditee">
+                                            <input type="text" id="date_closed0" readonly placeholder="DD-MMM-YYYY" />
+                                            <input type="date" name="date_closed[]" id="date_closed0_checkdate" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input" 
+                                            oninput="handleDateInput(this, `date_closed0`);checkDate('date_due0_checkdate','date_closed0_checkdate')" /></div>
+                                        </div>
+                                    </div>
+                                </td>
 
 
                                         <td><input type="text" name="remark[]"></td>
-                                        <td></td>
-                                         <!-- <td><input type="text" name="capa_type[]"></td>
+                                         <!-- <td><input type="text" name="capa_type[]"></td> 
                                         {{-- <td><input type="date" name="date_opened[]"></td> --}}
                                         <td><div class="group-input new-date-data-field mb-0">
                                             <div class="input-date "><div
                                              class="calenderauditee">
                                             <input type="text" id="date_due00' + serialNumber +'" readonly placeholder="DD-MMM-YYYY" />
-                                            <input type="date" name="date_opened[]" class="hide-input"
+                                            <input type="date" name="date_opened[]" class="hide-input" 
                                             oninput="handleDateInput(this, `date_due00' + serialNumber +'`)" /></div></div></div></td> -->
 
                                     </tbody>
@@ -1177,7 +1169,7 @@
                                 <table class="table table-bordered" id="capa_detail_details">
                                     <thead>
                                         <tr>
-                                            <th style="width:5%">Row #</th>
+                                            <th>Row #</th>
                                             <th>CAPA Details</th>
                                             <th>CAPA Type</th>
                                             <th>Site / Division</th>
@@ -1185,7 +1177,7 @@
                                             <th>Current Status</th>
                                             <th>Date Closed</th>
                                             <th>Remark</th>
-                                            <th>Action</th>
+                
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -1216,18 +1208,17 @@
                                         <td><div class="group-input new-date-data-field mb-0"><div class="input-date ">
                                             <div class="calenderauditee">
                                             <input type="text" id="date_closed_capa1" readonly placeholder="DD-MMM-YYYY" />
-                                            <input type="date" name="date_closed2[]"   min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input"
+                                            <input type="date" name="date_closed2[]"   min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input" 
                                                         oninput="handleDateInput(this, `date_closed_capa1`);" /></div></div>
                                                     </div>
-                                                </td>
-
+                                                </td>  
+                                         
 
                                         <td><input type="text" name="remark2[]"></td>
-                                        <td></td>
                                     </tbody>
                                 </table>
                             </div>
-
+                           
                             <div class="new-date-data-field">
                                 <div class="group-input input-date">
                                     <label for="next_managment_review_date">Next Management Review Date</label>
@@ -1510,21 +1501,17 @@ function addActionItemDetails(tableId) {
                         userHtml += '<option value="' + users[i].id + '">' + users[i].name + '</option>';
                     }
                     userHtml +='</select>';
-
+            
             cell5.innerHTML = userHtml;
 
             var cell6 = newRow.insertCell(5);
-            cell6.innerHTML = "<input type='text' name='current_status[]'>";
+            cell6.innerHTML = "<input type='text' name='current_status[]'>"; 
 
             var cell7 = newRow.insertCell(6);
             cell7.innerHTML = '<td><div class="group-input new-date-data-field mb-0"><div class="input-date "><div class="calenderauditee"> <input type="text" id="date_closed' + currentRowCount +'" readonly placeholder="DD-MMM-YYYY" /><input type="date" name="date_closed[]"  min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"  id="date_closed'+ currentRowCount +'_checkdate" class="hide-input" oninput="handleDateInput(this, `date_closed' + currentRowCount +'`);checkDate(`date_due' + currentRowCount +'_checkdate`,`date_closed' + currentRowCount +'_checkdate`)" /></div></div></div></td>';
-
+              
             var cell8 = newRow.insertCell(7);
             cell8.innerHTML = "<input type='text' name='remark[]'>";
-
-            var cell9 = newRow.insertCell(8);
-            cell9.innerHTML = "<button type='text' class='removeRowBtn' name='Action[]' readonly>Remove</button>";
-
             for (var i = 1; i < currentRowCount; i++) {
                 var row = table.rows[i];
                 row.cells[0].innerHTML = i;
@@ -1532,7 +1519,7 @@ function addActionItemDetails(tableId) {
         }
 
         $(document).ready(function() {
-
+        
             $('#action_plan2').click(function(e) {
                 function generateTableRow(serialNumber) {
                     var users = @json($users);
@@ -1639,7 +1626,7 @@ function addActionItemDetails(tableId) {
                         '<tr>' +
                         '<td><input disabled type="text" name="serial_number[]" value="' + serialNumber +
                         '"></td>' +
-
+                       
                         '<td><input type="text" name="Details[]">' +
                         '<td><select id="select-state" placeholder="Select..." name="capa_type[]">'+
                         '<option value="">Select a value</option>'+
@@ -1657,14 +1644,12 @@ function addActionItemDetails(tableId) {
                     }
 
                     html += '</select></td>' +
-
+                        
                         '<td><input type="text" name="current_status2[]">' +
-
+                       
                         '<td><div class="group-input new-date-data-field mb-0"><div class="input-date "><div class="calenderauditee"><input type="text" id="date_closed_capa' + serialNumber +'" readonly placeholder="DD-MMM-YYYY" /><input type="date" name="date_closed2[]"min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"  class="hide-input" oninput="handleDateInput(this, `date_closed_capa' + serialNumber +'`)" /></div></div></div></td>' +
 
                         '<td><input type="text" name="remark2[]"></td>' +
-
-                        '<td><button type="text" class="removeRowBtn" name="Action[]" readonly>Remove</button></td>' +
 
                         '</tr>';
                     return html;
@@ -2130,10 +2115,6 @@ function addActionItemDetails(tableId) {
 
             var cell5 = newRow.insertCell(4);
             cell5.innerHTML = "<input type='text' name='evaluation[]'>";
-
-            var cell6 = newRow.insertCell(5);
-            cell6.innerHTML = "<button type='text' class='removeRowBtn' name='Action[]' readonly>Remove</button>";
-
             for (var i = 1; i < currentRowCount; i++) {
                 var row = table.rows[i];
                 row.cells[0].innerHTML = i;
@@ -2142,7 +2123,7 @@ function addActionItemDetails(tableId) {
 
 
         $(document).ready(function() {
-
+            
             $('#meetingagenda').click(function(e) {
             function generateTableRow(serialNumber) {
                 var html =
@@ -2155,7 +2136,6 @@ function addActionItemDetails(tableId) {
                     '<td><input type="time" name="start_time[]"></td>' +
                     '<td><input type="time" name="end_time[]"></td>' +
                     '<td><input type="text" name="comment[]"></td>' +
-                    '<td><button type="text" class="removeRowBtn" name="Action[]" readonly>Remove</button></td>' +
                     '</tr>';
                 return html;
             }
@@ -2228,11 +2208,6 @@ function addActionItemDetails(tableId) {
                 tableBody.append(newRow);
             });
         });
-    </script>
-    <script>
-        $(document).on('click', '.removeRowBtn', function() {
-            $(this).closest('tr').remove();
-        })
     </script>
     <script>
         $(document).ready(function() {

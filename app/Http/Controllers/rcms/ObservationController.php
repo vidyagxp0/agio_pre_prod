@@ -49,7 +49,7 @@ class ObservationController extends Controller
         $data->initiator_id = Auth::user()->id;
         $data->parent_id = $request->parent_id;
         $data->parent_type = $request->parent_type;
-        $data->division_code = $request->division_id;
+        $data->division_code = $request->division_code;
         $data->intiation_date = $request->intiation_date;
         $data->due_date = $request->input('due_date');
         $data->short_description = $request->short_description;

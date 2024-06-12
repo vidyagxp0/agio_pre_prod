@@ -54,7 +54,7 @@ class LabIncidentController extends Controller
         $data->intiation_date = $request->intiation_date;
         $data->Initiator_Group= $request->Initiator_Group;
         $data->initiator_group_code= $request->initiator_group_code;
-        $data->Other_Ref= $request->Other_Ref;
+        $data->Other_Ref= $request->Other_Ref;  
         $data->due_date = $request->due_date;
         $data->assign_to = $request->assign_to;
         $data->Incident_Category= $request->Incident_Category;
@@ -82,35 +82,6 @@ class LabIncidentController extends Controller
         $data->occurance_date = $request->occurance_date;
         $data->Incident_Category_others = $request->Incident_Category_others;
         $data->due_date_extension= $request->due_date_extension;
-
-        $data->instrument_involved_SSFI= $request->instrument_involved_SSFI;
-        $data->stage_SSFI= $request->stage_SSFI;
-        $data->stability_condition_SSFI= $request->stability_condition_SSFI;
-        $data->interval_SSFI= $request->interval_SSFI;
-        $data->test_SSFI= $request->test_SSFI;
-        $data->date_of_analysis_SSFI= $request->date_of_analysis_SSFI;
-        $data->specification_number_SSFI= $request->specification_number_SSFI;
-        $data->stp_number_SSFI= $request->stp_number_SSFI;
-        $data->name_of_analyst_SSFI= $request->name_of_analyst_SSFI;
-        $data->date_of_incidence_SSFI= $request->date_of_incidence_SSFI;
-        $data->qc_reviewer_SSFI= $request->qc_reviewer_SSFI;
-        $data->description_of_incidence_SSFI= $request->description_of_incidence_SSFI;
-        $data->detail_investigation_SSFI= $request->detail_investigation_SSFI;
-        $data->proposed_corrective_action_SSFI= $request->proposed_corrective_action_SSFI;
-        $data->root_cause_SSFI= $request->root_cause_SSFI;
-        $data->incident_summary_SSFI= $request->incident_summary_SSFI;
-        $data->investigator_qc_SSFI= $request->investigator_qc_SSFI;
-        $data->reviewed_by_qc_SSFI= $request->reviewed_by_qc_SSFI;
-
-
-
-        $data->closure_of_incident_closure= $request->closure_of_incident_closure;
-        $data->affected_documents_closed_closure= $request->affected_documents_closed_closure;
-        $data->qc_head_remark_closure= $request->qc_head_remark_closure;
-        $data->qc_head_closure= $request->qc_head_closure;
-        $data->qa_head_remark_closure= $request->qa_head_remark_closure;
-
-
         $data->status = 'Opened';
         $data->stage = 1;
         $data->incident_involved_others_gi =$request->incident_involved_others_gi;
@@ -155,9 +126,9 @@ class LabIncidentController extends Controller
         $data->suit_qc_review_to =$request->suit_qc_review_to;
 
         // $data->assign_to_qc_reviewer = $request->assign_to_qc_reviewer;
+       
 
-
-
+        
 
         if (!empty($request->extension_attachments_e)) {
             $files = [];
@@ -279,9 +250,9 @@ class LabIncidentController extends Controller
             }
             $data->QA_Head_Attachment = json_encode($files);
         }
+        
 
-
-
+        
          $data->save();
 
 
@@ -311,9 +282,9 @@ class LabIncidentController extends Controller
          $labnew->qa_hear_remark_c = $request->qa_hear_remark_c;
          $labnew->test_ssfi = $request->test_ssfi;
          // $data->closure_attachment_c = $request->closure_attachment_c;
-
-
-
+ 
+        
+         
         if (!empty($request->system_suitable_attachments)) {
              $files = [];
              if ($request->hasfile('system_suitable_attachments')) {
@@ -325,7 +296,7 @@ class LabIncidentController extends Controller
              }
              $labnew->system_suitable_attachments = json_encode($files);
          }
-
+ 
          if (!empty($request->closure_attachment_c)) {
              $files = [];
              if ($request->hasfile('closure_attachment_c')) {
@@ -338,13 +309,13 @@ class LabIncidentController extends Controller
              $labnew->closure_attachment_c = json_encode($files);
          }
          $labnew->save();
+         
+ 
 
 
 
 
-
-
-
+    
 
 
 
@@ -363,17 +334,17 @@ class LabIncidentController extends Controller
             $incidentReport->save();
 
 
-
+            
                 // For "Sutability" report
             $identifier = 'Sutability';
-
+        
             $suitabilityReport = lab_incidents_grid::where(['labincident_id' => $griddata, 'identifier' => $identifier])->firstOrNew();
             $suitabilityReport->labincident_id = $griddata;
             $suitabilityReport->identifier = $identifier;
             $suitabilityReport->data = $request->investigation;
             $suitabilityReport->save();
 
-
+       
 
 
          //=======================================Grid ==============================================//
@@ -757,7 +728,7 @@ class LabIncidentController extends Controller
             $history->origin_state = $data->status;
             $history->save();
         }
-
+       
 
 
         if (!empty($data->Incident_Details)) {
@@ -1187,7 +1158,7 @@ class LabIncidentController extends Controller
 
 
 
-        // new added
+        // new added 
         $data->incident_involved_others_gi =$request->incident_involved_others_gi;
         $data->description_incidence_gi =$request->description_incidence_gi;
         $data->stage_stage_gi =$request->stage_stage_gi;
@@ -1584,7 +1555,7 @@ class LabIncidentController extends Controller
         // $labnew = Labincident_Second::find($id);
         // $updatetab=$data->id;
         $labtab = Labincident_Second::where('id', $id)->firstOrCreate();
-
+        
         // $labtab->lab_incident_id = $updatetab;
         $labtab->involved_ssfi =$request->involved_ssfi;
         $labtab->stage_stage_ssfi = $request->stage_stage_ssfi;
@@ -1609,7 +1580,7 @@ class LabIncidentController extends Controller
         $labtab->qa_hear_remark_c = $request->qa_hear_remark_c;
         $labtab->test_ssfi = $request->test_ssfi;
 
-
+        
         if (!empty($request->system_suitable_attachments)) {
             $files = [];
             if ($request->hasfile('system_suitable_attachments')) {
@@ -1621,7 +1592,7 @@ class LabIncidentController extends Controller
             }
             $labtab->system_suitable_attachments = json_encode($files);
         }
-
+        
         if (!empty($request->closure_attachment_c)) {
             $files = [];
             if ($request->hasfile('closure_attachment_c')) {
@@ -1633,7 +1604,7 @@ class LabIncidentController extends Controller
             }
             $labtab->closure_attachment_c = json_encode($files);
         }
-
+        
         $labtab->save();
 
         if (isset($data) && isset($request)) {
@@ -1641,7 +1612,7 @@ class LabIncidentController extends Controller
                     if (isset($data->id) && isset($request->investigation)){
                     $griddata = $data->id;
                     $identifier = 'Sutability';
-
+        
                     $suitabilityReport = lab_incidents_grid::where(['labincident_id' => $griddata, 'identifier' => $identifier])->firstOrNew();
                     $suitabilityReport->labincident_id = $griddata;
                     $suitabilityReport->identifier = $identifier;
@@ -1650,7 +1621,7 @@ class LabIncidentController extends Controller
                     }else{
                         throw new Exception('Required data or request object is not set.');
                     }
-
+                    
                     if (isset($data->id) && isset($request->investrecord)) {
                     // For "Incident Report"
                     $incidentReport = lab_incidents_grid::where(['labincident_id' => $griddata, 'identifier' => 'incident report'])->firstOrNew();
@@ -1663,8 +1634,8 @@ class LabIncidentController extends Controller
              } else {
                     throw new Exception('Required data or request object is not set.');
                 }
-
-
+                    
+       
 
         if ($lastDocument->short_desc != $data->short_desc ) {
 
@@ -2200,7 +2171,7 @@ class LabIncidentController extends Controller
         // }
         $systemSutData = lab_incidents_grid::where(['labincident_id' => $id,'identifier' => 'Sutability'])->first();
         $labnew =Labincident_Second::where(['lab_incident_id'=>$id])->first();
-
+        
         return view('frontend.labIncident.view', compact('data','report','systemSutData','labnew'));
 
            }
@@ -2220,9 +2191,11 @@ class LabIncidentController extends Controller
                $parent_record =  ((RecordNumber::first()->value('counter')) + 1);
                $parent_record = str_pad($parent_record, 4, '0', STR_PAD_LEFT);
                $parent_initiator_id = $id;
+               $parent_name = $request->parent_name;
+
                $changeControl = OpenStage::find(1);
                if (!empty($changeControl->cft)) $cft = explode(',', $changeControl->cft);
-
+           
                // Debugging to check the revision value
                \Log::info('Revision value: ' . $request->revision);
            
@@ -2231,11 +2204,17 @@ class LabIncidentController extends Controller
                    return view('frontend.forms.action-item', compact('record_number', 'due_date', 'parent_id', 'parent_type','parent_intiation_date','parent_record','parent_initiator_id'));
                
                }
-
+           
                if ($request->revision == "capa-child") {
                    $cc->originator = User::where('id', $cc->initiator_id)->value('name');
                   return view('frontend.forms.capa', compact('record_number', 'due_date', 'parent_id', 'parent_type', 'old_record', 'cft'));
                }
+               
+               if ($request->revision == "extension-child") {
+                $cc->originator = User::where('id', $cc->initiator_id)->value('name');
+                   
+                return view('frontend.forms.extension',compact('cft','parent_name','parent_id','parent_type','old_record','record_number','currentDate','formattedDate','due_date','parent_intiation_date','parent_record','parent_initiator_id'));
+            }
                
            }
 
@@ -2282,6 +2261,7 @@ class LabIncidentController extends Controller
         $parent_intiation_date = Capa::where('id', $id)->value('intiation_date');
         $parent_record =  ((RecordNumber::first()->value('counter')) + 1);
         $parent_record = str_pad($parent_record, 4, '0', STR_PAD_LEFT);
+        $parent_name = $request->parent_name;
         $parent_initiator_id = $id;
        
         if ($request->revision == "Action-Item") {
@@ -2290,7 +2270,7 @@ class LabIncidentController extends Controller
                
             // return view('frontend.forms.root-cause-analysis', compact('record_number', 'due_date', 'parent_id', 'parent_type'));
         }
-
+    
         if ($request->revision == "capa-child") {
             $cc->originator = User::where('id', $cc->initiator_id)->value('name');
             return view('frontend.forms.capa', compact('record_number', 'due_date', 'parent_id', 'parent_type', 'old_record', 'cft'));
@@ -2299,7 +2279,14 @@ class LabIncidentController extends Controller
          $cc->originator = User::where('id', $cc->initiator_id)->value('name');
            return view('frontend.forms.effectiveness-check', compact( 'parent_id', 'parent_type','record_number','currentDate','formattedDate','due_date'));
         // return view('frontend.forms.root-cause-analysis', compact('record_number', 'due_date', 'parent_id', 'parent_type'));
-    };}
+    }
+    if ($request->revision == "extension-child") {
+        $cc->originator = User::where('id', $cc->initiator_id)->value('name');
+           
+        return view('frontend.forms.extension',compact('cft','parent_name','parent_id','parent_type','old_record','record_number','currentDate','formattedDate','due_date','parent_intiation_date','parent_record','parent_initiator_id'));
+    }
+
+}
 
     public function labincidentRiskChild(Request $request,$id)
     {
@@ -2317,11 +2304,18 @@ class LabIncidentController extends Controller
         $parent_record =  ((RecordNumber::first()->value('counter')) + 1);
         $parent_record = str_pad($parent_record, 4, '0', STR_PAD_LEFT);
         $parent_initiator_id = $id;
+        $parent_name = $request->parent_name;
+
        
         if ($request->revision == "risk-Item") {
             $cc->originator = User::where('id', $cc->initiator_id)->value('name');
             return view('frontend.forms.risk-management', compact('record_number', 'due_date', 'parent_id','old_record', 'parent_type','parent_intiation_date','parent_record','parent_initiator_id'));
 
+        }
+        if ($request->revision == "extension-child") {
+            $cc->originator = User::where('id', $cc->initiator_id)->value('name');
+               
+            return view('frontend.forms.extension',compact('cft','parent_name','parent_id','parent_type','old_record','record_number','currentDate','formattedDate','due_date','parent_intiation_date','parent_record','parent_initiator_id'));
         }
         
 
@@ -2355,12 +2349,12 @@ class LabIncidentController extends Controller
             $history->stage='No Assignable Cause Identification';
             $history->save();
 
-
+            
             $labstate->update();
 
             return redirect()->back();
            }
-
+       
         }else {
             toastr()->error('E-signature Not match');
             return back();
@@ -2393,14 +2387,14 @@ class LabIncidentController extends Controller
                 $history->change_from = $lastDocument->status;
                 $history->stage='Submited';
                 $history->save();
-
+                
                 try {
                     $list = Helpers::getHodUserList();
-
+        
                     foreach ($list as $u) {
                     if ($u->q_m_s_divisions_id == $changeControl->division_id) {
                     $email = Helpers::getInitiatorEmail($u->user_id);
-
+        
                     // if ($email !== null) {
                     // try {
                     //  Mail::send(
@@ -2420,9 +2414,9 @@ class LabIncidentController extends Controller
                 } catch (\Exception $e) {
                     // return response()->json(['error' => 'An error Occured: ' . $e->getMessage()], 500);
                 }
+              
 
-
-
+                
                 $changeControl->update();
                 toastr()->success('Document Sent');
                 return back();
@@ -2452,7 +2446,7 @@ class LabIncidentController extends Controller
                         if($u->q_m_s_divisions_id == $changeControl ->division_id){
                             $email = Helpers::getInitiatorEmail($u->user_id);
                              if ($email !== null) {
-
+                          
                               Mail::send(
                                   'mail.view-mail',
                                    ['data' => $changeControl ],
@@ -2462,7 +2456,7 @@ class LabIncidentController extends Controller
                                 }
                               );
                             }
-                     }
+                     } 
                   }
 
                 $changeControl->update();
@@ -2494,7 +2488,7 @@ class LabIncidentController extends Controller
                         if($u->q_m_s_divisions_id == $changeControl->division_id){
                             $email = Helpers::getInitiatorEmail($u->user_id);
                             //  if ($email !== null) {
-
+                          
                             //   Mail::send(
                             //       'mail.view-mail',
                             //        ['data' => $changeControl],
@@ -2504,7 +2498,7 @@ class LabIncidentController extends Controller
                             //     }
                             //   );
                             // }
-                     }
+                     } 
                   }
                 $changeControl->update();
                 toastr()->success('Document Sent');
@@ -2534,9 +2528,9 @@ class LabIncidentController extends Controller
                     toastr()->success('Document Sent');
                     return back();
 
-
+                    
                 }
-
+           
             if ($changeControl->stage == 5) {
                 $changeControl->stage = "7";
                 $changeControl->status = "CAPA Initiation & Approval";
@@ -2556,13 +2550,13 @@ class LabIncidentController extends Controller
                 $history->change_from = $lastDocument->status;
                 $history->origin_state = $lastDocument->status;
                 $history->stage='Solution Validation';
-                $history->save();
+                $history->save();  
                 $list = Helpers::getQAUserList();
                 foreach ($list as $u) {
                     if($u->q_m_s_divisions_id ==$changeControl->division_id){
                         $email = Helpers::getInitiatorEmail($u->user_id);
                         //  if ($email !== null) {
-
+                      
                         //   Mail::send(
                         //       'mail.view-mail',
                         //        ['data' => $changeControl],
@@ -2572,8 +2566,8 @@ class LabIncidentController extends Controller
                         //     }
                         //   );
                         // }
-                 }
-              }
+                 } 
+              }          
                 $changeControl->update();
                 toastr()->success('Document Sent');
                 return back();
@@ -2637,7 +2631,7 @@ class LabIncidentController extends Controller
                             //     }
                             //   );
                             // }
-                     }
+                     } 
                   }
                 $changeControl->update();
                 toastr()->success('Document Sent');
@@ -2668,7 +2662,7 @@ class LabIncidentController extends Controller
                         if($u->q_m_s_divisions_id ==$changeControl->division_id){
                             $email = Helpers::getInitiatorEmail($u->user_id);
                             //  if ($email !== null) {
-
+                          
                             //   Mail::send(
                             //       'mail.view-mail',
                             //        ['data' => $changeControl],
@@ -2678,7 +2672,7 @@ class LabIncidentController extends Controller
                             //     }
                             //   );
                             // }
-                     }
+                     } 
                   }
                 $changeControl->update();
                 toastr()->success('Document Sent');
@@ -2769,7 +2763,7 @@ class LabIncidentController extends Controller
                 toastr()->success('Document Sent');
                 return back();
             }
-
+           
         } else {
             toastr()->error('E-signature Not match');
             return back();
@@ -2862,8 +2856,8 @@ class LabIncidentController extends Controller
         if (!empty($doc)) {
             $doc->originator = User::where('id', $doc->initiator_id)->value('name');
             $data = LabIncidentAuditTrial::where('LabIncident_id', $id)->get();
-
-
+            
+            
             $pdf = App::make('dompdf.wrapper');
             $time = Carbon::now();
             $pdf = PDF::loadview('frontend.labIncident.auditReport', compact('data', 'doc'))

@@ -68,7 +68,7 @@
                     {{ $doc->updated_at }}
                 </td>
                 <td class="status">
-                    {{ Helpers::getDocStatusByStage($doc->stage, $doc->training_required) }}
+                    {{ $doc->status }}
                 </td>
                 <td class="action">
                     <div class="action-dropdown">

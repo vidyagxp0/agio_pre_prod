@@ -18,7 +18,7 @@
         </div> --}}
         <div class="division-bar">
             <strong>Site Division/Project</strong> :
-            {{ Helpers::getDivisionName(session()->get('division')) }}/ Market Complaint
+            / Market Complaint
         </div>
     </div>
 
@@ -272,6 +272,131 @@
                         <button class="button_theme1"> <a class="text-white" href="{{ url('rcms/qms-dashboard') }}"> Exit
                             </a> </button>
 
+                        {{-- <button class="button_theme1"> <a class="text-white" href="{{ url('rcms/qms-dashboard') }}"> Exit
+                        </a> </button> --}}
+
+
+
+                        {{-- <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
+                                Verification Complete
+                            </button> --}}
+
+
+                        {{-- <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#cancel-modal">
+                                Cancellation Request
+                            </button>
+                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#rejection-modal">
+                                Request More Info
+                            </button> --}}
+
+
+
+                        {{-- <button class="button_theme1"> <a class="text-white" href=""> --}}
+                        {{-- {{ url('DeviationAuditTrial', $data->id) }} --}}
+
+                        {{-- add here url for auditTrail i.e. href="{{ url('CapaAuditTrial', $data->id) }}"
+                                Audit Trail </a> </button> --}}
+
+                        {{--    @if ($data->stage == 1 && (in_array(3, $userRoleIds) || in_array(18, $userRoleIds))) --}}
+                        {{-- <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
+                            Submit
+                        </button>
+                        <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#cancel-modal">
+                            Cancel
+                        </button> --}}
+                        {{-- @elseif($data->stage == 2 && (in_array(4, $userRoleIds) || in_array(18, $userRoleIds))) --}}
+                        {{-- <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#more-info-required-modal">
+                            More Info Required
+                        </button> --}}
+
+
+                        {{-- 
+                        <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
+                            HOD Review Complete
+                        </button>
+                        <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#cancel-modal">
+                            Cancel
+                        </button> --}}
+
+
+
+
+
+                        {{-- @elseif($data->stage == 3 && (in_array(7, $userRoleIds) || in_array(18, $userRoleIds))) --}}
+                        {{-- <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#more-info-required-modal">
+                            More Info Required
+                        </button>
+                        <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
+                            QA Initial Review Complete
+                        </button>
+
+                        <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal">
+                            Child
+                        </button> --}}
+                        {{-- @elseif(
+                            $data->stage == 4 &&
+                                (in_array(5, $userRoleIds) || in_array(18, $userRoleIds) || in_array(Auth::user()->id, $valuesArray)))
+                            @if (!$cftCompleteUser) --}}
+                        {{-- <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#more-info-required-modal">
+                            More Info Required
+                        </button> --}}
+
+                        {{-- @elseif($data->stage == 5 && (in_array(7, $userRoleIds) || in_array(18, $userRoleIds))) --}}
+                        {{-- <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#sendToInitiator">
+                            Send to Initiator
+                        </button>
+                        <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#hodsend">
+                            Send to HOD
+                        </button>
+                        <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#qasend">
+                            Send to QA Initial Review
+                        </button>
+                        <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
+                            QA Final Review Complete
+                        </button>
+                        <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal">
+                            Child
+                        </button> --}}
+                        {{-- @elseif($data->stage == 6 && (in_array(39, $userRoleIds) || in_array(18, $userRoleIds))) --}}
+                        {{-- <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#more-info-required-modal">
+                            More Info Required
+                        </button>
+                        <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
+                            Approved
+                        </button> --}}
+                        {{-- @elseif($data->stage == 7 && (in_array(3, $userRoleIds) || in_array(18, $userRoleIds))) --}}
+                        {{-- <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#sendToInitiator">
+                            Send to Opened
+                        </button>
+                        <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#hodsend">
+                            Send to HOD Review
+                        </button>
+                        <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#qasend">
+                            Send to QA Initial Review
+                        </button>
+                        <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
+                            Initiator Updated Complete
+                        </button> --}}
+                        {{-- @elseif($data->stage == 8 && (in_array(39, $userRoleIds) || in_array(18, $userRoleIds))) --}}
+                        {{-- <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#sendToInitiator">
+                            Send to Opened
+                        </button>
+                        <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#hodsend">
+                            Send to HOD Review
+                        </button> --}}
+                        {{-- <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#qasend">
+                            Send to QA Initial Review
+                        </button>
+                        <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#pending-initiator-update">
+                            Send to Pending Initiator Update
+                        </button>
+                        <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
+                            QA Final Review Complete
+                        </button> --}}
+                        {{-- @endif --}}
+                        {{-- <button class="button_theme1"> <a class="text-white" href="{{ url('rcms/qms-dashboard') }}"> Exit
+                            </a> </button> --}}
+
 
                     </div>
 
@@ -514,6 +639,7 @@
                                
                                 <div class="modal-footer">
                                           <button type="submit">Submit</button>
+                                         <button type="button" data-bs-dismiss="modal">Close</button>                         
                                          <button type="button" data-bs-dismiss="modal">Close</button>                         
                                </div>
                             </form>
@@ -770,7 +896,7 @@
                                     <p class="text-primary"> last date this record should be closed by</p>
 
                                     <div class="calenderauditee">
-                                        <input type="text" id="due_date" readonly placeholder="DD-MMM-YYYY" value="{{ $data->due_date_gi ? \Carbon\Carbon::parse($data->due_date_gi)->format('d-M-Y') : '' }}" />
+                                        <input type="text" id="due_date" readonly placeholder="DD-MMM-YYYY" />
                                         <input type="date" name="due_date_gi"
                                             min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
                                             value="{{ $data->due_date_gi ?? '' }}" class="hide-input"
@@ -808,13 +934,16 @@
                                     <select name="initiator_group" id="initiator_group" {{ $data->stage == 0 || $data->stage == 8 ? "disabled" : "" }}>
                                         <option selected disabled>---select---</option>
                                         @foreach (Helpers::getInitiatorGroups() as $code => $initiator_group)
-                                            <option value="{{ $code }}" @if ($data->initiator_group == $code) selected @endif>
-                                                {{ $initiator_group }}
+                                            <option value="{{ $code }}"
+                                                @if ($data->initiator_group == $code) selected @endif>{{ $initiator_group }}
                                             </option>
                                         @endforeach
                                     </select>
                                 </div>
                             </div>
+
+
+
 
                             <div class="col-lg-12">
                                 <div class="group-input">
@@ -822,21 +951,6 @@
                                     <input readonly type="text" name="initiator_group_code_gi" id="initiator_group_code_gi" value="{{ $data->initiator_group_code_gi ?? '' }}" {{ $data->stage == 0 || $data->stage == 8 ? "disabled" : "" }}>
                                 </div>
                             </div>
-
-                            <script>
-                                document.getElementById('initiator_group').addEventListener('change', function() {
-                                    var selectedValue = this.value;
-                                    document.getElementById('initiator_group_code_gi').value = selectedValue;
-                                });
-
-                                // Set the group code on page load if a value is already selected
-                                document.addEventListener('DOMContentLoaded', function() {
-                                    var initiatorGroupElement = document.getElementById('initiator_group');
-                                    if (initiatorGroupElement.value) {
-                                        document.getElementById('initiator_group_code_gi').value = initiatorGroupElement.value;
-                                    }
-                                });
-                            </script>
 
                             <div class="col-lg-12">
                                 <div class="group-input">
@@ -907,7 +1021,15 @@
 
 
 
-                           
+                            <div class="col-md-12 mb-3">
+                                <div class="group-input">
+                                    <label for="Description">Description</label>
+                                    <div><small class="text-primary">Please insert "NA" in the data field if it does
+                                            not require completion</small></div>
+                                    <textarea class="summernote" name="description_gi" id="summernote-1">{{ $data->description_gi }}
+                                    </textarea>
+                                </div>
+                            </div>
 
 
                             <div class="col-12">
@@ -959,7 +1081,7 @@
                                 </div>
                             </div>
 
-                            {{-- <div class="col-lg-6 new-date-data-field">
+                            <div class="col-lg-6 new-date-data-field">
                                 <div class="group-input input-date">
                                     <label for="OOC Logged On"> Complaint Reported On </label>
 
@@ -968,7 +1090,9 @@
                                             min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" readonly
                                             placeholder="DD-MM-YYYY" name="complaint_reported_on_gi"
                                             value="{{ $data->complaint_reported_on_gi }}" />
-
+                                        {{-- <input type="date" name="complaint_reported_on_gi"
+                                                min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" 
+                                                oninput=""  /> --}}
                                     </div>
 
 
@@ -985,32 +1109,6 @@
                                     </div>
                                 </div>
                             </div>
-
-                            <script>
-                                document.addEventListener('DOMContentLoaded', (event) => {
-                                    const dateInput = document.getElementById('complaint_date_picker');
-                                    const today = new Date().toISOString().split('T')[0];
-                                    dateInput.setAttribute('max', today);
-
-                                    // Show the date picker when clicking on the readonly input
-                                    const readonlyInput = document.getElementById('compalint_dat');
-                                    readonlyInput.addEventListener('click', () => {
-                                        dateInput.style.display = 'block';
-                                        dateInput.focus();
-                                    });
-
-                                    // Update the readonly input when a date is selected
-                                    dateInput.addEventListener('change', () => {
-                                        readonlyInput.value = new Date(dateInput.value).toLocaleDateString('en-GB');
-                                        dateInput.style.display = 'none';
-                                    });
-
-                                    // If there is an existing date, set the readonly input's value
-                                    if (dateInput.value) {
-                                        readonlyInput.value = new Date(dateInput.value).toLocaleDateString('en-GB');
-                                    }
-                                });
-                            </script>
 
                             <div class="col-md-12 mb-3">
                                 <div class="group-input">
@@ -1047,8 +1145,6 @@
                                                 <th>Pack Size</th>
                                                 <th>Dispatch Quantity</th>
                                                 <th>Remarks</th>
-                                                <th>Action</th>
-
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -1130,31 +1226,30 @@
                                 </div>
                             </div>
 
-
+                         
                             <script>
                                 $(document).ready(function() {
                                     let indexDetail = {{ ($productsgi && is_array($productsgi->data)) ? count($productsgi->data) : 0 }};
                                     $('#Details').click(function(e) {
                                         e.preventDefault();
-
+                            
                                         function generateTableRow(serialNumber) {
                                             var html =
                                                 '<tr>' +
                                                 '<td><input disabled type="text" name="serial_number_gi[' + serialNumber + '][serial]" value="' + (serialNumber + 1) + '"></td>' +
                                                 '<td><input type="text" name="serial_number_gi[' + indexDetail + '][info_product_name]"></td>' +
                                                 '<td><input type="text" name="serial_number_gi[' + indexDetail + '][info_batch_no]"></td>' +
-                                                '<td> <div class="new-date-data-field"><div class="group-input input-date"> <div class="calenderauditee"><input id="date_'+ indexDetail +'_mfg_date" type="text" name="serial_number_gi[' + indexDetail + '][info_mfg_date]" placeholder="DD-MMM-YYYY" /> <input type="date" name="serial_number_gi[' + indexDetail + '][info_mfg_date]" min="{{ \Carbon\Carbon::now()->format("Y-m-d") }}" value="{{ \Carbon\Carbon::now()->format("Y-m-d") }}" id="date_'+ indexDetail +'_mfg_date" class="hide-input show_date" style="position: absolute; top: 0; left: 0; opacity: 0;" oninput="handleDateInput(this, \'date_'+ indexDetail +'_mfg_date\')" /> </div> </div></div></td>' +
-                                                '<td>  <div class="new-date-data-field"><div class="group-input input-date"><div class="calenderauditee"><input id="date_'+ indexDetail +'_expiry_date" type="text" name="serial_number_gi[' + indexDetail + '][info_expiry_date]" placeholder="DD-MMM-YYYY" /> <input type="date" name="serial_number_gi[' + indexDetail + '][info_expiry_date]" min="{{ \Carbon\Carbon::now()->format("Y-m-d") }}" value="{{ \Carbon\Carbon::now()->format("Y-m-d") }}" id="date_'+ indexDetail +'_expiry_date" class="hide-input show_date" style="position: absolute; top: 0; left: 0; opacity: 0;" oninput="handleDateInput(this, \'date_'+ indexDetail +'_expiry_date\')" /> </div> </div></div></td>' +
+                                                '<td><input type="date" name="serial_number_gi[' + indexDetail + '][info_mfg_date]"></td>' +
+                                                '<td><input type="date" name="serial_number_gi[' + indexDetail + '][info_expiry_date]"></td>' +
                                                 '<td><input type="text" name="serial_number_gi[' + indexDetail + '][info_batch_size]"></td>' +
                                                 '<td><input type="text" name="serial_number_gi[' + indexDetail + '][info_pack_size]"></td>' +
                                                 '<td><input type="text" name="serial_number_gi[' + indexDetail + '][info_dispatch_quantity]"></td>' +
                                                 '<td><input type="text" name="serial_number_gi[' + indexDetail + '][info_remarks]"></td>' +
-                                                '<td><button type="text" class="removeRowBtn" ">Remove</button></td>' +
                                                 '</tr>';
                                                 indexDetail++;
                                             return html;
                                         }
-
+                            
                                         var tableBody = $('#ProductsDetails tbody');
                                         var rowCount = tableBody.children('tr').length;
                                         var newRow = generateTableRow(rowCount);
@@ -1181,7 +1276,6 @@
                                                     <th>Batch No.</th>
                                                     <th>Manufacturing Location</th>
                                                     <th>Remarks</th>
-                                                    <th>Action</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -1196,26 +1290,24 @@
                                                             <td><input type="text" name="trace_ability[{{ $index }}][batch_no_tr]" value="{{ $tracebil['batch_no_tr'] }}"></td>
                                                             <td><input type="text" name="trace_ability[{{ $index }}][manufacturing_location_tr]" value="{{ $tracebil['manufacturing_location_tr'] }}"></td>
                                                             <td><input type="text" name="trace_ability[{{ $index }}][remarks_tr]" value="{{ $tracebil['remarks_tr'] }}"></td>
-                                                           <td><button type="text" class="removeRowBtn" >Remove</button></td>
-
                                                         </tr>
                                                     @endforeach
                                                 @else
                                                     <tr>
                                                         <td colspan="5">No found</td>
-                                                     </tr>
+                                                    </tr>
                                                 @endif
                                             </tbody>
                                         </table>
                                     </div>
                                 </div>
                             </div>
-
+                            
                             <script>
                                 $(document).ready(function() {
                                     $('#traceblity_add').click(function(e) {
                                         e.preventDefault();
-
+                            
                                         function generateTableRow(serialNumber) {
                                             var html =
                                                 '<tr>' +
@@ -1224,12 +1316,10 @@
                                                 '<td><input type="text" name="trace_ability[' + serialNumber + '][batch_no_tr]"></td>' +
                                                 '<td><input type="text" name="trace_ability[' + serialNumber + '][manufacturing_location_tr]"></td>' +
                                                 '<td><input type="text" name="trace_ability[' + serialNumber + '][remarks_tr]"></td>' +
-                                                '<td><button type="text" class="removeRowBtn" >Remove</button></td>' +
-
                                                 '</tr>';
                                             return html;
                                         }
-
+                            
                                         var tableBody = $('#traceblity tbody');
                                         var rowCount = tableBody.children('tr').length;
                                         var newRow = generateTableRow(rowCount);
@@ -1237,7 +1327,7 @@
                                     });
                                 });
                             </script>
-
+                            
 
                             <div class="col-lg-12">
                                 <div class="group-input">
@@ -1290,8 +1380,6 @@
                                                     <th>Name</th>
                                                     <th>Department</th>
                                                     <th>Remarks</th>
-                                                    <th>Action</th>
-
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -1305,8 +1393,6 @@
                                                             <td><input type="text" name="Investing_team[{{ $index }}][name_inv_tem]" value="{{ $inves['name_inv_tem'] }}"></td>
                                                             <td><input type="text" name="Investing_team[{{ $index }}][department_inv_tem]" value="{{ $inves['department_inv_tem'] }}"></td>
                                                             <td><input type="text" name="Investing_team[{{ $index }}][remarks_inv_tem]" value="{{ $inves['remarks_inv_tem'] }}"></td>
-                                                             <td><button type="text" class="removeRowBtn" >Remove</button></td>
-
                                                         </tr>
                                                     @endforeach
                                                 @else
@@ -1319,12 +1405,12 @@
                                     </div>
                                 </div>
                             </div>
-
+                            
                             <script>
                                 $(document).ready(function() {
                                     $('#investigation_team_add').click(function(e) {
                                         e.preventDefault();
-
+                            
                                         function generateTableRow(serialNumber) {
                                             var html =
                                                 '<tr>' +
@@ -1332,12 +1418,10 @@
                                                 '<td><input type="text" name="Investing_team[' + serialNumber + '][name_inv_tem]"></td>' +
                                                 '<td><input type="text" name="Investing_team[' + serialNumber + '][department_inv_tem]"></td>' +
                                                 '<td><input type="text" name="Investing_team[' + serialNumber + '][remarks_inv_tem]"></td>' +
-                                                '<td><button type="text" class="removeRowBtn" >Remove</button></td>' +
-
                                                 '</tr>';
                                             return html;
                                         }
-
+                            
                                         var tableBody = $('#Investing_team tbody');
                                         var rowCount = tableBody.children('tr').length;
                                         var newRow = generateTableRow(rowCount);
@@ -1345,7 +1429,7 @@
                                     });
                                 });
                             </script>
-
+                            
                             <div class="col-md-12 mb-3">
                                 <div class="group-input">
                                     <label for="Review of Batch manufacturing record (BMR)">Review
@@ -1467,8 +1551,6 @@
                                                     <th>Facts/Controls</th>
                                                     <th>Probable Cause</th>
                                                     <th>Remarks</th>
-                                                    <th>Action</th>
-
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -1483,8 +1565,6 @@
                                                             <td><input type="text" name="brain_stroming_details[{{ $index }}][factscontrols_bssd]" value="{{ $bra_st_s['factscontrols_bssd'] }}"></td>
                                                             <td><input type="text" name="brain_stroming_details[{{ $index }}][probable_cause_bssd]" value="{{ $bra_st_s['probable_cause_bssd'] }}"></td>
                                                             <td><input type="text" name="brain_stroming_details[{{ $index }}][remarks_bssd]" value="{{ $bra_st_s['remarks_bssd'] }}"></td>
-                                                              <td><button type="button" class="removeRowBtn">Remove</button></td>
-
                                                         </tr>
                                                     @endforeach
                                                 @else
@@ -1497,12 +1577,12 @@
                                     </div>
                                 </div>
                             </div>
-
+                            
                             <script>
                                 $(document).ready(function() {
                                     $('#brain-stroming').click(function(e) {
                                         e.preventDefault();
-
+                            
                                         function generateTableRow(serialNumber) {
                                             var html =
                                                 '<tr>' +
@@ -1511,12 +1591,10 @@
                                                 '<td><input type="text" name="brain_stroming_details[' + serialNumber + '][factscontrols_bssd]"></td>' +
                                                 '<td><input type="text" name="brain_stroming_details[' + serialNumber + '][probable_cause_bssd]"></td>' +
                                                 '<td><input type="text" name="brain_stroming_details[' + serialNumber + '][remarks_bssd]"></td>' +
-                                                '<td><button type="button" class="removeRowBtn">Remove</button></td>' +
-
                                                 '</tr>';
                                             return html;
                                         }
-
+                            
                                         var tableBody = $('#brain_stroming_details tbody');
                                         var rowCount = tableBody.children('tr').length;
                                         var newRow = generateTableRow(rowCount);
@@ -1524,7 +1602,7 @@
                                     });
                                 });
                             </script>
-
+                            
 
                             <div class="button-block">
                                 <button type="submit" class="saveButton" id="saveButton"
@@ -1722,6 +1800,7 @@
                                     $('#team_members').click(function(e) {
                                         e.preventDefault();
                             
+                            
                                         function generateTableRow(teamserialNumber) {
                                             var html =
                                                 '<tr>' +
@@ -1736,6 +1815,7 @@
                                             return html;
                                         }
                             
+                            
                                         var tableBody = $('#team_members_details tbody');
                                         var rowCount = tableBody.children('tr').length;
                                         var newRow = generateTableRow(rowCount);
@@ -1747,7 +1827,7 @@
 
 
 
-
+                           
 
                             <div class="col-12">
                                 <div class="group-input">
@@ -1825,6 +1905,7 @@
                                     $('#report_approval').click(function(e) {
                                         e.preventDefault();
                             
+                            
                                         function generateTableRow(serialNumber) {
                                             var html =
                                                 '<tr>' +
@@ -1838,6 +1919,7 @@
                                             indexReaprovel++;
                                             return html;
                                         }
+                            
                             
                                         var tableBody = $('#report_approval_details tbody');
                                         var rowCount = tableBody.children('tr').length;
@@ -2077,11 +2159,13 @@
                             </div>
                         </div>
                         
+                        
                         <script>
                             $(document).ready(function() {
                                 let indexMaetDetails = {{ ($product_materialDetails && is_array($product_materialDetails->data)) ? count($product_materialDetails->data) : 0 }};
                                 $('#promate_add').click(function(e) {
                                     e.preventDefault();
+                        
                         
                                     function generateTableRow(productserialno) {
                                         var html =
@@ -2089,8 +2173,8 @@
                                                 '<td>' + (productserialno + 1) + '</td>' +
                                                 '<td><input type="text" name="Product_MaterialDetails[' + productserialno + '][product_name_ca]"></td>' +
                                                 '<td><input type="text" name="Product_MaterialDetails[' + productserialno + '][batch_no_pmd_ca]"></td>' +
-                                                '<td> <div class="new-date-data-field"><div class="group-input input-date"><div class="calenderauditee"><input id="date_'+ productserialno +'_mfg_date_pmd_ca" type="text" name="Product_MaterialDetails[' + productserialno + '][mfg_date_pmd_ca]" placeholder="DD-MMM-YYYY" /> <input type="date" name="Product_MaterialDetails[' + productserialno + '][mfg_date_pmd_ca]" min="{{ \Carbon\Carbon::now()->format("Y-m-d") }}" value="{{ \Carbon\Carbon::now()->format("Y-m-d") }}" id="date_'+ productserialno +'_mfg_date_pmd_ca" class="hide-input show_date" style="position: absolute; top: 0; left: 0; opacity: 0;" oninput="handleDateInput(this, \'date_'+ productserialno +'_mfg_date_pmd_ca\')" /> </div></div></div> </td>' +
-                                                '<td> <div class="new-date-data-field"><div class="group-input input-date"><div class="calenderauditee"><input id="date_'+ productserialno +'_expiry_date_pmd_ca" type="text" name="Product_MaterialDetails[' + productserialno + '][expiry_date_pmd_ca]" placeholder="DD-MMM-YYYY" /> <input type="date" name="Product_MaterialDetails[' + productserialno + '][expiry_date_pmd_ca]" min="{{ \Carbon\Carbon::now()->format("Y-m-d") }}" value="{{ \Carbon\Carbon::now()->format("Y-m-d") }}" id="date_'+ productserialno +'_expiry_date_pmd_ca" class="hide-input show_date" style="position: absolute; top: 0; left: 0; opacity: 0;" oninput="handleDateInput(this, \'date_'+ productserialno +'_expiry_date_pmd_ca\')" /> </div></div></div> </td>' +
+                                                '<td><input type="date" name="Product_MaterialDetails[' + productserialno + '][mfg_date_pmd_ca]"></td>' +
+                                                '<td><input type="date" name="Product_MaterialDetails[' + productserialno + '][expiry_date_pmd_ca]"></td>' +
                                                 '<td><input type="text" name="Product_MaterialDetails[' + productserialno + '][batch_size_pmd_ca]"></td>' +
                                                 '<td><input type="text" name="Product_MaterialDetails[' + productserialno + '][pack_profile_pmd_ca]"></td>' +
                                                 '<td><input type="text" name="Product_MaterialDetails[' + productserialno + '][released_quantity_pmd_ca]"></td>' +
@@ -2099,6 +2183,7 @@
                                             '</tr>';
                                         return html;
                                     }
+                        
                         
                                     var tableBody = $('#prod_mate_details tbody');
                                     var rowCount = tableBody.children('tr').length;
@@ -2115,7 +2200,7 @@
 
 
 
-
+                   
                         <div class="col-lg-12">
                             <div class="group-input">
                                 <label for="Complaint Sample Required">Complaint Sample Required</label>

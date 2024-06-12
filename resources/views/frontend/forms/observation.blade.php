@@ -82,6 +82,7 @@
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="originator">Initiator</label>
+                                        <label for="originator">Initiator</label>
                                         <input disabled type="text" value="{{ Auth::user()->name }}">
                                     </div>
                                 </div>

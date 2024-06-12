@@ -5,12 +5,11 @@ namespace App\Http\Controllers\rcms;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\{FailureInvestigation,FailureInvestigationAuditTrail,FailureInvestigationCft,
-FailureInvestigationCftResponse,
-FailureInvestigationGrid,
-FailureInvestigationGridData,
-FailureInvestigationGridFailureMode,
-FailureInvestigationHistory,
-FailureInvestigationLaunchExtension,
+    FailureInvestigationCftResponse,
+    FailureInvestigationGrid,
+    FailureInvestigationGridData,
+    FailureInvestigationGridFailureMode,
+    FailureInvestigationHistory,
 };
 use App\Models\RootCauseAnalysis;
 use App\Models\{EffectivenessCheck,LaunchExtension};
@@ -410,7 +409,7 @@ class FailureInvestigationController extends Controller
 
         $failureInvestigation->save();
 
-        $data3 = new FailureInvestigationGrid();
+        $data3 = new FailureInvestigation();
         $data3->failure_investigation_grid_id = $failureInvestigation->id;
         $data3->type = "FailureInvestigation";
         if (!empty($request->facility_name)) {
@@ -424,7 +423,7 @@ class FailureInvestigationController extends Controller
             $data3->Remarks = serialize($request->Remarks);
         }
         $data3->save();
-        $data4 = new FailureInvestigationGrid();
+        $data4 = new FailureInvestigation();
         $data4->failure_investigation_grid_id = $failureInvestigation->id;
         $data4->type = "Document ";
         if (!empty($request->Number)) {
@@ -439,7 +438,7 @@ class FailureInvestigationController extends Controller
         }
         $data4->save();
 
-        $data5 = new FailureInvestigationGrid();
+        $data5 = new FailureInvestigation();
         $data5->failure_investigation_grid_id = $failureInvestigation->id;
         $data5->type = "Product ";
         if (!empty($request->product_name)) {

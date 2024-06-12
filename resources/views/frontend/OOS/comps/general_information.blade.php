@@ -202,6 +202,11 @@
                             <option value="pdf" {{ $data->source_document_type_gi == 'pdf' ? 'selected' : ''
                             }}>pdf</option>
                        </select>
+                        <option value="doc" {{ $data->source_document_type_gi == 'doc' ? 'selected' : ''
+                            }}>doc</option>
+                            <option value="pdf" {{ $data->source_document_type_gi == 'pdf' ? 'selected' : ''
+                            }}>pdf</option>
+                       </select>
                 </div>
             </div>
 
@@ -279,7 +284,11 @@
                             <tr>
                                 <th style="width: 2%">Row#</th>
                                 <th style="width: 6%">Item/Product Code</th>
+                                <th style="width: 2%">Row#</th>
+                                <th style="width: 6%">Item/Product Code</th>
                                 <th style="width: 8%"> Batch No*.</th>
+                                <th style="width: 18%"> Mfg.Date</th>
+                                <th style="width: 18%">Expiry Date</th>
                                 <th style="width: 18%"> Mfg.Date</th>
                                 <th style="width: 18%">Expiry Date</th>
                                 <th style="width: 8%"> Label Claim.</th>
@@ -287,6 +296,7 @@
                                 <th style="width: 8%">Analyst Name</th>
                                 <th style="width: 10%">Others (Specify)</th>
                                 <th style="width: 10%"> In- Process Sample Stage.</th>
+                                <th style="width: 10% pt-3">Packing Material Type</th>
                                 <th style="width: 10% pt-3">Packing Material Type</th>
                                 <th style="width: 16% pt-2"> Stability for</th>
                             </tr>

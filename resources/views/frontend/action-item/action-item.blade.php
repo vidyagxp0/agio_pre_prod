@@ -68,7 +68,7 @@
                                         <input disabled type="text" name="division_code"
                                             value="{{ Helpers::getDivisionName(session()->get('division')) }}">
                                         <input type="hidden" name="division_id" value="{{ session()->get('division') }}">
-                                        {{-- <div class="static">{{ Helpers::getDivisionName(session()->get('division')) }}</div> --}}
+                                        {{-- <div class="static">QMS-North America</div> --}}
                                     </div>
                                 </div>
                                 <div class="col-lg-6">  
@@ -78,7 +78,7 @@
                                     <div class="group-input">
                                         <label for="originator">Initiator</label>
                                         <input disabled type="text"
-                                            value="{{ Auth::user()->name }}">
+                                            value="{{ Helpers::getInitiatorName($parent_initiator_id) }}">
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
@@ -86,9 +86,9 @@
                                         <label for="Date Opened">Date of Initiation</label>
                                         {{-- <div class="static">{{ date('d-M-Y') }}</div> --}}
                                         <input disabled type="text"
-                                            value="{{ date('d-M-Y') }}"
+                                            value="{{ Helpers::getdateFormat($parent_intiation_date) }}"
                                             name="intiation_date">
-                                        <input type="hidden" value="{{ date('d-M-Y') }}" name="intiation_date">
+                                        <input type="hidden" value="{{ $parent_intiation_date }}" name="intiation_date">
                                     </div>
                                 </div>
                                 {{-- <div class="col-lg-6">

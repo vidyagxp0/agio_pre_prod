@@ -4,7 +4,6 @@ use App\Models\ActionItem;
 use App\Models\Division;
 use App\Models\QMSDivision;
 use App\Models\User;
-use App\Models\OOS_micro;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
@@ -14,6 +13,7 @@ class Helpers
 {
     public static function getArrayKey(array $array, $key)
     {
+        return $array && is_array($array) && array_key_exists($key, $array) ? $array[$key] : '';
         return $array && is_array($array) && array_key_exists($key, $array) ? $array[$key] : '';
     }
 
@@ -76,16 +76,6 @@ class Helpers
 
 
     }}
-
-    public static function isRiskAssessment($data)
-    {   
-        if($data == 0 || $data  >= 7){
-            return 'disabled';
-        }else{
-            return  '';
-        }
-         
-    }
     // public static function getHodUserList(){
 
     //     return $hodUserList = DB::table('user_roles')->where(['q_m_s_roles_id' =>'4'])->get();
@@ -599,31 +589,15 @@ class Helpers
         return $isQA;
     }
 
-    // Helpers::getMicroGridData($micro, 'analyst_training', true, 'response', true, 0)
-    public static function getMicroGridData(OOS_micro $micro, $identifier, $getKey = false, $keyName = null, $byIndex = false, $index = 0)
-    {
-        $res = $getKey ? '' : [];
-            try {
-                $grid = $micro->grids()->where('identifier', $identifier)->first();
 
-                if($grid && is_array($grid->data)){
-
-                    $res = $grid->data;
-
-                    if ($getKey && !$byIndex) {
-                        $res = array_key_exists($keyName, $grid->data) ? $grid->data[$keyName] : '';
-                    }
-
-                    if ($getKey && $byIndex && is_array($grid->data[$index])) {
-                        $res = array_key_exists($keyName, $grid->data[$index]) ? $grid->data[$index][$keyName] : '';
-                    }
-                }
-
-            } catch(\Exception $e){
-
-            }
-        return $res;
-    }
+    // public static function hodMail($data)
+    // {
+    //     Mail::send('hod-mail',['data' => $data],
+    // function ($message){
+    //         $message->to("shaleen.mishra@mydemosoftware.com")
+    //                 ->subject('Record is for Review');
+    //     });
+    // }
 
     public static function disabledErrataFields($data)
     {
@@ -643,55 +617,6 @@ class Helpers
             return  '';
         }
 
-    }
-
-    public static function getDocStatusByStage($stage, $document_training = 'no')
-    {
-        $status = '';
-        $training_required = $document_training == 'yes' ? true : false;
-        switch ($stage) {
-            case '1':
-                $status = 'Draft';
-                break;
-            case '2':
-                $status = 'In-HOD Review';
-                break;
-            case '3':
-                $status = 'HOD Review Complete';
-                break;
-            case '4':
-                $status = 'In-Review';
-                break;
-            case '5':
-                $status = 'Reviewed';
-                break;
-            case '6':
-                $status = 'For-Approval';
-                break;
-            case '7':
-                $status = 'Approved';
-                break;
-            case '8':
-                $status = $training_required ? 'Pending-Traning' : 'Effective';
-                break;
-            case '9':
-                $status = $training_required ? 'Traning-Complete' : 'Obsolete';
-                break;
-            case '10':
-                $status = $training_required ? 'Effective' : 'Obsolete';
-                break;
-            case '11':
-                $status = 'Obsolete';
-                break;
-            case '13':
-                $status = 'Closed/Cancel';
-                break;
-            default:
-                # code...
-                break;
-        }
-
-        return $status;
     }
 
 }

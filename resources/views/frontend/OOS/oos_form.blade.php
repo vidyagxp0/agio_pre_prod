@@ -324,6 +324,7 @@ $users = DB::table('users')
         <div class="division-bar pt-3">
             <strong>Site Division/Project</strong> :
             QMS-North America / OOS
+            QMS-North America / OOS
         </div>
         <!-- <div class="button-bar">
             <button type="button">Save</button>
@@ -435,6 +436,17 @@ $users = DB::table('users')
                                         min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input"
                                         oninput="handleDateInput(this, 'due_date')" />
                                 </div>
+                        <div class="col-lg-6 new-date-data-field">
+                            <div class="group-input input-date">
+                                <label for="Date Due"> Due Date</label>
+                                <div><small class="text-primary">If revising Due Date, kindly mention revision
+                                        reason in "Due Date Extension Justification" data field.</small></div>
+                                <div class="calenderauditee">
+                                    <input type="text" id="due_date" readonly placeholder="DD-MMM-YYYY" />
+                                    <input type="date" name="due_date"
+                                        min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input"
+                                        oninput="handleDateInput(this, 'due_date')" />
+                                </div>
                             </div>
                         </div>
                         <div class="col-lg-6">
@@ -454,8 +466,13 @@ $users = DB::table('users')
                                     <span class="text-danger">*</span></label>
                                     <span id="rchars">255</span>characters remaining
                                 <textarea id="docname"  name="description_gi" required></textarea>
+                                <label for="Short Description">Short Description
+                                    <span class="text-danger">*</span></label>
+                                    <span id="rchars">255</span>characters remaining
+                                <textarea id="docname"  name="description_gi" required></textarea>
                             </div>
                         </div>
+                        <p id="docnameError" style="color:red">**Short Description is required</p>
                         <p id="docnameError" style="color:red">**Short Description is required</p>
                         <div class="col-lg-6">
                             <div class="group-input">
@@ -514,6 +531,18 @@ $users = DB::table('users')
                                 </select>
                             </div>
                         </div>
+                        <div class="col-md-6 new-date-data-field">
+                                    <div class="group-input input-date">
+                                        <label for="due-date">Deviation Occured On</label>
+                                        <div class="calenderauditee">                                    
+                                            <input type="text"  id="deviation_occured_on_gi" readonly placeholder="DD-MMM-YYYY" />
+                                            <input type="date" name="deviation_occured_on_gi"    min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" value=""
+                                            class="hide-input"
+                                            oninput="handleDateInput(this, 'deviation_occured_on_gi')"/>
+                                        </div>
+                                    </div>
+                                </div>
+
                         <div class="col-md-6 new-date-data-field">
                                     <div class="group-input input-date">
                                         <label for="due-date">Deviation Occured On</label>
@@ -629,6 +658,8 @@ $users = DB::table('users')
                                             <th style="width: 8%"> Batch No*.</th>
                                             <th style="width: 12%"> Mfg.Date</th>
                                             <th style="width: 12%">Expiry Date</th>
+                                            <th style="width: 12%"> Mfg.Date</th>
+                                            <th style="width: 12%">Expiry Date</th>
                                             <th style="width: 8%"> Label Claim.</th>
                                             <th style="width: 8%">Pack Size</th>
                                             <th style="width: 8%">Analyst Name</th>
@@ -671,6 +702,31 @@ $users = DB::table('users')
                                             </div>
                                            </td>
                                             
+                                            <td>
+                                            <div class="col-lg-6 new-date-data-field">
+                                                <div class="group-input input-date">
+                                                    <div class="calenderauditee">
+                                                        <input type="text" id="info_mfg_date" readonly 
+                                                        placeholder="DD-MMM-YYYY" />
+                                                        <input type="date" name="info_product_material[0][info_mfg_date]" value="" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
+                                                        class="hide-input" oninput="handleDateInput(this, 'info_mfg_date')">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            </td> 
+                                            <td>
+                                            <div class="col-lg-6 new-date-data-field">
+                                                <div class="group-input input-date">
+                                                    <div class="calenderauditee">
+                                                        <input type="text" id="info_expiry_date" readonly 
+                                                        placeholder="DD-MMM-YYYY" />
+                                                        <input type="date" name="info_product_material[0][info_expiry_date]" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
+                                                        class="hide-input" oninput="handleDateInput(this, 'info_expiry_date')">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                           </td>
+                                            
                                             <td><input type="text" name="info_product_material[0][info_label_claim]" value=""></td>
                                             <td><input type="text" name="info_product_material[0][info_pack_size]" value=""></td>
                                             <td><input type="text" name="info_product_material[0][info_analyst_name]" value=""></td>
@@ -678,6 +734,7 @@ $users = DB::table('users')
                                             <td><input type="text" name="info_product_material[0][info_process_sample_stage]" value=""></td>
                                             <td>
                                                 <select name="info_product_material[0][info_packing_material_type]">
+                                                    <option value="">--Select-- </option>
                                                     <option value="">--Select-- </option>
                                                     <option value="Primary">Primary</option>
                                                     <option value="Secondary">Secondary</option>
@@ -687,6 +744,7 @@ $users = DB::table('users')
                                             </td>
                                             <td>
                                                 <select name="info_product_material[0][info_stability_for]">
+                                                    <option value="">--Select-- </option>
                                                     <option value="">--Select-- </option>
                                                     <option vlaue="Submission">Submission</option>
                                                     <option vlaue="Commercial">Commercial</option>
@@ -762,7 +820,11 @@ $users = DB::table('users')
                                             <th style="width: 8%">Results Obtained</th>
                                             <th style="width: 8%">Specification Limit</th>
                                             <th style="width: 8%">Details of Obvious Error</th>
+                                            <th style="width: 8%">Results Obtained</th>
+                                            <th style="width: 8%">Specification Limit</th>
+                                            <th style="width: 8%">Details of Obvious Error</th>
                                             <th style="width: 16%">File Attachment</th>
+                                            <th style="width: 8%">Submit By</th>
                                             <th style="width: 8%">Submit By</th>
                                             <th style="width: 16%">Submit On</th>
                                         </tr>
@@ -776,7 +838,20 @@ $users = DB::table('users')
                                             <td><input type="text" name="oos_detail[0][oos_specification_limit]"></td>
                                             <td><input type="text" name="oos_detail[0][oos_details_obvious_error]"></td>
                                             <td><input type="file" name="oos_detail[0][oos_file_attachment]"></td>
+                                            <td><input type="file" name="oos_detail[0][oos_file_attachment]"></td>
                                             <td><input type="text" name="oos_detail[0][oos_submit_by]"></td>
+                                            <td>
+                                                <div class="col-lg-6 new-date-data-field">
+                                                <div class="group-input input-date">
+                                                    <div class="calenderauditee">
+                                                        <input type="text" id="oos_submit_on" readonly 
+                                                        placeholder="DD-MMM-YYYY" />
+                                                        <input type="date" name="oos_detail[0][oos_submit_on]" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
+                                                        class="hide-input" oninput="handleDateInput(this, 'oos_submit_on')">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            </td>
                                             <td>
                                                 <div class="col-lg-6 new-date-data-field">
                                                 <div class="group-input input-date">
@@ -1164,7 +1239,10 @@ $users = DB::table('users')
                                             <th style="width: 4%">Row#</th>
                                             <th style="width: 8%">OOS Number</th>
                                             <th style="width: 16%"> OOS Reported Date</th>
+                                            <th style="width: 16%"> OOS Reported Date</th>
                                             <th style="width: 12%">Description of OOS</th>
+                                            <th style="width: 8%">Previous OOS Root Cause</th>
+                                            <th style="width: 8%"> CAPA</th>
                                             <th style="width: 8%">Previous OOS Root Cause</th>
                                             <th style="width: 8%"> CAPA</th>
                                             <th style="width: 16% pt-3">Closure Date of CAPA</th>
@@ -1176,6 +1254,18 @@ $users = DB::table('users')
                                         <tr>
                                             <td><input disabled type="text" name="oos_capa[0][serial]" value="1"></td>
                                             <td><input type="text" id="info_oos_number" name="oos_capa[0][info_oos_number]" value=""></td>
+                                            <td>
+                                            <div class="col-lg-6 new-date-data-field">
+                                                <div class="group-input input-date">
+                                                    <div class="calenderauditee">
+                                                        <input type="text" id="info_oos_reported_date" readonly 
+                                                        placeholder="DD-MMM-YYYY" />
+                                                        <input type="date" name="oos_capa[0][info_oos_reported_date]" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
+                                                        class="hide-input" oninput="handleDateInput(this, 'info_oos_reported_date')">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            </td>
                                             <td>
                                             <div class="col-lg-6 new-date-data-field">
                                                 <div class="group-input input-date">
@@ -1203,7 +1293,20 @@ $users = DB::table('users')
                                                 </div>
                                             </div>
                                             </td>
+                                            <td>
+                                                <div class="col-lg-6 new-date-data-field">
+                                                <div class="group-input input-date">
+                                                    <div class="calenderauditee">
+                                                        <input type="text" id="info_oos_closure_date" readonly 
+                                                        placeholder="DD-MMM-YYYY" />
+                                                        <input type="date" name="oos_capa[0][info_oos_closure_date]" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
+                                                        class="hide-input" oninput="handleDateInput(this, 'info_oos_closure_date')">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            </td>
                                             <td><select name="oos_capa[0][info_oos_capa_requirement]">
+                                                   <option value="">Select</option>
                                                    <option value="">Select</option>
                                                     <option value="yes">Yes</option>
                                                     <option value="No">No</option>
@@ -2789,6 +2892,13 @@ $users = DB::table('users')
             document.getElementById(cityName).style.display = "block";
             evt.currentTarget.className += " active";
         }
+    </script>
+    <script>
+        var maxLength = 255;
+        $('#docname').keyup(function() {
+            var textlen = maxLength - $(this).val().length;
+            $('#rchars').text(textlen);
+        });
     </script>
     <script>
         var maxLength = 255;
