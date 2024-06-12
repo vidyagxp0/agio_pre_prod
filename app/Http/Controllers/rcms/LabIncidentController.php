@@ -2213,7 +2213,8 @@ class LabIncidentController extends Controller
                if ($request->revision == "extension-child") {
                 $cc->originator = User::where('id', $cc->initiator_id)->value('name');
                    
-                return view('frontend.forms.extension',compact('cft','parent_name','parent_id','parent_type','old_record','record_number','currentDate','formattedDate','due_date','parent_intiation_date','parent_record','parent_initiator_id'));
+                return view('frontend.extension.extension_new',compact('cft','parent_name','parent_id','parent_type','old_record','record_number','currentDate','formattedDate','due_date','parent_intiation_date','parent_record','parent_initiator_id'));
+                
             }
                
            }
@@ -2240,7 +2241,7 @@ class LabIncidentController extends Controller
             if ($request->revision == "extension-child") {
                 $cc->originator = User::where('id', $cc->initiator_id)->value('name');
                    
-                return view('frontend.forms.extension',compact('cft','parent_name','parent_id','parent_type','old_record','record_number','currentDate','formattedDate','due_date','parent_intiation_date','parent_record','parent_initiator_id'));
+                return view('frontend.extension.extension_new',compact('cft','parent_name','parent_id','parent_type','old_record','record_number','currentDate','formattedDate','due_date','parent_intiation_date','parent_record','parent_initiator_id'));
                 // return view('frontend.forms.root-cause-analysis', compact('record_number', 'due_date', 'parent_id', 'parent_type'));
             }
 
@@ -2283,7 +2284,7 @@ class LabIncidentController extends Controller
     if ($request->revision == "extension-child") {
         $cc->originator = User::where('id', $cc->initiator_id)->value('name');
            
-        return view('frontend.forms.extension',compact('cft','parent_name','parent_id','parent_type','old_record','record_number','currentDate','formattedDate','due_date','parent_intiation_date','parent_record','parent_initiator_id'));
+        return view('frontend.extension.extension_new',compact('cft','parent_name','parent_id','parent_type','old_record','record_number','currentDate','formattedDate','due_date','parent_intiation_date','parent_record','parent_initiator_id'));
     }
 
 }
@@ -2315,7 +2316,7 @@ class LabIncidentController extends Controller
         if ($request->revision == "extension-child") {
             $cc->originator = User::where('id', $cc->initiator_id)->value('name');
                
-            return view('frontend.forms.extension',compact('cft','parent_name','parent_id','parent_type','old_record','record_number','currentDate','formattedDate','due_date','parent_intiation_date','parent_record','parent_initiator_id'));
+            return view('frontend.extension.extension_new',compact('cft','parent_name','parent_id','parent_type','old_record','record_number','currentDate','formattedDate','due_date','parent_intiation_date','parent_record','parent_initiator_id'));
         }
         
 
