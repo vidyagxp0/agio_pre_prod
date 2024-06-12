@@ -58,7 +58,7 @@
                                     <div class="group-input"> 
                                         <label for="RLS Record Number"><b>Record Number</b></label>
                                         <input disabled type="text" name="record_number"
-                                            value="{{ Helpers::getDivisionName(session()->get('division')) }}/AI/{{ date('Y') }}/{{ isset($parent_record) ? $parent_record : '' }}">
+                                            value="{{ Helpers::getDivisionName(session()->get('division')) }}/AI/{{ date('Y') }}/{{ $parent_record }}">
                                         {{-- <div class="static">QMS-EMEA/CAPA/{{ date('Y') }}/{{ $record_number }}</div> --}}
                                     </div>
                                 </div>
@@ -78,7 +78,7 @@
                                     <div class="group-input">
                                         <label for="originator">Initiator</label>
                                         <input disabled type="text"
-                                            value="{{ isset($parent_initiator_id) ? Helpers::getInitiatorName($parent_initiator_id) : '' }}">
+                                            value="{{ Helpers::getInitiatorName($parent_initiator_id) }}">
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
@@ -88,7 +88,7 @@
                                         <input disabled type="text"
                                             value="{{ Helpers::getdateFormat($parent_intiation_date) }}"
                                             name="intiation_date">
-                                        <input type="hidden" value="{{ isset($parent_intiation_date) ? $parent_intiation_date : '' }}" name="intiation_date">
+                                        <input type="hidden" value="{{ $parent_intiation_date }}" name="intiation_date">
                                     </div>
                                 </div>
                                 {{-- <div class="col-lg-6">

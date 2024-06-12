@@ -322,7 +322,7 @@
                                 </div> --}}
                                 <div class="col-6">
                                     <div class="group-input">
-                                        <label for="major"> Document Version <small>(Major)</small><span class="text-danger">*</span>
+                                        <label for="major">Major<span class="text-danger">*</span>
                                         <span  class="text-primary" data-bs-toggle="modal"
                                         data-bs-target="#document-management-system-modal"
                                         style="font-size: 0.8rem; font-weight: 400;">
@@ -336,7 +336,7 @@
 
                                 <div class="col-6">
                                     <div class="group-input">
-                                        <label for="minor">Document Version <small>(Minor)</small><span class="text-danger">*</span> 
+                                        <label for="minor">Minor<span class="text-danger">*</span> 
                                             <span  class="text-primary" data-bs-toggle="modal"
                                             data-bs-target="#document-management-system-modal-minor"
                                             style="font-size: 0.8rem; font-weight: 400;">
