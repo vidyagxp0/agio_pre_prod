@@ -3,6 +3,11 @@
 namespace Database\Seeders;
 
 use App\Models\User;
+use App\Models\Roles;
+use App\Models\QMSRoles;
+use App\Models\QMSProcess;
+use App\Models\QMSDivision;
+use App\Models\UserRole;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
@@ -17,331 +22,152 @@ class UserLoginSeeder extends Seeder
      */
     public function run()
     {
+        $users = [
+            [
+                'name' => 'Himanshu',
+                'email' => 'himanshupatil5690@gmail.com',
+                'password' => '$2y$10$ybcHMuQ8soPzXcdljEQ/wOUx0JximT3yb5naubluqz3TjOz/tGBlC',
+                'departmentid' => 1,
+                'roles' => range(1, 433),
+            ],
+            [
+                'name' => 'Umesh Kulkarni',
+                'email' => 'qa05@agio-pharma.com',
+                'password' => Hash::make(1),
+                'departmentid' => 1,
+                'roles' => range(1, 433),
+            ],
+            [
+                'name' => 'Sandip Patil',
+                'email' => 'qc02@agio-pharma.com',
+                'password' => Hash::make(1),
+                'departmentid' => 1,
+                'roles' => range(1, 433),
+            ],
+            [
+                'name' => 'Somnath Shinde',
+                'email' => 'somnath@agio-pharma.com',
+                'password' => Hash::make(1),
+                'departmentid' => 1,
+                'roles' => range(1, 433),
+            ],
+            [
+                'name' => 'Nandlal Gupta',
+                'email' => 'cqa2@agio-pharma.com',
+                'password' => Hash::make(1),
+                'departmentid' => 1,
+                'roles' => range(1, 433),
+            ],
+            [
+                'name' => 'Mahadev Patil',
+                'email' => 'engineering@agio-pharma.com',
+                'password' => Hash::make(1),
+                'departmentid' => 1,
+                'roles' => range(1, 433),
+            ],
+            [
+                'name' => 'Sachin Bhasme',
+                'email' => 'injection_pune@agio-pharma.com',
+                'password' => Hash::make(1),
+                'departmentid' => 1,
+                'roles' => range(1, 433),
+            ],
+            [
+                'name' => 'Tirupati Survase',
+                'email' => 'tab-qms@agio-pharma.com',
+                'password' => Hash::make(1),
+                'departmentid' => 1,
+                'roles' => range(1, 433),
+            ],
+            [
+                'name' => 'Sanjay / Rahul',
+                'email' => 'edp.agiopune@gmail.com',
+                'password' => Hash::make(1),
+                'departmentid' => 1,
+                'roles' => range(1, 433),
+            ],
+            [
+                'name' => 'Anil Bade',
+                'email' => 'stores_pune@agio-pharma.com',
+                'password' => Hash::make(1),
+                'departmentid' => 1,
+                'roles' => range(1, 433),
+            ],
+            [
+                'name' => 'Sanjay Dhumal',
+                'email' => 'sanjayd@agio-pharma.com',
+                'password' => Hash::make(1),
+                'departmentid' => 1,
+                'roles' => range(1, 433),
+            ],
+            [
+                'name' => 'Satyam Dabekar',
+                'email' => 'satyam.agio@gmail.com',
+                'password' => Hash::make(1),
+                'departmentid' => 1,
+                'roles' => range(1, 433),
+            ],
+        ];
 
-        $user  = new User();
-        $user->name = "Amit Guru";
-        $user->email = "amit.guru@mydemosoftware.com";
-        $user->password = Hash::make('Dms@123');
-        $user->departmentid = 1;
-        $user->role = "1,2,3,4,5,6";
-        $user->save();
+        foreach ($users as $userData) {
+            $user = User::create([
+                'name' => $userData['name'],
+                'email' => $userData['email'],
+                'password' => '$2y$10$ybcHMuQ8soPzXcdljEQ/wOUx0JximT3yb5naubluqz3TjOz/tGBlC',
+                'departmentid' => $userData['departmentid'],
+            ]);
 
-        $user  = new User();
-        $user->name = "Esra'a Hyasat";
-        $user->email = "accounting@enviro-lab.com";
-        $user->password = Hash::make('Dms@123');
-        $user->departmentid = 1;
-        $user->role = "1,2,3,4,5,6";
-        $user->save();
+            $usertableRole = ''; // Initialize the variable to store concatenated role IDs
 
-        $user  = new User();
-        $user->name = "Sondos";
-        $user->email = "Sondos@mydemosoftware.com";
-        $user->password = Hash::make('Dms@123');
-        $user->departmentid = 1;
-        $user->role = 3;
-        $user->save();
+            foreach ($userData['roles'] as $roleId) {
+                $checkRole = Roles::find($roleId);
 
-        $user  = new User();
-        $user->name = "User 1";
-        $user->email = "user1fp@mydemosoftware.com";
-        $user->password = Hash::make('Dms@123');
-        $user->departmentid = 1;
-        $user->role = 3;
-        $user->save();
+                // Split the string using the '-' delimiter
+                $roleArray = explode('-', $checkRole->name);
 
-        $user  = new User();
-        $user->name = "User 2";
-        $user->email = "user2fp@mydemosoftware.com";
-        $user->password = Hash::make('Dms@123');
-        $user->departmentid = 1;
-        $user->role = 3;
-        $user->save();
+                // Assign values to three variables
+                $q_m_s_divisions_name = trim($roleArray[0]);
+                $q_m_s_processes_name = trim($roleArray[1]);
+                $q_m_s_roles_name = trim($roleArray[2]);
 
-        $user  = new User();
-        $user->name = "User 3";
-        $user->email = "user3fp@mydemosoftware.com";
-        $user->password = Hash::make('Dms@123');
-        $user->departmentid = 1;
-        $user->role = 3;
-        $user->save();
+                // Assuming you have models for q_m_s_divisions and q_m_s_process
+                $division = QMSDivision::where('name', $q_m_s_divisions_name)->first();
+                $processes = QMSProcess::where('process_name', $q_m_s_processes_name)->get();
+                $qmsroles = QMSRoles::where('name', $q_m_s_roles_name)->first();
+                
+                foreach ($processes as $process) {
+                    $q_m_s_divisions_id = $division->id;
+                    $q_m_s_processes_id = $process->id;
+                    $q_m_s_roles_id = $qmsroles->id;
+                    
+                    $userRole = new UserRole();                
+                    // Concatenate the q_m_s_roles_id with previous ones
+                    $usertableRole .= $q_m_s_roles_id . ',';
 
-        $user  = new User();
-        $user->name = "User 4";
-        $user->email = "user4fp@mydemosoftware.com";
-        $user->password = Hash::make('Dms@123');
-        $user->departmentid = 1;
-        $user->role = 3;
-        $user->save();
+                    $userRole->user_id = $user->id;
+                    $userRole->role_id = $roleId;
+                    $userRole->q_m_s_divisions_id = $q_m_s_divisions_id;
+                    $userRole->q_m_s_processes_id = $q_m_s_processes_id;
+                    $userRole->q_m_s_roles_id = $q_m_s_roles_id;
+                    $userRole->save();
+                }
+            }
 
-        $user  = new User();
-        $user->name = "User 5";
-        $user->email = "user5fp@mydemosoftware.com";
-        $user->password = Hash::make('Dms@123');
-        $user->departmentid = 1;
-        $user->role = 3;
-        $user->save();
+            // Remove the trailing comma from the concatenated string
+            $usertableRole = rtrim($usertableRole, ',');
 
-        $user  = new User();
-        $user->name = "Shaleen Mishra";
-        $user->email = "shaleen.mishra@mydemosoftware.com";
-        $user->password = Hash::make('Dms@123');
-        $user->departmentid = 1;
-        $user->role = 4;
-        $user->save();
+            // Explode the concatenated string into an array
+            $rolesArray = explode(',', $usertableRole);
 
-        $user  = new User();
-        $user->name = "User 1";
-        $user->email = "user1hod@mydemosoftware.com";
-        $user->password = Hash::make('Dms@123');
-        $user->departmentid = 1;
-        $user->role = 4;
-        $user->save();
+            // Remove duplicate entries
+            $uniqueRolesArray = array_unique($rolesArray);
 
-        $user  = new User();
-        $user->name = "User 2";
-        $user->email = "user2hod@mydemosoftware.com";
-        $user->password = Hash::make('Dms@123');
-        $user->departmentid = 1;
-        $user->role = 4;
-        $user->save();
+            // Implode the unique array back into a string
+            $uniqueUsertableRole = implode(',', $uniqueRolesArray);
 
-        $user  = new User();
-        $user->name = "User 3";
-        $user->email = "user3hod@mydemosoftware.com";
-        $user->password = Hash::make('Dms@123');
-        $user->departmentid = 1;
-        $user->role = 4;
-        $user->save();
-
-        $user  = new User();
-        $user->name = "User 4";
-        $user->email = "user4hod@mydemosoftware.com";
-        $user->password = Hash::make('Dms@123');
-        $user->departmentid = 1;
-        $user->role = 4;
-        $user->save();
-
-        $user  = new User();
-        $user->name = "User 5";
-        $user->email = "user5hod@mydemosoftware.com";
-        $user->password = Hash::make('Dms@123');
-        $user->departmentid = 1;
-        $user->role = 4;
-        $user->save();
-
-
-        $user  = new User();
-        $user->name = "Vikas Prajapati";
-        $user->email = "vikas.prajapati@mydemosoftware.com";
-        $user->password = Hash::make('Dms@123');
-        $user->departmentid = 1;
-        $user->role = 1;
-        $user->save();
-
-        $user  = new User();
-        $user->name = "User 1";
-        $user->email = "user1app@mydemosoftware.com";
-        $user->password = Hash::make('Dms@123');
-        $user->departmentid = 1;
-        $user->role = 1;
-        $user->save();
-
-
-        $user  = new User();
-        $user->name = "User 2";
-        $user->email = "user2app@mydemosoftware.com";
-        $user->password = Hash::make('Dms@123');
-        $user->departmentid = 1;
-        $user->role = 1;
-        $user->save();
-
-
-        $user  = new User();
-        $user->name = "User 3";
-        $user->email = "user3app@mydemosoftware.com";
-        $user->password = Hash::make('Dms@123');
-        $user->departmentid = 1;
-        $user->role = 1;
-        $user->save();
-
-
-        $user  = new User();
-        $user->name = "User 4";
-        $user->email = "user4app@mydemosoftware.com";
-        $user->password = Hash::make('Dms@123');
-        $user->departmentid = 1;
-        $user->role = 1;
-        $user->save();
-
-
-        $user  = new User();
-        $user->name = "User 5";
-        $user->email = "user5app@mydemosoftware.com";
-        $user->password = Hash::make('Dms@123');
-        $user->departmentid = 1;
-        $user->role = 1;
-        $user->save();
-
-
-        $user  = new User();
-        $user->name = "Anshul Patel";
-        $user->email = "anshul.patel@mydemosoftware.com";
-        $user->password = Hash::make('Dms@123');
-        $user->departmentid = 1;
-        $user->role = 5;
-        $user->save();
-
-        $user  = new User();
-        $user->name = "User 1";
-        $user->email = "user1cft@mydemosoftware.com";
-        $user->password = Hash::make('Dms@123');
-        $user->departmentid = 1;
-        $user->role = 5;
-        $user->save();
-
-        $user  = new User();
-        $user->name = "User 2";
-        $user->email = "user2cft@mydemosoftware.com";
-        $user->password = Hash::make('Dms@123');
-        $user->departmentid = 1;
-        $user->role = 5;
-        $user->save();
-
-        $user  = new User();
-        $user->name = "User 3";
-        $user->email = "user3cft@mydemosoftware.com";
-        $user->password = Hash::make('Dms@123');
-        $user->departmentid = 1;
-        $user->role = 5;
-        $user->save();
-
-        $user  = new User();
-        $user->name = "User 4";
-        $user->email = "user4cft@mydemosoftware.com";
-        $user->password = Hash::make('Dms@123');
-        $user->departmentid = 1;
-        $user->role = 5;
-        $user->save();
-
-        $user  = new User();
-        $user->name = "User 5";
-        $user->email = "user5cft@mydemosoftware.com";
-        $user->password = Hash::make('Dms@123');
-        $user->departmentid = 1;
-        $user->role = 5;
-        $user->save();
-
-        $user  = new User();
-        $user->name = "Amit Patel";
-        $user->email = "amit.patel@mydemosoftware.com";
-        $user->password = Hash::make('Dms@123');
-        $user->departmentid = 1;
-        $user->role = 2;
-        $user->save();
-
-        $user  = new User();
-        $user->name = "User 1";
-        $user->email = "user1rep@mydemosoftware.com";
-        $user->password = Hash::make('Dms@123');
-        $user->departmentid = 1;
-        $user->role = 2;
-        $user->save();
-
-        $user  = new User();
-        $user->name = "User 2";
-        $user->email = "user2rep@mydemosoftware.com";
-        $user->password = Hash::make('Dms@123');
-        $user->departmentid = 1;
-        $user->role = 2;
-        $user->save();
-
-        $user  = new User();
-        $user->name = "User 3";
-        $user->email = "user3rep@mydemosoftware.com";
-        $user->password = Hash::make('Dms@123');
-        $user->departmentid = 1;
-        $user->role = 2;
-        $user->save();
-
-        $user  = new User();
-        $user->name = "User 4";
-        $user->email = "user4rep@mydemosoftware.com";
-        $user->password = Hash::make('Dms@123');
-        $user->departmentid = 1;
-        $user->role = 2;
-        $user->save();
-
-        $user  = new User();
-        $user->name = "User 5";
-        $user->email = "user5rep@mydemosoftware.com";
-        $user->password = Hash::make('Dms@123');
-        $user->departmentid = 1;
-        $user->role = 2;
-        $user->save();
-
-        $user  = new User();
-        $user->name = "Madhulika Mishra";
-        $user->email = "madhulika.mishra@mydemosoftware.com";
-        $user->password = Hash::make('Dms@123');
-        $user->departmentid = 1;
-        $user->role = 6;
-        $user->save();
-
-        $user  = new User();
-        $user->name = "User 1";
-        $user->email = "user1tp@mydemosoftware.com";
-        $user->password = Hash::make('Dms@123');
-        $user->departmentid = 1;
-        $user->role = 6;
-        $user->save();
-
-        $user  = new User();
-        $user->name = "User 2";
-        $user->email = "user2tp@mydemosoftware.com";
-        $user->password = Hash::make('Dms@123');
-        $user->departmentid = 1;
-        $user->role = 6;
-        $user->save();
-
-        $user  = new User();
-        $user->name = "User 3";
-        $user->email = "user3tp@mydemosoftware.com";
-        $user->password = Hash::make('Dms@123');
-        $user->departmentid = 1;
-        $user->role = 6;
-        $user->save();
-
-        $user  = new User();
-        $user->name = "User 4";
-        $user->email = "user4tp@mydemosoftware.com";
-        $user->password = Hash::make('Dms@123');
-        $user->departmentid = 1;
-        $user->role = 6;
-        $user->save();
-
-        $user  = new User();
-        $user->name = "User 5";
-        $user->email = "user5tp@mydemosoftware.com";
-        $user->password = Hash::make('Dms@123');
-        $user->departmentid = 1;
-        $user->role = 6;
-        $user->save();
-
-        $user  = new User();
-        $user->name = "Jin Kim";
-        $user->email = "jin.kim@mydemosoftware.com";
-        $user->password = Hash::make('Dms@123');
-        $user->departmentid = 1;
-        $user->role = 3;
-        $user->save();
-
-        $user  = new User();
-        $user->name = "Akash Asthana";
-        $user->email = "akash.asthana@mydemosoftware.com";
-        $user->password = Hash::make('Dms@123');
-        $user->departmentid = 1;
-        $user->role = 8;
-        $user->save();
+            // Update the user table with the unique concatenated role IDs
+            $user->role = $uniqueUsertableRole;
+            $user->save();
+        }
     }
 }

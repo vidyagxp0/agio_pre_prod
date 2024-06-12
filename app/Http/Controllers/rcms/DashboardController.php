@@ -105,7 +105,7 @@ class DashboardController extends Controller
                 "initiated_through" => $data->initiated_through,
                 "intiation_date" => $data->intiation_date,
                 "stage" => $data->status,
-                "date_open" => $data->create,
+                "date_open" => $data->created_at,
                 "date_close" => $data->updated_at,
             ]);
         }
@@ -127,7 +127,7 @@ class DashboardController extends Controller
                 "initiated_through" => $data->initiated_through,
                 "intiation_date" => $data->intiation_date,
                 "stage" => $data->status,
-                "date_open" => $data->create,
+                "date_open" => $data->created_at,
                 "date_close" => $data->updated_at,
             ]);
         }
@@ -147,7 +147,7 @@ class DashboardController extends Controller
                 "initiated_through" => $data->initiated_through,
                 "intiation_date" => $data->intiation_date,
                 "stage" => $data->status,
-                "date_open" => $data->create,
+                "date_open" => $data->created_at,
                 "due_date" => $data->due_date,
                 "date_close" => $data->updated_at,
             ]);
@@ -168,7 +168,7 @@ class DashboardController extends Controller
                 "initiated_through" => $data->initiated_through,
                 "intiation_date" => $data->intiation_date,
                 "stage" => $data->status,
-                "date_open" => $data->create,
+                "date_open" => $data->created_at,
                 "date_close" => $data->updated_at,
             ]);
         }
@@ -188,7 +188,7 @@ class DashboardController extends Controller
                 "initiated_through" => $data->initiated_through,
                 "intiation_date" => $data->intiation_date,
                 "stage" => $data->status,
-                "date_open" => $data->create,
+                "date_open" => $data->created_at,
                 "date_close" => $data->updated_at,
             ]);
         }
@@ -209,7 +209,7 @@ class DashboardController extends Controller
                 "initiated_through" => $data->initiated_through,
                 "intiation_date" => $revised_date ? $revised_date : $data->intiation_date,
                 "stage" => $data->status,
-                "date_open" => $data->create,
+                "date_open" => $data->created_at,
                 "date_close" => $data->updated_at,
             ]);
         }
@@ -229,7 +229,7 @@ class DashboardController extends Controller
                 "initiated_through" => $data->initiated_through,
                 "intiation_date" => $data->intiation_date,
                 "stage" => $data->status,
-                "date_open" => $data->create,
+                "date_open" => $data->created_at,
                 "date_close" => $data->updated_at,
             ]);
         }
@@ -249,7 +249,7 @@ class DashboardController extends Controller
                 "initiated_through" => $data->initiated_through,
                 "intiation_date" => $data->intiation_date,
                 "stage" => $data->status,
-                "date_open" => $data->create,
+                "date_open" => $data->created_at,
                 "date_close" => $data->updated_at,
             ]);
         }
@@ -268,7 +268,7 @@ class DashboardController extends Controller
                 "initiated_through" => $data->initiated_through,
                 "intiation_date" => $data->intiation_date,
                 "stage" => $data->status,
-                "date_open" => $data->create,
+                "date_open" => $data->created_at,
                 "date_close" => $data->updated_at,
             ]);
         }
@@ -288,7 +288,7 @@ class DashboardController extends Controller
                 "initiated_through" => $data->initiated_through,
                 "intiation_date" => $data->intiation_date,
                 "stage" => $data->status,
-                "date_open" => $data->create,
+                "date_open" => $data->created_at,
                 "date_close" => $data->updated_at,
             ]);
         }
@@ -308,7 +308,7 @@ class DashboardController extends Controller
                 "initiated_through" => $data->initiated_through,
                 "intiation_date" => $data->intiation_date,
                 "stage" => $data->status,
-                "date_open" => $data->create,
+                "date_open" => $data->created_at,
                 "date_close" => $data->updated_at,
             ]);
         }
@@ -329,7 +329,7 @@ class DashboardController extends Controller
                 "initiated_through" => $data->initiated_through,
                 "intiation_date" => $data->intiation_date,
                 "stage" => $data->status,
-                "date_open" => $data->create,
+                "date_open" => $data->created_at,
                 "date_close" => $data->updated_at,
             ]);
         }
@@ -348,7 +348,7 @@ class DashboardController extends Controller
                 "initiated_through" => $data->initiated_through,
                 "intiation_date" => $data->intiation_date,
                 "stage" => $data->status,
-                "date_open" => $data->create,
+                "date_open" => $data->created_at,
                 "date_close" => $data->updated_at,
             ]);
         }
@@ -367,7 +367,7 @@ class DashboardController extends Controller
                 "initiated_through" => $data->initiated_through_gi,
                 "intiation_date" => $data->intiation_date,
                 "stage" => $data->status,
-                "date_open" => $data->create,
+                "date_open" => $data->created_at,
                 "date_close" => $data->updated_at,
             ]);
         }
@@ -388,7 +388,7 @@ class DashboardController extends Controller
                 "intiation_date" => $data->intiation_date,
                 "stage" => $data->status,
 
-                "date_open" => $data->create,
+                "date_open" => $data->created_at,
                 "date_close" => $data->updated_at,
             ]);
         }
@@ -401,13 +401,12 @@ class DashboardController extends Controller
                 "division_id" => $data->division_id,
                 "type" => "OOT",
                 "parent_id" => $data->parent_id,
-                "parent" => $data->parent_record? $data->parent_record : "-",
                 "parent_type" => $data->parent_type,
                 "short_description" => $data->short_description ? $data->short_description : "-",
                 "initiator_id" => $data->initiator_id,
                 "due_date" => $data->due_date,
                 "stage" => $data->status,
-                "date_open" => $data->create,
+                "date_open" => $data->created_at,
                 "initiated_through" => $data->initiated_through? $data->initiated_through : "-",
                 "date_close" => $data->updated_at,
             ]);
@@ -428,7 +427,7 @@ class DashboardController extends Controller
                 "intiation_date" => $data->intiation_date,
                 "stage" => $data->status,
 
-                "date_open" => $data->create,
+                "date_open" => $data->created_at,
                 "date_close" => $data->updated_at,
             ]);
         }
@@ -447,7 +446,7 @@ class DashboardController extends Controller
                 "initiated_through" => $data->initiated_through_gi,
                 "intiation_date" => $data->intiation_date,
                 "stage" => $data->status,
-                "date_open" => $data->create,
+                "date_open" => $data->created_at,
                 "date_close" => $data->updated_at,
             ]);
         }
@@ -466,7 +465,7 @@ class DashboardController extends Controller
                 "intiation_date" => $data->intiation_date,
                 "stage" => $data->status,
                 "initiated_through" => $data->initiated_through,
-                "date_open" => $data->create,
+                "date_open" => $data->created_at,
                 "date_close" => $data->updated_at,
                 "due_date" => $data->due_date,
             ]);
@@ -487,7 +486,7 @@ class DashboardController extends Controller
                 "initiated_through" => $data->initiated_through_gi,
                 "intiation_date" => $data->intiation_date,
                 "stage" => $data->status,
-                "date_open" => $data->create,
+                "date_open" => $data->created_at,
                 "date_close" => $data->updated_at,
             ]);
         }
@@ -507,7 +506,7 @@ class DashboardController extends Controller
                 "initiated_through" => $data->initiated_through,
                 "intiation_date" => $data->intiation_date,
                 "stage" => $data->status,
-                "date_open" => $data->create,
+                "date_open" => $data->created_at,
                 "due_date" => $data->due_date,
                 "date_close" => $data->updated_at,
             ]);
@@ -527,7 +526,7 @@ class DashboardController extends Controller
                 "initiated_through" => $data->initiated_through,
                 "intiation_date" => $data->intiation_date,
                 "stage" => $data->status,
-                "date_open" => $data->create,
+                "date_open" => $data->created_at,
                 "due_date" => $data->due_date,
                 "date_close" => $data->updated_at,
             ]);
