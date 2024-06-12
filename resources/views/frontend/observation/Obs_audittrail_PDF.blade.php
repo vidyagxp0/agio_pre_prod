@@ -108,7 +108,6 @@
     }
 
     .inner-block {
-        margin-top: 20px;
         padding: 10px;
     }
 
@@ -156,9 +155,7 @@
                 </td>
                 <td class="w-30">
                     <div class="logo">
-                        {{-- <img src="https://dms.mydemosoftware.com/user/images/logo.png" alt="" class="w-100"> --}}
-                        <img src="https://navin.mydemosoftware.com/public/user/images/logo.png" alt="" class="w-100" style="scale: 0.5" >
-
+                        <img src="https://vidyagxp.com/vidyaGxp_logo.png" alt="" class="w-100">
                     </div>
                 </td>
             </tr>
@@ -166,10 +163,10 @@
         <table>
             <tr>
                 <td class="w-30">
-                    <strong>Market Complaint No.</strong>
+                    <strong>Observation No.</strong>
                 </td>
                 <td class="w-40">
-                   {{ Helpers::getDivisionName($doc->division_id) }}/Market Complaint/{{ Helpers::year($doc->created_at)}}/ {{ str_pad($doc->record, 4, '0', STR_PAD_LEFT) }}
+                   {{ Helpers::getDivisionName(session()->get('division'))}}/Observation/{{ Helpers::year($doc->created_at)}}/ {{ str_pad($doc->record, 4, '0', STR_PAD_LEFT) }}
                 </td>
                 <td class="w-30">
                     <strong>Record No.</strong> {{ str_pad($doc->record, 4, '0', STR_PAD_LEFT) }}
@@ -178,7 +175,7 @@
         </table>
     </header>
 
-    <div class="inner-block ">
+    <div class="inner-block">
 
         <div class="head">Audit Trial Histroy Configuration Report</div>
 
@@ -205,7 +202,7 @@
                         @endif
                     </td>
                 </tr>
-               
+
             </table>
         </div>
 
@@ -222,16 +219,47 @@
                         <td>
                             <div>{{ $datas->activity_type }}</div>
                             <div>
-                                <div><strong>Changed From :</strong></div>
-                                @if(!empty($datas->previous))
-                                <div>{{ $datas->previous }}</div>
+                                @if($datas->activity_type == "Activity Log")
+                                    <div><strong>Changed From :</strong></div>
+                                    @if(!empty($datas->change_from))
+                                        <div>{!! $datas->change_from !!}</div>
+                                    @else
+                                        <div>Not Applicable</div>
+                                    @endif
                                 @else
-                                <div>Null</div>
+                                    <div><strong>Changed From :</strong></div>
+                                    @if(!empty($datas->previous))
+                                        <div>{!! $datas->previous !!}</div>
+                                    @else
+                                        <div>Null</div>
+                                    @endif
                                 @endif
+
+                                <!-- <div><strong>Changed From :</strong></div>
+                                @if(!empty($datas->previous))
+                                    <div>{{ $datas->previous }}</div>
+                                @else
+                                    <div>Null</div>
+                                @endif -->
                             </div>
                             <div>
-                                <div><strong>Changed To :</strong></div>
-                                <div>{{ $datas->current }}</div>
+                                @if($datas->activity_type == "Activity Log")
+                                    <div><strong>Changed To :</strong></div>
+                                    @if(!empty($datas->change_to))
+                                        <div>{!! $datas->change_to !!}</div>
+                                    @else
+                                        <div>Not Applicable</div>
+                                    @endif
+                                @else
+                                    <div><strong>Changed To :</strong></div>
+                                    @if(!empty($datas->current))
+                                        <div>{!! $datas->current !!}</div>
+                                    @else
+                                        <div>Null</div>
+                                    @endif
+                                @endif
+                                <!-- <div><strong>Changed To :</strong></div>
+                                <div>{{ $datas->current }}</div> -->
                             </div>
                         </td>
                         <td>{{ Helpers::getDateFormat($datas->created_at) }}</td>
@@ -263,7 +291,6 @@
             </tr>
         </table>
     </footer>
-
 </body>
-
 </html>
+

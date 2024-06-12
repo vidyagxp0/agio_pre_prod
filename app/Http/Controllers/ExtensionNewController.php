@@ -75,6 +75,8 @@ class ExtensionNewController extends Controller
         // dd($request->initiator);
         $extensionNew->initiation_date = $request->initiation_date;
         $extensionNew->short_description = $request->short_description;
+        $extensionNew->parent_id = $request->parent_id;
+        $extensionNew->parent_record = $request->parent_record;
         $extensionNew->reviewers = $request->reviewers;
         $extensionNew->approvers = $request->approvers;
         $extensionNew->current_due_date = $request->current_due_date;

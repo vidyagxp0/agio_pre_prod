@@ -92,24 +92,42 @@ $users = DB::table('users')
     <!-- -----------------------------grid-1----------------------------script -->
     <script>
         $(document).ready(function() {
-            $('#Info_Product_Material').click(function(e) {
+            $('#info_product_material').click(function(e) {
                 function generateTableRow(serialNumber) {
                     var users = @json($users); 
                     var html =
                     '<tr>' +
-                        '<td><input disabled type="text" name="Info_Product_Material[' + serialNumber + '][serial]" value="' + serialNumber +
+                        '<td><input disabled type="text" name="info_product_material[' + serialNumber + '][serial]" value="' + serialNumber +
                         '"></td>' +
-                        '<td><input type="text" id="info_product_code" name="Info_Product_Material[' + serialNumber + ']info_product_code[]" value=""></td>' +
-                        '<td><input type="text" name="Info_Product_Material[' + serialNumber + '][info_batch_no]" value=""></td>'+
-                        '<td><input type="date" name="Info_Product_Material[' + serialNumber + '][info_mfg_date]" value=""></td>' +
-                        '<td><input type="date" name="Info_Product_Material[' + serialNumber + '][info_expiry_date]" value=""></td>' +
-                        '<td><input type="text" name="Info_Product_Material[' + serialNumber + '][info_label_claim]" value=""></td>' +
-                        '<td><input type="text" name="Info_Product_Material[' + serialNumber + '][info_pack_size]" value=""></td>' +
-                        '<td><input type="text" name="Info_Product_Material[' + serialNumber + '][info_analyst_name]" value=""></td>' +
-                        '<td><input type="text" name="Info_Product_Material[' + serialNumber + '][info_others_specify]" value=""></td>' +
-                        '<td><input type="text" name="Info_Product_Material[' + serialNumber + '][info_process_sample_stage]" value=""></td>' +
-                        '<td><select name="Info_Product_Material[' + serialNumber + '][info_packing_material_type]"><option value="Primary">Primary</option><option value="Secondary">Secondary</option><option value="Tertiary">Tertiary</option><option value="Not Applicable">Not Applicable</option></select></td>' +
-                        '<td><select name="Info_Product_Material[' + serialNumber + '][info_stability_for]"><option vlaue="Submission">Submission</option><option vlaue="Commercial">Commercial</option><option vlaue="Pack Evaluation">Pack Evaluation</option><option vlaue="Not Applicable">Not Applicable</option></select></td>' +
+                        '<td><input type="text" id="info_product_code" name="info_product_material[' + serialNumber + ']info_product_code[]" value=""></td>' +
+                        '<td><input type="text" name="info_product_material[' + serialNumber + '][info_batch_no]" value=""></td>'+
+                        '<td>' +
+                        '<div class="col-lg-6 new-date-data-field">' +
+                        '<div class="group-input input-date">' +
+                        '<div class="calenderauditee">' +
+                        '<input type="text" readonly id="info_mfg_date_' + serialNumber + '" placeholder="DD-MMM-YYYY" />' +
+                        '<input type="date" name="info_product_material[' + serialNumber + '][info_mfg_date]" value="" class="hide-input" oninput="handleDateInput(this, \'info_mfg_date_' + serialNumber + '\')">' +
+                        '</div>' +
+                        '</div>' +
+                        '</div>' +
+                        '</td>' +
+                        '<td>' +
+                        '<div class="col-lg-6 new-date-data-field">' +
+                        '<div class="group-input input-date">' +
+                        '<div class="calenderauditee">' +
+                        '<input type="text" readonly id="info_expiry_date' + serialNumber + '" placeholder="DD-MMM-YYYY" />' +
+                        '<input type="date" name="info_product_material[' + serialNumber + '][info_expiry_date]" value="" class="hide-input" oninput="handleDateInput(this, \'info_expiry_date' + serialNumber + '\')">' +
+                        '</div>' +
+                        '</div>' +
+                        '</div>' +
+                        '</td>' +
+                        '<td><input type="text" name="info_product_material[' + serialNumber + '][info_label_claim]" value=""></td>' +
+                        '<td><input type="text" name="info_product_material[' + serialNumber + '][info_pack_size]" value=""></td>' +
+                        '<td><input type="text" name="info_product_material[' + serialNumber + '][info_analyst_name]" value=""></td>' +
+                        '<td><input type="text" name="info_product_material[' + serialNumber + '][info_others_specify]" value=""></td>' +
+                        '<td><input type="text" name="info_product_material[' + serialNumber + '][info_process_sample_stage]" value=""></td>' +
+                        '<td><select name="info_product_material[' + serialNumber + '][info_packing_material_type]"><option value="">--Select--</option><option value="Primary">Primary</option><option value="Secondary">Secondary</option><option value="Tertiary">Tertiary</option><option value="Not Applicable">Not Applicable</option></select></td>' +
+                        '<td><select name="info_product_material[' + serialNumber + '][info_stability_for]"><option value="">--Select--</option><option vlaue="Submission">Submission</option><option vlaue="Commercial">Commercial</option><option vlaue="Pack Evaluation">Pack Evaluation</option><option vlaue="Not Applicable">Not Applicable</option></select></td>' +
                     '</tr>';
                     for (var i = 0; i < users.length; i++) {
                         html += '<option value="' + users[i].id + '">' + users[i].name + '</option>';
@@ -122,7 +140,7 @@ $users = DB::table('users')
                     return html;
                 }
 
-                var tableBody = $('#Info_Product_Material_details tbody');
+                var tableBody = $('#info_product_material_details tbody');
                 var rowCount = tableBody.children('tr').length;
                 var newRow = generateTableRow(rowCount + 1);
                 tableBody.append(newRow);
@@ -133,7 +151,7 @@ $users = DB::table('users')
     <!-- --------------------------------grid-2--------------------------->
     <script>
         $(document).ready(function() {
-            $('#Details_Stability').click(function(e) {
+            $('#details_stability').click(function(e) {
                 function generateTableRow(serialNumber) {
                     var html =
                         '<tr>' +
@@ -154,7 +172,7 @@ $users = DB::table('users')
                     return html;
                 }
 
-                var tableBody = $('#Details_Stability_details tbody');
+                var tableBody = $('#details_stability_details tbody');
                 var rowCount = tableBody.children('tr').length;
                 var newRow = generateTableRow(rowCount + 1);
                 tableBody.append(newRow);
@@ -164,7 +182,7 @@ $users = DB::table('users')
     <!-- ------------------------------grid-3-------------------------script -->
     <script>
         $(document).ready(function() {
-            $('#OOS_Details').click(function(e) {
+            $('#oos_details').click(function(e) {
                 function generateTableRow(serialNumber) {
                     var html =
                         '<tr>' +
@@ -177,7 +195,16 @@ $users = DB::table('users')
                             '<td><input type="text" name="oos_detail['+ serialNumber +'][oos_details_obvious_error]"></td>' +
                             '<td><input type="file" name="oos_detail['+ serialNumber +'][oos_file_attachment]"></td>' +
                             '<td><input type="text" name="oos_detail['+ serialNumber +'][oos_submit_by]"></td>' +
-                            '<td><input type="date" name="oos_detail['+ serialNumber +'][oos_submit_on]"></td>' +
+                            '<td>' +
+                            '<div class="col-lg-6 new-date-data-field">' +
+                            '<div class="group-input input-date">' +
+                            '<div class="calenderauditee">' +
+                            '<input type="text" readonly id="oos_submit_on' + serialNumber + '" placeholder="DD-MMM-YYYY" />' +
+                            '<input type="date" name="oos_details[' + serialNumber + '][oos_submit_on]" value="" class="hide-input" oninput="handleDateInput(this, \'oos_submit_on' + serialNumber + '\')">' +
+                            '</div>' +
+                            '</div>' +
+                            '</div>' +
+                            '</td>' +
                         '</tr>';
                     // for (var i = 0; i < users.length; i++) {
                     //     html += '<option value="' + users[i].id + '">' + users[i].name + '</option>';
@@ -187,7 +214,7 @@ $users = DB::table('users')
                     return html;
                 }
 
-                var tableBody = $('#OOS_Details_details tbody');
+                var tableBody = $('#oos_details_details tbody');
                 var rowCount = tableBody.children('tr').length;
                 var newRow = generateTableRow(rowCount + 1);
                 tableBody.append(newRow);
@@ -247,13 +274,6 @@ $users = DB::table('users')
                         '<td><input type="text" name="oos_conclusion[' + serialNumber + '][summary_results_analyst_name]"></td>' +
                         '<td><input type="text" name="oos_conclusion[' + serialNumber + '][summary_results_remarks]"></td>' +
                         '</tr>';
-
-                    // for (var i = 0; i < users.length; i++) {
-                    //     html += '<option value="' + users[i].id + '">' + users[i].name + '</option>';
-                    // }
-
-                    // html += '</select></td>' + 
-
                     '</tr>';
 
                     return html;
@@ -283,12 +303,6 @@ $users = DB::table('users')
                         '<td><input type="text" name="oos_conclusion_review[' + serialNumber + '][conclusion_review_any_other_information]"></td>' +
                         '<td><input type="text" name="oos_conclusion_review[' + serialNumber + '][conclusion_review_action_affecte_batch]"></td>' +
                         '</tr>';
-                    // for (var i = 0; i < users.length; i++) {
-                    //     html += '<option value="' + users[i].id + '">' + users[i].name + '</option>';
-                    // }
-
-                    // html += '</select></td>' + 
-
                     '</tr>';
 
                     return html;
@@ -309,7 +323,7 @@ $users = DB::table('users')
                     </div> -->
         <div class="division-bar pt-3">
             <strong>Site Division/Project</strong> :
-            {{ Helpers::getDivisionName(session()->get('division')) }} / OOS
+            QMS-North America / OOS
         </div>
         <!-- <div class="button-bar">
             <button type="button">Save</button>
@@ -373,7 +387,7 @@ $users = DB::table('users')
                                 <select id="dynamicSelectType" name="type">
                                     <option value="{{ route('oos.index') }}">OOS Chemical</option>
                                     <option value="{{ route('oos_micro.index') }}">OOS Micro</option>
-                                    <option value="{{ route('oot.index');  }}">OOT</option>
+                                    <option value="{{ route('oot.index')  }}">OOT</option>
                                 </select>
                             </div>
                         </div>
@@ -410,17 +424,17 @@ $users = DB::table('users')
                     
                             </div>
                         </div>
-                        
-                        <div class="col-lg-6">
-                            <div class="group-input">
-                                <label for="Initiator"> Due Date
-                                </label>
-
-                                <small class="text-primary">
-                                    Please mention expected date of completion
-                                </small>
-                                <input type="date" name="due_date" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input"
-                                                oninput="handleDateInput(this, 'due_date')" />
+                        <div class="col-lg-6 new-date-data-field">
+                            <div class="group-input input-date">
+                                <label for="Date Due"> Due Date</label>
+                                <div><small class="text-primary">If revising Due Date, kindly mention revision
+                                        reason in "Due Date Extension Justification" data field.</small></div>
+                                <div class="calenderauditee">
+                                    <input type="text" id="due_date" readonly placeholder="DD-MMM-YYYY" />
+                                    <input type="date" name="due_date"
+                                        min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input"
+                                        oninput="handleDateInput(this, 'due_date')" />
+                                </div>
                             </div>
                         </div>
                         <div class="col-lg-6">
@@ -436,15 +450,18 @@ $users = DB::table('users')
                         </div>
                         <div class="col-lg-6">
                             <div class="group-input">
-                                <label for="Initiator Group"> Short Description</label>
-                                <textarea  name="description_gi" value="" required></textarea>
+                                <label for="Short Description">Short Description
+                                    <span class="text-danger">*</span></label>
+                                    <span id="rchars">255</span>characters remaining
+                                <textarea id="docname"  name="description_gi" required></textarea>
                             </div>
                         </div>
+                        <p id="docnameError" style="color:red">**Short Description is required</p>
                         <div class="col-lg-6">
                             <div class="group-input">
                                 <label for="Short Description">Initiator Group <span class="text-danger"></span></label>
                                 
-                                <select name="initiator_Group" id="initiator_group">
+                                <select name="initiator_group" id="initiator_group">
                                 <option>Enter Your Selection Here</option>
                                 @foreach (Helpers::getInitiatorGroups() as $code => $initiator_group) 
                                 <option value="{{ $code }}" @if (old('initiator_group') == $code) selected @endif>{{ $initiator_group }}</option> 
@@ -461,8 +478,10 @@ $users = DB::table('users')
                         </div>
                         <div class="col-lg-6">
                             <div class="group-input">
-                                <label for="Initiator Group Code">If Others</label>
-                                <textarea  type="text" name="if_others_gi"></textarea>
+                                <label for="If Others">If Others
+                                    <span class="text-danger">*</span></label>
+                                    <span id="rchars">255</span>characters remaining
+                                <textarea id="docname"  name="if_others_gi" ></textarea>
                             </div>
                         </div>
                         <div class="col-lg-6">
@@ -479,8 +498,10 @@ $users = DB::table('users')
 
                         <div class="col-lg-6 mt-4">
                             <div class="group-input">
-                                <label for="Initiator Group">Repeat Nature</label>
-                                <textarea  type="text" name="repeat_nature_gi"></textarea>
+                                <label for="Initiator Group"></label>
+                                <label for="Repeat Nature">Repeat Nature<span class="text-danger">*</span></label>
+                                 <span id="rchars">255</span>characters remaining
+                                <textarea id="docname"  name="repeat_nature_gi" ></textarea>
                             </div>
                         </div>
                         <div class="col-lg-6">
@@ -493,13 +514,18 @@ $users = DB::table('users')
                                 </select>
                             </div>
                         </div>
+                        <div class="col-md-6 new-date-data-field">
+                                    <div class="group-input input-date">
+                                        <label for="due-date">Deviation Occured On</label>
+                                        <div class="calenderauditee">                                    
+                                            <input type="text"  id="deviation_occured_on_gi" readonly placeholder="DD-MMM-YYYY" />
+                                            <input type="date" name="deviation_occured_on_gi"    min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" value=""
+                                            class="hide-input"
+                                            oninput="handleDateInput(this, 'deviation_occured_on_gi')"/>
+                                        </div>
+                                    </div>
+                                </div>
 
-                        <div class="col-lg-6">
-                            <div class="group-input">
-                                <label for="Initiator Group">Deviation Occured On</label>
-                                <input type="date" name="deviation_occured_on_gi">
-                            </div>
-                        </div>
                         <div class="col-lg-6">
                             <div class="group-input">
                                 <label for="Audit Attachments">Initial Attachments</label>
@@ -567,15 +593,14 @@ $users = DB::table('users')
                         <div class="col-lg-6">
                             <div class="group-input ">
                                 <label for="Short Description ">Market</label>
-
                                 <input type="text" name="market_gi">
                             </div>
                         </div>
-                        <div class="col-6">
+                        <div class="col-lg-6">
                             <div class="group-input">
                                 <label for="Initiator Group">Customer*</label>
                                 <select name="customer_gi">
-                                     <option value="0">Enter Your Selection Here</option>
+                                    <option value="">Enter Your Selection Here</option>
                                     <option name="yes">Yes</option>
                                     <option name="no">No</option>
                                 </select>
@@ -587,7 +612,7 @@ $users = DB::table('users')
                         <div class="group-input">
                             <label for="audit-agenda-grid">
                                 Info. On Product/ Material
-                                <button type="button" name="audit-agenda-grid" id="Info_Product_Material">+</button>
+                                <button type="button" name="audit-agenda-grid" id="info_product_material">+</button>
 
                                 <span class="text-primary" data-bs-toggle="modal"
                                     data-bs-target="#document-details-field-instruction-modal"
@@ -596,14 +621,14 @@ $users = DB::table('users')
                                 </span>
                             </label>
                             <div class="table-responsive">
-                                <table class="table table-bordered" id="Info_Product_Material_details" style="width: 100%;">
+                                <table class="table table-bordered" id="info_product_material_details" style="width: 100%;">
                                     <thead>
                                         <tr>
                                             <th style="width: 4%">Row#</th>
                                             <th style="width: 10%">Item/Product Code</th>
                                             <th style="width: 8%"> Batch No*.</th>
-                                            <th style="width: 8%"> Mfg.Date</th>
-                                            <th style="width: 8%">Expiry Date</th>
+                                            <th style="width: 12%"> Mfg.Date</th>
+                                            <th style="width: 12%">Expiry Date</th>
                                             <th style="width: 8%"> Label Claim.</th>
                                             <th style="width: 8%">Pack Size</th>
                                             <th style="width: 8%">Analyst Name</th>
@@ -621,8 +646,31 @@ $users = DB::table('users')
                                             <td><input disabled type="text" name="info_product_material[0][serial]" value="1"></td>
                                             <td><input type="text" name="info_product_material[0][info_product_code]" value=""></td>
                                             <td><input type="text" name="info_product_material[0][info_batch_no]" value=""></td>
-                                            <td><input type="date" name="info_product_material[0][info_mfg_date]" value=""></td>
-                                            <td><input type="date" name="info_product_material[0][info_expiry_date]" value=""></td>
+                                            <td>
+                                            <div class="col-lg-6 new-date-data-field">
+                                                <div class="group-input input-date">
+                                                    <div class="calenderauditee">
+                                                        <input type="text" id="info_mfg_date" readonly 
+                                                        placeholder="DD-MMM-YYYY" />
+                                                        <input type="date" name="info_product_material[0][info_mfg_date]" value="" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
+                                                        class="hide-input" oninput="handleDateInput(this, 'info_mfg_date')">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            </td> 
+                                            <td>
+                                            <div class="col-lg-6 new-date-data-field">
+                                                <div class="group-input input-date">
+                                                    <div class="calenderauditee">
+                                                        <input type="text" id="info_expiry_date" readonly 
+                                                        placeholder="DD-MMM-YYYY" />
+                                                        <input type="date" name="info_product_material[0][info_expiry_date]" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
+                                                        class="hide-input" oninput="handleDateInput(this, 'info_expiry_date')">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                           </td>
+                                            
                                             <td><input type="text" name="info_product_material[0][info_label_claim]" value=""></td>
                                             <td><input type="text" name="info_product_material[0][info_pack_size]" value=""></td>
                                             <td><input type="text" name="info_product_material[0][info_analyst_name]" value=""></td>
@@ -630,6 +678,7 @@ $users = DB::table('users')
                                             <td><input type="text" name="info_product_material[0][info_process_sample_stage]" value=""></td>
                                             <td>
                                                 <select name="info_product_material[0][info_packing_material_type]">
+                                                    <option value="">--Select-- </option>
                                                     <option value="Primary">Primary</option>
                                                     <option value="Secondary">Secondary</option>
                                                     <option value="Tertiary">Tertiary</option>
@@ -638,6 +687,7 @@ $users = DB::table('users')
                                             </td>
                                             <td>
                                                 <select name="info_product_material[0][info_stability_for]">
+                                                    <option value="">--Select-- </option>
                                                     <option vlaue="Submission">Submission</option>
                                                     <option vlaue="Commercial">Commercial</option>
                                                     <option vlaue="Pack Evaluation">Pack Evaluation</option>
@@ -654,7 +704,7 @@ $users = DB::table('users')
                         <div class="group-input">
                             <label for="audit-agenda-grid">
                                 Details of Stability Study
-                                <button type="button" name="audit-agenda-grid" id="Details_Stability">+</button>
+                                <button type="button" name="audit-agenda-grid" id="details_stability">+</button>
                                 <span class="text-primary" data-bs-toggle="modal"
                                     data-bs-target="#document-details-field-instruction-modal"
                                     style="font-size: 0.8rem; font-weight: 400; cursor: pointer;">
@@ -662,7 +712,7 @@ $users = DB::table('users')
                                 </span>
                             </label>
                             <div class="table-responsive">
-                                <table class="table table-bordered" id="Details_Stability_details" style="width: 100%;">
+                                <table class="table table-bordered" id="details_stability_details" style="width: 100%;">
                                     <thead>
                                         <tr>
                                             <th style="width: 4%">Row#</th>
@@ -695,7 +745,7 @@ $users = DB::table('users')
                         <div class="group-input">
                             <label for="audit-agenda-grid">
                                 OOS Details
-                                <button type="button" name="audit-agenda-grid" id="OOS_Details">+</button>
+                                <button type="button" name="audit-agenda-grid" id="oos_details">+</button>
                                 <span class="text-primary" data-bs-toggle="modal"
                                     data-bs-target="#document-details-field-instruction-modal"
                                     style="font-size: 0.8rem; font-weight: 400; cursor: pointer;">
@@ -703,17 +753,17 @@ $users = DB::table('users')
                                 </span>
                             </label>
                             <div class="table-responsive">
-                                <table class="table table-bordered" id="OOS_Details_details" style="width: 100%;">
+                                <table class="table table-bordered" id="oos_details_details" style="width: 100%;">
                                     <thead>
                                         <tr>
                                             <th style="width: 4%">Row#</th>
                                             <th style="width: 8%">AR Number.</th>
                                             <th style="width: 8%">Test Name of OOS</th>
-                                            <th style="width: 12%">Results Obtained</th>
-                                            <th style="width: 16%">Specification Limit</th>
-                                            <th style="width: 16%">Details of Obvious Error</th>
+                                            <th style="width: 8%">Results Obtained</th>
+                                            <th style="width: 8%">Specification Limit</th>
+                                            <th style="width: 8%">Details of Obvious Error</th>
                                             <th style="width: 16%">File Attachment</th>
-                                            <th style="width: 16%">Submit By</th>
+                                            <th style="width: 8%">Submit By</th>
                                             <th style="width: 16%">Submit On</th>
                                         </tr>
                                     </thead>
@@ -725,9 +775,20 @@ $users = DB::table('users')
                                             <td><input type="text" name="oos_detail[0][oos_results_obtained]"></td>
                                             <td><input type="text" name="oos_detail[0][oos_specification_limit]"></td>
                                             <td><input type="text" name="oos_detail[0][oos_details_obvious_error]"></td>
-                                            <td><input type="text" name="oos_detail[0][oos_file_attachment]"></td>
+                                            <td><input type="file" name="oos_detail[0][oos_file_attachment]"></td>
                                             <td><input type="text" name="oos_detail[0][oos_submit_by]"></td>
-                                            <td><input type="date" name="oos_detail[0][oos_submit_on]"></td>
+                                            <td>
+                                                <div class="col-lg-6 new-date-data-field">
+                                                <div class="group-input input-date">
+                                                    <div class="calenderauditee">
+                                                        <input type="text" id="oos_submit_on" readonly 
+                                                        placeholder="DD-MMM-YYYY" />
+                                                        <input type="date" name="oos_detail[0][oos_submit_on]" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
+                                                        class="hide-input" oninput="handleDateInput(this, 'oos_submit_on')">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            </td>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -1102,10 +1163,10 @@ $users = DB::table('users')
                                         <tr>
                                             <th style="width: 4%">Row#</th>
                                             <th style="width: 8%">OOS Number</th>
-                                            <th style="width: 8%"> OOS Reported Date</th>
+                                            <th style="width: 16%"> OOS Reported Date</th>
                                             <th style="width: 12%">Description of OOS</th>
-                                            <th style="width: 16%">Previous OOS Root Cause</th>
-                                            <th style="width: 16%"> CAPA</th>
+                                            <th style="width: 8%">Previous OOS Root Cause</th>
+                                            <th style="width: 8%"> CAPA</th>
                                             <th style="width: 16% pt-3">Closure Date of CAPA</th>
                                             <th style="width: 16%">CAPA Requirement</th>
                                             <th style="width: 16%">Reference CAPA Number</th>
@@ -1115,12 +1176,35 @@ $users = DB::table('users')
                                         <tr>
                                             <td><input disabled type="text" name="oos_capa[0][serial]" value="1"></td>
                                             <td><input type="text" id="info_oos_number" name="oos_capa[0][info_oos_number]" value=""></td>
-                                            <td><input type="date" name="oos_capa[0][info_oos_reported_date]" value=""></td>
+                                            <td>
+                                            <div class="col-lg-6 new-date-data-field">
+                                                <div class="group-input input-date">
+                                                    <div class="calenderauditee">
+                                                        <input type="text" id="info_oos_reported_date" readonly 
+                                                        placeholder="DD-MMM-YYYY" />
+                                                        <input type="date" name="oos_capa[0][info_oos_reported_date]" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
+                                                        class="hide-input" oninput="handleDateInput(this, 'info_oos_reported_date')">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            </td>
                                             <td><input type="text" name="oos_capa[0][info_oos_description]" value=""></td>
                                             <td><input type="text" name="oos_capa[0][info_oos_previous_root_cause]"value=""></td>
                                             <td><input type="text" name="oos_capa[0][info_oos_capa]" value=""></td>
-                                            <td><input type="date" name="oos_capa[0][info_oos_closure_date]" value=""></td>
+                                            <td>
+                                                <div class="col-lg-6 new-date-data-field">
+                                                <div class="group-input input-date">
+                                                    <div class="calenderauditee">
+                                                        <input type="text" id="info_oos_closure_date" readonly 
+                                                        placeholder="DD-MMM-YYYY" />
+                                                        <input type="date" name="oos_capa[0][info_oos_closure_date]" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
+                                                        class="hide-input" oninput="handleDateInput(this, 'info_oos_closure_date')">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            </td>
                                             <td><select name="oos_capa[0][info_oos_capa_requirement]">
+                                                   <option value="">Select</option>
                                                     <option value="yes">Yes</option>
                                                     <option value="No">No</option>
                                                 </select></td>
@@ -1405,9 +1489,8 @@ $users = DB::table('users')
                     <div class="col-md-12 mb-4">
                         <div class="group-input">
                             <label for="Description Deviation">Impact Assessment.</label>
-                            <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
                             <textarea class="summernote" name="impact_assessment_piiqcr" id="summernote-1">
-                                    </textarea>
+                            </textarea>
                         </div>
                     </div>
                     <div class="col-12">
@@ -2706,5 +2789,12 @@ $users = DB::table('users')
             document.getElementById(cityName).style.display = "block";
             evt.currentTarget.className += " active";
         }
+    </script>
+    <script>
+        var maxLength = 255;
+        $('#docname').keyup(function() {
+            var textlen = maxLength - $(this).val().length;
+            $('#rchars').text(textlen);
+        });
     </script>
 @endsection

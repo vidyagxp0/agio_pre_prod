@@ -108,6 +108,7 @@
     }
 
     .inner-block {
+        margin-top: 20px;
         padding: 10px;
     }
 
@@ -151,11 +152,12 @@
         <table>
             <tr>
                 <td class="w-70 head">
-                   OOS Chemical Audit Trial Report
+                     Audit Trial Report
                 </td>
                 <td class="w-30">
                     <div class="logo">
-                    <img src="https://navin.mydemosoftware.com/public/user/images/logo.png" alt="" class="w-100">
+                        {{-- <img src="https://dms.mydemosoftware.com/user/images/logo.png" alt="" class="w-100"> --}}
+                        <img src="https://navin.mydemosoftware.com/public/user/images/logo.png" alt="" class="w-100" style="scale: 0.5" >
 
                     </div>
                 </td>
@@ -164,10 +166,10 @@
         <table>
             <tr>
                 <td class="w-30">
-                    <strong>OOS Chemical Audit No.</strong>
+                    <strong>Action Item No.</strong>
                 </td>
                 <td class="w-40">
-                   {{ Helpers::divisionNameForQMS($doc->division_id) }}/{{ Helpers::year($doc->created_at) }}/{{ str_pad($doc->record, 4, '0', STR_PAD_LEFT) }}
+                   {{ Helpers::getDivisionName($doc->division_id) }}/Action Item/{{ Helpers::year($doc->created_at)}}/ {{ str_pad($doc->record, 4, '0', STR_PAD_LEFT) }}
                 </td>
                 <td class="w-30">
                     <strong>Record No.</strong> {{ str_pad($doc->record, 4, '0', STR_PAD_LEFT) }}
@@ -176,22 +178,20 @@
         </table>
     </header>
 
-    <div class="inner-block">
+    <div class="inner-block ">
 
         <div class="head">Audit Trial Histroy Configuration Report</div>
 
-        <div class="division">
-            {{ Helpers::divisionNameForQMS($doc->division_id) }}/{{ Helpers::year($doc->created_at) }}/{{ str_pad($doc->record, 4, '0', STR_PAD_LEFT) }}
-        </div>
 
-        <!-- <div class="first-table">
+
+        <div class="first-table">
             <table>
                 <tr>
                     <td class="w-50">
                         <strong>Config Area :</strong> All - No Filter
                     </td>
                     <td class="w-50">
-                        <strong>Start Date (GMT) :</strong> {{ Helpers::getdateFormat($doc->created_at) }}
+                        <strong>Start Date (GMT) :</strong> {{ Helpers::getDateFormat($doc->created_at) }}
                     </td>
                 </tr>
                 <tr>
@@ -201,18 +201,13 @@
                     <td class="w-50">
                         <strong>End Date (GMT) :</strong>
                         @if ($doc->stage >= 9)
-                            {{ $doc->updated_at }}
+                            {{ Helpers::getDateFormat($doc->updated_at) }}
                         @endif
                     </td>
                 </tr>
-                <tr>
-                    <td class="w-50">&nbsp;</td>
-                    <td class="w-50">
-                        <strong>Person Responsible : {{ $doc->originator }}</strong>
-                    </td>
-                </tr>
+               
             </table>
-        </div> -->
+        </div>
 
         <div class="second-table">
             <table>
@@ -229,42 +224,23 @@
                             <div>
                                 <div><strong>Changed From :</strong></div>
                                 @if(!empty($datas->previous))
-                                @if($datas->activity_type == "Assigned To" || $datas->activity_type == "CAPA Team" )
-                                @foreach(explode(',',$datas->previous) as $prev)
-                                <div>{{ $prev != 'Null' ?  Helpers::getInitiatorName($prev ) : $prev  }}</div>
-                                @endforeach
-                                @else
                                 <div>{{ $datas->previous }}</div>
-                                @endif
-                                @elseif($datas->activity_type == "CAPA Related Records")
-                                
-                                <div>{{ Helpers::getDivisionName($doc->division_id) }}/CAPA/{{ date('Y') }}/{{ Helpers::recordFormat($doc->record) }}</div>
                                 @else
                                 <div>Null</div>
                                 @endif
                             </div>
                             <div>
                                 <div><strong>Changed To :</strong></div>
-                                @if($datas->activity_type == "Assigned To" || $datas->activity_type == "CAPA Team" )
-                                @foreach(explode(',',$datas->current) as $curr)
-                                <div>{{ Helpers::getInitiatorName($curr) }}</div>
-                                @endforeach
-                                @elseif($datas->activity_type == "CAPA Related Records")
-                                <div>{{ Helpers::getDivisionName($doc->division_id) }}/CAPA/{{ date('Y') }}/{{ Helpers::recordFormat($doc->record) }}</div>
-                                @else
                                 <div>{{ $datas->current }}</div>
-                                @endif
                             </div>
                         </td>
-                        <td>{{ Helpers::getdateFormat($datas->created_at) }}</td>
+                        <td>{{ Helpers::getDateFormat($datas->created_at) }}</td>
                         <td>{{ $datas->user_name }}</td>
                         <td>
-                        @if(($datas->previous == 'Null') && ($datas->current !='Null'))
-                                New
-                            @elseif(($datas->previous != $datas->current))
+                            @if ($datas->previous != "NULL")
                                 Modify
-                            @else 
-                               New
+                            @else
+                                New
                             @endif
                         </td>
                     </tr>
@@ -283,9 +259,7 @@
                 <td class="w-40">
                     <strong>Printed By :</strong> {{ Auth::user()->name }}
                 </td>
-                {{-- <td class="w-30">
-                    <strong>Page :</strong> 1 of 1
-                </td> --}}
+
             </tr>
         </table>
     </footer>

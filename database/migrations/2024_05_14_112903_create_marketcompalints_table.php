@@ -23,7 +23,7 @@ return new class extends Migration
             $table->string('intiation_date')->nullable();
             $table->date('due_date_gi')->nullable();
             $table->string('initiator_group_code_gi')->nullable();
-            $table->string('record_number')->nullable();
+            $table->string('record')->nullable();
 
 
             $table->longText('form_type')->nullable();

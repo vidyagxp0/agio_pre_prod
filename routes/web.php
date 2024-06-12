@@ -542,7 +542,7 @@ Route::view('oos_oot_form', 'frontend.forms.OOS\OOT.oos_oot');
 Route::get('/sop/users/{id?}', [AjaxController::class, 'getSopTrainingUsers'])->name('sop_training_users');
 
 // ========================Errata==================================
-Route::view('errata_new', 'frontend.errata.errata_new')->name('errata_new');
+// Route::view('errata_new', 'frontend.errata.errata_new')->name('errata_new');
 Route::view('errata_view', 'frontend.errata.errata_view');
 
 // <<<<<<< HEAD
@@ -567,6 +567,7 @@ Route::put('errata/update/{id}', [Erratacontroller::class, 'update'])->name('err
 Route::get('errataaudittrail/{id}', [ErrataController::class, 'AuditTrial'])->name('errata.audittrail');
 Route::get('errataAuditInner/{id}', [ErrataController::class, 'auditDetailsErrata'])->name('errataauditdetails');
 Route::post('/errata/cancel/{id}', [ErrataController::class, 'erratacancelstage'])->name('errata.cancel');
+Route::get('errata_new', [ErrataController::class, 'index'])->name('errata_new');
 
 // ----------------------Stages----------------------------------------
 

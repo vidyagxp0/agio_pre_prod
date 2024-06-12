@@ -105,6 +105,7 @@
             querySelect.options.add(new Option('Check Effectiveness', '2'));
             querySelect.options.add(new Option('Close - Done', '3'));
 
+
         } else if (scopeValue === 'CC') {
             querySelect.options.add(new Option('Opened', '1'));
             querySelect.options.add(new Option('Under HOD Review', '2'));
@@ -206,6 +207,7 @@
                             </div>
                             <div class="item-btn" onclick="window.print()">Print</div>
                         </div>
+
 
 
                         <div class="main-scope-table table-container">
@@ -442,7 +444,7 @@
                                                     </a>
                                                     @if (!empty($datas->parent_id))
                                                         <a
-                                                            href="{{ url('rcms/qms-dashboard_new', $datas->id) }}/management_review">
+                                                            href="{{ url('rcms/qms-dashboard_new', $datas->id) }}/errata">
                                                             <div class="icon" onclick="showChild()"
                                                                 data-bs-toggle="tooltip" title="Related Records">
                                                                 {{-- <img src="{{ asset('user/images/parent.png') }}"
@@ -464,7 +466,7 @@
                                                         </a>
                                                     @endif
 
-                                                    @elseif($datas->type == 'errata')
+                                                    @elseif($datas->type == 'ERRATA')
                                                     <a href="{{ route('errata.show', $datas->id) }}">
                                                         {{ str_pad(($total_count - $loop->index), 4, '0', STR_PAD_LEFT) }}{{ $datas->id }}
                                                     </a>
