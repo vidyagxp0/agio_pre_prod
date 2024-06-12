@@ -125,7 +125,6 @@
                                 oninput="addMultipleFiles(this, 'conclusion_attachment_ocr')" multiple>
                         </div>
                     </div>
-
                 </div>
             </div>
             <div class="col-lg-6">
@@ -134,7 +133,6 @@
                     <input type="text" name="cq_approver" value="{{$data->cq_approver ? $data->cq_approver : '' }}">
                 </div>
             </div>
-
             <div class="button-block">
                 <button type="submit" id="ChangesaveButton" class="saveButton">Save</button>
                 <button type="button" class="backButton" onclick="previousStep()">Back</button>

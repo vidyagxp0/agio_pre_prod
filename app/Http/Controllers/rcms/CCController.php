@@ -22,6 +22,7 @@ use App\Models\QMSDivision;
 use App\Models\RiskAssessment;
 use App\Models\RcmDocHistory;
 use App\Models\RiskLevelKeywords;
+use App\Models\Capa;
 use App\Models\RoleGroup;
 use App\Models\User;
 // use Barryvdh\DomPDF\PDF;
