@@ -253,7 +253,7 @@
             <div class="cctab">
                 <button class="cctablinks active" onclick="openCity(event, 'CCForm1')">General Information</button>
                 <button class="cctablinks" onclick="openCity(event, 'CCForm2')">Immediate Actions</button>
-                <button class="cctablinks" onclick="openCity(event, 'CCForm3')">Extension</button>
+                {{-- <button class="cctablinks" onclick="openCity(event, 'CCForm3')">Extension</button> --}}
                 <button class="cctablinks" onclick="openCity(event, 'CCForm8')">Incident Details</button>
                 <button class="cctablinks" onclick="openCity(event, 'CCForm9')">Investigation Details</button>
                 <button class="cctablinks" onclick="openCity(event, 'CCForm4')">CAPA</button>
@@ -1060,7 +1060,7 @@
                              <div class="col-12">
                                  <div class="group-input">
                                      <label for="Incident Details">Reason For Extension</label>
-                                     <textarea name="reasoon_for_extension_e" {{ $data->stage == 0 || $data->stage == 10 ? "disabled" : "" }}>{{$data->reasoon_for_extension_e}}</textarea>
+                                     <textarea name="reasoon_for_extension_e" >{{$data->reasoon_for_extension_e}}</textarea>
                                  </div>
                              </div>
  
@@ -1079,7 +1079,7 @@
                                     <div class="calenderauditee">
                                         <input type="text" id="extension_date_esc" readonly
                                             placeholder="DD-MMM-YYYY" value="{{ Helpers::getdateFormat($data->extension_date_esc) }}"/>
-                                        <input type="date" name="extension_date_esc"  {{ $data->stage == 0 || $data->stage == 10 ? "disabled" : "" }} class="hide-input"
+                                        <input type="date" name="extension_date_esc"   class="hide-input"
                                             oninput="handleDateInput(this, 'extension_date_esc')" />
                                     </div>
                                 </div>
@@ -1105,7 +1105,7 @@
                                     <div class="calenderauditee">
                                         <input type="text" id="extension_date_initiator" readonly
                                             placeholder="DD-MMM-YYYY" value="{{ Helpers::getdateFormat($data->extension_date_initiator) }}" />
-                                        <input type="date" name="extension_date_initiator" {{ $data->stage == 0 || $data->stage == 10 ? "disabled" : "" }} class="hide-input"
+                                        <input type="date" name="extension_date_initiator"  class="hide-input"
                                             oninput="handleDateInput(this, 'extension_date_initiator')" />
                                     </div>
                                 </div>
@@ -1117,7 +1117,7 @@
                                     <label for="search">
                                         Extension HOD <span class="text-danger"></span>
                                     </label>
-                                    <select id="select-state" placeholder="Select..." name="assign_to" {{ $data->stage == 0 || $data->stage == 10 ? "disabled" : "" }}>
+                                    <select id="select-state" placeholder="Select..." name="assign_to" >
                                         <option value="">Select a value</option>
                                         @foreach ($users as $key=> $value)
                                             <option  @if ($data->assign_to == $value->id) selected @endif  value="{{ $value->id }}">{{ $value->name }}</option>
@@ -1134,7 +1134,7 @@
                                     <label for="search">
                                         Extension Approved By <span class="text-danger"></span>
                                     </label>
-                                    <select id="select-state" placeholder="Select..." name="assign_to" {{ $data->stage == 0 || $data->stage == 10 ? "disabled" : "" }}>
+                                    <select id="select-state" placeholder="Select..." name="assign_to" >
                                         <option value="">Select a value</option>
                                         @foreach ($users as $key=> $value)
                                             <option  @if ($data->assign_to == $value->id) selected @endif  value="{{ $value->id }}">{{ $value->name }}</option>
@@ -1161,7 +1161,7 @@
                               <div class="col-12">
                                   <div class="group-input">
                                  <label for="reason for extension sc">Reason For Extension</label>
-                                 <textarea name="reasoon_for_extension_esc" {{ $data->stage == 0 || $data->stage == 10 ? "disabled" : "" }}>{{$data->reasoon_for_extension_esc}}</textarea>
+                                 <textarea name="reasoon_for_extension_esc" >{{$data->reasoon_for_extension_esc}}</textarea>
                                  </div>
                               </div>
  
@@ -1181,7 +1181,7 @@
                                     <div class="calenderauditee">
                                         <input type="text" id="extension_date_e" readonly
                                             placeholder="DD-MMM-YYYY" value="{{ Helpers::getdateFormat($data->extension_date_e) }}" />
-                                        <input type="date" name="extension_date_e"  {{ $data->stage == 0 || $data->stage == 10 ? "disabled" : "" }} class="hide-input"
+                                        <input type="date" name="extension_date_e"   class="hide-input"
                                             oninput="handleDateInput(this, 'extension_date_e')" />
                                     </div>
                                 </div>
@@ -1195,7 +1195,7 @@
                                     <div class="calenderauditee">
                                         <input type="text" id="extension_date_idsc" readonly
                                             placeholder="DD-MMM-YYYY" value="{{ Helpers::getdateFormat($data->extension_date_idsc) }}" >
-                                        <input type="date" name="extension_date_idsc"  {{ $data->stage == 0 || $data->stage == 10 ? "disabled" : "" }}  class="hide-input"
+                                        <input type="date" name="extension_date_idsc"    class="hide-input"
                                             oninput="handleDateInput(this, 'extension_date_idsc')" />
                                     </div>
                                 </div>
@@ -1228,7 +1228,7 @@
                                                         <label for="search">
                                                             Extension Approved By <span class="text-danger"></span>
                                                         </label>
-                                                        <select id="select-state" placeholder="Select..." name="assign_to" {{ $data->stage == 0 || $data->stage == 10 ? "disabled" : "" }}>
+                                                        <select id="select-state" placeholder="Select..." name="assign_to" >
                                                             <option value="">Select a value</option>
                                                             @foreach ($users as $key=> $value)
                                                                 <option  @if ($data->assign_to == $value->id) selected @endif  value="{{ $value->id }}">{{ $value->name }}</option>
@@ -1253,7 +1253,7 @@
                            <div class="col-12">
                                <div class="group-input">
                               <label for="reason for extension tc">Reason For Extension</label>
-                              <textarea name="reasoon_for_extension_tc" {{ $data->stage == 0 || $data->stage == 10 ? "disabled" : "" }}>{{$data->reasoon_for_extension_tc}}</textarea>
+                              <textarea name="reasoon_for_extension_tc" >{{$data->reasoon_for_extension_tc}}</textarea>
                               </div>
                            </div>
  
@@ -1267,7 +1267,7 @@
                                 <div class="calenderauditee">
                                     <input type="text" id="extension_date__tc" readonly
                                         placeholder="DD-MMM-YYYY" value="{{ Helpers::getdateFormat($data->extension_date__tc) }}"/>
-                                    <input type="date" name="extension_date__tc" {{ $data->stage == 0 || $data->stage == 10 ? "disabled" : "" }}   class="hide-input"
+                                    <input type="date" name="extension_date__tc"    class="hide-input"
                                         oninput="handleDateInput(this, 'extension_date__tc')" />
                                 </div>
                             </div>
@@ -1283,7 +1283,7 @@
                                     <div class="calenderauditee">
                                         <input type="text" id="extension_date_idtc" readonly
                                             placeholder="DD-MMM-YYYY" value="{{ Helpers::getdateFormat($data->extension_date_idtc) }}" />
-                                        <input type="date" name="extension_date_idtc"  {{ $data->stage == 0 || $data->stage == 10 ? "disabled" : "" }}  class="hide-input"
+                                        <input type="date" name="extension_date_idtc"    class="hide-input"
                                             oninput="handleDateInput(this, 'extension_date_idtc')" />
                                     </div>
                                 </div>
@@ -1295,7 +1295,7 @@
                                             <label for="search">
                                                 Extension Approved By QA <span class="text-danger"></span>
                                             </label>
-                                            <select id="select-state" placeholder="Select..." name="assign_to" {{ $data->stage == 0 || $data->stage == 10 ? "disabled" : "" }}>
+                                            <select id="select-state" placeholder="Select..." name="assign_to" >
                                                 <option value="">Select a value</option>
                                                 @foreach ($users as $key=> $value)
                                                     <option  @if ($data->assign_to == $value->id) selected @endif  value="{{ $value->id }}">{{ $value->name }}</option>
@@ -1312,7 +1312,7 @@
                                             <label for="search">
                                                 Extension Approved By CQA <span class="text-danger"></span>
                                             </label>
-                                            <select id="select-state" placeholder="Select..." name="assign_to" {{ $data->stage == 0 || $data->stage == 10 ? "disabled" : "" }}>
+                                            <select id="select-state" placeholder="Select..." name="assign_to" >
                                                 <option value="">Select a value</option>
                                                 @foreach ($users as $key=> $value)
                                                     <option  @if ($data->assign_to == $value->id) selected @endif  value="{{ $value->id }}">{{ $value->name }}</option>
@@ -1348,7 +1348,7 @@
                                 </div>
                                 <div class="add-btn">
                                     <div>Add</div>
-                                    <input {{ $data->stage == 0 || $data->stage == 10 ? "disabled" : "" }} type="file" id="extension_attachments_e" name="extension_attachments_e[]"
+                                    <input  type="file" id="extension_attachments_e" name="extension_attachments_e[]"
                                         oninput="addMultipleFiles(this, 'extension_attachments_e')" multiple>
                                 </div>
                             </div>
