@@ -4785,7 +4785,7 @@
                                     </div>
                                 </div>
                             @endif
-                            <!-- @if ($data->stage == 3 || $data->stage == 4)
+                            {{-- <!-- @if ($data->stage == 3 || $data->stage == 4)
                                 <div class="sub-head">
                                     Other's 1 ( Additional Person Review From Departments If Required)
                                 </div>
@@ -4824,6 +4824,7 @@
                                 @php
                                     $userRoles = DB::table('user_roles')
                                         ->where(['q_m_s_divisions_id' => $data->division_id])
+                                        ->select('user_id')->distinct()
                                         ->get();
                                     $userRoleIds = $userRoles->pluck('user_id')->toArray();
                                     $users = DB::table('users')->whereIn('id', $userRoleIds)->get(); // Fetch user data based on user IDs
@@ -5018,6 +5019,7 @@
                                 @php
                                     $userRoles = DB::table('user_roles')
                                         ->where(['q_m_s_divisions_id' => $data->division_id])
+                                        ->select('user_id')->distinct()
                                         ->get();
                                     $userRoleIds = $userRoles->pluck('user_id')->toArray();
                                     $users = DB::table('users')->whereIn('id', $userRoleIds)->get(); // Fetch user data based on user IDs
@@ -5211,6 +5213,7 @@
                                 @php
                                     $userRoles = DB::table('user_roles')
                                         ->where(['q_m_s_divisions_id' => $data->division_id])
+                                        ->select('user_id')->distinct()
                                         ->get();
                                     $userRoleIds = $userRoles->pluck('user_id')->toArray();
                                     $users = DB::table('users')->whereIn('id', $userRoleIds)->get(); // Fetch user data based on user IDs
@@ -5402,6 +5405,7 @@
                                 @php
                                     $userRoles = DB::table('user_roles')
                                         ->where(['q_m_s_divisions_id' => $data->division_id])
+                                        ->select('user_id')->distinct()
                                         ->get();
                                     $userRoleIds = $userRoles->pluck('user_id')->toArray();
                                     $users = DB::table('users')->whereIn('id', $userRoleIds)->get(); // Fetch user data based on user IDs
@@ -5595,6 +5599,7 @@
                                 @php
                                     $userRoles = DB::table('user_roles')
                                         ->where(['q_m_s_divisions_id' => $data->division_id])
+                                        ->select('user_id')->distinct()
                                         ->get();
                                     $userRoleIds = $userRoles->pluck('user_id')->toArray();
                                     $users = DB::table('users')->whereIn('id', $userRoleIds)->get(); // Fetch user data based on user IDs
@@ -5774,6 +5779,7 @@
                                 @php
                                     $userRoles = DB::table('user_roles')
                                         ->where(['q_m_s_divisions_id' => $data->division_id])
+                                        ->select('user_id')->distinct()
                                         ->get();
                                     $userRoleIds = $userRoles->pluck('user_id')->toArray();
                                     $users = DB::table('users')->whereIn('id', $userRoleIds)->get(); // Fetch user data based on user IDs
@@ -5921,6 +5927,7 @@
                                 @php
                                     $userRoles = DB::table('user_roles')
                                         ->where(['q_m_s_divisions_id' => $data->division_id])
+                                        ->select('user_id')->distinct()
                                         ->get();
                                     $userRoleIds = $userRoles->pluck('user_id')->toArray();
                                     $users = DB::table('users')->whereIn('id', $userRoleIds)->get(); // Fetch user data based on user IDs
@@ -6068,6 +6075,7 @@
                                 @php
                                     $userRoles = DB::table('user_roles')
                                         ->where(['q_m_s_divisions_id' => $data->division_id])
+                                        ->select('user_id')->distinct()
                                         ->get();
                                     $userRoleIds = $userRoles->pluck('user_id')->toArray();
                                     $users = DB::table('users')->whereIn('id', $userRoleIds)->get(); // Fetch user data based on user IDs
@@ -6212,6 +6220,7 @@
                                 @php
                                     $userRoles = DB::table('user_roles')
                                         ->where(['q_m_s_divisions_id' => $data->division_id])
+                                        ->select('user_id')->distinct()
                                         ->get();
                                     $userRoleIds = $userRoles->pluck('user_id')->toArray();
                                     $users = DB::table('users')->whereIn('id', $userRoleIds)->get(); // Fetch user data based on user IDs
@@ -6358,6 +6367,7 @@
                                 @php
                                     $userRoles = DB::table('user_roles')
                                         ->where(['q_m_s_divisions_id' => $data->division_id])
+                                        ->select('user_id')->distinct()
                                         ->get();
                                     $userRoleIds = $userRoles->pluck('user_id')->toArray();
                                     $users = DB::table('users')->whereIn('id', $userRoleIds)->get(); // Fetch user data based on user IDs
@@ -6477,7 +6487,7 @@
                                             value="{{ $data1->Other5_on }}">
                                     </div>
                                 </div>
-                            @endif -->
+                            @endif --> --}}
                         </div>
                         <div class="button-block">
                             <button style=" justify-content: center; width: 4rem; margin-left: 1px;;" type="submit"{{ $data->stage == 0 || $data->stage == 7 || $data->stage == 9 ? 'disabled' : '' }}
