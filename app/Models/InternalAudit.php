@@ -14,4 +14,9 @@ class InternalAudit extends Model
         return $this->hasOne(User::class, 'id', 'assign_to');
     }
 
+    public function internal_audit_checklist_grid()
+    {
+        return $this->hasMany(InternalAuditChecklistGrid::class);
+    }
+
 }

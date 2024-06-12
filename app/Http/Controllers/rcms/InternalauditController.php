@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\RecordNumber;
 use Illuminate\Http\Request;
 use App\Models\InternalAudit;
-use App\Models\{InternalAuditTrial,IA_checklist_tablet_compression,IA_checklist_tablet_coating,Checklist_Capsule, IA_checklist__formulation_research, IA_checklist_analytical_research, IA_checklist_dispensing, IA_checklist_engineering, IA_checklist_hr, IA_checklist_manufacturing_filling, IA_checklist_production_injection, IA_checklist_stores, IA_dispencing_manufacturing, IA_ointment_paking, IA_quality_control};
+use App\Models\{InternalAuditTrial,IA_checklist_tablet_compression,IA_checklist_tablet_coating,Checklist_Capsule, IA_checklist__formulation_research, IA_checklist_analytical_research, IA_checklist_dispensing, IA_checklist_engineering, IA_checklist_hr, IA_checklist_manufacturing_filling, IA_checklist_production_injection, IA_checklist_stores, IA_dispencing_manufacturing, IA_ointment_paking, IA_quality_control, InternalAuditChecklistGrid};
 use App\Models\{IA_checklist_capsule_paking};
 use App\Models\RoleGroup;
 use App\Models\InternalAuditGrid;
@@ -232,7 +232,17 @@ class InternalauditController extends Controller
 //$internalAudit->save();
 
 
+        $auditAssessmentGrid = InternalAuditChecklistGrid::where(['ia_id' => $internalAudit->id, 'identifier' => 'auditAssessmentChecklist'])->firstOrNew();
+        $auditAssessmentGrid->ia_id = $internalAudit->id;
+        $auditAssessmentGrid->identifier = 'auditAssessmentChecklist';
+        $auditAssessmentGrid->data = $request->auditAssessmentChecklist;
+        $auditAssessmentGrid->save();
 
+        $auditPersonnelGrid = InternalAuditChecklistGrid::where(['ia_id' => $internalAudit->id, 'identifier' => 'auditPersonnelChecklist'])->firstOrNew();
+        $auditPersonnelGrid->ia_id = $internalAudit->id;
+        $auditPersonnelGrid->identifier = 'auditPersonnelChecklist';
+        $auditPersonnelGrid->data = $request->auditPersonnelChecklist;
+        $auditPersonnelGrid->save();
 
         $internalAudit->status = 'Opened';
         $internalAudit->stage = 1;
@@ -1523,6 +1533,20 @@ $Checklist_Capsule->save();
 
         $internalAudit->update();
 
+        $ia_id = $internalAudit->id;
+
+        $auditAssessmentGrid = InternalAuditChecklistGrid::where(['ia_id' => $ia_id, 'identifier' => 'auditAssessmentChecklist'])->firstOrNew();
+        $auditAssessmentGrid->ia_id = $ia_id;
+        $auditAssessmentGrid->identifier = 'auditAssessmentChecklist';
+        $auditAssessmentGrid->data = $request->auditAssessmentChecklist;
+        $auditAssessmentGrid->save();
+
+        $auditPersonnelGrid = InternalAuditChecklistGrid::where(['ia_id' => $internalAudit->id, 'identifier' => 'auditPersonnelChecklist'])->firstOrNew();
+        $auditPersonnelGrid->ia_id = $internalAudit->id;
+        $auditPersonnelGrid->identifier = 'auditPersonnelChecklist';
+        $auditPersonnelGrid->data = $request->auditPersonnelChecklist;
+        $auditPersonnelGrid->save();
+
         $data3 = InternalAuditGrid::where('audit_id',$internalAudit->id)->where('type','internal_audit')->first();
         if (!empty($request->audit)) {
             $data3->area_of_audit = serialize($request->audit);
@@ -2114,7 +2138,10 @@ $Checklist_Capsule->save();
      //   dd($grid_data);
         $grid_data1 = InternalAuditGrid::where('audit_id', $id)->where('type', "Observation_field")->first();
         // return dd($checklist1);
-        return view('frontend.internalAudit.view', compact('data','checklist1','checklist2','checklist3', 'checklist4','checklist6','checklist7','checklist9','checklist10','checklist11','checklist12','checklist13','checklist14','checklist15','checklist16','checklist17','old_record','grid_data','grid_data1'));
+
+        $auditAssessmentChecklist = InternalAuditChecklistGrid::where(['ia_id' => $id, 'identifier' => 'auditAssessmentChecklist'])->first();
+        // dd($auditAssessmentChecklist);
+        return view('frontend.internalAudit.view', compact('data','checklist1','checklist2','checklist3', 'checklist4','checklist6','checklist7','checklist9','checklist10','checklist11','checklist12','checklist13','checklist14','checklist15','checklist16','checklist17','old_record','grid_data','grid_data1', 'auditAssessmentChecklist'));
     }
 
     public function InternalAuditStateChange(Request $request, $id)
