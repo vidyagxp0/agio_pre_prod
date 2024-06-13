@@ -14,7 +14,17 @@ return new class extends Migration
     public function up()
     {
         Schema::table('extension_news', function (Blueprint $table) {
-            $table->string('type')->nullable();
+            $table->string('more_info_review_by')->nullable();
+            $table->string('more_info_review_on')->nullable();
+            $table->string('more_info_review_comment')->nullable();
+
+            $table->string('more_info_inapproved_by')->nullable();
+            $table->string('more_info_inapproved_on')->nullable();
+            $table->string('more_info_inapproved_comment')->nullable();
+
+            $table->string('reject_by')->nullable();
+            $table->string('reject_on')->nullable();
+            $table->string('reject_comment')->nullable();
         });
     }
 

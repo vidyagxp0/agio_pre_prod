@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ErrataController;
+use App\Http\Controllers\ExtensionNewController;
 use App\Http\Controllers\rcms\ActionItemController;
 use App\Http\Controllers\rcms\AuditeeController;
 use App\Http\Controllers\rcms\CCController;
@@ -276,7 +277,9 @@ Route::group(['prefix' => 'rcms'], function () {
 
             /********************* Fallure Investigation Routes Ends *******************/
 
-
+// =====================extesnion new report and audit trail ===============
+Route::get('singleReportNew/{id}', [ExtensionNewController::class, 'singleReport'])->name('singleReportNew');
+Route::get('audit_trailNew/{id}', [ExtensionNewController::class, 'extensionNewAuditTrail']);
             //----------------------------------- OOT ----------------------------------//
 
             Route::get('oot/', [OOTController::class, 'index']);
