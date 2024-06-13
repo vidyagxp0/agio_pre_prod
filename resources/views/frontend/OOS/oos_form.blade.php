@@ -331,7 +331,7 @@ $users = DB::table('users')
                     </div> -->
         <div class="division-bar pt-3">
             <strong>Site Division/Project</strong> :
-            QMS-North America / OOS
+            {{ Helpers::getDivisionName(session()->get('division')) }}/ OOS Chemical
         </div>
         <!-- <div class="button-bar">
             <button type="button">Save</button>
@@ -401,14 +401,14 @@ $users = DB::table('users')
                         </div>
                         <div class="col-lg-6">
                             <div class="group-input">
-                                <label for="Initiator"> Record Number </label>
+                                <label for="Record Number"> Record Number </label>
                                 <input disabled type="text" name="record_number"
                             value="{{ Helpers::getDivisionName(session()->get('division')) }}/OOS Chemical/{{ date('Y') }}/{{ $record_number }}">
                         </div>
                         </div>
                         <div class="col-lg-6">
                             <div class="group-input">
-                                <label disabled for="Short Description">Division Code<span class="text-danger"></span></label>
+                                <label disabled for="Division Code">Division Code<span class="text-danger"></span></label>
                                 <input disabled type="text" name="division_code"
                                         value="{{ Helpers::getDivisionName(session()->get('division')) }}">
                                     <input type="hidden" name="division_id" value="{{ session()->get('division') }}">
@@ -417,7 +417,7 @@ $users = DB::table('users')
 
                         <div class="col-lg-6">
                             <div class="group-input">
-                                <label for="Short Description">Initiator <span class="text-danger"></span></label>
+                                <label for="Initiator">Initiator <span class="text-danger"></span></label>
                                 <input type="hidden" name="initiator_id" value="{{ Auth::user()->id }}">
                                 <input disabled type="text" name="initiator"
                                         value="{{ Auth::user()->name }}">

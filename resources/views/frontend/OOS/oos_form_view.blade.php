@@ -359,7 +359,7 @@
     <div class="form-field-head">
         <div class="division-bar pt-3">
             <strong>Site Division/Project</strong> :
-            QMS-North America / OOS
+            {{ Helpers::getDivisionName(session()->get('division')) }} / OOS Chemical
         </div>
     </div>
 
