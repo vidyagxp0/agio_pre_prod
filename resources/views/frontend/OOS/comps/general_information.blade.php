@@ -83,14 +83,14 @@
             </div>
             
             <div class="col-lg-6">
-                            <div class="group-input">
-                                <label for="Short Description">Short Description
-                                    <span class="text-danger">*</span></label>
-                                    <span id="rchars">255</span>characters remaining
-                                <textarea id="docname"  name="description_gi" maxlength="255" required>{{ $data->description_gi }}</textarea>
-                            </div>
-                        </div>
-                        <p id="docnameError" style="color:red">**Short Description is required</p>
+                <div class="group-input">
+                    <label for="Short Description">Short Description
+                        <span class="text-danger">*</span></label>
+                        <span id="rchars">255</span>characters remaining
+                    <textarea id="docname"  name="description_gi" maxlength="255" required>{{ $data->description_gi }}</textarea>
+                </div>
+            </div>
+            <p id="docnameError" style="color:red">**Short Description is required</p>
                         
             <div class="col-lg-6">
                 <div class="group-input">
@@ -116,14 +116,12 @@
             <div class="col-lg-6">
                 <div class="group-input">
                     <label for="Initiator Group Code">If Others</label>
-                    <textarea type="if_others_gi"
-                        name="if_others_gi">{{ $data->if_others_gi }}</textarea>
+                    <textarea type="if_others_gi" name="if_others_gi">{{ $data->if_others_gi }}</textarea>
                 </div>
             </div>
             <div class="col-lg-6">
                 <div class="group-input">
                     <label for="Initiator Group Code">Is Repeat?</label>
-                    
                         <select name="is_repeat_gi">
                         <option value="" {{ $data->is_repeat_gi == 'o' ? 'selected' : '' }}>Enter Your
                             Selection Here</option>
@@ -135,8 +133,7 @@
             <div class="col-lg-6 mt-4">
                 <div class="group-input">
                     <label for="Initiator Group">Repeat Nature</label>
-                    <textarea type="text"
-                        name="repeat_nature_gi">{{ $data->repeat_nature_gi }}</textarea>
+                    <textarea type="text" name="repeat_nature_gi">{{ $data->repeat_nature_gi }}</textarea>
                 </div>
             </div>
             <div class="col-lg-6">
@@ -153,18 +150,18 @@
                 </div>
             </div>
             <div class="col-lg-6 new-date-data-field">
-                            <div class="group-input input-date">
-                                <label for="Deviation Occurred On"> Deviation Occurred On </label>
-                                <div><small class="text-primary">If revising Due Date, kindly mention revision
-                                        reason in "Due Date Extension Justification" data field.</small></div>
-                                <div class="calenderauditee">
-                                    <input type="text" id="deviation_occured_on_gi" readonly value="{{ Helpers::getdateFormat($data['deviation_occured_on_gi'] ?? '') }}" placeholder="DD-MMM-YYYY" />
-                                    <input type="date" name="deviation_occured_on_gi"
-                                        min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input"
-                                        oninput="handleDateInput(this, 'deviation_occured_on_gi')" />
-                                </div>
-                            </div>
-                        </div>
+                <div class="group-input input-date">
+                    <label for="Deviation Occurred On"> Deviation Occurred On </label>
+                    <div><small class="text-primary">If revising Due Date, kindly mention revision
+                            reason in "Due Date Extension Justification" data field.</small></div>
+                    <div class="calenderauditee">
+                        <input type="text" id="deviation_occured_on_gi" readonly value="{{ Helpers::getdateFormat($data['deviation_occured_on_gi'] ?? '') }}" placeholder="DD-MMM-YYYY" />
+                        <input type="date" name="deviation_occured_on_gi"
+                            min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input"
+                            oninput="handleDateInput(this, 'deviation_occured_on_gi')" />
+                    </div>
+                </div>
+            </div>
             <div class="col-lg-6">
                 <div class="group-input">
                     <label for="Initiator Group">Initial Attachment</label>
@@ -176,7 +173,6 @@
                         <div class="file-attachment-list" id="initial_attachment_gi">
                             @if ($data->initial_attachment_gi)
                             @foreach ($data->initial_attachment_gi as $file)
-                            
                             <h6 type="button" class="file-container text-dark"
                                 style="background-color: rgb(243, 242, 240);">
                                 <b>{{ $file }}</b>
@@ -189,8 +185,6 @@
                             </h6>
                             @endforeach
                             @endif
-
-
                         </div>
 
                         <div class="add-btn">
@@ -203,7 +197,6 @@
                 </div>
             </div>
             <div class="col-lg-6">
-
                 <div class="group-input">
                     <label for="Source Document Type">Source Document Type</label>
                     <select name="source_document_type_gi">
@@ -248,8 +241,7 @@
             </div>
             <div class="col-lg-6">
                 <div class="group-input">
-                    <label for="Short Description ">Product / Material Name</label>
-
+                    <label for="Short Description">Product / Material Name</label>
                     <input type="text" value="{{$data->product_material_name_gi}}"
                         name="product_material_name_gi">
                 </div>

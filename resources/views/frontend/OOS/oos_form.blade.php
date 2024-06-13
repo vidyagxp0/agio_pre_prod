@@ -488,7 +488,6 @@ $users = DB::table('users')
                             <div class="group-input">
                                 <label for="If Others">If Others
                                     <span class="text-danger">*</span></label>
-                                    <span id="rchars">255</span>characters remaining
                                 <textarea id="docname"  name="if_others_gi" ></textarea>
                             </div>
                         </div>
@@ -507,9 +506,8 @@ $users = DB::table('users')
                         <div class="col-lg-6 mt-4">
                             <div class="group-input">
                                 <label for="Initiator Group"></label>
-                                <label for="Repeat Nature">Repeat Nature<span class="text-danger">*</span></label>
-                                 <span id="rchars">255</span>characters remaining
-                                <textarea id="docname"  name="repeat_nature_gi" ></textarea>
+                                <label for="Repeat Nature">Repeat Nature</label>
+                                 <textarea  name="repeat_nature_gi" ></textarea>
                             </div>
                         </div>
                         <div class="col-lg-6">
