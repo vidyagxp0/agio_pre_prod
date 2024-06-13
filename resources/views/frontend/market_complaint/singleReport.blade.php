@@ -186,6 +186,22 @@
         </table>
     </header>
 
+    <footer>
+        <table>
+            <tr>
+                <td class="w-30">
+                    <strong>Printed On :</strong> {{ date('d-M-Y') }}
+                </td>
+                <td class="w-40">
+                    <strong>Printed By :</strong> {{ Auth::user()->name }}
+                </td>
+                {{-- <td class="w-30">
+                    <strong>Page :</strong> 1 of 1
+                </td> --}}
+            </tr>
+        </table>
+    </footer>
+
     <div class="inner-block">
         <div class="content-table">
             <div class="block">
@@ -202,9 +218,33 @@
                     </tr>
                     <tr>
                         <th class="w-20">Initiator Group</th>
-                        <td class="w-30">{{ $data->initiator_group ?? 'Not Applicable' }}</td>
+                        {{-- <td class="w-30">{{ $data->initiator_group ?? 'Not Applicable' }}</td> --}}
+                        @php
+                            $departments = [
+                                'CQA' => 'Corporate Quality Assurance',
+                                'QAB' => 'Quality Assurance Biopharma',
+                                'CQC' => 'Central Quality Control',
+                                'PSG' => 'Plasma Sourcing Group',
+                                'CS' => 'Central Stores',
+                                'ITG' => 'Information Technology Group',
+                                'MM' => 'Molecular Medicine',
+                                'CL' => 'Central Laboratory',
+                                'TT' => 'Tech Team',
+                                'QA' => 'Quality Assurance',
+                                'QM' => 'Quality Management',
+                                'IA' => 'IT Administration',
+                                'ACC' => 'Accounting',
+                                'LOG' => 'Logistics',
+                                'SM' => 'Senior Management',
+                                'BA' => 'Business Administration',
+                            ];
+                        @endphp
+                        <td class="w-80">{{ $departments[$data->initiator_group] ?? 'Unknown Department' }}</td>
+ 
                         <th class="w-20">Initiator Group Code</th>
-                        <td class="w-30">{{ $data->initiator_group_code ?? 'Not Applicable' }}</td>
+                        {{-- <td class="w-30">{{ $data->initiator_group ?? 'Not Applicable' }}</td> --}}
+                        <td class="w-30">{{ $data->initiator_group_code_gi ?? 'Not Applicable' }}</td>
+
                     </tr>
                     <tr>
                         <th class="w-20">If Other</th>
@@ -628,21 +668,7 @@
         </div>
     </div>
 
-    <footer>
-        <table>
-            <tr>
-                <td class="w-30">
-                    <strong>Printed On :</strong> {{ date('d-M-Y') }}
-                </td>
-                <td class="w-40">
-                    <strong>Printed By :</strong> {{ Auth::user()->name }}
-                </td>
-                <td class="w-30">
-                    <strong>Page :</strong> 1 of 1
-                </td>
-            </tr>
-        </table>
-    </footer>
+
 
 </body>
 
