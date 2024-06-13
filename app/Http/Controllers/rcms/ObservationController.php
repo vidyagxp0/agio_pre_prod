@@ -66,18 +66,18 @@ class ObservationController extends Controller
         //     $data->attach_files1 = $image_name;
         // }
 
-        if (!empty($request->attach_files1)) {
-            $files = [];
-            if ($request->hasfile('attach_files1')) {
-                foreach ($request->file('attach_files1') as $file) {
-                    $name = $request->name . 'attach_files1' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
-                    $file->move('upload/', $name);
-                    $files[] = $name;
-                }
-            }
 
-            $data->attach_files1 = json_encode($files);
+        $files = [];
+        if ($request->hasFile('attach_files1')) {
+            foreach ($request->file('attach_files1') as $file) {
+                $name = $request->name . 'attach_files1' . uniqid() . '.' . $file->getClientOriginalExtension();
+                $file->move(public_path('upload/'), $name);
+                $files[] = $name;
+            }
         }
+        $data->attach_files1 = json_encode($files);
+
+        $data->HOD_Remarks = $request->HOD_Remarks;
         $data->recomendation_capa_date_due = $request->recomendation_capa_date_due;
         $data->non_compliance = $request->non_compliance;
         $data->recommend_action = $request->recommend_action;
@@ -777,20 +777,14 @@ class ObservationController extends Controller
         // }
 
         $files = [];
-            if ($request->hasFile('attach_files1')) {
-                foreach ($request->file('attach_files1') as $file) {
-                    // Generate a unique name for the file
-                    $name = $request->name . 'attach_files1' . uniqid() . '.' . $file->getClientOriginalExtension();
-
-                    // Move the file to the upload directory
-                    $file->move(public_path('upload/'), $name);
-
-                    // Add the file name to the array
-                    $files[] = $name;
-                }
+        if ($request->hasFile('attach_files1')) {
+            foreach ($request->file('attach_files1') as $file) {
+                $name = $request->name . 'attach_files1' . uniqid() . '.' . $file->getClientOriginalExtension();
+                $file->move(public_path('upload/'), $name);
+                $files[] = $name;
             }
-            // Encode the file names array to JSON and assign it to the model
-            $data->attach_files1 = json_encode($files);
+        }
+        $data->attach_files1 = json_encode($files);
 
         // $files = [];
         // if ($request->attach_files1) {
@@ -895,6 +889,7 @@ class ObservationController extends Controller
         // $data->status = 'Opened';
         // $data->stage = 1;
         $data->update();
+
         $data1 = ObservationGrid::find($id);
         $data1->observation_id = $data->id;
         if (!empty($request->action)) {
@@ -1540,7 +1535,7 @@ class ObservationController extends Controller
             $history->save();
         }
 
-        toastr()->success("Record is update successfully");
+        toastr()->success("Record is updated successfully");
         return back();
     }
 
