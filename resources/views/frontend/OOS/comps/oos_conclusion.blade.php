@@ -36,6 +36,7 @@
                                 <th style="width: 16%">Results</th>
                                 <th style="width: 16%">Analyst Name.</th>
                                 <th style="width: 16%">Remarks</th>
+                                <th style="width: 4%"> Action </th>
                             </tr>
                         </thead>
                         <tbody>
@@ -48,6 +49,7 @@
                                         <td><input type="text" name="oos_conclusion[{{$loop->index }}][summary_results]" value="{{ Helpers::getArrayKey($oos_conclusion, 'summary_results') }}"></td>
                                         <td><input type="text" name="oos_conclusion[{{$loop->index }}][summary_results_analyst_name]" value="{{ Helpers::getArrayKey($oos_conclusion, 'summary_results_analyst_name') }}"></td>
                                         <td><input type="text" name="oos_conclusion[{{$loop->index }}][summary_results_remarks]" value="{{ Helpers::getArrayKey($oos_conclusion, 'summary_results_remarks') }}"></td> 
+                                        <td><button type="text" class="removeRowBtn">Remove</button></td>
                                     </tr>  
                                 @endforeach
                             @endif
@@ -69,6 +71,7 @@
                 <div class="group-input">
                     <label for="Audit Attachments">Results to be Reported</label>
                     <select name="results_to_be_reported_oosc">
+                       <option value="">Enter Your Selection Here</option>
                         <option value="Initial" {{ $data->results_to_be_reported_oosc == 'Initial' ? 'selected' : ''
                             }}>Initial</option>
                         <option value="Retested_result" {{ $data->results_to_be_reported_oosc == 'Retested_result' ?
@@ -99,6 +102,7 @@
                 <div class="group-input">
                     <label for="Reference Recores">OOS Stands </label>
                     <select name="oos_stands_oosc">
+                       <option value="">Enter Your Selection Here</option>
                         <option value="Valid" {{ $data->oos_stands_oosc == 'Valid' ? 'selected' : '' }}>Valid
                         </option>
                         <option value="Invalid" {{ $data->oos_stands_oosc == 'Invalid' ? 'selected' : '' }}>Invalid
@@ -111,6 +115,7 @@
                 <div class="group-input">
                     <label for="Audit Attachments">CAPA Req.</label>
                     <select name="capa_req_oosc">
+                        <option value="">Enter Your Selection Here</option>
                         <option value="Yes" {{ $data->capa_req_oosc == 'Yes' ? 'selected' : '' }}>Yes</option>
                         <option value="No" {{ $data->capa_req_oosc == 'No' ? 'selected' : '' }}>No</option>
                     </select>
@@ -141,6 +146,7 @@
                 <div class="group-input">
                     <label for="Audit Attachments">Action Item Req.</label>
                     <select name="action_plan_req_oosc">
+                        <option value="">Enter Your Selection Here</option>
                         <option value="Yes" {{ $data->action_plan_req_oosc == 'Yes' ? 'selected' : '' }}>Yes
                         </option>
                         <option value="No" {{ $data->action_plan_req_oosc == 'No' ? 'selected' : '' }}>No</option>

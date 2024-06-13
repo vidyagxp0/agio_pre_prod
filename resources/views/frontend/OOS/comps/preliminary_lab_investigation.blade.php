@@ -38,6 +38,7 @@
                                 <th style="width: 14% pt-3">Closure Date of CAPA</th>
                                 <th style="width: 12%">CAPA Requirement</th>
                                 <th style="width: 10%">Reference CAPA Number</th>
+                                <th style="widht: 4%">Action</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -78,6 +79,9 @@
                                                 <option value="No" {{ Helpers::getArrayKey($oos_capa, 'info_oos_capa_requirement') == 'No' ? 'selected' : '' }}>No</option>
                                             </select></td>
                                         <td><input type="text" name="oos_capa[{{ $loop->index }}][info_oos_capa_reference_number]" value="{{ Helpers::getArrayKey($oos_capa, 'info_oos_capa_reference_number') }}"></td> 
+                                        <td><button type="text" class="removeRowBtn">Remove</button></td>
+
+
                                     </tr>
                                @endforeach
                            @endif

@@ -159,6 +159,7 @@
                         '<td><input type="text" name="info_product_material[' + serialNumber + '][info_process_sample_stage]" value=""></td>' +
                         '<td><select name="info_product_material[' + serialNumber + '][info_packing_material_type]"><option value="">--Select--</option><option value="Primary">Primary</option><option value="Secondary">Secondary</option><option value="Tertiary">Tertiary</option><option value="Not Applicable">Not Applicable</option></select></td>' +
                         '<td><select name="info_product_material[' + serialNumber + '][info_stability_for]"><option value="">--Select--</option><option vlaue="Submission">Submission</option><option vlaue="Commercial">Commercial</option><option vlaue="Pack Evaluation">Pack Evaluation</option><option vlaue="Not Applicable">Not Applicable</option></select></td>' +
+                        '<td><button type="text" class="removeRowBtn">Remove</button></td>' +
                     '</tr>';
                     // for (var i = 0; i < users.length; i++) {
                     //     html += '<option value="' + users[i].id + '">' + users[i].name + '</option>';
@@ -189,6 +190,7 @@
                         '<td><input type="text" name="details_stability[' + serialNumber + '][stability_study_pack_details]"></td>'+
                         '<td><input type="text" name="details_stability[' + serialNumber + '][stability_study_specification_no]"></td>'+
                         '<td><input type="text" name="details_stability[' + serialNumber + '][stability_study_sample_description]"></td>'+
+                        '<td><button type="text" class="removeRowBtn">Remove</button></td>' +
                         '</tr>';
                     return html;
                 }
@@ -227,7 +229,8 @@
                             '</div>' +
                             '</td>' +
                             '<td><input type="text" name="oos_detail['+ serialNumber +'][oos_submit_by]"></td>' +
-                            
+                            '<td><button type="text" class="removeRowBtn">Remove</button></td>' +
+
                         '</tr>';
                     // for (var i = 0; i < users.length; i++) {
                     //     html += '<option value="' + users[i].id + '">' + users[i].name + '</option>';
@@ -278,8 +281,10 @@
                             '</div>' +
                             '</div>' +
                         '</td>' +
-                        '<td><select name="oos_capa['+ serialNumber +'][info_oos_capa_requirement]"><option value="yes">Yes</option><option value="No">No</option></select></td>' +
+                        '<td><select name="oos_capa['+ serialNumber +'][info_oos_capa_requirement]"><option vlaue="">--select--</option><option value="yes">Yes</option><option value="No">No</option></select></td>' +
                         '<td><input type="text" name="oos_capa[' + serialNumber + '][info_oos_capa_reference_number]" value=""></td>' +
+                        '<td><button type="text" class="removeRowBtn">Remove</button></td>' +
+
                         '</tr>';
                     return html;
                 }
@@ -307,6 +312,8 @@
                         '<td><input type="text" name="oos_conclusion[' + serialNumber + '][summary_results]"></td>' +
                         '<td><input type="text" name="oos_conclusion[' + serialNumber + '][summary_results_analyst_name]"></td>' +
                         '<td><input type="text" name="oos_conclusion[' + serialNumber + '][summary_results_remarks]"></td>' +
+                        '<td><button type="text" class="removeRowBtn">Remove</button></td>' +
+
                     '</tr>';
 
                     return html;
@@ -335,7 +342,8 @@
                         '<td><input type="text" name="oos_conclusion_review[' + serialNumber + '][conclusion_review_batch_no]"></td>' +
                         '<td><input type="text" name="oos_conclusion_review[' + serialNumber + '][conclusion_review_any_other_information]"></td>' +
                         '<td><input type="text" name="oos_conclusion_review[' + serialNumber + '][conclusion_review_action_affecte_batch]"></td>' +
-                    '</tr>';
+                        '<td><button type="text" class="removeRowBtn">Remove</button></td>' +
+                        '</tr>';
                     return html;
                 }
 
@@ -355,9 +363,7 @@
         </div>
     </div>
 
-
-
-    {{-- ======================================
+{{-- ======================================
                     DATA FIELDS
     ======================================= --}}
     <div id="change-control-fields">
@@ -553,5 +559,10 @@
             document.getElementById(cityName).style.display = "block";
             evt.currentTarget.className += " active";
         }
+    </script>
+    <script>
+        $(document).on('click', '.removeRowBtn', function() {
+            $(this).closest('tr').remove();
+        })
     </script>
 @endsection

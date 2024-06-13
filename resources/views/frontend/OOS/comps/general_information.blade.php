@@ -120,7 +120,7 @@
                     <label for="Initiator Group Code">Is Repeat?</label>
                     
                         <select name="is_repeat_gi">
-                        <option value="o" {{ $data->is_repeat_gi == 'o' ? 'selected' : '' }}>Enter Your
+                        <option value="" {{ $data->is_repeat_gi == 'o' ? 'selected' : '' }}>Enter Your
                             Selection Here</option>
                         <option value="yes" {{ $data->is_repeat_gi == 'yes' ? 'selected' : '' }}>yes</option>
                         <option value="No" {{ $data->is_repeat_gi == '2' ? 'selected' : '' }}>No</option>
@@ -215,7 +215,7 @@
                 <div class="group-input">
                     <label for="Reference Recores">Reference System Document</label>
                     <select multiple id="reference_record" name="reference_system_document_gi[]" id="">
-                        <option value="o">Enter Your Selection Here</option>
+                        <option value="">Enter Your Selection Here</option>
                         <option value="1" {{ (!empty($data->reference_system_document_gi) && str_contains($data->reference_system_document_gi, 1)) ? 'selected' : '' }}>1</option>
                         <option value="2" {{ (!empty($data->reference_system_document_gi) && str_contains($data->reference_system_document_gi, 2)) ? 'selected' : '' }}>2</option>
                     </select>
@@ -295,6 +295,7 @@
                                 <th style="width: 10%"> In- Process Sample Stage.</th>
                                 <th style="width: 10% pt-3">Packing Material Type</th>
                                 <th style="width: 16% pt-2"> Stability for</th>
+                                <th style="width: 16% pt-2"> Action </th>
                             </tr>
                         </thead>
                         <tbody>
@@ -345,9 +346,9 @@
                                             <option value="Commercial" {{ $info_product_material['info_stability_for'] === 'Commercial' ? 'selected' : '' }}>Commercial</option>
                                             <option value="Pack Evaluation" {{ $info_product_material['info_stability_for'] === 'Pack Evaluation' ? 'selected' : '' }}>Pack Evaluation</option>
                                             <option value="Not Applicable" {{ $info_product_material['info_stability_for'] === 'Not Applicable' ? 'selected' : '' }}>Not Applicable</option>
-                                    
                                         </select>
                                     </td>
+                                    <td><button type="text" class="removeRowBtn">Remove</button></td>
                                 </tr>
                             @endforeach
                         @endif
@@ -367,8 +368,7 @@
                     </span>
                 </label>
                 <div class="table-responsive">
-                    <table class="table table-bordered" id="details_stability_details"
-                        style="width: 100%;">
+                    <table class="table table-bordered" id="details_stability_details" style="width: 100%;">
                         <thead>
                             <tr>
                                 <th style="width: 4%">Row#</th>
@@ -379,6 +379,7 @@
                                 <th style="width: 16%">Pack Details (if any)</th>
                                 <th style="width: 16%">Specification No.</th>
                                 <th style="width: 16%">Sample Description</th>
+                                <th style="width: 4%"> Action </th>
                             </tr>
                         </thead>
                         @if($details_stabilities && is_array($details_stabilities->data))
@@ -392,6 +393,7 @@
                                     <td><input type="text" name="details_stability[{{ $loop->index }}][stability_study_pack_details]" value="{{ Helpers::getArrayKey($details_stabilitie, 'stability_study_pack_details') }}"></td>
                                     <td><input type="text" name="details_stability[{{ $loop->index }}][stability_study_specification_no]" value="{{ Helpers::getArrayKey($details_stabilitie, 'stability_study_specification_no') }}"></td>
                                     <td><input type="text" name="details_stability[{{ $loop->index }}][stability_study_sample_description]" value="{{ Helpers::getArrayKey($details_stabilitie, 'stability_study_sample_description') }}"></td> 
+                                    <td><button type="text" class="removeRowBtn">Remove</button></td>
                                 </tr>
                             @endforeach
                         @endif
@@ -423,7 +425,7 @@
                                 <th style="width: 14%">File Attachment</th>
                                 <th style="width: 16%">Submit On</th>
                                 <th style="width: 8%">Submit By</th>
-                                
+                                <th style="width: 5%"> Action</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -449,6 +451,7 @@
                                           </div>
                                        </td>
                                        <td><input type="text" name="oos_detail[{{ $loop->index }}][oos_submit_by]" value="{{ Helpers::getArrayKey($oos_detail, 'oos_submit_by') }}"></td>
+                                       <td><button type="text" class="removeRowBtn">Remove</button></td>
                                     </tr>
                                 @endforeach
                             @endif

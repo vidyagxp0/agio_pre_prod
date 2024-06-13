@@ -128,6 +128,8 @@ $users = DB::table('users')
                         '<td><input type="text" name="info_product_material[' + serialNumber + '][info_process_sample_stage]" value=""></td>' +
                         '<td><select name="info_product_material[' + serialNumber + '][info_packing_material_type]"><option value="">--Select--</option><option value="Primary">Primary</option><option value="Secondary">Secondary</option><option value="Tertiary">Tertiary</option><option value="Not Applicable">Not Applicable</option></select></td>' +
                         '<td><select name="info_product_material[' + serialNumber + '][info_stability_for]"><option value="">--Select--</option><option vlaue="Submission">Submission</option><option vlaue="Commercial">Commercial</option><option vlaue="Pack Evaluation">Pack Evaluation</option><option vlaue="Not Applicable">Not Applicable</option></select></td>' +
+                        '<td><button type="text" class="removeRowBtn">Remove</button></td>' +
+
                     '</tr>';
                     for (var i = 0; i < users.length; i++) {
                         html += '<option value="' + users[i].id + '">' + users[i].name + '</option>';
@@ -155,14 +157,16 @@ $users = DB::table('users')
                 function generateTableRow(serialNumber) {
                     var html =
                         '<tr>' +
-                        '<td><input disabled type="text" name="details_stability[ '+ serialNumber + '][serial]" value="' + serialNumber +
-                        '"></td>' +
-                        '<td><input type="text" name="details_stability[ '+ serialNumber + '][stability_study_arnumber]"></td>'+
-                        '<td><input type="text" name="details_stability[ '+ serialNumber + '][stability_study_condition_temprature_rh]"></td>'+
-                        '<td><input type="text" name="details_stability[ '+ serialNumber + '][stability_study_Interval]"></td>'+
-                        '<td><input type="text" name="details_stability[ '+ serialNumber + '][stability_study_orientation]"></td>'+
-                        '<td><input type="text" name="details_stability[ '+ serialNumber + '][stability_study_specification_no]"></td>'+
-                        '<td><input type="text" name="details_stability[ '+ serialNumber + '][stability_study_sample_description]"></td>'+
+                            '<td><input disabled type="text" name="details_stability[ '+ serialNumber + '][serial]" value="' + serialNumber +
+                            '"></td>' +
+                            '<td><input type="text" name="details_stability[ '+ serialNumber + '][stability_study_arnumber]"></td>'+
+                            '<td><input type="text" name="details_stability[ '+ serialNumber + '][stability_study_condition_temprature_rh]"></td>'+
+                            '<td><input type="text" name="details_stability[ '+ serialNumber + '][stability_study_Interval]"></td>'+
+                            '<td><input type="text" name="details_stability[ '+ serialNumber + '][stability_study_orientation]"></td>'+
+                            '<td><input type="text" name="details_stability[ '+ serialNumber + '][stability_study_pack_details]"></td>'+
+                            '<td><input type="text" name="details_stability[ '+ serialNumber + '][stability_study_specification_no]"></td>'+
+                            '<td><input type="text" name="details_stability[ '+ serialNumber + '][stability_study_sample_description]"></td>'+
+                            '<td><button type="text" class="removeRowBtn">Remove</button></td>' +
                         '</tr>';
                     // for (var i = 0; i < users.length; i++) {
                     //     html += '<option value="' + users[i].id + '">' + users[i].name + '</option>';
@@ -194,6 +198,7 @@ $users = DB::table('users')
                             '<td><input type="text" name="oos_detail['+ serialNumber +'][oos_specification_limit]"></td>' +
                             '<td><input type="text" name="oos_detail['+ serialNumber +'][oos_details_obvious_error]"></td>' +
                             '<td><input type="file" name="oos_detail['+ serialNumber +'][oos_file_attachment]"></td>' +
+                            '<td><input type="text" name="oos_detail['+ serialNumber +'][oos_submit_by]"></td>' +
                             '<td>' +
                             '<div class="col-lg-6 new-date-data-field">' +
                             '<div class="group-input input-date">' +
@@ -204,8 +209,8 @@ $users = DB::table('users')
                             '</div>' +
                             '</div>' +
                             '</td>' +
-                            '<td><input type="text" name="oos_detail['+ serialNumber +'][oos_submit_by]"></td>' +
-                        '</tr>';
+                            '<td><button type="text" class="removeRowBtn">Remove</button></td>'
+                         '</tr>';
                     // for (var i = 0; i < users.length; i++) {
                     //     html += '<option value="' + users[i].id + '">' + users[i].name + '</option>';
                     // }
@@ -240,6 +245,7 @@ $users = DB::table('users')
                         '<td><input type="date" name="oos_capa['+ serialNumber +'][info_oos_closure_date]" value=""></td>' +
                         '<td><select name="oos_capa['+ serialNumber +'][info_oos_capa_requirement]"><option value="">Select an Option</option><option value="yes">Yes</option><option value="No">No</option></select></td>' +
                         '<td><input type="text" name="oos_capa['+ serialNumber +'][info_oos_capa_reference_number]" value=""></td>' +
+                        '<td><button type="text" class="removeRowBtn">Remove</button></td>' +
                         '</tr>';
                     // for (var i = 0; i < users.length; i++) {
                     //     html += '<option value="' + users[i].id + '">' + users[i].name + '</option>';
@@ -273,6 +279,7 @@ $users = DB::table('users')
                         '<td><input type="text" name="oos_conclusion[' + serialNumber + '][summary_results]"></td>' +
                         '<td><input type="text" name="oos_conclusion[' + serialNumber + '][summary_results_analyst_name]"></td>' +
                         '<td><input type="text" name="oos_conclusion[' + serialNumber + '][summary_results_remarks]"></td>' +
+                        '<td><button type="text" class="removeRowBtn">Remove</button></td>' +
                         '</tr>';
                     '</tr>';
 
@@ -302,6 +309,7 @@ $users = DB::table('users')
                         '<td><input type="text" name="oos_conclusion_review[' + serialNumber + '][conclusion_review_batch_no]"></td>' +
                         '<td><input type="text" name="oos_conclusion_review[' + serialNumber + '][conclusion_review_any_other_information]"></td>' +
                         '<td><input type="text" name="oos_conclusion_review[' + serialNumber + '][conclusion_review_action_affecte_batch]"></td>' +
+                        '<td><button type="text" class="removeRowBtn">Remove</button></td>'
                         '</tr>';
                     '</tr>';
 
@@ -636,12 +644,10 @@ $users = DB::table('users')
                                             <th style="width: 10%"> In- Process Sample Stage.</th>
                                             <th style="width: 12% pt-3">Packing Material Type</th>
                                             <th style="width: 16% pt-2"> Stability for</th>
+                                            <th style="width: 15%">Action</th>
                                         </tr>
                                     </thead>
-                                       
-                                    
                                     <tbody>
-                                      
                                         <tr>
                                             <td><input disabled type="text" name="info_product_material[0][serial]" value="1"></td>
                                             <td><input type="text" name="info_product_material[0][info_product_code]" value=""></td>
@@ -694,6 +700,7 @@ $users = DB::table('users')
                                                     <option vlaue="Not Applicable">Not Applicable</option>
                                                 </select>
                                             </td>
+                                            <td><button type="text" class="removeRowBtn">Remove</button></td>
                                         </tr>
                                        
                                     </tbody>
@@ -723,6 +730,7 @@ $users = DB::table('users')
                                             <th style="width: 16%">Pack Details (if any)</th>
                                             <th style="width: 16%">Specification No.</th>
                                             <th style="width: 16%">Sample Description</th>
+                                            <th style="width: 15%">Action</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -735,6 +743,8 @@ $users = DB::table('users')
                                             <td><input type="text" name="details_stability[0][stability_study_pack_details]"></td>
                                             <td><input type="text" name="details_stability[0][stability_study_specification_no]"></td>
                                             <td><input type="text" name="details_stability[0][stability_study_sample_description]"></td> 
+                                            <td><button type="text" class="removeRowBtn">Remove</button></td>
+
                                         </tr>
                                     </tbody>
                                 </table>
@@ -765,6 +775,7 @@ $users = DB::table('users')
                                             <th style="width: 16%">File Attachment</th>
                                             <th style="width: 8%">Submit By</th>
                                             <th style="width: 16%">Submit On</th>
+                                            <th style="width: 15%">Action</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -789,6 +800,7 @@ $users = DB::table('users')
                                                 </div>
                                             </div>
                                             </td>
+                                            <td><button type="text" class="removeRowBtn">Remove</button></td>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -1168,6 +1180,7 @@ $users = DB::table('users')
                                             <th style="width: 16% pt-3">Closure Date of CAPA</th>
                                             <th style="width: 16%">CAPA Requirement</th>
                                             <th style="width: 16%">Reference CAPA Number</th>
+                                            <th style="width: 4%">Action</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -1207,6 +1220,7 @@ $users = DB::table('users')
                                                     <option value="No">No</option>
                                                 </select></td>
                                             <td><input type="text" name="oos_capa[0][info_oos_capa_reference_number]" value=""></td> 
+                                            <td><button type="text" class="removeRowBtn">Remove</button></td>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -1637,6 +1651,8 @@ $users = DB::table('users')
                                         <th style="width: 16%">Results</th>
                                         <th style="width: 16%">Analyst Name.</th>
                                         <th style="width: 16%">Remarks</th>
+                                        <th style="width: 16%">Action</th>
+                                        
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -1646,6 +1662,7 @@ $users = DB::table('users')
                                     <td><input type="text" name="oos_conclusion[0][summary_results]"></td>
                                     <td><input type="text" name="oos_conclusion[0][summary_results_analyst_name]"></td>
                                     <td><input type="text" name="oos_conclusion[0][summary_results_remarks]"></td> 
+                                    <td><button type="text" class="removeRowBtn">Remove</button></td>
                                 </tbody>
                             </table>
                         </div>
@@ -2800,5 +2817,10 @@ $users = DB::table('users')
             var textlen = maxLength - $(this).val().length;
             $('#rchars').text(textlen);
         });
+    </script>
+    <script>
+        $(document).on('click', '.removeRowBtn', function() {
+            $(this).closest('tr').remove();
+        })
     </script>
 @endsection

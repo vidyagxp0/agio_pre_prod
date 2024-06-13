@@ -35,6 +35,7 @@
                                 <th style="width: 16%">Batch No.(s) / A.R. No. (s)</th>
                                 <th style="width: 16%">Any Other Information</th>
                                 <th style="width: 16%">Action Taken on Affec.batch</th>
+                                <th style="widht: 16%">Action </th>
                             </tr>
                         </thead>
                         <tbody>
@@ -46,6 +47,7 @@
                                         <td><input type="text" name="oos_conclusion_review[{{ $loop->index }}][conclusion_review_batch_no]" value="{{ Helpers::getArrayKey($oos_conclusion_review, 'conclusion_review_batch_no') }}"></td>
                                         <td><input type="text" name="oos_conclusion_review[{{ $loop->index }}][conclusion_review_any_other_information]" value="{{ Helpers::getArrayKey($oos_conclusion_review, 'conclusion_review_any_other_information') }}"></td>
                                         <td><input type="text" name="oos_conclusion_review[{{ $loop->index }}][conclusion_review_action_affecte_batch]" value="{{ Helpers::getArrayKey($oos_conclusion_review, 'conclusion_review_action_affecte_batch') }}"></td>
+                                        <td><button type="text" class="removeRowBtn">Remove</button></td>
                                     </tr>
                                 @endforeach
                             @endif
@@ -68,6 +70,7 @@
                 <div class="group-input">
                     <label for="Audit Attachments">CAPA Req?</label>
                     <select name="capa_req_ocr">
+                        <option value="">Enter Your Selection Here</option>
                         <option value="Yes" {{ $data->capa_req_ocr == 'Yes' ? 'selected' : '' }}>Yes</option>
                         <option value="No" {{ $data->capa_req_ocr == 'No' ? 'selected' : '' }}>No</option>
                     </select>
