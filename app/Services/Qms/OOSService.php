@@ -1479,7 +1479,7 @@ class OOSService
 
             $input = $request->all();
 
-             // TODO: Audit Trail
+             // ===================== update(Audit Trail) ===========
             // $lastOosRecod = OOS::find($id);
             $lastOosRecod = OOS::where('id', $id)->first();
             
@@ -2810,9 +2810,13 @@ class OOSService
                 $history->action_name = 'Update';
                 $history->save();
             }
-            
         
 // ============ audit trail update close =================
+            $oos = OOS::findOrFail($id);
+
+            $input['due_date'] = isset($request->due_date) ? $request->due_date : $oos['due_date'];
+            $input['deviation_occured_on_gi'] = isset($request->deviation_occured_on_gi) ? $request->deviation_occured_on_gi : $oos['deviation_occured_on_gi'];
+
             $file_input_names = [
                 'initial_attachment_gi',
                 'file_attachments_pli',
@@ -2831,7 +2835,7 @@ class OOSService
                 'required_attachment_uar',
                 'verification_attachment_uar',
             ];
-            $oos = OOS::findOrFail($id);
+            
             foreach ($file_input_names as $file_input_name)
             {
                 // dd($input[$file_input_name]);

@@ -110,6 +110,7 @@ class OOSController extends Controller
 
     public function update(Request $request, $id)
     {
+        // dd($request->all());
         // if (!$request->short_description) {
         //     toastr()->error("Short description is required");
         //     return redirect()->back();

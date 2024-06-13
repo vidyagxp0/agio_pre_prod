@@ -54,18 +54,19 @@
                     </div>
                 </div>
 
-            <div class="col-lg-6">
-                <div class="group-input">
-                    <label for="Initiator"> Due Date
-                    </label>
-
-                    <small class="text-primary">
-                        Please mention expected date of completion
-                    </small>
-                    <input type="date" name="due_date" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" 
-                    class="hide-input" oninput="handleDateInput(this, 'due_date')" value="{{ $data->due_date ?? '' }}"/>
+                <div class="col-lg-6 new-date-data-field">
+                <div class="group-input input-date">
+                    <label for="Date Due"> Due Date </label>
+                    <div><small class="text-primary">If revising Due Date, kindly mention revision
+                            reason in "Due Date Extension Justification" data field.</small></div>
+                    <div class="calenderauditee">
+                        <input type="text" id="due_date" readonly value="{{ Helpers::getdateFormat($data['due_date'] ?? '') }}" placeholder="DD-MMM-YYYY" />
+                        <input type="date" name="due_date"
+                            min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input"
+                            oninput="handleDateInput(this, 'due_date')" />
+                    </div>
                 </div>
-            </div>
+            </div>                                                                                  
             <div class="col-lg-6">
                 <div class="group-input">
                     <label for="Short Description"> Severity Level</label>
@@ -146,14 +147,19 @@
                     </select>
                 </div>
             </div>
-
-            <div class="col-lg-6">
-                <div class="group-input">
-                    <label for="Initiator Group">Deviation Occurred On</label>
-                    <input type="date" name="deviation_occured_on_gi"
-                        value="{{ $data->deviation_occured_on_gi }}">
-                </div>
-            </div>
+            <div class="col-lg-6 new-date-data-field">
+                            <div class="group-input input-date">
+                                <label for="Deviation Occurred On"> Deviation Occurred On </label>
+                                <div><small class="text-primary">If revising Due Date, kindly mention revision
+                                        reason in "Due Date Extension Justification" data field.</small></div>
+                                <div class="calenderauditee">
+                                    <input type="text" id="deviation_occured_on_gi" readonly value="{{ Helpers::getdateFormat($data['deviation_occured_on_gi'] ?? '') }}" placeholder="DD-MMM-YYYY" />
+                                    <input type="date" name="deviation_occured_on_gi"
+                                        min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input"
+                                        oninput="handleDateInput(this, 'deviation_occured_on_gi')" />
+                                </div>
+                            </div>
+                        </div>
             <div class="col-lg-6">
                 <div class="group-input">
                     <label for="Initiator Group">Initial Attachment</label>

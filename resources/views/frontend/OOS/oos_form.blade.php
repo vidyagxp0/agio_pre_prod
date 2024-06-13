@@ -426,7 +426,7 @@ $users = DB::table('users')
                         </div>
                         <div class="col-lg-6 new-date-data-field">
                             <div class="group-input input-date">
-                                <label for="Date Due"> Due Date</label>
+                                <label for="Date Due"> Due Date </label>
                                 <div><small class="text-primary">If revising Due Date, kindly mention revision
                                         reason in "Due Date Extension Justification" data field.</small></div>
                                 <div class="calenderauditee">
