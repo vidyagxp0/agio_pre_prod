@@ -55,49 +55,80 @@ class ErrataController extends Controller
         // $data->details = $request->details;
         $data->Date_and_time_of_correction = $request->Date_and_time_of_correction ? Carbon::parse($request->Date_and_time_of_correction)->format('d-M-Y H:i') : '';
         $data->QA_Feedbacks = $request->QA_Feedbacks;
-        if (!empty($request->QA_Attachments)) {
-            $files = [];
-            if ($request->hasfile('QA_Attachments')) {
-                foreach ($request->file('QA_Attachments') as $file) {
-                    $name = $request->name . rand(1, 100) . '.' . $file->getClientOriginalExtension();
-                    $file->move('upload/', $name);
-                    $files[] = $name;
-                }
+        // if (!empty($request->QA_Attachments)) {
+        //     $files = [];
+        //     if ($request->hasfile('QA_Attachments')) {
+        //         foreach ($request->file('QA_Attachments') as $file) {
+        //             $name = $request->name . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+        //             $file->move('upload/', $name);
+        //             $files[] = $name;
+        //         }
+        //     }
+
+
+        //     $data->QA_Attachments = json_encode($files);
+        // }
+
+        $files = [];
+        if ($request->hasFile('QA_Attachments')) {
+            foreach ($request->file('QA_Attachments') as $file) {
+                $name = $request->name . 'QA_Attachments' . uniqid() . '.' . $file->getClientOriginalExtension();
+                $file->move(public_path('upload/'), $name);
+                $files[] = $name;
             }
-
-
-            $data->QA_Attachments = json_encode($files);
         }
+        $data->QA_Attachments = json_encode($files);
 
         $data->HOD_Remarks = $request->HOD_Remarks;
 
-        if (!empty($request->HOD_Attachments)) {
-            $files = [];
-            if ($request->hasfile('HOD_Attachments')) {
-                foreach ($request->file('HOD_Attachments') as $file) {
-                    $name = $request->name . rand(1, 100) . '.' . $file->getClientOriginalExtension();
-                    $file->move('upload/', $name);
-                    $files[] = $name;
-                }
+        // if (!empty($request->HOD_Attachments)) {
+        //     $files = [];
+        //     if ($request->hasfile('HOD_Attachments')) {
+        //         foreach ($request->file('HOD_Attachments') as $file) {
+        //             $name = $request->name . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+        //             $file->move('upload/', $name);
+        //             $files[] = $name;
+        //         }
+        //     }
+        //     $data->HOD_Attachments = json_encode($files);
+        // }
+
+        $files = [];
+        if ($request->hasFile('HOD_Attachments')) {
+            foreach ($request->file('HOD_Attachments') as $file) {
+                $name = $request->name . 'HOD_Attachments' . uniqid() . '.' . $file->getClientOriginalExtension();
+                $file->move(public_path('upload/'), $name);
+                $files[] = $name;
             }
-            $data->HOD_Attachments = json_encode($files);
         }
+        $data->HOD_Attachments = json_encode($files);
+
         $data->Closure_Comments = $request->Closure_Comments;
         $data->All_Impacting_Documents_Corrected = $request->All_Impacting_Documents_Corrected;
         $data->Remarks = $request->Remarks;
 
 
-        if (!empty($request->Closure_Attachments)) {
-            $files = [];
-            if ($request->hasfile('Closure_Attachments')) {
-                foreach ($request->file('Closure_Attachments') as $file) {
-                    $name = $request->name . rand(1, 100) . '.' . $file->getClientOriginalExtension();
-                    $file->move('upload/', $name);
-                    $files[] = $name;
-                }
+        // if (!empty($request->Closure_Attachments)) {
+        //     $files = [];
+        //     if ($request->hasfile('Closure_Attachments')) {
+        //         foreach ($request->file('Closure_Attachments') as $file) {
+        //             $name = $request->name . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+        //             $file->move('upload/', $name);
+        //             $files[] = $name;
+        //         }
+        //     }
+        //     $data->Closure_Attachments = json_encode($files);
+        // }
+
+        $files = [];
+        if ($request->hasFile('Closure_Attachments')) {
+            foreach ($request->file('Closure_Attachments') as $file) {
+                $name = $request->name . 'Closure_Attachments' . uniqid() . '.' . $file->getClientOriginalExtension();
+                $file->move(public_path('upload/'), $name);
+                $files[] = $name;
             }
-            $data->Closure_Attachments = json_encode($files);
         }
+        $data->Closure_Attachments = json_encode($files);
 
 
 
@@ -787,50 +818,45 @@ class ErrataController extends Controller
         $data->QA_Feedbacks = $request->QA_Feedbacks;
 
 
-        if (!empty($request->QA_Attachments)) {
-            $files = [];
-            if ($request->hasfile('QA_Attachments')) {
-                foreach ($request->file('QA_Attachments') as $file) {
-                    $name = $request->name . rand(1, 100) . '.' . $file->getClientOriginalExtension();
-                    $file->move('upload/', $name);
-                    $files[] = $name;
-                }
+
+        $files = [];
+        if ($request->hasFile('QA_Attachments')) {
+            foreach ($request->file('QA_Attachments') as $file) {
+                $name = $request->name . 'QA_Attachments' . uniqid() . '.' . $file->getClientOriginalExtension();
+                $file->move(public_path('upload/'), $name);
+                $files[] = $name;
             }
-
-
-            $data->QA_Attachments = json_encode($files);
         }
+        $data->QA_Attachments = json_encode($files);
+
+        $data->HOD_Remarks = $request->HOD_Remarks;
 
 
         $data->HOD_Remarks = $request->HOD_Remarks;
 
-        if (!empty($request->HOD_Attachments)) {
-            $files = [];
-            if ($request->hasfile('HOD_Attachments')) {
-                foreach ($request->file('HOD_Attachments') as $file) {
-                    $name = $request->name . rand(1, 100) . '.' . $file->getClientOriginalExtension();
-                    $file->move('upload/', $name);
-                    $files[] = $name;
-                }
+        $files = [];
+        if ($request->hasFile('HOD_Attachments')) {
+            foreach ($request->file('HOD_Attachments') as $file) {
+                $name = $request->name . 'HOD_Attachments' . uniqid() . '.' . $file->getClientOriginalExtension();
+                $file->move(public_path('upload/'), $name);
+                $files[] = $name;
             }
-            $data->HOD_Attachments = json_encode($files);
         }
+        $data->HOD_Attachments = json_encode($files);
         $data->Closure_Comments = $request->Closure_Comments;
         $data->All_Impacting_Documents_Corrected = $request->All_Impacting_Documents_Corrected;
         $data->Remarks = $request->Remarks;
 
 
-        if (!empty($request->Closure_Attachments)) {
-            $files = [];
-            if ($request->hasfile('Closure_Attachments')) {
-                foreach ($request->file('Closure_Attachments') as $file) {
-                    $name = $request->name . rand(1, 100) . '.' . $file->getClientOriginalExtension();
-                    $file->move('upload/', $name);
-                    $files[] = $name;
-                }
+        $files = [];
+        if ($request->hasFile('Closure_Attachments')) {
+            foreach ($request->file('Closure_Attachments') as $file) {
+                $name = $request->name . 'Closure_Attachments' . uniqid() . '.' . $file->getClientOriginalExtension();
+                $file->move(public_path('upload/'), $name);
+                $files[] = $name;
             }
-            $data->Closure_Attachments = json_encode($files);
         }
+        $data->Closure_Attachments = json_encode($files);
 
         $data->update();
 
