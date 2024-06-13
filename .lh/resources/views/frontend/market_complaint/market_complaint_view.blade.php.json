@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 12,
+            "activePatchIndex": 15,
             "patches": [
                 {
                     "date": 1718260980638,
@@ -56,6 +56,18 @@
                 {
                     "date": 1718261227199,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -399,9 +399,9 @@\n                                 <h4 class=\"modal-title\">Child</h4>\r\n                             </div>\r\n                             <div class=\"model-body\">\r\n \r\n-                                <form action=\"# method=\"POST\">\r\n+                                <form action=\"\" method=\"POST\">\r\n                                     @csrf\r\n                                     <!-- Modal body -->\r\n                                     <div class=\"modal-body\">\r\n                                         <div class=\"group-input\">\r\n"
+                },
+                {
+                    "date": 1718261447637,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -656,15 +656,15 @@\n                             });\r\n                         });\r\n                     });\r\n                 </script>\r\n-                <script>\r\n+                {{-- <script>\r\n                     var maxLength = 255;\r\n                     $('#docname').keyup(function() {\r\n                         var textlen = maxLength - $(this).val().length;\r\n                         $('#rchars').text(textlen);\r\n                     });\r\n-                </script>\r\n+                </script> --}}\r\n                 <script>\r\n                     var maxLength = 240;\r\n                     $('#duedoc').keyup(function() {\r\n                         var textlen = maxLength - $(this).val().length;\r\n"
+                },
+                {
+                    "date": 1718261582335,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -843,9 +843,9 @@\n                                             class=\"text-danger\">*</span></label>\r\n                                             <span id=\"rchars\">255</span>\r\n                                         <div><small class=\"text-primary\">Please insert \"NA\" in the data field if it does\r\n                                                 not require completion</small></div>\r\n-                                        <input  name=\"description_gi\" {{ $data->stage == 0 || $data->stage == 8 ? \"disabled\" : \"\" }} id=\"summernote-1\" required value=\"{{ $data->description_gi }}\"  >\r\n+                                        <input  name=\"description_gi\"id=\"docname\" {{ $data->stage == 0 || $data->stage == 8 ? \"disabled\" : \"\" }} id=\"summernote-1\" required value=\"{{ $data->description_gi }}\"  >\r\n                                     \r\n                                     </div>\r\n                                 </div>\r\n \r\n"
+                },
+                {
+                    "date": 1718261662965,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -843,9 +843,9 @@\n                                             class=\"text-danger\">*</span></label>\r\n                                             <span id=\"rchars\">255</span>\r\n                                         <div><small class=\"text-primary\">Please insert \"NA\" in the data field if it does\r\n                                                 not require completion</small></div>\r\n-                                        <input  name=\"description_gi\"id=\"docname\" {{ $data->stage == 0 || $data->stage == 8 ? \"disabled\" : \"\" }} id=\"summernote-1\" required value=\"{{ $data->description_gi }}\"  >\r\n+                                        <input  name=\"description_gi\" maxlength=\"255\" id=\"docname\" {{ $data->stage == 0 || $data->stage == 8 ? \"disabled\" : \"\" }} id=\"summernote-1\" required value=\"{{ $data->description_gi }}\"  >\r\n                                     \r\n                                     </div>\r\n                                 </div>\r\n \r\n"
                 }
             ],
             "date": 1718260980638,
