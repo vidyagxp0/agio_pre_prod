@@ -49,7 +49,7 @@
                                             <td>
                                                 <div style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                                     <select name="phase_two_inv[{{ $loop->index }}][response]" id="response" style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                        <option value="Yes">Select an Option</option>
+                                                        <option value="">Select an Option</option>
                                                         <option value="Yes" {{ Helpers::getArrayKey($phase_two_invs->data[$loop->index], 'response') == 'Yes' ? 'selected' : '' }}>Yes</option>
                                                         <option value="No" {{ Helpers::getArrayKey($phase_two_invs->data[$loop->index], 'response') == 'No' ? 'selected' : '' }}>No</option>
                                                         <option value="N/A" {{ Helpers::getArrayKey($phase_two_invs->data[$loop->index], 'response') == 'N/A' ? 'selected' : '' }}>N/A</option>

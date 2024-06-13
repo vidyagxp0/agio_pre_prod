@@ -200,19 +200,22 @@
         });
     </script>
     <!-- ------------------------------grid-3-------------------------script -->
-    <script>
+    
+
+<script>
         $(document).ready(function() {
             $('#oos_details').click(function(e) {
                 function generateTableRow(serialNumber) {
                     var html =
                         '<tr>' +
-                            '<td><input disabled type="text" name="serial[]" value="' + serialNumber + '"></td>' +
-                            '<td><input type="text"  name="oos_details[' + serialNumber + '][oos_arnumber]"value=""></td>'+
-                            '<td><input type="text" name="oos_details[' + serialNumber + '][oos_test_name]"></td>' +
-                            '<td><input type="text" name="oos_details[' + serialNumber + '][oos_results_obtained]"></td>' +
-                            '<td><input type="text" name="oos_details[' + serialNumber + '][oos_specification_limit]"></td>' +
-                            '<td><input type="text" name="oos_details[' + serialNumber + '][oos_details_obvious_error]"></td>' +
-                            '<td><input type="file" name="oos_details[' + serialNumber + '][oos_file_attachment]"></td>' +
+                            '<td><input disabled type="text" name="oos_detail['+ serialNumber +'][serial]" value="' + serialNumber +
+                            '"></td>' +
+                            '<td><input type="text" name="oos_detail['+ serialNumber +'][oos_arnumber]"></td>'+
+                            '<td><input type="text" name="oos_detail['+ serialNumber +'][oos_test_name]"></td>' +
+                            '<td><input type="text" name="oos_detail['+ serialNumber +'][oos_results_obtained]"></td>' +
+                            '<td><input type="text" name="oos_detail['+ serialNumber +'][oos_specification_limit]"></td>' +
+                            '<td><input type="text" name="oos_detail['+ serialNumber +'][oos_details_obvious_error]"></td>' +
+                            '<td><input type="file" name="oos_detail['+ serialNumber +'][oos_file_attachment]"></td>' +
                             '<td>' +
                             '<div class="col-lg-6 new-date-data-field">' +
                             '<div class="group-input input-date">' +
@@ -223,9 +226,15 @@
                             '</div>' +
                             '</div>' +
                             '</td>' +
-                            '<td><input type="text" name="oos_details[' + serialNumber + '][oos_submit_by]"></td>' +
+                            '<td><input type="text" name="oos_detail['+ serialNumber +'][oos_submit_by]"></td>' +
+                            
                         '</tr>';
-                   return html;
+                    // for (var i = 0; i < users.length; i++) {
+                    //     html += '<option value="' + users[i].id + '">' + users[i].name + '</option>';
+                    // }
+
+                    // html += '</select></td>' + 
+                    return html;
                 }
 
                 var tableBody = $('#oos_details_details tbody');
