@@ -81,12 +81,17 @@
                     </select>
                 </div>
             </div>
+            
             <div class="col-lg-6">
-                <div class="group-input">
-                    <label for="Initiator Group">Short Description</label>
-                    <textarea name="description_gi" required>{{ $data->description_gi }}</textarea>
-                </div>
-            </div>
+                            <div class="group-input">
+                                <label for="Short Description">Short Description
+                                    <span class="text-danger">*</span></label>
+                                    <span id="rchars">255</span>characters remaining
+                                <textarea id="docname"  name="description_gi" maxlength="255" required>{{ $data->description_gi }}</textarea>
+                            </div>
+                        </div>
+                        <p id="docnameError" style="color:red">**Short Description is required</p>
+                        
             <div class="col-lg-6">
                 <div class="group-input">
                     <label for="Short Description">Initiator Group <span

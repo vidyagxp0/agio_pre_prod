@@ -461,7 +461,7 @@ $users = DB::table('users')
                                 <label for="Short Description">Short Description
                                     <span class="text-danger">*</span></label>
                                     <span id="rchars">255</span>characters remaining
-                                <textarea id="docname"  name="description_gi" required></textarea>
+                                <textarea id="docname"  name="description_gi" maxlength="255" required></textarea>
                             </div>
                         </div>
                         <p id="docnameError" style="color:red">**Short Description is required</p>
