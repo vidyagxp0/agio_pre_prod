@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ctms\ClinicalSiteController;
 use App\Http\Controllers\ErrataController;
 use App\Http\Controllers\rcms\ActionItemController;
 use App\Http\Controllers\rcms\AuditeeController;
@@ -354,6 +355,7 @@ Route::group(['prefix' => 'rcms'], function () {
             });
             // Route::get('rcms/marketComplaintSingleReport/{id}', [MarketComplaintController::class, 'singleReport']);
             Route::get('pdf-report/{id}', [MarketComplaintController::class, 'singleReport']);
+
 
 
 

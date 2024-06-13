@@ -91,6 +91,8 @@
                 td {
                     padding: 10px;
                     text-align: left;
+                    overflow:auto;
+                    max-width: 150px;
                 }
 
                 header .head {
@@ -163,6 +165,8 @@
                     margin-bottom: 10px;
                     margin-top: 10px;
                     background: #4274da;
+                    overflow: auto;
+                    max-width: 100%;
                 }
 
                 .heading-new {
