@@ -5,6 +5,7 @@ namespace App\Http\Controllers\rcms;
 use App\Http\Controllers\Controller;
 use App\Models\ActionItem;
 use App\Models\Capa;
+use App\Models\QMSProcess;
 use App\Models\CC;
 use App\Models\EffectivenessCheck;
 use App\Models\Extension;
@@ -60,7 +61,6 @@ class DashboardController extends Controller
 
     public function index(Request $request)
     {
-
         $table = [];
 
         $datas = CC::orderByDesc('id')->get();
@@ -533,8 +533,8 @@ class DashboardController extends Controller
         }
         $table  = collect($table)->sortBy('record')->reverse()->toArray();
         $datag = $this->paginate($table);
-
-        return view('frontend.rcms.dashboard', compact('datag'));
+        $uniqueProcessNames = QMSProcess::select('process_name')->distinct()->pluck('process_name');
+        return view('frontend.rcms.dashboard', compact('datag', 'uniqueProcessNames'));
     }
 
     public function dashboard_child($id, $process)

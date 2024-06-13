@@ -168,27 +168,14 @@
 
                 <div>
                     <div class="inner-block scope-table" style="height: calc(100vh - 170px); padding: 0;">
-
                        <div class="grid-block">
                             <div class="group-input">
                                 <label for="scope">Process</label>
                                 <select id="scope" name="form">
                                     <option value="">All Records</option>
-                                    <option value="Internal-Audit">Internal Audit</option>
-                                    <option value="External-Audit">External Audit</option>
-                                    <option value="Capa">CAPA</option>
-                                    <option value="Audit-Program">Audit Program</option>
-                                    <option value="Lab Incident">Lab Incident</option>
-                                    <option value="Risk Assesment">Risk Assesment</option>
-                                    <option value="Root-Cause-Analysis">Root Cause Analysis</option>
-                                    <option value="Management Review">Management Review</option>
-                                    <option value="Document">Document</option>
-                                    <option value="Extension">Extension</option>
-                                    <option value="Observation">Observation</option>
-                                    <option value="Change Control">Change Control</option>
-                                    <option value="Action Item">Action Item</option>
-                                    <option value="Effectiveness Check">Effectiveness Check</option>
-                                    <option value="Deviation">Deviation</option>
+                                    @foreach ($uniqueProcessNames as $ultraprocess)
+                                        <option value={{ $ultraprocess }}>{{ $ultraprocess }}</option>
+                                    @endforeach
                                 </select>
                             </div>
                             <div class="group-input">
@@ -571,7 +558,7 @@
                                                         </a>
                                                     @endif
                                                 @elseif($datas->type == 'OOT')
-                                                    <a href="{{ route('rcms/oot_view', $datas->id) }}">
+                                                    <a href="{{ route('rcms/oot_view', $datas->id) }}" style="color: blue">
                                                         {{ str_pad(($total_count - $loop->index), 4, '0', STR_PAD_LEFT) }}
                                                     </a>
                                                     @if (!empty($datas->parent_id))
@@ -621,10 +608,15 @@
                                                 data-bs-target="#record-modal">
                                                 {{ $datas->short_description }}
                                             </td>
+                                            @php
+                                                $date = new \DateTime($datas->date_open);
+                                                $formattedDate = $date->format('d-M-Y H:i:s');
+                                            @endphp
+
                                             <td class="viewdetails" data-id="{{ $datas->id }}"
                                                 data-type="{{ $datas->type }}" data-bs-toggle="modal"
                                                 data-bs-target="#record-modal">
-                                                {{ $datas->date_open }}
+                                                {{ $formattedDate }}
                                             </td>
                                             <td class="viewdetails" data-id="{{ $datas->id }}"
                                                 data-type="{{ $datas->type }}" data-bs-toggle="modal"
