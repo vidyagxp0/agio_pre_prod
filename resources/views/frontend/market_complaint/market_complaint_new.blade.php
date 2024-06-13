@@ -203,7 +203,7 @@
                                         {{-- <input disabled type="text" name="record" value=""> --}}
                                         {{-- <input disabled type="text" name="record" value=" {{ Helpers::getDivisionName(session()->get('division')) }}/LI/{{ date('Y') }}/{{ $record}}"> --}}
                                         <input disabled type="text" name="record" id="record" 
-                                        value="---/LI/{{ date('y') }}/{{ $record }}">
+                                        value="---/MC/{{ date('y') }}/{{ $record }}">
                                     </div>
                                 </div>
                                
@@ -1889,7 +1889,7 @@
                 // Remove active class from current button
                 stepButtons[currentStep].classList.remove("active");
 
-                // Update current step
+                // Update current stepkmlkmlmkmklm
                 currentStep--;
             }
         }

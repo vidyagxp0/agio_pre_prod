@@ -139,7 +139,7 @@
 
     .inner-block .block-head {
         font-weight: bold;
-        font-size: 1.1rem;
+        font-size: 1.1rem; 
         padding-bottom: 5px;
         border-bottom: 2px solid #4274da;
         margin-bottom: 10px;
@@ -177,7 +177,7 @@
                     {{-- <strong>Lab Incident No.</strong> --}}
                 </td>
                 <td class="w-40">
-                   {{ Helpers::divisionNameForQMS($data->division_id) }}/{{ Helpers::year($data->created_at) }}/{{ str_pad($data->record, 4, '0', STR_PAD_LEFT) }}
+                   {{ Helpers::divisionNameForQMS($data->division_id) }}/MC/{{ Helpers::year($data->created_at) }}/{{ str_pad($data->record, 4, '0', STR_PAD_LEFT) }}
                 </td>
                 <td class="w-30">
                     <strong>Record No.</strong> {{ str_pad($data->record, 4, '0', STR_PAD_LEFT) }}
