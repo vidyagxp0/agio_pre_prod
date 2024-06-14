@@ -463,6 +463,9 @@ $users = DB::table('users')
                                     <span id="rchars">255</span>characters remaining
                                 <textarea id="docname"  name="description_gi" maxlength="255" required></textarea>
                             </div>
+                            @error('short_description')
+                                    <div class="text-danger">{{ $message }}</div>
+                                @enderror
                         </div>
                         <p id="docnameError" style="color:red">**Short Description is required</p>
                         <div class="col-lg-6">
