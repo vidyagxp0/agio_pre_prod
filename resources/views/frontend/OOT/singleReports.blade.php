@@ -224,7 +224,41 @@
                                 </td>
                             </tr>
                         
+
                             <tr>
+                                <th class="w-20">Initiated Through</th>
+                                <td class="w-30">
+                                    @if ($data->initiator_group)
+                                        {{ $data->initiator_group }}
+                                    @else
+                                        Not Applicable
+                                    @endif
+                                </td>
+        
+                                <th class="w-20">Department</th>
+                                @php
+                                    $departments = [
+                                        'CQA' => 'Corporate Quality Assurance',
+                                        'QAB' => 'Quality Assurance Biopharma',
+                                        'CQC' => 'Central Quality Control',
+                                        'PSG' => 'Plasma Sourcing Group',
+                                        'CS' => 'Central Stores',
+                                        'ITG' => 'Information Technology Group',
+                                        'MM' => 'Molecular Medicine',
+                                        'CL' => 'Central Laboratory',
+                                        'TT' => 'Tech Team',
+                                        'QA' => 'Quality Assurance',
+                                        'QM' => 'Quality Management',
+                                        'IA' => 'IT Administration',
+                                        'ACC' => 'Accounting',
+                                        'LOG' => 'Logistics',
+                                        'SM' => 'Senior Management',
+                                        'BA' => 'Business Administration',
+                                    ];
+                                @endphp
+                                <td class="w-80">{{ $departments[$data->initiator_group] ?? 'Unknown Department' }}</td>
+                            </tr>
+                            {{-- <tr>
                                 <th class="w-20">Intiater Group</th>
                                 <td class="w-30">
                                     @if ($data->initiator_group)
@@ -249,7 +283,7 @@
                                         Not Applicable
                                     @endif
                                 </td>
-                            </tr>
+                            </tr> --}}
                             <tr>
 
                                 <th class="w-20">Short Description</th>

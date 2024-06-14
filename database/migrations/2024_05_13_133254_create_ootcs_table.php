@@ -40,6 +40,9 @@ return new class extends Migration
             $table->text('specification_procedure_number')->nullable();
             $table->text('specification_limit')->nullable();
             $table->text('Attachment')->nullable(); 
+            $table->string('comments')->nullable();
+            $table->string('corrective_action')->nullable();
+            $table->longText('reason_for_stability')->nullable();
             $table->timestamps();
         });
     }

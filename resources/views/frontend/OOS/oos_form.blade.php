@@ -413,12 +413,9 @@ $users = DB::table('users')
                         
                         <div class="col-lg-6">
                             <div class="group-input">
-                                <label for="Initiator"> Due Date
-                                </label>
+                                <label for="Initiator"> Due Date </label>
 
-                                <small class="text-primary">
-                                    Please mention expected date of completion
-                                </small>
+                                <small class="text-primary">     Please mention expected date of completion </small>
                                 <input type="date" name="due_date" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input"
                                                 oninput="handleDateInput(this, 'due_date')" />
                             </div>
