@@ -59,19 +59,19 @@ class LogController extends Controller
 
                 case 'lab-incident':
                 
-                $labincident = LabIncident::get();
+                    $labincident =LabIncident::with('incidentInvestigationReports')->get();
                 
         
-                $labgrid = lab_incidents_grid::where('identifier', 'incident report')->get()->keyBy('labincident_id');
+                
                                             
                                         
-                    return view('frontend.forms.logs.laboratoryincidentLog',compact('labincident','labgrid'));
+                    return view('frontend.forms.logs.laboratoryincidentLog',compact('labincident'));
                     break;        
                 
 
              case 'market-complaint':
                 
-             $marketcomplaint = MarketComplaint::get();
+                $marketcomplaint = MarketComplaint::with('product_details')->get();
 
                     return view('frontend.forms.logs.Market-complaint-registerLog',compact('marketcomplaint'));
                         
@@ -79,7 +79,7 @@ class LogController extends Controller
                         
             case 'ooc':
             
-            $oocs = OutOfCalibration::get();
+                $oocs = OutOfCalibration::with('InstrumentDetails')->get();
                     return view('frontend.forms.logs.OOC_log' , compact('oocs'));
               
                                               

@@ -76,5 +76,10 @@ class OutOfCalibration extends Model
         'initiated_through_rootcause_ooc',
         'initiated_through_impact_closure_ooc'
     ];
+
+    public function InstrumentDetails()
+    {
+        return $this->hasOne(OOC_Grid::class,'ooc_id');
+    }
     
 }
