@@ -736,7 +736,7 @@
                                                                 <td><input type="text" name="Root_Cause_Sub_Category[]"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} value="{{ unserialize($data->Root_Cause_Sub_Category)[$key] ? unserialize($data->Root_Cause_Sub_Category)[$key] : '' }}"></td>
                                                                 <td><input type="text" name="Probability[]"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} value="{{ unserialize($data->Probability)[$key] ? unserialize($data->Probability)[$key] : '' }}"></td>
                                                                 <td><input type="text" name="Remarks[]"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} value="{{ unserialize($data->Remarks)[$key] ?? null }}"></td>
-                                                                <td></td>
+                                                              <td><button type="text" class="removeRowBtn">Remove</button></td>
                                                             </tr>
                                                             @endforeach
                                                             @endif
@@ -876,7 +876,7 @@
                                                                 <td>
                                                                     <input name="mitigation_proposal[]" type="text" value="{{ unserialize($data->mitigation_proposal)[$key] ?? null }}" >
                                                                 </td>
-                                                                <td></td>
+                                                                <td><button type="text" class="removeRowBtn">Remove</button></td>
                                                             </tr>
                                                             @endforeach
                                                         @endif

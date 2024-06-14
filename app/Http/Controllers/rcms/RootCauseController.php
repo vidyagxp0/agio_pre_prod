@@ -407,7 +407,13 @@ use Illuminate\Support\Facades\Hash;
         return redirect(url('rcms/qms-dashboard'));
     }
     public function root_update(Request $request, $id)
+
+
+
     {
+
+
+        
         if (!$request->short_description) {
             toastr()->error("Short description is required");
             return redirect()->back();
@@ -418,7 +424,7 @@ use Illuminate\Support\Facades\Hash;
         $root->initiated_through = $request->initiated_through;
         $root->initiated_if_other = ($request->initiated_if_other);
         $root->short_description = $request->short_description;
-        $root->due_date = $request->due_date;
+        $root->due_date =  $request->filled('due_date')  ? $request->due_date : $root->due_date;
         $root->severity_level= $request->severity_level;
         $root->Type= ($request->Type);
         $root->priority_level = ($request->priority_level);

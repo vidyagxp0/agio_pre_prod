@@ -165,7 +165,7 @@
                 </td>
                 <td class="w-30">
                     <div class="logo">
-                        <img src="https://dms.mydemosoftware.com/user/images/logo.png" alt="" class="w-100">
+                        <img src="https://navin.mydemosoftware.com/public/user/images/logo.png" alt="" class="w-100">
                     </div>
                 </td>
             </tr>
@@ -202,7 +202,7 @@
                         <th class="w-20">Site/Location Code</th>
                         <td class="w-30">@if($data->division_code){{ $data->division_code }} @else Not Applicable @endif</td>
                         <th class="w-20">Initiator Group</th>
-                        <td class="w-30">@if($data->Initiator_Group){{ $data->Initiator_Group }} @else Not Applicable @endif</td>
+                        <td class="w-30">@if($data->initiator_Group){{ $data->initiator_Group }} @else Not Applicable @endif</td>
                        
                     </tr>
                     <tr>
@@ -218,7 +218,7 @@
                             @if($data->short_description){{ $data->short_description }}@else Not Applicable @endif
                         </td>
                         <th class="w-20">Initiator Group Code</th>
-                        <td class="w-30">@if($data->initiator_group_code){{ $data->initiator_group_code }} @else Not Applicable @endif</td>
+                        <td class="w-30">@if($data->initiator_Group){{ $data->initiator_Group }} @else Not Applicable @endif</td>
                     </tr>
                     <tr>
                         <th class="w-20">Due Date</th>
@@ -227,7 +227,7 @@
                         <td class="w-30">@if($data->assign_to){{ Helpers::getInitiatorName($data->assign_to) }} @else Not Applicable @endif</td>r>
                     <tr>
                         <th class="w-20">Others</th>
-                        <td class="w-30">@if($data->initiated_if_other){{ $data->initiated_if_other }}@else Not Applicable @endif</td>
+                        <td class="w-30">@if($data->initiated_if_other){{ $data->initiated_if_other }} @else Not Applicable @endif</td>
                         <th class="w-20">Priority Level</th>
                         <td class="w-30">@if($data->priority_level){{ $data->priority_level }}@else Not Applicable @endif</td>
                     </tr>
@@ -296,14 +296,7 @@
                             <th class="w-20">Investigation Summary</th>
                             <td class="w-80">@if($data->investigation_summary){{ $data->investigation_summary }}@else Not Applicable @endif</td>
                         </tr>
-                        <tr>
-                            <th class="w-20">Attachments</th>
-                            <td class="w-80">@if($data->attachments)<a href="{{ asset('upload/document/',$data->attachments) }}">{{ $data->attachments }}@else Not Applicable @endif</td>
-                        </tr>
-                        <tr>
-                            <th class="w-20">Comments</th>
-                            <td class="w-80">@if($data->comments){{ $data->comments }}@else Not Applicable @endif</td>
-                        </tr>
+                       
                      
                     </table>
                     <div class="block-head">
