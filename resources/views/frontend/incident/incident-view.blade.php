@@ -12678,7 +12678,7 @@
                     <h4 class="modal-title">E-Signature</h4>
                     <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                 </div>
-                <form action="{{ route('pending_initiator_update', $data->id) }}" method="POST"
+                <form action="{{ route('new_incident_stage', $data->id) }}" method="POST"
                     id="pendingInitiatorForm">
                     @csrf
                     <div class="modal-body">

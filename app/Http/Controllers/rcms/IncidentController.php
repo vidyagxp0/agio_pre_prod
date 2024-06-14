@@ -3374,7 +3374,7 @@ class IncidentController extends Controller
     }
 
 
-    public function pending_initiator_update(Request $request, $id)
+    public function new_incident_stage(Request $request, $id)
     {
         if ($request->username == Auth::user()->email && Hash::check($request->password, Auth::user()->password)) {
             $incident = Incident::find($id);

@@ -234,7 +234,6 @@ Route::group(['prefix' => 'rcms'], function () {
             Route::post('nonConformaceCheck/{id}', [NonConformaceController::class, 'nonConformaceCheck'])->name('nonConformaceCheck');
             Route::post('nonConformaceCheck2/{id}', [NonConformaceController::class, 'nonConformaceCheck2'])->name('nonConformaceCheck2');
             Route::post('nonConformaceCheck3/{id}', [NonConformaceController::class, 'nonConformaceCheck3'])->name('nonConformaceCheck3');
-            // Route::post('pending_initiator_update/{id}', [NonConformaceController::class, 'pending_initiator_update'])->name('pending_initiator_update');
             Route::post('nonConformaceStageChange/{id}', [NonConformaceController::class, 'non_conformance_send_stage'])->name('nonConformaceStageChange');
             Route::post('nonConformaceCftnotreqired/{id}', [NonConformaceController::class, 'cftnotreqired'])->name('nonConformaceCftnotreqired');
             Route::post('nonConformaceQaMoreInfo/{id}', [NonConformaceController::class, 'failure_inv_qa_more_info'])->name('nonConformaceQaMoreInfo');
@@ -262,7 +261,6 @@ Route::group(['prefix' => 'rcms'], function () {
             Route::post('failureInvestigationCheck/{id}', [FailureInvestigationController::class, 'failureInvestigationCheck'])->name('failureInvestigationCheck');
             Route::post('failureInvestigationCheck2/{id}', [FailureInvestigationController::class, 'failureInvestigationCheck2'])->name('failureInvestigationCheck2');
             Route::post('failureInvestigationCheck3/{id}', [FailureInvestigationController::class, 'failureInvestigationCheck3'])->name('failureInvestigationCheck3');
-            // Route::post('pending_initiator_update/{id}', [FailureInvestigationController::class, 'pending_initiator_update'])->name('pending_initiator_update');
             Route::post('failureInvestigationStageChange/{id}', [FailureInvestigationController::class, 'failure_investigation_send_stage'])->name('failureInvestigationStageChange');
             Route::post('failureInvestigationCftnotreqired/{id}', [FailureInvestigationController::class, 'cftnotreqired'])->name('failureInvestigationCftnotreqired');
             Route::post('failureInvestigationQaMoreInfo/{id}', [FailureInvestigationController::class, 'failure_inv_qa_more_info'])->name('failureInvestigationQaMoreInfo');
@@ -401,7 +399,7 @@ Route::group(['prefix' => 'rcms'], function () {
             Route::post('incidentCheck/{id}', [IncidentController::class, 'incidentCheck'])->name('incidentCheck');
             Route::post('incidentCheck2/{id}', [IncidentController::class, 'incidentCheck2'])->name('incidentCheck2');
             Route::post('incidentCheck3/{id}', [IncidentController::class, 'incidentCheck3'])->name('incidentCheck3');
-            Route::post('pending_initiator_update/{id}', [IncidentController::class, 'pending_initiator_update'])->name('pending_initiator_update');
+            Route::post('new_incident_stage/{id}', [IncidentController::class, 'new_incident_stage'])->name('new_incident_stage');
             Route::post('incidentStageChange/{id}', [IncidentController::class, 'incident_send_stage'])->name('incidentStageChange');
             Route::post('incidentCftnotreqired/{id}', [IncidentController::class, 'cftnotreqired'])->name('incidentCftnotreqired');
             Route::post('incidentQaMoreInfo/{id}', [IncidentController::class, 'incident_qa_more_info'])->name('incidentQaMoreInfo');
