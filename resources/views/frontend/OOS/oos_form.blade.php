@@ -105,7 +105,7 @@ $users = DB::table('users')
                         '<div class="col-lg-6 new-date-data-field">' +
                         '<div class="group-input input-date">' +
                         '<div class="calenderauditee">' +
-                        '<input type="text" readonly id="info_mfg_date_' + serialNumber + '" placeholder="DD-MMM-YYYY" />' +
+                        '<input type="text" readonly id="info_mfg_date_' + serialNumber + '" placeholder="DD-MM-YYYY" />' +
                         '<input type="date" name="info_product_material[' + serialNumber + '][info_mfg_date]" value="" class="hide-input" oninput="handleDateInput(this, \'info_mfg_date_' + serialNumber + '\')">' +
                         '</div>' +
                         '</div>' +
@@ -115,7 +115,7 @@ $users = DB::table('users')
                         '<div class="col-lg-6 new-date-data-field">' +
                         '<div class="group-input input-date">' +
                         '<div class="calenderauditee">' +
-                        '<input type="text" readonly id="info_expiry_date' + serialNumber + '" placeholder="DD-MMM-YYYY" />' +
+                        '<input type="text" readonly id="info_expiry_date' + serialNumber + '" placeholder="DD-MM-YYYY" />' +
                         '<input type="date" name="info_product_material[' + serialNumber + '][info_expiry_date]" value="" class="hide-input" oninput="handleDateInput(this, \'info_expiry_date' + serialNumber + '\')">' +
                         '</div>' +
                         '</div>' +
@@ -203,7 +203,7 @@ $users = DB::table('users')
                             '<div class="col-lg-6 new-date-data-field">' +
                             '<div class="group-input input-date">' +
                             '<div class="calenderauditee">' +
-                            '<input type="text" readonly id="oos_submit_on' + serialNumber + '" placeholder="DD-MMM-YYYY" />' +
+                            '<input type="text" readonly id="oos_submit_on' + serialNumber + '" placeholder="DD-MM-YYYY" />' +
                             '<input type="date" name="oos_details[' + serialNumber + '][oos_submit_on]" value="" class="hide-input" oninput="handleDateInput(this, \'oos_submit_on' + serialNumber + '\')">' +
                             '</div>' +
                             '</div>' +
@@ -438,7 +438,7 @@ $users = DB::table('users')
                                 <div><small class="text-primary">If revising Due Date, kindly mention revision
                                         reason in "Due Date Extension Justification" data field.</small></div>
                                 <div class="calenderauditee">
-                                    <input type="text" id="due_date" readonly placeholder="DD-MMM-YYYY" />
+                                    <input type="text" id="due_date" readonly placeholder="DD-MM-YYYY" />
                                     <input type="date" name="due_date"
                                         min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input"
                                         oninput="handleDateInput(this, 'due_date')" />
@@ -524,7 +524,7 @@ $users = DB::table('users')
                                     <div class="group-input input-date">
                                         <label for="due-date">Deviation Occured On</label>
                                         <div class="calenderauditee">                                    
-                                            <input type="text"  id="deviation_occured_on_gi" readonly placeholder="DD-MMM-YYYY" />
+                                            <input type="text"  id="deviation_occured_on_gi" readonly placeholder="DD-MM-YYYY" />
                                             <input type="date" name="deviation_occured_on_gi"    min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" value=""
                                             class="hide-input"
                                             oninput="handleDateInput(this, 'deviation_occured_on_gi')"/>
@@ -655,7 +655,7 @@ $users = DB::table('users')
                                                 <div class="group-input input-date">
                                                     <div class="calenderauditee">
                                                         <input type="text" id="info_mfg_date" readonly 
-                                                        placeholder="DD-MMM-YYYY" />
+                                                        placeholder="DD-MM-YYYY" />
                                                         <input type="date" name="info_product_material[0][info_mfg_date]" value="" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
                                                         class="hide-input" oninput="handleDateInput(this, 'info_mfg_date')">
                                                     </div>
@@ -667,7 +667,7 @@ $users = DB::table('users')
                                                 <div class="group-input input-date">
                                                     <div class="calenderauditee">
                                                         <input type="text" id="info_expiry_date" readonly 
-                                                        placeholder="DD-MMM-YYYY" />
+                                                        placeholder="DD-MM-YYYY" />
                                                         <input type="date" name="info_product_material[0][info_expiry_date]" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
                                                         class="hide-input" oninput="handleDateInput(this, 'info_expiry_date')">
                                                     </div>
@@ -791,7 +791,7 @@ $users = DB::table('users')
                                                 <div class="group-input input-date">
                                                     <div class="calenderauditee">
                                                         <input type="text" id="oos_submit_on" readonly 
-                                                        placeholder="DD-MMM-YYYY" />
+                                                        placeholder="DD-MM-YYYY" />
                                                         <input type="date" name="oos_detail[0][oos_submit_on]" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
                                                         class="hide-input" oninput="handleDateInput(this, 'oos_submit_on')">
                                                     </div>
@@ -1190,7 +1190,7 @@ $users = DB::table('users')
                                                 <div class="group-input input-date">
                                                     <div class="calenderauditee">
                                                         <input type="text" id="info_oos_reported_date" readonly 
-                                                        placeholder="DD-MMM-YYYY" />
+                                                        placeholder="DD-MM-YYYY" />
                                                         <input type="date" name="oos_capa[0][info_oos_reported_date]" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
                                                         class="hide-input" oninput="handleDateInput(this, 'info_oos_reported_date')">
                                                     </div>
@@ -1205,7 +1205,7 @@ $users = DB::table('users')
                                                 <div class="group-input input-date">
                                                     <div class="calenderauditee">
                                                         <input type="text" id="info_oos_closure_date" readonly 
-                                                        placeholder="DD-MMM-YYYY" />
+                                                        placeholder="DD-MM-YYYY" />
                                                         <input type="date" name="oos_capa[0][info_oos_closure_date]" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
                                                         class="hide-input" oninput="handleDateInput(this, 'info_oos_closure_date')">
                                                     </div>

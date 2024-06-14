@@ -51,7 +51,7 @@
                                         <div class="col-lg-6 new-date-data-field">
                                             <div class="group-input input-date">
                                                 <div class="calenderauditee">
-                                                    <input type="text" id="info_oos_reported_date_{{ $loop->index }}" value="{{ Helpers::getdateFormat($oos_capa['info_oos_reported_date'] ?? '') }}" readonly placeholder="DD-MMM-YYYY" />
+                                                    <input type="text" id="info_oos_reported_date_{{ $loop->index }}" value="{{ Helpers::getdateFormat($oos_capa['info_oos_reported_date'] ?? '') }}" readonly placeholder="DD-MM-YYYY" />
                                                     <input type="date" name="oos_capa[{{ $loop->index }}][info_oos_reported_date]" value="{{ $info_product_material['info_oos_reported_date'] ?? '' }}" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input"
                                                      oninput="handleDateInput(this, 'info_oos_reported_date_{{ $loop->index }}')">
                                                 </div>
@@ -65,7 +65,7 @@
                                         <div class="col-lg-6 new-date-data-field">
                                             <div class="group-input input-date">
                                                 <div class="calenderauditee">
-                                                    <input type="text" id="info_oos_closure_date_{{ $loop->index }}" value="{{ Helpers::getdateFormat($oos_capa['info_oos_closure_date'] ?? '') }}" readonly placeholder="DD-MMM-YYYY" />
+                                                    <input type="text" id="info_oos_closure_date_{{ $loop->index }}" value="{{ Helpers::getdateFormat($oos_capa['info_oos_closure_date'] ?? '') }}" readonly placeholder="DD-MM-YYYY" />
                                                     <input type="date" name="oos_capa[{{ $loop->index }}][info_oos_closure_date]" value="{{ $oos_capa['info_oos_closure_date'] ?? '' }}" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input"
                                                      oninput="handleDateInput(this, 'info_oos_closure_date_{{ $loop->index }}')">
                                                 </div>

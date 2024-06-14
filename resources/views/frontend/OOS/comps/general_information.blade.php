@@ -60,7 +60,7 @@
                     <div><small class="text-primary">If revising Due Date, kindly mention revision
                             reason in "Due Date Extension Justification" data field.</small></div>
                     <div class="calenderauditee">
-                        <input type="text" id="due_date" readonly value="{{ Helpers::getdateFormat($data['due_date'] ?? '') }}" placeholder="DD-MMM-YYYY" />
+                        <input type="text" id="due_date" readonly value="{{ Helpers::getdateFormat($data['due_date'] ?? '') }}" placeholder="DD-MM-YYYY" />
                         <input type="date" name="due_date"
                             min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input"
                             oninput="handleDateInput(this, 'due_date')" />
@@ -155,7 +155,7 @@
                     <div><small class="text-primary">If revising Due Date, kindly mention revision
                             reason in "Due Date Extension Justification" data field.</small></div>
                     <div class="calenderauditee">
-                        <input type="text" id="deviation_occured_on_gi" readonly value="{{ Helpers::getdateFormat($data['deviation_occured_on_gi'] ?? '') }}" placeholder="DD-MMM-YYYY" />
+                        <input type="text" id="deviation_occured_on_gi" readonly value="{{ Helpers::getdateFormat($data['deviation_occured_on_gi'] ?? '') }}" placeholder="DD-MM-YYYY" />
                         <input type="date" name="deviation_occured_on_gi"
                             min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input"
                             oninput="handleDateInput(this, 'deviation_occured_on_gi')" />
@@ -306,7 +306,7 @@
                                         <div class="col-lg-6 new-date-data-field">
                                             <div class="group-input input-date">
                                                 <div class="calenderauditee">
-                                                    <input type="text" id="info_mfg_date_{{ $loop->index }}" value="{{ Helpers::getdateFormat($info_product_material['info_expiry_date'] ?? '') }}" readonly placeholder="DD-MMM-YYYY" />
+                                                    <input type="text" id="info_mfg_date_{{ $loop->index }}" value="{{ Helpers::getdateFormat($info_product_material['info_expiry_date'] ?? '') }}" readonly placeholder="DD-MM-YYYY" />
                                                     <input type="date" name="info_product_material[{{ $loop->index }}][info_mfg_date]" value="{{ $info_product_material['info_mfg_date'] ?? '' }}" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input" oninput="handleDateInput(this, 'info_mfg_date_{{ $loop->index }}')">
                                                 </div>
                                             </div>
@@ -316,7 +316,7 @@
                                         <div class="col-lg-6 new-date-data-field">
                                             <div class="group-input input-date">
                                                 <div class="calenderauditee">
-                                                    <input type="text" id="info_expiry_date_{{ $loop->index }}" value="{{ Helpers::getdateFormat($info_product_material['info_expiry_date'] ?? '') }}" readonly placeholder="DD-MMM-YYYY" />
+                                                    <input type="text" id="info_expiry_date_{{ $loop->index }}" value="{{ Helpers::getdateFormat($info_product_material['info_expiry_date'] ?? '') }}" readonly placeholder="DD-MM-YYYY" />
                                                     <input type="date" name="info_product_material[{{ $loop->index }}][info_expiry_date]" value="{{ $info_product_material['info_expiry_date'] ?? '' }}" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input" oninput="handleDateInput(this, 'info_expiry_date_{{ $loop->index }}')">
                                                 </div>
                                             </div>
@@ -440,7 +440,7 @@
                                           <div class="col-lg-6 new-date-data-field">
                                             <div class="group-input input-date">
                                                 <div class="calenderauditee">
-                                                    <input type="text" id="oos_submit_on_{{ $loop->index }}" value="{{ Helpers::getdateFormat($oos_detail['oos_submit_on'] ?? '') }}" readonly placeholder="DD-MMM-YYYY" />
+                                                    <input type="text" id="oos_submit_on_{{ $loop->index }}" value="{{ Helpers::getdateFormat($oos_detail['oos_submit_on'] ?? '') }}" readonly placeholder="DD-MM-YYYY" />
                                                     <input type="date" name="oos_detail[{{ $loop->index }}][oos_submit_on]" value="{{ $oos_detail['oos_submit_on'] ?? '' }}" 
                                                     min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input" oninput="handleDateInput(this, 'oos_submit_on_{{ $loop->index }}')">
                                                 </div>
