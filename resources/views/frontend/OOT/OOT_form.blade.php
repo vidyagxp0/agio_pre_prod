@@ -92,8 +92,7 @@
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="RLS Record Number"><b>Record Number</b></label>
-                                        <input disabled type="text" name="record_number" id="record_number"
-                                            value="---/LI/{{ date('y') }}/{{ $data }}">
+                                        <input disabled type="text" name="record_number" id="record_number" value="---/LI/{{ date('y') }}/{{ $data }}">
 
                                     </div>
                                 </div>
@@ -131,33 +130,17 @@
                                     </div>
                                 </div> --}}
 
-                                <div class="col-lg-12 new-date-data-field">
-                                    <div class="group-input input-date">
-                                        <label for="Due Date">Due Date</label>
-                                        <div><small class="text-primary">If revising Due Date, kindly mention revision
-                                                reason in "Due Date Extension Justification" data field.</small></div>
-                                        <div class="calenderauditee">
-                                            <input type="text" id="due_date" readonly placeholder="DD-MM-YYYY" />
-                                            <input type="date" name="due_date"  min="{{ \Carbon\Carbon::now()->format('d-M-Y') }}" class="hide-input" oninput="handleDateInput(this, 'due_date')" />
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="col-lg-6">
+                                   <div class="col-lg-6">
                                     <div class="group-input">
-                                        <label for="Short Description">Severity Level <span
-                                                class="text-danger"></span></label>
-                                        <select name="severity_level" id="severity_level">
-                                            <option value="">Select Option </option>
-                                            <option value="major">Major</option>
-                                            <option value="minor">minor </option>
-                                            <option value="critical">critical </option>
-                                        </select>
-
+                                        <label for="Initiator"> Due Date </label>
+        
+                                        {{-- <small class="text-primary"> Please mention expected date of completion </small> --}}
+                                        <input type="date" name="due_date" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input"
+                                                        oninput="handleDateInput(this, 'due_date')" />
                                     </div>
                                 </div>
 
-
+                        
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Short Description">Initiator Group <span
@@ -173,12 +156,28 @@
                                     </div>
                                 </div>
 
+                                
+
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Short Description">Initiator Group Code <span
                                                 class="text-danger"></span></label>
                                         <input type="text" name="initiator_group_code" id="initiator_group_code"
                                             readonly>
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-6">
+                                    <div class="group-input">
+                                        <label for="Short Description">Severity Level <span
+                                                class="text-danger"></span></label>
+                                        <select name="severity_level" id="severity_level">
+                                            <option value="">Select Option </option>
+                                            <option value="major">Major</option>
+                                            <option value="minor">minor </option>
+                                            <option value="critical">critical </option>
+                                        </select>
+
                                     </div>
                                 </div>
 
@@ -366,53 +365,9 @@
                                                 <td><input type="text" name="product_materiel[0][lot_batch_no]"></td>
                                                 <td><input type="text" name="product_materiel[0][a_r_number]">
 
-                                                    {{-- <td>
-                                                        <div class="col-md-6 new-date-data-field">
-                                                            <div class="group-input input-date">
-                                                                <div class="calenderauditee">
-                                                                    <input type="text" id="" readonly placeholder="DD-MM-YYYY" />
-                                                                    <input type="date" name="product_materiel[0][m_f_g_date]" min="{{ \Carbon\Carbon::now()->format('d-M-Y') }}" class="hide-input" oninput="handleDateInput(this, 'm_f_g_date')"/>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </td> --}}
-
-                                                <td>
-                                                    <div class="col-md-6 new-date-data-field">
-                                                        <div class="group-input input-date">
-                                                            <div class="calenderautitee">
-                                                                <input type="text" id="product_materiel_0_mfg_date"
-                                                                    placeholder="DD-MM-YYYY" readonly />
-                                                                <input type="date"
-                                                                    name="product_materiel[0][m_f_g_date]"
-                                                                    min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
-                                                                    class="hide-input"
-                                                                    oninput="handleDateInput(this, 'product_materiel_0_mfg_date')" />
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </td>
-
-                                                <td>
-                                                    <div class="col-md-6 new-date-data-field">
-                                                        <div class="group-input input-date">
-                                                            <div class="calenderautitee">
-                                                                <input type="text" id="product_materiel_0_expiry_date"
-                                                                    placeholder="DD-MM-YYYY" readonly />
-                                                                <input type="date"
-                                                                    name="product_materiel[0][expiry_date]"
-                                                                    min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
-                                                                    class="hide-input"
-                                                                    oninput="handleDateInput(this, 'product_materiel_0_expiry_date')" />
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </td>
-
-
-
-                                                {{-- <td><input type="date" name="product_materiel[0][m_f_g_date]"></td> --}}
-                                                {{-- <td><input type="date" name="product_materiel[0][expiry_date]"></td> --}}
+                                            
+                                                <td><input type="date" name="product_materiel[0][m_f_g_date]"></td>
+                                                <td><input type="date" name="product_materiel[0][expiry_date]"></td>
                                                 <td><input type="text" name="product_materiel[0][label_claim]"></td>
 
                                             </tbody>
@@ -431,11 +386,14 @@
 
                                 <div class="col-lg-6">
                                     <div class="group-input">
-                                        <label for="Reference Recores">Sample Type </label>
-                                        <select multiple id="reference_record" name="reference_record[]" id="">
-                                            <option>Select Option</option>
-                                            <option value="pankaj">Pankaj</option>
-                                            <option value="gaurav">Gourav</option>
+                                        <label for="Reference Record">Sample Type </label>
+                                        <select name="reference_record" id="reference_record">
+                                            <option>Enter Your Selection Here</option>
+                                            <option value="raw_material">Raw Material</option>
+                                            <option value="packing_material">Packing Material</option>
+                                            <option value="finished_product">Finished Product</option>
+                                            <option value="stability_sample">Stability Sample</option>
+                                            <option  value="others"> Others</option>
                                         </select>
                                     </div>
                                 </div>
@@ -450,11 +408,12 @@
 
                                 <div class="col-lg-6">
                                     <div class="group-input">
-                                        <label for="Reference Recores">Stability For </label>
+                                        <label for="">Stability For </label>
                                         <select multiple id="stability_for" name="stability_for[]" id="">
-                                            <option>Select Option</option>
-                                            <option value="pankaj">Pankaj</option>
-                                            <option value="pankaj">Gourav</option>
+                                            <option value="submission">Submission</option>
+                                            <option value="commercial">Commercial</option>
+                                            <option value="pack_evalution">Pack Evalution</option>
+                                            <option value="n_a">Not Applicable</option>
                                         </select>
                                     </div>
                                 </div>
@@ -1804,7 +1763,7 @@
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="group-input">
-                                        <label for="search">Lab-Charge <span class="text-danger"></span> </label>
+                                        <label for="search">LanIN-Charge <span class="text-danger"></span> </label>
 
                                         <select id="select-state" placeholder="Select..." name="in_charge">
                                             <option value="">Select a value</option>

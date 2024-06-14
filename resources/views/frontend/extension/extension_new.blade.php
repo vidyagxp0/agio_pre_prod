@@ -159,6 +159,12 @@
                                     <div class="text-danger">{{ $message }}</div>
                                 @enderror --}}
                             </div>
+                            <script>
+                                var maxLength = 255;
+                                $('#docname').keyup(function() {
+                                    var textlen = maxLength - $(this).val().length;
+                                    $('#rchars').text(textlen);});
+                            </script>
                             <div class="col-lg-6">
                                 <div class="group-input">
                                     <label for="Assigned To">Reviewer </label>
@@ -224,8 +230,8 @@
                             </div>
                             <div class="col-12">
                                 <div class="group-input">
-                                    <label for="Short Description"> Description</label><span id="rchars">255</span>
-                                    Characters remaining
+                                    <label for="Short Description"> Description</label>
+                                
                                  <textarea name="description" id="description" cols="30"  ></textarea>
                                 </div>
                                 {{-- @error('short_description')

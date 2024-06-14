@@ -268,7 +268,8 @@ class ExtensionNewController extends Controller
         }
         // return redirect()->back()->with('success', 'Induction training data saved successfully!');
         // return redirect()->route('TMS.index')->with('success', 'Induction training data saved successfully!');
-        return redirect(url('rcms/qms-dashboard'))->with('success', 'Extension data saved successfully!');
+        toastr()->success("Record is created Successfully");
+        return redirect(url('rcms/qms-dashboard'));
 
     }
 
@@ -470,7 +471,9 @@ class ExtensionNewController extends Controller
             $history->action_name = 'Create';
             $history->save();
         }
-        return redirect()->back()->with('success', 'Extension data saved successfully!');
+        toastr()->success("Record is created Successfully");
+
+        return redirect()->back();
 
 
     }

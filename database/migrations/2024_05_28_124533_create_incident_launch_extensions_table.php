@@ -13,9 +13,10 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('failure_investigation_launch_extensions', function (Blueprint $table) {
+        Schema::create('incident_launch_extensions', function (Blueprint $table) {
             $table->id();
-            $table->integer('failure_investigation_id')->nullable();
+            $table->integer('incident_id')->nullable();
+            $table->string('extension_identifier')->nullable();
             $table->text('dev_proposed_due_date')->nullable();
             $table->string('dev_extension_justification')->nullable();
             $table->string('dev_extension_completed_by')->nullable();
@@ -69,8 +70,6 @@ return new class extends Migration
             $table->string('qrm_effective_check_closed_by')->nullable();
             $table->text('qrm_effective_check_closed_on')->nullable();
 
-            $table->integer('counter')->nullable();
-
             $table->timestamps();
         });
     }
@@ -82,6 +81,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('failure_investigation_launch_extensions');
+        Schema::dropIfExists('incident_launch_extensions');
     }
 };

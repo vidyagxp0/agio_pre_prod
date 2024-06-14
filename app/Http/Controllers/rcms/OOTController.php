@@ -23,7 +23,7 @@ use Helpers;
 use Illuminate\Support\Facades\Hash;
 
 class OOTController extends Controller
-{
+{  
     public function index(Request $request)
     {
         $cft = [];
@@ -65,10 +65,7 @@ class OOTController extends Controller
 
     public function store(Request $request)
     {
-            // dd($request->oot_result);
-
-        // return dd($request->all());
-         
+        
         $data = new Ootc();
         $data->initiator_id          = Auth::user()->id;
         $data->record_number         = ((RecordNumber::first()->value('counter')) + 1);
@@ -99,10 +96,8 @@ class OOTController extends Controller
         $data->customer               = $request->customer;
         $data->analyst_name           = $request->analyst_name;
         $data->others                 = $request->others;
-        
-        if (is_array($request->reference_record )) {
-            $data->reference_record = implode(',', $request->reference_record);
-        }
+        $data->reference_record       = $request->reference_record;
+                
         if (is_array($request->stability_for )) {
             $data->stability_for = implode(',', $request->stability_for);
         }
@@ -203,8 +198,9 @@ class OOTController extends Controller
 
         $data->status = 'Opened';                 
         $data->stage = 1;
-    //   dd($data);
         $data->save();
+        
+        
 
         $record = RecordNumber::first();
         $record->counter = ((RecordNumber::first()->value('counter'))+1);
@@ -743,6 +739,9 @@ class OOTController extends Controller
         
         $data = Ootc::where('id',$id)->first();  
         $old_record = Ootc::select('id', 'division_id', 'record_number')->get();
+        $data->assign_to_name = User::where('id', $data->assign_id)->value('name');
+
+
        $formattedDate = Helpers::getdateFormat($data->due_date);    
        $occuredDate = Helpers::getdateFormat($data->oot_occured_on); 
        $grid_product_mat = ProductGridOot::where(['ootcs_id' => $id, 'identifier' => 'product_materiel'])->first();
@@ -754,7 +753,7 @@ class OOTController extends Controller
 
 
        $checkList = OotChecklist::where(['ootcs_id' => $id ])->first();
-    //   dd($checkList);
+       
        $record_number = ((RecordNumber::first()->value('counter')) + 1);
        $record_number = str_pad($record_number, 4, '0', STR_PAD_LEFT);
         return view('frontend.OOT.ootView',compact('data','record_number','grid_product_mat','checkList','gridStability','GridOotRes','InfoProductMat','formattedDate','occuredDate','old_record'));
@@ -768,7 +767,7 @@ class OOTController extends Controller
         $data->division_id           = $request->division_id;
         $data->record_number         = $lastDocument->record_number;
         // dd($lastDocument->record_number);
-        $data->due_date              = $request->due_date;
+        // $data->due_date              = $request->due_date;
         $data->severity_level        = $request->severity_level;
         $data->initiator_group       = $request->initiator_group;
         $data->initiator_group_code  =$request->initiator_group_code;
@@ -792,9 +791,8 @@ class OOTController extends Controller
         $data->customer              = $request->customer;
         $data->analyst_name          = $request->analyst_name;
         $data->others                = $request->others;
-        if (is_array($request->reference_record )) {
-            $data->reference_record = implode(',', $request->reference_record);
-        }
+        $data->reference_record      = $request->reference_record;
+        
         if (is_array($request->stability_for )) {
             $data->stability_for = implode(',', $request->stability_for);
         }
@@ -893,9 +891,9 @@ class OOTController extends Controller
             // Save the file paths in the database
             $data->doc_closure = json_encode($files);
         }
-
-
         $data->update();
+
+        
         $productGrid = ProductGridOot::where(['ootcs_id' => $data->id, 'identifier' =>'product_materiel'])->firstOrCreate();
         $productGrid->ootcs_id = $data->id;
         $productGrid->identifier = 'product_materiel';
@@ -1006,8 +1004,10 @@ class OOTController extends Controller
          $checkList->elaborate_the_reson    = $request->elaborate_the_reson;
          $checkList->in_charge              = $request->in_charge;
          $checkList->pli_head_designee      = $request->pli_head_designee;
+         
          $checkList->data                        = $request->data;
         $checkList->update();
+        // dd($checkList);
 
 
 

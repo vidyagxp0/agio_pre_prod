@@ -543,7 +543,7 @@
 
         <div class="division-bar">
             <strong>Site Division/Project</strong>:
-            {{ Helpers::getDivisionName(session()->get('division')) }}/Failure Investigation
+            {{ Helpers::getDivisionName(session()->get('division')) }}/Incident
         </div>
     </div>
 
@@ -569,7 +569,7 @@
 
                 <button class="cctablinks" onclick="openCity(event, 'CCForm6')">Activity Log</button>
             </div>
-            <form id="auditform" action="{{ route('failureInvestigationStore') }}" method="post" enctype="multipart/form-data">
+            <form id="auditform" action="{{ route('incident-store') }}" method="post" enctype="multipart/form-data">
                 @csrf
                 <input type="hidden" name="form_name" id="formNameField" value="">
                 <div id="step-form">
@@ -594,7 +594,7 @@
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="RLS Record Number"><b>Record Number</b></label>
-                                        <input disabled type="text" name="record_number" placeholder="{{ Helpers::getDivisionName(session()->get('division')) }}/FI/{{ date('Y') }}/{{ $record_number }}">
+                                        <input disabled type="text" name="record_number">
                                         {{-- value="{{ Helpers::getDivisionName(session()->get('division')) }}/DEV/{{ date('Y') }}/{{ $record_number }}"> --}}
                                         {{-- <div class="static">QMS-EMEA/CAPA/{{ date('Y') }}/{{ $record_number }}</div> --}}
                                     </div>
@@ -605,7 +605,7 @@
                                         <input disabled type="text" name="division_code"
                                             value="{{ Helpers::getDivisionName(session()->get('division')) }}">
                                         <input type="hidden" name="division_id" value="{{ session()->get('division') }}">
-                                        {{-- <div class="static">{{ Helpers::getDivisionName(session()->get('division')) }}</div> --}}
+                                        {{-- <div class="static">QMS-North America</div> --}}
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
@@ -748,7 +748,7 @@
 
                                 <div class="col-lg-6 new-date-data-field">
                                     <div class="group-input input-date">
-                                        <label for="short_description_required">Repeat Failure Investigation?</label>
+                                        <label for="short_description_required">Repeat Incident?</label>
                                         <select name="short_description_required" id="short_description_required"
                                             required>
                                             <option value="0">-- Select --</option>
@@ -808,17 +808,17 @@
 
                                 <div class="col-lg-6 new-date-data-field">
                                     <div class="group-input input-date">
-                                        <label for="Failure Investigation date">Failure Investigation Observed On</label>
+                                        <label for="Incident date">Incident Observed On</label>
                                         <div class="calenderauditee">
-                                            <input type="text" id="failure_investigation_date" readonly
-                                                placeholder="DD-MMM-YYYY" />
+                                            <input type="text" id="incident_date" readonly
+                                                placeholder="DD-MM-YYYY" />
                                             {{-- <td><input type="time" name="scheduled_start_time[]"></td> --}}
-                                            <input type="date" name="failure_investigation_date"
+                                            <input type="date" name="incident_date"
                                                 max="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input"
-                                                oninput="handleDateInput(this, 'failure_investigation_date')" />
+                                                oninput="handleDateInput(this, 'incident_date')" />
                                         </div>
                                     </div>
-                                    @error('failure_investigation_date')
+                                    @error('incident_date')
                                         <div class="text-danger">{{ $message }}</div>
                                     @enderror
                                 </div>
@@ -826,26 +826,26 @@
 
                                 <div class="col-lg-6 new-time-data-field">
                                     <div class="group-input input-time">
-                                        <label for="failure_investigation_time">Failure Investigation Observed On (Time)</label>
-                                        <input type="text" name="failure_investigation_time" id="failure_investigation_time">
+                                        <label for="incident_time">Incident Observed On (Time)</label>
+                                        <input type="text" name="incident_time" id="incident_time">
                                     </div>
-                                    @error('failure_investigation_date')
+                                    @error('incident_date')
                                         <div class="text-danger">{{ $message }}</div>
                                     @enderror
                                 </div>
 
                                 <div class="col-lg-6 new-time-data-field">
                                     <div class="group-input input-time delayJustificationBlock">
-                                        <label for="failure_investigation_time">Delay Justification</label>
+                                        <label for="incident_time">Delay Justification</label>
                                         <textarea id="Delay_Justification" name="Delay_Justification"></textarea>
                                     </div>
-                                    {{-- @error('failure_investigation_date')
+                                    {{-- @error('incident_date')
                                         <div class="text-danger">{{  $message  }}</div>
                                     @enderror --}}
                                 </div>
 
                                 <script>
-                                    flatpickr("#failure_investigation_time", {
+                                    flatpickr("#incident_time", {
                                         enableTime: true,
                                         noCalendar: true,
                                         dateFormat: "H:i", // 24-hour format without AM/PM
@@ -855,19 +855,19 @@
                                 </script>
                                 <div class="col-lg-6">
                                     <div class="group-input">
-                                        <label for="facility">Failure Investigation Observed By</label>
-                                        <input type="text" name="Facility" id="failure_investigation_observed_by" placeholder="Enter Facility Name">
+                                        <label for="facility">Incident Observed By</label>
+                                        <input type="text" name="Facility" id="incident_observed_by" placeholder="Enter Facility Name">
                                     </div>
                                 </div>
                                 <div class="col-lg-6 new-date-data-field">
                                     <div class="group-input input-date">
-                                        <label for="Audit Schedule End Date">Failure Investigation Reported on</label>
+                                        <label for="Audit Schedule End Date">Incident Reported on</label>
                                         <div class="calenderauditee">
-                                            <input type="text" id="failure_investigation_reported_date" readonly
-                                                placeholder="DD-MMM-YYYY" />
-                                            <input type="date" name="failure_investigation_reported_date"
+                                            <input type="text" id="incident_reported_date" readonly
+                                                placeholder="DD-MM-YYYY" />
+                                            <input type="date" name="incident_reported_date"
                                                 max="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input"
-                                                oninput="handleDateInput(this, 'failure_investigation_reported_date')" />
+                                                oninput="handleDateInput(this, 'incident_reported_date')" />
                                         </div>
                                     </div>
                                 </div>
@@ -875,18 +875,18 @@
                                     $('.delayJustificationBlock').hide();
 
                                     function calculateDateDifference() {
-                                        let failureInvestigationDate = $('input[name=failure_investigation_date]').val();
-                                        let reportedDate = $('input[name=failure_investigation_reported_date]').val();
+                                        let incidentDate = $('input[name=incident_date]').val();
+                                        let reportedDate = $('input[name=incident_reported_date]').val();
 
-                                        if (!failureInvestigationDate || !reportedDate) {
-                                            console.error('Failure Investigation date or reported date is missing.');
+                                        if (!incidentDate || !reportedDate) {
+                                            console.error('Incident date or reported date is missing.');
                                             return;
                                         }
 
-                                        let failureInvestigationDateMoment = moment(failureInvestigationDate);
+                                        let incidentDateMoment = moment(incidentDate);
                                         let reportedDateMoment = moment(reportedDate);
 
-                                        let diffInDays = reportedDateMoment.diff(failureInvestigationDateMoment, 'days');
+                                        let diffInDays = reportedDateMoment.diff(incidentDateMoment, 'days');
 
                                         if (diffInDays > 0) {
                                             $('.delayJustificationBlock').show();
@@ -896,18 +896,18 @@
 
                                     }
 
-                                    $('input[name=failure_investigation_date]').on('change', function() {
+                                    $('input[name=incident_date]').on('change', function() {
                                         calculateDateDifference();
                                     })
 
-                                    $('input[name=failure_investigation_reported_date]').on('change', function() {
+                                    $('input[name=incident_reported_date]').on('change', function() {
                                         calculateDateDifference();
                                     })
                                 </script>
 
                                 <div class="col-lg-6">
                                     <div class="group-input">
-                                        <label for="audit type">Failure Investigation Related To </label>
+                                        <label for="audit type">Incident Related To </label>
                                         <select multiple name="audit_type[]" id="audit_type">
                                             {{-- <option value="">Enter Your Selection Here</option> --}}
                                             <option value="Facility">Facility</option>
@@ -931,7 +931,7 @@
                                 </div>
                                 {{-- <div class="col-lg-6">
                                     <div class="group-input">
-                                        <label for="audit type">Failure Investigation Related To </label>
+                                        <label for="audit type">Incident Related To </label>
                                         <select name="audit_type[]" id="audit_type" multiple class="form-control">
                                             <option value="">Enter Your Selection Here</option>
                                             <option value="Facility">Facility</option>
@@ -1356,19 +1356,19 @@
 
                                 {{-- <div class="col-6">
                                     <div class="group-input">
-                                        <label for="Description Failure Investigation">Description of Failure Investigation</label>
-                                        <textarea class="" id="Description_failure_investigation" name="Description_failure_investigation[]"></textarea>
+                                        <label for="Description Incident">Description of Incident</label>
+                                        <textarea class="" id="Description_incident" name="Description_incident[]"></textarea>
                                     </div>
                                 </div> --}}
                                 <div class="col-md-12 mb-3">
                                     <div class="group-input">
-                                        <label for="Description Failure Investigation">Description of Failure Investigation</label>
+                                        <label for="Description Incident">Description of Incident</label>
                                         <div><small class="text-primary">Please insert "NA" in the data field if it does
                                                 not require completion</small></div>
-                                        <textarea class="tiny" name="Description_failure_investigation[]" id="summernote-1" required>
+                                        <textarea class="tiny" name="Description_incident[]" id="summernote-1" required>
                                     </textarea>
                                     </div>
-                                    @error('Description_failure_investigation[]')
+                                    @error('Description_incident[]')
                                         <div class="text-danger">{{ $message }}</div>
                                     @enderror
                                 </div>
@@ -1393,13 +1393,13 @@
                                 </div>
                                 {{-- <div class="col-6">
                                 <div class="group-input">
-                                        <label for="Preliminary Impact">Preliminary Impact of Failure Investigation</label>
+                                        <label for="Preliminary Impact">Preliminary Impact of Incident</label>
                                         <textarea class="" id="Preliminary_Impact" name="Preliminary_Impact[]"></textarea>
                                     </div>
                                 </div> --}}
                                 <div class="col-md-12 mb-3">
                                     <div class="group-input">
-                                        <label for="Preliminary Impact">Preliminary Impact of Failure Investigation </label>
+                                        <label for="Preliminary Impact">Preliminary Impact of Incident </label>
                                         <div><small class="text-primary">Please insert "NA" in the data field if it does
                                                 not require completion</small></div>
                                         <textarea class="tiny" name="Preliminary_Impact[]" id="summernote-3" required>
@@ -1533,9 +1533,9 @@
 
 
 
-                                    // Function to handle the change event of the Initial Failure Investigation Category dropdown
-                                    function handlefailureInvestigationCategoryChange() {
-                                        var selectElement = document.getElementById("failure_investigation_category");
+                                    // Function to handle the change event of the Initial Incident Category dropdown
+                                    function handleincidentCategoryChange() {
+                                        var selectElement = document.getElementById("incident_category");
                                         var selectedOption = selectElement.options[selectElement.selectedIndex].value;
 
                                         // var investigationSelect = document.getElementById("Investigation_required");
@@ -1593,9 +1593,9 @@
 
                                 <div style="margin-bottom: 0px;" class="col-lg-12 new-date-data-field ">
                                     <div class="group-input input-date">
-                                        <label for="failure_investigation_category">Initial Failure Investigation Category</label>
-                                        <select name="failure_investigation_category" id="failure_investigation_category" disabled
-                                            onchange="handlefailureInvestigationCategoryChange()">
+                                        <label for="incident_category">Initial Incident Category</label>
+                                        <select name="incident_category" id="incident_category" disabled
+                                            onchange="handleincidentCategoryChange()">
                                             <option value="0">-- Select -- </option>
                                             <option value="minor">Minor </option>
                                             <option value="major">Major </option>
@@ -1716,10 +1716,10 @@
                         // This is a JQuery used for showing the Investigation
 
                         $(document).ready(function() {
-                            $('#failure_investigation_category, #Investigation_required, #qrm_required, #capa_required').change(
+                            $('#incident_category, #Investigation_required, #qrm_required, #capa_required').change(
                                 function() {
                                     // Get the selected values
-                                    var failureInvestigationCategory = $('#failure_investigation_category').val();
+                                    var incidentCategory = $('#incident_category').val();
                                     var investigationRequired = $('#Investigation_required').val();
                                     var capaRequired = $('#capa_required').val();
                                     var qrmRequired = $('#qrm_required').val();
@@ -1770,7 +1770,7 @@
 
 
                         $(document).ready(function() {
-                            $('#failure_investigation_category').change(function() {
+                            $('#incident_category').change(function() {
                                 var selectedValues = $(this).val();
 
                                 if (selectedValues === 'major' || selectedValues === 'critical') {
@@ -1790,7 +1790,7 @@
                         $(document).ready(function() {
 
 
-                            $('#failure_investigation_category').change(function() {
+                            $('#incident_category').change(function() {
                                 if ($(this).val() === 'major') {
                                     $('#Investigation_required').val('yes').prop('disabled', true);
 
@@ -4860,10 +4860,10 @@
                                 </div>
                                 <div style="margin-bottom: 0px;" class="col-lg-12 new-date-data-field ">
                                     <div class="group-input input-date">
-                                        <label for="Failure Investigation category">Source of CAPA</label>
-                                        <select name="failure_investigation_category" id="failure_investigation_category">
+                                        <label for="Incident category">Source of CAPA</label>
+                                        <select name="incident_category" id="incident_category">
                                             <option value="0">-- Select -- </option>
-                                            <option value="Failure Investigation">Failure Investigation </option>
+                                            <option value="Incident">Incident </option>
                                             <option value="OS/OT">OS/OT</option>
                                             <option value="Audit_Obs">Audit Observation </option>
 
@@ -5108,8 +5108,8 @@
 
                                 <div class="col-md-12 mb-3">
                                     <div class="group-input">
-                                        <label for="Post Categorization Of Failure Investigation">Post Categorization Of Failure Investigation</label>
-                                       <div><small class="text-primary">Please Refer Intial Failure Investigation category before updating.</small></div>
+                                        <label for="Post Categorization Of Incident">Post Categorization Of Incident</label>
+                                       <div><small class="text-primary">Please Refer Intial Incident category before updating.</small></div>
                                         {{-- <textarea class="" name="Post_Categorization" id="summernote-12"> --}}
                     {{-- <select name="Post_Categorization" id="Post_Categorization">
                                                 <option value=""> -- Select --</option>
@@ -5241,9 +5241,9 @@
                             <div class="row">
                                 <div class="col-md-12 mb-3">
                                     <div class="group-input">
-                                        <label for="Post Categorization Of Failure Investigation">Post Categorization Of
-                                            Failure Investigation</label>
-                                        <div><small class="text-primary">Please Refer Intial Failure Investigation category before
+                                        <label for="Post Categorization Of Incident">Post Categorization Of
+                                            Incident</label>
+                                        <div><small class="text-primary">Please Refer Intial Incident category before
                                                 updating.</small></div>
                                         <select name="Post_Categorization" id="Post_Categorization" disabled>
                                             <option value=""> -- Select --</option>
@@ -5321,39 +5321,39 @@
                         <div class="inner-block-content">
                             <div class="row">
                                 <div class="sub-head">
-                                    Failure Investigation Extension
+                                    Incident Extension
                                 </div>
 
                                 <div class="col-lg-6 new-date-data-field">
                                     <div class="group-input input-date">
-                                        <label for="Audit Schedule End Date">Proposed Due Date (Failure Investigation)</label>
+                                        <label for="Audit Schedule End Date">Proposed Due Date (Incident)</label>
                                         <div class="calenderauditee">
-                                            <input type="text" id="Proposed_Due_date_failure_investigation" readonly
+                                            <input type="text" id="Proposed_Due_date_incident" readonly
                                                 placeholder="DD-MMM-YYYY" disabled/>
-                                            <input type="date" name="Proposed_Due_date_failure_investigation"
+                                            <input type="date" name="Proposed_Due_date_incident"
                                                 min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input"
-                                                oninput="handleDateInput(this, 'Proposed_Due_date_failure_investigation')" disabled />
+                                                oninput="handleDateInput(this, 'Proposed_Due_date_incident')" disabled />
                                         </div>
                                     </div>
                                 </div>
 
                                 <div class="col-md-12 mb-3">
                                     <div class="group-input">
-                                        <label for="Extension_Justification_failure_investigation">Extension Justification
-                                            (Failure Investigation)</label>
+                                        <label for="Extension_Justification_incident">Extension Justification
+                                            (Incident)</label>
                                         <div><small class="text-primary">Please insert "NA" in the data field if it does
                                                 not require completion</small></div>
-                                        <textarea class="tiny" name="Extension_Justification_failure_investigation" id="summernote-10">
+                                        <textarea class="tiny" name="Extension_Justification_incident" id="summernote-10">
                                     </textarea>
                                     </div>
                                 </div>
 
                                 <div class="col-lg-6">
                                     <div class="group-input">
-                                        <label for=" failure_investigation_Extension_Completed_By"> Failure Investigation Extension Completed By
+                                        <label for=" incident_Extension_Completed_By"> Incident Extension Completed By
                                         </label>
-                                        <select name="failure_investigation_Extension_Completed_By"
-                                            id="failure_investigation_Extension_Completed_By" disabled>
+                                        <select name="incident_Extension_Completed_By"
+                                            id="incident_Extension_Completed_By" disabled>
                                             <option value="">-- Select --</option>
                                             @foreach ($users as $user)
                                                 <option value="{{ $user->id }}">{{ $user->name }}</option>
@@ -5364,13 +5364,13 @@
 
                                 <div class="col-lg-6 new-date-data-field">
                                     <div class="group-input input-date">
-                                        <label for="Audit Schedule End Date">Failure Investigation Extension Completed On</label>
+                                        <label for="Audit Schedule End Date">Incident Extension Completed On</label>
                                         <div class="calenderauditee">
-                                            <input type="text" id="failure_investigation_Extension_Completed_On" readonly
+                                            <input type="text" id="incident_Extension_Completed_On" readonly
                                                 placeholder="DD-MMM-YYYY" disabled/>
-                                            <input type="date" name="failure_investigation_Extension_Completed_On"
+                                            <input type="date" name="incident_Extension_Completed_On"
                                                 min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input"
-                                                oninput="handleDateInput(this, 'failure_investigation_Extension_Completed_On')" disabled/>
+                                                oninput="handleDateInput(this, 'incident_Extension_Completed_On')" disabled/>
                                         </div>
                                     </div>
                                 </div>
@@ -5564,16 +5564,16 @@
 
 
                                 {{-- <div class="sub-head">
-                                    Failure Investigation Effectiveness Check
+                                    Incident Effectiveness Check
                                 </div>
 
                                 <div class="col-md-12 mb-3">
                                     <div class="group-input">
-                                        <label for="Effectiveness_Check_Plan_failure_investigation">Effectiveness Check
-                                            Plan(Failure Investigation)</label>
+                                        <label for="Effectiveness_Check_Plan_incident">Effectiveness Check
+                                            Plan(Incident)</label>
                                         <div><small class="text-primary">Please insert "NA" in the data field if it does
                                                 not require completion</small></div>
-                                        <textarea class="tiny" name="Effectiveness_Check_Plan_failure_investigation" id="summernote-10">
+                                        <textarea class="tiny" name="Effectiveness_Check_Plan_incident" id="summernote-10">
                                     </textarea>
                                     </div>
                                 </div>
@@ -5583,10 +5583,10 @@
 
                                     <div class="col-lg-6">
                                         <div class="group-input">
-                                            <label for=" failure_investigation_Effectiveness_Check_Plan_Proposed_By">Failure Investigation
+                                            <label for=" incident_Effectiveness_Check_Plan_Proposed_By">Incident
                                                 Effectiveness Check Plan Proposed By </label>
-                                            <select name="failure_investigation_Effectiveness_Check_Plan_Proposed_By"
-                                                id="failure_investigation_Effectiveness_Check_Plan_Proposed_By">
+                                            <select name="incident_Effectiveness_Check_Plan_Proposed_By"
+                                                id="incident_Effectiveness_Check_Plan_Proposed_By">
                                                 <option value="">-- Select --</option>
                                                 @foreach ($users as $user)
                                                     <option value="{{ $user->id }}">{{ $user->name }}</option>
@@ -5597,15 +5597,15 @@
 
                                     <div class="col-lg-6 new-date-data-field">
                                         <div class="group-input input-date">
-                                            <label for="failure_investigation_EC_Plan_Proposed_On"> Failure Investigation Effectiveness Check Plan
+                                            <label for="incident_EC_Plan_Proposed_On"> Incident Effectiveness Check Plan
                                                 Proposed On</label>
                                             <div class="calenderauditee">
-                                                <input type="text" id="failure_investigation_EC_Plan_Proposed_On" readonly
+                                                <input type="text" id="incident_EC_Plan_Proposed_On" readonly
                                                     placeholder="DD-MMM-YYYY" />
-                                                <input type="date" name="failure_investigation_EC_Plan_Proposed_On"
+                                                <input type="date" name="incident_EC_Plan_Proposed_On"
                                                     max="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
                                                     class="hide-input"
-                                                    oninput="handleDateInput(this, 'failure_investigation_EC_Plan_Proposed_On')" />
+                                                    oninput="handleDateInput(this, 'incident_EC_Plan_Proposed_On')" />
                                             </div>
                                         </div>
                                     </div>
@@ -5615,11 +5615,11 @@
 
                                 <div class="col-md-12 mb-3">
                                     <div class="group-input">
-                                        <label for="EC_Closure_comments_failure_investigation">Effectiveness Check Closure
-                                            Comments(Failure Investigation)</label>
+                                        <label for="EC_Closure_comments_incident">Effectiveness Check Closure
+                                            Comments(Incident)</label>
                                         <div><small class="text-primary">Please insert "NA" in the data field if it does
                                                 not require completion</small></div>
-                                        <textarea class="tiny" name="EC_Closure_comments_failure_investigation" id="summernote-10">
+                                        <textarea class="tiny" name="EC_Closure_comments_incident" id="summernote-10">
                                     </textarea>
                                     </div>
                                 </div>
@@ -5627,13 +5627,13 @@
 
                                 <div class="col-lg-6 new-date-data-field">
                                     <div class="group-input input-date">
-                                        <label for="Next_review_date_failure_investigation">Next Review Date(Failure Investigation)</label>
+                                        <label for="Next_review_date_incident">Next Review Date(Incident)</label>
                                         <div class="calenderauditee">
-                                            <input type="text" id="Next_review_date_failure_investigation" readonly
+                                            <input type="text" id="Next_review_date_incident" readonly
                                                 placeholder="DD-MMM-YYYY" />
-                                            <input type="date" name="Next_review_date_failure_investigation"
+                                            <input type="date" name="Next_review_date_incident"
                                                 min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input"
-                                                oninput="handleDateInput(this, 'Next_review_date_failure_investigation')" />
+                                                oninput="handleDateInput(this, 'Next_review_date_incident')" />
                                         </div>
                                     </div>
                                 </div>
@@ -5641,9 +5641,9 @@
                                 <div class="row">
                                     <div class="col-lg-6">
                                         <div class="group-input">
-                                            <label for=" deviaiton_EC_Closed_By">Failure Investigation Effectiveness Check Closed
+                                            <label for="incident_EC_Closed_By">Incident Effectiveness Check Closed
                                                 By</label>
-                                            <select name="deviaiton_EC_Closed_By" id="deviaiton_EC_Closed_By">
+                                            <select name="incident_EC_Closed_By" id="incident_EC_Closed_By">
                                                 <option value="">-- Select --</option>
                                                 @foreach ($users as $user)
                                                     <option value="{{ $user->id }}">{{ $user->name }}</option>
@@ -5654,15 +5654,15 @@
 
                                     <div class="col-lg-6 new-date-data-field">
                                         <div class="group-input input-date">
-                                            <label for="failure_investigation_Effectiveness_Check_Closed_On">Failure Investigation Effectiveness
+                                            <label for="incident_Effectiveness_Check_Closed_On">Incident Effectiveness
                                                 Check Closed On</label>
                                             <div class="calenderauditee">
-                                                <input type="text" id="failure_investigation_Effectiveness_Check_Closed_On"
+                                                <input type="text" id="incident_Effectiveness_Check_Closed_On"
                                                     readonly placeholder="DD-MMM-YYYY" />
-                                                <input type="date" name="failure_investigation_Effectiveness_Check_Closed_On"
+                                                <input type="date" name="incident_Effectiveness_Check_Closed_On"
                                                     min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
                                                     class="hide-input"
-                                                    oninput="handleDateInput(this, 'failure_investigation_Effectiveness_Check_Closed_On')" />
+                                                    oninput="handleDateInput(this, 'incident_Effectiveness_Check_Closed_On')" />
                                             </div>
                                         </div>
                                     </div>
@@ -6218,7 +6218,7 @@
                 <!-- Modal content-->
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h4 class="modal-title">Failure Investigation Workflow</h4>
+                        <h4 class="modal-title">Incident Workflow</h4>
                     </div>
                     <div style="padding: 2px; " class="modal-body">
 
@@ -6365,7 +6365,7 @@
                                     </li>
                                     <li>
                                         <div> <a href="" data-bs-toggle="modal"
-                                                data-bs-target="#failure_investigation_extension"> Failure Investigation</a></div>
+                                                data-bs-target="#incident_extension"> Incident</a></div>
                                     </li>
                                 </ul>
                             </div>
@@ -6557,15 +6557,14 @@
                 </div>
             </div>
         </div>
-
-
-        <div class="modal fade" id="failure_investigation_extension">
+        {{-- ===============================Incident=========== --}}
+        <div class="modal fade" id="incident_extension">
             <div class="modal-dialog modal-dialog-centered">
                 <div class="modal-content">
 
                     <!-- Modal Header -->
                     <div class="modal-header">
-                        <h4 class="modal-title">Failure Investigation-Extension</h4>
+                        <h4 class="modal-title">Incident-Extension</h4>
                         <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                     </div>
 
@@ -6583,25 +6582,25 @@
                                 <input class="extension_modal_signature" type="password" name="password" required>
                             </div>
                             <div class="group-input">
-                                <label for="password">Proposed Due Date (Failure Investigation)</label>
-                                <input class="extension_modal_signature" type="date" name="failure_investigation_due_capa">
+                                <label for="password">Proposed Due Date (Incident)</label>
+                                <input class="extension_modal_signature" type="date" name="incident_due_capa">
                             </div>
                             <div class="group-input">
-                                <label for="password">Extension Justification (Failure Investigation)<span
+                                <label for="password">Extension Justification (Incident)<span
                                         class="text-danger">*</span></label>
                                 <input class="extension_modal_signature" type="text"
-                                    name="failure_investigation_justification">
+                                    name="incident_justification">
                             </div>
                             <div class="group-input">
-                                <label for="password">Failure Investigation Extension Completed By </label>
-                                <select class="extension_modal_signature" name="failure_investigation_extension_by"
+                                <label for="password">Incident Extension Completed By </label>
+                                <select class="extension_modal_signature" name="incident_extension_by"
                                     id="">
                                     <option value="">-- Select --</option>
                                 </select>
                             </div>
                             <div class="group-input">
-                                <label for="password">Failure Investigation Extension Completed On </label>
-                                <input class="extension_modal_signature" type="date" name="failure_investigation_on">
+                                <label for="password">Incident Extension Completed On </label>
+                                <input class="extension_modal_signature" type="date" name="incident_on">
                             </div>
 
                         </div>
@@ -6639,7 +6638,7 @@
                                 <ul>
                                     <li>
                                         <div> <a href="" data-bs-toggle="modal"
-                                                data-bs-target="#failure_investigation_effectiveness"> Failure Investigation Effectiveness
+                                                data-bs-target="#incident_effectiveness"> Incident Effectiveness
                                                 Check</a></div>
                                     </li>
 
@@ -6670,15 +6669,14 @@
                 </div>
             </div>
         </div>
-
-
-        <div class="modal fade" id="failure_investigation_effectiveness">
+        {{-- ===============================Incident effectiveness=========== --}}
+        <div class="modal fade" id="incident_effectiveness">
             <div class="modal-dialog modal-dialog-centered">
                 <div class="modal-content">
 
                     <!-- Modal Header -->
                     <div class="modal-header">
-                        <h4 class="modal-title">Failure Investigation-Effectiveness</h4>
+                        <h4 class="modal-title">Incident-Effectiveness</h4>
                         <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                     </div>
 
@@ -6696,41 +6694,41 @@
                                 <input class="extension_modal_signature" type="password" name="password" required>
                             </div>
                             <div class="group-input">
-                                <label for="Failure Investigation">Effectiveness Check Plan(Failure Investigation)</label>
+                                <label for="Incident">Effectiveness Check Plan(Incident)</label>
                                 <input class="extension_modal_signature" type="date"
-                                    name="effectiveness_failure_investigation">
+                                    name="effectiveness_incident">
                             </div>
                             <div class="group-input">
-                                <label for="password">Failure Investigation Effectiveness Check Plan Proposed By<span
+                                <label for="password">Incident Effectiveness Check Plan Proposed By<span
                                         class="text-danger">*</span></label>
                                 <input class="extension_modal_signature" type="text"
-                                    name="effectiveness_failure_investigation_proposed_by">
+                                    name="effectiveness_incident_proposed_by">
                             </div>
                             <div class="group-input">
-                                <label for="password">Failure Investigation Effectiveness Check Plan Proposed On </label>
+                                <label for="password">Incident Effectiveness Check Plan Proposed On </label>
                                 <input class="extension_modal_signature" type="text"
-                                    name="failure_investigation_effectiveness_by">
+                                    name="incident_effectiveness_by">
                             </div>
                             <div class="group-input">
-                                <label for="password">Effectiveness Check Colsure Comments(Failure Investigation)</label>
+                                <label for="password">Effectiveness Check Colsure Comments(Incident)</label>
                                 <input class="extension_modal_signature" type="date"
-                                    name="failure_investigation_effectiveness_on">
+                                    name="incident_effectiveness_on">
                             </div>
                             <div class="group-input">
-                                <label for="password">Next Review Date(Failure Investigation)</label>
-                                <input class="extension_modal_signature" type="date" name="next_review_failure_investigation">
+                                <label for="password">Next Review Date(Incident)</label>
+                                <input class="extension_modal_signature" type="date" name="next_review_incident">
                             </div>
                             <div class="group-input">
-                                <label for="password">Failure Investigation Effectiveness Check closed By </label>
-                                <select class="extension_modal_signature" name="failure_investigation_feectiveness_closed_by"
+                                <label for="password">Incident Effectiveness Check closed By </label>
+                                <select class="extension_modal_signature" name="incident_feectiveness_closed_by"
                                     id="">
                                     <option value="">-- Select --</option>
                                 </select>
                             </div>
                             <div class="group-input">
-                                <label for="password">Failure Investigation Effectiveness Check CLosed On</label>
+                                <label for="password">Incident Effectiveness Check CLosed On</label>
                                 <input class="extension_modal_signature" type="date"
-                                    name="failure_investigation_effectiveness_on">
+                                    name="incident_effectiveness_on">
                             </div>
 
                         </div>
@@ -6784,12 +6782,12 @@
                             <div class="group-input">
                                 <label for="password">CAPA Effectiveness Check Plan Proposed On </label>
                                 <input class="extension_modal_signature" type="text"
-                                    name="failure_investigation_effectiveness_by">
+                                    name="incident_effectiveness_by">
                             </div>
                             <div class="group-input">
                                 <label for="password">Effectiveness Check Colsure Comments(CAPA)</label>
                                 <input class="extension_modal_signature" type="date"
-                                    name="failure_investigation_effectiveness_on">
+                                    name="incident_effectiveness_on">
                             </div>
                             <div class="group-input">
                                 <label for="password">Next Review Date(CAPA)</label>
@@ -6849,7 +6847,7 @@
                             </div>
                             <div class="group-input">
                                 <label for="password">Effectiveness Check Plan(QRM)</label>
-                                <input class="extension_modal_signature" type="date" name="failure_investigation_due_capa">
+                                <input class="extension_modal_signature" type="date" name="incident_due_capa">
                             </div>
                             <div class="group-input">
                                 <label for="password">QRM Effectiveness Check Plan Proposed By<span

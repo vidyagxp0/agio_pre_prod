@@ -13,9 +13,9 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('cc_cfts', function (Blueprint $table) {
+        Schema::create('incident_cfts', function (Blueprint $table) {
             $table->id();
-            $table->integer('cc_id');
+            $table->integer('incident_id');
             $table->text('Production_Review')->nullable();
             $table->text('Production_person')->nullable();
             $table->longtext('Production_assessment')->nullable();
@@ -156,15 +156,6 @@ return new class extends Migration
             $table->string('Other5_attachment')->nullable();
             $table->text('Other5_by')->nullable();
             $table->date('Other5_on')->nullable();
-
-            $table->text('RA_Comments')->nullable();
-            $table->text('RA_person')->nullable();
-            $table->longtext('RA_assessment')->nullable();
-            $table->longtext('RA_feedback')->nullable();
-            $table->string('RA_attachment')->nullable();
-            $table->text('RA_by')->nullable();
-            $table->date('RA_on')->nullable();
-            $table->text('RA_Review')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });
@@ -177,6 +168,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('cc_cfts');
+        Schema::dropIfExists('incident_cfts');
     }
 };

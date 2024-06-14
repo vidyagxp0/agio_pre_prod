@@ -17,7 +17,7 @@ use App\Models\LabIncident;
 use App\Models\Auditee;
 use App\Models\NonConformance;
 use App\Models\AuditProgram;
-use App\Models\{Division,Deviation, extension_new};
+use App\Models\{Division,Deviation, extension_new, Incident};
 use App\Models\RootCauseAnalysis;
 use App\Models\Observation;
 use App\Models\QMSDivision;
@@ -87,6 +87,7 @@ class DashboardController extends Controller
         $datas17 = OOS_micro::orderByDesc('id')->get();
 
         $datas25 = NonConformance::orderByDesc('id')->get();
+        $incident = Incident::orderByDesc('id')->get();
         foreach ($datas as $data) {
             $data->create = Carbon::parse($data->created_at)->format('d-M-Y h:i A');
 
@@ -160,7 +161,7 @@ class DashboardController extends Controller
                 "parent" => $data->parent_record ? $data->parent_record : "-",
                 "record" => $data->record,
                 "type" => "Effectiveness-Check",
-                "parent_id" => $data->parent_id,
+                "parent_id" => $data->parent_record,
                 "parent_type" => $data->parent_type,
                 "division_id" => $data->division_id,
                 "short_description" => $data->short_description ? $data->short_description : "-",
@@ -518,6 +519,26 @@ class DashboardController extends Controller
                 "parent" => $data->cc_id ? $data->cc_id : "-",
                 "record" => $data->record,
                 "type" => "Non Conformance",
+                "parent_id" => $data->parent_id,
+                "parent_type" => $data->parent_type,
+                "division_id" => $data->division_id,
+                "short_description" => $data->short_description ? $data->short_description : "-",
+                "initiator_id" => $data->initiator_id,
+                "initiated_through" => $data->initiated_through,
+                "intiation_date" => $data->intiation_date,
+                "stage" => $data->status,
+                "date_open" => $data->created_at,
+                "due_date" => $data->due_date,
+                "date_close" => $data->updated_at,
+            ]);
+        }
+        foreach ($incident as $data) {
+            $data->create = Carbon::parse($data->created_at)->format('d-M-Y h:i A');
+            array_push($table, [
+                "id" => $data->id,
+                "parent" => $data->cc_id ? $data->cc_id : "-",
+                "record" => $data->record,
+                "type" => "Incident",
                 "parent_id" => $data->parent_id,
                 "parent_type" => $data->parent_type,
                 "division_id" => $data->division_id,
@@ -1024,6 +1045,14 @@ class DashboardController extends Controller
             $data = CC::find($id);
             $audit = "audit/" . $data->id;
             $single = "change_control_single_pdf/" . $data->id;
+            $division = QMSDivision::find($data->division_id);
+            $division_name = $division->name;
+        }
+
+        elseif ($type == "Incident") {
+            $data = Incident::find($id);
+            $single = "incident-single-report/" . $data->id;
+            $audit = "incident-audit-pdf/" . $data->id;
             $division = QMSDivision::find($data->division_id);
             $division_name = $division->name;
         }

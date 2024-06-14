@@ -4,16 +4,18 @@ namespace App\Http\Controllers\rcms;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Models\{FailureInvestigation,FailureInvestigationAuditTrail,FailureInvestigationCft,
-FailureInvestigationCftResponse,
-FailureInvestigationGrid,
-FailureInvestigationGridData,
-FailureInvestigationGridFailureMode,
-FailureInvestigationHistory,
-FailureInvestigationLaunchExtension,
+use App\Models\{Incident,
+IncidentAuditTrail,
+IncidentCft,
+IncidentCftResponse,
+IncidentGrid,
+IncidentGridData,
+IncidentGridFailureMode,
+IncidentHistory,
+IncidentLaunchExtension,
 };
 use App\Models\RootCauseAnalysis;
-use App\Models\{EffectivenessCheck,LaunchExtension};
+use App\Models\EffectivenessCheck;
 use App\Models\CC;
 use App\Models\ActionItem;
 use App\Models\Extension;
@@ -38,17 +40,15 @@ use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Validator;
 
-class FailureInvestigationController extends Controller
+class IncidentController extends Controller
 {
-    public function index(){
-        $old_record = FailureInvestigation::select('id', 'division_id', 'record')->get();
-        $record_numbers = (RecordNumber::first()->value('counter')) + 1;
-        $record_number = str_pad($record_numbers, 4, '0', STR_PAD_LEFT);
+    public function index(Request $request){
+        $old_record = Incident::select('id', 'division_id', 'record')->get();
         $currentDate = Carbon::now();
         $formattedDate = $currentDate->addDays(30);
         $due_date = $formattedDate->format('d-M-Y');
-        $pre = FailureInvestigation::all();
-        return response()->view('frontend.failure-investigation.failure-inv-new', compact('formattedDate','record_number', 'due_date', 'old_record', 'pre'));
+        $pre = Incident::all();
+        return response()->view('frontend.incident.incident-new', compact('formattedDate', 'due_date', 'old_record', 'pre'));
     }
 
     public function store(Request $request)
@@ -81,215 +81,213 @@ class FailureInvestigationController extends Controller
             return response()->redirect()->back()->withInput();
         }
 
-        $failureInvestigation = new FailureInvestigation();
-        $failureInvestigation->form_type = "Failure Investigation";
+        $incident = new Incident();
+        $incident->form_type = "Incident";
 
-        $failureInvestigation->record = ((RecordNumber::first()->value('counter')) + 1);
-        $failureInvestigation->initiator_id = Auth::user()->id;
+        $incident->record = ((RecordNumber::first()->value('counter')) + 1);
+        $incident->initiator_id = Auth::user()->id;
 
-        $failureInvestigation->form_progress = isset($form_progress) ? $form_progress : null;
+        $incident->form_progress = isset($form_progress) ? $form_progress : null;
 
         # -------------new-----------
-        //  $failureInvestigation->record_number = $request->record_number;
-        $failureInvestigation->division_id = $request->division_id;
-        $failureInvestigation->assign_to = $request->assign_to;
-        $failureInvestigation->Facility = $request->Facility;
-        $failureInvestigation->due_date = $request->due_date;
-        $failureInvestigation->intiation_date = $request->intiation_date;
-        $failureInvestigation->Initiator_Group = $request->Initiator_Group;
-        $failureInvestigation->due_date = Carbon::now()->addDays(30)->format('d-M-Y');
-        $failureInvestigation->initiator_group_code = $request->initiator_group_code;
-        $failureInvestigation->short_description = $request->short_description;
-        $failureInvestigation->failure_investigation_date = $request->failure_investigation_date;
-        $failureInvestigation->failure_investigation_time = $request->failure_investigation_time;
-        $failureInvestigation->failure_investigation_reported_date = $request->failure_investigation_reported_date;
+        //  $incident->record_number = $request->record_number;
+        $incident->division_id = $request->division_id;
+        $incident->assign_to = $request->assign_to;
+        $incident->Facility = $request->Facility;
+        $incident->due_date = $request->due_date;
+        $incident->intiation_date = $request->intiation_date;
+        $incident->Initiator_Group = $request->Initiator_Group;
+        $incident->due_date = Carbon::now()->addDays(30)->format('d-M-Y');
+        $incident->initiator_group_code = $request->initiator_group_code;
+        $incident->short_description = $request->short_description;
+        $incident->incident_date = $request->incident_date;
+        $incident->incident_time = $request->incident_time;
+        $incident->incident_reported_date = $request->incident_reported_date;
         if (is_array($request->audit_type)) {
-            $failureInvestigation->audit_type = implode(',', $request->audit_type);
+            $incident->audit_type = implode(',', $request->audit_type);
         }
-        $failureInvestigation->short_description_required = $request->short_description_required;
-        $failureInvestigation->nature_of_repeat = $request->nature_of_repeat;
-        $failureInvestigation->others = $request->others;
+        $incident->short_description_required = $request->short_description_required;
+        $incident->nature_of_repeat = $request->nature_of_repeat;
+        $incident->others = $request->others;
 
-        $failureInvestigation->Product_Batch = $request->Product_Batch;
+        $incident->Product_Batch = $request->Product_Batch;
 
-        $failureInvestigation->Description_failure_investigation = implode(',', $request->Description_failure_investigation);
-        $failureInvestigation->Immediate_Action = implode(',', $request->Immediate_Action);
-        $failureInvestigation->Preliminary_Impact = implode(',', $request->Preliminary_Impact);
-        $failureInvestigation->Product_Details_Required = $request->Product_Details_Required;
+        $incident->Description_incident = implode(',', $request->Description_incident);
+        $incident->Immediate_Action = implode(',', $request->Immediate_Action);
+        $incident->Preliminary_Impact = implode(',', $request->Preliminary_Impact);
+        $incident->Product_Details_Required = $request->Product_Details_Required;
 
-        $failureInvestigation->HOD_Remarks = $request->HOD_Remarks;
-        $failureInvestigation->failure_investigation_category = $request->failure_investigation_category;
-        if($request->failure_investigation_category=='')
-        $failureInvestigation->Justification_for_categorization = $request->Justification_for_categorization;
-        $failureInvestigation->Investigation_required = $request->Investigation_required;
-        $failureInvestigation->capa_required = $request->capa_required;
-        $failureInvestigation->qrm_required = $request->qrm_required;
+        $incident->HOD_Remarks = $request->HOD_Remarks;
+        $incident->incident_category = $request->incident_category;
+        if($request->incident_category=='')
+        $incident->Justification_for_categorization = $request->Justification_for_categorization;
+        $incident->Investigation_required = $request->Investigation_required;
+        $incident->capa_required = $request->capa_required;
+        $incident->qrm_required = $request->qrm_required;
 
-        $failureInvestigation->Investigation_Details = $request->Investigation_Details;
-        $failureInvestigation->Customer_notification = $request->Customer_notification;
-        $failureInvestigation->customers = $request->customers;
-        $failureInvestigation->QAInitialRemark = $request->QAInitialRemark;
+        $incident->Investigation_Details = $request->Investigation_Details;
+        $incident->Customer_notification = $request->Customer_notification;
+        $incident->customers = $request->customers;
+        $incident->QAInitialRemark = $request->QAInitialRemark;
 
-        $failureInvestigation->Investigation_Summary = $request->Investigation_Summary;
-        $failureInvestigation->Impact_assessment = $request->Impact_assessment;
-        $failureInvestigation->Root_cause = $request->Root_cause;
-        $failureInvestigation->CAPA_Rquired = $request->CAPA_Rquired;
-        $failureInvestigation->capa_type = $request->capa_type;
-        $failureInvestigation->CAPA_Description = $request->CAPA_Description;
-        $failureInvestigation->Post_Categorization = $request->Post_Categorization;
-        $failureInvestigation->Investigation_Of_Review = $request->Investigation_Of_Review;
-        $failureInvestigation->QA_Feedbacks = $request->QA_Feedbacks;
-        $failureInvestigation->Closure_Comments = $request->Closure_Comments;
-        $failureInvestigation->Disposition_Batch = $request->Disposition_Batch;
-        $failureInvestigation->Facility_Equipment = $request->Facility_Equipment;
-        $failureInvestigation->Document_Details_Required = $request->Document_Details_Required;
+        $incident->Investigation_Summary = $request->Investigation_Summary;
+        $incident->Impact_assessment = $request->Impact_assessment;
+        $incident->Root_cause = $request->Root_cause;
+        $incident->CAPA_Rquired = $request->CAPA_Rquired;
+        $incident->capa_type = $request->capa_type;
+        $incident->CAPA_Description = $request->CAPA_Description;
+        $incident->Post_Categorization = $request->Post_Categorization;
+        $incident->Investigation_Of_Review = $request->Investigation_Of_Review;
+        $incident->QA_Feedbacks = $request->QA_Feedbacks;
+        $incident->Closure_Comments = $request->Closure_Comments;
+        $incident->Disposition_Batch = $request->Disposition_Batch;
+        $incident->Facility_Equipment = $request->Facility_Equipment;
+        $incident->Document_Details_Required = $request->Document_Details_Required;
       
-        if ($request->failure_investigation_category == 'major' || $request->failure_investigation_category == 'minor' || $request->failure_investigation_category == 'critical') {
-            $list = Helpers::getHeadoperationsUserList();
-                    foreach ($list as $u) {
-                        if ($u->q_m_s_divisions_id == $failureInvestigation->division_id) {
-                            $email = Helpers::getInitiatorEmail($u->user_id);
-                            if ($email !== null) {
-                                 // Add this if statement
-                                try {
-                                    Mail::send(
-                                        'mail.Categorymail',
-                                        ['data' => $failureInvestigation],
-                                        function ($message) use ($email) {
-                                            $message->to($email)
-                                                ->subject("Activity Performed By " . Auth::user()->name);
-                                        }
-                                    );
-                                } catch (\Exception $e) {
-                                    //log error
-                                }
+        if ($request->incident_category == 'major' || $request->incident_category == 'minor' || $request->incident_category == 'critical') {
+            // $list = Helpers::getHeadoperationsUserList();
+            //         foreach ($list as $u) {
+            //             if ($u->q_m_s_divisions_id == $incident->division_id) {
+            //                 $email = Helpers::getInitiatorEmail($u->user_id);
+            //                 if ($email !== null) {
+            //                     try {
+            //                         Mail::send(
+            //                             'mail.Categorymail',
+            //                             ['data' => $incident],
+            //                             function ($message) use ($email) {
+            //                                 $message->to($email)
+            //                                     ->subject("Activity Performed By " . Auth::user()->name);
+            //                             }
+            //                         );
+            //                     } catch (\Exception $e) {
+            //                     }
 
-                            }
-                        }
-                    }
+            //                 }
+            //             }
+            //         }
                 }
 
 
-                if ($request->failure_investigation_category == 'major' || $request->failure_investigation_category == 'minor' || $request->failure_investigation_category == 'critical') {
-                    $list = Helpers::getCEOUserList();
-                            foreach ($list as $u) {
-                                if ($u->q_m_s_divisions_id == $failureInvestigation->division_id) {
-                                    $email = Helpers::getInitiatorEmail($u->user_id);
-                                    if ($email !== null) {
-                                         // Add this if statement
-                                         try {
-                                                Mail::send(
-                                                    'mail.Categorymail',
-                                                    ['data' => $failureInvestigation],
-                                                    function ($message) use ($email) {
-                                                        $message->to($email)
-                                                            ->subject("Activity Performed By " . Auth::user()->name);
-                                                    }
-                                                );
-                                            } catch (\Exception $e) {
-                                                //log error
-                                            }
+                if ($request->incident_category == 'major' || $request->incident_category == 'minor' || $request->incident_category == 'critical') {
+                    // $list = Helpers::getCEOUserList();
+                    //         foreach ($list as $u) {
+                    //             if ($u->q_m_s_divisions_id == $incident->division_id) {
+                    //                 $email = Helpers::getInitiatorEmail($u->user_id);
+                    //                 if ($email !== null) {
+                                         
+                    //                      try {
+                    //                             Mail::send(
+                    //                                 'mail.Categorymail',
+                    //                                 ['data' => $incident],
+                    //                                 function ($message) use ($email) {
+                    //                                     $message->to($email)
+                    //                                         ->subject("Activity Performed By " . Auth::user()->name);
+                    //                                 }
+                    //                             );
+                    //                         } catch (\Exception $e) {
+                                                
+                    //                         }
 
-                                    }
-                                }
-                            }
+                    //                 }
+                    //             }
+                    //         }
                         }
-                        if ($request->failure_investigation_category == 'major' || $request->failure_investigation_category == 'minor' || $request->failure_investigation_category == 'critical') {
-                            $list = Helpers::getCorporateEHSHeadUserList();
-                                    foreach ($list as $u) {
-                                        if ($u->q_m_s_divisions_id == $failureInvestigation->division_id) {
-                                            $email = Helpers::getInitiatorEmail($u->user_id);
-                                            if ($email !== null) {
-                                                 // Add this if statement
-                                                 try {
-                                                        Mail::send(
-                                                            'mail.Categorymail',
-                                                            ['data' => $failureInvestigation],
-                                                            function ($message) use ($email) {
-                                                                $message->to($email)
-                                                                    ->subject("Activity Performed By " . Auth::user()->name);
-                                                            }
-                                                        );
-                                                    } catch (\Exception $e) {
-                                                        //log error
-                                                    }
+                        if ($request->incident_category == 'major' || $request->incident_category == 'minor' || $request->incident_category == 'critical') {
+                            // $list = Helpers::getCorporateEHSHeadUserList();
+                            //         foreach ($list as $u) {
+                            //             if ($u->q_m_s_divisions_id == $incident->division_id) {
+                            //                 $email = Helpers::getInitiatorEmail($u->user_id);
+                            //                 if ($email !== null) {
+                                                 
+                            //                      try {
+                            //                             Mail::send(
+                            //                                 'mail.Categorymail',
+                            //                                 ['data' => $incident],
+                            //                                 function ($message) use ($email) {
+                            //                                     $message->to($email)
+                            //                                         ->subject("Activity Performed By " . Auth::user()->name);
+                            //                                 }
+                            //                             );
+                            //                         } catch (\Exception $e) {
+                                                        
+                            //                         }
 
-                                            }
-                                        }
-                                    }
+                            //                 }
+                            //             }
+                            //         }
                                 }
 
                                 if ($request->Post_Categorization == 'major' || $request->Post_Categorization == 'minor' || $request->Post_Categorization == 'critical') {
-                                    $list = Helpers::getHeadoperationsUserList();
-                                            foreach ($list as $u) {
-                                                if ($u->q_m_s_divisions_id == $failureInvestigation->division_id) {
-                                                    $email = Helpers::getInitiatorEmail($u->user_id);
-                                                    if ($email !== null) {
-                                                         // Add this if statement
-                                                         try {
-                                                            Mail::send(
-                                                                'mail.Categorymail',
-                                                                ['data' => $failureInvestigation],
-                                                                function ($message) use ($email) {
-                                                                    $message->to($email)
-                                                                        ->subject("Activity Performed By " . Auth::user()->name);
-                                                                }
-                                                            );
-                                                        } catch (\Exception $e) {
-                                                            //log error
-                                                        }
+                                    // $list = Helpers::getHeadoperationsUserList();
+                                    //         foreach ($list as $u) {
+                                    //             if ($u->q_m_s_divisions_id == $incident->division_id) {
+                                    //                 $email = Helpers::getInitiatorEmail($u->user_id);
+                                    //                 if ($email !== null) {
+                                                         
+                                    //                      try {
+                                    //                         Mail::send(
+                                    //                             'mail.Categorymail',
+                                    //                             ['data' => $incident],
+                                    //                             function ($message) use ($email) {
+                                    //                                 $message->to($email)
+                                    //                                     ->subject("Activity Performed By " . Auth::user()->name);
+                                    //                             }
+                                    //                         );
+                                    //                     } catch (\Exception $e) {
+                                                            
+                                    //                     }
 
-                                                    }
-                                                }
-                                            }
+                                    //                 }
+                                    //             }
+                                    //         }
                                         }
                                         if ($request->Post_Categorization == 'major' || $request->Post_Categorization == 'minor' || $request->Post_Categorization == 'critical') {
-                                            $list = Helpers::getCEOUserList();
-                                                    foreach ($list as $u) {
-                                                        if ($u->q_m_s_divisions_id == $failureInvestigation->division_id) {
-                                                            $email = Helpers::getInitiatorEmail($u->user_id);
-                                                            if ($email !== null) {
-                                                                 // Add this if statement
-                                                                 try {
-                                                                        Mail::send(
-                                                                            'mail.Categorymail',
-                                                                            ['data' => $failureInvestigation],
-                                                                            function ($message) use ($email) {
-                                                                                $message->to($email)
-                                                                                    ->subject("Activity Performed By " . Auth::user()->name);
-                                                                            }
-                                                                        );
-                                                                    } catch (\Exception $e) {
-                                                                        //log error
-                                                                    }
+                                            // $list = Helpers::getCEOUserList();
+                                            //         foreach ($list as $u) {
+                                            //             if ($u->q_m_s_divisions_id == $incident->division_id) {
+                                            //                 $email = Helpers::getInitiatorEmail($u->user_id);
+                                            //                 if ($email !== null) {
+                                                                 
+                                            //                      try {
+                                            //                             Mail::send(
+                                            //                                 'mail.Categorymail',
+                                            //                                 ['data' => $incident],
+                                            //                                 function ($message) use ($email) {
+                                            //                                     $message->to($email)
+                                            //                                         ->subject("Activity Performed By " . Auth::user()->name);
+                                            //                                 }
+                                            //                             );
+                                            //                         } catch (\Exception $e) {
+                                                                        
+                                            //                         }
 
-                                                            }
-                                                        }
-                                                    }
+                                            //                 }
+                                            //             }
+                                            //         }
                                                 }
                                                 if ($request->Post_Categorization == 'major' || $request->Post_Categorization == 'minor' || $request->Post_Categorization == 'critical') {
-                                                    $list = Helpers::getCorporateEHSHeadUserList();
-                                                            foreach ($list as $u) {
-                                                                if ($u->q_m_s_divisions_id == $failureInvestigation->division_id) {
-                                                                    $email = Helpers::getInitiatorEmail($u->user_id);
-                                                                    if ($email !== null) {
-                                                                         // Add this if statement
-                                                                         try {
-                                                                                Mail::send(
-                                                                                    'mail.Categorymail',
-                                                                                    ['data' => $failureInvestigation],
-                                                                                    function ($message) use ($email) {
-                                                                                        $message->to($email)
-                                                                                            ->subject("Activity Performed By " . Auth::user()->name);
-                                                                                    }
-                                                                                );
-                                                                            } catch (\Exception $e) {
-                                                                                //log error
-                                                                            }
+                                                    // $list = Helpers::getCorporateEHSHeadUserList();
+                                                    //         foreach ($list as $u) {
+                                                    //             if ($u->q_m_s_divisions_id == $incident->division_id) {
+                                                    //                 $email = Helpers::getInitiatorEmail($u->user_id);
+                                                    //                 if ($email !== null) {
+                                                                         
+                                                    //                      try {
+                                                    //                             Mail::send(
+                                                    //                                 'mail.Categorymail',
+                                                    //                                 ['data' => $incident],
+                                                    //                                 function ($message) use ($email) {
+                                                    //                                     $message->to($email)
+                                                    //                                         ->subject("Activity Performed By " . Auth::user()->name);
+                                                    //                                 }
+                                                    //                             );
+                                                    //                         } catch (\Exception $e) {
+                                                                                
+                                                    //                         }
 
-                                                                    }
-                                                                }
-                                                            }
+                                                    //                 }
+                                                    //             }
+                                                    //         }
                                                         }
 
         if (!empty ($request->Audit_file)) {
@@ -303,7 +301,7 @@ class FailureInvestigationController extends Controller
             }
 
 
-            $failureInvestigation->Audit_file = json_encode($files);
+            $incident->Audit_file = json_encode($files);
         }
         if (!empty ($request->initial_file)) {
             $files = [];
@@ -316,7 +314,7 @@ class FailureInvestigationController extends Controller
             }
 
 
-            $failureInvestigation->initial_file = json_encode($files);
+            $incident->initial_file = json_encode($files);
         }
         //dd($request->Initial_attachment);
         if (!empty ($request->Initial_attachment)) {
@@ -330,7 +328,7 @@ class FailureInvestigationController extends Controller
             }
 
 
-            $failureInvestigation->Initial_attachment = json_encode($files);
+            $incident->Initial_attachment = json_encode($files);
         }
 
         if (!empty ($request->QA_attachment)) {
@@ -344,7 +342,7 @@ class FailureInvestigationController extends Controller
             }
 
 
-            $failureInvestigation->QA_attachment = json_encode($files);
+            $incident->QA_attachment = json_encode($files);
         }
         if (!empty ($request->Investigation_attachment)) {
             $files = [];
@@ -357,7 +355,7 @@ class FailureInvestigationController extends Controller
             }
 
 
-            $failureInvestigation->Investigation_attachment = json_encode($files);
+            $incident->Investigation_attachment = json_encode($files);
         }
         if (!empty ($request->Capa_attachment)) {
             $files = [];
@@ -370,7 +368,7 @@ class FailureInvestigationController extends Controller
             }
 
 
-            $failureInvestigation->Capa_attachment = json_encode($files);
+            $incident->Capa_attachment = json_encode($files);
         }
 
         if (!empty ($request->QA_attachments)) {
@@ -384,7 +382,7 @@ class FailureInvestigationController extends Controller
             }
 
 
-            $failureInvestigation->QA_attachments = json_encode($files);
+            $incident->QA_attachments = json_encode($files);
         }
 
         if (!empty ($request->closure_attachment)) {
@@ -398,7 +396,7 @@ class FailureInvestigationController extends Controller
             }
 
 
-            $failureInvestigation->closure_attachment = json_encode($files);
+            $incident->closure_attachment = json_encode($files);
         }
 
         $record = RecordNumber::first();
@@ -407,14 +405,14 @@ class FailureInvestigationController extends Controller
 
 
 
-        $failureInvestigation->status = 'Opened';
-        $failureInvestigation->stage = 1;
+        $incident->status = 'Opened';
+        $incident->stage = 1;
 
-        $failureInvestigation->save();
+        $incident->save();
 
-        $data3 = new FailureInvestigationGrid();
-        $data3->failure_investigation_grid_id = $failureInvestigation->id;
-        $data3->type = "FailureInvestigation";
+        $data3 = new IncidentGrid();
+        $data3->incident_grid_id = $incident->id;
+        $data3->type = "Incident";
         if (!empty($request->facility_name)) {
             $data3->facility_name = serialize($request->facility_name);
         }
@@ -426,8 +424,8 @@ class FailureInvestigationController extends Controller
             $data3->Remarks = serialize($request->Remarks);
         }
         $data3->save();
-        $data4 = new FailureInvestigationGrid();
-        $data4->failure_investigation_grid_id = $failureInvestigation->id;
+        $data4 = new IncidentGrid();
+        $data4->incident_grid_id = $incident->id;
         $data4->type = "Document ";
         if (!empty($request->Number)) {
             $data4->Number = serialize($request->Number);
@@ -441,8 +439,8 @@ class FailureInvestigationController extends Controller
         }
         $data4->save();
 
-        $data5 = new FailureInvestigationGrid();
-        $data5->failure_investigation_grid_id = $failureInvestigation->id;
+        $data5 = new IncidentGrid();
+        $data5->incident_grid_id = $incident->id;
         $data5->type = "Product ";
         if (!empty($request->product_name)) {
             $data5->product_name = serialize($request->product_name);
@@ -458,8 +456,8 @@ class FailureInvestigationController extends Controller
 
 
 
-        $Cft = new FailureInvestigationCft();
-        $Cft->failure_investigation_id = $failureInvestigation->id;
+        $Cft = new IncidentCft();
+        $Cft->incident_id = $incident->id;
         $Cft->Production_Review = $request->Production_Review;
         $Cft->Production_person = $request->Production_person;
         $Cft->Production_assessment = $request->Production_assessment;
@@ -808,8 +806,8 @@ class FailureInvestigationController extends Controller
 
         $Cft->save();
 
-            $history = new FailureInvestigationAuditTrail();
-            $history->failure_investigation_id = $failureInvestigation->id;
+            $history = new IncidentAuditTrail();
+            $history->incident_id = $incident->id;
             $history->activity_type = 'Initiator';
             $history->previous = "Null";
             $history->current = Auth::user()->name;
@@ -817,29 +815,29 @@ class FailureInvestigationController extends Controller
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state = $failureInvestigation->status;
+            $history->origin_state = $incident->status;
             $history->change_to =   "Opened";
             $history->change_from = "Initiator";
             $history->action_name = 'Create';
             $history->save();
 
-            $history = new FailureInvestigationAuditTrail();
-            $history->failure_investigation_id = $failureInvestigation->id;
+            $history = new IncidentAuditTrail();
+            $history->incident_id = $incident->id;
             $history->activity_type = 'Due Date';
             $history->previous = "Null";
-            $history->current = $failureInvestigation->due_date;
+            $history->current = $incident->due_date;
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state = $failureInvestigation->status;
+            $history->origin_state = $incident->status;
             $history->change_to =   "Opened";
             $history->change_from = "Initiator";
             $history->action_name = 'Create';
             $history->save();
 
-            $history = new FailureInvestigationAuditTrail();
-            $history->failure_investigation_id = $failureInvestigation->id;
+            $history = new IncidentAuditTrail();
+            $history->incident_id = $incident->id;
             $history->activity_type = 'Date of Initiation';
             $history->previous = "Null";
             $history->current = Carbon::now()->format('d-M-Y');
@@ -847,23 +845,23 @@ class FailureInvestigationController extends Controller
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state = $failureInvestigation->status;
+            $history->origin_state = $incident->status;
             $history->change_to =   "Opened";
             $history->change_from = "Initiator";
             $history->action_name = 'Create';
             $history->save();
 
         if (!empty ($request->short_description)){
-            $history = new FailureInvestigationAuditTrail();
-            $history->failure_investigation_id = $failureInvestigation->id;
+            $history = new IncidentAuditTrail();
+            $history->incident_id = $incident->id;
             $history->activity_type = 'Short Description';
             $history->previous = "Null";
-            $history->current = $failureInvestigation->short_description;
+            $history->current = $incident->short_description;
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state = $failureInvestigation->status;
+            $history->origin_state = $incident->status;
             $history->change_to =   "Opened";
             $history->change_from = "Initiator";
             $history->action_name = 'Create';
@@ -871,194 +869,194 @@ class FailureInvestigationController extends Controller
         }
 
         if (!empty ($request->Initiator_Group)){
-            $history = new FailureInvestigationAuditTrail();
-            $history->failure_investigation_id = $failureInvestigation->id;
+            $history = new IncidentAuditTrail();
+            $history->incident_id = $incident->id;
             $history->activity_type = 'Department';
             $history->previous = "Null";
-            $history->current = $failureInvestigation->Initiator_Group;
+            $history->current = $incident->Initiator_Group;
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state = $failureInvestigation->status;
+            $history->origin_state = $incident->status;
             $history->change_to =   "Opened";
             $history->change_from = "Initiator";
             $history->action_name = 'Create';
             $history->save();
         }
-        if (!empty ($request->failure_investigation_date)){
-            $history = new FailureInvestigationAuditTrail();
-            $history->failure_investigation_id = $failureInvestigation->id;
-            $history->activity_type = 'Failure Investigation Observed';
+        if (!empty ($request->incident_date)){
+            $history = new IncidentAuditTrail();
+            $history->incident_id = $incident->id;
+            $history->activity_type = 'Incident Observed';
             $history->previous = "Null";
-            $history->current = $failureInvestigation->failure_investigation_date;
+            $history->current = $incident->incident_date;
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state = $failureInvestigation->status;
+            $history->origin_state = $incident->status;
             $history->change_to =   "Opened";
             $history->change_from = "Initiator";
             $history->action_name = 'Create';
             $history->save();
         }
         if (is_array($request->Facility) && $request->Facility[0] !== null){
-            $history = new FailureInvestigationAuditTrail();
-            $history->failure_investigation_id = $failureInvestigation->id;
+            $history = new IncidentAuditTrail();
+            $history->incident_id = $incident->id;
             $history->activity_type = 'Observed by';
             $history->previous = "Null";
-            $history->current = $failureInvestigation->Facility;
+            $history->current = $incident->Facility;
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state = $failureInvestigation->status;
+            $history->origin_state = $incident->status;
             $history->change_to =   "Opened";
             $history->change_from = "Initiator";
             $history->action_name = 'Create';
             $history->save();
         }
-        if (!empty ($request->failure_investigation_reported_date)){
-            $history = new FailureInvestigationAuditTrail();
-            $history->failure_investigation_id = $failureInvestigation->id;
-            $history->activity_type = 'Failure Investigation Reported on';
+        if (!empty ($request->incident_reported_date)){
+            $history = new IncidentAuditTrail();
+            $history->incident_id = $incident->id;
+            $history->activity_type = 'Incident Reported on';
             $history->previous = "Null";
-            $history->current = $failureInvestigation->failure_investigation_reported_date;
+            $history->current = $incident->incident_reported_date;
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state = $failureInvestigation->status;
+            $history->origin_state = $incident->status;
             $history->change_to =   "Opened";
             $history->change_from = "Initiator";
             $history->action_name = 'Create';
             $history->save();
         }
         if ($request->audit_type[0] !== null){
-            $history = new FailureInvestigationAuditTrail();
-            $history->failure_investigation_id = $failureInvestigation->id;
-            $history->activity_type = 'Failure Investigation Related To';
+            $history = new IncidentAuditTrail();
+            $history->incident_id = $incident->id;
+            $history->activity_type = 'Incident Related To';
             $history->previous = "Null";
-            $history->current = $failureInvestigation->audit_type;
+            $history->current = $incident->audit_type;
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state = $failureInvestigation->status;
+            $history->origin_state = $incident->status;
             $history->change_to =   "Opened";
             $history->change_from = "Initiator";
             $history->action_name = 'Create';
             $history->save();
         }
         if (!empty ($request->others)){
-            $history = new FailureInvestigationAuditTrail();
-            $history->failure_investigation_id = $failureInvestigation->id;
+            $history = new IncidentAuditTrail();
+            $history->incident_id = $incident->id;
             $history->activity_type = 'Others';
             $history->previous = "Null";
-            $history->current = $failureInvestigation->others;
+            $history->current = $incident->others;
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state = $failureInvestigation->status;
+            $history->origin_state = $incident->status;
             $history->action_name = 'Create';
             $history->change_to =   "Opened";
             $history->change_from = "Initiator";
             $history->save();
         }
         if (!empty ($request->Facility_Equipment)){
-            $history = new FailureInvestigationAuditTrail();
-            $history->failure_investigation_id = $failureInvestigation->id;
+            $history = new IncidentAuditTrail();
+            $history->incident_id = $incident->id;
             $history->activity_type = 'Facility/ Equipment/ Instrument/ System Details Required?';
             $history->previous = "Null";
-            $history->current = $failureInvestigation->Facility_Equipment;
+            $history->current = $incident->Facility_Equipment;
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state = $failureInvestigation->status;
+            $history->origin_state = $incident->status;
             $history->change_to =   "Opened";
             $history->change_from = "Initiator";
             $history->action_name = 'Create';
             $history->save();
         }
         if (!empty ($request->Document_Details_Required)){
-            $history = new FailureInvestigationAuditTrail();
-            $history->failure_investigation_id = $failureInvestigation->id;
+            $history = new IncidentAuditTrail();
+            $history->incident_id = $incident->id;
             $history->activity_type = 'Document Details Required';
             $history->previous = "Null";
-            $history->current = $failureInvestigation->Document_Details_Required;
+            $history->current = $incident->Document_Details_Required;
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->change_to =   "Opened";
             $history->change_from = "Initiator";
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state = $failureInvestigation->status;
+            $history->origin_state = $incident->status;
             $history->action_name = 'Create';
             $history->save();
         }
         if (!empty ($request->Product_Batch)){
-            $history = new FailureInvestigationAuditTrail();
-            $history->failure_investigation_id = $failureInvestigation->id;
+            $history = new IncidentAuditTrail();
+            $history->incident_id = $incident->id;
             $history->activity_type = 'Name of Product & Batch No';
             $history->previous = "Null";
-            $history->current = $failureInvestigation->Product_Batch;
+            $history->current = $incident->Product_Batch;
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->change_to =   "Opened";
             $history->change_from = "Initiator";
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state = $failureInvestigation->status;
+            $history->origin_state = $incident->status;
             $history->action_name = 'Create';
             $history->save();
         }
-        if ($request->Description_failure_investigation[0] !== null){
-            $history = new FailureInvestigationAuditTrail();
-            $history->failure_investigation_id = $failureInvestigation->id;
-            $history->activity_type = 'Description of Failure Investigation';
+        if ($request->Description_incident[0] !== null){
+            $history = new IncidentAuditTrail();
+            $history->incident_id = $incident->id;
+            $history->activity_type = 'Description of Incident';
             $history->previous = "Null";
-            $history->current = $failureInvestigation->Description_failure_investigation;
+            $history->current = $incident->Description_incident;
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->change_to =   "Opened";
             $history->change_from = "Initiator";
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state = $failureInvestigation->status;
+            $history->origin_state = $incident->status;
             $history->action_name = 'Create';
             $history->save();
         }
         if ($request->Immediate_Action[0] !== null){
-            $history = new FailureInvestigationAuditTrail();
-            $history->failure_investigation_id = $failureInvestigation->id;
-            $history->activity_type = 'Immediate Action (if any)';
-            $history->previous = "Null";
-            $history->current = $failureInvestigation->Immediate_Action;
-            $history->comment = "Not Applicable";
-            $history->user_id = Auth::user()->id;
-            $history->user_name = Auth::user()->name;
-            $history->change_to =   "Opened";
+            $history = new IncidentAuditTrail();
+        $history->incident_id = $incident->id;
+        $history->activity_type = 'Immediate Action (if any)';
+        $history->previous = "Null";
+        $history->current = $incident->Immediate_Action;
+        $history->comment = "Not Applicable";
+        $history->user_id = Auth::user()->id;
+        $history->user_name = Auth::user()->name;
+        $history->change_to =   "Opened";
             $history->change_from = "Initiator";
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state = $failureInvestigation->status;
-            $history->action_name = 'Create';
-            $history->save();
+        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        $history->origin_state = $incident->status;
+        $history->action_name = 'Create';
+        $history->save();
         }
         if ($request->Preliminary_Impact[0] !== null){
-            $history = new FailureInvestigationAuditTrail();
-            $history->failure_investigation_id = $failureInvestigation->id;
-            $history->activity_type = 'Preliminary Impact of Failure Investigation';
+            $history = new IncidentAuditTrail();
+            $history->incident_id = $incident->id;
+            $history->activity_type = 'Preliminary Impact of Incident';
             $history->previous = "Null";
-            $history->current = $failureInvestigation->Preliminary_Impact;
+            $history->current = $incident->Preliminary_Impact;
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->change_to =   "Opened";
             $history->change_from = "Initiator";
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state = $failureInvestigation->status;
+            $history->origin_state = $incident->status;
             $history->action_name = 'Create';
             $history->save();
         }
@@ -1067,59 +1065,61 @@ class FailureInvestigationController extends Controller
         return redirect(url('rcms/qms-dashboard'));
     }
 
-    public function show($id)
+
+    public function incidentShow($id)
     {
-        $old_record = FailureInvestigation::select('id', 'division_id', 'record')->get();
-        $data = FailureInvestigation::find($id);
+        $old_record = Incident::select('id', 'division_id', 'record')->get();
+        $data = Incident::find($id);
         $userData = User::all();
-        $data1 = FailureInvestigationCft::where('failure_investigation_id', $id)->latest()->first();
+        $data1 = IncidentCft::where('incident_id', $id)->latest()->first();
         $data->record = str_pad($data->record, 4, '0', STR_PAD_LEFT);
         $data->assign_to_name = User::where('id', $data->assign_id)->value('name');
-        $grid_data = FailureInvestigationGrid::where('failure_investigation_grid_id', $id)->where('type', "FailureInvestigation")->first();
-        $grid_data1 = FailureInvestigationGrid::where('failure_investigation_grid_id', $id)->where('type', "Document")->first();
-        $grid_data2 = FailureInvestigationGrid::where('failure_investigation_grid_id', $id)->where('type', "Product")->first();
+        $grid_data = IncidentGrid::where('incident_grid_id', $id)->where('type', "Incident")->first();
+        $grid_data1 = IncidentGrid::where('incident_grid_id', $id)->where('type', "Document")->first();
+        $grid_data2 = IncidentGrid::where('incident_grid_id', $id)->where('type', "Product")->first();
         $data->initiator_name = User::where('id', $data->initiator_id)->value('name');
-        $pre = FailureInvestigation::all();
+        // dd($data->initiator_id);
+        $pre = Incident::all();
         $divisionName = DB::table('q_m_s_divisions')->where('id', $data->division_id)->value('name');
+        $incidentNewGrid = IncidentGridData::where('incident_id', $id)->latest()->first();
 
-        $investigationTeamData = FailureInvestigationGridData::where(['failure_investigation_id' => $id, 'identifier' => 'investigation'])->first();
-        // $investigationTeamData = json_decode($test, true);
-        // dd($investigationTeamData->data);
-        $root_cause_data = FailureInvestigationGridData::where(['failure_investigation_id' => $id, 'identifier' => 'rootCause'])->first();
-        $why_data = FailureInvestigationGridData::where(['failure_investigation_id' => $id, 'identifier' => 'why'])->first();
-        $fishbone_data = FailureInvestigationGridData::where(['failure_investigation_id' => $id, 'identifier' => 'fishbone'])->first();
+        $investigation_data = IncidentGridData::where(['incident_id' => $id, 'identifier' => 'investication'])->first();
+        $root_cause_data = IncidentGridData::where(['incident_id' => $id, 'identifier' => 'rootCause'])->first();
+        $why_data = IncidentGridData::where(['incident_id' => $id, 'identifier' => 'why'])->first();
+        $fishbone_data = IncidentGridData::where(['incident_id' => $id, 'identifier' => 'fishbone'])->first();
 
-        $grid_data_qrms = FailureInvestigationGridFailureMode::where(['failure_investigation_id' => $id, 'identifier' => 'failure_mode_qrms'])->first();
-        $grid_data_matrix_qrms = FailureInvestigationGridFailureMode::where(['failure_investigation_id' => $id, 'identifier' => 'matrix_qrms'])->first();
+        $grid_data_qrms = IncidentGridFailureMode::where(['incident_id' => $id, 'identifier' => 'failure_mode_qrms'])->first();
+        $grid_data_matrix_qrms = IncidentGridFailureMode::where(['incident_id' => $id, 'identifier' => 'matrix_qrms'])->first();
 
-        $capaExtension = FailureInvestigationLaunchExtension::where(['failure_investigation_id' => $id, "extension_identifier" => "Capa"])->first();
-        $qrmExtension = FailureInvestigationLaunchExtension::where(['failure_investigation_id' => $id, "extension_identifier" => "QRM"])->first();
-        $investigationExtension = FailureInvestigationLaunchExtension::where(['failure_investigation_id' => $id, "extension_identifier" => "Investigation"])->first();
-        $failureInvestigationExtension = FailureInvestigationLaunchExtension::where(['failure_investigation_id' => $id, "extension_identifier" => "FailureInvestigation"])->first();
+        $capaExtension = IncidentLaunchExtension::where(['incident_id' => $id, "extension_identifier" => "Capa"])->first();
+        $qrmExtension = IncidentLaunchExtension::where(['incident_id' => $id, "extension_identifier" => "QRM"])->first();
+        $investigationExtension = IncidentLaunchExtension::where(['incident_id' => $id, "extension_identifier" => "Investigation"])->first();
+        $incidentExtension = IncidentLaunchExtension::where(['incident_id' => $id, "extension_identifier" => "Incident"])->first();
 
-        return view('frontend.failure-investigation.failure-inv-view', compact('data','userData', 'grid_data_qrms','grid_data_matrix_qrms', 'capaExtension','qrmExtension','investigationExtension','failureInvestigationExtension', 'old_record', 'pre', 'data1', 'divisionName','grid_data','grid_data1','grid_data2','investigationTeamData','root_cause_data', 'why_data', 'fishbone_data'));
+        return view('frontend.incident.incident-view', compact('data','userData', 'grid_data_qrms','grid_data_matrix_qrms', 'capaExtension','qrmExtension','investigationExtension','incidentExtension', 'old_record', 'pre', 'data1', 'divisionName','grid_data','grid_data1', 'incidentNewGrid','grid_data2','investigation_data','root_cause_data', 'why_data', 'fishbone_data'));
     }
 
-    public function update(Request $request,$id)
+
+    public function update(Request $request, $id)
     {
         $form_progress = null;
         
-        $lastFailureInvestigation = FailureInvestigation::find($id);
-        $failureInvestigation = FailureInvestigation::find($id);
-        $failureInvestigation->Delay_Justification = $request->Delay_Justification;
+        $lastIncident = Incident::find($id);
+        $incident = Incident::find($id);
+        $incident->Delay_Justification = $request->Delay_Justification;
 
-        if ($request->failure_investigation_category == 'major' || $request->failure_investigation_category == 'critical')
+        if ($request->incident_category == 'major' || $request->incident_category == 'critical')
         {
-            $failureInvestigation->Investigation_required = "yes";
-            $failureInvestigation->capa_required = "yes";
-            $failureInvestigation->qrm_required = "yes";
+            $incident->Investigation_required = "yes";
+            $incident->capa_required = "yes";
+            $incident->qrm_required = "yes";
         }
 
-        if ($request->failure_investigation_category == 'minor')
+        if ($request->incident_category == 'minor')
         {
-            $failureInvestigation->Investigation_required = $request->Investigation_required;
-            $failureInvestigation->capa_required = $request->capa_required;
-            $failureInvestigation->qrm_required = $request->qrm_required;
+            $incident->Investigation_required = $request->Investigation_required;
+            $incident->capa_required = $request->capa_required;
+            $incident->qrm_required = $request->qrm_required;
         }
 
         if ($request->form_name == 'general-open')
@@ -1131,14 +1131,14 @@ class FailureInvestigationController extends Controller
                 'short_description' => 'required',
                 'short_description_required' => 'required|in:Recurring,Non_Recurring',
                 'nature_of_repeat' => 'required_if:short_description_required,Recurring',
-                'failure_investigation_date' => 'required',
-                'failure_investigation_time' => 'required',
-                'failure_investigation_reported_date' => 'required',
+                'incident_date' => 'required',
+                'incident_time' => 'required',
+                'incident_reported_date' => 'required',
                 'Delay_Justification' => [
                     function ($attribute, $value, $fail) use ($request) {
-                        $failureInvestigation_date = Carbon::parse($request->failure_investigation_date);
-                        $reported_date = Carbon::parse($request->failure_investigation_reported_date);
-                        $diff_in_days = $reported_date->diffInDays($failureInvestigation_date);
+                        $incident_date = Carbon::parse($request->incident_date);
+                        $reported_date = Carbon::parse($request->incident_reported_date);
+                        $diff_in_days = $reported_date->diffInDays($incident_date);
                         if ($diff_in_days !== 0) {
                             if(!$request->Delay_Justification){
                                 $fail('The Delay Justification is required!');
@@ -1186,12 +1186,12 @@ class FailureInvestigationController extends Controller
                         }
                     },
                 ],
-                // 'Description_failure_investigation' => [
+                // 'Description_incident' => [
                 //     'required',
                 //     'array',
                 //     function($attribute, $value, $fail) {
                 //         if (count($value) === 1 && reset($value) === null) {
-                //             return $fail('Description of Failure Investigation must not be empty!.');
+                //             return $fail('Description of Incident must not be empty!.');
                 //         }
                 //     },
                 // ],
@@ -1216,7 +1216,7 @@ class FailureInvestigationController extends Controller
             ], [
                 'short_description_required.required' => 'Nature of Repeat required!',
                 'nature_of_repeat.required' =>  'The nature of repeat field is required when nature of repeat is Recurring.',
-                'audit_type' => 'Failure Investigation related to field required!'
+                'audit_type' => 'Incident related to field required!'
             ]);
 
             $validator->sometimes('others', 'required|string|min:1', function ($input) {
@@ -1234,7 +1234,7 @@ class FailureInvestigationController extends Controller
         if ($request->form_name == 'qa')
         {
             $validator = Validator::make($request->all(), [
-                'failure_investigation_category' => 'required|not_in:0',
+                'incident_category' => 'required|not_in:0',
                 'Justification_for_categorization' => 'required',
 
                 // 'Investigation_required' => 'required|in:yes,no|not_in:0',
@@ -1260,21 +1260,21 @@ class FailureInvestigationController extends Controller
         if ($request->form_name == 'capa')
         {
             if($request->source_doc!=""){
-                $failureInvestigation->capa_number = $request->capa_number ? $request->capa_number : $failureInvestigation->capa_number;
-                $failureInvestigation->department_capa = $request->department_capa ? $request->department_capa : $failureInvestigation->department_capa;
-                $failureInvestigation->source_of_capa = $request->source_of_capa ? $request->source_of_capa : $failureInvestigation->source_of_capa;
-                $failureInvestigation->capa_others = $request->capa_others ? $request->capa_others : $failureInvestigation->capa_others;
-                $failureInvestigation->source_doc = $request->source_doc ? $request->source_doc : $failureInvestigation->source_doc;
-                $failureInvestigation->Description_of_Discrepancy = $request->Description_of_Discrepancy ? $request->Description_of_Discrepancy : $failureInvestigation->Description_of_Discrepancy;
-                $failureInvestigation->capa_root_cause = $request->capa_root_cause ? $request->capa_root_cause : $failureInvestigation->capa_root_cause;
-                $failureInvestigation->Immediate_Action_Take = $request->Immediate_Action_Take ? $request->Immediate_Action_Take : $failureInvestigation->Immediate_Action_Take;
-                $failureInvestigation->Corrective_Action_Details = $request->Corrective_Action_Details ? $request->Corrective_Action_Details : $failureInvestigation->Corrective_Action_Details;
-                $failureInvestigation->Preventive_Action_Details = $request->Preventive_Action_Details ? $request->Preventive_Action_Details : $failureInvestigation->Preventive_Action_Details;
-                $failureInvestigation->capa_completed_date = $request->capa_completed_date ? $request->capa_completed_date : $failureInvestigation->capa_completed_date;
-                $failureInvestigation->Interim_Control = $request->Interim_Control ? $request->Interim_Control : $failureInvestigation->Interim_Control;
-                $failureInvestigation->Corrective_Action_Taken = $request->Corrective_Action_Taken ? $request->Corrective_Action_Taken : $failureInvestigation->Corrective_Action_Taken;
-                $failureInvestigation->Preventive_action_Taken = $request->Preventive_action_Taken ? $request->Preventive_action_Taken : $failureInvestigation->Preventive_action_Taken;
-                $failureInvestigation->CAPA_Closure_Comments = $request->CAPA_Closure_Comments ? $request->CAPA_Closure_Comments : $failureInvestigation->CAPA_Closure_Comments;
+                $incident->capa_number = $request->capa_number ? $request->capa_number : $incident->capa_number;
+                $incident->department_capa = $request->department_capa ? $request->department_capa : $incident->department_capa;
+                $incident->source_of_capa = $request->source_of_capa ? $request->source_of_capa : $incident->source_of_capa;
+                $incident->capa_others = $request->capa_others ? $request->capa_others : $incident->capa_others;
+                $incident->source_doc = $request->source_doc ? $request->source_doc : $incident->source_doc;
+                $incident->Description_of_Discrepancy = $request->Description_of_Discrepancy ? $request->Description_of_Discrepancy : $incident->Description_of_Discrepancy;
+                $incident->capa_root_cause = $request->capa_root_cause ? $request->capa_root_cause : $incident->capa_root_cause;
+                $incident->Immediate_Action_Take = $request->Immediate_Action_Take ? $request->Immediate_Action_Take : $incident->Immediate_Action_Take;
+                $incident->Corrective_Action_Details = $request->Corrective_Action_Details ? $request->Corrective_Action_Details : $incident->Corrective_Action_Details;
+                $incident->Preventive_Action_Details = $request->Preventive_Action_Details ? $request->Preventive_Action_Details : $incident->Preventive_Action_Details;
+                $incident->capa_completed_date = $request->capa_completed_date ? $request->capa_completed_date : $incident->capa_completed_date;
+                $incident->Interim_Control = $request->Interim_Control ? $request->Interim_Control : $incident->Interim_Control;
+                $incident->Corrective_Action_Taken = $request->Corrective_Action_Taken ? $request->Corrective_Action_Taken : $incident->Corrective_Action_Taken;
+                $incident->Preventive_action_Taken = $request->Preventive_action_Taken ? $request->Preventive_action_Taken : $incident->Preventive_action_Taken;
+                $incident->CAPA_Closure_Comments = $request->CAPA_Closure_Comments ? $request->CAPA_Closure_Comments : $incident->CAPA_Closure_Comments;
 
                  if (!empty ($request->CAPA_Closure_attachment)) {
                     $files = [];
@@ -1286,10 +1286,10 @@ class FailureInvestigationController extends Controller
                             $files[] = $name;
                         }
                     }
-                    $failureInvestigation->CAPA_Closure_attachment = json_encode($files);
+                    $incident->CAPA_Closure_attachment = json_encode($files);
 
                 }
-                $failureInvestigation->update();
+                $incident->update();
                 toastr()->success('Document Sent');
                 return back();
                 }
@@ -1347,106 +1347,106 @@ class FailureInvestigationController extends Controller
             }
         }
 
-        $failureInvestigation->assign_to = $request->assign_to;
-        $failureInvestigation->Initiator_Group = $request->Initiator_Group;
+        $incident->assign_to = $request->assign_to;
+        $incident->Initiator_Group = $request->Initiator_Group;
 
-        if ($failureInvestigation->stage < 3) {
-            $failureInvestigation->short_description = $request->short_description;
+        if ($incident->stage < 3) {
+            $incident->short_description = $request->short_description;
         } else {
-            $failureInvestigation->short_description = $failureInvestigation->short_description;
+            $incident->short_description = $incident->short_description;
         }
-        $failureInvestigation->initiator_group_code = $request->initiator_group_code;
-        $failureInvestigation->failure_investigation_reported_date = $request->failure_investigation_reported_date;
-        $failureInvestigation->failure_investigation_date = $request->failure_investigation_date;
-        $failureInvestigation->failure_investigation_time = $request->failure_investigation_time;
-        $failureInvestigation->Delay_Justification = $request->Delay_Justification;
-        // $failureInvestigation->audit_type = implode(',', $request->audit_type);
+        $incident->initiator_group_code = $request->initiator_group_code;
+        $incident->incident_reported_date = $request->incident_reported_date;
+        $incident->incident_date = $request->incident_date;
+        $incident->incident_time = $request->incident_time;
+        $incident->Delay_Justification = $request->Delay_Justification;
+        // $incident->audit_type = implode(',', $request->audit_type);
         if (is_array($request->audit_type)) {
-            $failureInvestigation->audit_type = implode(',', $request->audit_type);
+            $incident->audit_type = implode(',', $request->audit_type);
         }
-        $failureInvestigation->short_description_required = $request->short_description_required;
-        $failureInvestigation->nature_of_repeat = $request->nature_of_repeat;
-        $failureInvestigation->others = $request->others;
-        $failureInvestigation->Product_Batch = $request->Product_Batch;
+        $incident->short_description_required = $request->short_description_required;
+        $incident->nature_of_repeat = $request->nature_of_repeat;
+        $incident->others = $request->others;
+        $incident->Product_Batch = $request->Product_Batch;
 
-        $failureInvestigation->Description_failure_investigation = $request->Description_failure_investigation;
+        $incident->Description_incident = $request->Description_incident;
         if ($request->related_records) {
-            $failureInvestigation->Related_Records1 =  implode(',', $request->related_records);
+            $incident->Related_Records1 =  implode(',', $request->related_records);
         }
-        $failureInvestigation->Facility = $request->Facility;
+        $incident->Facility = $request->Facility;
 
 
-        $failureInvestigation->Immediate_Action = implode(',', $request->Immediate_Action);
-        $failureInvestigation->Preliminary_Impact = implode(',', $request->Preliminary_Impact);
-        $failureInvestigation->Product_Details_Required = $request->Product_Details_Required;
+        $incident->Immediate_Action = implode(',', $request->Immediate_Action);
+        $incident->Preliminary_Impact = implode(',', $request->Preliminary_Impact);
+        $incident->Product_Details_Required = $request->Product_Details_Required;
 
 
-        $failureInvestigation->HOD_Remarks = $request->HOD_Remarks;
-        $failureInvestigation->Justification_for_categorization = !empty($request->Justification_for_categorization) ? $request->Justification_for_categorization : $failureInvestigation->Justification_for_categorization;
+        $incident->HOD_Remarks = $request->HOD_Remarks;
+        $incident->Justification_for_categorization = !empty($request->Justification_for_categorization) ? $request->Justification_for_categorization : $incident->Justification_for_categorization;
 
-        $failureInvestigation->Investigation_Details = !empty($request->Investigation_Details) ? $request->Investigation_Details : $failureInvestigation->Investigation_Details;
+        $incident->Investigation_Details = !empty($request->Investigation_Details) ? $request->Investigation_Details : $incident->Investigation_Details;
 
-        $failureInvestigation->QAInitialRemark = $request->QAInitialRemark;
-        $failureInvestigation->Investigation_Summary = $request->Investigation_Summary;
-        $failureInvestigation->Impact_assessment = $request->Impact_assessment;
-        $failureInvestigation->Root_cause = $request->Root_cause;
+        $incident->QAInitialRemark = $request->QAInitialRemark;
+        $incident->Investigation_Summary = $request->Investigation_Summary;
+        $incident->Impact_assessment = $request->Impact_assessment;
+        $incident->Root_cause = $request->Root_cause;
 
-        $failureInvestigation->Conclusion = $request->Conclusion;
-        $failureInvestigation->Identified_Risk = $request->Identified_Risk;
-        $failureInvestigation->severity_rate = $request->severity_rate ? $request->severity_rate : $failureInvestigation->severity_rate;
-        $failureInvestigation->Occurrence = $request->Occurrence ? $request->Occurrence : $failureInvestigation->Occurrence;
-        $failureInvestigation->detection = $request->detection ? $request->detection: $failureInvestigation->detection;
+        $incident->Conclusion = $request->Conclusion;
+        $incident->Identified_Risk = $request->Identified_Risk;
+        $incident->severity_rate = $request->severity_rate ? $request->severity_rate : $incident->severity_rate;
+        $incident->Occurrence = $request->Occurrence ? $request->Occurrence : $incident->Occurrence;
+        $incident->detection = $request->detection ? $request->detection: $incident->detection;
 
-        $newDataGridqrms = FailureInvestigationGridFailureMode::where(['failure_investigation_id' => $id, 'identifier' =>
+        $newDataGridqrms = IncidentGridFailureMode::where(['incident_id' => $id, 'identifier' =>
         'failure_mode_qrms'])->firstOrCreate();
-        $newDataGridqrms->failure_investigation_id = $id;
+        $newDataGridqrms->incident_id = $id;
         $newDataGridqrms->identifier = 'failure_mode_qrms';
         $newDataGridqrms->data = $request->failure_mode_qrms;
         $newDataGridqrms->save();
 
-        $matrixDataGridqrms = FailureInvestigationGridFailureMode::where(['failure_investigation_id' => $id, 'identifier' => 'matrix_qrms'])->firstOrCreate();
-        $matrixDataGridqrms->failure_investigation_id = $id;
+        $matrixDataGridqrms = IncidentGridFailureMode::where(['incident_id' => $id, 'identifier' => 'matrix_qrms'])->firstOrCreate();
+        $matrixDataGridqrms->incident_id = $id;
         $matrixDataGridqrms->identifier = 'matrix_qrms';
         $matrixDataGridqrms->data = $request->matrix_qrms;
         $matrixDataGridqrms->save();
 
-        if ($failureInvestigation->stage < 6) {
-            $failureInvestigation->CAPA_Rquired = $request->CAPA_Rquired;
+        if ($incident->stage < 6) {
+            $incident->CAPA_Rquired = $request->CAPA_Rquired;
         }
 
-        if ($failureInvestigation->stage < 6) {
-            $failureInvestigation->capa_type = $request->capa_type;
+        if ($incident->stage < 6) {
+            $incident->capa_type = $request->capa_type;
         }
 
-        $failureInvestigation->CAPA_Description = !empty($request->CAPA_Description) ? $request->CAPA_Description : $failureInvestigation->CAPA_Description;
-        $failureInvestigation->Post_Categorization = !empty($request->Post_Categorization) ? $request->Post_Categorization : $failureInvestigation->Post_Categorization;
-        $failureInvestigation->Investigation_Of_Review = $request->Investigation_Of_Review;
-        $failureInvestigation->QA_Feedbacks = $request->has('QA_Feedbacks') ? $request->QA_Feedbacks : $failureInvestigation->QA_Feedbacks;
-        $failureInvestigation->Closure_Comments = $request->Closure_Comments;
-        $failureInvestigation->Disposition_Batch = $request->Disposition_Batch;
-        $failureInvestigation->Facility_Equipment = $request->Facility_Equipment;
-        $failureInvestigation->Document_Details_Required = $request->Document_Details_Required;
+        $incident->CAPA_Description = !empty($request->CAPA_Description) ? $request->CAPA_Description : $incident->CAPA_Description;
+        $incident->Post_Categorization = !empty($request->Post_Categorization) ? $request->Post_Categorization : $incident->Post_Categorization;
+        $incident->Investigation_Of_Review = $request->Investigation_Of_Review;
+        $incident->QA_Feedbacks = $request->has('QA_Feedbacks') ? $request->QA_Feedbacks : $incident->QA_Feedbacks;
+        $incident->Closure_Comments = $request->Closure_Comments;
+        $incident->Disposition_Batch = $request->Disposition_Batch;
+        $incident->Facility_Equipment = $request->Facility_Equipment;
+        $incident->Document_Details_Required = $request->Document_Details_Required;
 
-        if ($failureInvestigation->stage == 3)
+        if ($incident->stage == 3)
         {
-            $failureInvestigation->Customer_notification = $request->Customer_notification;
-            // $failureInvestigation->Investigation_required = $request->Investigation_required;
-            // $failureInvestigation->capa_required = $request->capa_required;
-            // $failureInvestigation->qrm_required = $request->qrm_required;
-            $failureInvestigation->failure_investigation_category = $request->failure_investigation_category;
-            $failureInvestigation->QAInitialRemark = $request->QAInitialRemark;
-            // $failureInvestigation->customers = $request->customers;
+            $incident->Customer_notification = $request->Customer_notification;
+            // $incident->Investigation_required = $request->Investigation_required;
+            // $incident->capa_required = $request->capa_required;
+            // $incident->qrm_required = $request->qrm_required;
+            $incident->incident_category = $request->incident_category;
+            $incident->QAInitialRemark = $request->QAInitialRemark;
+            // $incident->customers = $request->customers;
         }
 
-        if($failureInvestigation->stage == 3 || $failureInvestigation->stage == 4 ){
+        if($incident->stage == 3 || $incident->stage == 4 ){
 
 
             if (!$form_progress) {
                 $form_progress = 'cft';
             }
 
-            $Cft = FailureInvestigationCft::withoutTrashed()->where('failure_investigation_id', $id)->first();
-            if($Cft && $failureInvestigation->stage == 4 ){
+            $Cft = IncidentCft::withoutTrashed()->where('incident_id', $id)->first();
+            if($Cft && $incident->stage == 4 ){
                 $Cft->Production_Review = $request->Production_Review == null ? $Cft->Production_Review : $request->Production_Review;
                 $Cft->Production_person = $request->Production_person == null ? $Cft->Production_person : $request->Production_Review;
                 $Cft->Warehouse_review = $request->Warehouse_review == null ? $Cft->Warehouse_review : $request->Warehouse_review;
@@ -1786,8 +1786,8 @@ class FailureInvestigationController extends Controller
 
 
         $Cft->save();
-                $IsCFTRequired = FailureInvestigationCftResponse::withoutTrashed()->where(['is_required' => 1, 'failure_investigation_id' => $id])->latest()->first();
-                $cftUsers = DB::table('failure_investigation_cfts')->where(['failure_investigation_id' => $id])->first();
+                $IsCFTRequired = IncidentCftResponse::withoutTrashed()->where(['is_required' => 1, 'incident_id' => $id])->latest()->first();
+                $cftUsers = DB::table('incident_cfts')->where(['incident_id' => $id])->first();
                 // Define the column names
                 $columns = ['Production_person', 'Warehouse_notification', 'Quality_Control_Person', 'QualityAssurance_person', 'Engineering_person', 'Analytical_Development_person', 'Kilo_Lab_person', 'Technology_transfer_person', 'Environment_Health_Safety_person', 'Human_Resource_person', 'Information_Technology_person', 'Project_management_person','Other1_person','Other2_person','Other3_person','Other4_person','Other5_person'];
 
@@ -1813,14 +1813,14 @@ class FailureInvestigationController extends Controller
                             try {
                                 Mail::send(
                                     'mail.view-mail',
-                                    ['data' => $failureInvestigation],
+                                    ['data' => $incident],
                                     function ($message) use ($email) {
                                         $message->to($email)
                                             ->subject("CFT Assgineed by " . Auth::user()->name);
                                     }
                                 );
                             } catch (\Exception $e) {
-                                //log error
+                                
                             }
                     }
                 }
@@ -1829,8 +1829,8 @@ class FailureInvestigationController extends Controller
             if (!empty ($request->Initial_attachment)) {
                 $files = [];
 
-                if ($failureInvestigation->Initial_attachment) {
-                    $files = is_array(json_decode($failureInvestigation->Initial_attachment)) ? $failureInvestigation->Initial_attachment : [];
+                if ($incident->Initial_attachment) {
+                    $files = is_array(json_decode($incident->Initial_attachment)) ? $incident->Initial_attachment : [];
                 }
 
                 if ($request->hasfile('Initial_attachment')) {
@@ -1842,7 +1842,7 @@ class FailureInvestigationController extends Controller
                 }
 
 
-                $failureInvestigation->Initial_attachment = json_encode($files);
+                $incident->Initial_attachment = json_encode($files);
             }
         }
 
@@ -1852,12 +1852,12 @@ class FailureInvestigationController extends Controller
 
             $files = [];
 
-            if ($failureInvestigation->Audit_file) {
-                $existingFiles = json_decode($failureInvestigation->Audit_file, true); // Convert to associative array
+            if ($incident->Audit_file) {
+                $existingFiles = json_decode($incident->Audit_file, true); // Convert to associative array
                 if (is_array($existingFiles)) {
                     $files = $existingFiles;
                 }
-                // $files = is_array(json_decode($failureInvestigation->Audit_file)) ? $failureInvestigation->Audit_file : [];
+                // $files = is_array(json_decode($incident->Audit_file)) ? $incident->Audit_file : [];
             }
 
             if ($request->hasfile('Audit_file')) {
@@ -1867,14 +1867,14 @@ class FailureInvestigationController extends Controller
                     $files[] = $name;
                 }
             }
-            $failureInvestigation->Audit_file = json_encode($files);
+            $incident->Audit_file = json_encode($files);
         }
         if (!empty($request->initial_file)) {
             $files = [];
 
             // Decode existing files if they exist
-            if ($failureInvestigation->initial_file) {
-                $existingFiles = json_decode($failureInvestigation->initial_file, true); // Convert to associative array
+            if ($incident->initial_file) {
+                $existingFiles = json_decode($incident->initial_file, true); // Convert to associative array
                 if (is_array($existingFiles)) {
                     $files = $existingFiles;
                 }
@@ -1890,18 +1890,18 @@ class FailureInvestigationController extends Controller
             }
 
             // Encode the files array and update the model
-            $failureInvestigation->initial_file = json_encode($files);
+            $incident->initial_file = json_encode($files);
         }
 
         if (!empty ($request->QA_attachment)) {
             $files = [];
 
-            if ($failureInvestigation->QA_attachment) {
-                $existingFiles = json_decode($failureInvestigation->QA_attachment, true); // Convert to associative array
+            if ($incident->QA_attachment) {
+                $existingFiles = json_decode($incident->QA_attachment, true); // Convert to associative array
                 if (is_array($existingFiles)) {
                     $files = $existingFiles;
                 }
-                // $files = is_array(json_decode($failureInvestigation->QA_attachment)) ? $failureInvestigation->QA_attachment : [];
+                // $files = is_array(json_decode($incident->QA_attachment)) ? $incident->QA_attachment : [];
             }
 
             if ($request->hasfile('QA_attachment')) {
@@ -1913,19 +1913,19 @@ class FailureInvestigationController extends Controller
             }
 
 
-            $failureInvestigation->QA_attachment = json_encode($files);
+            $incident->QA_attachment = json_encode($files);
         }
 
         if (!empty ($request->Investigation_attachment)) {
 
             $files = [];
 
-            if ($failureInvestigation->Investigation_attachment) {
-                $existingFiles = json_decode($failureInvestigation->Investigation_attachment, true); // Convert to associative array
+            if ($incident->Investigation_attachment) {
+                $existingFiles = json_decode($incident->Investigation_attachment, true); // Convert to associative array
                 if (is_array($existingFiles)) {
                     $files = $existingFiles;
                 }
-                // $files = is_array(json_decode($failureInvestigation->QA_attachment)) ? $failureInvestigation->QA_attachment : [];
+                // $files = is_array(json_decode($incident->QA_attachment)) ? $incident->QA_attachment : [];
             }
 
             if ($request->hasfile('Investigation_attachment')) {
@@ -1937,19 +1937,19 @@ class FailureInvestigationController extends Controller
             }
 
 
-            $failureInvestigation->Investigation_attachment = json_encode($files);
+            $incident->Investigation_attachment = json_encode($files);
         }
 
         if (!empty ($request->Capa_attachment)) {
 
             $files = [];
 
-            if ($failureInvestigation->Capa_attachment) {
-                $existingFiles = json_decode($failureInvestigation->Capa_attachment, true); // Convert to associative array
+            if ($incident->Capa_attachment) {
+                $existingFiles = json_decode($incident->Capa_attachment, true); // Convert to associative array
                 if (is_array($existingFiles)) {
                     $files = $existingFiles;
                 }
-                // $files = is_array(json_decode($failureInvestigation->Capa_attachment)) ? $failureInvestigation->Capa_attachment : [];
+                // $files = is_array(json_decode($incident->Capa_attachment)) ? $incident->Capa_attachment : [];
             }
 
             if ($request->hasfile('Capa_attachment')) {
@@ -1961,14 +1961,14 @@ class FailureInvestigationController extends Controller
             }
 
 
-            $failureInvestigation->Capa_attachment = json_encode($files);
+            $incident->Capa_attachment = json_encode($files);
         }
         if (!empty ($request->QA_attachments)) {
 
             $files = [];
 
-            if ($failureInvestigation->QA_attachments) {
-                $files = is_array(json_decode($failureInvestigation->QA_attachments)) ? $failureInvestigation->QA_attachments : [];
+            if ($incident->QA_attachments) {
+                $files = is_array(json_decode($incident->QA_attachments)) ? $incident->QA_attachments : [];
             }
 
             if ($request->hasfile('QA_attachments')) {
@@ -1980,19 +1980,19 @@ class FailureInvestigationController extends Controller
             }
 
 
-            $failureInvestigation->QA_attachments = json_encode($files);
+            $incident->QA_attachments = json_encode($files);
         }
 
         if (!empty ($request->closure_attachment)) {
 
             $files = [];
 
-            if ($failureInvestigation->closure_attachment) {
-                $existingFiles = json_decode($failureInvestigation->closure_attachment, true); // Convert to associative array
+            if ($incident->closure_attachment) {
+                $existingFiles = json_decode($incident->closure_attachment, true); // Convert to associative array
                 if (is_array($existingFiles)) {
                     $files = $existingFiles;
                 }
-                // $files = is_array(json_decode($failureInvestigation->closure_attachment)) ? $failureInvestigation->closure_attachment : [];
+                // $files = is_array(json_decode($incident->closure_attachment)) ? $incident->closure_attachment : [];
             }
 
             if ($request->hasfile('closure_attachment')) {
@@ -2004,69 +2004,69 @@ class FailureInvestigationController extends Controller
             }
 
 
-            $failureInvestigation->closure_attachment = json_encode($files);
+            $incident->closure_attachment = json_encode($files);
         }
-        if($failureInvestigation->stage > 0){
+        if($incident->stage > 0){
 
 
             //investiocation dynamic
-            $failureInvestigation->Discription_Event = $request->Discription_Event;
-            $failureInvestigation->objective = $request->objective;
-            $failureInvestigation->scope = $request->scope;
-            $failureInvestigation->imidiate_action = $request->imidiate_action;
-            $failureInvestigation->investigation_approach = is_array($request->investigation_approach) ? implode(',', $request->investigation_approach) : '';
-            $failureInvestigation->attention_issues = $request->attention_issues;
-            $failureInvestigation->attention_actions = $request->attention_actions;
-            $failureInvestigation->attention_remarks = $request->attention_remarks;
-            $failureInvestigation->understanding_issues = $request->understanding_issues;
-            $failureInvestigation->understanding_actions = $request->understanding_actions;
-            $failureInvestigation->understanding_remarks = $request->understanding_remarks;
-            $failureInvestigation->procedural_issues = $request->procedural_issues;
-            $failureInvestigation->procedural_actions = $request->procedural_actions;
-            $failureInvestigation->procedural_remarks = $request->procedural_remarks;
-            $failureInvestigation->behavioiral_issues = $request->behavioiral_issues;
-            $failureInvestigation->behavioiral_actions = $request->behavioiral_actions;
-            $failureInvestigation->behavioiral_remarks = $request->behavioiral_remarks;
-            $failureInvestigation->skill_issues = $request->skill_issues;
-            $failureInvestigation->skill_actions = $request->skill_actions;
-            $failureInvestigation->skill_remarks = $request->skill_remarks;
-            $failureInvestigation->what_will_be = $request->what_will_be;
-            $failureInvestigation->what_will_not_be = $request->what_will_not_be;
-            $failureInvestigation->what_rationable = $request->what_rationable;
-            $failureInvestigation->where_will_be = $request->where_will_be;
-            $failureInvestigation->where_will_not_be = $request->where_will_not_be;
-            $failureInvestigation->where_rationable = $request->where_rationable;
-            $failureInvestigation->when_will_not_be = $request->when_will_not_be;
-            $failureInvestigation->when_will_be = $request->when_will_be;
-            $failureInvestigation->when_rationable = $request->when_rationable;
-            $failureInvestigation->coverage_will_be = $request->coverage_will_be;
-            $failureInvestigation->coverage_will_not_be = $request->coverage_will_not_be;
-            $failureInvestigation->coverage_rationable = $request->coverage_rationable;
-            $failureInvestigation->who_will_be = $request->who_will_be;
-            $failureInvestigation->who_will_not_be = $request->who_will_not_be;
-            $failureInvestigation->who_rationable = $request->who_rationable;
+            $incident->Discription_Event = $request->Discription_Event;
+            $incident->objective = $request->objective;
+            $incident->scope = $request->scope;
+            $incident->imidiate_action = $request->imidiate_action;
+            $incident->investigation_approach = is_array($request->investigation_approach) ? implode(',', $request->investigation_approach) : '';
+            $incident->attention_issues = $request->attention_issues;
+            $incident->attention_actions = $request->attention_actions;
+            $incident->attention_remarks = $request->attention_remarks;
+            $incident->understanding_issues = $request->understanding_issues;
+            $incident->understanding_actions = $request->understanding_actions;
+            $incident->understanding_remarks = $request->understanding_remarks;
+            $incident->procedural_issues = $request->procedural_issues;
+            $incident->procedural_actions = $request->procedural_actions;
+            $incident->procedural_remarks = $request->procedural_remarks;
+            $incident->behavioiral_issues = $request->behavioiral_issues;
+            $incident->behavioiral_actions = $request->behavioiral_actions;
+            $incident->behavioiral_remarks = $request->behavioiral_remarks;
+            $incident->skill_issues = $request->skill_issues;
+            $incident->skill_actions = $request->skill_actions;
+            $incident->skill_remarks = $request->skill_remarks;
+            $incident->what_will_be = $request->what_will_be;
+            $incident->what_will_not_be = $request->what_will_not_be;
+            $incident->what_rationable = $request->what_rationable;
+            $incident->where_will_be = $request->where_will_be;
+            $incident->where_will_not_be = $request->where_will_not_be;
+            $incident->where_rationable = $request->where_rationable;
+            $incident->when_will_not_be = $request->when_will_not_be;
+            $incident->when_will_be = $request->when_will_be;
+            $incident->when_rationable = $request->when_rationable;
+            $incident->coverage_will_be = $request->coverage_will_be;
+            $incident->coverage_will_not_be = $request->coverage_will_not_be;
+            $incident->coverage_rationable = $request->coverage_rationable;
+            $incident->who_will_be = $request->who_will_be;
+            $incident->who_will_not_be = $request->who_will_not_be;
+            $incident->who_rationable = $request->who_rationable;
 
             // dd($id);
-            $newDataGridInvestication = FailureInvestigationGridData::where(['failure_investigation_id' => $id, 'identifier' => 'investigation'])->firstOrCreate();
-            $newDataGridInvestication->failure_investigation_id = $id;
-            $newDataGridInvestication->identifier = 'investigation';
-            $newDataGridInvestication->data = $request->investigation;
+            $newDataGridInvestication = IncidentGridData::where(['incident_id' => $id, 'identifier' => 'investication'])->firstOrCreate();
+            $newDataGridInvestication->incident_id = $id;
+            $newDataGridInvestication->identifier = 'investication';
+            $newDataGridInvestication->data = $request->investication;
             $newDataGridInvestication->save();
 
-            $newDataGridRCA = FailureInvestigationGridData::where(['failure_investigation_id' => $id, 'identifier' => 'rootCause'])->firstOrCreate();
-            $newDataGridRCA->failure_investigation_id = $id;
+            $newDataGridRCA = IncidentGridData::where(['incident_id' => $id, 'identifier' => 'rootCause'])->firstOrCreate();
+            $newDataGridRCA->incident_id = $id;
             $newDataGridRCA->identifier = 'rootCause';
             $newDataGridRCA->data = $request->rootCause;
             $newDataGridRCA->save();
 
-            $newDataGridWhy = FailureInvestigationGridData::where(['failure_investigation_id' => $id, 'identifier' => 'why'])->firstOrCreate();
-            $newDataGridWhy->failure_investigation_id = $id;
+            $newDataGridWhy = IncidentGridData::where(['incident_id' => $id, 'identifier' => 'why'])->firstOrCreate();
+            $newDataGridWhy->incident_id = $id;
             $newDataGridWhy->identifier = 'why';
             $newDataGridWhy->data = $request->why;
             $newDataGridWhy->save();
 
-            $newDataGridFishbone = FailureInvestigationGridData::where(['failure_investigation_id' => $id, 'identifier' => 'fishbone'])->firstOrCreate();
-            $newDataGridFishbone->failure_investigation_id = $id;
+            $newDataGridFishbone = IncidentGridData::where(['incident_id' => $id, 'identifier' => 'fishbone'])->firstOrCreate();
+            $newDataGridFishbone->incident_id = $id;
             $newDataGridFishbone->identifier = 'fishbone';
             $newDataGridFishbone->data = $request->fishbone;
             $newDataGridFishbone->save();
@@ -2074,10 +2074,10 @@ class FailureInvestigationController extends Controller
         }
 
 
-        $failureInvestigation->form_progress = isset($form_progress) ? $form_progress : null;
-        $failureInvestigation->update();
+        $incident->form_progress = isset($form_progress) ? $form_progress : null;
+        $incident->update();
         // grid
-         $data3=FailureInvestigationGrid::where('failure_investigation_grid_id', $failureInvestigation->id)->where('type', "FailureInvestigation")->first();
+         $data3=IncidentGrid::where('incident_grid_id', $incident->id)->where('type', "Incident")->first();
                 if (!empty($request->IDnumber)) {
                     $data3->IDnumber = serialize($request->IDnumber);
                 }
@@ -2093,7 +2093,7 @@ class FailureInvestigationController extends Controller
                 // dd($request->Remarks);
 
 
-            $data4=FailureInvestigationGrid::where('failure_investigation_grid_id', $failureInvestigation->id)->where('type', "Document")->first();
+            $data4=IncidentGrid::where('incident_grid_id', $incident->id)->where('type', "Document")->first();
             if (!empty($request->Number)) {
                 $data4->Number = serialize($request->Number);
             }
@@ -2106,7 +2106,7 @@ class FailureInvestigationController extends Controller
             }
             $data4->update();
 
-            $data5=FailureInvestigationGrid::where('failure_investigation_grid_id', $failureInvestigation->id)->where('type', "Product")->first();
+            $data5=IncidentGrid::where('incident_grid_id', $incident->id)->where('type', "Product")->first();
             if (!empty($request->product_name)) {
                 $data5->product_name = serialize($request->product_name);
             }
@@ -2120,577 +2120,577 @@ class FailureInvestigationController extends Controller
             $data5->update();
 
 
-        if ($lastFailureInvestigation->short_description != $failureInvestigation->short_description || !empty ($request->comment)) {
+        if ($lastIncident->short_description != $incident->short_description || !empty ($request->comment)) {
             // return 'history';
-            $history = new FailureInvestigationAuditTrail;
-            $history->failure_investigation_id = $id;
+            $history = new IncidentAuditTrail;
+            $history->incident_id = $id;
             $history->activity_type = 'Short Description';
-             $history->previous = $lastFailureInvestigation->short_description;
-            $history->current = $failureInvestigation->short_description;
-            $history->comment = $failureInvestigation->submit_comment;
+             $history->previous = $lastIncident->short_description;
+            $history->current = $incident->short_description;
+            $history->comment = $incident->submit_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state = $lastFailureInvestigation->status;
+            $history->origin_state = $lastIncident->status;
             $history->change_to =   "Not Applicable";
-            $history->change_from = $lastFailureInvestigation->status;
+            $history->change_from = $lastIncident->status;
             $history->action_name = "Update";
             $history->save();
         }
-        if ($lastFailureInvestigation->Initiator_Group != $failureInvestigation->Initiator_Group || !empty ($request->comment)) {
+        if ($lastIncident->Initiator_Group != $incident->Initiator_Group || !empty ($request->comment)) {
             // return 'history';
-            $history = new FailureInvestigationAuditTrail;
-            $history->failure_investigation_id = $id;
+            $history = new IncidentAuditTrail;
+            $history->incident_id = $id;
             $history->activity_type = 'Initiator Group';
-            $history->previous = $lastFailureInvestigation->Initiator_Group;
-            $history->current = $failureInvestigation->Initiator_Group;
+            $history->previous = $lastIncident->Initiator_Group;
+            $history->current = $incident->Initiator_Group;
             $history->comment = $request->comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state = $lastFailureInvestigation->status;
+            $history->origin_state = $lastIncident->status;
             $history->change_to =   "Not Applicable";
-            $history->change_from = $lastFailureInvestigation->status;
+            $history->change_from = $lastIncident->status;
             $history->action_name = 'Update';
             $history->save();
         }
 
-        if ($lastFailureInvestigation->failure_investigation_date != $failureInvestigation->failure_investigation_date || !empty ($request->comment)) {
+        if ($lastIncident->incident_date != $incident->incident_date || !empty ($request->comment)) {
             // return 'history';
-            $history = new FailureInvestigationAuditTrail;
-            $history->failure_investigation_id = $id;
-            $history->activity_type = 'Failure Investigation Observed';
-            $history->previous = $lastFailureInvestigation->failure_investigation_date;
-            $history->current = $failureInvestigation->failure_investigation_date;
+            $history = new IncidentAuditTrail;
+            $history->incident_id = $id;
+            $history->activity_type = 'Incident Observed';
+            $history->previous = $lastIncident->incident_date;
+            $history->current = $incident->incident_date;
             $history->comment = $request->comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state = $lastFailureInvestigation->status;
+            $history->origin_state = $lastIncident->status;
             $history->change_to =   "Not Applicable";
-            $history->change_from = $lastFailureInvestigation->status;
+            $history->change_from = $lastIncident->status;
             $history->action_name = 'Update';
             $history->save();
         }
 
-        if ($lastFailureInvestigation->Observed_by != $failureInvestigation->Observed_by || !empty ($request->comment)) {
+        if ($lastIncident->Observed_by != $incident->Observed_by || !empty ($request->comment)) {
             // return 'history';
-            $history = new FailureInvestigationAuditTrail;
-            $history->failure_investigation_id = $id;
+            $history = new IncidentAuditTrail;
+            $history->incident_id = $id;
             $history->activity_type = 'Observed by';
-            $history->previous = $lastFailureInvestigation->Observed_by;
-            $history->current = $failureInvestigation->Observed_by;
+            $history->previous = $lastIncident->Observed_by;
+            $history->current = $incident->Observed_by;
             $history->comment = $request->comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state = $lastFailureInvestigation->status;
+            $history->origin_state = $lastIncident->status;
             $history->change_to =   "Not Applicable";
-            $history->change_from = $lastFailureInvestigation->status;
+            $history->change_from = $lastIncident->status;
             $history->action_name = 'Update';
             $history->save();
         }
 
-        if ($lastFailureInvestigation->failure_investigation_reported_date != $failureInvestigation->failure_investigation_reported_date || !empty ($request->comment)) {
+        if ($lastIncident->incident_reported_date != $incident->incident_reported_date || !empty ($request->comment)) {
             // return 'history';
-            $history = new FailureInvestigationAuditTrail;
-            $history->failure_investigation_id = $id;
-            $history->activity_type = 'Failure Investigation Reported on';
-            $history->previous = $lastFailureInvestigation->failure_investigation_reported_date;
-            $history->current = $failureInvestigation->failure_investigation_reported_date;
+            $history = new IncidentAuditTrail;
+            $history->incident_id = $id;
+            $history->activity_type = 'Incident Reported on';
+            $history->previous = $lastIncident->incident_reported_date;
+            $history->current = $incident->incident_reported_date;
             $history->comment = $request->comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state = $lastFailureInvestigation->status;
+            $history->origin_state = $lastIncident->status;
             $history->change_to =   "Not Applicable";
-            $history->change_from = $lastFailureInvestigation->status;
+            $history->change_from = $lastIncident->status;
             $history->action_name = 'Update';
             $history->save();
         }
 
-        if ($lastFailureInvestigation->audit_type != $failureInvestigation->audit_type || !empty ($request->comment)) {
+        if ($lastIncident->audit_type != $incident->audit_type || !empty ($request->comment)) {
             // return 'history';
-            $history = new FailureInvestigationAuditTrail;
-            $history->failure_investigation_id = $id;
-            $history->activity_type = 'Failure Investigation Related To';
-            $history->previous = $lastFailureInvestigation->audit_type;
-            $history->current = $failureInvestigation->audit_type;
+            $history = new IncidentAuditTrail;
+            $history->incident_id = $id;
+            $history->activity_type = 'Incident Related To';
+            $history->previous = $lastIncident->audit_type;
+            $history->current = $incident->audit_type;
             $history->comment = $request->comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state = $lastFailureInvestigation->status;
+            $history->origin_state = $lastIncident->status;
             $history->change_to =   "Not Applicable";
-            $history->change_from = $lastFailureInvestigation->status;
+            $history->change_from = $lastIncident->status;
             $history->action_name = 'Update';
             $history->save();
         }
 
-        if ($lastFailureInvestigation->Others != $failureInvestigation->Others || !empty ($request->comment)) {
+        if ($lastIncident->Others != $incident->Others || !empty ($request->comment)) {
             // return 'history';
-            $history = new FailureInvestigationAuditTrail;
-            $history->failure_investigation_id = $id;
+            $history = new IncidentAuditTrail;
+            $history->incident_id = $id;
             $history->activity_type = 'Others';
-            $history->previous = $lastFailureInvestigation->Others;
-            $history->current = $failureInvestigation->Others;
+            $history->previous = $lastIncident->Others;
+            $history->current = $incident->Others;
             $history->comment = $request->comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state = $lastFailureInvestigation->status;
+            $history->origin_state = $lastIncident->status;
             $history->change_to =   "Not Applicable";
-            $history->change_from = $lastFailureInvestigation->status;
+            $history->change_from = $lastIncident->status;
             $history->action_name = 'Update';
             $history->save();
         }
 
-        if ($lastFailureInvestigation->Facility_Equipment != $failureInvestigation->Facility_Equipment || !empty ($request->comment)) {
+        if ($lastIncident->Facility_Equipment != $incident->Facility_Equipment || !empty ($request->comment)) {
             // return 'history';
-            $history = new FailureInvestigationAuditTrail;
-            $history->failure_investigation_id = $id;
+            $history = new IncidentAuditTrail;
+            $history->incident_id = $id;
             $history->activity_type = 'Facility/ Equipment/ Instrument/ System Details Required?';
-            $history->previous = $lastFailureInvestigation->Facility_Equipment;
-            $history->current = $failureInvestigation->Facility_Equipment;
+            $history->previous = $lastIncident->Facility_Equipment;
+            $history->current = $incident->Facility_Equipment;
             $history->comment = $request->comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state = $lastFailureInvestigation->status;
+            $history->origin_state = $lastIncident->status;
             $history->change_to =   "Not Applicable";
-            $history->change_from = $lastFailureInvestigation->status;
+            $history->change_from = $lastIncident->status;
             $history->action_name = 'Update';
             $history->save();
         }
 
-        if ($lastFailureInvestigation->Document_Details_Required != $failureInvestigation->Document_Details_Required || !empty ($request->comment)) {
+        if ($lastIncident->Document_Details_Required != $incident->Document_Details_Required || !empty ($request->comment)) {
             // return 'history';
-            $history = new FailureInvestigationAuditTrail;
-            $history->failure_investigation_id = $id;
+            $history = new IncidentAuditTrail;
+            $history->incident_id = $id;
             $history->activity_type = 'Document Details Required';
-            $history->previous = $lastFailureInvestigation->Document_Details_Required;
-            $history->current = $failureInvestigation->Document_Details_Required;
+            $history->previous = $lastIncident->Document_Details_Required;
+            $history->current = $incident->Document_Details_Required;
             $history->comment = $request->comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state = $lastFailureInvestigation->status;
+            $history->origin_state = $lastIncident->status;
             $history->change_to =   "Not Applicable";
-            $history->change_from = $lastFailureInvestigation->status;
+            $history->change_from = $lastIncident->status;
             $history->action_name = 'Update';
             $history->save();
         }
 
-        if ($lastFailureInvestigation->Product_Batch != $failureInvestigation->Product_Batch || !empty ($request->comment)) {
+        if ($lastIncident->Product_Batch != $incident->Product_Batch || !empty ($request->comment)) {
             // return 'history';
-            $history = new FailureInvestigationAuditTrail;
-            $history->failure_investigation_id = $id;
+            $history = new IncidentAuditTrail;
+            $history->incident_id = $id;
             $history->activity_type = 'Name of Product & Batch No';
-            $history->previous = $lastFailureInvestigation->Product_Batch;
-            $history->current = $failureInvestigation->Product_Batch;
+            $history->previous = $lastIncident->Product_Batch;
+            $history->current = $incident->Product_Batch;
             $history->comment = $request->comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state = $lastFailureInvestigation->status;
+            $history->origin_state = $lastIncident->status;
             $history->change_to =   "Not Applicable";
-            $history->change_from = $lastFailureInvestigation->status;
+            $history->change_from = $lastIncident->status;
             $history->action_name = 'Update';
             $history->save();
         }
 
-        if ($lastFailureInvestigation->Description_failure_investigation != $failureInvestigation->Description_failure_investigation || !empty ($request->comment)) {
+        if ($lastIncident->Description_incident != $incident->Description_incident || !empty ($request->comment)) {
             // return 'history';
-            $history = new FailureInvestigationAuditTrail;
-            $history->failure_investigation_id = $id;
-            $history->activity_type = 'Description of Failure Investigation';
-            $history->previous = $lastFailureInvestigation->Description_failure_investigation;
-            $history->current = $failureInvestigation->Description_failure_investigation;
+            $history = new IncidentAuditTrail;
+            $history->incident_id = $id;
+            $history->activity_type = 'Description of Incident';
+            $history->previous = $lastIncident->Description_incident;
+            $history->current = $incident->Description_incident;
             $history->comment = $request->comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state = $lastFailureInvestigation->status;
+            $history->origin_state = $lastIncident->status;
             $history->change_to =   "Not Applicable";
-            $history->change_from = $lastFailureInvestigation->status;
+            $history->change_from = $lastIncident->status;
             $history->action_name = 'Update';
             $history->save();
         }
 
-        if ($lastFailureInvestigation->Immediate_Action != $failureInvestigation->Immediate_Action || !empty ($request->comment)) {
+        if ($lastIncident->Immediate_Action != $incident->Immediate_Action || !empty ($request->comment)) {
             // return 'history';
-            $history = new FailureInvestigationAuditTrail;
-            $history->failure_investigation_id = $id;
+            $history = new IncidentAuditTrail;
+            $history->incident_id = $id;
             $history->activity_type = 'Immediate Action (if any)';
-            $history->previous = $lastFailureInvestigation->Immediate_Action;
-            $history->current = $failureInvestigation->Immediate_Action;
+            $history->previous = $lastIncident->Immediate_Action;
+            $history->current = $incident->Immediate_Action;
             $history->comment = $request->comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state = $lastFailureInvestigation->status;
+            $history->origin_state = $lastIncident->status;
             $history->change_to =   "Not Applicable";
-            $history->change_from = $lastFailureInvestigation->status;
+            $history->change_from = $lastIncident->status;
             $history->action_name = 'Update';
             $history->save();
         }
 
-        if ($lastFailureInvestigation->Preliminary_Impact != $failureInvestigation->Preliminary_Impact || !empty ($request->comment)) {
+        if ($lastIncident->Preliminary_Impact != $incident->Preliminary_Impact || !empty ($request->comment)) {
             // return 'history';
-            $history = new FailureInvestigationAuditTrail;
-            $history->failure_investigation_id = $id;
-            $history->activity_type = 'Preliminary Impact of Failure Investigation';
-            $history->previous = $lastFailureInvestigation->Preliminary_Impact;
-            $history->current = $failureInvestigation->Preliminary_Impact;
+            $history = new IncidentAuditTrail;
+            $history->incident_id = $id;
+            $history->activity_type = 'Preliminary Impact of Incident';
+            $history->previous = $lastIncident->Preliminary_Impact;
+            $history->current = $incident->Preliminary_Impact;
             $history->comment = $request->comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state = $lastFailureInvestigation->status;
+            $history->origin_state = $lastIncident->status;
             $history->change_to =   "Not Applicable";
-            $history->change_from = $lastFailureInvestigation->status;
+            $history->change_from = $lastIncident->status;
             $history->action_name = 'Update';
             $history->save();
         }
 
-        if ($lastFailureInvestigation->HOD_Remarks != $failureInvestigation->HOD_Remarks || !empty ($request->comment)) {
+        if ($lastIncident->HOD_Remarks != $incident->HOD_Remarks || !empty ($request->comment)) {
             // return 'history';
-            $history = new FailureInvestigationAuditTrail;
-            $history->failure_investigation_id = $id;
+            $history = new IncidentAuditTrail;
+            $history->incident_id = $id;
             $history->activity_type = 'HOD Remarks';
-            $history->previous = $lastFailureInvestigation->HOD_Remarks;
-            $history->current = $failureInvestigation->HOD_Remarks;
+            $history->previous = $lastIncident->HOD_Remarks;
+            $history->current = $incident->HOD_Remarks;
             $history->comment = $request->comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state = $lastFailureInvestigation->status;
+            $history->origin_state = $lastIncident->status;
             $history->change_to =   "Not Applicable";
-            $history->change_from = $lastFailureInvestigation->status;
+            $history->change_from = $lastIncident->status;
             $history->action_name = 'Update';
             $history->save();
         }
 
-        if ($lastFailureInvestigation->failure_investigation_category != $failureInvestigation->failure_investigation_category || !empty ($request->comment)) {
+        if ($lastIncident->incident_category != $incident->incident_category || !empty ($request->comment)) {
             // return 'history';
-            $history = new FailureInvestigationAuditTrail;
-            $history->failure_investigation_id = $id;
-            $history->activity_type = 'Initial Failure Investigation Category';
-            $history->previous = $lastFailureInvestigation->failure_investigation_category;
-            $history->current = $failureInvestigation->failure_investigation_category;
+            $history = new IncidentAuditTrail;
+            $history->incident_id = $id;
+            $history->activity_type = 'Initial Incident Category';
+            $history->previous = $lastIncident->incident_category;
+            $history->current = $incident->incident_category;
             $history->comment = $request->comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state = $lastFailureInvestigation->status;
+            $history->origin_state = $lastIncident->status;
             $history->change_to =   "Not Applicable";
-            $history->change_from = $lastFailureInvestigation->status;
+            $history->change_from = $lastIncident->status;
             $history->action_name = 'Update';
             $history->save();
         }
 
-        if ($lastFailureInvestigation->Justification_for_categorization != $failureInvestigation->Justification_for_categorization || !empty ($request->comment)) {
+        if ($lastIncident->Justification_for_categorization != $incident->Justification_for_categorization || !empty ($request->comment)) {
             // return 'history';
-            $history = new FailureInvestigationAuditTrail;
-            $history->failure_investigation_id = $id;
+            $history = new IncidentAuditTrail;
+            $history->incident_id = $id;
             $history->activity_type = 'Justification for Categorization';
-            $history->previous = $lastFailureInvestigation->Justification_for_categorization;
-            $history->current = $failureInvestigation->Justification_for_categorization;
+            $history->previous = $lastIncident->Justification_for_categorization;
+            $history->current = $incident->Justification_for_categorization;
             $history->comment = $request->comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state = $lastFailureInvestigation->status;
+            $history->origin_state = $lastIncident->status;
             $history->change_to =   "Not Applicable";
-            $history->change_from = $lastFailureInvestigation->status;
+            $history->change_from = $lastIncident->status;
             $history->action_name = 'Update';
             $history->save();
         }
 
-        if ($lastFailureInvestigation->Investigation_required != $failureInvestigation->Investigation_required || !empty ($request->comment)) {
+        if ($lastIncident->Investigation_required != $incident->Investigation_required || !empty ($request->comment)) {
             // return 'history';
-            $history = new FailureInvestigationAuditTrail;
-            $history->failure_investigation_id = $id;
+            $history = new IncidentAuditTrail;
+            $history->incident_id = $id;
             $history->activity_type = 'Investigation Is required ?';
-            $history->previous = $lastFailureInvestigation->Investigation_required;
-            $history->current = $failureInvestigation->Investigation_required;
+            $history->previous = $lastIncident->Investigation_required;
+            $history->current = $incident->Investigation_required;
             $history->comment = $request->comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state = $lastFailureInvestigation->status;
+            $history->origin_state = $lastIncident->status;
             $history->change_to =   "Not Applicable";
-            $history->change_from = $lastFailureInvestigation->status;
+            $history->change_from = $lastIncident->status;
             $history->action_name = 'Update';
             $history->save();
         }
 
-        if ($lastFailureInvestigation->Investigation_Details != $failureInvestigation->Investigation_Details || !empty ($request->comment)) {
+        if ($lastIncident->Investigation_Details != $incident->Investigation_Details || !empty ($request->comment)) {
             // return 'history';
-            $history = new FailureInvestigationAuditTrail;
-            $history->failure_investigation_id = $id;
+            $history = new IncidentAuditTrail;
+            $history->incident_id = $id;
             $history->activity_type = 'Investigation Details';
-            $history->previous = $lastFailureInvestigation->Investigation_Details;
-            $history->current = $failureInvestigation->Investigation_Details;
+            $history->previous = $lastIncident->Investigation_Details;
+            $history->current = $incident->Investigation_Details;
             $history->comment = $request->comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state = $lastFailureInvestigation->status;
+            $history->origin_state = $lastIncident->status;
             $history->change_to =   "Not Applicable";
-            $history->change_from = $lastFailureInvestigation->status;
+            $history->change_from = $lastIncident->status;
             $history->action_name = 'Update';
             $history->save();
         }
 
-        if ($lastFailureInvestigation->Customer_notification != $failureInvestigation->Customer_notification || !empty ($request->comment)) {
+        if ($lastIncident->Customer_notification != $incident->Customer_notification || !empty ($request->comment)) {
             // return 'history';
-            $history = new FailureInvestigationAuditTrail;
-            $history->failure_investigation_id = $id;
+            $history = new IncidentAuditTrail;
+            $history->incident_id = $id;
             $history->activity_type = 'Customer Notification Required ?';
-            $history->previous = $lastFailureInvestigation->Customer_notification;
-            $history->current = $failureInvestigation->Customer_notification;
+            $history->previous = $lastIncident->Customer_notification;
+            $history->current = $incident->Customer_notification;
             $history->comment = $request->comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state = $lastFailureInvestigation->status;
+            $history->origin_state = $lastIncident->status;
             $history->change_to =   "Not Applicable";
-            $history->change_from = $lastFailureInvestigation->status;
+            $history->change_from = $lastIncident->status;
             $history->action_name = 'Update';
             $history->save();
         }
 
-        if ($lastFailureInvestigation->customers != $failureInvestigation->customers || !empty ($request->comment)) {
+        if ($lastIncident->customers != $incident->customers || !empty ($request->comment)) {
             // return 'history';
-            $history = new FailureInvestigationAuditTrail;
-            $history->failure_investigation_id = $id;
+            $history = new IncidentAuditTrail;
+            $history->incident_id = $id;
             $history->activity_type = 'Customer';
-            $history->previous = $lastFailureInvestigation->customers;
-            $history->current = $failureInvestigation->customers;
+            $history->previous = $lastIncident->customers;
+            $history->current = $incident->customers;
             $history->comment = $request->comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state = $lastFailureInvestigation->status;
+            $history->origin_state = $lastIncident->status;
             $history->change_to =   "Not Applicable";
-            $history->change_from = $lastFailureInvestigation->status;
+            $history->change_from = $lastIncident->status;
             $history->action_name = 'Update';
             $history->save();
         }
 
-        if ($lastFailureInvestigation->QAInitialRemark != $failureInvestigation->QAInitialRemark || !empty ($request->comment)) {
+        if ($lastIncident->QAInitialRemark != $incident->QAInitialRemark || !empty ($request->comment)) {
             // return 'history';
-            $history = new FailureInvestigationAuditTrail;
-            $history->failure_investigation_id = $id;
+            $history = new IncidentAuditTrail;
+            $history->incident_id = $id;
             $history->activity_type = 'QA Initial Remarks';
-            $history->previous = $lastFailureInvestigation->QAInitialRemark;
-            $history->current = $failureInvestigation->QAInitialRemark;
+            $history->previous = $lastIncident->QAInitialRemark;
+            $history->current = $incident->QAInitialRemark;
             $history->comment = $request->comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state = $lastFailureInvestigation->status;
+            $history->origin_state = $lastIncident->status;
             $history->change_to =   "Not Applicable";
-            $history->change_from = $lastFailureInvestigation->status;
+            $history->change_from = $lastIncident->status;
             $history->action_name = 'Update';
             $history->save();
         }
 
-        if ($lastFailureInvestigation->Investigation_Summary != $failureInvestigation->Investigation_Summary || !empty ($request->comment)) {
+        if ($lastIncident->Investigation_Summary != $incident->Investigation_Summary || !empty ($request->comment)) {
             // return 'history';
-            $history = new FailureInvestigationAuditTrail;
-            $history->failure_investigation_id = $id;
+            $history = new IncidentAuditTrail;
+            $history->incident_id = $id;
             $history->activity_type = 'Investigation Summary';
-            $history->previous = $lastFailureInvestigation->Investigation_Summary;
-            $history->current = $failureInvestigation->Investigation_Summary;
+            $history->previous = $lastIncident->Investigation_Summary;
+            $history->current = $incident->Investigation_Summary;
             $history->comment = $request->comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state = $lastFailureInvestigation->status;
+            $history->origin_state = $lastIncident->status;
             $history->action_name = 'Update';
             $history->change_to =   "Not Applicable";
-            $history->change_from = $lastFailureInvestigation->status;
+            $history->change_from = $lastIncident->status;
             $history->save();
         }
 
-        if ($lastFailureInvestigation->Impact_assessment != $failureInvestigation->Impact_assessment || !empty ($request->comment)) {
+        if ($lastIncident->Impact_assessment != $incident->Impact_assessment || !empty ($request->comment)) {
             // return 'history';
-            $history = new FailureInvestigationAuditTrail;
-            $history->failure_investigation_id = $id;
+            $history = new IncidentAuditTrail;
+            $history->incident_id = $id;
             $history->activity_type = 'Impact Assessment';
-            $history->previous = $lastFailureInvestigation->Impact_assessment;
-            $history->current = $failureInvestigation->Impact_assessment;
+            $history->previous = $lastIncident->Impact_assessment;
+            $history->current = $incident->Impact_assessment;
             $history->comment = $request->comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state = $lastFailureInvestigation->status;
+            $history->origin_state = $lastIncident->status;
             $history->change_to =   "Not Applicable";
-            $history->change_from = $lastFailureInvestigation->status;
+            $history->change_from = $lastIncident->status;
             $history->action_name = 'Update';
             $history->save();
         }
 
-        if ($lastFailureInvestigation->Root_cause != $failureInvestigation->Root_cause || !empty ($request->comment)) {
+        if ($lastIncident->Root_cause != $incident->Root_cause || !empty ($request->comment)) {
             // return 'history';
-            $history = new FailureInvestigationAuditTrail;
-            $history->failure_investigation_id = $id;
+            $history = new IncidentAuditTrail;
+            $history->incident_id = $id;
             $history->activity_type = 'Root Cause';
-            $history->previous = $lastFailureInvestigation->Root_cause;
-            $history->current = $failureInvestigation->Root_cause;
+            $history->previous = $lastIncident->Root_cause;
+            $history->current = $incident->Root_cause;
             $history->comment = $request->comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state = $lastFailureInvestigation->status;
+            $history->origin_state = $lastIncident->status;
             $history->change_to =   "Not Applicable";
-            $history->change_from = $lastFailureInvestigation->status;
+            $history->change_from = $lastIncident->status;
             $history->action_name = 'Update';
             $history->save();
         }
 
-        if ($lastFailureInvestigation->CAPA_Rquired != $failureInvestigation->CAPA_Rquired || !empty ($request->comment)) {
+        if ($lastIncident->CAPA_Rquired != $incident->CAPA_Rquired || !empty ($request->comment)) {
             // return 'history';
-            $history = new FailureInvestigationAuditTrail;
-            $history->failure_investigation_id = $id;
+            $history = new IncidentAuditTrail;
+            $history->incident_id = $id;
             $history->activity_type = 'CAPA Required ?';
-            $history->previous = $lastFailureInvestigation->CAPA_Rquired;
-            $history->current = $failureInvestigation->CAPA_Rquired;
+            $history->previous = $lastIncident->CAPA_Rquired;
+            $history->current = $incident->CAPA_Rquired;
             $history->comment = $request->comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state = $lastFailureInvestigation->status;
+            $history->origin_state = $lastIncident->status;
             $history->change_to =   "Not Applicable";
-            $history->change_from = $lastFailureInvestigation->status;
+            $history->change_from = $lastIncident->status;
             $history->action_name = 'Update';
             $history->save();
         }
 
-        if ($lastFailureInvestigation->capa_type != $failureInvestigation->capa_type || !empty ($request->comment)) {
+        if ($lastIncident->capa_type != $incident->capa_type || !empty ($request->comment)) {
             // return 'history';
-            $history = new FailureInvestigationAuditTrail;
-            $history->failure_investigation_id = $id;
+            $history = new IncidentAuditTrail;
+            $history->incident_id = $id;
             $history->activity_type = 'CAPA Type?';
-            $history->previous = $lastFailureInvestigation->capa_type;
-            $history->current = $failureInvestigation->capa_type;
+            $history->previous = $lastIncident->capa_type;
+            $history->current = $incident->capa_type;
             $history->comment = $request->comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state = $lastFailureInvestigation->status;
+            $history->origin_state = $lastIncident->status;
             $history->change_to =   "Not Applicable";
-            $history->change_from = $lastFailureInvestigation->status;
+            $history->change_from = $lastIncident->status;
             $history->action_name = 'Update';
             $history->save();
         }
 
-        if ($lastFailureInvestigation->CAPA_Description != $failureInvestigation->CAPA_Description || !empty ($request->comment)) {
+        if ($lastIncident->CAPA_Description != $incident->CAPA_Description || !empty ($request->comment)) {
             // return 'history';
-            $history = new FailureInvestigationAuditTrail;
-            $history->failure_investigation_id = $id;
+            $history = new IncidentAuditTrail;
+            $history->incident_id = $id;
             $history->activity_type = 'CAPA Description';
-            $history->previous = $lastFailureInvestigation->CAPA_Description;
-            $history->current = $failureInvestigation->CAPA_Description;
+            $history->previous = $lastIncident->CAPA_Description;
+            $history->current = $incident->CAPA_Description;
             $history->comment = $request->comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state = $lastFailureInvestigation->status;
+            $history->origin_state = $lastIncident->status;
             $history->change_to =   "Not Applicable";
-            $history->change_from = $lastFailureInvestigation->status;
+            $history->change_from = $lastIncident->status;
             $history->action_name = 'Update';
             $history->save();
         }
 
-        if ($lastFailureInvestigation->Post_Categorization != $failureInvestigation->Post_Categorization || !empty ($request->comment)) {
+        if ($lastIncident->Post_Categorization != $incident->Post_Categorization || !empty ($request->comment)) {
             // return 'history';
-            $history = new FailureInvestigationAuditTrail;
-            $history->failure_investigation_id = $id;
-            $history->activity_type = 'Post Categorization Of Failure Investigation';
-            $history->previous = $lastFailureInvestigation->Post_Categorization;
-            $history->current = $failureInvestigation->Post_Categorization;
+            $history = new IncidentAuditTrail;
+            $history->incident_id = $id;
+            $history->activity_type = 'Post Categorization Of Incident';
+            $history->previous = $lastIncident->Post_Categorization;
+            $history->current = $incident->Post_Categorization;
             $history->comment = $request->comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state = $lastFailureInvestigation->status;
+            $history->origin_state = $lastIncident->status;
             $history->change_to =   "Not Applicable";
-            $history->change_from = $lastFailureInvestigation->status;
+            $history->change_from = $lastIncident->status;
             $history->action_name = 'Update';
             $history->save();
         }
 
-        if ($lastFailureInvestigation->Investigation_Of_Review != $failureInvestigation->Investigation_Of_Review || !empty ($request->comment)) {
+        if ($lastIncident->Investigation_Of_Review != $incident->Investigation_Of_Review || !empty ($request->comment)) {
             // return 'history';
-            $history = new FailureInvestigationAuditTrail;
-            $history->failure_investigation_id = $id;
+            $history = new IncidentAuditTrail;
+            $history->incident_id = $id;
             $history->activity_type = 'Investigation Of Revised Categorization';
-            $history->previous = $lastFailureInvestigation->Investigation_Of_Review;
-            $history->current = $failureInvestigation->Investigation_Of_Review;
+            $history->previous = $lastIncident->Investigation_Of_Review;
+            $history->current = $incident->Investigation_Of_Review;
             $history->comment = $request->comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state = $lastFailureInvestigation->status;
+            $history->origin_state = $lastIncident->status;
             $history->change_to =   "Not Applicable";
-            $history->change_from = $lastFailureInvestigation->status;
+            $history->change_from = $lastIncident->status;
             $history->action_name = 'Update';
             $history->save();
         }
 
-        if ($lastFailureInvestigation->QA_Feedbacks != $failureInvestigation->QA_Feedbacks || !empty ($request->comment)) {
+        if ($lastIncident->QA_Feedbacks != $incident->QA_Feedbacks || !empty ($request->comment)) {
             // return 'history';
-            $history = new FailureInvestigationAuditTrail;
-            $history->failure_investigation_id = $id;
+            $history = new IncidentAuditTrail;
+            $history->incident_id = $id;
             $history->activity_type = 'QA Feedbacks';
-            $history->previous = $lastFailureInvestigation->QA_Feedbacks;
-            $history->current = $failureInvestigation->QA_Feedbacks;
+            $history->previous = $lastIncident->QA_Feedbacks;
+            $history->current = $incident->QA_Feedbacks;
             $history->comment = $request->comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state = $lastFailureInvestigation->status;
+            $history->origin_state = $lastIncident->status;
             $history->change_to =   "Not Applicable";
-            $history->change_from = $lastFailureInvestigation->status;
+            $history->change_from = $lastIncident->status;
             $history->action_name = 'Update';
             $history->save();
         }
 
-        if ($lastFailureInvestigation->Closure_Comments != $failureInvestigation->Closure_Comments || !empty ($request->comment)) {
+        if ($lastIncident->Closure_Comments != $incident->Closure_Comments || !empty ($request->comment)) {
             // return 'history';
-            $history = new FailureInvestigationAuditTrail;
-            $history->failure_investigation_id = $id;
+            $history = new IncidentAuditTrail;
+            $history->incident_id = $id;
             $history->activity_type = 'Closure Comments';
-            $history->previous = $lastFailureInvestigation->Closure_Comments;
-            $history->current = $failureInvestigation->Closure_Comments;
+            $history->previous = $lastIncident->Closure_Comments;
+            $history->current = $incident->Closure_Comments;
             $history->comment = $request->comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state = $lastFailureInvestigation->status;
+            $history->origin_state = $lastIncident->status;
             $history->change_to =   "Not Applicable";
-            $history->change_from = $lastFailureInvestigation->status;
+            $history->change_from = $lastIncident->status;
             $history->action_name = 'Update';
             $history->save();
         }
 
-        if ($lastFailureInvestigation->Disposition_Batch != $failureInvestigation->Disposition_Batch || !empty ($request->comment)) {
+        if ($lastIncident->Disposition_Batch != $incident->Disposition_Batch || !empty ($request->comment)) {
             // return 'history';
-            $history = new FailureInvestigationAuditTrail;
-            $history->failure_investigation_id = $id;
+            $history = new IncidentAuditTrail;
+            $history->incident_id = $id;
             $history->activity_type = 'Disposition of Batch';
-            $history->previous = $lastFailureInvestigation->Disposition_Batch;
-            $history->current = $failureInvestigation->Disposition_Batch;
+            $history->previous = $lastIncident->Disposition_Batch;
+            $history->current = $incident->Disposition_Batch;
             $history->comment = $request->comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state = $lastFailureInvestigation->status;
+            $history->origin_state = $lastIncident->status;
             $history->change_to =   "Not Applicable";
-            $history->change_from = $lastFailureInvestigation->status;
+            $history->change_from = $lastIncident->status;
             $history->action_name = 'Update';
             $history->save();
         }
@@ -2700,46 +2700,163 @@ class FailureInvestigationController extends Controller
         return back();
     }
 
-    public function failureInvestigationReject(Request $request, $id)
+
+    public function launchExtensionIncident(Request $request, $id){
+        $incident = Incident::find($id);
+        $getCounter = IncidentLaunchExtension::where(['incident_id' => $incident->id, 'extension_identifier' => "Incident"])->first();
+        if($getCounter && $getCounter->counter == null){
+            $counter = 1;
+        } else {
+            $counter = $getCounter ? $getCounter->counter + 1 : 1;
+        }
+        if($incident->id != null){
+            $data = IncidentLaunchExtension::where([
+                'incident_id' => $incident->id,
+                'extension_identifier' => "Incident"
+            ])->firstOrCreate();
+
+            $data->incident_id = $request->incident_id;
+            $data->extension_identifier = $request->extension_identifier;
+            $data->counter = $counter;
+            $data->dev_proposed_due_date = $request->dev_proposed_due_date;
+            $data->dev_extension_justification = $request->dev_extension_justification;
+            $data->dev_extension_completed_by = $request->dev_extension_completed_by;
+            $data->dev_completed_on = $request->dev_completed_on;
+            $data->save();
+
+            toastr()->success('Record is Update Successfully');
+            return back();
+        }
+    }
+
+    public function launchExtensionCapa(Request $request, $id){
+        $incident = Incident::find($id);
+        $getCounter = IncidentLaunchExtension::where(['incident_id' => $incident->id, 'extension_identifier' => "Capa"])->first();
+        if($getCounter && $getCounter->counter == null){
+            $counter = 1;
+        } else {
+            $counter = $getCounter ? $getCounter->counter + 1 : 1;
+        }
+        if($incident->id != null){
+
+            $data = IncidentLaunchExtension::where([
+                'incident_id' => $incident->id,
+                'extension_identifier' => "Capa"
+            ])->firstOrCreate();
+
+            $data->incident_id = $request->incident_id;
+            $data->extension_identifier = $request->extension_identifier;
+            $data->counter = $counter;
+            $data->capa_proposed_due_date = $request->capa_proposed_due_date;
+            $data->capa_extension_justification = $request->capa_extension_justification;
+            $data->capa_extension_completed_by = $request->capa_extension_completed_by;
+            $data->capa_completed_on = $request->capa_completed_on;
+            $data->save();
+
+            toastr()->success('Record is Update Successfully');
+            return back();
+        }
+    }
+
+
+    public function launchExtensionQrm(Request $request, $id){
+        $incident = Incident::find($id);
+        $getCounter = IncidentLaunchExtension::where(['incident_id' => $incident->id, 'extension_identifier' => "QRM"])->first();
+        if($getCounter && $getCounter->counter == null){
+            $counter = 1;
+        } else {
+            $counter = $getCounter ? $getCounter->counter + 1 : 1;
+        }
+        if($incident->id != null){
+
+            $data = IncidentLaunchExtension::where([
+                'incident_id' => $incident->id,
+                'extension_identifier' => "QRM"
+            ])->firstOrCreate();
+
+            $data->incident_id = $request->incident_id;
+            $data->extension_identifier = $request->extension_identifier;
+            $data->counter = $counter;
+            $data->qrm_proposed_due_date = $request->qrm_proposed_due_date;
+            $data->qrm_extension_justification = $request->qrm_extension_justification;
+            $data->qrm_extension_completed_by = $request->qrm_extension_completed_by;
+            $data->qrm_completed_on = $request->qrm_completed_on;
+            $data->save();
+
+            toastr()->success('Record is Update Successfully');
+            return back();
+        }
+    }
+
+    public function launchExtensionInvestigation(Request $request, $id){
+        $incident = Incident::find($id);
+        $getCounter = IncidentLaunchExtension::where(['incident_id' => $incident->id, 'extension_identifier' => "Investigation"])->first();
+        if($getCounter && $getCounter->counter == null){
+            $counter = 1;
+        } else {
+            $counter = $getCounter ? $getCounter->counter + 1 : 1;
+        }
+        if($incident->id != null){
+
+            $data = IncidentLaunchExtension::where([
+                'incident_id' => $incident->id,
+                'extension_identifier' => "Investigation"
+            ])->firstOrCreate();
+
+            $data->incident_id = $request->incident_id;
+            $data->extension_identifier = $request->extension_identifier;
+            $data->counter = $counter;
+            $data->investigation_proposed_due_date = $request->investigation_proposed_due_date;
+            $data->investigation_extension_justification = $request->investigation_extension_justification;
+            $data->investigation_extension_completed_by = $request->investigation_extension_completed_by;
+            $data->investigation_completed_on = $request->investigation_completed_on;
+            $data->save();
+
+            toastr()->success('Record is Update Successfully');
+            return back();
+        }
+    }
+
+    public function incidentReject(Request $request, $id)
     {
 
         if ($request->username == Auth::user()->email && Hash::check($request->password, Auth::user()->password)) {
             // return $request;
-            $failureInvestigation = FailureInvestigation::find($id);
-            $lastDocument = FailureInvestigation::find($id);
+            $incident = Incident::find($id);
+            $lastDocument = Incident::find($id);
             $list = Helpers::getInitiatorUserList();
 
 
-            if ($failureInvestigation->stage == 2) {
+            if ($incident->stage == 2) {
 
-                $failureInvestigation->stage = "1";
-                $failureInvestigation->status = "Opened";
-                $failureInvestigation->rejected_by = Auth::user()->name;
-                $failureInvestigation->rejected_on = Carbon::now()->format('d-M-Y');
-                $failureInvestigation->update();
-                $history = new FailureInvestigationHistory();
-                $history->type = "Failure Investigation";
+                $incident->stage = "1";
+                $incident->status = "Opened";
+                $incident->rejected_by = Auth::user()->name;
+                $incident->rejected_on = Carbon::now()->format('d-M-Y');
+                $incident->update();
+                $history = new IncidentHistory();
+                $history->type = "Incident";
                 $history->doc_id = $id;
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
-                $history->stage_id = $failureInvestigation->stage;
+                $history->stage_id = $incident->stage;
                 $history->status = "Opened";
                 // foreach ($list as $u) {
-                //     if ($u->q_m_s_divisions_id == $failureInvestigation->division_id) {
+                //     if ($u->q_m_s_divisions_id == $incident->division_id) {
                 //         $email = Helpers::getInitiatorEmail($u->user_id);
                 //         if ($email !== null) {
 
                 //             try {
                 //                 Mail::send(
                 //                     'mail.view-mail',
-                //                     ['data' => $failureInvestigation],
+                //                     ['data' => $incident],
                 //                     function ($message) use ($email) {
                 //                         $message->to($email)
                 //                             ->subject("Activity Performed By " . Auth::user()->name);
                 //                     }
                 //                 );
                 //             } catch (\Exception $e) {
-                //                 //log error
+                //                 
                 //             }
                 //         }
                 //     }
@@ -2749,18 +2866,18 @@ class FailureInvestigationController extends Controller
                 toastr()->success('Document Sent');
                 return back();
             }
-            if ($failureInvestigation->stage == 3) {
-                $failureInvestigation->stage = "2";
-                $failureInvestigation->status = "HOD Review";
-                $failureInvestigation->form_progress = 'hod';
-                $failureInvestigation->qa_more_info_required_by = Auth::user()->name;
-                $failureInvestigation->qa_more_info_required_on = Carbon::now()->format('d-M-Y');
-                $history = new FailureInvestigationAuditTrail();
-                $history->failure_investigation_id = $id;
+            if ($incident->stage == 3) {
+                $incident->stage = "2";
+                $incident->status = "HOD Review";
+                $incident->form_progress = 'hod';
+                $incident->qa_more_info_required_by = Auth::user()->name;
+                $incident->qa_more_info_required_on = Carbon::now()->format('d-M-Y');
+                $history = new IncidentAuditTrail();
+                $history->incident_id = $id;
                 $history->activity_type = 'Activity Log';
                 $history->previous = "";
                 $history->action='More Information Required';
-                $history->current = $failureInvestigation->qa_more_info_required_by;
+                $history->current = $incident->qa_more_info_required_by;
                 $history->comment = $request->comment;
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
@@ -2768,31 +2885,31 @@ class FailureInvestigationController extends Controller
                 $history->origin_state = $lastDocument->status;
                 $history->stage = 'More Info Required';
                 $history->save();
-                $failureInvestigation->update();
-                $history = new FailureInvestigationHistory();
-                $history->type = "Failure Investigation";
+                $incident->update();
+                $history = new IncidentHistory();
+                $history->type = "Incident";
                 $history->doc_id = $id;
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
-                $history->stage_id = $failureInvestigation->stage;
+                $history->stage_id = $incident->stage;
                 $history->status = "More Info Required";
 
                 // foreach ($list as $u) {
-                //     if ($u->q_m_s_divisions_id == $failureInvestigation->division_id) {
+                //     if ($u->q_m_s_divisions_id == $incident->division_id) {
                 //         $email = Helpers::getInitiatorEmail($u->user_id);
                 //         if ($email !== null) {
 
                 //             try {
                 //                 Mail::send(
                 //                     'mail.view-mail',
-                //                     ['data' => $failureInvestigation],
+                //                     ['data' => $incident],
                 //                     function ($message) use ($email) {
                 //                         $message->to($email)
                 //                             ->subject("Activity Performed By " . Auth::user()->name);
                 //                     }
                 //                 );
                 //             } catch (\Exception $e) {
-                //                 //log error
+                //                 
                 //             }
                 //         }
                 //     }
@@ -2803,35 +2920,35 @@ class FailureInvestigationController extends Controller
                 toastr()->success('Document Sent');
                 return back();
             }
-            if ($failureInvestigation->stage == 4) {
+            if ($incident->stage == 4) {
 
-                $cftResponse = FailureInvestigationCftResponse::withoutTrashed()->where(['failure_investigation_id' => $id])->get();
+                $cftResponse = IncidentCftResponse::withoutTrashed()->where(['incident_id' => $id])->get();
 
                 // Soft delete all records
                 $cftResponse->each(function ($response) {
                     $response->delete();
                 });
 
-                $stage = new FailureInvestigationCftResponse();
-                $stage->failure_investigation_id = $id;
+                $stage = new IncidentCftResponse();
+                $stage->incident_id = $id;
                 $stage->cft_user_id = Auth::user()->id;
                 $stage->status = "More Info Required";
                 // $stage->cft_stage = ;
                 $stage->comment = $request->comment;
                 $stage->save();
 
-                $failureInvestigation->stage = "3";
-                $failureInvestigation->status = "QA Initial Review";
-                $failureInvestigation->form_progress = 'qa';
+                $incident->stage = "3";
+                $incident->status = "QA Initial Review";
+                $incident->form_progress = 'qa';
 
-                $failureInvestigation->qa_more_info_required_by = Auth::user()->name;
-                $failureInvestigation->qa_more_info_required_on = Carbon::now()->format('d-M-Y');
-                $history = new FailureInvestigationAuditTrail();
-                $history->failure_investigation_id = $id;
+                $incident->qa_more_info_required_by = Auth::user()->name;
+                $incident->qa_more_info_required_on = Carbon::now()->format('d-M-Y');
+                $history = new IncidentAuditTrail();
+                $history->incident_id = $id;
                 $history->activity_type = 'Activity Log';
                 $history->previous = "";
                 $history->action='More Information Required';
-                $history->current = $failureInvestigation->qa_more_info_required_by;
+                $history->current = $incident->qa_more_info_required_by;
                 $history->comment = $request->comment;
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
@@ -2839,30 +2956,30 @@ class FailureInvestigationController extends Controller
                 $history->origin_state = $lastDocument->status;
                 $history->stage = 'More Info Required';
                 $history->save();
-                $failureInvestigation->update();
-                $history = new FailureInvestigationHistory();
-                $history->type = "Failure Investigation";
+                $incident->update();
+                $history = new IncidentHistory();
+                $history->type = "Incident";
                 $history->doc_id = $id;
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
-                $history->stage_id = $failureInvestigation->stage;
+                $history->stage_id = $incident->stage;
                 $history->status = "More Info Required";
                 // foreach ($list as $u) {
-                //     if ($u->q_m_s_divisions_id == $failureInvestigation->division_id) {
+                //     if ($u->q_m_s_divisions_id == $incident->division_id) {
                 //         $email = Helpers::getInitiatorEmail($u->user_id);
                 //         if ($email !== null) {
 
                 //             try {
                 //                 Mail::send(
                 //                     'mail.view-mail',
-                //                     ['data' => $failureInvestigation],
+                //                     ['data' => $incident],
                 //                     function ($message) use ($email) {
                 //                         $message->to($email)
                 //                             ->subject("Activity Performed By " . Auth::user()->name);
                 //                     }
                 //                 );
                 //             } catch (\Exception $e) {
-                //                 //log error
+                //                 
                 //             }
                 //         }
                 //     }
@@ -2872,19 +2989,19 @@ class FailureInvestigationController extends Controller
                 return back();
             }
 
-            if ($failureInvestigation->stage == 6) {
-                $failureInvestigation->stage = "5";
-                $failureInvestigation->status = "QA Final Review";
-                $failureInvestigation->form_progress = 'capa';
+            if ($incident->stage == 6) {
+                $incident->stage = "5";
+                $incident->status = "QA Final Review";
+                $incident->form_progress = 'capa';
 
-                $failureInvestigation->qa_more_info_required_by = Auth::user()->name;
-                $failureInvestigation->qa_more_info_required_on = Carbon::now()->format('d-M-Y');
-                $history = new FailureInvestigationAuditTrail();
-                $history->failure_investigation_id = $id;
+                $incident->qa_more_info_required_by = Auth::user()->name;
+                $incident->qa_more_info_required_on = Carbon::now()->format('d-M-Y');
+                $history = new IncidentAuditTrail();
+                $history->incident_id = $id;
                 $history->activity_type = 'Activity Log';
                 $history->previous = "";
                 $history->action='More Information Required';
-                $history->current = $failureInvestigation->qa_more_info_required_by;
+                $history->current = $incident->qa_more_info_required_by;
                 $history->comment = $request->comment;
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
@@ -2893,33 +3010,33 @@ class FailureInvestigationController extends Controller
                 $history->stage = 'More Info Required';
                 // dd();
                 // foreach ($list as $u) {
-                //     if ($u->q_m_s_divisions_id == $failureInvestigation->division_id) {
+                //     if ($u->q_m_s_divisions_id == $incident->division_id) {
                 //         $email = Helpers::getInitiatorEmail($u->user_id);
                 //         if ($email !== null) {
 
                 //             try {
                 //                 Mail::send(
                 //                     'mail.view-mail',
-                //                     ['data' => $failureInvestigation],
+                //                     ['data' => $incident],
                 //                     function ($message) use ($email) {
                 //                         $message->to($email)
                 //                             ->subject("Activity Performed By " . Auth::user()->name);
                 //                     }
                 //                 );
                 //             } catch (\Exception $e) {
-                //                 //log error
+                //                 
                 //             }
                 //         }
                 //     }
                 // }
                 $history->save();
-                $failureInvestigation->update();
-                $history = new FailureInvestigationHistory();
-                $history->type = "Failure Investigation";
+                $incident->update();
+                $history = new IncidentHistory();
+                $history->type = "Incident";
                 $history->doc_id = $id;
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
-                $history->stage_id = $failureInvestigation->stage;
+                $history->stage_id = $incident->stage;
                 $history->status = "More Info Required";
                 $history->save();
                 toastr()->success('Document Sent');
@@ -2932,56 +3049,55 @@ class FailureInvestigationController extends Controller
         }
     }
 
-    public function failureInvestigationCancel(Request $request, $id)
+    public function incidentCancel(Request $request, $id)
     {
         if ($request->username == Auth::user()->email && Hash::check($request->password, Auth::user()->password)) {
-            $failureInvestigation = FailureInvestigation::find($id);
-            $lastDocument = FailureInvestigation::find($id);
+            $incident = Incident::find($id);
+            $lastDocument = Incident::find($id);
 
-
-            $failureInvestigation->stage = "0";
-            $failureInvestigation->status = "Closed-Cancelled";
-            $failureInvestigation->cancelled_by = Auth::user()->name;
-            $failureInvestigation->cancelled_on = Carbon::now()->format('d-M-Y');
-            $history = new FailureInvestigationAuditTrail();
-            $history->failure_investigation_id = $id;
+            $incident->stage = "0";
+            $incident->status = "Closed-Cancelled";
+            $incident->cancelled_by = Auth::user()->name;
+            $incident->cancelled_on = Carbon::now()->format('d-M-Y');
+            $history = new IncidentAuditTrail();
+            $history->incident_id = $id;
             $history->activity_type = 'Activity Log';
             $history->previous = "";
-            $history->current = $failureInvestigation->cancelled_by;
+            $history->current = $incident->cancelled_by;
             $history->comment = $request->comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state = $failureInvestigation->status;
+            $history->origin_state = $incident->status;
             $history->stage = 'Cancelled';
             $history->save();
-            $failureInvestigation->update();
-            $history = new FailureInvestigationHistory();
-            $history->type = "Failure Investigation";
+            $incident->update();
+            $history = new IncidentHistory();
+            $history->type = "Incident";
             $history->doc_id = $id;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->stage_id = $failureInvestigation->stage;
-            $history->status = $failureInvestigation->status;
+            $history->stage_id = $incident->stage;
+            $history->status = $incident->status;
             $history->save();
 
             // $list = Helpers::getInitiatorUserList();
             // foreach ($list as $u) {
-            //     if ($u->q_m_s_divisions_id == $failureInvestigation->division_id) {
+            //     if ($u->q_m_s_divisions_id == $incident->division_id) {
             //         $email = Helpers::getInitiatorEmail($u->user_id);
             //         if ($email !== null) {
 
             //             try {
             //                 Mail::send(
             //                     'mail.view-mail',
-            //                     ['data' => $failureInvestigation],
+            //                     ['data' => $incident],
             //                     function ($message) use ($email) {
             //                         $message->to($email)
             //                             ->subject("Activity Performed By " . Auth::user()->name);
             //                     }
             //                 );
             //             } catch (\Exception $e) {
-            //                 //log error
+            //                 
             //             }
             //         }
             //     }
@@ -2995,21 +3111,21 @@ class FailureInvestigationController extends Controller
         }
     }
 
-    public function failureInvestigationCftNotrequired(Request $request, $id)
+    public function incidentIsCFTRequired(Request $request, $id)
     {
         if ($request->username == Auth::user()->email && Hash::check($request->password, Auth::user()->password)) {
-            $failureInvestigation = FailureInvestigation::find($id);
-            $lastDocument = FailureInvestigation::find($id);
+            $incident = Incident::find($id);
+            $lastDocument = Incident::find($id);
             $list = Helpers::getInitiatorUserList();
-            $failureInvestigation->stage = "5";
-            $failureInvestigation->status = "QA Final Review";
-            $failureInvestigation->CFT_Review_Complete_By = Auth::user()->name;
-            $failureInvestigation->CFT_Review_Complete_On = Carbon::now()->format('d-M-Y');
-            $history = new FailureInvestigationAuditTrail();
-            $history->failure_investigation_id = $id;
+            $incident->stage = "5";
+            $incident->status = "QA Final Review";
+            $incident->CFT_Review_Complete_By = Auth::user()->name;
+            $incident->CFT_Review_Complete_On = Carbon::now()->format('d-M-Y');
+            $history = new IncidentAuditTrail();
+            $history->incident_id = $id;
             $history->activity_type = 'Activity Log';
             $history->previous = "";
-            $history->current = $failureInvestigation->CFT_Review_Complete_By;
+            $history->current = $incident->CFT_Review_Complete_By;
             $history->comment = $request->comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -3017,34 +3133,34 @@ class FailureInvestigationController extends Controller
             $history->origin_state = $lastDocument->status;
             $history->stage = 'Send to HOD';
             // foreach ($list as $u) {
-            //     if ($u->q_m_s_divisions_id == $failureInvestigation->division_id) {
+            //     if ($u->q_m_s_divisions_id == $incident->division_id) {
             //         $email = Helpers::getInitiatorEmail($u->user_id);
             //         if ($email !== null) {
 
             //             try {
             //                 Mail::send(
             //                     'mail.view-mail',
-            //                     ['data' => $failureInvestigation],
+            //                     ['data' => $incident],
             //                     function ($message) use ($email) {
             //                         $message->to($email)
             //                             ->subject("Activity Performed By " . Auth::user()->name);
             //                     }
             //                 );
             //             } catch (\Exception $e) {
-            //                 //log error
+            //                 
             //             }
             //         }
             //     }
             // }
             $history->save();
-            $failureInvestigation->update();
-            $history = new FailureInvestigationHistory();
-            $history->type = "Failure Investigation";
+            $incident->update();
+            $history = new IncidentHistory();
+            $history->type = "Incident";
             $history->doc_id = $id;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->stage_id = $failureInvestigation->stage;
-            $history->status = $failureInvestigation->status;
+            $history->stage_id = $incident->stage;
+            $history->status = $incident->status;
             $history->save();
 
             toastr()->success('Document Sent');
@@ -3055,12 +3171,12 @@ class FailureInvestigationController extends Controller
         }
     }
 
-    public function failureInvestigationCheck(Request $request, $id)
+    public function incidentCheck(Request $request, $id)
     {
         if ($request->username == Auth::user()->email && Hash::check($request->password, Auth::user()->password)) {
-            $failureInvestigation = FailureInvestigation::find($id);
-            $lastDocument = FailureInvestigation::find($id);
-            $cftResponse = FailureInvestigationCftResponse::withoutTrashed()->where(['failure_investigation_id' => $id])->get();
+            $incident = Incident::find($id);
+            $lastDocument = Incident::find($id);
+            $cftResponse = IncidentCftResponse::withoutTrashed()->where(['incident_id' => $id])->get();
             $list = Helpers::getInitiatorUserList();
            // Soft delete all records
            $cftResponse->each(function ($response) {
@@ -3068,15 +3184,15 @@ class FailureInvestigationController extends Controller
         });
 
 
-        $failureInvestigation->stage = "1";
-        $failureInvestigation->status = "Opened";
-        $failureInvestigation->qa_more_info_required_by = Auth::user()->name;
-        $failureInvestigation->qa_more_info_required_on = Carbon::now()->format('d-M-Y');
-        $history = new FailureInvestigationAuditTrail();
-        $history->failure_investigation_id = $id;
+        $incident->stage = "1";
+        $incident->status = "Opened";
+        $incident->qa_more_info_required_by = Auth::user()->name;
+        $incident->qa_more_info_required_on = Carbon::now()->format('d-M-Y');
+        $history = new IncidentAuditTrail();
+        $history->incident_id = $id;
         $history->activity_type = 'Activity Log';
         $history->previous = "";
-        $history->current = $failureInvestigation->qa_more_info_required_by;
+        $history->current = $incident->qa_more_info_required_by;
         $history->comment = $request->comment;
         $history->user_id = Auth::user()->id;
         $history->user_name = Auth::user()->name;
@@ -3084,36 +3200,36 @@ class FailureInvestigationController extends Controller
         $history->origin_state = $lastDocument->status;
         $history->stage = 'Send to Initiator';
         $history->save();
-        $failureInvestigation->update();
-        $history = new FailureInvestigationHistory();
-        $history->type = "Failure Investigation";
+        $incident->update();
+        $history = new IncidentHistory();
+        $history->type = "Incident";
         $history->doc_id = $id;
         $history->user_id = Auth::user()->id;
         $history->user_name = Auth::user()->name;
-        $history->stage_id = $failureInvestigation->stage;
+        $history->stage_id = $incident->stage;
         $history->status = "Send to Initiator";
         $history->save();
         // foreach ($list as $u) {
-        //     if ($u->q_m_s_divisions_id == $failureInvestigation->division_id) {
+        //     if ($u->q_m_s_divisions_id == $incident->division_id) {
         //         $email = Helpers::getInitiatorEmail($u->user_id);
         //         if ($email !== null) {
 
         //             try {
         //                 Mail::send(
         //                     'mail.view-mail',
-        //                     ['data' => $failureInvestigation],
+        //                     ['data' => $incident],
         //                     function ($message) use ($email) {
         //                         $message->to($email)
         //                             ->subject("Activity Performed By " . Auth::user()->name);
         //                     }
         //                 );
         //             } catch (\Exception $e) {
-        //                 //log error
+        //                 
         //             }
         //         }
         //     }
         // }
-        $failureInvestigation->update();
+        $incident->update();
         toastr()->success('Document Sent');
         return back();
 
@@ -3123,27 +3239,27 @@ class FailureInvestigationController extends Controller
         }
     }
 
-    public function failureInvestigationCheck2(Request $request, $id)
+    public function incidentCheck2(Request $request, $id)
     {
         if ($request->username == Auth::user()->email && Hash::check($request->password, Auth::user()->password)) {
-            $failureInvestigation = FailureInvestigation::find($id);
-            $lastDocument = FailureInvestigation::find($id);
-            $cftResponse = FailureInvestigationCftResponse::withoutTrashed()->where(['failure_investigation_id' => $id])->get();
+            $incident = Incident::find($id);
+            $lastDocument = Incident::find($id);
+            $cftResponse = IncidentCftResponse::withoutTrashed()->where(['incident_id' => $id])->get();
             $list = Helpers::getInitiatorUserList();
 
         // Soft delete all records
         $cftResponse->each(function ($response) {
             $response->delete();
         });
-        $failureInvestigation->stage = "2";
-        $failureInvestigation->status = "HOD Review";
-        $failureInvestigation->qa_more_info_required_by = Auth::user()->name;
-        $failureInvestigation->qa_more_info_required_on = Carbon::now()->format('d-M-Y');
-        $history = new FailureInvestigationAuditTrail();
-        $history->failure_investigation_id = $id;
+        $incident->stage = "2";
+        $incident->status = "HOD Review";
+        $incident->qa_more_info_required_by = Auth::user()->name;
+        $incident->qa_more_info_required_on = Carbon::now()->format('d-M-Y');
+        $history = new IncidentAuditTrail();
+        $history->incident_id = $id;
         $history->activity_type = 'Activity Log';
         $history->previous = "";
-        $history->current = $failureInvestigation->qa_more_info_required_by;
+        $history->current = $incident->qa_more_info_required_by;
         $history->comment = $request->comment;
         $history->user_id = Auth::user()->id;
         $history->user_name = Auth::user()->name;
@@ -3151,36 +3267,36 @@ class FailureInvestigationController extends Controller
         $history->origin_state = $lastDocument->status;
         $history->stage = 'Send to HOD';
         $history->save();
-        $failureInvestigation->update();
-        $history = new FailureInvestigationHistory();
-        $history->type = "Failure Investigation";
+        $incident->update();
+        $history = new IncidentHistory();
+        $history->type = "Incident";
         $history->doc_id = $id;
         $history->user_id = Auth::user()->id;
         $history->user_name = Auth::user()->name;
-        $history->stage_id = $failureInvestigation->stage;
+        $history->stage_id = $incident->stage;
         $history->status = "Send to HOD Review";
         $history->save();
         // foreach ($list as $u) {
-        //     if ($u->q_m_s_divisions_id == $failureInvestigation->division_id) {
+        //     if ($u->q_m_s_divisions_id == $incident->division_id) {
         //         $email = Helpers::getInitiatorEmail($u->user_id);
         //         if ($email !== null) {
 
         //             try {
         //                 Mail::send(
         //                     'mail.view-mail',
-        //                     ['data' => $failureInvestigation],
+        //                     ['data' => $incident],
         //                     function ($message) use ($email) {
         //                         $message->to($email)
         //                             ->subject("Activity Performed By " . Auth::user()->name);
         //                     }
         //                 );
         //             } catch (\Exception $e) {
-        //                 //log error
+        //                 
         //             }
         //         }
         //     }
         // }
-        $failureInvestigation->update();
+        $incident->update();
         toastr()->success('Document Sent');
         return back();
 
@@ -3190,27 +3306,27 @@ class FailureInvestigationController extends Controller
         }
     }
 
-    public function failureInvestigationCheck3(Request $request, $id)
+    public function incidentCheck3(Request $request, $id)
     {
         if ($request->username == Auth::user()->email && Hash::check($request->password, Auth::user()->password)) {
-            $failureInvestigation = FailureInvestigation::find($id);
-            $lastDocument = FailureInvestigation::find($id);
-            $cftResponse = FailureInvestigationCftResponse::withoutTrashed()->where(['failure_investigation_id' => $id])->get();
+            $incident = Incident::find($id);
+            $lastDocument = Incident::find($id);
+            $cftResponse = IncidentCftResponse::withoutTrashed()->where(['incident_id' => $id])->get();
             $list = Helpers::getInitiatorUserList();
 
         // Soft delete all records
         $cftResponse->each(function ($response) {
             $response->delete();
         });
-        $failureInvestigation->stage = "3";
-            $failureInvestigation->status = "QA Initial Review";
-            $failureInvestigation->qa_more_info_required_by = Auth::user()->name;
-            $failureInvestigation->qa_more_info_required_on = Carbon::now()->format('d-M-Y');
-        $history = new FailureInvestigationAuditTrail();
-        $history->failure_investigation_id = $id;
+        $incident->stage = "3";
+            $incident->status = "QA Initial Review";
+            $incident->qa_more_info_required_by = Auth::user()->name;
+            $incident->qa_more_info_required_on = Carbon::now()->format('d-M-Y');
+        $history = new IncidentAuditTrail();
+        $history->incident_id = $id;
         $history->activity_type = 'Activity Log';
         $history->previous = "";
-        $history->current = $failureInvestigation->qa_more_info_required_by;
+        $history->current = $incident->qa_more_info_required_by;
         $history->comment = $request->comment;
         $history->user_id = Auth::user()->id;
         $history->user_name = Auth::user()->name;
@@ -3218,36 +3334,36 @@ class FailureInvestigationController extends Controller
         $history->origin_state = $lastDocument->status;
         $history->stage = 'Send to HOD';
         $history->save();
-        $failureInvestigation->update();
-        $history = new FailureInvestigationHistory();
-        $history->type = "Failure Investigation";
+        $incident->update();
+        $history = new IncidentHistory();
+        $history->type = "Incident";
         $history->doc_id = $id;
         $history->user_id = Auth::user()->id;
         $history->user_name = Auth::user()->name;
-        $history->stage_id = $failureInvestigation->stage;
+        $history->stage_id = $incident->stage;
         $history->status = "Send to QA Initial Review";
         $history->save();
         // foreach ($list as $u) {
-        //     if ($u->q_m_s_divisions_id == $failureInvestigation->division_id) {
+        //     if ($u->q_m_s_divisions_id == $incident->division_id) {
         //         $email = Helpers::getInitiatorEmail($u->user_id);
         //         if ($email !== null) {
 
         //             try {
         //                 Mail::send(
         //                     'mail.view-mail',
-        //                     ['data' => $failureInvestigation],
+        //                     ['data' => $incident],
         //                     function ($message) use ($email) {
         //                         $message->to($email)
         //                             ->subject("Activity Performed By " . Auth::user()->name);
         //                     }
         //                 );
         //             } catch (\Exception $e) {
-        //                 //log error
+        //                 
         //             }
         //         }
         //     }
         // }
-        $failureInvestigation->update();
+        $incident->update();
         toastr()->success('Document Sent');
         return back();
 
@@ -3256,13 +3372,14 @@ class FailureInvestigationController extends Controller
             return back();
         }
     }
+
 
     public function pending_initiator_update(Request $request, $id)
     {
         if ($request->username == Auth::user()->email && Hash::check($request->password, Auth::user()->password)) {
-            $failureInvestigation = FailureInvestigation::find($id);
-            $lastDocument = FailureInvestigation::find($id);
-            // $cftResponse = FailureInvestigationCftResponse::withoutTrashed()->where(['failure_investigation_id' => $id])->get();
+            $incident = Incident::find($id);
+            $lastDocument = Incident::find($id);
+            // $cftResponse = IncidentCftResponse::withoutTrashed()->where(['incident_id' => $id])->get();
             $list = Helpers::getInitiatorUserList();
            // Soft delete all records
         //    $cftResponse->each(function ($response) {
@@ -3270,15 +3387,15 @@ class FailureInvestigationController extends Controller
         // });
 
 
-        $failureInvestigation->stage = "7";
-        $failureInvestigation->status = "Pending Initiator Update";
-        $failureInvestigation->qa_more_info_required_by = Auth::user()->name;
-        $failureInvestigation->qa_more_info_required_on = Carbon::now()->format('d-M-Y');
-        $history = new FailureInvestigationAuditTrail();
-        $history->failure_investigation_id = $id;
+        $incident->stage = "7";
+        $incident->status = "Pending Initiator Update";
+        $incident->qa_more_info_required_by = Auth::user()->name;
+        $incident->qa_more_info_required_on = Carbon::now()->format('d-M-Y');
+        $history = new IncidentAuditTrail();
+        $history->incident_id = $id;
         $history->activity_type = 'Activity Log';
         $history->previous = "";
-        $history->current = $failureInvestigation->qa_more_info_required_by;
+        $history->current = $incident->qa_more_info_required_by;
         $history->comment = $request->comment;
         $history->user_id = Auth::user()->id;
         $history->user_name = Auth::user()->name;
@@ -3286,36 +3403,36 @@ class FailureInvestigationController extends Controller
         $history->origin_state = $lastDocument->status;
         $history->stage = 'Send to Pending Initiator Update';
         $history->save();
-        $failureInvestigation->update();
-        $history = new FailureInvestigationHistory();
-        $history->type = "Failure Investigation";
+        $incident->update();
+        $history = new IncidentHistory();
+        $history->type = "Incident";
         $history->doc_id = $id;
         $history->user_id = Auth::user()->id;
         $history->user_name = Auth::user()->name;
-        $history->stage_id = $failureInvestigation->stage;
+        $history->stage_id = $incident->stage;
         $history->status = "Send to Pending Initiator Update";
         $history->save();
         // foreach ($list as $u) {
-        //     if ($u->q_m_s_divisions_id == $failureInvestigation->division_id) {
+        //     if ($u->q_m_s_divisions_id == $incident->division_id) {
         //         $email = Helpers::getInitiatorEmail($u->user_id);
         //         if ($email !== null) {
 
         //             try {
         //                 Mail::send(
         //                     'mail.view-mail',
-        //                     ['data' => $failureInvestigation],
+        //                     ['data' => $incident],
         //                     function ($message) use ($email) {
         //                         $message->to($email)
         //                             ->subject("Activity Performed By " . Auth::user()->name);
         //                     }
         //                 );
         //             } catch (\Exception $e) {
-        //                 //log error
+        //                 
         //             }
         //         }
         //     }
         // }
-        $failureInvestigation->update();
+        $incident->update();
         toastr()->success('Document Sent');
         return back();
 
@@ -3325,17 +3442,17 @@ class FailureInvestigationController extends Controller
         }
     }
 
-    public function failure_investigation_send_stage(Request $request, $id)
+    public function incident_send_stage(Request $request, $id)
     { 
         try {
             if ($request->username == Auth::user()->email && Hash::check($request->password, Auth::user()->password)) {
-                $failureInvestigation = FailureInvestigation::find($id);
-                $updateCFT = FailureInvestigationCft::where('failure_investigation_id', $id)->latest()->first();
-                $lastDocument = FailureInvestigation::find($id);
-                $cftDetails = FailureInvestigationCftResponse::withoutTrashed()->where(['status' => 'In-progress', 'failure_investigation_id' => $id])->distinct('cft_user_id')->count();
+                $incident = Incident::find($id);
+                $updateCFT = IncidentCft::where('incident_id', $id)->latest()->first();
+                $lastDocument = Incident::find($id);
+                $cftDetails = IncidentCftResponse::withoutTrashed()->where(['status' => 'In-progress', 'incident_id' => $id])->distinct('cft_user_id')->count();
     
-                if ($failureInvestigation->stage == 1) {
-                    if ($failureInvestigation->form_progress !== 'general-open')
+                if ($incident->stage == 1) {
+                    if ($incident->form_progress !== 'general-open')
                     {
                         dd('emnter');
                         Session::flash('swal', [
@@ -3354,18 +3471,18 @@ class FailureInvestigationController extends Controller
                         ]);
                     }
                     
-                    $failureInvestigation->stage = "2";
-                    $failureInvestigation->status = "HOD Review";
-                    $failureInvestigation->submit_by = Auth::user()->name;
-                    $failureInvestigation->submit_on = Carbon::now()->format('d-M-Y');
-                    $failureInvestigation->submit_comment = $request->comment;
+                    $incident->stage = "2";
+                    $incident->status = "HOD Review";
+                    $incident->submit_by = Auth::user()->name;
+                    $incident->submit_on = Carbon::now()->format('d-M-Y');
+                    $incident->submit_comment = $request->comment;
                     
-                    $history = new FailureInvestigationAuditTrail();
-                    $history->failure_investigation_id = $id;
+                    $history = new IncidentAuditTrail();
+                    $history->incident_id = $id;
                     $history->activity_type = 'Activity Log';
                     $history->previous = "";
                     $history->action='Submit';
-                    $history->current = $failureInvestigation->submit_by;
+                    $history->current = $incident->submit_by;
                     $history->comment = $request->comment;
                     $history->user_id = Auth::user()->id;
                     $history->user_name = Auth::user()->name;
@@ -3379,21 +3496,21 @@ class FailureInvestigationController extends Controller
     
                     // $list = Helpers::getHodUserList();
                     // foreach ($list as $u) {
-                    //     if ($u->q_m_s_divisions_id == $failureInvestigation->division_id) {
+                    //     if ($u->q_m_s_divisions_id == $incident->division_id) {
                     //         $email = Helpers::getInitiatorEmail($u->user_id);
                     //         if ($email !== null) {
     
                     //             try {
                     //                 Mail::send(
                     //                     'mail.view-mail',
-                    //                     ['data' => $failureInvestigation],
+                    //                     ['data' => $incident],
                     //                     function ($message) use ($email) {
                     //                         $message->to($email)
                     //                             ->subject("Activity Performed By " . Auth::user()->name);
                     //                     }
                     //                 );
                     //             } catch (\Exception $e) {
-                    //                 //log error
+                    //                 
                     //             }
                     //         }
                     //     }
@@ -3401,13 +3518,13 @@ class FailureInvestigationController extends Controller
     
                     // $list = Helpers::getHeadoperationsUserList();
                     // foreach ($list as $u) {
-                    //     if ($u->q_m_s_divisions_id == $failureInvestigation->division_id) {
+                    //     if ($u->q_m_s_divisions_id == $incident->division_id) {
                     //         $email = Helpers::getInitiatorEmail($u->user_id);
                     //         if ($email !== null) {
     
                     //             Mail::send(
                     //                 'mail.Categorymail',
-                    //                 ['data' => $failureInvestigation],
+                    //                 ['data' => $incident],
                     //                 function ($message) use ($email) {
                     //                     $message->to($email)
                     //                         ->subject("Activity Performed By " . Auth::user()->name);
@@ -3416,14 +3533,14 @@ class FailureInvestigationController extends Controller
                     //         }
                     //     }
                     // }
-                    // dd($failureInvestigation);
-                    $failureInvestigation->update();
+                    // dd($incident);
+                    $incident->update();
                     return back();
                 }
-                if ($failureInvestigation->stage == 2) {
+                if ($incident->stage == 2) {
     
                     // Check HOD remark value
-                    if (!$failureInvestigation->HOD_Remarks) {
+                    if (!$incident->HOD_Remarks) {
     
                         Session::flash('swal', [
                             'title' => 'Mandatory Fields Required!',
@@ -3440,16 +3557,16 @@ class FailureInvestigationController extends Controller
                         ]);
                     }
     
-                    $failureInvestigation->stage = "3";
-                    $failureInvestigation->status = "QA Initial Review";
-                    $failureInvestigation->HOD_Review_Complete_By = Auth::user()->name;
-                    $failureInvestigation->HOD_Review_Complete_On = Carbon::now()->format('d-M-Y');
-                    $failureInvestigation->HOD_Review_Comments = $request->comment;
-                    $history = new FailureInvestigationAuditTrail();
-                    $history->failure_investigation_id = $id;
+                    $incident->stage = "3";
+                    $incident->status = "QA Initial Review";
+                    $incident->HOD_Review_Complete_By = Auth::user()->name;
+                    $incident->HOD_Review_Complete_On = Carbon::now()->format('d-M-Y');
+                    $incident->HOD_Review_Comments = $request->comment;
+                    $history = new IncidentAuditTrail();
+                    $history->incident_id = $id;
                     $history->activity_type = 'Activity Log';
                     $history->previous = "";
-                    $history->current = $failureInvestigation->HOD_Review_Complete_By;
+                    $history->current = $incident->HOD_Review_Complete_By;
                     $history->comment = $request->comment;
                     $history->action= 'HOD Review Complete';
                     $history->user_id = Auth::user()->id;
@@ -3463,32 +3580,32 @@ class FailureInvestigationController extends Controller
                     // dd($history->action);
                     // $list = Helpers::getQAUserList();
                     // foreach ($list as $u) {
-                    //     if ($u->q_m_s_divisions_id == $failureInvestigation->division_id) {
+                    //     if ($u->q_m_s_divisions_id == $incident->division_id) {
                     //         $email = Helpers::getInitiatorEmail($u->user_id);
                     //         if ($email !== null) {
                     //             try {
                     //                 Mail::send(
                     //                     'mail.view-mail',
-                    //                     ['data' => $failureInvestigation],
+                    //                     ['data' => $incident],
                     //                     function ($message) use ($email) {
                     //                         $message->to($email)
                     //                             ->subject("Activity Performed By " . Auth::user()->name);
                     //                     }
                     //                 );
                     //             } catch (\Exception $e) {
-                    //                 //log error
+                    //                 
                     //             }
                     //         }
                     //     }
                     // }
     
     
-                    $failureInvestigation->update();
+                    $incident->update();
                     toastr()->success('Document Sent');
                     return back();
                 }
-                if ($failureInvestigation->stage == 3) {
-                    if ($failureInvestigation->form_progress !== 'cft')
+                if ($incident->stage == 3) {
+                    if ($incident->form_progress !== 'cft')
                     {
                         Session::flash('swal', [
                             'type' => 'warning',
@@ -3505,12 +3622,12 @@ class FailureInvestigationController extends Controller
                         ]);
                     }
     
-                    $failureInvestigation->stage = "4";
-                    $failureInvestigation->status = "CFT Review";
+                    $incident->stage = "4";
+                    $incident->status = "CFT Review";
     
                     // Code for the CFT required
-                    $stage = new FailureInvestigationCftResponse();
-                    $stage->failure_investigation_id = $id;
+                    $stage = new IncidentCftResponse();
+                    $stage->incident_id = $id;
                     $stage->cft_user_id = Auth::user()->id;
                     $stage->status = "CFT Required";
                     // $stage->cft_stage = ;
@@ -3518,15 +3635,15 @@ class FailureInvestigationController extends Controller
                     $stage->is_required = 1;
                     $stage->save();
     
-                    $failureInvestigation->QA_Initial_Review_Complete_By = Auth::user()->name;
-                    $failureInvestigation->QA_Initial_Review_Complete_On = Carbon::now()->format('d-M-Y');
-                    $failureInvestigation->QA_Initial_Review_Comments = $request->comment;
-                    $history = new FailureInvestigationAuditTrail();
-                    $history->failure_investigation_id = $id;
+                    $incident->QA_Initial_Review_Complete_By = Auth::user()->name;
+                    $incident->QA_Initial_Review_Complete_On = Carbon::now()->format('d-M-Y');
+                    $incident->QA_Initial_Review_Comments = $request->comment;
+                    $history = new IncidentAuditTrail();
+                    $history->incident_id = $id;
                     $history->activity_type = 'Activity Log';
                     $history->previous = "";
                     $history->action= 'QA Initial Review Complete';
-                    $history->current = $failureInvestigation->QA_Initial_Review_Complete_By;
+                    $history->current = $incident->QA_Initial_Review_Complete_By;
                     $history->comment = $request->comment;
                     $history->user_id = Auth::user()->id;
                     $history->user_name = Auth::user()->name;
@@ -3538,35 +3655,35 @@ class FailureInvestigationController extends Controller
                     $history->save();
                     // $list = Helpers::getQAUserList();
                     // foreach ($list as $u) {
-                    //     if ($u->q_m_s_divisions_id == $failureInvestigation->division_id) {
+                    //     if ($u->q_m_s_divisions_id == $incident->division_id) {
                     //         $email = Helpers::getInitiatorEmail($u->user_id);
                     //         if ($email !== null) {
                     //             try {
                     //                 Mail::send(
                     //                     'mail.view-mail',
-                    //                     ['data' => $failureInvestigation],
+                    //                     ['data' => $incident],
                     //                     function ($message) use ($email) {
                     //                         $message->to($email)
                     //                             ->subject("Activity Performed By " . Auth::user()->name);
                     //                     }
                     //                 );
                     //             } catch (\Exception $e) {
-                    //                 //log error
+                    //                 
                     //             }
                     //         }
                     //     }
                     // }
     
-                    if ($request->failure_investigation_category == 'major' || $request->failure_investigation_category == 'minor' || $request->failure_investigation_category == 'critical') {
-                        $list = Helpers::getHeadoperationsUserList();
+                    if ($request->Incident_category == 'major' || $request->Incident_category == 'minor' || $request->Incident_category == 'critical') {
+                        // $list = Helpers::getHeadoperationsUserList();
                                 // foreach ($list as $u) {
-                                //     if ($u->q_m_s_divisions_id == $failureInvestigation->division_id) {
+                                //     if ($u->q_m_s_divisions_id == $incident->division_id) {
                                 //         $email = Helpers::getInitiatorEmail($u->user_id);
                                 //         if ($email !== null) {
                                 //              try {
                                 //                     Mail::send(
                                 //                         'mail.Categorymail',
-                                //                         ['data' => $failureInvestigation],
+                                //                         ['data' => $incident],
                                 //                         function ($message) use ($email) {
                                 //                             $message->to($email)
                                 //                                 ->subject("Activity Performed By " . Auth::user()->name);
@@ -3579,48 +3696,48 @@ class FailureInvestigationController extends Controller
                                 //     }
                                 // }
                             }
-                            if ($request->failure_investigation_category == 'major' || $request->failure_investigation_category == 'minor' || $request->failure_investigation_category == 'critical') {
-                                $list = Helpers::getCEOUserList();
+                            if ($request->Incident_category == 'major' || $request->Incident_category == 'minor' || $request->Incident_category == 'critical') {
+                                // $list = Helpers::getCEOUserList();
                                         // foreach ($list as $u) {
-                                        //     if ($u->q_m_s_divisions_id == $failureInvestigation->division_id) {
+                                        //     if ($u->q_m_s_divisions_id == $incident->division_id) {
                                         //         $email = Helpers::getInitiatorEmail($u->user_id);
                                         //         if ($email !== null) {
-                                        //              // Add this if statement
+                                        //              
                                         //              try {
                                         //                     Mail::send(
                                         //                         'mail.Categorymail',
-                                        //                         ['data' => $failureInvestigation],
+                                        //                         ['data' => $incident],
                                         //                         function ($message) use ($email) {
                                         //                             $message->to($email)
                                         //                                 ->subject("Activity Performed By " . Auth::user()->name);
                                         //                         }
                                         //                     );
                                         //                 } catch (\Exception $e) {
-                                        //                     //log error
+                                        //                     
                                         //                 }
     
                                         //         }
                                         //     }
                                         // }
                                     }
-                                    if ($request->failure_investigation_category == 'major' || $request->failure_investigation_category == 'minor' || $request->failure_investigation_category == 'critical') {
-                                        $list = Helpers::getCorporateEHSHeadUserList();
+                                    if ($request->Incident_category == 'major' || $request->Incident_category == 'minor' || $request->Incident_category == 'critical') {
+                                        // $list = Helpers::getCorporateEHSHeadUserList();
                                                 // foreach ($list as $u) {
-                                                //     if ($u->q_m_s_divisions_id == $failureInvestigation->division_id) {
+                                                //     if ($u->q_m_s_divisions_id == $incident->division_id) {
                                                 //         $email = Helpers::getInitiatorEmail($u->user_id);
                                                 //         if ($email !== null) {
-                                                //              // Add this if statement
+                                                //              
                                                 //              try {
                                                 //                     Mail::send(
                                                 //                         'mail.Categorymail',
-                                                //                         ['data' => $failureInvestigation],
+                                                //                         ['data' => $incident],
                                                 //                         function ($message) use ($email) {
                                                 //                             $message->to($email)
                                                 //                                 ->subject("Activity Performed By " . Auth::user()->name);
                                                 //                         }
                                                 //                     );
                                                 //                 } catch (\Exception $e) {
-                                                //                     //log error
+                                                //                     
                                                 //                 }
     
                                                 //         }
@@ -3628,14 +3745,14 @@ class FailureInvestigationController extends Controller
                                                 // }
                                             }
     
-                    $failureInvestigation->update();
+                    $incident->update();
                     toastr()->success('Document Sent');
                     return back();
                 }
-                if ($failureInvestigation->stage == 4) {
+                if ($incident->stage == 4) {
     
                     // CFT review state update form_progress
-                    if ($failureInvestigation->form_progress !== 'cft')
+                    if ($incident->form_progress !== 'cft')
                     {
                         Session::flash('swal', [
                             'type' => 'warning',
@@ -3653,8 +3770,8 @@ class FailureInvestigationController extends Controller
                     }
     
     
-                    $IsCFTRequired = FailureInvestigationCftResponse::withoutTrashed()->where(['is_required' => 1, 'failure_investigation_id' => $id])->latest()->first();
-                    $cftUsers = DB::table('failure_investigation_cfts')->where(['failure_investigation_id' => $id])->first();
+                    $IsCFTRequired = IncidentCftResponse::withoutTrashed()->where(['is_required' => 1, 'incident_id' => $id])->latest()->first();
+                    $cftUsers = DB::table('incident_cfts')->where(['incident_id' => $id])->first();
                     // Define the column names
                     $columns = ['Production_person', 'Warehouse_notification', 'Quality_Control_Person', 'QualityAssurance_person', 'Engineering_person', 'Analytical_Development_person', 'Kilo_Lab_person', 'Technology_transfer_person', 'Environment_Health_Safety_person', 'Human_Resource_person', 'Information_Technology_person', 'Project_management_person','Other1_person','Other2_person','Other3_person','Other4_person','Other5_person'];
                     // $columns2 = ['Production_review', 'Warehouse_review', 'Quality_Control_review', 'QualityAssurance_review', 'Engineering_review', 'Analytical_Development_review', 'Kilo_Lab_review', 'Technology_transfer_review', 'Environment_Health_Safety_review', 'Human_Resource_review', 'Information_Technology_review', 'Project_management_review'];
@@ -3743,16 +3860,16 @@ class FailureInvestigationController extends Controller
                     // dd($valuesArray, count(array_unique($valuesArray)), ($cftDetails+1));
                     if ($IsCFTRequired) {
                         if (count(array_unique($valuesArray)) == ($cftDetails + 1)) {
-                            $stage = new FailureInvestigationCftResponse();
-                            $stage->failure_investigation_id = $id;
+                            $stage = new IncidentCftResponse();
+                            $stage->incident_id = $id;
                             $stage->cft_user_id = Auth::user()->id;
                             $stage->status = "Completed";
                             // $stage->cft_stage = ;
                             $stage->comment = $request->comment;
                             $stage->save();
                         } else {
-                            $stage = new FailureInvestigationCftResponse();
-                            $stage->failure_investigation_id = $id;
+                            $stage = new IncidentCftResponse();
+                            $stage->incident_id = $id;
                             $stage->cft_user_id = Auth::user()->id;
                             $stage->status = "In-progress";
                             // $stage->cft_stage = ;
@@ -3761,24 +3878,24 @@ class FailureInvestigationController extends Controller
                         }
                     }
     
-                    $checkCFTCount = FailureInvestigationCftResponse::withoutTrashed()->where(['status' => 'Completed', 'failure_investigation_id' => $id])->count();
+                    $checkCFTCount = IncidentCftResponse::withoutTrashed()->where(['status' => 'Completed', 'incident_id' => $id])->count();
                     // dd(count(array_unique($valuesArray)), $checkCFTCount);
     
     
                     if (!$IsCFTRequired || $checkCFTCount) {
     
-                        $failureInvestigation->stage = "5";
-                        $failureInvestigation->status = "QA Final Review";
-                        $failureInvestigation->CFT_Review_Complete_By = Auth::user()->name;
-                        $failureInvestigation->CFT_Review_Complete_On = Carbon::now()->format('d-M-Y');
-                        $failureInvestigation->CFT_Review_Comments = $request->comment;
+                        $incident->stage = "5";
+                        $incident->status = "QA Final Review";
+                        $incident->CFT_Review_Complete_By = Auth::user()->name;
+                        $incident->CFT_Review_Complete_On = Carbon::now()->format('d-M-Y');
+                        $incident->CFT_Review_Comments = $request->comment;
     
-                        $history = new FailureInvestigationAuditTrail();
-                        $history->failure_investigation_id = $id;
+                        $history = new IncidentAuditTrail();
+                        $history->incident_id = $id;
                         $history->activity_type = 'Activity Log';
                         $history->previous = "";
                         $history->action='CFT Review Complete';
-                        $history->current = $failureInvestigation->CFT_Review_Complete_By;
+                        $history->current = $incident->CFT_Review_Complete_By;
                         $history->comment = $request->comment;
                         $history->user_id = Auth::user()->id;
                         $history->user_name = Auth::user()->name;
@@ -3790,33 +3907,33 @@ class FailureInvestigationController extends Controller
                         $history->save();
                         // $list = Helpers::getQAUserList();
                         // foreach ($list as $u) {
-                        //     if ($u->q_m_s_divisions_id == $failureInvestigation->division_id) {
+                        //     if ($u->q_m_s_divisions_id == $incident->division_id) {
                         //         $email = Helpers::getInitiatorEmail($u->user_id);
                         //         if ($email !== null) {
                         //             try {
                         //                 Mail::send(
                         //                     'mail.view-mail',
-                        //                     ['data' => $failureInvestigation],
+                        //                     ['data' => $incident],
                         //                     function ($message) use ($email) {
                         //                         $message->to($email)
                         //                             ->subject("Activity Performed By " . Auth::user()->name);
                         //                     }
                         //                 );
                         //             } catch (\Exception $e) {
-                        //                 //log error
+                        //                 
                         //             }
                         //         }
                         //     }
                         // }
-                        $failureInvestigation->update();
+                        $incident->update();
                     }
                     toastr()->success('Document Sent');
                     return back();
                 }
     
-                if ($failureInvestigation->stage == 5) {
+                if ($incident->stage == 5) {
     
-                    if ($failureInvestigation->form_progress === 'capa' && !empty($failureInvestigation->QA_Feedbacks))
+                    if ($incident->form_progress === 'capa' && !empty($incident->QA_Feedbacks))
                     {
                         Session::flash('swal', [
                             'type' => 'success',
@@ -3835,17 +3952,17 @@ class FailureInvestigationController extends Controller
                     }
     
     
-                    $failureInvestigation->stage = "6";
-                    $failureInvestigation->status = "QA Head/Manager Designee Approval";
-                    $failureInvestigation->QA_Final_Review_Complete_By = Auth::user()->name;
-                    $failureInvestigation->QA_Final_Review_Complete_On = Carbon::now()->format('d-M-Y');
-                    $failureInvestigation->QA_Final_Review_Comments = $request->comment;
+                    $incident->stage = "6";
+                    $incident->status = "QA Head/Manager Designee Approval";
+                    $incident->QA_Final_Review_Complete_By = Auth::user()->name;
+                    $incident->QA_Final_Review_Complete_On = Carbon::now()->format('d-M-Y');
+                    $incident->QA_Final_Review_Comments = $request->comment;
     
-                    $history = new FailureInvestigationAuditTrail();
-                    $history->failure_investigation_id = $id;
+                    $history = new IncidentAuditTrail();
+                    $history->incident_id = $id;
                     $history->activity_type = 'Activity Log';
                     $history->previous = "";
-                    $history->current = $failureInvestigation->QA_Final_Review_Complete_By;
+                    $history->current = $incident->QA_Final_Review_Complete_By;
                     $history->comment = $request->comment;
                     $history->action ='QA Final Review Complete';
                     $history->user_id = Auth::user()->id;
@@ -3858,31 +3975,31 @@ class FailureInvestigationController extends Controller
                     $history->save();
                     // $list = Helpers::getQAUserList();
                     // foreach ($list as $u) {
-                    //     if ($u->q_m_s_divisions_id == $failureInvestigation->division_id) {
+                    //     if ($u->q_m_s_divisions_id == $incident->division_id) {
                     //         $email = Helpers::getInitiatorEmail($u->user_id);
                     //         if ($email !== null) {
                     //             try {
                     //                 Mail::send(
                     //                     'mail.view-mail',
-                    //                     ['data' => $failureInvestigation],
+                    //                     ['data' => $incident],
                     //                     function ($message) use ($email) {
                     //                         $message->to($email)
                     //                             ->subject("Activity Performed By " . Auth::user()->name);
                     //                     }
                     //                 );
                     //             } catch (\Exception $e) {
-                    //                 //log error
+                    //                 
                     //             }
                     //         }
                     //     }
                     // }
-                    $failureInvestigation->update();
+                    $incident->update();
                     toastr()->success('Document Sent');
                     return back();
                 }
-                if ($failureInvestigation->stage == 6) {
+                if ($incident->stage == 6) {
     
-                    if ($failureInvestigation->form_progress !== 'qah')
+                    if ($incident->form_progress !== 'qah')
                     {
     
                         Session::flash('swal', [
@@ -3896,13 +4013,13 @@ class FailureInvestigationController extends Controller
                         Session::flash('swal', [
                             'type' => 'success',
                             'title' => 'Success',
-                            'message' => 'Failure Investigation sent to Intiator Update'
+                            'message' => 'Incident sent to Intiator Update'
                         ]);
                     }
     
-                    $extension = Extension::where('parent_id', $failureInvestigation->id)->first();
+                    $extension = Extension::where('parent_id', $incident->id)->first();
     
-                    $rca = RootCauseAnalysis::where('parent_record', str_pad($failureInvestigation->id, 4, 0, STR_PAD_LEFT))->first();
+                    $rca = RootCauseAnalysis::where('parent_record', str_pad($incident->id, 4, 0, STR_PAD_LEFT))->first();
     
                     if ($extension && $extension->status !== 'Closed-Done') {
                         Session::flash('swal', [
@@ -3926,18 +4043,18 @@ class FailureInvestigationController extends Controller
     
                     // return "PAUSE";
     
-                    $failureInvestigation->stage = "7";
-                    $failureInvestigation->status = "Pending Initiator Update";
-                    $failureInvestigation->QA_head_approved_by = Auth::user()->name;
-                    $failureInvestigation->QA_head_approved_on = Carbon::now()->format('d-M-Y');
-                    $failureInvestigation->QA_head_approved_comment	 = $request->comment;
+                    $incident->stage = "7";
+                    $incident->status = "Pending Initiator Update";
+                    $incident->QA_head_approved_by = Auth::user()->name;
+                    $incident->QA_head_approved_on = Carbon::now()->format('d-M-Y');
+                    $incident->QA_head_approved_comment	 = $request->comment;
     
-                    $history = new FailureInvestigationAuditTrail();
-                    $history->failure_investigation_id = $id;
+                    $history = new IncidentAuditTrail();
+                    $history->incident_id = $id;
                     $history->activity_type = 'Activity Log';
                     $history->previous = "";
                     $history->action ='Approved';
-                    $history->current = $failureInvestigation->QA_head_approved_by;
+                    $history->current = $incident->QA_head_approved_by;
                     $history->comment = $request->comment;
                     $history->user_id = Auth::user()->id;
                     $history->user_name = Auth::user()->name;
@@ -3949,31 +4066,31 @@ class FailureInvestigationController extends Controller
                     $history->save();
                     // $list = Helpers::getQAUserList();
                     // foreach ($list as $u) {
-                    //     if ($u->q_m_s_divisions_id == $failureInvestigation->division_id) {
+                    //     if ($u->q_m_s_divisions_id == $incident->division_id) {
                     //         $email = Helpers::getInitiatorEmail($u->user_id);
                     //         if ($email !== null) {
                     //             try {
                     //                 Mail::send(
                     //                     'mail.view-mail',
-                    //                     ['data' => $failureInvestigation],
+                    //                     ['data' => $incident],
                     //                     function ($message) use ($email) {
                     //                         $message->to($email)
                     //                             ->subject("Activity Performed By " . Auth::user()->name);
                     //                     }
                     //                 );
                     //             } catch (\Exception $e) {
-                    //                 //log error
+                    //                 
                     //             }
                     //         }
                     //     }
                     // }
-                    $failureInvestigation->update();
+                    $incident->update();
                     toastr()->success('Document Sent');
                     return back();
                 }
-                if ($failureInvestigation->stage == 7) {
+                if ($incident->stage == 7) {
     
-                    if ($failureInvestigation->form_progress !== 'qah')
+                    if ($incident->form_progress !== 'qah')
                     {
     
                         Session::flash('swal', [
@@ -3987,13 +4104,13 @@ class FailureInvestigationController extends Controller
                         Session::flash('swal', [
                             'type' => 'success',
                             'title' => 'Success',
-                            'message' => 'Failure Investigation sent to QA Final Approval.'
+                            'message' => 'Incident sent to QA Final Approval.'
                         ]);
                     }
     
-                    $extension = Extension::where('parent_id', $failureInvestigation->id)->first();
+                    $extension = Extension::where('parent_id', $incident->id)->first();
     
-                    $rca = RootCauseAnalysis::where('parent_record', str_pad($failureInvestigation->id, 4, 0, STR_PAD_LEFT))->first();
+                    $rca = RootCauseAnalysis::where('parent_record', str_pad($incident->id, 4, 0, STR_PAD_LEFT))->first();
     
                     if ($extension && $extension->status !== 'Closed-Done') {
                         Session::flash('swal', [
@@ -4017,18 +4134,18 @@ class FailureInvestigationController extends Controller
     
                     // return "PAUSE";
     
-                    $failureInvestigation->stage = "8";
-                    $failureInvestigation->status = "QA Final Approval";
-                    $failureInvestigation->pending_initiator_approved_by = Auth::user()->name;
-                    $failureInvestigation->pending_initiator_approved_on = Carbon::now()->format('d-M-Y');
-                    $failureInvestigation->pending_initiator_approved_comment = $request->comment;
+                    $incident->stage = "8";
+                    $incident->status = "QA Final Approval";
+                    $incident->pending_initiator_approved_by = Auth::user()->name;
+                    $incident->pending_initiator_approved_on = Carbon::now()->format('d-M-Y');
+                    $incident->pending_initiator_approved_comment = $request->comment;
     
-                    $history = new FailureInvestigationAuditTrail();
-                    $history->failure_investigation_id = $id;
+                    $history = new IncidentAuditTrail();
+                    $history->incident_id = $id;
                     $history->activity_type = 'Activity Log';
                     $history->previous = "";
                     $history->action ='Initiator Updated Complete';
-                    $history->current = $failureInvestigation->pending_initiator_approved_by;
+                    $history->current = $incident->pending_initiator_approved_by;
                     $history->comment = $request->comment;
                     $history->user_id = Auth::user()->id;
                     $history->user_name = Auth::user()->name;
@@ -4040,33 +4157,33 @@ class FailureInvestigationController extends Controller
                     $history->save();
                     // $list = Helpers::getQAUserList();
                     // foreach ($list as $u) {
-                    //     if ($u->q_m_s_divisions_id == $failureInvestigation->division_id) {
+                    //     if ($u->q_m_s_divisions_id == $incident->division_id) {
                     //         $email = Helpers::getInitiatorEmail($u->user_id);
                     //         if ($email !== null) {
                     //             try {
                     //                 Mail::send(
                     //                     'mail.view-mail',
-                    //                     ['data' => $failureInvestigation],
+                    //                     ['data' => $incident],
                     //                     function ($message) use ($email) {
                     //                         $message->to($email)
                     //                             ->subject("Activity Performed By " . Auth::user()->name);
                     //                     }
                     //                 );
                     //             } catch (\Exception $e) {
-                    //                 //log error
+                    //                 
                     //             }
                     //         }
                     //     }
                     // }
-                    $failureInvestigation->update();
+                    $incident->update();
                     toastr()->success('Document Sent');
                     return back();
                 }
     
     
-                if ($failureInvestigation->stage == 8) {
+                if ($incident->stage == 8) {
     
-                    if ($failureInvestigation->form_progress !== 'qah')
+                    if ($incident->form_progress !== 'qah')
                     {
     
                         Session::flash('swal', [
@@ -4080,13 +4197,13 @@ class FailureInvestigationController extends Controller
                         Session::flash('swal', [
                             'type' => 'success',
                             'title' => 'Success',
-                            'message' => 'Failure Investigation sent to Closed/Done state'
+                            'message' => 'Incident sent to Closed/Done state'
                         ]);
                     }
     
-                    $extension = Extension::where('parent_id', $failureInvestigation->id)->first();
+                    $extension = Extension::where('parent_id', $incident->id)->first();
     
-                    $rca = RootCauseAnalysis::where('parent_record', str_pad($failureInvestigation->id, 4, 0, STR_PAD_LEFT))->first();
+                    $rca = RootCauseAnalysis::where('parent_record', str_pad($incident->id, 4, 0, STR_PAD_LEFT))->first();
     
                     if ($extension && $extension->status !== 'Closed-Done') {
                         Session::flash('swal', [
@@ -4110,18 +4227,18 @@ class FailureInvestigationController extends Controller
     
                     // return "PAUSE";
     
-                    $failureInvestigation->stage = "9";
-                    $failureInvestigation->status = "Closed-Done";
-                    $failureInvestigation->QA_final_approved_by = Auth::user()->name;
-                    $failureInvestigation->QA_final_approved_on = Carbon::now()->format('d-M-Y');
-                    $failureInvestigation->QA_final_approved_comment = $request->comment;
+                    $incident->stage = "9";
+                    $incident->status = "Closed-Done";
+                    $incident->QA_final_approved_by = Auth::user()->name;
+                    $incident->QA_final_approved_on = Carbon::now()->format('d-M-Y');
+                    $incident->QA_final_approved_comment = $request->comment;
     
-                    $history = new FailureInvestigationAuditTrail();
-                    $history->failure_investigation_id = $id;
+                    $history = new IncidentAuditTrail();
+                    $history->incident_id = $id;
                     $history->activity_type = 'Activity Log';
                     $history->previous = "";
                     $history->action ='Closed-Done';
-                    $history->current = $failureInvestigation->QA_final_approved_by;
+                    $history->current = $incident->QA_final_approved_by;
                     $history->comment = $request->comment;
                     $history->user_id = Auth::user()->id;
                     $history->user_name = Auth::user()->name;
@@ -4133,25 +4250,25 @@ class FailureInvestigationController extends Controller
                     $history->save();
                     // $list = Helpers::getQAUserList();
                     // foreach ($list as $u) {
-                    //     if ($u->q_m_s_divisions_id == $failureInvestigation->division_id) {
+                    //     if ($u->q_m_s_divisions_id == $incident->division_id) {
                     //         $email = Helpers::getInitiatorEmail($u->user_id);
                     //         if ($email !== null) {
                     //             try {
                     //                 Mail::send(
                     //                     'mail.view-mail',
-                    //                     ['data' => $failureInvestigation],
+                    //                     ['data' => $incident],
                     //                     function ($message) use ($email) {
                     //                         $message->to($email)
                     //                             ->subject("Activity Performed By " . Auth::user()->name);
                     //                     }
                     //                 );
                     //             } catch (\Exception $e) {
-                    //                 //log error
+                    //                 
                     //             }
                     //         }
                     //     }
                     // }
-                    $failureInvestigation->update();
+                    $incident->update();
                     toastr()->success('Document Sent');
                     return back();
                 }
@@ -4173,23 +4290,23 @@ class FailureInvestigationController extends Controller
 
 
         if ($request->username == Auth::user()->email && Hash::check($request->password, Auth::user()->password)) {
-            $failureInvestigation = FailureInvestigation::find($id);
-            $lastDocument = FailureInvestigation::find($id);
-            $cftDetails = FailureInvestigationCftResponse::withoutTrashed()->where(['status' => 'In-progress', 'failure_investigation_id' => $id])->distinct('cft_user_id')->count();
+            $incident = Incident::find($id);
+            $lastDocument = Incident::find($id);
+            $cftDetails = IncidentCftResponse::withoutTrashed()->where(['status' => 'In-progress', 'incident_id' => $id])->distinct('cft_user_id')->count();
 
-                $failureInvestigation->stage = "5";
-                $failureInvestigation->status = "QA Final Review";
-                $failureInvestigation->QA_Initial_Review_Complete_By = Auth::user()->name;
-                // dd($failureInvestigation->QA_Initial_Review_Complete_By);
-                $failureInvestigation->QA_Initial_Review_Complete_On = Carbon::now()->format('d-M-Y');
-                $failureInvestigation->QA_Initial_Review_Comments = $request->comment;
+                $incident->stage = "5";
+                $incident->status = "QA Final Review";
+                $incident->QA_Initial_Review_Complete_By = Auth::user()->name;
+                // dd($incident->QA_Initial_Review_Complete_By);
+                $incident->QA_Initial_Review_Complete_On = Carbon::now()->format('d-M-Y');
+                $incident->QA_Initial_Review_Comments = $request->comment;
 
-                $history = new FailureInvestigationAuditTrail();
-                $history->failure_investigation_id = $id;
+                $history = new IncidentAuditTrail();
+                $history->incident_id = $id;
                 $history->activity_type = 'Activity Log';
                 $history->previous = "";
                 $history->action ='QA Final Review Complete';
-                $history->current = $failureInvestigation->QA_Initial_Review_Complete_By;
+                $history->current = $incident->QA_Initial_Review_Complete_By;
                 $history->comment = $request->comment;
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
@@ -4199,25 +4316,25 @@ class FailureInvestigationController extends Controller
                 $history->save();
                 // $list = Helpers::getQAUserList();
                 // foreach ($list as $u) {
-                //     if ($u->q_m_s_divisions_id == $failureInvestigation->division_id) {
+                //     if ($u->q_m_s_divisions_id == $incident->division_id) {
                 //         $email = Helpers::getInitiatorEmail($u->user_id);
                 //         if ($email !== null) {
                 //             try {
                 //                 Mail::send(
                 //                     'mail.view-mail',
-                //                     ['data' => $failureInvestigation],
+                //                     ['data' => $incident],
                 //                     function ($message) use ($email) {
                 //                         $message->to($email)
                 //                             ->subject("Activity Performed By " . Auth::user()->name);
                 //                     }
                 //                 );
                 //             } catch (\Exception $e) {
-                //                 //log error
+                //                 
                 //             }
                 //         }
                 //     }
                 // }
-                $failureInvestigation->update();
+                $incident->update();
                 toastr()->success('Document Sent');
                 return back();
         } else {
@@ -4226,22 +4343,22 @@ class FailureInvestigationController extends Controller
         }
     }
 
-    public function failure_inv_qa_more_info(Request $request, $id)
+    public function incident_qa_more_info(Request $request, $id)
     {
         if ($request->username == Auth::user()->email && Hash::check($request->password, Auth::user()->password)) {
-            $failureInvestigation = FailureInvestigation::find($id);
-            $lastDocument = FailureInvestigation::find($id);
+            $incident = Incident::find($id);
+            $lastDocument = Incident::find($id);
 
-            if ($failureInvestigation->stage == 2) {
-                $failureInvestigation->stage = "2";
-                $failureInvestigation->status = "Opened";
-                $failureInvestigation->qa_more_info_required_by = Auth::user()->name;
-                $failureInvestigation->qa_more_info_required_on = Carbon::now()->format('d-M-Y');
-                $history = new FailureInvestigationAuditTrail();
-                $history->failure_investigation_id = $id;
+            if ($incident->stage == 2) {
+                $incident->stage = "2";
+                $incident->status = "Opened";
+                $incident->qa_more_info_required_by = Auth::user()->name;
+                $incident->qa_more_info_required_on = Carbon::now()->format('d-M-Y');
+                $history = new IncidentAuditTrail();
+                $history->incident_id = $id;
                 $history->activity_type = 'Activity Log';
                 $history->previous = "";
-                $history->current = $failureInvestigation->qa_more_info_required_by;
+                $history->current = $incident->qa_more_info_required_by;
                 $history->comment = $request->comment;
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
@@ -4249,31 +4366,31 @@ class FailureInvestigationController extends Controller
                 $history->origin_state = $lastDocument->status;
                 $history->stage = 'HOD Review';
                 $history->save();
-                $failureInvestigation->update();
-                $history = new FailureInvestigationHistory();
-                $history->type = "Failure Investigation";
+                $incident->update();
+                $history = new IncidentHistory();
+                $history->type = "Incident";
                 $history->doc_id = $id;
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
-                $history->stage_id = $failureInvestigation->stage;
-                $history->status = $failureInvestigation->status;
+                $history->stage_id = $incident->stage;
+                $history->status = $incident->status;
                 $history->save();
                 // $list = Helpers::getHodUserList();
                 // foreach ($list as $u) {
-                //     if ($u->q_m_s_divisions_id == $failureInvestigation->division_id) {
+                //     if ($u->q_m_s_divisions_id == $incident->division_id) {
                 //         $email = Helpers::getInitiatorEmail($u->user_id);
                 //         if ($email !== null) {
                 //             try {
                 //                 Mail::send(
                 //                     'mail.view-mail',
-                //                     ['data' => $failureInvestigation],
+                //                     ['data' => $incident],
                 //                     function ($message) use ($email) {
                 //                         $message->to($email)
                 //                             ->subject("Activity Performed By " . Auth::user()->name);
                 //                     }
                 //                 );
                 //             } catch (\Exception $e) {
-                //                 //log error
+                //                 
                 //             }
                 //         }
                 //     }
@@ -4281,17 +4398,17 @@ class FailureInvestigationController extends Controller
                 toastr()->success('Document Sent');
                 return back();
             }
-            if ($failureInvestigation->stage == 3) {
-                $failureInvestigation->stage = "2";
-                $failureInvestigation->status = "HOD Review";
-                $failureInvestigation->qa_more_info_required_by = Auth::user()->name;
-                $failureInvestigation->qa_more_info_required_on = Carbon::now()->format('d-M-Y');
-                $history = new FailureInvestigationAuditTrail();
-                $history->failure_investigation_id = $id;
+            if ($incident->stage == 3) {
+                $incident->stage = "2";
+                $incident->status = "HOD Review";
+                $incident->qa_more_info_required_by = Auth::user()->name;
+                $incident->qa_more_info_required_on = Carbon::now()->format('d-M-Y');
+                $history = new IncidentAuditTrail();
+                $history->incident_id = $id;
                 $history->activity_type = 'Activity Log';
                 $history->previous = "";
                 $history->action='More Information Required';
-                $history->current = $failureInvestigation->qa_more_info_required_by;
+                $history->current = $incident->qa_more_info_required_by;
                 $history->comment = $request->comment;
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
@@ -4299,31 +4416,31 @@ class FailureInvestigationController extends Controller
                 $history->origin_state = $lastDocument->status;
                 $history->stage = 'More Info Required';
                 $history->save();
-                $failureInvestigation->update();
-                $history = new FailureInvestigationHistory();
-                $history->type = "Failure Investigation";
+                $incident->update();
+                $history = new IncidentHistory();
+                $history->type = "Incident";
                 $history->doc_id = $id;
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
-                $history->stage_id = $failureInvestigation->stage;
-                $history->status = $failureInvestigation->status;
+                $history->stage_id = $incident->stage;
+                $history->status = $incident->status;
                 $history->save();
                 // $list = Helpers::getHodUserList();
                 // foreach ($list as $u) {
-                //     if ($u->q_m_s_divisions_id == $failureInvestigation->division_id) {
+                //     if ($u->q_m_s_divisions_id == $incident->division_id) {
                 //         $email = Helpers::getInitiatorEmail($u->user_id);
                 //         if ($email !== null) {
                 //             try {
                 //                 Mail::send(
                 //                     'mail.view-mail',
-                //                     ['data' => $failureInvestigation],
+                //                     ['data' => $incident],
                 //                     function ($message) use ($email) {
                 //                         $message->to($email)
                 //                             ->subject("Activity Performed By " . Auth::user()->name);
                 //                     }
                 //                 );
                 //             } catch (\Exception $e) {
-                //                 //log error
+                //                 
                 //             }
                 //         }
                 //     }
@@ -4332,17 +4449,17 @@ class FailureInvestigationController extends Controller
                 return back();
             }
 
-            if ($failureInvestigation->stage == 4) {
-                $failureInvestigation->stage = "3";
-                $failureInvestigation->status = "QA Initial Review";
-                $failureInvestigation->qa_more_info_required_by = Auth::user()->name;
-                $failureInvestigation->qa_more_info_required_on = Carbon::now()->format('d-M-Y');
-                $history = new FailureInvestigationAuditTrail();
-                $history->failure_investigation_id = $id;
+            if ($incident->stage == 4) {
+                $incident->stage = "3";
+                $incident->status = "QA Initial Review";
+                $incident->qa_more_info_required_by = Auth::user()->name;
+                $incident->qa_more_info_required_on = Carbon::now()->format('d-M-Y');
+                $history = new IncidentAuditTrail();
+                $history->incident_id = $id;
                 $history->activity_type = 'Activity Log';
                 $history->previous = "";
                 $history->action='More Information Required';
-                $history->current = $failureInvestigation->qa_more_info_required_by;
+                $history->current = $incident->qa_more_info_required_by;
                 $history->comment = $request->comment;
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
@@ -4350,14 +4467,14 @@ class FailureInvestigationController extends Controller
                 $history->origin_state = $lastDocument->status;
                 $history->stage = 'More Info Required';
                 $history->save();
-                $failureInvestigation->update();
-                $history = new FailureInvestigationHistory();
-                $history->type = "Failure Investigation";
+                $incident->update();
+                $history = new IncidentHistory();
+                $history->type = "Incident";
                 $history->doc_id = $id;
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
-                $history->stage_id = $failureInvestigation->stage;
-                $history->status = $failureInvestigation->status;
+                $history->stage_id = $incident->stage;
+                $history->status = $incident->status;
                 $history->save();
                 toastr()->success('Document Sent');
                 return back();
@@ -4368,24 +4485,24 @@ class FailureInvestigationController extends Controller
         }
     }
 
-    public function failureInvestigationAuditTrail($id)
+    public function incidentAuditTrail($id)
     {
-        $audit = FailureInvestigationAuditTrail::where('failure_investigation_id', $id)->orderByDesc('id')->paginate(5);
+        $audit = IncidentAuditTrail::where('incident_id', $id)->orderByDesc('id')->paginate(5);
         $today = Carbon::now()->format('d-m-y');
-        $document = FailureInvestigation::where('id', $id)->first();
+        $document = Incident::where('id', $id)->first();
         $document->initiator = User::where('id', $document->initiator_id)->value('name');
         
-        return view('frontend.failure-investigation.audit-trail', compact('audit', 'document', 'today'));
+        return view('frontend.incident.audit-trail', compact('audit', 'document', 'today'));
     }
 
-    public function failureInvestigationAuditTrailPdf($id)
+    public function incidentAuditTrailPdf($id)
     {
-        $doc = FailureInvestigation::find($id);
+        $doc = Incident::find($id);
         $doc->originator = User::where('id', $doc->initiator_id)->value('name');
-        $data = FailureInvestigationAuditTrail::where('failure_investigation_id', $doc->id)->orderByDesc('id')->get();
+        $data = IncidentAuditTrail::where('incident_id', $doc->id)->orderByDesc('id')->get();
         $pdf = App::make('dompdf.wrapper');
         $time = Carbon::now();
-        $pdf = PDF::loadview('frontend.failure-investigation.audit-trail-pdf', compact('data', 'doc'))
+        $pdf = PDF::loadview('frontend.incident.audit-trail-pdf', compact('data', 'doc'))
             ->setOptions([
                 'defaultFont' => 'sans-serif',
                 'isHtml5ParserEnabled' => true,
@@ -4414,29 +4531,29 @@ class FailureInvestigationController extends Controller
         return $pdf->stream('SOP' . $id . '.pdf');
     }
 
-    public function singleReport($id)
+    public static function singleReport($id)
     {
-        $data = FailureInvestigation::find($id);
-        $data1 =  FailureInvestigationCft::where('failure_investigation_id', $id)->first();
+        $data = Incident::find($id);
+        $data1 =  IncidentCft::where('incident_id', $id)->first();
         if (!empty ($data)) {
             $data->originator = User::where('id', $data->initiator_id)->value('name');
-            $grid_data = FailureInvestigationGrid::where('failure_investigation_grid_id', $id)->where('type', "FailureInvestigation")->first();
-            $grid_data1 = FailureInvestigationGrid::where('failure_investigation_grid_id', $id)->where('type', "Document")->first();
+            $grid_data = IncidentGrid::where('incident_grid_id', $id)->where('type', "Incident")->first();
+            $grid_data1 = IncidentGrid::where('incident_grid_id', $id)->where('type', "Document")->first();
 
-            $investigation_data = FailureInvestigationGridData::where(['failure_investigation_id' => $id, 'identifier' => 'investigation'])->first();
-            $root_cause_data = FailureInvestigationGridData::where(['failure_investigation_id' => $id, 'identifier' => 'rootCause'])->first();
-            $why_data = FailureInvestigationGridData::where(['failure_investigation_id' => $id, 'identifier' => 'why'])->first();
+            $investigation_data = IncidentGridData::where(['incident_id' => $id, 'identifier' => 'investication'])->first();
+            $root_cause_data = IncidentGridData::where(['incident_id' => $id, 'identifier' => 'rootCause'])->first();
+            $why_data = IncidentGridData::where(['incident_id' => $id, 'identifier' => 'why'])->first();
 
-            $capaExtension = FailureInvestigationLaunchExtension::where(['failure_investigation_id' => $id, "extension_identifier" => "Capa"])->first();
-            $qrmExtension = FailureInvestigationLaunchExtension::where(['failure_investigation_id' => $id, "extension_identifier" => "QRM"])->first();
-            $investigationExtension = FailureInvestigationLaunchExtension::where(['failure_investigation_id' => $id, "extension_identifier" => "Investigation"])->first();
+            $capaExtension = IncidentLaunchExtension::where(['incident_id' => $id, "extension_identifier" => "Capa"])->first();
+            $qrmExtension = IncidentLaunchExtension::where(['incident_id' => $id, "extension_identifier" => "QRM"])->first();
+            $investigationExtension = IncidentLaunchExtension::where(['incident_id' => $id, "extension_identifier" => "Investigation"])->first();
 
-            $grid_data_qrms = FailureInvestigationGridFailureMode::where(['failure_investigation_id' => $id, 'identifier' => 'failure_mode_qrms'])->first();
-            $grid_data_matrix_qrms = FailureInvestigationGridFailureMode::where(['failure_investigation_id' => $id, 'identifier' => 'matrix_qrms'])->first();
+            $grid_data_qrms = IncidentGridFailureMode::where(['incident_id' => $id, 'identifier' => 'failure_mode_qrms'])->first();
+            $grid_data_matrix_qrms = IncidentGridFailureMode::where(['incident_id' => $id, 'identifier' => 'matrix_qrms'])->first();
 
             $pdf = App::make('dompdf.wrapper');
             $time = Carbon::now();
-            $pdf = PDF::loadview('frontend.failure-investigation.single-report', compact('data','grid_data_qrms','grid_data_matrix_qrms','data1','capaExtension','qrmExtension','grid_data','grid_data1','investigation_data','root_cause_data','why_data','investigationExtension'))
+            $pdf = PDF::loadview('frontend.incident.single-report', compact('data','grid_data_qrms','grid_data_matrix_qrms','data1','capaExtension','qrmExtension','grid_data','grid_data1','investigation_data','root_cause_data','why_data','investigationExtension'))
                 ->setOptions([
                 'defaultFont' => 'sans-serif',
                 'isHtml5ParserEnabled' => true,
@@ -4451,201 +4568,6 @@ class FailureInvestigationController extends Controller
             $canvas->page_script('$pdf->set_opacity(0.1,"Multiply");');
             $canvas->page_text($width / 4, $height / 2, $data->status, null, 25, [0, 0, 0], 2, 6, -20);
             return $pdf->stream('Failure Investigation' . $id . '.pdf');
-        }
-    }
-
-    public function failure_investigation_child_1(Request $request, $id)
-    {
-        $cft = [];
-        $parent_id = $id;
-        $parent_type = "Audit_Program";
-        $record_number = ((RecordNumber::first()->value('counter')) + 1);
-        $record_number = str_pad($record_number, 4, '0', STR_PAD_LEFT);
-        $currentDate = Carbon::now();
-        $formattedDate = $currentDate->addDays(30);
-        $due_date = $formattedDate->format('d-M-Y');
-        $parent_record = FailureInvestigation::where('id', $id)->value('record');
-        $parent_record = str_pad($parent_record, 4, '0', STR_PAD_LEFT);
-        $parent_division_id = FailureInvestigation::where('id', $id)->value('division_id');
-        $parent_initiator_id = FailureInvestigation::where('id', $id)->value('initiator_id');
-        $parent_intiation_date = FailureInvestigation::where('id', $id)->value('intiation_date');
-        $parent_created_at = FailureInvestigation::where('id', $id)->value('created_at');
-        $parent_short_description = FailureInvestigation::where('id', $id)->value('short_description');
-        $hod = User::where('role', 4)->get();
-        if ($request->child_type == "extension") {
-            $parent_due_date = "";
-            $parent_id = $id;
-            $parent_name = $request->parent_name;
-            if ($request->due_date) {
-                $parent_due_date = $request->due_date;
-            }
-
-            $record_number = ((RecordNumber::first()->value('counter')) + 1);
-            $record_number = str_pad($record_number, 4, '0', STR_PAD_LEFT);
-            $Extensionchild = FailureInvestigation::find($id);
-            $Extensionchild->Extensionchild = $record_number;
-            $Extensionchild->save();
-            return view('frontend.forms.extension', compact('parent_id','parent_record', 'parent_name', 'record_number', 'parent_due_date', 'due_date', 'parent_created_at'));
-        }
-        $old_record = FailureInvestigation::select('id', 'division_id', 'record')->get();
-        // dd($request->child_type)
-        if ($request->child_type == "capa") {
-            $parent_name = "CAPA";
-            $Capachild = FailureInvestigation::find($id);
-            $Capachild->Capachild = $record_number;
-            $Capachild->save();
-
-            return view('frontend.forms.capa', compact('parent_id', 'parent_record','parent_type', 'record_number', 'due_date', 'parent_short_description', 'parent_initiator_id', 'parent_intiation_date', 'parent_name', 'parent_division_id', 'parent_record', 'old_record', 'cft'));
-        } elseif ($request->child_type == "Action_Item")
-         {
-            $parent_name = "CAPA";
-            $actionchild = FailureInvestigation::find($id);
-            $actionchild->actionchild = $record_number;
-            $parent_id = $id;
-            $actionchild->save();
-
-            return view('frontend.forms.action-item', compact('old_record', 'parent_short_description', 'parent_initiator_id', 'parent_intiation_date', 'parent_name', 'parent_division_id', 'parent_record', 'record_number', 'due_date', 'parent_id', 'parent_type'));
-        }
-        elseif ($request->child_type == "effectiveness_check")
-         {
-            $parent_name = "CAPA";
-            $effectivenesschild = FailureInvestigation::find($id);
-            $effectivenesschild->effectivenesschild = $record_number;
-            $effectivenesschild->save();
-        return view('frontend.forms.effectiveness-check', compact('old_record','parent_short_description','parent_record', 'parent_initiator_id', 'parent_intiation_date', 'parent_division_id',  'record_number', 'due_date', 'parent_id', 'parent_type'));
-        }
-        elseif ($request->child_type == "Change_control") {
-            $parent_name = "CAPA";
-            $Changecontrolchild = FailureInvestigation::find($id);
-            $Changecontrolchild->Changecontrolchild = $record_number;
-
-            $Changecontrolchild->save();
-
-            return view('frontend.change-control.new-change-control', compact('cft','pre','hod','parent_short_description', 'parent_initiator_id', 'parent_intiation_date', 'parent_division_id',  'record_number', 'due_date', 'parent_id', 'parent_type'));
-        }
-        else {
-            $parent_name = "Root";
-            $Rootchild = FailureInvestigation::find($id);
-            $Rootchild->Rootchild = $record_number;
-            $Rootchild->save();
-            return view('frontend.forms.root-cause-analysis', compact('parent_id', 'parent_record','parent_type', 'record_number', 'due_date', 'parent_short_description', 'parent_initiator_id', 'parent_intiation_date', 'parent_name', 'parent_division_id', 'parent_record', ));
-        }
-    }
-
-    
-    public function launchExtensionDeviation(Request $request, $id){
-        $failureinvestigation = FailureInvestigation::find($id);
-        $getCounter = FailureInvestigationlaunchExtension::where(['failure_investigation_id' => $failureinvestigation->id, 'extension_identifier' => "Failure Investigation"])->first();
-        if($getCounter && $getCounter->counter == null){
-            $counter = 1;
-        } else {
-            $counter = $getCounter ? $getCounter->counter + 1 : 1;
-        }
-        if($failureinvestigation->id != null){
-            $data = FailureInvestigationlaunchExtension::where([
-                'failure_investigation_id' => $failureinvestigation->id,
-                'extension_identifier' => "Failure Investigation"
-            ])->firstOrCreate();
-
-            $data->failure_investigation_id = $request->failure_investigation_id;
-            $data->extension_identifier = $request->extension_identifier;
-            $data->counter = $counter;
-            $data->dev_proposed_due_date = $request->dev_proposed_due_date;
-            $data->dev_extension_justification = $request->dev_extension_justification;
-            $data->dev_extension_completed_by = $request->dev_extension_completed_by;
-            $data->dev_completed_on = $request->dev_completed_on;
-            $data->save();
-
-            toastr()->success('Record is Update Successfully');
-            return back();
-        }
-    }
-
-    public function launchExtensionCapa(Request $request, $id){
-        $failureinvestigation = FailureInvestigation::find($id);
-        $getCounter = FailureInvestigationlaunchExtension::where(['failure_investigation_id' => $failureinvestigation->id, 'extension_identifier' => "Capa"])->first();
-        if($getCounter && $getCounter->counter == null){
-            $counter = 1;
-        } else {
-            $counter = $getCounter ? $getCounter->counter + 1 : 1;
-        }
-        if($failureinvestigation->id != null){
-
-            $data = FailureInvestigationlaunchExtension::where([
-                'failure_investigation_id' => $failureinvestigation->id,
-                'extension_identifier' => "Capa"
-            ])->firstOrCreate();
-
-            $data->failure_investigation_id = $request->failure_investigation_id;
-            $data->extension_identifier = $request->extension_identifier;
-            $data->counter = $counter;
-            $data->capa_proposed_due_date = $request->capa_proposed_due_date;
-            $data->capa_extension_justification = $request->capa_extension_justification;
-            $data->capa_extension_completed_by = $request->capa_extension_completed_by;
-            $data->capa_completed_on = $request->capa_completed_on;
-            $data->save();
-
-            toastr()->success('Record is Update Successfully');
-            return back();
-        }
-    }
-
-
-    public function launchExtensionQrm(Request $request, $id){
-        $failureinvestigation = FailureInvestigation::find($id);
-        $getCounter = FailureInvestigationlaunchExtension::where(['failure_investigation_id' => $failureinvestigation->id, 'extension_identifier' => "QRM"])->first();
-        if($getCounter && $getCounter->counter == null){
-            $counter = 1;
-        } else {
-            $counter = $getCounter ? $getCounter->counter + 1 : 1;
-        }
-        if($failureinvestigation->id != null){
-
-            $data = FailureInvestigationlaunchExtension::where([
-                'failure_investigation_id' => $failureinvestigation->id,
-                'extension_identifier' => "QRM"
-            ])->firstOrCreate();
-
-            $data->failure_investigation_id = $request->failure_investigation_id;
-            $data->extension_identifier = $request->extension_identifier;
-            $data->counter = $counter;
-            $data->qrm_proposed_due_date = $request->qrm_proposed_due_date;
-            $data->qrm_extension_justification = $request->qrm_extension_justification;
-            $data->qrm_extension_completed_by = $request->qrm_extension_completed_by;
-            $data->qrm_completed_on = $request->qrm_completed_on;
-            $data->save();
-
-            toastr()->success('Record is Update Successfully');
-            return back();
-        }
-    }
-
-    public function launchExtensionInvestigation(Request $request, $id){
-        $failureinvestigation = FailureInvestigation::find($id);
-        $getCounter = FailureInvestigationlaunchExtension::where(['failure_investigation_id' => $failureinvestigation->id, 'extension_identifier' => "Investigation"])->first();
-        if($getCounter && $getCounter->counter == null){
-            $counter = 1;
-        } else {
-            $counter = $getCounter ? $getCounter->counter + 1 : 1;
-        }
-        if($failureinvestigation->id != null){
-
-            $data = FailureInvestigationlaunchExtension::where([
-                'failure_investigation_id' => $failureinvestigation->id,
-                'extension_identifier' => "Investigation"
-            ])->firstOrCreate();
-
-            $data->failure_investigation_id = $request->failure_investigation_id;
-            $data->extension_identifier = $request->extension_identifier;
-            $data->counter = $counter;
-            $data->investigation_proposed_due_date = $request->investigation_proposed_due_date;
-            $data->investigation_extension_justification = $request->investigation_extension_justification;
-            $data->investigation_extension_completed_by = $request->investigation_extension_completed_by;
-            $data->investigation_completed_on = $request->investigation_completed_on;
-            $data->save();
-
-            toastr()->success('Record is Update Successfully');
-            return back();
         }
     }
 }

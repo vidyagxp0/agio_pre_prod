@@ -73,7 +73,7 @@
 
         <div class="division-bar">
             <strong>Site Division/Project</strong> :
-            {{-- {{ Helpers::getDivisionName($data->division_id) }} / --}}
+            {{ Helpers::getDivisionName($extensionNew->site_location_code) }} /
             Extension
         </div>
     </div>
@@ -218,7 +218,7 @@
                             <div class="group-input">
                                 <label for="RLS Record Number"><b>Record Number</b></label>
                                 <input disabled type="text" name="record_number"
-                                value="{{ Helpers::getDivisionName(session()->get('division')) }}/Extension/{{ Helpers::year($extensionNew->created_at) }}/{{ $extensionNew->record_number }}">
+                                value="{{ Helpers::getDivisionName(session()->get('division')) }}/Ext/{{ Helpers::year($extensionNew->created_at) }}/{{ $extensionNew->record_number }}">
                             </div>
                         </div>
                         <div class="col-lg-6">
@@ -269,6 +269,12 @@
                                     <div class="text-danger">{{ $message }}</div>
                                 @enderror --}}
                             </div>
+                            <script>
+                                var maxLength = 255;
+                                $('#docname').keyup(function() {
+                                    var textlen = maxLength - $(this).val().length;
+                                    $('#rchars').text(textlen);});
+                            </script>
                             <div class="col-lg-6">
                                 <div class="group-input">
                                     <label for="Assigned To">Reviewer </label>
@@ -334,9 +340,9 @@
                             </div>
                             <div class="col-12">
                                 <div class="group-input">
-                                    <label for="Short Description"> Description</label><span id="rchars">255</span>
-                                    Characters remaining
-                                    <input id="docname" type="text" name="description" value="{{$extensionNew->description}}" maxlength="255" >
+                                    <label for="Short Description"> Description</label>
+                                 
+                                    <textarea id="docname" type="text" name="description" value="" >{{$extensionNew->description}}</textarea>
                                 </div>
                                 {{-- @error('short_description')
                                     <div class="text-danger">{{ $message }}</div>

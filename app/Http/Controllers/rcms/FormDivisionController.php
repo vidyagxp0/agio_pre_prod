@@ -78,5 +78,8 @@ class FormDivisionController extends Controller
 
             return redirect('documents/create');
         }
+        elseif ($request->process_name == 'Incident') {
+            return redirect()->route('incident');
+        }
     }
 }

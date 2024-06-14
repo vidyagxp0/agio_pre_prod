@@ -11,6 +11,7 @@ use App\Http\Controllers\rcms\ExtensionController;
 use App\Http\Controllers\rcms\InternalauditController;
 use App\Http\Controllers\rcms\LabIncidentController;
 use App\Http\Controllers\rcms\ObservationController;
+use App\Http\Controllers\rcms\IncidentController;
 use App\Http\Controllers\UserLoginController;
 use App\Http\Controllers\rcms\AuditProgramController;
 use App\Http\Controllers\rcms\CapaController;
@@ -212,10 +213,10 @@ Route::group(['prefix' => 'rcms'], function () {
             Route::post('deviation/Qa/{id}', [DeviationController::class, 'deviation_qa_more_info'])->name('deviation_qa_more_info');
             Route::get('deviationSingleReport/{id}', [DeviationController::class, 'singleReport'])->name('deviationSingleReport');
 
-            Route::post('launch-extension-deviation/{id}', [DeviationController::class, 'launchExtensionDeviation'])->name('launch-extension-deviation');
-            Route::post('launch-extension-capa/{id}', [DeviationController::class, 'launchExtensionCapa'])->name('launch-extension-capa');
-            Route::post('launch-extension-qrm/{id}', [DeviationController::class, 'launchExtensionQrm'])->name('launch-extension-qrm');
-            Route::post('launch-extension-investigation/{id}', [DeviationController::class, 'launchExtensionInvestigation'])->name('launch-extension-investigation');
+            Route::post('dev-launch-extension-deviation/{id}', [DeviationController::class, 'launchExtensionDeviation'])->name('dev-launch-extension-deviation');
+            Route::post('dev-launch-extension-capa/{id}', [DeviationController::class, 'launchExtensionCapa'])->name('dev-launch-extension-capa');
+            Route::post('dev-launch-extension-qrm/{id}', [DeviationController::class, 'launchExtensionQrm'])->name('dev-launch-extension-qrm');
+            Route::post('dev-launch-extension-investigation/{id}', [DeviationController::class, 'launchExtensionInvestigation'])->name('dev-launch-extension-investigation');
 
             /********************* Deviation Routes Ends *******************/
 
@@ -277,9 +278,9 @@ Route::group(['prefix' => 'rcms'], function () {
 
             /********************* Fallure Investigation Routes Ends *******************/
 
-// =====================extesnion new report and audit trail ===============
-Route::get('singleReportNew/{id}', [ExtensionNewController::class, 'singleReport'])->name('singleReportNew');
-Route::get('audit_trailNew/{id}', [ExtensionNewController::class, 'extensionNewAuditTrail']);
+            // =====================extesnion new report and audit trail ===============
+            Route::get('singleReportNew/{id}', [ExtensionNewController::class, 'singleReport'])->name('singleReportNew');
+            Route::get('audit_trailNew/{id}', [ExtensionNewController::class, 'extensionNewAuditTrail']);
             //----------------------------------- OOT ----------------------------------//
 
             Route::get('oot/', [OOTController::class, 'index']);
@@ -387,6 +388,34 @@ Route::get('audit_trailNew/{id}', [ExtensionNewController::class, 'extensionNewA
                 Route::get('single_report/{id}', [OOSController::class, 'singleReport'])->name('single_report');
     
                 });
+
+            /********************* Incident Routes Starts *******************/
+
+            Route::get('incident', [IncidentController::class, 'index'])->name('incident');    
+            Route::post('incident-store', [IncidentController::class, 'store'])->name('incident-store');
+            Route::get('incident-show/{id}', [IncidentController::class, 'incidentShow'])->name('incident-show');
+            Route::post('incident-update/{id}', [IncidentController::class, 'update'])->name('incident-update');
+            Route::post('incident-reject/{id}', [IncidentController::class, 'incidentReject'])->name('incident-reject');
+            Route::post('incident-cancel/{id}', [IncidentController::class, 'incidentCancel'])->name('incident-cancel');
+            Route::post('incidentIsCFTRequired/{id}', [IncidentController::class, 'incidentIsCFTRequired'])->name('incidentIsCFTRequired');
+            Route::post('incidentCheck/{id}', [IncidentController::class, 'incidentCheck'])->name('incidentCheck');
+            Route::post('incidentCheck2/{id}', [IncidentController::class, 'incidentCheck2'])->name('incidentCheck2');
+            Route::post('incidentCheck3/{id}', [IncidentController::class, 'incidentCheck3'])->name('incidentCheck3');
+            Route::post('pending_initiator_update/{id}', [IncidentController::class, 'pending_initiator_update'])->name('pending_initiator_update');
+            Route::post('incidentStageChange/{id}', [IncidentController::class, 'incident_send_stage'])->name('incidentStageChange');
+            Route::post('incidentCftnotreqired/{id}', [IncidentController::class, 'cftnotreqired'])->name('incidentCftnotreqired');
+            Route::post('incidentQaMoreInfo/{id}', [IncidentController::class, 'incident_qa_more_info'])->name('incidentQaMoreInfo');
+
+            Route::get('incident-audit-trail/{id}', [IncidentController::class, 'incidentAuditTrail'])->name('incident-audit-trail');
+            Route::get('incident-audit-pdf/{id}', [IncidentController::class, 'incidentAuditTrailPdf'])->name('incident-audit-pdf');
+            Route::get('incident-single-report/{id}', [IncidentController::class, 'singleReport'])->name('incident-single-report');
+
+            Route::post('launch-extension-incident/{id}', [IncidentController::class, 'launchExtensionIncident'])->name('launch-extension-incident');
+            Route::post('launch-extension-capa/{id}', [IncidentController::class, 'launchExtensionCapa'])->name('launch-extension-capa');
+            Route::post('launch-extension-qrm/{id}', [IncidentController::class, 'launchExtensionQrm'])->name('launch-extension-qrm');
+            Route::post('launch-extension-investigation/{id}', [IncidentController::class, 'launchExtensionInvestigation'])->name('launch-extension-investigation');
+
+            /********************* Incident Routes Ends *******************/
         }
     );
 });

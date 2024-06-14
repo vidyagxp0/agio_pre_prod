@@ -529,11 +529,11 @@
 
         <div class="division-bar">
             <strong>Site Division/Project</strong> :
-            {{ Helpers::getDivisionName(session()->get('division')) }}/Deviation
+            {{ Helpers::getDivisionName(session()->get('division')) }}/Incident
         </div>
     </div>
 
-    <!-- Deviation Form Starts -->
+    <!-- Incident Form Starts -->
 
     <div id="change-control-view">
         <div class="container-fluid">
@@ -549,8 +549,8 @@
                                 ->get();
                             $userRoleIds = $userRoles->pluck('q_m_s_roles_id')->toArray();
                             $cftRolesAssignUsers = collect($userRoleIds); //->contains(fn ($roleId) => $roleId >= 22 && $roleId <= 33);
-                            $cftUsers = DB::table('deviationcfts')
-                                ->where(['deviation_id' => $data->id])
+                            $cftUsers = DB::table('incident_cfts')
+                                ->where(['incident_id' => $data->id])
                                 ->first();
 
                             // Define the column names
@@ -580,9 +580,9 @@
                                     $valuesArray[] = $value;
                                 }
                             }
-                            $cftCompleteUser = DB::table('deviationcfts_response')
+                            $cftCompleteUser = DB::table('incident_cft_responses')
                                 ->whereIn('status', ['In-progress', 'Completed'])
-                                ->where('deviation_id', $data->id)
+                                ->where('incident_id', $data->id)
                                 ->where('cft_user_id', Auth::user()->id)
                                 ->whereNull('deleted_at')
                                 ->first();
@@ -590,7 +590,7 @@
                         @endphp
                         <!-- <button class="button_theme1" onclick="window.print();return false;" class="new-doc-btn">Print</button> -->
                         <button class="button_theme1"> <a class="text-white"
-                                href="{{ url('DeviationAuditTrial', $data->id) }}">Audit Trail </a> </button>
+                                href="{{ url('rcms/incident-audit-trail', $data->id) }}">Audit Trail </a> </button>
 
                         @if ($data->stage == 1 && (in_array(3, $userRoleIds) || in_array(18, $userRoleIds)))
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
@@ -619,9 +619,9 @@
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#cft-not-reqired">
                                 CFT Review Not Required
                             </button>
-                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal">
+                            <!-- <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal">
                                 Child
-                            </button>
+                            </button> -->
                         @elseif(
                             $data->stage == 4 &&
                                 (in_array(5, $userRoleIds) || in_array(18, $userRoleIds) || in_array(Auth::user()->id, $valuesArray)))
@@ -647,9 +647,9 @@
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                 QA Final Review Complete
                             </button>
-                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal">
+                            <!-- <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal">
                                 Child
-                            </button>
+                            </button> -->
                         @elseif($data->stage == 6 && (in_array(39, $userRoleIds) || in_array(18, $userRoleIds)))
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#more-info-required-modal">
                                 More Info Required
@@ -870,7 +870,7 @@
                     <button class="cctablinks" onclick="openCity(event, 'CCForm6')">Activity Log</button>
                 </div>
 
-                <form id="auditForm" action="{{ route('deviationupdate', $data->id) }}" method="post"
+                <form id="auditForm" action="{{ route('incident-update', $data->id) }}" method="post"
                     enctype="multipart/form-data">
                     @csrf
                     <input type="hidden" name="form_name" id="formNameField" value="">
@@ -891,7 +891,7 @@
                                             <label for="record_number"><b>Record Number</b></label>
                                             @if ($data->stage >= 3)
                                                 <input disabled type="text"
-                                                    value="{{ Helpers::getDivisionName($data->division_id) }}/DEV/{{ date('Y') }}/{{ str_pad($data->record, 4, '0', STR_PAD_LEFT) }}">
+                                                    value="{{ Helpers::getDivisionName($data->division_id) }}/INC/{{ date('Y') }}/{{ str_pad($data->record, 4, '0', STR_PAD_LEFT) }}">
                                             @else
                                                 <input disabled type="text" name="record">
                                             @endif
@@ -923,11 +923,8 @@
                                     <div class="col-lg-6">
                                         <div class="group-input">
                                             <label for="Date of Initiation"><b>Date of Initiation</b></label>
-                                            <input readonly type="text" value="{{ date('d-M-Y') }}"
-                                                name="initiation_date" id="initiation_date"
-                                                style="background-color: light-dark(rgba(239, 239, 239, 0.3), rgba(59, 59, 59, 0.3))">
-                                            <input type="hidden" value="{{ date('Y-m-d') }}"
-                                                name="initiation_date_hidden">
+                                            <input readonly type="text" value="{{ date('d-M-Y') }}" name="initiation_date" id="initiation_date" style="background-color: light-dark(rgba(239, 239, 239, 0.3), rgba(59, 59, 59, 0.3))">
+                                            <input type="hidden" value="{{ date('Y-m-d') }}" name="initiation_date_hidden">
                                         </div>
                                     </div>
 
@@ -937,11 +934,8 @@
                                             <div><small class="text-primary">If revising Due Date, kindly mention revision
                                                     reason in "Due Date Extension Justification" data field.</small></div>
                                             <div class="calenderauditee">
-                                                <input readonly type="text"
-                                                    value="{{ Helpers::getdateFormat($data->due_date) }}"
-                                                    name="due_date" />
-                                                <input type="date" name="due_date"
-                                                    min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input"
+                                                <input readonly type="text" value="{{ Helpers::getdateFormat($data->due_date) }}" name="due_date" />
+                                                <input type="date" name="due_date"  min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input"
                                                     oninput="handleDateInput(this, 'due_date')" />
                                             </div>
                                         </div>
@@ -1039,7 +1033,7 @@
                                     </div>
                                     <div class="col-lg-6 new-date-data-field">
                                         <div class="group-input input-date">
-                                            <label for="Short Description required">Repeat Deviation? <span
+                                            <label for="Short Description required">Repeat Incident? <span
                                                     class="text-danger">*</span></label>
                                             <select name="short_description_required"
                                                 {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
@@ -1114,32 +1108,29 @@
                                             }
                                         }
                                     </script>
-                                    <div class="col-6 new-date-data-field">
-                                        <div class="group-input input-date">
-                                            <label for="severity-level">Deviation Observed On <span
+                                    <div class="col-6">
+                                        <div class="group-input">
+                                            <label for="severity-level">Incident Observed On <span
                                                     class="text-danger">*</span></label>
                                             <!-- <span class="text-primary">Severity levels in a QMS record gauge issue seriousness, guiding priority for corrective actions. Ranging from low to high, they ensure quality standards and mitigate critical risks.</span> -->
-
-                                            <div class="calenderauditee">
-                                                <input type="text" id="Deviation_date" readonly placeholder="DD-MMM-YYYY" value="{{ Helpers::getdateFormat($data->Deviation_date) }}" />
-                                                <input type="date" name="Deviation_date" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
-                                                class="hide-input" value="{{ $data->Deviation_date }}"
-                                                oninput="handleDateInput(this, 'Deviation_date')" />
-                                            </div>
-                                            @error('Deviation_date')
+                                            <input type="date" id="incident_date"
+                                                max="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
+                                                name="incident_date"{{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
+                                                value="{{ old('incident_date') ? old('incident_date') : $data->incident_date }}">
+                                            @error('incident_date')
                                                 <div class="text-danger">{{ $message }}</div>
                                             @enderror
                                         </div>
                                     </div>
                                     <div class="col-lg-6 new-time-data-field">
                                         <div class="group-input input-time">
-                                            <label for="deviation_time">Deviation Observed On (Time) <span
+                                            <label for="incident_time">Incident Observed On (Time) <span
                                                     class="text-danger">*</span></label>
                                             <input type="text"
-                                                name="deviation_time"{{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
-                                                id="deviation_time"
-                                                value="{{ old('deviation_time') ? old('deviation_time') : $data->deviation_time }}">
-                                            @error('deviation_time')
+                                                name="incident_time"{{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
+                                                id="incident_time"
+                                                value="{{ old('incident_time') ? old('incident_time') : $data->incident_time }}">
+                                            @error('incident_time')
                                                 <div class="text-danger">{{ $message }}</div>
                                             @enderror
                                         </div>
@@ -1148,8 +1139,8 @@
 
                                     <div class="col-lg-6 new-time-data-field">
                                         <div
-                                            class="group-input input-time @if ($data->Delay_Justification) style="display: block !important" @endif @error('Delay_Justification') @else delayJustificationBlock @enderror">
-                                            <label for="deviation_time">Delay Justification <span class="text-danger">*</span></label>
+                                            class="group-input input-time @error('Delay_Justification') @else delayJustificationBlock @enderror">
+                                            <label for="incident_time">Delay Justification <span class="text-danger">*</span></label>
                                             <textarea id="Delay_Justification" name="Delay_Justification">{{ $data->Delay_Justification }}</textarea>
                                         </div>
                                         @error('Delay_Justification')
@@ -1160,7 +1151,7 @@
 
 
                                     <script>
-                                        flatpickr("#deviation_time", {
+                                        flatpickr("#incident_time", {
                                             enableTime: true,
                                             noCalendar: true,
                                             dateFormat: "H:i", // 24-hour format without AM/PM
@@ -1175,7 +1166,7 @@
                                                 $users = DB::table('users')->get();
                                             @endphp
 
-                                            <label for="If Other">Deviation Observed By<span
+                                            <label for="If Other">Incident Observed By<span
                                                     class="text-danger">*</span></label>
                                             <input type="text" name="Facility" placeholder="Select Facility Name"
                                                 value="{{ $data->Facility }}">
@@ -1184,22 +1175,19 @@
                                             @enderror
                                         </div>
                                     </div>
-                                    <div class="col-6 new-date-data-field">
-                                        <div class="group-input input-date">
-                                            <label for="Initiator Group">Deviation Reported On <span
+                                    <div class="col-lg-6">
+                                        <div class="group-input">
+                                            <label for="Initiator Group">Incident Reported On <span
                                                     class="text-danger">*</span></label>
                                             <!-- <div><small class="text-primary">Please select related information</small></div> -->
-
-                                            <div class="calenderauditee">
-                                                <input type="text" id="Deviation_reported_date" readonly placeholder="DD-MMM-YYYY" value="{{ Helpers::getdateFormat($data->Deviation_reported_date) }}" />
-                                                <input type="date" name="Deviation_reported_date" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
-                                                class="hide-input" value="{{ $data->Deviation_reported_date }}"
-                                                oninput="handleDateInput(this, 'Deviation_reported_date')" />
-                                            </div>
-                                            @error('Deviation_reported_date')
-                                                <div class="text-danger">{{ $message }}</div>
-                                            @enderror
+                                            <input type="date" id="incident_reported_date"
+                                                max="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
+                                                name="incident_reported_date"{{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
+                                                value="{{ $data->incident_reported_date }}">
                                         </div>
+                                        @error('incident_reported_date')
+                                            <div class="text-danger">{{ $message }}</div>
+                                        @enderror
                                     </div>
 
                                     <script>
@@ -1212,18 +1200,18 @@
                                         });
 
                                         function checkDateDifference() {
-                                            let deviationDate = $('input[name=Deviation_date]').val();
-                                            let reportedDate = $('input[name=Deviation_reported_date]').val();
+                                            let incidentDate = $('input[name=incident_date]').val();
+                                            let reportedDate = $('input[name=incident_reported_date]').val();
 
-                                            if (!deviationDate || !reportedDate) {
-                                                console.error('Deviation date or reported date is missing.');
+                                            if (!incidentDate || !reportedDate) {
+                                                console.error('Incident date or reported date is missing.');
                                                 return;
                                             }
 
-                                            let deviationDateMoment = moment(deviationDate);
+                                            let incidentDateMoment = moment(incidentDate);
                                             let reportedDateMoment = moment(reportedDate);
 
-                                            let diffInDays = reportedDateMoment.diff(deviationDateMoment, 'days');
+                                            let diffInDays = reportedDateMoment.diff(incidentDateMoment, 'days');
 
                                             if (diffInDays > 0) {
                                                 $('.delayJustificationBlock').show();
@@ -1233,14 +1221,14 @@
                                         }
 
                                         // Call checkDateDifference whenever the values are changed
-                                        $('input[name=Deviation_date], input[name=Deviation_reported_date]').on('change', function() {
+                                        $('input[name=incident_date], input[name=incident_reported_date]').on('change', function() {
                                             checkDateDifference();
                                         });
                                         </script>
 
                                     <div class="col-lg-6">
                                         <div class="group-input">
-                                            <label for="audit type">Deviation Related To <span
+                                            <label for="audit type">Incident Related To <span
                                                     class="text-danger">*</span></label>
                                             <select multiple
                                                 name="audit_type[]"{{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
@@ -1412,7 +1400,7 @@
                                                                                 {{ isset($facility_name[$key]) && $facility_name[$key] == 'Facility' ? 'selected' : 'Facility' }}>
                                                                                 Facility</option>
                                                                             <option value="Equipment"
-                                                                                {{ isset($facility_name[$key]) && $facility_name[$key] == 'Equipment' ? 'selected' : 'Equipment' }}>
+                                                                                {{ isset($facility_name[$key]) && $facility_name[$key] == 'Facility' ? 'selected' : 'Equipment' }}>
                                                                                 Equipment</option>
                                                                             <option value="Instrument"
                                                                                 {{ isset($facility_name[$key]) && $facility_name[$key] == 'Instrument' ? 'selected' : 'Instrument' }}>
@@ -1670,9 +1658,7 @@
                                                         <tbody>
                                                             @if ($grid_data2->product_name)
                                                                 @foreach (unserialize($grid_data2->product_name) as $key => $temps)
-
-                                                                <tr>
-                                                                <td><input disabled type="text"
+                                                                    <td><input disabled type="text"
                                                                             name="serial[]"{{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
                                                                             value="{{ $key + 1 }}"></td>
                                                                     <td><input class="productName" type="text"
@@ -1730,8 +1716,6 @@
                                                                     </td>
                                                                     <td><input type="text" class="Removebtn"
                                                                             name="Action[]" readonly></td>
-                                                                </tr>
-                                                                    
                                                                 @endforeach
                                                             @endif
                                                         </tbody>
@@ -1791,21 +1775,21 @@
                                         </script>
                                     </div>
 
-
+                                   
                                     <div class="col-md-12">
                                         <div class="group-input">
-                                            <label for="Description Deviation">Description of Deviation <span
+                                            <label for="Description Incident">Description of Incident <span
                                                     class="text-danger">*</span></label>
                                             <div><small class="text-primary">Please insert "NA" in the data field if it
                                                     does not require completion</small></div>
                                             <textarea class="tiny"
-                                                name="Description_Deviation"{{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }} id="summernote-1">{{ $data->Description_Deviation }}</textarea>
+                                                name="Description_incident"{{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }} id="summernote-1">{{ $data->Description_incident }}</textarea>
                                         </div>
-                                        @error('Description_Deviation')
+                                        @error('Description_incident')
                                             <div class="text-danger">{{ $message }}</div>
                                         @enderror
                                     </div>
-
+                                    
                                     <div class="col-md-12">
                                         <div class="group-input">
                                             <label for="Immediate Action">Immediate Action (if any) <span
@@ -1822,7 +1806,7 @@
 
                                     <div class="col-md-12">
                                         <div class="group-input">
-                                            <label for="Preliminary Impact">Preliminary Impact of Deviation <span
+                                            <label for="Preliminary Impact">Preliminary Impact of Incident <span
                                                     class="text-danger">*</span></label>
                                             <div><small class="text-primary">Please insert "NA" in the data field if it
                                                     does not require completion</small></div>
@@ -1840,8 +1824,8 @@
                                                     documents</small></div>
                                             <div class="file-attachment-field">
                                                 <div disabled class="file-attachment-list" id="initial_file">
-                                                    @if ($data->initial_file)
-                                                        @foreach (json_decode($data->initial_file) as $file)
+                                                    @if ($data->Audit_file)
+                                                        @foreach (json_decode($data->Audit_file) as $file)
                                                             <h6 class="file-container text-dark"
                                                                 style="background-color: rgb(243, 242, 240);">
                                                                 <b>{{ $file }}</b>
@@ -1861,8 +1845,8 @@
                                                     <input
                                                         {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}
                                                         type="file" id="HOD_Attachments"
-                                                        name="initial_file[]"{{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
-                                                        oninput="addMultipleFiles(this, 'initial_file')" multiple>
+                                                        name="Audit_file[]"{{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
+                                                        oninput="addMultipleFiles(this, 'Audit_file')" multiple>
                                                 </div>
                                             </div>
                                         </div>
@@ -2051,9 +2035,9 @@
 
 
 
-                            // Function to handle the change event of the Initial Deviation Category dropdown
-                            function handleDeviationCategoryChange() {
-                                var selectElement = document.getElementById("Deviation_category");
+                            // Function to handle the change event of the Initial Incident Category dropdown
+                            function handleincidentCategoryChange() {
+                                var selectElement = document.getElementById("incident_category");
                                 var selectedOption = selectElement.options[selectElement.selectedIndex].value;
 
                                 // var investigationSelect = document.getElementById("Investigation_required");
@@ -2110,10 +2094,10 @@
                             // This is a JQuery used for showing the Investigation
 
                             $(document).ready(function() {
-                                $('#Deviation_category, #Investigation_required, #qrm_required, #capa_required').change(
+                                $('#incident_category, #Investigation_required, #qrm_required, #capa_required').change(
                                     function() {
                                         // Get the selected values
-                                        var deviationCategory = $('#Deviation_category').val();
+                                        var incidentCategory = $('#incident_category').val();
                                         var investigationRequired = $('#Investigation_required').val();
                                         var capaRequired = $('#capa_required').val();
                                         var qrmRequired = $('#qrm_required').val();
@@ -2164,7 +2148,7 @@
 
 
                             $(document).ready(function() {
-                                $('#Deviation_category').change(function() {
+                                $('#incident_category').change(function() {
                                     var selectedValues = $(this).val();
 
                                     if (selectedValues === 'major' || selectedValues === 'critical') {
@@ -2184,7 +2168,7 @@
                             $(document).ready(function() {
 
 
-                                $('#Deviation_category').change(function() {
+                                $('#incident_category').change(function() {
                                     if ($(this).val() === 'major') {
                                         $('#Investigation_required').val('yes').prop('disabled', true);
 
@@ -2253,37 +2237,37 @@
                                             <div class="group-input input-date">
 
                                                 @if ($data->stage == 3)
-                                                    <label for="Deviation category">Initial Deviation category <span
+                                                    <label for="Incident category">Initial Incident category <span
                                                             class="text-danger">*</span></label>
-                                                    <select id="Deviation_category"
-                                                        name="Deviation_category"{{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
-                                                        value="{{ $data->Deviation_category }}"
-                                                        onchange="handleDeviationCategoryChange()" required>
+                                                    <select id="incident_category"
+                                                        name="incident_category"{{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
+                                                        value="{{ $data->incident_category }}"
+                                                        onchange="handleincidentCategoryChange()" required>
                                                         <option value="0">-- Select --</option>
-                                                        <option @if ($data->Deviation_category == 'minor') selected @endif
+                                                        <option @if ($data->incident_category == 'minor') selected @endif
                                                             value="minor">Minor</option>
-                                                        <option @if ($data->Deviation_category == 'major') selected @endif
+                                                        <option @if ($data->incident_category == 'major') selected @endif
                                                             value="major">Major</option>
-                                                        <option @if ($data->Deviation_category == 'critical') selected @endif
+                                                        <option @if ($data->incident_category == 'critical') selected @endif
                                                             value="critical">Critical</option>
                                                     </select>
                                                 @else
-                                                    <label for="Deviation category">Initial Deviation category</label>
-                                                    <select id="Deviation_category"
-                                                        name="Deviation_category"{{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
-                                                        onchange="handleDeviationCategoryChange()"
-                                                        value="{{ $data->Deviation_category }}">
+                                                    <label for="Incident category">Initial Incident category</label>
+                                                    <select id="incident_category"
+                                                        name="incident_category"{{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
+                                                        onchange="handleincidentCategoryChange()"
+                                                        value="{{ $data->incident_category }}">
                                                         <option value="0">-- Select --</option>
-                                                        <option @if ($data->Deviation_category == 'minor') selected @endif
+                                                        <option @if ($data->incident_category == 'minor') selected @endif
                                                             value="minor">Minor</option>
-                                                        <option @if ($data->Deviation_category == 'major') selected @endif
+                                                        <option @if ($data->incident_category == 'major') selected @endif
                                                             value="major">Major</option>
-                                                        <option @if ($data->Deviation_category == 'critical') selected @endif
+                                                        <option @if ($data->incident_category == 'critical') selected @endif
                                                             value="critical">Critical</option>
                                                     </select>
                                                 @endif
 
-                                                @error('Deviation_category')
+                                                @error('incident_category')
                                                     <div class="text-danger">{{ $message }}</div>
                                                 @enderror
                                             </div>
@@ -2496,36 +2480,36 @@
                                 <div style="margin-bottom: 0px;" class="col-lg-12 new-date-data-field ">
                                     <div class="group-input input-date">
                                         @if ($data->stage == 3)
-                                            <label for="Deviation category">Initial Deviation category <span
+                                            <label for="Incident category">Initial Incident category <span
                                                     class="text-danger">*</span></label>
-                                            <select disabled id="Deviation_category"
-                                                name="Deviation_category"{{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
-                                                value="{{ $data->Deviation_category }}">
+                                            <select disabled id="incident_category"
+                                                name="incident_category"{{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
+                                                value="{{ $data->incident_category }}">
                                                 <option value="0">-- Select --</option>
-                                                <option @if ($data->Deviation_category == 'minor') selected @endif value="minor">
+                                                <option @if ($data->incident_category == 'minor') selected @endif value="minor">
                                                     Minor</option>
-                                                <option @if ($data->Deviation_category == 'major') selected @endif value="major">
+                                                <option @if ($data->incident_category == 'major') selected @endif value="major">
                                                     Major</option>
-                                                <option @if ($data->Deviation_category == 'critical') selected @endif
+                                                <option @if ($data->incident_category == 'critical') selected @endif
                                                     value="critical">Critical</option>
                                             </select>
                                         @else
                                             <div class="group-input">
-                                                <label for="Deviation category">Initial Deviation category</label>
-                                                <select disabled id="Deviation_category"
-                                                    name="Deviation_category"{{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
-                                                    value="{{ $data->Deviation_category }}">
+                                                <label for="Incident category">Initial Incident category</label>
+                                                <select disabled id="incident_category"
+                                                    name="incident_category"{{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
+                                                    value="{{ $data->incident_category }}">
                                                     <option value="0">-- Select --</option>
-                                                    <option @if ($data->Deviation_category == 'minor') selected @endif
+                                                    <option @if ($data->incident_category == 'minor') selected @endif
                                                         value="minor">Minor</option>
-                                                    <option @if ($data->Deviation_category == 'major') selected @endif
+                                                    <option @if ($data->incident_category == 'major') selected @endif
                                                         value="major">Major</option>
-                                                    <option @if ($data->Deviation_category == 'critical') selected @endif
+                                                    <option @if ($data->incident_category == 'critical') selected @endif
                                                         value="critical">Critical</option>
                                                 </select>
                                             </div>
                                         @endif
-                                        @error('Deviation_category')
+                                        @error('incident_category')
                                             <div class="text-danger">{{ $message }}</div>
                                         @enderror
                                     </div>
@@ -2602,7 +2586,7 @@
                                         </script>
                                     </div>
                                 </div>
-
+                                
                                 <div class="col-md-12">
                                     <div class="group-input">
                                         <label for="QAInitialRemark">QA Initial Remarks</label>
@@ -2677,7 +2661,7 @@
                     <script>
                         var checkValue = false;
                         $(document).ready(function() {
-                            $('#Deviation_category').change(function() {
+                            $('#incident_category').change(function() {
                                 if ($(this).val() === 'major' || $(this).val() === 'critical') {
                                     checkValue = true;
                                     $('#Investigation_required').val('yes').prop('disabled', true);
@@ -2719,8 +2703,6 @@
                                 </div>
                                 <script>
                                     $(document).ready(function() {
-                                        @if($data1->Production_Review !== 'yes')
-
                                         $('.p_erson').hide();
 
                                         $('[name="Production_Review"]').change(function() {
@@ -2733,12 +2715,11 @@
                                                 $('.p_erson span').hide();
                                             }
                                         });
-                                        @endif
                                     });
                                 </script>
                                 @php
-                                    $data1 = DB::table('deviationcfts')
-                                        ->where('deviation_id', $data->id)
+                                    $data1 = DB::table('incident_cfts')
+                                        ->where('incident_id', $data->id)
                                         ->first();
                                 @endphp
                                 @if ($data->stage == 3 || $data->stage == 4)
@@ -2768,7 +2749,7 @@
                                             ])
                                             ->get();
                                         $userRoleIds = $userRoles->pluck('user_id')->toArray();
-                                        // $users = DB::table('users')->whereIn('id', $userRoleIds)->get(); // Fetch user data based on user IDs
+                                        $users = DB::table('users')->whereIn('id', $userRoleIds)->get(); // Fetch user data based on user IDs
                                     @endphp
                                     <div class="col-lg-6 p_erson">
                                         <div class="group-input">
@@ -2857,21 +2838,14 @@
 
                                         </div>
                                     </div>
-                                    <div class="col-6 new-date-data-field p_erson">
-                                        <div class="group-input input-date">
+                                    <div class="col-lg-6 p_erson">
+                                        <div class="group-input ">
                                             <label for="Production Review Completed On">Production Review Completed
                                                 On</label>
                                             <!-- <div><small class="text-primary">Please select related information</small></div> -->
-
-                                            <div class="calenderauditee">
-                                                <input type="text" id="production_on" readonly placeholder="DD-MMM-YYYY" value="{{ Helpers::getdateFormat($data1->production_on) }}" />
-                                                <input type="date" name="production_on"{{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }} min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" value=""
-                                                class="hide-input"
-                                                oninput="handleDateInput(this, 'production_on')" />
-                                            </div>
-                                            @error('production_on')
-                                                <div class="text-danger">{{ $message }}</div>
-                                            @enderror
+                                            <input type="date"id="production_on"
+                                                name="production_on"{{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
+                                                value="{{ $data1->production_on }}">
                                         </div>
                                     </div>
                                     <script>
@@ -2932,7 +2906,7 @@
                                             ])
                                             ->get();
                                         $userRoleIds = $userRoles->pluck('user_id')->toArray();
-                                        //$users = DB::table('users')->whereIn('id', $userRoleIds)->get(); // Fetch user data based on user IDs
+                                        $users = DB::table('users')->whereIn('id', $userRoleIds)->get(); // Fetch user data based on user IDs
                                     @endphp
                                     <div class="col-lg-6 p_erson">
                                         <div class="group-input">
@@ -3036,21 +3010,13 @@
 
                                         </div>
                                     </div>
-                                    <div class="col-6 new-date-data-field p_erson">
-                                        <div class="group-input input-date">
+                                    <div class="col-lg-6 p_erson">
+                                        <div class="group-input">
                                             <label for="Production Review Completed On">Production Review Completed
                                                 On</label>
                                             <!-- <div><small class="text-primary">Please select related information</small></div> -->
-
-                                            <div class="calenderauditee">
-                                                <input type="text" id="production_on" readonly placeholder="DD-MMM-YYYY" value="{{ Helpers::getdateFormat($data1->production_on) }}" />
-                                                <input type="date" name="production_on" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" value=""
-                                                class="hide-input"
-                                                oninput="handleDateInput(this, 'production_on')" />
-                                            </div>
-                                            @error('production_on')
-                                                <div class="text-danger">{{ $message }}</div>
-                                            @enderror
+                                            <input readonly type="date"id="production_on" name="production_on"
+                                                value="{{ $data1->production_on }}">
                                         </div>
                                     </div>
                                 @endif
@@ -3104,7 +3070,7 @@
                                             ])
                                             ->get();
                                         $userRoleIds = $userRoles->pluck('user_id')->toArray();
-                                        //$users = DB::table('users')->whereIn('id', $userRoleIds)->get(); // Fetch user data based on user IDs
+                                        $users = DB::table('users')->whereIn('id', $userRoleIds)->get(); // Fetch user data based on user IDs
                                     @endphp
                                     <div class="col-lg-6 warehouse">
                                         <div class="group-input">
@@ -3219,20 +3185,11 @@
                                             <input disabled type="text" value="{{ $data1->Warehouse_by }}" name="Warehouse_by" id="Warehouse_by">
                                         </div>
                                     </div>
-                                    <div class="col-6 mb-3 warehouse new-date-data-field">
-                                        <div class="group-input input-date">
+                                    <div class="col-lg-6 mb-3 warehouse">
+                                        <div class="group-input">
                                             <label for="Warehouse Review Completed On">Warehouse Review Completed On</label>
-                                            <!-- <div><small class="text-primary">Please select related information</small></div> -->
-
-                                            <div class="calenderauditee">
-                                                <input type="text" id="Warehouse_on" readonly placeholder="DD-MMM-YYYY" value="{{ Helpers::getdateFormat($data1->Warehouse_on) }}" />
-                                                <input type="date" name="Warehouse_on" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" value=""
-                                                class="hide-input"
-                                                oninput="handleDateInput(this, 'Warehouse_on')" />
-                                            </div>
-                                            @error('Warehouse_on')
-                                                <div class="text-danger">{{ $message }}</div>
-                                            @enderror
+                                            <input type="date"id="Warehouse_on" name="Warehouse_on"
+                                                value="{{ $data1->Warehouse_on }}">
                                         </div>
                                     </div>
                                 @else
@@ -3260,7 +3217,7 @@
                                             ])
                                             ->get();
                                         $userRoleIds = $userRoles->pluck('user_id')->toArray();
-                                        //$users = DB::table('users')->whereIn('id', $userRoleIds)->get(); // Fetch user data based on user IDs
+                                        $users = DB::table('users')->whereIn('id', $userRoleIds)->get(); // Fetch user data based on user IDs
                                     @endphp
                                     <div class="col-lg-6 warehouse">
                                         <div class="group-input">
@@ -3353,20 +3310,11 @@
                                         name="Warehouse_by" id="Warehouse_by">
                                 </div>
                             </div>
-                            <div class="col-6 mb-3 warehouse new-date-data-field">
-                                <div class="group-input input-date">
+                            <div class="col-lg-6 warehouse">
+                                <div class="group-input">
                                     <label for="Warehouse Review Completed On">Warehouse Review Completed On</label>
-                                    <!-- <div><small class="text-primary">Please select related information</small></div> -->
-
-                                    <div class="calenderauditee">
-                                        <input type="text" id="Warehouse_on" readonly placeholder="DD-MMM-YYYY" value="{{ Helpers::getdateFormat($data1->Warehouse_on) }}" />
-                                        <input type="date" name="Warehouse_on" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" value=""
-                                        class="hide-input"
-                                        oninput="handleDateInput(this, 'Warehouse_on')" />
-                                    </div>
-                                    @error('Warehouse_on')
-                                        <div class="text-danger">{{ $message }}</div>
-                                    @enderror
+                                    <input disabled type="date"id="Warehouse_on" name="Warehouse_on"
+                                        value="{{ $data1->Warehouse_on }}">
                                 </div>
                             </div>
                             @endif
@@ -3376,8 +3324,6 @@
                             </div>
                             <script>
                                 $(document).ready(function() {
-                                    @if($data1->Quality_review !== 'yes')
-
                                     $('.quality_control').hide();
 
                                     $('[name="Quality_review"]').change(function() {
@@ -3389,7 +3335,6 @@
                                             $('.quality_control span').hide();
                                         }
                                     });
-                                    @endif
                                 });
                             </script>
                             @if ($data->stage == 3 || $data->stage == 4)
@@ -3416,7 +3361,7 @@
                                         ->where(['q_m_s_roles_id' => 24, 'q_m_s_divisions_id' => $data->division_id])
                                         ->get();
                                     $userRoleIds = $userRoles->pluck('user_id')->toArray();
-                                    //$users = DB::table('users')->whereIn('id', $userRoleIds)->get(); // Fetch user data based on user IDs
+                                    $users = DB::table('users')->whereIn('id', $userRoleIds)->get(); // Fetch user data based on user IDs
                                 @endphp
                                 <div class="col-lg-6 quality_control">
                                     <div class="group-input">
@@ -3526,18 +3471,12 @@
                                             name="Quality_Control_by" id="Quality_Control_by">
                                     </div>
                                 </div>
-                                <div class="col-6 mb-3 quality_control new-date-data-field">
-                                    <div class="group-input input-date">
+                                <div class="col-lg-6 quality_control">
+                                    <div class="group-input">
                                         <label for="Quality Control Review Completed On">Quality Control Review Completed
-                                            On</label>                                        <div class="calenderauditee">
-                                            <input type="text" id="Quality_Control_on" readonly placeholder="DD-MMM-YYYY" value="{{ Helpers::getdateFormat($data1->Quality_Control_on) }}" />
-                                            <input type="date" name="Quality_Control_on" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" value=""
-                                            class="hide-input"
-                                            oninput="handleDateInput(this, 'Quality_Control_on')" />
-                                        </div>
-                                        @error('Quality_Control_on')
-                                            <div class="text-danger">{{ $message }}</div>
-                                        @enderror
+                                            On</label>
+                                        <input type="date"id="Quality_Control_on" name="Quality_Control_on"
+                                            value="{{ $data1->Quality_Control_on }}">
                                     </div>
                                 </div>
                                 <div class="sub-head">
@@ -3549,7 +3488,7 @@
 
                                         $('.quality_assurance').hide();
 
-                                        $('[name="Quality_Assurance_Review"]').change(function() {
+                                        $('[name="Quality_Assurance"]').change(function() {
                                             if ($(this).val() === 'yes') {
                                                 $('.quality_assurance').show();
                                                 $('.quality_assurance span').show();
@@ -3584,7 +3523,7 @@
                                         ->where(['q_m_s_roles_id' => 26, 'q_m_s_divisions_id' => $data->division_id])
                                         ->get();
                                     $userRoleIds = $userRoles->pluck('user_id')->toArray();
-                                    //$users = DB::table('users')->whereIn('id', $userRoleIds)->get(); // Fetch user data based on user IDs
+                                    $users = DB::table('users')->whereIn('id', $userRoleIds)->get(); // Fetch user data based on user IDs
                                 @endphp
                                 <div class="col-lg-6 quality_assurance">
                                     <div class="group-input">
@@ -3696,23 +3635,18 @@
                                             value="{{ $data1->QualityAssurance_by }}" disabled>
                                     </div>
                                 </div>
-                                <div class="col-6 mb-3 quality_assurance new-date-data-field">
-                                    <div class="group-input input-date">
+                                <div class="col-lg-6 quality_assurance">
+                                    <div class="group-input">
                                         <label for="Quality Assurance Review Completed On">Quality Assurance Review
-                                            Completed On</label>                                        <div class="calenderauditee">
-                                            <input type="text" id="QualityAssurance_on" readonly placeholder="DD-MMM-YYYY" value="{{ Helpers::getdateFormat($data1->QualityAssurance_on) }}" />
-                                            <input type="date" name="QualityAssurance_on" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" value=""
-                                            class="hide-input"
-                                            oninput="handleDateInput(this, 'QualityAssurance_on')" />
-                                        </div>
-                                        @error('QualityAssurance_on')
-                                            <div class="text-danger">{{ $message }}</div>
-                                        @enderror
+                                            Completed On</label>
+                                        <!-- <div><small class="text-primary">Please select related information</small></div> -->
+                                        <input type="date"id="QualityAssurance_on" name="QualityAssurance_on"
+                                            value="{{ $data1->QualityAssurance_on }}">
                                     </div>
                                 </div>
-                                {{-- <div class="sub-head">
+                                <div class="sub-head">
                                     Engineering
-                                </div> --}}
+                                </div>
                                 <script>
                                     $(document).ready(function() {
                                         @if($data1->Engineering_review !== 'yes')
@@ -3759,7 +3693,7 @@
                                         ->where(['q_m_s_roles_id' => 25, 'q_m_s_divisions_id' => $data->division_id])
                                         ->get();
                                     $userRoleIds = $userRoles->pluck('user_id')->toArray();
-                                    //$users = DB::table('users')->whereIn('id', $userRoleIds)->get(); // Fetch user data based on user IDs
+                                    $users = DB::table('users')->whereIn('id', $userRoleIds)->get(); // Fetch user data based on user IDs
                                 @endphp
                                 <div class="col-lg-6 engineering">
                                     <div class="group-input">
@@ -3864,22 +3798,15 @@
 
                                     </div>
                                 </div>
-                                <div class="col-6 mb-3 engineering new-date-data-field">
-                                    <div class="group-input input-date">
+                                <div class="col-lg-6 engineering">
+                                    <div class="group-input">
                                         <label for="Engineering Review Completed On">Engineering Review Completed
                                             On</label>
-                                        <div class="calenderauditee">
-                                            <input type="text" id="Engineering_on" readonly placeholder="DD-MMM-YYYY" value="{{ Helpers::getdateFormat($data1->Engineering_on) }}" />
-                                            <input type="date" name="Engineering_on" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" value=""
-                                            class="hide-input"
-                                            oninput="handleDateInput(this, 'Engineering_on')" />
-                                        </div>
-                                        @error('Engineering_on')
-                                            <div class="text-danger">{{ $message }}</div>
-                                        @enderror
+                                        <!-- <div><small class="text-primary">Please select related information</small></div> -->
+                                        <input type="date" id="Engineering_on" name="Engineering_on"
+                                            value="{{ $data1->Engineering_on }}">
                                     </div>
                                 </div>
-
                                 <div class="sub-head">
                                     Analytical Development Laboratory
                                 </div>
@@ -3927,7 +3854,7 @@
                                         ->where(['q_m_s_roles_id' => 27, 'q_m_s_divisions_id' => $data->division_id])
                                         ->get();
                                     $userRoleIds = $userRoles->pluck('user_id')->toArray();
-                                    //$users = DB::table('users')->whereIn('id', $userRoleIds)->get(); // Fetch user data based on user IDs
+                                    $users = DB::table('users')->whereIn('id', $userRoleIds)->get(); // Fetch user data based on user IDs
                                 @endphp
                                 <div class="col-lg-6 analytical_development">
                                     <div class="group-input">
@@ -4037,22 +3964,16 @@
                                             name="Analytical_Development_by" id="Analytical_Development_by">
                                     </div>
                                 </div>
-                                <div class="col-6 mb-3 analytical_development new-date-data-field">
-                                    <div class="group-input input-date">
+                                <div class="col-lg-6 analytical_development">
+                                    <div class="group-input">
                                         <label for="Analytical Development Laboratory Review Completed On">Analytical
                                             Development Laboratory Review Completed On</label>
-                                        <div class="calenderauditee">
-                                            <input type="text" id="Analytical_Development_on" readonly placeholder="DD-MMM-YYYY" value="{{ Helpers::getdateFormat($data1->Analytical_Development_on) }}" />
-                                            <input type="date" name="Analytical_Development_on" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" value=""
-                                            class="hide-input"
-                                            oninput="handleDateInput(this, 'Analytical_Development_on')" />
-                                        </div>
-                                        @error('Analytical_Development_on')
-                                            <div class="text-danger">{{ $message }}</div>
-                                        @enderror
+                                        <!-- <div><small class="text-primary">Please select related information</small></div> -->
+                                        <input type="date" id="Analytical_Development_on"
+                                            name="Analytical_Development_on"
+                                            value="{{ $data1->Analytical_Development_on }}">
                                     </div>
                                 </div>
-
                                 <div class="sub-head">
                                     Process Development Laboratory / Kilo Lab
                                 </div>
@@ -4099,7 +4020,7 @@
                                         ->where(['q_m_s_roles_id' => 28, 'q_m_s_divisions_id' => $data->division_id])
                                         ->get();
                                     $userRoleIds = $userRoles->pluck('user_id')->toArray();
-                                    //$users = DB::table('users')->whereIn('id', $userRoleIds)->get(); // Fetch user data based on user IDs
+                                    $users = DB::table('users')->whereIn('id', $userRoleIds)->get(); // Fetch user data based on user IDs
                                 @endphp
                                 <div class="col-lg-6 kilo_lab">
                                     <div class="group-input">
@@ -4203,22 +4124,16 @@
                                             name="Kilo_Lab_attachment_by" id="Kilo_Lab_attachment_by">
                                     </div>
                                 </div>
-                                <div class="col-6 mb-3 kilo_lab new-date-data-field">
-                                    <div class="group-input input-date">
+                                <div class="col-md-6 mb-3 kilo_lab">
+                                    <div class="group-input">
                                         <label for="Kilo Lab Review Completed On">Process Development Laboratory / Kilo
                                             Lab Review Completed On</label>
-                                        <div class="calenderauditee">
-                                            <input type="text" id="Kilo_Lab_attachment_on" readonly placeholder="DD-MMM-YYYY" value="{{ Helpers::getdateFormat($data1->Kilo_Lab_attachment_on) }}" />
-                                            <input type="date" name="Kilo_Lab_attachment_on" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" value=""
-                                            class="hide-input"
-                                            oninput="handleDateInput(this, 'Kilo_Lab_attachment_on')" />
-                                        </div>
-                                        @error('Kilo_Lab_attachment_on')
-                                            <div class="text-danger">{{ $message }}</div>
-                                        @enderror
+                                        <input type="date" id="Kilo_Lab_attachment_on"
+                                            name="Kilo_Lab_attachment_on"
+                                            value="{{ $data1->Kilo_Lab_attachment_on }}">
+
                                     </div>
                                 </div>
-
                                 <div class="sub-head">
                                     Technology Transfer / Design
                                 </div>
@@ -4265,7 +4180,7 @@
                                         ->where(['q_m_s_roles_id' => 29, 'q_m_s_divisions_id' => $data->division_id])
                                         ->get();
                                     $userRoleIds = $userRoles->pluck('user_id')->toArray();
-                                    //$users = DB::table('users')->whereIn('id', $userRoleIds)->get(); // Fetch user data based on user IDs
+                                    $users = DB::table('users')->whereIn('id', $userRoleIds)->get(); // Fetch user data based on user IDs
                                 @endphp
                                 <div class="col-lg-6 technology_transfer">
                                     <div class="group-input">
@@ -4376,22 +4291,15 @@
 
                                     </div>
                                 </div>
-                                <div class="col-6 mb-3 technology_transfer new-date-data-field">
-                                    <div class="group-input input-date">
+                                <div class="col-md-6 mb-3 technology_transfer">
+                                    <div class="group-input">
                                         <label for="productionfeedback">Technology Transfer / Design Review Completed
                                             On</label>
-                                        <div class="calenderauditee">
-                                            <input type="text" id="Technology_transfer_on" readonly placeholder="DD-MMM-YYYY" value="{{ Helpers::getdateFormat($data1->Technology_transfer_on) }}" />
-                                            <input type="date" name="Technology_transfer_on" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" value=""
-                                            class="hide-input"
-                                            oninput="handleDateInput(this, 'Technology_transfer_on')" />
-                                        </div>
-                                        @error('Technology_transfer_on')
-                                            <div class="text-danger">{{ $message }}</div>
-                                        @enderror
+                                        <input type="date" id="Technology_transfer_on"
+                                            name="Technology_transfer_on"
+                                            value="{{ $data1->Technology_transfer_on }}">
                                     </div>
                                 </div>
-
                                 <div class="sub-head">
                                     Environment, Health & Safety
                                 </div>
@@ -4438,7 +4346,7 @@
                                         ->where(['q_m_s_roles_id' => 30, 'q_m_s_divisions_id' => $data->division_id])
                                         ->get();
                                     $userRoleIds = $userRoles->pluck('user_id')->toArray();
-                                    //$users = DB::table('users')->whereIn('id', $userRoleIds)->get(); // Fetch user data based on user IDs
+                                    $users = DB::table('users')->whereIn('id', $userRoleIds)->get(); // Fetch user data based on user IDs
                                 @endphp
                                 <div class="col-lg-6 environmental_health">
                                     <div class="group-input">
@@ -4550,19 +4458,14 @@
 
                                     </div>
                                 </div>
-                                <div class="col-6 mb-3 environmental_health new-date-data-field">
-                                    <div class="group-input input-date">
+                                <div class="col-md-6 mb-3 environmental_health">
+                                    <div class="group-input">
                                         <label for="Safety Review Completed On">Environment, Health & Safety Review
                                             Completed On</label>
-                                        <div class="calenderauditee">
-                                            <input type="text" id="Environment_Health_Safety_on" readonly placeholder="DD-MMM-YYYY" value="{{ Helpers::getdateFormat($data1->Environment_Health_Safety_on) }}" />
-                                            <input type="date" name="Environment_Health_Safety_on" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" value=""
-                                            class="hide-input"
-                                            oninput="handleDateInput(this, 'Environment_Health_Safety_on')" />
-                                        </div>
-                                        @error('Environment_Health_Safety_on')
-                                            <div class="text-danger">{{ $message }}</div>
-                                        @enderror
+                                        <input type="date" id="Environment_Health_Safety_on"
+                                            name="Environment_Health_Safety_on"
+                                            value="{{ $data1->Environment_Health_Safety_on }}">
+
                                     </div>
                                 </div>
                                 <div class="sub-head">
@@ -4610,7 +4513,7 @@
                                         ->where(['q_m_s_roles_id' => 31, 'q_m_s_divisions_id' => $data->division_id])
                                         ->get();
                                     $userRoleIds = $userRoles->pluck('user_id')->toArray();
-                                    //$users = DB::table('users')->whereIn('id', $userRoleIds)->get(); // Fetch user data based on user IDs
+                                    $users = DB::table('users')->whereIn('id', $userRoleIds)->get(); // Fetch user data based on user IDs
                                 @endphp
                                 <div class="col-lg-6 human_resources">
                                     <div class="group-input">
@@ -4717,22 +4620,15 @@
 
                                     </div>
                                 </div>
-                                <div class="col-6 mb-3 human_resources new-date-data-field">
-                                    <div class="group-input input-date">
+                                <div class="col-md-6 mb-3 human_resources">
+                                    <div class="group-input">
                                         <label for="Administration Review Completed On"> Human Resource & Administration
                                             Review Completed On</label>
-                                        <div class="calenderauditee">
-                                            <input type="text" id="Human_Resource_on" readonly placeholder="DD-MMM-YYYY" value="{{ Helpers::getdateFormat($data1->Human_Resource_on) }}" />
-                                            <input type="date" name="Human_Resource_on" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" value=""
-                                            class="hide-input"
-                                            oninput="handleDateInput(this, 'Human_Resource_on')" />
-                                        </div>
-                                        @error('Human_Resource_on')
-                                            <div class="text-danger">{{ $message }}</div>
-                                        @enderror
+                                        <input type="date" id="Environment_Health_Safety_on"
+                                            name="Environment_Health_Safety_on"
+                                            value="{{ $data1->Environment_Health_Safety_on }}">
                                     </div>
                                 </div>
-
                                 <div class="sub-head">
                                     Information Technology
                                 </div>
@@ -4780,7 +4676,7 @@
                                         ->where(['q_m_s_roles_id' => 32, 'q_m_s_divisions_id' => $data->division_id])
                                         ->get();
                                     $userRoleIds = $userRoles->pluck('user_id')->toArray();
-                                    //$users = DB::table('users')->whereIn('id', $userRoleIds)->get(); // Fetch user data based on user IDs
+                                    $users = DB::table('users')->whereIn('id', $userRoleIds)->get(); // Fetch user data based on user IDs
                                 @endphp
                                 <div class="col-lg-6 information_technology">
                                     <div class="group-input">
@@ -4791,7 +4687,7 @@
                                         <select name=" Information_Technology_person"
                                             class="Information_Technology_person" id=" Information_Technology_person"
                                             @if ($data->stage == 4) disabled @endif>
-                                            <option value="">-- Select --</option>
+                                            <option value="0">-- Select --</option>
                                             @foreach ($users as $user)
                                                 <option
                                                     {{ $data1->Information_Technology_person == $user->id ? 'selected' : '' }}
@@ -4889,22 +4785,15 @@
 
                                     </div>
                                 </div>
-                                <div class="col-6 mb-3 information_technology new-date-data-field">
-                                    <div class="group-input input-date">
+                                <div class="col-md-6 mb-3 information_technology">
+                                    <div class="group-input">
                                         <label for="Information Technology Review Completed On">Information Technology
                                             Review Completed On</label>
-                                        <div class="calenderauditee">
-                                            <input type="text" id="Information_Technology_on" readonly placeholder="DD-MMM-YYYY" value="{{ Helpers::getdateFormat($data1->Information_Technology_on) }}" />
-                                            <input type="date" name="Information_Technology_on" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" value=""
-                                            class="hide-input"
-                                            oninput="handleDateInput(this, 'Information_Technology_on')" />
-                                        </div>
-                                        @error('Information_Technology_on')
-                                            <div class="text-danger">{{ $message }}</div>
-                                        @enderror
+                                        <input type="text" name="Information_Technology_on"
+                                            id="Information_Technology_on"
+                                            value={{ $data1->Information_Technology_on }}>
                                     </div>
                                 </div>
-
                                 <div class="sub-head">
                                     Project Management
                                 </div>
@@ -4949,7 +4838,7 @@
                                         ->where(['q_m_s_roles_id' => 33, 'q_m_s_divisions_id' => $data->division_id])
                                         ->get();
                                     $userRoleIds = $userRoles->pluck('user_id')->toArray();
-                                    //$users = DB::table('users')->whereIn('id', $userRoleIds)->get(); // Fetch user data based on user IDs
+                                    $users = DB::table('users')->whereIn('id', $userRoleIds)->get(); // Fetch user data based on user IDs
                                 @endphp
                                 <div class="col-lg-6 project_management">
                                     <div class="group-input">
@@ -5057,19 +4946,12 @@
 
                                     </div>
                                 </div>
-                                <div class="col-6 mb-3 project_management new-date-data-field">
-                                    <div class="group-input input-date">
+                                <div class="col-md-6 mb-3 project_management">
+                                    <div class="group-input">
                                         <label for="Project management Review Completed On">Project management Review
                                             Completed On</label>
-                                        <div class="calenderauditee">
-                                            <input type="text" id="Project_management_on" readonly placeholder="DD-MMM-YYYY" value="{{ Helpers::getdateFormat($data1->Project_management_on) }}" />
-                                            <input type="date" name="Project_management_on" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" value=""
-                                            class="hide-input"
-                                            oninput="handleDateInput(this, 'Project_management_on')" />
-                                        </div>
-                                        @error('Project_management_on')
-                                            <div class="text-danger">{{ $message }}</div>
-                                        @enderror
+                                        <input type="date" name="Project_management_on" id="Project_management_on"
+                                            value="{{ $data1->Project_management_on }}">
                                     </div>
                                 </div>
                             @else
@@ -5085,7 +4967,7 @@
                                                 No</option>
                                             <option @if ($data1->Quality_review == 'na') selected @endif value="na">
                                                 NA</option>
-                                        </select>
+                                        </select>                                        
                                     </div>
                                 </div>
                                 @php
@@ -5093,7 +4975,7 @@
                                         ->where(['q_m_s_roles_id' => 24, 'q_m_s_divisions_id' => $data->division_id])
                                         ->get();
                                     $userRoleIds = $userRoles->pluck('user_id')->toArray();
-                                    //$users = DB::table('users')->whereIn('id', $userRoleIds)->get(); // Fetch user data based on user IDs
+                                    $users = DB::table('users')->whereIn('id', $userRoleIds)->get(); // Fetch user data based on user IDs
                                 @endphp
                                 <div class="col-lg-6">
                                     <div class="group-input">
@@ -5171,18 +5053,13 @@
                                             name="Quality_Control_by" id="Quality_Control_by">
                                     </div>
                                 </div>
-                                <div class="col-6 mb-3 quality_control new-date-data-field">
-                                    <div class="group-input input-date">
+                                <div class="col-lg-6">
+                                    <div class="group-input">
                                         <label for="Quality Control Review Completed On">Quality Control Review Completed
-                                            On</label>                                        <div class="calenderauditee">
-                                            <input type="text" id="Quality_Control_on" readonly placeholder="DD-MMM-YYYY" value="{{ Helpers::getdateFormat($data1->Quality_Control_on) }}" />
-                                            <input type="date" name="Quality_Control_on" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" value=""
-                                            class="hide-input"
-                                            oninput="handleDateInput(this, 'Quality_Control_on')" />
-                                        </div>
-                                        @error('Quality_Control_on')
-                                            <div class="text-danger">{{ $message }}</div>
-                                        @enderror
+                                            On</label>
+                                        <!-- <div><small class="text-primary">Please select related information</small></div> -->
+                                        <input disabled type="date"id="Quality_Control_on" name="Quality_Control_on"
+                                            value="{{ $data1->Quality_Control_on }}">
                                     </div>
                                 </div>
                                 <div class="sub-head">
@@ -5207,9 +5084,9 @@
                                         ->where(['q_m_s_roles_id' => 26, 'q_m_s_divisions_id' => $data->division_id])
                                         ->get();
                                     $userRoleIds = $userRoles->pluck('user_id')->toArray();
-                                    //$users = DB::table('users')->whereIn('id', $userRoleIds)->get(); // Fetch user data based on user IDs
+                                    $users = DB::table('users')->whereIn('id', $userRoleIds)->get(); // Fetch user data based on user IDs
                                 @endphp
-                                <div class="col-lg-6 quality_assurance">
+                                <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Quality Assurance Person">Quality Assurance Person</label>
                                         <select disabled name="QualityAssurance_person" id="QualityAssurance_person">
@@ -5222,7 +5099,7 @@
                                         </select>
                                     </div>
                                 </div>
-                                <div class="col-md-12 mb-3 quality_assurance">
+                                <div class="col-md-12 mb-3">
                                     <div class="group-input">
                                         <label for="Impact Assessment3">Impact Assessment (By Quality Assurance)</label>
                                         <div><small class="text-primary">Please insert "NA" in the data field if it does
@@ -5232,7 +5109,7 @@
                                             id="summernote-23">{{ $data1->QualityAssurance_assessment }}</textarea>
                                     </div>
                                 </div>
-                                <div class="col-md-12 mb-3 quality_assurance">
+                                <div class="col-md-12 mb-3">
                                     <div class="group-input">
                                         <label for="Quality Assurance Feedback">Quality Assurance Feedback</label>
                                         <div><small class="text-primary">Please insert "NA" in the data field if it does
@@ -5242,7 +5119,7 @@
                                             id="summernote-24">{{ $data1->QualityAssurance_feedback }}</textarea>
                                     </div>
                                 </div>
-                                <div class="col-12 quality_assurance">
+                                <div class="col-12">
                                     <div class="group-input">
                                         <label for="Quality Assurance Attachments">Quality Assurance Attachments</label>
                                         <div><small class="text-primary">Please Attach all relevant or supporting
@@ -5277,7 +5154,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-md-6 mb-3 quality_assurance">
+                                <div class="col-md-6 mb-3">
                                     <div class="group-input">
                                         <label for="Quality Assurance Review Completed By">Quality Assurance Review
                                             Completed By</label>
@@ -5285,21 +5162,15 @@
                                             name="QualityAssurance_by" id="QualityAssurance_by">
                                     </div>
                                 </div>
-                                <div class="col-6 mb-3 quality_assurance new-date-data-field">
-                                    <div class="group-input input-date">
+                                <div class="col-lg-6">
+                                    <div class="group-input">
                                         <label for="Quality Assurance Review Completed On">Quality Assurance Review
-                                            Completed On</label>                                        <div class="calenderauditee">
-                                            <input type="text" id="Quality_Control_on" readonly placeholder="DD-MMM-YYYY" value="{{ Helpers::getdateFormat($data1->Quality_Control_on) }}" />
-                                            <input type="date" name="Quality_Control_on" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" value=""
-                                            class="hide-input"
-                                            oninput="handleDateInput(this, 'Quality_Control_on')" />
-                                        </div>
-                                        @error('Quality_Control_on')
-                                            <div class="text-danger">{{ $message }}</div>
-                                        @enderror
+                                            Completed On</label>
+                                        <!-- <div><small class="text-primary">Please select related information</small></div> -->
+                                        <input disabled type="date"id="QualityAssurance_on"
+                                            name="QualityAssurance_on" value="{{ $data1->QualityAssurance_on }}">
                                     </div>
                                 </div>
-
                                 <div class="sub-head">
                                     Engineering
                                 </div>
@@ -5323,7 +5194,7 @@
                                         ->where(['q_m_s_roles_id' => 25, 'q_m_s_divisions_id' => $data->division_id])
                                         ->get();
                                     $userRoleIds = $userRoles->pluck('user_id')->toArray();
-                                    //$users = DB::table('users')->whereIn('id', $userRoleIds)->get(); // Fetch user data based on user IDs
+                                    $users = DB::table('users')->whereIn('id', $userRoleIds)->get(); // Fetch user data based on user IDs
                                 @endphp
                                 <div class="col-lg-6">
                                     <div class="group-input">
@@ -5397,22 +5268,15 @@
 
                                     </div>
                                 </div>
-                                <div class="col-6 mb-3 new-date-data-field">
-                                    <div class="group-input input-date">
+                                <div class="col-lg-6">
+                                    <div class="group-input">
                                         <label for="Engineering Review Completed On">Engineering Review Completed
                                             On</label>
-                                        <div class="calenderauditee">
-                                            <input type="text" id="Engineering_on" readonly placeholder="DD-MMM-YYYY" value="{{ Helpers::getdateFormat($data1->Engineering_on) }}" />
-                                            <input type="date" name="Engineering_on" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" value=""
-                                            class="hide-input"
-                                            oninput="handleDateInput(this, 'Engineering_on')" />
-                                        </div>
-                                        @error('Engineering_on')
-                                            <div class="text-danger">{{ $message }}</div>
-                                        @enderror
+                                        <!-- <div><small class="text-primary">Please select related information</small></div> -->
+                                        <input disabled type="date" id="Engineering_on" name="Engineering_on"
+                                            value="{{ $data1->Engineering_on }}">
                                     </div>
                                 </div>
-
                                 <div class="sub-head">
                                     Analytical Development Laboratory
                                 </div>
@@ -5439,7 +5303,7 @@
                                         ->where(['q_m_s_roles_id' => 27, 'q_m_s_divisions_id' => $data->division_id])
                                         ->get();
                                     $userRoleIds = $userRoles->pluck('user_id')->toArray();
-                                    //$users = DB::table('users')->whereIn('id', $userRoleIds)->get(); // Fetch user data based on user IDs
+                                    $users = DB::table('users')->whereIn('id', $userRoleIds)->get(); // Fetch user data based on user IDs
                                 @endphp
                                 <div class="col-lg-6">
                                     <div class="group-input">
@@ -5519,19 +5383,14 @@
                                             name="Analytical_Development_by" id="Analytical_Development_by">
                                     </div>
                                 </div>
-                                <div class="col-6 mb-3 analytical_development new-date-data-field">
-                                    <div class="group-input input-date">
+                                <div class="col-lg-6">
+                                    <div class="group-input">
                                         <label for="Analytical Development Laboratory Review Completed On">Analytical
                                             Development Laboratory Review Completed On</label>
-                                        <div class="calenderauditee">
-                                            <input type="text" id="Analytical_Development_on" readonly placeholder="DD-MMM-YYYY" value="{{ Helpers::getdateFormat($data1->Analytical_Development_on) }}" />
-                                            <input type="date" name="Analytical_Development_on" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" value=""
-                                            class="hide-input"
-                                            oninput="handleDateInput(this, 'Analytical_Development_on')" />
-                                        </div>
-                                        @error('Analytical_Development_on')
-                                            <div class="text-danger">{{ $message }}</div>
-                                        @enderror
+                                        <!-- <div><small class="text-primary">Please select related information</small></div> -->
+                                        <input disabled type="date" id="Analytical_Development_on"
+                                            name="Analytical_Development_on"
+                                            value="{{ $data1->Analytical_Development_on }}">
                                     </div>
                                 </div>
                                 <div class="sub-head">
@@ -5559,7 +5418,7 @@
                                         ->where(['q_m_s_roles_id' => 28, 'q_m_s_divisions_id' => $data->division_id])
                                         ->get();
                                     $userRoleIds = $userRoles->pluck('user_id')->toArray();
-                                    //$users = DB::table('users')->whereIn('id', $userRoleIds)->get(); // Fetch user data based on user IDs
+                                    $users = DB::table('users')->whereIn('id', $userRoleIds)->get(); // Fetch user data based on user IDs
                                 @endphp
                                 <div class="col-lg-6">
                                     <div class="group-input">
@@ -5632,21 +5491,6 @@
                                             name="Kilo_Lab_attachment_by" id="Kilo_Lab_attachment_by">
                                     </div>
                                 </div>
-                                <div class="col-6 mb-3  new-date-data-field">
-                                    <div class="group-input input-date">
-                                        <label for="Kilo Lab Review Completed On">Process Development Laboratory / Kilo
-                                            Lab Review Completed On</label>
-                                        <div class="calenderauditee">
-                                            <input type="text" id="Kilo_Lab_attachment_on" readonly placeholder="DD-MMM-YYYY" value="{{ Helpers::getdateFormat($data1->Kilo_Lab_attachment_on) }}" />
-                                            <input type="date" name="Kilo_Lab_attachment_on" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" value=""
-                                            class="hide-input"
-                                            oninput="handleDateInput(this, 'Kilo_Lab_attachment_on')" />
-                                        </div>
-                                        @error('Kilo_Lab_attachment_on')
-                                            <div class="text-danger">{{ $message }}</div>
-                                        @enderror
-                                    </div>
-                                </div>
                                 <div class="col-md-6 mb-3">
                                     <div class="group-input">
                                         <label for="Kilo Lab Review Completed On">Process Development Laboratory / Kilo
@@ -5683,7 +5527,7 @@
                                         ->where(['q_m_s_roles_id' => 29, 'q_m_s_divisions_id' => $data->division_id])
                                         ->get();
                                     $userRoleIds = $userRoles->pluck('user_id')->toArray();
-                                    //$users = DB::table('users')->whereIn('id', $userRoleIds)->get(); // Fetch user data based on user IDs
+                                    $users = DB::table('users')->whereIn('id', $userRoleIds)->get(); // Fetch user data based on user IDs
                                 @endphp
                                 <div class="col-lg-6">
                                     <div class="group-input">
@@ -5763,22 +5607,15 @@
 
                                     </div>
                                 </div>
-                                <div class="col-6 mb-3 new-date-data-field">
-                                    <div class="group-input input-date">
+                                <div class="col-md-6 mb-3">
+                                    <div class="group-input">
                                         <label for="productionfeedback">Technology Transfer / Design Review Completed
                                             On</label>
-                                        <div class="calenderauditee">
-                                            <input type="text" id="Technology_transfer_on" readonly placeholder="DD-MMM-YYYY" value="{{ Helpers::getdateFormat($data1->Technology_transfer_on) }}" />
-                                            <input type="date" name="Technology_transfer_on" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" value=""
-                                            class="hide-input"
-                                            oninput="handleDateInput(this, 'Technology_transfer_on')" />
-                                        </div>
-                                        @error('Technology_transfer_on')
-                                            <div class="text-danger">{{ $message }}</div>
-                                        @enderror
+                                        <input disabled type="date" id="Technology_transfer_on"
+                                            name="Technology_transfer_on"
+                                            value="{{ $data1->Technology_transfer_on }}">
                                     </div>
                                 </div>
-
                                 <div class="sub-head">
                                     Environment, Health & Safety
                                 </div>
@@ -5805,7 +5642,7 @@
                                         ->where(['q_m_s_roles_id' => 30, 'q_m_s_divisions_id' => $data->division_id])
                                         ->get();
                                     $userRoleIds = $userRoles->pluck('user_id')->toArray();
-                                    //$users = DB::table('users')->whereIn('id', $userRoleIds)->get(); // Fetch user data based on user IDs
+                                    $users = DB::table('users')->whereIn('id', $userRoleIds)->get(); // Fetch user data based on user IDs
                                 @endphp
                                 <div class="col-lg-6">
                                     <div class="group-input">
@@ -5885,22 +5722,16 @@
 
                                     </div>
                                 </div>
-                                <div class="col-6 mb-3 new-date-data-field">
-                                    <div class="group-input input-date">
+                                <div class="col-md-6 mb-3">
+                                    <div class="group-input">
                                         <label for="Safety Review Completed On">Environment, Health & Safety Review
                                             Completed On</label>
-                                        <div class="calenderauditee">
-                                            <input type="text" id="Environment_Health_Safety_on" readonly placeholder="DD-MMM-YYYY" value="{{ Helpers::getdateFormat($data1->Environment_Health_Safety_on) }}" />
-                                            <input type="date" name="Environment_Health_Safety_on" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" value=""
-                                            class="hide-input"
-                                            oninput="handleDateInput(this, 'Environment_Health_Safety_on')" />
-                                        </div>
-                                        @error('Environment_Health_Safety_on')
-                                            <div class="text-danger">{{ $message }}</div>
-                                        @enderror
+                                        <input disabled type="date" id="Environment_Health_Safety_on"
+                                            name="Environment_Health_Safety_on"
+                                            value="{{ $data1->Environment_Health_Safety_on }}">
+
                                     </div>
                                 </div>
-
                                 <div class="sub-head">
                                     Human Resource & Administration
                                 </div>
@@ -5925,7 +5756,7 @@
                                         ->where(['q_m_s_roles_id' => 31, 'q_m_s_divisions_id' => $data->division_id])
                                         ->get();
                                     $userRoleIds = $userRoles->pluck('user_id')->toArray();
-                                    //$users = DB::table('users')->whereIn('id', $userRoleIds)->get(); // Fetch user data based on user IDs
+                                    $users = DB::table('users')->whereIn('id', $userRoleIds)->get(); // Fetch user data based on user IDs
                                 @endphp
                                 <div class="col-lg-6">
                                     <div class="group-input">
@@ -6001,19 +5832,13 @@
 
                                     </div>
                                 </div>
-                                <div class="col-6 mb-3 new-date-data-field">
-                                    <div class="group-input input-date">
+                                <div class="col-md-6 mb-3">
+                                    <div class="group-input">
                                         <label for="Administration Review Completed On"> Human Resource & Administration
                                             Review Completed On</label>
-                                        <div class="calenderauditee">
-                                            <input type="text" id="Human_Resource_on" readonly placeholder="DD-MMM-YYYY" value="{{ Helpers::getdateFormat($data1->Human_Resource_on) }}" />
-                                            <input type="date" name="Human_Resource_on" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" value=""
-                                            class="hide-input"
-                                            oninput="handleDateInput(this, 'Human_Resource_on')" />
-                                        </div>
-                                        @error('Human_Resource_on')
-                                            <div class="text-danger">{{ $message }}</div>
-                                        @enderror
+                                        <input type="date" id="Environment_Health_Safety_on"
+                                            name="Environment_Health_Safety_on"
+                                            value="{{ $data1->Environment_Health_Safety_on }}">
                                     </div>
                                 </div>
                                 <div class="sub-head">
@@ -6043,7 +5868,7 @@
                                         ->where(['q_m_s_roles_id' => 32, 'q_m_s_divisions_id' => $data->division_id])
                                         ->get();
                                     $userRoleIds = $userRoles->pluck('user_id')->toArray();
-                                    //$users = DB::table('users')->whereIn('id', $userRoleIds)->get(); // Fetch user data based on user IDs
+                                    $users = DB::table('users')->whereIn('id', $userRoleIds)->get(); // Fetch user data based on user IDs
                                 @endphp
                                 <div class="col-lg-6">
                                     <div class="group-input">
@@ -6123,22 +5948,15 @@
 
                                     </div>
                                 </div>
-                                <div class="col-6 mb-3 new-date-data-field">
-                                    <div class="group-input input-date">
+                                <div class="col-md-6 mb-3">
+                                    <div class="group-input">
                                         <label for="Information Technology Review Completed On">Information Technology
                                             Review Completed On</label>
-                                        <div class="calenderauditee">
-                                            <input type="text" id="Information_Technology_on" readonly placeholder="DD-MMM-YYYY" value="{{ Helpers::getdateFormat($data1->Information_Technology_on) }}" />
-                                            <input type="date" name="Information_Technology_on" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" value=""
-                                            class="hide-input"
-                                            oninput="handleDateInput(this, 'Information_Technology_on')" />
-                                        </div>
-                                        @error('Information_Technology_on')
-                                            <div class="text-danger">{{ $message }}</div>
-                                        @enderror
+                                        <input disabled type="text" name="Information_Technology_on"
+                                            id="Information_Technology_on"
+                                            value={{ $data1->Information_Technology_on }}>
                                     </div>
                                 </div>
-
                                 <div class="sub-head">
                                     Project Management
                                 </div>
@@ -6163,7 +5981,7 @@
                                         ->where(['q_m_s_roles_id' => 33, 'q_m_s_divisions_id' => $data->division_id])
                                         ->get();
                                     $userRoleIds = $userRoles->pluck('user_id')->toArray();
-                                    //$users = DB::table('users')->whereIn('id', $userRoleIds)->get(); // Fetch user data based on user IDs
+                                    $users = DB::table('users')->whereIn('id', $userRoleIds)->get(); // Fetch user data based on user IDs
                                 @endphp
                                 <div class="col-lg-6">
                                     <div class="group-input">
@@ -6241,19 +6059,14 @@
 
                                     </div>
                                 </div>
-                                <div class="col-6 mb-3 new-date-data-field">
-                                    <div class="group-input input-date">
+                                <div class="col-md-6 mb-3">
+                                    <div class="group-input">
                                         <label for="Project management Review Completed On">Project management Review
                                             Completed On</label>
-                                        <div class="calenderauditee">
-                                            <input type="text" id="Project_management_on" readonly placeholder="DD-MMM-YYYY" value="{{ Helpers::getdateFormat($data1->Project_management_on) }}" />
-                                            <input type="date" name="Project_management_on" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" value=""
-                                            class="hide-input"
-                                            oninput="handleDateInput(this, 'Project_management_on')" />
-                                        </div>
-                                        @error('Project_management_on')
-                                            <div class="text-danger">{{ $message }}</div>
-                                        @enderror
+                                        <input disabled type="date" name="Project_management_on"
+                                            id="Project_management_on" value={{ $data1->Project_management_on }}>
+
+
                                     </div>
                                 </div>
                             @endif
@@ -6296,10 +6109,9 @@
                                 @php
                                     $userRoles = DB::table('user_roles')
                                         ->where(['q_m_s_divisions_id' => $data->division_id])
-                                        ->select('user_id')->distinct()
                                         ->get();
                                     $userRoleIds = $userRoles->pluck('user_id')->toArray();
-                                    //$users = DB::table('users')->whereIn('id', $userRoleIds)->get(); // Fetch user data based on user IDs
+                                    $users = DB::table('users')->whereIn('id', $userRoleIds)->get(); // Fetch user data based on user IDs
                                 @endphp
                                 <div class="col-lg-6 other1_reviews ">
                                     <div class="group-input">
@@ -6450,21 +6262,14 @@
 
                                     </div>
                                 </div>
-                                <div class="col-6 mb-3 other1_reviews new-date-data-field">
-                                    <div class="group-input input-date">
+                                <div class="col-md-6 mb-3 other1_reviews ">
+                                    <div class="group-input">
                                         <label for="Review Completed On1">Other's 1 Review Completed On</label>
-                                        <div class="calenderauditee">
-                                            <input type="text" id="Other1_on" readonly placeholder="DD-MMM-YYYY" value="{{ Helpers::getdateFormat($data1->Other1_on) }}" />
-                                            <input type="date" name="Other1_on" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" value=""
-                                            class="hide-input"
-                                            oninput="handleDateInput(this, 'Other1_on')" />
-                                        </div>
-                                        @error('Other1_on')
-                                            <div class="text-danger">{{ $message }}</div>
-                                        @enderror
+                                        <input disabled type="date" name="Other1_on" id="Other1_on"
+                                            value="{{ $data1->Other1_on }}">
+
                                     </div>
                                 </div>
-
                                 <div class="sub-head">
                                     Other's 2 ( Additional Person Review From Departments If Required)
                                 </div>
@@ -6503,10 +6308,9 @@
                                 @php
                                     $userRoles = DB::table('user_roles')
                                         ->where(['q_m_s_divisions_id' => $data->division_id])
-                                        ->select('user_id')->distinct()
                                         ->get();
                                     $userRoleIds = $userRoles->pluck('user_id')->toArray();
-                                    //$users = DB::table('users')->whereIn('id', $userRoleIds)->get(); // Fetch user data based on user IDs
+                                    $users = DB::table('users')->whereIn('id', $userRoleIds)->get(); // Fetch user data based on user IDs
                                 @endphp
                                 <div class="col-lg-6 Other2_reviews">
                                     <div class="group-input">
@@ -6654,18 +6458,11 @@
 
                                     </div>
                                 </div>
-                                <div class="col-6 mb-3 Other2_reviews new-date-data-field">
-                                    <div class="group-input input-date">
-                                        <label for="Review Completed On1">Other's 2 Review Completed On</label>
-                                        <div class="calenderauditee">
-                                            <input type="text" id="Other2_on" readonly placeholder="DD-MMM-YYYY" value="{{ Helpers::getdateFormat($data1->Other2_on) }}" />
-                                            <input type="date" name="Other2_on" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" value=""
-                                            class="hide-input"
-                                            oninput="handleDateInput(this, 'Other2_on')" />
-                                        </div>
-                                        @error('Other2_on')
-                                            <div class="text-danger">{{ $message }}</div>
-                                        @enderror
+                                <div class="col-md-6 mb-3 Other2_reviews">
+                                    <div class="group-input">
+                                        <label for="Review Completed On2">Other's 2 Review Completed On</label>
+                                        <input disabled type="date" name="Other2_on" id="Other2_on"
+                                            value="{{ $data1->Other2_on }}">
                                     </div>
                                 </div>
 
@@ -6709,10 +6506,9 @@
                                 @php
                                     $userRoles = DB::table('user_roles')
                                         ->where(['q_m_s_divisions_id' => $data->division_id])
-                                        ->select('user_id')->distinct()
                                         ->get();
                                     $userRoleIds = $userRoles->pluck('user_id')->toArray();
-                                    //$users = DB::table('users')->whereIn('id', $userRoleIds)->get(); // Fetch user data based on user IDs
+                                    $users = DB::table('users')->whereIn('id', $userRoleIds)->get(); // Fetch user data based on user IDs
                                 @endphp
                                 <div class="col-lg-6 Other3_reviews">
                                     <div class="group-input">
@@ -6860,21 +6656,13 @@
 
                                     </div>
                                 </div>
-                                <div class="col-6 mb-3 Other3_reviews new-date-data-field">
-                                    <div class="group-input input-date">
-                                        <label for="Review Completed On1">Other's 3 Review Completed On</label>
-                                        <div class="calenderauditee">
-                                            <input type="text" id="Other3_on" readonly placeholder="DD-MMM-YYYY" value="{{ Helpers::getdateFormat($data1->Other3_on) }}" />
-                                            <input type="date" name="Other3_on" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" value=""
-                                            class="hide-input"
-                                            oninput="handleDateInput(this, 'Other3_on')" />
-                                        </div>
-                                        @error('Other3_on')
-                                            <div class="text-danger">{{ $message }}</div>
-                                        @enderror
+                                <div class="col-md-6 mb-3 Other3_reviews">
+                                    <div class="group-input">
+                                        <label for="productionfeedback">Other's 3 Review Completed On</label>
+                                        <input disabled type="date" name="Other3_on" id="Other3_on"
+                                            value="{{ $data1->Other3_on }}">
                                     </div>
                                 </div>
-
                                 <div class="sub-head">
                                     Other's 4 ( Additional Person Review From Departments If Required)
                                 </div>
@@ -6914,10 +6702,9 @@
                                 @php
                                     $userRoles = DB::table('user_roles')
                                         ->where(['q_m_s_divisions_id' => $data->division_id])
-                                        ->select('user_id')->distinct()
                                         ->get();
                                     $userRoleIds = $userRoles->pluck('user_id')->toArray();
-                                    //$users = DB::table('users')->whereIn('id', $userRoleIds)->get(); // Fetch user data based on user IDs
+                                    $users = DB::table('users')->whereIn('id', $userRoleIds)->get(); // Fetch user data based on user IDs
                                 @endphp
                                 <div class="col-lg-6 Other4_reviews">
                                     <div class="group-input">
@@ -7064,20 +6851,16 @@
 
                                     </div>
                                 </div>
-                                <div class="col-6 mb-3 Other4_reviews new-date-data-field">
-                                    <div class="group-input input-date">
-                                        <label for="Review Completed On1">Other's 4 Review Completed On</label>
-                                        <div class="calenderauditee">
-                                            <input type="text" id="Other4_on" readonly placeholder="DD-MMM-YYYY" value="{{ Helpers::getdateFormat($data1->Other4_on) }}" />
-                                            <input type="date" name="Other4_on" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" value=""
-                                            class="hide-input"
-                                            oninput="handleDateInput(this, 'Other4_on')" />
-                                        </div>
-                                        @error('Other4_on')
-                                            <div class="text-danger">{{ $message }}</div>
-                                        @enderror
+                                <div class="col-md-6 mb-3 Other4_reviews">
+                                    <div class="group-input">
+                                        <label for="Review Completed On4">Other's 4 Review Completed On</label>
+                                        <input disabled type="date" name="Other4_on" id="Other4_on"
+                                            value="{{ $data1->Other4_on }}">
+
                                     </div>
                                 </div>
+
+
 
                                 <div class="sub-head">
                                     Other's 5 ( Additional Person Review From Departments If Required)
@@ -7117,10 +6900,9 @@
                                 @php
                                     $userRoles = DB::table('user_roles')
                                         ->where(['q_m_s_divisions_id' => $data->division_id])
-                                        ->select('user_id')->distinct()
                                         ->get();
                                     $userRoleIds = $userRoles->pluck('user_id')->toArray();
-                                    //$users = DB::table('users')->whereIn('id', $userRoleIds)->get(); // Fetch user data based on user IDs
+                                    $users = DB::table('users')->whereIn('id', $userRoleIds)->get(); // Fetch user data based on user IDs
                                 @endphp
                                 <div class="col-lg-6 Other5_reviews">
                                     <div class="group-input">
@@ -7268,21 +7050,13 @@
 
                                     </div>
                                 </div>
-                                <div class="col-6 mb-3 Other5_reviews new-date-data-field">
-                                    <div class="group-input input-date">
-                                        <label for="Review Completed On1">Other's 5 Review Completed On</label>
-                                        <div class="calenderauditee">
-                                            <input type="text" id="Other5_on" readonly placeholder="DD-MMM-YYYY" value="{{ Helpers::getdateFormat($data1->Other5_on) }}" />
-                                            <input type="date" name="Other5_on" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" value=""
-                                            class="hide-input"
-                                            oninput="handleDateInput(this, 'Other5_on')" />
-                                        </div>
-                                        @error('Other5_on')
-                                            <div class="text-danger">{{ $message }}</div>
-                                        @enderror
+                                <div class="col-md-6 mb-3 Other5_reviews">
+                                    <div class="group-input">
+                                        <label for="Review Completed On5">Other's 5 Review Completed On</label>
+                                        <input disabled type="date" name="Other5_on" id="Other5_on"
+                                            value="{{ $data1->Other5_on }}">
                                     </div>
                                 </div>
-
                             @else
                                 <div class="sub-head">
                                     Other's 1 ( Additional Person Review From Departments If Required)
@@ -7308,10 +7082,9 @@
                                 @php
                                     $userRoles = DB::table('user_roles')
                                         ->where(['q_m_s_divisions_id' => $data->division_id])
-                                        ->select('user_id')->distinct()
                                         ->get();
                                     $userRoleIds = $userRoles->pluck('user_id')->toArray();
-                                    //$users = DB::table('users')->whereIn('id', $userRoleIds)->get(); // Fetch user data based on user IDs
+                                    $users = DB::table('users')->whereIn('id', $userRoleIds)->get(); // Fetch user data based on user IDs
                                 @endphp
                                 <div class="col-lg-6">
                                     <div class="group-input">
@@ -7423,18 +7196,12 @@
 
                                     </div>
                                 </div>
-                                <div class="col-6 mb-3 new-date-data-field">
-                                    <div class="group-input input-date">
+                                <div class="col-md-6 mb-3">
+                                    <div class="group-input">
                                         <label for="Review Completed On1">Other's 1 Review Completed On</label>
-                                        <div class="calenderauditee">
-                                            <input type="text" id="Other1_on" readonly placeholder="DD-MMM-YYYY" value="{{ Helpers::getdateFormat($data1->Other1_on) }}" />
-                                            <input type="date" name="Other1_on" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" value=""
-                                            class="hide-input"
-                                            oninput="handleDateInput(this, 'Other1_on')" />
-                                        </div>
-                                        @error('Other1_on')
-                                            <div class="text-danger">{{ $message }}</div>
-                                        @enderror
+                                        <input disabled type="date" name="Other1_on" id="Other1_on"
+                                            value="{{ $data1->Other1_on }}">
+
                                     </div>
                                 </div>
 
@@ -7462,10 +7229,9 @@
                                 @php
                                     $userRoles = DB::table('user_roles')
                                         ->where(['q_m_s_divisions_id' => $data->division_id])
-                                        ->select('user_id')->distinct()
                                         ->get();
                                     $userRoleIds = $userRoles->pluck('user_id')->toArray();
-                                    //$users = DB::table('users')->whereIn('id', $userRoleIds)->get(); // Fetch user data based on user IDs
+                                    $users = DB::table('users')->whereIn('id', $userRoleIds)->get(); // Fetch user data based on user IDs
                                 @endphp
                                 <div class="col-lg-6">
                                     <div class="group-input">
@@ -7576,18 +7342,11 @@
 
                                     </div>
                                 </div>
-                                <div class="col-6 mb-3 new-date-data-field">
-                                    <div class="group-input input-date">
-                                        <label for="Review Completed On1">Other's 2 Review Completed On</label>
-                                        <div class="calenderauditee">
-                                            <input type="text" id="Other2_on" readonly placeholder="DD-MMM-YYYY" value="{{ Helpers::getdateFormat($data1->Other2_on) }}" />
-                                            <input type="date" name="Other2_on" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" value=""
-                                            class="hide-input"
-                                            oninput="handleDateInput(this, 'Other2_on')" />
-                                        </div>
-                                        @error('Other2_on')
-                                            <div class="text-danger">{{ $message }}</div>
-                                        @enderror
+                                <div class="col-md-6 mb-3">
+                                    <div class="group-input">
+                                        <label for="Review Completed On2">Other's 2 Review Completed On</label>
+                                        <input disabled type="date" name="Other2_on" id="Other2_on"
+                                            value="{{ $data1->Other2_on }}">
                                     </div>
                                 </div>
 
@@ -7617,10 +7376,9 @@
                                 @php
                                     $userRoles = DB::table('user_roles')
                                         ->where(['q_m_s_divisions_id' => $data->division_id])
-                                        ->select('user_id')->distinct()
                                         ->get();
                                     $userRoleIds = $userRoles->pluck('user_id')->toArray();
-                                    //$users = DB::table('users')->whereIn('id', $userRoleIds)->get(); // Fetch user data based on user IDs
+                                    $users = DB::table('users')->whereIn('id', $userRoleIds)->get(); // Fetch user data based on user IDs
                                 @endphp
                                 <div class="col-lg-6">
                                     <div class="group-input">
@@ -7730,21 +7488,13 @@
 
                                     </div>
                                 </div>
-                                <div class="col-6 mb-3  new-date-data-field">
-                                    <div class="group-input input-date">
-                                        <label for="Review Completed On1">Other's 3 Review Completed On</label>
-                                        <div class="calenderauditee">
-                                            <input type="text" id="Other3_on" readonly placeholder="DD-MMM-YYYY" value="{{ Helpers::getdateFormat($data1->Other3_on) }}" />
-                                            <input type="date" name="Other3_on" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" value=""
-                                            class="hide-input"
-                                            oninput="handleDateInput(this, 'Other3_on')" />
-                                        </div>
-                                        @error('Other3_on')
-                                            <div class="text-danger">{{ $message }}</div>
-                                        @enderror
+                                <div class="col-md-6 mb-3">
+                                    <div class="group-input">
+                                        <label for="productionfeedback">Other's 3 Review Completed On</label>
+                                        <input disabled type="date" name="Other3_on" id="Other3_on"
+                                            value="{{ $data1->Other3_on }}">
                                     </div>
                                 </div>
-
                                 <div class="sub-head">
                                     Other's 4 ( Additional Person Review From Departments If Required)
                                 </div>
@@ -7770,10 +7520,9 @@
                                 @php
                                     $userRoles = DB::table('user_roles')
                                         ->where(['q_m_s_divisions_id' => $data->division_id])
-                                        ->select('user_id')->distinct()
                                         ->get();
                                     $userRoleIds = $userRoles->pluck('user_id')->toArray();
-                                    //$users = DB::table('users')->whereIn('id', $userRoleIds)->get(); // Fetch user data based on user IDs
+                                    $users = DB::table('users')->whereIn('id', $userRoleIds)->get(); // Fetch user data based on user IDs
                                 @endphp
                                 <div class="col-lg-6">
                                     <div class="group-input">
@@ -7882,20 +7631,16 @@
 
                                     </div>
                                 </div>
-                                <div class="col-6 mb-3  new-date-data-field">
-                                    <div class="group-input input-date">
-                                        <label for="Review Completed On1">Other's 4 Review Completed On</label>
-                                        <div class="calenderauditee">
-                                            <input type="text" id="Other4_on" readonly placeholder="DD-MMM-YYYY" value="{{ Helpers::getdateFormat($data1->Other4_on) }}" />
-                                            <input type="date" name="Other4_on" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" value=""
-                                            class="hide-input"
-                                            oninput="handleDateInput(this, 'Other4_on')" />
-                                        </div>
-                                        @error('Other4_on')
-                                            <div class="text-danger">{{ $message }}</div>
-                                        @enderror
+                                <div class="col-md-6 mb-3">
+                                    <div class="group-input">
+                                        <label for="Review Completed On4">Other's 4 Review Completed On</label>
+                                        <input disabled type="date" name="Other4_on" id="Other4_on"
+                                            value="{{ $data1->Other4_on }}">
+
                                     </div>
                                 </div>
+
+
 
                                 <div class="sub-head">
                                     Other's 5 ( Additional Person Review From Departments If Required)
@@ -7921,10 +7666,9 @@
                                 @php
                                     $userRoles = DB::table('user_roles')
                                         ->where(['q_m_s_divisions_id' => $data->division_id])
-                                        ->select('user_id')->distinct()
                                         ->get();
                                     $userRoleIds = $userRoles->pluck('user_id')->toArray();
-                                    //$users = DB::table('users')->whereIn('id', $userRoleIds)->get(); // Fetch user data based on user IDs
+                                    $users = DB::table('users')->whereIn('id', $userRoleIds)->get(); // Fetch user data based on user IDs
                                 @endphp
                                 <div class="col-lg-6">
                                     <div class="group-input">
@@ -8034,18 +7778,11 @@
 
                                     </div>
                                 </div>
-                                <div class="col-6 mb-3 new-date-data-field">
-                                    <div class="group-input input-date">
-                                        <label for="Review Completed On1">Other's 5 Review Completed On</label>
-                                        <div class="calenderauditee">
-                                            <input type="text" id="Other5_on" readonly placeholder="DD-MMM-YYYY" value="{{ Helpers::getdateFormat($data1->Other5_on) }}" />
-                                            <input type="date" name="Other5_on" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" value=""
-                                            class="hide-input"
-                                            oninput="handleDateInput(this, 'Other5_on')" />
-                                        </div>
-                                        @error('Other5_on')
-                                            <div class="text-danger">{{ $message }}</div>
-                                        @enderror
+                                <div class="col-md-6 mb-3">
+                                    <div class="group-input">
+                                        <label for="Review Completed On5">Other's 5 Review Completed On</label>
+                                        <input disabled type="date" name="Other5_on" id="Other5_on"
+                                            value="{{ $data1->Other5_on }}">
                                     </div>
                                 </div>
                             @endif
@@ -8104,7 +7841,7 @@
                         <div class="col-lg-6">
                             <div class="group-input">
                                 <label for="Proposed Due Date">Proposed Due Date</label>
-                                <input name="investigation_proposed_due_date" id="investigation_proposed_due_date" placeholder="Deviation Proposed Due Date"  disabled>
+                                <input name="investigation_proposed_due_date" id="investigation_proposed_due_date" placeholder="Incident Proposed Due Date"  disabled>
                             </div>
                         </div>
                     @endif
@@ -9860,12 +9597,12 @@
                 </div>
                 <div style="margin-bottom: 0px;" class="col-lg-12 new-date-data-field ">
                     <div class="group-input input-date">
-                        <label for="Deviation category">Source of CAPA</label>
-                        <select name="source_of_capa" id="Deviation_category"
-                         @if ($data->stage==4) disabled @endif id="Deviation_category" value="{{ $data->source_of_capa }}">
+                        <label for="Incident category">Source of CAPA</label>
+                        <select name="source_of_capa" id="incident_category"
+                         @if ($data->stage==4) disabled @endif id="incident_category" value="{{ $data->source_of_capa }}">
                             <option value="0">-- Select -- </option>
-                            <option @if ($data->source_of_capa == 'Deviation') selected @endif
-                                                value="Deviation">Deviation</option>
+                            <option @if ($data->source_of_capa == 'Incident') selected @endif
+                                                value="Incident">Incident</option>
                             <option @if ($data->source_of_capa == 'OS/OT') selected @endif
                                                 value="OS/OT">OS/OT</option>
                             <option @if ($data->source_of_capa == 'Audit_Obs') selected @endif
@@ -10179,8 +9916,8 @@
 
                                 <div class="col-md-12">
                                     <div class="group-input">
-                                        <label for="Post Categorization Of Deviation">Post Categorization Of Deviation <span style="display: {{ $data->stage == 5 ? 'inline' : 'none' }}" class="text-danger">*</span></label>
-                                        <div><small class="text-primary">Please Refer Intial deviation category before updating.</small></div>
+                                        <label for="Post Categorization Of Incident">Post Categorization Of Incident <span style="display: {{ $data->stage == 5 ? 'inline' : 'none' }}" class="text-danger">*</span></label>
+                                        <div><small class="text-primary">Please Refer Intial incident category before updating.</small></div>
                                         <select name="Post_Categorization"  id="Post_Categorization" value="Post_Categorization">
                                         <option value=""> -- Select --</option>
                                         <option @if ($data->Post_Categorization == 'major') selected @endif
@@ -10322,8 +10059,8 @@
 
                                 <div class="col-md-12">
                                     <div class="group-input">
-                                        <label for="Post Categorization Of Deviation">Post Categorization Of Deviation</label>
-                                        <div><small class="text-primary">Please Refer Intial deviation category before updating.</small></div>
+                                        <label for="Post Categorization Of Incident">Post Categorization Of Incident</label>
+                                        <div><small class="text-primary">Please Refer Intial incident category before updating.</small></div>
                                         <select name="Post_Categorization" id="Post_Categorization" value="Post_Categorization">
                                         <option value=""> -- Select --</option>
                                         <option @if ($data->Post_Categorization == 'major') selected @endif
@@ -10515,8 +10252,8 @@
                 <div class="row">
                     <div class="col-md-12">
                         <div class="group-input">
-                            <label for="Post Categorization Of Deviation">Post Categorization Of Deviation</label>
-                            <div><small class="text-primary">Please Refer Intial deviation category before
+                            <label for="Post Categorization Of Incident">Post Categorization Of Incident</label>
+                            <div><small class="text-primary">Please Refer Intial Incident category before
                                     updating.</small></div>
                             <select
                                 name="Post_Categorization"{{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
@@ -10644,22 +10381,22 @@
             <div class="inner-block-content">
                 <div class="row">
                     <div class="sub-head">
-                        Deviation Extension
+                        Incident Extension
                     </div>
 
-                    @if($deviationExtension && $deviationExtension->dev_proposed_due_date)
+                    @if($incidentExtension && $incidentExtension->dev_proposed_due_date)
                         <div class="col-lg-6 new-date-data-field">
                             <div class="group-input input-date">
-                                <label for="Audit Schedule End Date">Proposed Due Date (Deviation)</label>
+                                <label for="Audit Schedule End Date">Proposed Due Date (Incident)</label>
                                 <div class="calenderauditee">
-                                    <input type="text" id="dev_proposed_due_date" id="dev_proposed_due_date" readonly value="{{Helpers::getdateFormat($deviationExtension->dev_proposed_due_date)}}" />
+                                    <input type="text" id="dev_proposed_due_date" id="dev_proposed_due_date" readonly value="{{Helpers::getdateFormat($incidentExtension->dev_proposed_due_date)}}" />
                                 </div>
                             </div>
                         </div>
                     @else
                         <div class="col-lg-6 new-date-data-field">
                             <div class="group-input input-date">
-                                <label for="Audit Schedule End Date">Proposed Due Date (Deviation)</label>
+                                <label for="Audit Schedule End Date">Proposed Due Date (Incident)</label>
                                 <div class="calenderauditee">
                                     <input type="text" id="dev_proposed_due_date" id="dev_proposed_due_date" readonly />
                                 </div>
@@ -10668,32 +10405,32 @@
                     @endif
 
 
-                    @if($deviationExtension && $deviationExtension->dev_extension_justification)
+                    @if($incidentExtension && $incidentExtension->dev_extension_justification)
                         <div class="col-md-12 mb-3">
                             <div class="group-input">
-                                <label for="Extension_Justification_deviation">Extension Justification (Deviation)</label>
+                                <label for="Extension_Justification_incident">Extension Justification (Incident)</label>
                                 <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
-                                <textarea name="dev_extension_justification" placeholder="Deviation Extension Justification" disabled id="dev_extension_justification" value="{{$deviationExtension->dev_extension_justification}}">{{$deviationExtension->dev_extension_justification}}</textarea>
+                                <textarea name="dev_extension_justification" placeholder="Incident Extension Justification" disabled id="dev_extension_justification" value="{{$incidentExtension->dev_extension_justification}}">{{$incidentExtension->dev_extension_justification}}</textarea>
                             </div>
                         </div>
                     @else
                         <div class="col-md-12 mb-3">
                             <div class="group-input">
-                                <label for="Extension_Justification_deviation">Extension Justification (Deviation)</label>
+                                <label for="Extension_Justification_incident">Extension Justification (Incident)</label>
                                 <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
-                                <textarea name="dev_extension_justification" placeholder="Deviation Extension Justification" id="dev_extension_justification" disabled ></textarea>
+                                <textarea name="dev_extension_justification" placeholder="Incident Extension Justification" id="dev_extension_justification" disabled ></textarea>
                             </div>
                         </div>
                     @endif
 
-                    @if($deviationExtension && $deviationExtension->dev_extension_completed_by)
+                    @if($incidentExtension && $incidentExtension->dev_extension_completed_by)
                         <div class="col-lg-6">
                             <div class="group-input">
-                                <label for=" dev_extension_completed_by"> Deviation Extension Completed By </label>
+                                <label for=" dev_extension_completed_by"> Incident Extension Completed By </label>
                                 <select name="dev_extension_completed_by" id="dev_extension_completed_by" disabled>
                                     <option value="">-- Select --</option>
                                     @foreach ($users as $user)
-                                        <option value="{{ $user->id }}" @if($user->id == $deviationExtension->dev_extension_completed_by) selected @endif >{{ $user->name }}</option>
+                                        <option value="{{ $user->id }}" @if($user->id == $incidentExtension->dev_extension_completed_by) selected @endif >{{ $user->name }}</option>
                                     @endforeach
                                 </select>
                             </div>
@@ -10701,7 +10438,7 @@
                     @else
                         <div class="col-lg-6">
                             <div class="group-input">
-                                <label for=" dev_extension_completed_by"> Deviation Extension Completed By </label>
+                                <label for=" dev_extension_completed_by"> Incident Extension Completed By </label>
                                 <select name="dev_extension_completed_by" id="dev_extension_completed_by" disabled>
                                     <option value="">-- Select --</option>
                                     @foreach ($users as $user)
@@ -10712,19 +10449,19 @@
                         </div>
                     @endif
 
-                    @if($deviationExtension && $deviationExtension->dev_completed_on)
+                    @if($incidentExtension && $incidentExtension->dev_completed_on)
                         <div class="col-lg-6 new-date-data-field">
                             <div class="group-input input-date">
-                                <label for="Audit Schedule End Date">Deviation Extension Completed On</label>
+                                <label for="Audit Schedule End Date">Incident Extension Completed On</label>
                                 <div class="calenderauditee">
-                                    <input type="text" id="dev_completed_on" readonly name="dev_completed_on" placeholder="DD-MMM-YYYY" value="{{Helpers::getdateFormat($deviationExtension->dev_completed_on)}}" />
+                                    <input type="text" id="dev_completed_on" readonly name="dev_completed_on" placeholder="DD-MMM-YYYY" value="{{Helpers::getdateFormat($incidentExtension->dev_completed_on)}}" />
                                 </div>
                             </div>
                         </div>
                     @else
                         <div class="col-lg-6 new-date-data-field">
                             <div class="group-input input-date">
-                                <label for="Audit Schedule End Date">Deviation Extension Completed On</label>
+                                <label for="Audit Schedule End Date">Incident Extension Completed On</label>
                                 <div class="calenderauditee">
                                     <input type="text" id="dev_completed_on" readonly name="dev_completed_on" placeholder="DD-MMM-YYYY" />
                                 </div>
@@ -11018,24 +10755,24 @@
 
 
                     <!-- <div class="sub-head">
-                        Deviation Effectiveness Check
+                        Incident Effectiveness Check
                     </div>
                     <div class="col-md-12 mb-3">
                         <div class="group-input">
-                            <label for="Effectiveness_Check_Plan_Deviation">Effectiveness Check Plan(Deviation)</label>
+                            <label for="Effectiveness_Check_Plan_incident">Effectiveness Check Plan(Incident)</label>
                             <div><small class="text-primary">Please insert "NA" in the data field if it does not require
                                     completion</small></div>
-                            <textarea class="tiny" name="Effectiveness_Check_Plan_Deviation" id="summernote-10"> </textarea>
+                            <textarea class="tiny" name="Effectiveness_Check_Plan_incident" id="summernote-10"> </textarea>
                         </div>
                     </div>
 
                     <div class="row">
                         <div class="col-lg-6">
                             <div class="group-input">
-                                <label for=" Deviation_Effectiveness_Check_Plan_Proposed_By">Deviation Effectiveness Check
+                                <label for=" incident_Effectiveness_Check_Plan_Proposed_By">Incident Effectiveness Check
                                     Plan Proposed By </label>
-                                <select name="Deviation_Effectiveness_Check_Plan_Proposed_By"
-                                    id="Deviation_Effectiveness_Check_Plan_Proposed_By">
+                                <select name="incident_Effectiveness_Check_Plan_Proposed_By"
+                                    id="incident_Effectiveness_Check_Plan_Proposed_By">
                                     <option value="">-- Select --</option>
                                     @foreach ($users as $user)
                                         <option value="{{ $user->id }}">{{ $user->name }}</option>
@@ -11045,43 +10782,43 @@
                         </div>
                         <div class="col-lg-6 new-date-data-field">
                             <div class="group-input input-date">
-                                <label for="deviation_EC_Plan_Proposed_On"> Deviation Effectiveness Check Plan Proposed
+                                <label for="incident_EC_Plan_Proposed_On"> Incident Effectiveness Check Plan Proposed
                                     On</label>
                                 <div class="calenderauditee">
-                                    <input type="text" id="deviation_EC_Plan_Proposed_On" readonly
+                                    <input type="text" id="incident_EC_Plan_Proposed_On" readonly
                                         placeholder="DD-MMM-YYYY" />
-                                    <input type="date" name="deviation_EC_Plan_Proposed_On"
+                                    <input type="date" name="incident_EC_Plan_Proposed_On"
                                         max="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input"
-                                        oninput="handleDateInput(this, 'deviation_EC_Plan_Proposed_On')" />
+                                        oninput="handleDateInput(this, 'incident_EC_Plan_Proposed_On')" />
                                 </div>
                             </div>
                         </div>
                     </div>
                     <div class="col-md-12 mb-3">
                         <div class="group-input">
-                            <label for="EC_Closure_comments_deviation">Effectiveness Check Closure
-                                Comments(Deviation)</label>
+                            <label for="EC_Closure_comments_incident">Effectiveness Check Closure
+                                Comments(Incident)</label>
                             <div><small class="text-primary">Please insert "NA" in the data field if it does not require
                                     completion</small></div>
-                            <textarea class="tiny" name="EC_Closure_comments_deviation" id="summernote-10"> </textarea>
+                            <textarea class="tiny" name="EC_Closure_comments_incident" id="summernote-10"> </textarea>
                         </div>
                     </div>
                     <div class="col-lg-6 new-date-data-field">
                         <div class="group-input input-date">
-                            <label for="Next_review_date_deviation">Next Review Date(Deviation)</label>
+                            <label for="Next_review_date_incident">Next Review Date(Incident)</label>
                             <div class="calenderauditee">
-                                <input type="text" id="Next_review_date_deviation" readonly
+                                <input type="text" id="Next_review_date_incident" readonly
                                     placeholder="DD-MMM-YYYY" />
-                                <input type="date" name="Next_review_date_deviation"
+                                <input type="date" name="Next_review_date_incident"
                                     min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input"
-                                    oninput="handleDateInput(this, 'Next_review_date_deviation')" />
+                                    oninput="handleDateInput(this, 'Next_review_date_incident')" />
                             </div>
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-lg-6">
                             <div class="group-input">
-                                <label for=" deviaiton_EC_Closed_By">Deviation Effectiveness Check Closed By</label>
+                                <label for=" deviaiton_EC_Closed_By">Incident Effectiveness Check Closed By</label>
                                 <select name="deviaiton_EC_Closed_By" id="deviaiton_EC_Closed_By">
                                     <option value="">-- Select --</option>
                                     @foreach ($users as $user)
@@ -11093,14 +10830,14 @@
 
                         <div class="col-lg-6 new-date-data-field">
                             <div class="group-input input-date">
-                                <label for="deviation_Effectiveness_Check_Closed_On">Deviation Effectiveness Check Closed
+                                <label for="incident_Effectiveness_Check_Closed_On">Incident Effectiveness Check Closed
                                     On</label>
                                 <div class="calenderauditee">
-                                    <input type="text" id="deviation_Effectiveness_Check_Closed_On" readonly
+                                    <input type="text" id="incident_Effectiveness_Check_Closed_On" readonly
                                         placeholder="DD-MMM-YYYY" />
-                                    <input type="date" name="deviation_Effectiveness_Check_Closed_On"
+                                    <input type="date" name="incident_Effectiveness_Check_Closed_On"
                                         min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input"
-                                        oninput="handleDateInput(this, 'deviation_Effectiveness_Check_Closed_On')" />
+                                        oninput="handleDateInput(this, 'incident_Effectiveness_Check_Closed_On')" />
                                 </div>
                             </div>
                         </div>
@@ -11545,7 +11282,7 @@
                             <label for="QA Final Review Comments">QA Head/Manager Designee Approval Comments :-</label>
                             <div class="">{{ $data->QA_head_approved_comment }}</div>
                         </div>
-                    </div>
+                    </div>                    
 
                     <div class="sub-head">Initiator Update</div>
                     <div class="col-lg-3">
@@ -11633,7 +11370,7 @@
                 <!-- Modal content-->
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h4 class="modal-titles">Deviation Workflow</h4>
+                        <h4 class="modal-titles">Incident Workflow</h4>
                     </div>
                     <div style="padding:3px;" class="modal-body">
                         <Div class="button-box">
@@ -11778,10 +11515,10 @@
                             </li>
                             <li>
                                 <div>
-                                    @if($deviationExtension && $deviationExtension->counter == 3)
+                                    @if($incidentExtension && $incidentExtension->counter == 3)
                                         <a>-------</a>
                                     @else
-                                        <a href="" data-bs-toggle="modal" data-bs-target="#deviation_extension"> Deviation</a>
+                                        <a href="" data-bs-toggle="modal" data-bs-target="#incident_extension"> Incident</a>
                                     @endif
                                 </div>
                             </li>
@@ -11806,7 +11543,7 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
             </div>
 
-            <form action="{{ route('dev-launch-extension-qrm', $data->id) }}" method="post">
+            <form action="{{ route('launch-extension-qrm', $data->id) }}" method="post">
                 @csrf
                 <div class="modal-body">
                     <!-- <div class="group-input">
@@ -11842,7 +11579,7 @@
                         <input class="extension_modal_signature" type="date"
                             name="qrm_completed_on" id="qrm_completed_on">
                     </div>
-                    <input name="deviation_id" id="deviation_id" value="{{$data->id}}" hidden >
+                    <input name="incident_id" id="incident_id" value="{{$data->id}}" hidden >
                     <input name="extension_identifier" id="extension_identifier" value="QRM" hidden >
                 </div>
 
@@ -11868,7 +11605,7 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
             </div>
 
-            <form action="{{ route('dev-launch-extension-investigation', $data->id) }}" method="post">
+            <form action="{{ route('launch-extension-investigation', $data->id) }}" method="post">
                 @csrf
                 <!-- Modal body -->
                 <div class="modal-body">
@@ -11905,7 +11642,7 @@
                         <label for="password">Investigation Extension Completed On </label>
                         <input class="extension_modal_signature" type="date" name="investigation_completed_on" id="investigation_completed_on">
                     </div>
-                    <input name="deviation_id" id="deviation_id" value="{{$data->id}}" hidden >
+                    <input name="incident_id" id="incident_id" value="{{$data->id}}" hidden >
                     <input name="extension_identifier" id="extension_identifier" value="Investigation" hidden >
                 </div>
 
@@ -11932,7 +11669,7 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
             </div>
 
-            <form action="{{ route('dev-launch-extension-capa', $data->id) }}" method="post">
+            <form action="{{ route('launch-extension-capa', $data->id) }}" method="post">
                 @csrf
 
                 <!-- Modal body -->
@@ -11964,7 +11701,7 @@
                                 @endforeach
                         </select>
                     </div>
-                    <input name="deviation_id" id="deviation_id" value="{{$data->id}}" hidden >
+                    <input name="incident_id" id="incident_id" value="{{$data->id}}" hidden >
                     <input name="extension_identifier" id="extension_identifier" value="Capa" hidden >
                     <div class="group-input">
                         <label for="password">CAPA Extension Completed On </label>
@@ -11986,17 +11723,17 @@
 </div>
 
 
-<div class="modal fade" id="deviation_extension">
+<div class="modal fade" id="incident_extension">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
 
             <!-- Modal Header -->
             <div class="modal-header">
-                <h4 class="modal-title">Deviation-Extension</h4>
+                <h4 class="modal-title">Incident-Extension</h4>
                 <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
             </div>
 
-            <form action="{{ route('dev-launch-extension-deviation', $data->id) }}" method="post">
+            <form action="{{ route('launch-extension-incident', $data->id) }}" method="post">
                 @csrf
                 <!-- Modal body -->
                 <div class="modal-body">
@@ -12009,17 +11746,17 @@
                         <input class="extension_modal_signature" type="password" name="password" required>
                     </div> -->
                     <div class="group-input">
-                        <label for="password">Proposed Due Date (Deviation)</label>
+                        <label for="password">Proposed Due Date (Incident)</label>
                         <input class="extension_modal_signature" type="date" name="dev_proposed_due_date" id="dev_proposed_due_date">
                     </div>
                     <div class="group-input">
-                        <label for="password">Extension Justification (Deviation)<span
+                        <label for="password">Extension Justification (Incident)<span
                                 class="text-danger">*</span></label>
                         <input class="extension_modal_signature" type="text"
                             name="dev_extension_justification" id="dev_extension_justification">
                     </div>
                     <div class="group-input">
-                        <label for="password">Deviation Extension Completed By </label>
+                        <label for="password">Incident Extension Completed By </label>
                         <select class="extension_modal_signature" name="dev_extension_completed_by" id="dev_extension_completed_by">
                         <option value="">-- Select --</option>
                                 @foreach($users as $user)
@@ -12028,11 +11765,11 @@
                         </select>
                     </div>
                     <div class="group-input">
-                        <label for="password">Deviation Extension Completed On </label>
+                        <label for="password">Incident Extension Completed On </label>
                         <input class="extension_modal_signature" type="date" name="dev_completed_on" id="dev_completed_on">
                     </div>
-                    <input name="deviation_id" id="deviation_id" value="{{$data->id}}" hidden  >
-                    <input name="extension_identifier" id="extension_identifier" value="Deviation"  hidden >
+                    <input name="incident_id" id="incident_id" value="{{$data->id}}" hidden  >
+                    <input name="extension_identifier" id="extension_identifier" value="Incident"  hidden >
                 </div>
 
                 <div class="modal-footer">
@@ -12066,7 +11803,7 @@
                         <ul>
                             <li>
                                 <div> <a href="" data-bs-toggle="modal"
-                                        data-bs-target="#deviation_effectiveness"> Deviation Effectiveness
+                                        data-bs-target="#incident_effectiveness"> Incident Effectiveness
                                         Check</a></div>
                             </li>
 
@@ -12096,13 +11833,13 @@
 </div>
 
 
-<div class="modal fade" id="deviation_effectiveness">
+<div class="modal fade" id="incident_effectiveness">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
 
             <!-- Modal Header -->
             <div class="modal-header">
-                <h4 class="modal-title">Deviation-Effectiveness</h4>
+                <h4 class="modal-title">Incident-Effectiveness</h4>
                 <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
             </div>
 
@@ -12120,41 +11857,41 @@
                         <input class="extension_modal_signature" type="password" name="password" required>
                     </div>
                     <div class="group-input">
-                        <label for="deviation">Effectiveness Check Plan(Deviation)</label>
+                        <label for="Incident">Effectiveness Check Plan(Incident)</label>
                         <input class="extension_modal_signature" type="date"
-                            name="effectiveness_deviation">
+                            name="effectiveness_incident">
                     </div>
                     <div class="group-input">
-                        <label for="password">Deviation Effectiveness Check Plan Proposed By<span
+                        <label for="password">Incident Effectiveness Check Plan Proposed By<span
                                 class="text-danger">*</span></label>
                         <input class="extension_modal_signature" type="text"
-                            name="effectiveness_deviation_proposed_by">
+                            name="effectiveness_incident_proposed_by">
                     </div>
                     <div class="group-input">
-                        <label for="password">Deviation Effectiveness Check Plan Proposed On </label>
+                        <label for="password">Incident Effectiveness Check Plan Proposed On </label>
                         <input class="extension_modal_signature" type="text"
-                            name="deviation_effectiveness_by">
+                            name="incident_effectiveness_by">
                     </div>
                     <div class="group-input">
-                        <label for="password">Effectiveness Check Colsure Comments(Deviation)</label>
+                        <label for="password">Effectiveness Check Colsure Comments(Incident)</label>
                         <input class="extension_modal_signature" type="date"
-                            name="deviation_effectiveness_on">
+                            name="incident_effectiveness_on">
                     </div>
                     <div class="group-input">
-                        <label for="password">Next Review Date(Deviation)</label>
-                        <input class="extension_modal_signature" type="date" name="next_review_deviation">
+                        <label for="password">Next Review Date(Incident)</label>
+                        <input class="extension_modal_signature" type="date" name="next_review_incident">
                     </div>
                     <div class="group-input">
-                        <label for="password">Deviation Effectiveness Check closed By </label>
-                        <select class="extension_modal_signature" name="deviation_feectiveness_closed_by"
+                        <label for="password">Incident Effectiveness Check closed By </label>
+                        <select class="extension_modal_signature" name="incident_feectiveness_closed_by"
                             id="">
                             <option value="">-- Select --</option>
                         </select>
                     </div>
                     <div class="group-input">
-                        <label for="password">Deviation Effectiveness Check CLosed On</label>
+                        <label for="password">Incident Effectiveness Check CLosed On</label>
                         <input class="extension_modal_signature" type="date"
-                            name="deviation_effectiveness_on">
+                            name="incident_effectiveness_on">
                     </div>
 
                 </div>
@@ -12209,12 +11946,12 @@
                     <div class="group-input">
                         <label for="password">CAPA Effectiveness Check Plan Proposed On </label>
                         <input class="extension_modal_signature" type="text"
-                            name="deviation_effectiveness_by">
+                            name="incident_effectiveness_by">
                     </div>
                     <div class="group-input">
                         <label for="password">Effectiveness Check Colsure Comments(CAPA)</label>
                         <input class="extension_modal_signature" type="date"
-                            name="deviation_effectiveness_on">
+                            name="incident_effectiveness_on">
                     </div>
                     <div class="group-input">
                         <label for="password">Next Review Date(CAPA)</label>
@@ -12275,7 +12012,7 @@
                     </div>
                     <div class="group-input">
                         <label for="password">Effectiveness Check Plan(QRM)</label>
-                        <input class="extension_modal_signature" type="date" name="deviation_due_capa">
+                        <input class="extension_modal_signature" type="date" name="incident_due_capa">
                     </div>
                     <div class="group-input">
                         <label for="password">QRM Effectiveness Check Plan Proposed By<span
@@ -12608,7 +12345,7 @@
                 <div class="modal-header">
                     <h4 class="modal-title">Child</h4>
                 </div>
-                <form action="{{ route('deviation_child_1', $data->id) }}" method="POST">
+                <form action="{{ route('incident_child_1', $data->id) }}" method="POST">
                     @csrf
                     <!-- Modal body -->
                     <div class="modal-body">
@@ -12661,7 +12398,7 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                 </div>
 
-                <form action="{{ route('deviation_reject', $data->id) }}" method="POST">
+                <form action="{{ route('incident-reject', $data->id) }}" method="POST">
                     @csrf
                     <!-- Modal body -->
                     <div class="modal-body">
@@ -12672,15 +12409,15 @@
                         </div>
                         <div class="group-input">
                             <label for="username">Username <span class="text-danger">*</span></label>
-                            <input type="text" class="form-control" name="username" required>
+                            <input type="text" name="username" required>
                         </div>
-                        <div class="group-input mt-4">
+                        <div class="group-input">
                             <label for="password">Password <span class="text-danger">*</span></label>
-                            <input type="password" class="form-control" name="password" required>
+                            <input type="password" name="password" required>
                         </div>
-                        <div class="group-input mt-4">
+                        <div class="group-input">
                             <label for="comment">Comment <span class="text-danger">*</span></label>
-                            <input type="comment" class="form-control" name="comment" required>
+                            <input type="comment" name="comment" required>
                         </div>
                     </div>
 
@@ -12710,7 +12447,7 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                 </div>
 
-                <form action="{{ route('deviationCancel', $data->id) }}" method="POST">
+                <form action="{{ route('incident-cancel', $data->id) }}" method="POST">
                     @csrf
                     <!-- Modal body -->
                     <div class="modal-body">
@@ -12729,7 +12466,7 @@
                         </div>
                         <div class="group-input">
                             <label for="comment">Comment <span class="text-danger">*</span></label>
-                            <input type="comment" name="comment" required>
+                            <input type="comment"  name="comment" required>
                         </div>
                     </div>
 
@@ -12758,7 +12495,7 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                 </div>
 
-                <form action="{{ url('deviationIsCFTRequired', $data->id) }}" method="POST">
+                <form action="{{ url('incidentIsCFTRequired', $data->id) }}" method="POST">
                     @csrf
                     <!-- Modal body -->
                     <div class="modal-body">
@@ -12804,7 +12541,7 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                 </div>
 
-                <form action="{{ route('check', $data->id) }}" method="POST">
+                <form action="{{ route('incidentCheck', $data->id) }}" method="POST">
                     @csrf
                     <!-- Modal body -->
                     <div class="modal-body">
@@ -12850,7 +12587,7 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                 </div>
 
-                <form action="{{ route('check2', $data->id) }}" method="POST">
+                <form action="{{ route('incidentCheck2', $data->id) }}" method="POST">
                     @csrf
                     <!-- Modal body -->
                     <div class="modal-body">
@@ -12896,7 +12633,7 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                 </div>
 
-                <form action="{{ route('check3', $data->id) }}" method="POST">
+                <form action="{{ route('incidentCheck3', $data->id) }}" method="POST">
                     @csrf
                     <!-- Modal body -->
                     <div class="modal-body">
@@ -12985,7 +12722,7 @@
                     <h4 class="modal-title">E-Signature</h4>
                     <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                 </div>
-                <form action="{{ route('deviation_send_stage', $data->id) }}" method="POST"
+                <form action="{{ route('incidentStageChange', $data->id) }}" method="POST"
                     id="signatureModalForm">
                     @csrf
                     <div class="modal-body">
@@ -13030,7 +12767,7 @@
                     <h4 class="modal-title">E-Signature</h4>
                     <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                 </div>
-                <form action="{{ route('cftnotreqired', $data->id) }}" method="POST">
+                <form action="{{ route('incidentCftnotreqired', $data->id) }}" method="POST">
                     @csrf
                     <!-- Modal body -->
                     <div class="modal-body">
@@ -13041,15 +12778,15 @@
                         </div>
                         <div class="group-input">
                             <label for="username">Username <span class="text-danger">*</span></label>
-                            <input type="text" name="username" required>
+                            <input class="form-control" type="text" name="username" required>
                         </div>
                         <div class="group-input">
                             <label for="password">Password <span class="text-danger">*</span></label>
-                            <input type="password" name="password" required>
+                            <input class="form-control"  type="password" name="password" required>
                         </div>
                         <div class="group-input">
                             <label for="comment">Comment</label>
-                            <input type="comment" name="comment">
+                            <input  class="form-control" type="comment" name="comment">
                         </div>
                     </div>
 
@@ -13075,7 +12812,7 @@
                     <h4 class="modal-title">E-Signature</h4>
                     <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                 </div>
-                <form action="{{ route('deviation_qa_more_info', $data->id) }}" method="POST">
+                <form action="{{ route('incidentQaMoreInfo', $data->id) }}" method="POST">
                     @csrf
                     <!-- Modal body -->
                     <div class="modal-body">

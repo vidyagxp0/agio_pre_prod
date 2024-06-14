@@ -127,7 +127,7 @@
     <table>
         <tr>
             <td class="w-30"><strong>Extension No.</strong></td>
-            <td class="w-40">{{ Helpers::divisionNameForQMS($data->site_location_code) }}/{{ Helpers::year($data->created_at) }}/{{ str_pad($data->record_number, 4, '0', STR_PAD_LEFT) }}</td>
+            <td class="w-40">{{ Helpers::divisionNameForQMS($data->site_location_code) }}/Ext/{{ Helpers::year($data->created_at) }}/{{ str_pad($data->record_number, 4, '0', STR_PAD_LEFT) }}</td>
             <td class="w-30"><strong>Record No.</strong> {{ str_pad($data->record_number, 4, '0', STR_PAD_LEFT) }}</td>
         </tr>
     </table>
@@ -147,7 +147,7 @@
             <table>
                 <tr>
                     <th class="w-20">Record Number</th>
-                    <td class="w-30">@if($data->record_number){{ str_pad($data->record_number, 4, '0', STR_PAD_LEFT) }} @else Not Applicable @endif</td>
+                    <td class="w-30">@if($data->record_number){{ Helpers::divisionNameForQMS($data->site_location_code) }}/Ext/{{ Helpers::year($data->created_at) }}/{{ str_pad($data->record_number, 4, '0', STR_PAD_LEFT) }} @else Not Applicable @endif</td>
                     <th class="w-20">Division Code</th>
                     <td class="w-30">@if($data->site_location_code){{ Helpers::getDivisionName($data->site_location_code) }} @else Not Applicable @endif</td>
                 </tr>

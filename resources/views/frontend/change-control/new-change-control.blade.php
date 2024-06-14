@@ -45,6 +45,64 @@
         }
     </script>
 
+    <script>
+        $(document).ready(function() {
+            let docIndex = 1;
+            $('#documentAdd').click(function(e) {
+                function generateTableRow(serialNumber) {
+                    var html =
+                        '<tr>' +
+                        '<td><input disabled type="text" name="serial[]" value="' + serialNumber +
+                        '"></td>' +
+                        ' <td><input type="text" name="documentDetails[' + docIndex + '][currentDocNumber]"></td>' +
+                        ' <td><input type="text"name="documentDetails[' + docIndex +'][currentVersionNumber]"></td>' +
+                        '<td><input type="text" name="documentDetails[' + docIndex + '][newDocNumber]"></td>' +
+                        '<td><input type="text" name="documentDetails[' + docIndex + '][newVersionNumber\]"></td>' +
+                        '<td><button type="text" class="removeRowBtn">Remove</button></td>' +
+                        '</tr>';
+                    '</tr>';
+
+                    docIndex++;
+                    return html;
+                }
+                var tableBody = $('#documentTableDetails tbody');
+                var rowCount = tableBody.children('tr').length;
+                var newRow = generateTableRow(rowCount + 1);
+                tableBody.append(newRow);
+            });
+        });
+    </script>
+
+    <script>
+        $(document).ready(function() {
+            let affectedDocIndex = 1;
+            $('#affectedDocAdd').click(function(e) {
+                function generateTableRow(serialNumber) {
+                    var html =
+                        '<tr>' +
+                        '<td><input disabled type="text" name="serial[]" value="' + serialNumber + '"></td>' +
+                        ' <td><input type="text" name="affectedDocuments[' + affectedDocIndex + '][afftectedDoc]"></td>' +
+                        ' <td><input type="text"name="affectedDocuments[' + affectedDocIndex +'][documentName]"></td>' +
+                        '<td><input type="number" name="affectedDocuments[' + affectedDocIndex + '][documentNumber]"></td>' +
+                        '<td><input type="text" name="affectedDocuments[' + affectedDocIndex + '][versionNumber]"></td>' +
+                        ' <td><input type="date"name="affectedDocuments[' + affectedDocIndex +'][implimentationDate]"></td>' +
+                        '<td><input type="text" name="affectedDocuments[' + affectedDocIndex + '][newDocumentNumber]"></td>' +
+                        '<td><input type="text" name="affectedDocuments[' + affectedDocIndex + '][newVersionNumber]"></td>' +
+                        '<td><button type="text" class="removeRowBtn">Remove</button></td>' +
+                        '</tr>';
+                    '</tr>';
+
+                    docIndex++;
+                    return html;
+                }
+                var tableBody = $('#affectedDocAddTable tbody');
+                var rowCount = tableBody.children('tr').length;
+                var newRow = generateTableRow(rowCount + 1);
+                tableBody.append(newRow);
+            });
+        });
+    </script>
+
     <div id="rcms_form-head">
         <div class="container-fluid">
             <div class="inner-block">
@@ -75,7 +133,7 @@
                 <button class="cctablinks " onclick="openCity(event, 'CCForm12')">CFT</button>
                 <button class="cctablinks" onclick="openCity(event, 'CCForm5')">Evaluation</button>
                 {{-- <button class="cctablinks" onclick="openCity(event, 'CCForm6')">Additional Information</button> --}}
-                <button class="cctablinks" onclick="openCity(event, 'CCForm7')">Comments</button>
+                {{-- <button class="cctablinks" onclick="openCity(event, 'CCForm7')">Comments</button> --}}
                 <button class="cctablinks" onclick="openCity(event, 'CCForm8')">Risk Assessment</button>
                 <button class="cctablinks" onclick="openCity(event, 'CCForm9')">QA Approval Comments</button>
                 <button class="cctablinks" onclick="openCity(event, 'CCForm10')">Change Closure</button>
@@ -110,6 +168,13 @@
                                         <input type="hidden" name="division_id" value="{{ session()->get('division') }}">
                                     </div>
                                 </div>
+
+                                @php
+                                    // Calculate the due date (30 days from the initiation date)
+                                    $initiationDate = date('Y-m-d'); // Current date as initiation date
+                                    $dueDate = date('Y-m-d', strtotime($initiationDate . '+30 days')); // Due date
+                                @endphp
+                                
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Initiator"><b>Initiator</b></label>
@@ -177,14 +242,40 @@
                                                 reason in "Due Date Extension Justification" data field.</small>
                                         </div>
                                         <div class="calenderauditee">
-                                            <input type="text" name="due_date" id="due_date" readonly
-                                                placeholder="DD-MMM-YYYY" />
+                                            <input type="text" id="due_date" readonly placeholder="DD-MM-YYYY" />
                                             <input type="date" name="due_date"
-                                                min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input"
+                                                min="{{ \Carbon\Carbon::now()->format('d-M-Y') }}" class="hide-input"
                                                 oninput="handleDateInput(this, 'due_date')" />
                                         </div>
                                     </div>
                                 </div>
+
+                                <script>
+                                    // Format the due date to DD-MM-YYYY
+                                    // Your input date
+                                    var dueDate = "{{ $dueDate }}"; // Replace {{ $dueDate }} with your actual date variable
+
+                                    // Create a Date object
+                                    var date = new Date(dueDate);
+
+                                    // Array of month names
+                                    var monthNames = [
+                                        "Jan", "Feb", "Mar", "Apr", "May", "Jun",
+                                        "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"
+                                    ];
+
+                                    // Extracting day, month, and year from the date
+                                    var day = date.getDate().toString().padStart(2, '0'); // Ensuring two digits
+                                    var monthIndex = date.getMonth();
+                                    var year = date.getFullYear();
+
+                                    // Formatting the date in "dd-MMM-yyyy" format
+                                    var dueDateFormatted = `${day}-${monthNames[monthIndex]}-${year}`;
+
+                                    // Set the formatted due date value to the input field
+                                    document.getElementById('due_date').value = dueDateFormatted;
+                                </script>
+
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="initiator-group">Initiator Group <span
@@ -405,9 +496,9 @@
                                     <div class="group-input">
                                         <label for="doc-detail">
                                             Document Details<button type="button" name="ann"
-                                                id="DocDetailbtn">+</button>
+                                                id="documentAdd">+</button>
                                         </label>
-                                        <table class="table-bordered table" id="doc-detail">
+                                        <table class="table-bordered table" id="documentTableDetails">
                                             <thead>
                                                 <tr>
                                                     <th>Sr. No.</th>
@@ -419,14 +510,12 @@
                                             </thead>
                                             <tbody>
                                                 <tr>
-                                                    <td><input type="text" value="1" name="serial_number[]"
-                                                            readonly></td>
-                                                    <td><input type="text" name="current_doc_number[]"></td>
-                                                    <td><input type="text" name="current_version[]"></td>
-                                                    <td><input type="text" name="new_doc_number[]"></td>
-                                                    <td><input type="text" name="new_version[]"></td>
+                                                    <td><input type="text" value="1" name="documentDetails[]" readonly></td>
+                                                    <td><input type="text" name="documentDetails[0][currentDocNumber]"></td>
+                                                    <td><input type="text" name="documentDetails[0][currentVersionNumber]"></td>
+                                                    <td><input type="text" name="documentDetails[0][newDocNumber]"></td>
+                                                    <td><input type="text" name="documentDetails[0][newVersionNumber]"></td>
                                                 </tr>
-                                                <div id="docdetaildiv"></div>
                                             </tbody>
                                         </table>
                                     </div>
@@ -2822,9 +2911,9 @@
                         <div class="group-input">
                             <label for="risk-assessment">
                                 Affected Documents<button type="button" name="ann"
-                                    id="addAffectedDocumentsbtn">+</button>
+                                    id="affectedDocAdd">+</button>
                             </label>
-                            <table class="table table-bordered" id="affected-documents">
+                            <table class="table table-bordered" id="affectedDocAddTable">
                                 <thead>
                                     <tr>
                                         <th>Sr. No.</th>
@@ -2839,38 +2928,14 @@
                                 </thead>
                                 <tbody>
                                     <tr>
-                                        <td><input type="text" Value="1" name="serial_number[]" readonly>
-                                        </td>
-
-                                        <td><input type="text" name="affected_documents[]">
-                                        </td>
-                                        <td><input type="text" name="document_name[]">
-                                        </td>
-                                        <td><input type="number" name="document_no[]">
-                                        </td>
-                                        <td><input type="text" name="version_no[]">
-                                        </td>
-                                        {{-- <td><input type="date" name="implementation_date[]">
-                                            </td> --}}
-                                        <td>
-                                            <div class="group-input new-date-data-field mb-0">
-                                                <div class="input-date ">
-                                                    <div class="calenderauditee">
-                                                        <input type="text"
-                                                            id="implementation_date' + serialNumber +'" readonly
-                                                            placeholder="DD-MMM-YYYY" />
-                                                        <input type="date" name="implementation_date[]"
-                                                            class="hide-input"
-                                                            oninput="handleDateInput(this, `implementation_date' + serialNumber +'`)" />
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </td>
-                                        <td><input type="text" name="new_document_no[]">
-                                        </td>
-                                        <td><input type="text" name="new_version_no[]">
-                                        </td>
-
+                                        <td><input type="text" value="1" name="affectedDocuments[]" readonly></td>
+                                        <td><input type="text" name="affectedDocuments[0][afftectedDoc]"></td>
+                                        <td><input type="text" name="affectedDocuments[0][documentName]"></td>
+                                        <td><input type="number" name="affectedDocuments[0][documentNumber]"></td>
+                                        <td><input type="text" name="affectedDocuments[0][versionNumber]"></td>
+                                        <td><input type="date" name="affectedDocuments[0][implimentationDate]"></td>
+                                        <td><input type="text" name="affectedDocuments[0][newDocumentNumber]"></td>
+                                        <td><input type="text" name="affectedDocuments[0][newVersionNumber]"></td>
                                     </tr>
                                 </tbody>
                             </table>

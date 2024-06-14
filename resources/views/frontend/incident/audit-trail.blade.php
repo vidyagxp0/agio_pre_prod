@@ -177,9 +177,9 @@
                                 <img src="https://development.vidyagxp.com/public/user/images/logo.png" alt=""
                                     class="w-100">
                             </div>
+
                         </tr>
                     </table>
-
                     @php
                         $userRoles = DB::table('user_roles')
                             ->where(['user_id' => Auth::user()->id, 'q_m_s_divisions_id' => $document->division_id])
@@ -207,7 +207,7 @@
                                 View
                             </button>
                             <button class="button_theme1"><a class="text-white"
-                                    href="{{ url('rcms/CC/' . $document->id) }}"> Back
+                                    href="{{ url('rcms/devshow/' . $document->id) }}"> Back
                                 </a>
                             </button>
                             <button class="button_theme1" onclick="window.print();">
@@ -215,7 +215,6 @@
                             </button>
                         </div>
                     </div>
-
                     <div class="modal fade" id="auditViewers">
                         <div class="modal-dialog modal-dialog-centered">
                             <div class="modal-content">
@@ -234,7 +233,7 @@
 
                                 @php
                                     $reviewer = DB::table('audit_reviewers_details')
-                                        ->where(['doc_id' => $document->id, 'type' => 'Change Control'])
+                                        ->where(['doc_id' => $document->id, 'type' => 'Incident'])
                                         ->get();
                                 @endphp
                                 <!-- Customer grid view -->
@@ -309,7 +308,7 @@
                                                     name="reviewer_completed_on" id="reviewer_completed_on"
                                                     value="{{ $auditCollect ? $auditCollect->reviewer_comment_on : '' }}">
                                             </div>
-                                            <input type="hidden" id="type" name="type" value="Change Control">
+                                            <input type="hidden" id="type" name="type" value="Incident">
                                         </div>
                                         <div class="modal-footer">
                                             {!! $auditCollect ? '' : '<button type="submit" >Submit</button>' !!}
@@ -320,7 +319,6 @@
                             </div>
                         </div>
                     </div>
-                 
 
                     <table>
                         <div class="heading">
@@ -331,8 +329,7 @@
 
                             <div> <strong>Record ID.</strong> {{ str_pad($document->record, 4, '0', STR_PAD_LEFT) }}</div>
                             <div style="margin-bottom: 5px;  font-weight: bold;"> Originator
-                                :{{ $document->originator ? $document->originator
-                                 : '' }}</div>
+                                :{{ $document->record_initiator ? $document->record_initiator->name : '' }}</div>
                             <div style="margin-bottom: 5px; font-weight: bold;">Short Description :
                                 {{ $document->short_description }}</div>
                             <div style="margin-bottom: 5px;  font-weight: bold;">Due Date : {{ $document->due_date }}</div>
@@ -344,8 +341,13 @@
         </header>
 
         <div class="inner-block">
+
+            <!-- <div class="head">Extension Audit Trial Report</div> -->
+
             <div class="division">
             </div>
+
+
             <div class="second-table">
                 <table>
                     <tr class="table_bg">
@@ -522,4 +524,3 @@
         });
     </script>
 @endsection
-

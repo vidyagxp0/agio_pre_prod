@@ -60,6 +60,7 @@ class EffectivenessCheckController extends Controller
 
     public function store(Request $request)
     {
+        // dd($request->all());
 
         $openState = new EffectivenessCheck();
         // $openState->form_type = "effectiveness-check";
@@ -145,12 +146,13 @@ class EffectivenessCheckController extends Controller
             }
         }
 
-        $openState->refer_record = json_encode($files);
-    }
+            $openState->refer_record = json_encode($files);
+        }
         $openState->Comments = $request->Comments;
         $openState->status = "Opened";
         $openState->stage = 1;
         $openState->save();
+        dd($openState->parent_id);
 
 
         $counter = DB::table('record_numbers')->value('counter');
