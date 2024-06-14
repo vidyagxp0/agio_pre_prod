@@ -33,7 +33,7 @@
             <div class="cctab">
                 <button class="cctablinks active" onclick="openCity(event, 'CCForm1')">General Information</button>
                 <button class="cctablinks" onclick="openCity(event, 'CCForm2')">Immediate Actions</button>
-                <button class="cctablinks" onclick="openCity(event, 'CCForm3')">Extension</button>
+                {{-- <button class="cctablinks" onclick="openCity(event, 'CCForm3')">Extension</button> --}}
                 <button class="cctablinks" onclick="openCity(event, 'CCForm8')">Incident Details</button>
                 <button class="cctablinks" onclick="openCity(event, 'CCForm9')">Investigation Details</button>
                 <button class="cctablinks" onclick="openCity(event, 'CCForm4')">CAPA</button>

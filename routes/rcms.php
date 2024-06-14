@@ -129,6 +129,7 @@ Route::group(['prefix' => 'rcms'], function () {
             Route::post('updateLabIncident/{id}', [LabIncidentController::class, 'updateLabIncident'])->name('LabIncidentUpdate');
             Route::post('LabIncidentCancel/{id}', [LabIncidentController::class, 'LabIncidentCancel'])->name('LabIncidentCancel');
             Route::post('LabIncidentChildCapa/{id}', [LabIncidentController::class, 'lab_incident_capa_child'])->name('lab_incident_capa_child');
+            Route::post('labExtChild/{id}', [LabIncidentController::class, 'lab_incident_extension_child'])->name('lab_incident_extension_child');
             Route::post('LabIncidentChildRoot/{id}', [LabIncidentController::class, 'lab_incident_root_child'])->name('lab_incident_root_child');
             Route::post('labincidentRiskChild/{id}', [LabIncidentController::class, 'labincidentRiskChild'])->name('labincidentRisk_Child');
             Route::get('LabIncidentAuditTrial/{id}', [LabIncidentController::class, 'LabIncidentAuditTrial'])->name('audittrialLabincident');
