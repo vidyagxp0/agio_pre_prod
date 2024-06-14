@@ -1391,7 +1391,10 @@ $users = DB::table('users')
                 </div>
                 <div class="row">
                     <div class="col-12">
-                        <label for="Reference Recores">PHASE II OOS INVESTIGATION </label>
+                    <center>
+                        <label style="font-weight: bold; for="Audit Attachments">PHASE II OOS INVESTIGATION</label>
+                    </center>
+                        <!-- <label for="Reference Recores">PHASE II OOS INVESTIGATION </label> -->
                         <div class="group-input">
                             <div class="why-why-chart">
                                 <table class="table table-bordered">

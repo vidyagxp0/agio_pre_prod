@@ -306,8 +306,10 @@
                                         <div class="col-lg-6 new-date-data-field">
                                             <div class="group-input input-date">
                                                 <div class="calenderauditee">
-                                                    <input type="text" id="info_mfg_date_{{ $loop->index }}" value="{{ Helpers::getdateFormat($info_product_material['info_expiry_date'] ?? '') }}" readonly placeholder="DD-MM-YYYY" />
-                                                    <input type="date" name="info_product_material[{{ $loop->index }}][info_mfg_date]" value="{{ $info_product_material['info_mfg_date'] ?? '' }}" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input" oninput="handleDateInput(this, 'info_mfg_date_{{ $loop->index }}')">
+                                                    <input type="text" id="info_mfg_date_{{ $loop->index }}" readonly placeholder="DD-MM-YYYY" name="info_product_material[{{ $loop->index }}][info_mfg_date]"
+                                                     value="{{ Helpers::getdateFormat($info_product_material['info_mfg_date'] ?? '') }}"  />
+                                                    <input type="date" name="info_product_material[{{ $loop->index }}][info_mfg_date]" 
+                                                    value="{{$info_product_material['info_mfg_date']}}" class="hide-input" oninput="handleDateInput(this, 'info_mfg_date_{{ $loop->index }}')">
                                                 </div>
                                             </div>
                                         </div>
@@ -317,7 +319,8 @@
                                             <div class="group-input input-date">
                                                 <div class="calenderauditee">
                                                     <input type="text" id="info_expiry_date_{{ $loop->index }}" value="{{ Helpers::getdateFormat($info_product_material['info_expiry_date'] ?? '') }}" readonly placeholder="DD-MM-YYYY" />
-                                                    <input type="date" name="info_product_material[{{ $loop->index }}][info_expiry_date]" value="{{ $info_product_material['info_expiry_date'] ?? '' }}" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input" oninput="handleDateInput(this, 'info_expiry_date_{{ $loop->index }}')">
+                                                    <input type="date" name="info_product_material[{{ $loop->index }}][info_expiry_date]" 
+                                                    value="{{ $info_product_material['info_expiry_date'] ?? '' }}" class="hide-input" oninput="handleDateInput(this, 'info_expiry_date_{{ $loop->index }}')">
                                                 </div>
                                             </div>
                                         </div>
@@ -441,8 +444,8 @@
                                             <div class="group-input input-date">
                                                 <div class="calenderauditee">
                                                     <input type="text" id="oos_submit_on_{{ $loop->index }}" value="{{ Helpers::getdateFormat($oos_detail['oos_submit_on'] ?? '') }}" readonly placeholder="DD-MM-YYYY" />
-                                                    <input type="date" name="oos_detail[{{ $loop->index }}][oos_submit_on]" value="{{ $oos_detail['oos_submit_on'] ?? '' }}" 
-                                                    min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input" oninput="handleDateInput(this, 'oos_submit_on_{{ $loop->index }}')">
+                                                    <input type="date" name="oos_detail[{{ $loop->index }}][oos_submit_on]" 
+                                                    value="{{ $oos_detail['oos_submit_on'] ?? '' }}"  class="hide-input" oninput="handleDateInput(this, 'oos_submit_on_{{ $loop->index }}')">
                                                 </div>
                                             </div>
                                           </div>
@@ -458,7 +461,6 @@
             </div>
             <div class="button-block">
                 <button type="submit" class="saveButton">Save</button>
-                <!-- <button type="button" class="backButton" onclick="previousStep()">Back</button> -->
                 <button type="button" class="nextButton" onclick="nextStep()">Next</button>
                 <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white">
                         Exit </a> </button>
