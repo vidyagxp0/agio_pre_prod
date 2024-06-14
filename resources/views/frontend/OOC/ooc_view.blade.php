@@ -1680,13 +1680,6 @@ $(document).ready(function() {
                             </div>
                         </div>
 
-{{-- 
-                        <div class="col-6">
-                            <div class="group-input">
-                                <label for="qa_comments">Additinal Remarks (if any)</label>
-                                <textarea name="qa_comments_stage_ooc">{{$ooc->qa_comments_stage_ooc}}</textarea>
-                            </div>
-                        </div> --}}
 
                         <div class="col-md-12 mb-3">
                             <div class="group-input">
@@ -2011,7 +2004,7 @@ $(document).ready(function() {
                     </div>
                     <div class="row">
 
-                        <div class="col-6">
+                        <div class="col-12">
                             <div class="group-input">
                                 <label for="Short Description">Closure Comments
                                     <input id="docname" type="text" name="short_description_closure_ooc" value="{{$ooc->short_description_closure_ooc}}">

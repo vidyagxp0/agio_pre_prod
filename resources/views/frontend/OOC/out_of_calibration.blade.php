@@ -188,12 +188,14 @@ $users = DB::table('users')->get();
                             {{-- @foreach ($record_number as $record) --}}
                             
                                 
-                            
+                            @php
+                                $division =  Helpers::getDivisionName(session()->get('division')) 
+                            @endphp
                             <div class="col-lg-6">
                                 <div class="group-input">
                                     <label for="RLS Record Number"><b>Record Number</b></label>
-                                    <input disabled type="number" name="record_number" value="" >
-                                    {{-- <input disabled type="number" name="record_number" value="{{$record}}"> --}}
+                                    {{-- <input disabled type="number" name="record_number" value="" > --}}
+                                    <input disabled type="number" name="record_number" value="{{$record_number}}">
                                   
                                 </div>
                             </div>
@@ -1289,7 +1291,7 @@ $(document).ready(function() {
                     </div>
                     <div class="row">
 
-                        <div class="col-6">
+                        <div class="col-12">
                             <div class="group-input">
                                 <label for="Short Description">Closure Comments
                                     <input id="docname" type="text" name="short_description_closure_ooc">

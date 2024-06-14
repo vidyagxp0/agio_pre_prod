@@ -291,9 +291,8 @@
                                             Assigned To <span class="text-danger"></span>
                                         </label>
                                         <select id="select-state" placeholder="Select..." name="assign_to" {{ $data->stage == 0 || $data->stage == 8 ? "disabled" : "" }}>
-                                            {{-- <option value="">Select a value</option> --}}
-                                            @foreach ($users as $key=> $value)
-                                                <option  @if ($data->assign_to == $value->id) selected @endif  value="{{ $value->id }}">{{ $value->name }}</option>
+                                            @foreach ($users as $key => $value)
+                                                <option @if ($data->assign_to == $value->id) selected @endif value="{{ $value->id }}">{{ $value->name }}</option>
                                             @endforeach
                                         </select>
                                         @error('assign_to')
@@ -686,7 +685,7 @@
                                 <select id="select-state" placeholder="Select..." name="analyst_sign_date_gi" {{ $data->stage == 0 || $data->stage == 8 ? "disabled" : "" }}>
                                     {{-- <option value="">Select a value</option> --}}
                                     @foreach ($users as $key=> $value)
-                                        <option  @if ($data->assign_to == $value->id) selected @endif  value="{{ $value->id }}">{{ $value->name }}</option>
+                                        <option  @if ($data->analyst_sign_date_gi == $value->id) selected @endif  value="{{ $value->id }}">{{ $value->name }}</option>
                                     @endforeach
                                 </select>
                                 @error('analyst_sign_date_gi')
