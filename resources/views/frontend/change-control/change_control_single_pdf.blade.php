@@ -176,7 +176,7 @@
                     <strong>Change Control No.</strong>
                 </td>
                 <td class="w-40">
-                    {{ Helpers::getDivisionName($data->division_id) }}/CC/{{ date('Y') }}/{{ $data->record_number ? str_pad($data->record_number->record_number, 4, '0', STR_PAD_LEFT) : '' }}
+                    {{ Helpers::getDivisionName($data->division_id) }}/CC/{{ date('Y') }}/{{ $data->record ? str_pad($data->record, 4, '0', STR_PAD_LEFT) : '' }}
                 </td>
                 <td class="w-30">
                     <strong>Record No.</strong> {{ str_pad($data->record, 4, '0', STR_PAD_LEFT) }}
@@ -196,7 +196,7 @@
                         <th class="w-20">Initiator</th>
                         <td class="w-30">{{ $data->originator }}</td>
                         <th class="w-20">Date Initiation</th>
-                        <td class="w-30">23-12-2302</td>
+                        <td class="w-30">{{ Helpers:: getDateFormat($data->intiation_date) }}</td>
                     </tr>
                     <tr>
                         <th class="w-20">Initiator Group</th>
@@ -331,15 +331,7 @@
                         @php
                             $serialNumber = 1;
                         @endphp
-                        @foreach(unserialize($docdetail->current_doc_no) as $key => $docdetails)
-                        <tr>
-                            <td class="w-25">{{$serialNumber++}}</td>
-                            <td class="w-25">@if($docdetails){{ $docdetails }}@else Not Applicable @endif</td>
-                            <td class="w-25">{{unserialize($docdetail->current_version_no)[$key] }}</td>
-                            <td class="w-25">{{ unserialize($docdetail->new_doc_no)[$key] }}</td>
-                            <td class="w-25">{{ unserialize($docdetail->new_version_no)[$key] }}</td>
-                        </tr>
-                        @endforeach
+                       
                     </table>
                 </div>
                 <table>

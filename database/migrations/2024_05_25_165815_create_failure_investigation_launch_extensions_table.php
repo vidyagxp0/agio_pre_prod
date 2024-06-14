@@ -16,6 +16,7 @@ return new class extends Migration
         Schema::create('failure_investigation_launch_extensions', function (Blueprint $table) {
             $table->id();
             $table->integer('failure_investigation_id')->nullable();
+            $table->integer('counter')->nullable();
             $table->text('dev_proposed_due_date')->nullable();
             $table->string('dev_extension_justification')->nullable();
             $table->string('dev_extension_completed_by')->nullable();

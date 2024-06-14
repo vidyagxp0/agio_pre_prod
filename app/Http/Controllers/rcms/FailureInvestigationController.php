@@ -42,11 +42,13 @@ class FailureInvestigationController extends Controller
 {
     public function index(){
         $old_record = FailureInvestigation::select('id', 'division_id', 'record')->get();
+        $record_numbers = (RecordNumber::first()->value('counter')) + 1;
+        $record_number = str_pad($record_numbers, 4, '0', STR_PAD_LEFT);
         $currentDate = Carbon::now();
         $formattedDate = $currentDate->addDays(30);
         $due_date = $formattedDate->format('d-M-Y');
         $pre = FailureInvestigation::all();
-        return response()->view('frontend.failure-investigation.failure-inv-new', compact('formattedDate', 'due_date', 'old_record', 'pre'));
+        return response()->view('frontend.failure-investigation.failure-inv-new', compact('formattedDate','record_number', 'due_date', 'old_record', 'pre'));
     }
 
     public function store(Request $request)
@@ -4449,6 +4451,201 @@ class FailureInvestigationController extends Controller
             $canvas->page_script('$pdf->set_opacity(0.1,"Multiply");');
             $canvas->page_text($width / 4, $height / 2, $data->status, null, 25, [0, 0, 0], 2, 6, -20);
             return $pdf->stream('Failure Investigation' . $id . '.pdf');
+        }
+    }
+
+    public function failure_investigation_child_1(Request $request, $id)
+    {
+        $cft = [];
+        $parent_id = $id;
+        $parent_type = "Audit_Program";
+        $record_number = ((RecordNumber::first()->value('counter')) + 1);
+        $record_number = str_pad($record_number, 4, '0', STR_PAD_LEFT);
+        $currentDate = Carbon::now();
+        $formattedDate = $currentDate->addDays(30);
+        $due_date = $formattedDate->format('d-M-Y');
+        $parent_record = FailureInvestigation::where('id', $id)->value('record');
+        $parent_record = str_pad($parent_record, 4, '0', STR_PAD_LEFT);
+        $parent_division_id = FailureInvestigation::where('id', $id)->value('division_id');
+        $parent_initiator_id = FailureInvestigation::where('id', $id)->value('initiator_id');
+        $parent_intiation_date = FailureInvestigation::where('id', $id)->value('intiation_date');
+        $parent_created_at = FailureInvestigation::where('id', $id)->value('created_at');
+        $parent_short_description = FailureInvestigation::where('id', $id)->value('short_description');
+        $hod = User::where('role', 4)->get();
+        if ($request->child_type == "extension") {
+            $parent_due_date = "";
+            $parent_id = $id;
+            $parent_name = $request->parent_name;
+            if ($request->due_date) {
+                $parent_due_date = $request->due_date;
+            }
+
+            $record_number = ((RecordNumber::first()->value('counter')) + 1);
+            $record_number = str_pad($record_number, 4, '0', STR_PAD_LEFT);
+            $Extensionchild = FailureInvestigation::find($id);
+            $Extensionchild->Extensionchild = $record_number;
+            $Extensionchild->save();
+            return view('frontend.forms.extension', compact('parent_id','parent_record', 'parent_name', 'record_number', 'parent_due_date', 'due_date', 'parent_created_at'));
+        }
+        $old_record = FailureInvestigation::select('id', 'division_id', 'record')->get();
+        // dd($request->child_type)
+        if ($request->child_type == "capa") {
+            $parent_name = "CAPA";
+            $Capachild = FailureInvestigation::find($id);
+            $Capachild->Capachild = $record_number;
+            $Capachild->save();
+
+            return view('frontend.forms.capa', compact('parent_id', 'parent_record','parent_type', 'record_number', 'due_date', 'parent_short_description', 'parent_initiator_id', 'parent_intiation_date', 'parent_name', 'parent_division_id', 'parent_record', 'old_record', 'cft'));
+        } elseif ($request->child_type == "Action_Item")
+         {
+            $parent_name = "CAPA";
+            $actionchild = FailureInvestigation::find($id);
+            $actionchild->actionchild = $record_number;
+            $parent_id = $id;
+            $actionchild->save();
+
+            return view('frontend.forms.action-item', compact('old_record', 'parent_short_description', 'parent_initiator_id', 'parent_intiation_date', 'parent_name', 'parent_division_id', 'parent_record', 'record_number', 'due_date', 'parent_id', 'parent_type'));
+        }
+        elseif ($request->child_type == "effectiveness_check")
+         {
+            $parent_name = "CAPA";
+            $effectivenesschild = FailureInvestigation::find($id);
+            $effectivenesschild->effectivenesschild = $record_number;
+            $effectivenesschild->save();
+        return view('frontend.forms.effectiveness-check', compact('old_record','parent_short_description','parent_record', 'parent_initiator_id', 'parent_intiation_date', 'parent_division_id',  'record_number', 'due_date', 'parent_id', 'parent_type'));
+        }
+        elseif ($request->child_type == "Change_control") {
+            $parent_name = "CAPA";
+            $Changecontrolchild = FailureInvestigation::find($id);
+            $Changecontrolchild->Changecontrolchild = $record_number;
+
+            $Changecontrolchild->save();
+
+            return view('frontend.change-control.new-change-control', compact('cft','pre','hod','parent_short_description', 'parent_initiator_id', 'parent_intiation_date', 'parent_division_id',  'record_number', 'due_date', 'parent_id', 'parent_type'));
+        }
+        else {
+            $parent_name = "Root";
+            $Rootchild = FailureInvestigation::find($id);
+            $Rootchild->Rootchild = $record_number;
+            $Rootchild->save();
+            return view('frontend.forms.root-cause-analysis', compact('parent_id', 'parent_record','parent_type', 'record_number', 'due_date', 'parent_short_description', 'parent_initiator_id', 'parent_intiation_date', 'parent_name', 'parent_division_id', 'parent_record', ));
+        }
+    }
+
+    
+    public function launchExtensionDeviation(Request $request, $id){
+        $failureinvestigation = FailureInvestigation::find($id);
+        $getCounter = FailureInvestigationlaunchExtension::where(['failure_investigation_id' => $failureinvestigation->id, 'extension_identifier' => "Failure Investigation"])->first();
+        if($getCounter && $getCounter->counter == null){
+            $counter = 1;
+        } else {
+            $counter = $getCounter ? $getCounter->counter + 1 : 1;
+        }
+        if($failureinvestigation->id != null){
+            $data = FailureInvestigationlaunchExtension::where([
+                'failure_investigation_id' => $failureinvestigation->id,
+                'extension_identifier' => "Failure Investigation"
+            ])->firstOrCreate();
+
+            $data->failure_investigation_id = $request->failure_investigation_id;
+            $data->extension_identifier = $request->extension_identifier;
+            $data->counter = $counter;
+            $data->dev_proposed_due_date = $request->dev_proposed_due_date;
+            $data->dev_extension_justification = $request->dev_extension_justification;
+            $data->dev_extension_completed_by = $request->dev_extension_completed_by;
+            $data->dev_completed_on = $request->dev_completed_on;
+            $data->save();
+
+            toastr()->success('Record is Update Successfully');
+            return back();
+        }
+    }
+
+    public function launchExtensionCapa(Request $request, $id){
+        $failureinvestigation = FailureInvestigation::find($id);
+        $getCounter = FailureInvestigationlaunchExtension::where(['failure_investigation_id' => $failureinvestigation->id, 'extension_identifier' => "Capa"])->first();
+        if($getCounter && $getCounter->counter == null){
+            $counter = 1;
+        } else {
+            $counter = $getCounter ? $getCounter->counter + 1 : 1;
+        }
+        if($failureinvestigation->id != null){
+
+            $data = FailureInvestigationlaunchExtension::where([
+                'failure_investigation_id' => $failureinvestigation->id,
+                'extension_identifier' => "Capa"
+            ])->firstOrCreate();
+
+            $data->failure_investigation_id = $request->failure_investigation_id;
+            $data->extension_identifier = $request->extension_identifier;
+            $data->counter = $counter;
+            $data->capa_proposed_due_date = $request->capa_proposed_due_date;
+            $data->capa_extension_justification = $request->capa_extension_justification;
+            $data->capa_extension_completed_by = $request->capa_extension_completed_by;
+            $data->capa_completed_on = $request->capa_completed_on;
+            $data->save();
+
+            toastr()->success('Record is Update Successfully');
+            return back();
+        }
+    }
+
+
+    public function launchExtensionQrm(Request $request, $id){
+        $failureinvestigation = FailureInvestigation::find($id);
+        $getCounter = FailureInvestigationlaunchExtension::where(['failure_investigation_id' => $failureinvestigation->id, 'extension_identifier' => "QRM"])->first();
+        if($getCounter && $getCounter->counter == null){
+            $counter = 1;
+        } else {
+            $counter = $getCounter ? $getCounter->counter + 1 : 1;
+        }
+        if($failureinvestigation->id != null){
+
+            $data = FailureInvestigationlaunchExtension::where([
+                'failure_investigation_id' => $failureinvestigation->id,
+                'extension_identifier' => "QRM"
+            ])->firstOrCreate();
+
+            $data->failure_investigation_id = $request->failure_investigation_id;
+            $data->extension_identifier = $request->extension_identifier;
+            $data->counter = $counter;
+            $data->qrm_proposed_due_date = $request->qrm_proposed_due_date;
+            $data->qrm_extension_justification = $request->qrm_extension_justification;
+            $data->qrm_extension_completed_by = $request->qrm_extension_completed_by;
+            $data->qrm_completed_on = $request->qrm_completed_on;
+            $data->save();
+
+            toastr()->success('Record is Update Successfully');
+            return back();
+        }
+    }
+
+    public function launchExtensionInvestigation(Request $request, $id){
+        $failureinvestigation = FailureInvestigation::find($id);
+        $getCounter = FailureInvestigationlaunchExtension::where(['failure_investigation_id' => $failureinvestigation->id, 'extension_identifier' => "Investigation"])->first();
+        if($getCounter && $getCounter->counter == null){
+            $counter = 1;
+        } else {
+            $counter = $getCounter ? $getCounter->counter + 1 : 1;
+        }
+        if($failureinvestigation->id != null){
+
+            $data = FailureInvestigationlaunchExtension::where([
+                'failure_investigation_id' => $failureinvestigation->id,
+                'extension_identifier' => "Investigation"
+            ])->firstOrCreate();
+
+            $data->failure_investigation_id = $request->failure_investigation_id;
+            $data->extension_identifier = $request->extension_identifier;
+            $data->counter = $counter;
+            $data->investigation_proposed_due_date = $request->investigation_proposed_due_date;
+            $data->investigation_extension_justification = $request->investigation_extension_justification;
+            $data->investigation_extension_completed_by = $request->investigation_extension_completed_by;
+            $data->investigation_completed_on = $request->investigation_completed_on;
+            $data->save();
+
+            toastr()->success('Record is Update Successfully');
+            return back();
         }
     }
 }

@@ -157,6 +157,7 @@ return new class extends Migration
             $table->text('Other5_by')->nullable();
             $table->date('Other5_on')->nullable();
 
+            $table->text('RA_Review')->nullable();
             $table->text('RA_Comments')->nullable();
             $table->text('RA_person')->nullable();
             $table->longtext('RA_assessment')->nullable();

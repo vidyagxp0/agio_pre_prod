@@ -622,9 +622,9 @@
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#cft-not-reqired">
                                 CFT Review Not Required
                             </button>
-                            <!-- <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal">
+                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal">
                                 Child
-                            </button> -->
+                            </button>
                         @elseif(
                             $data->stage == 4 &&
                                 (in_array(5, $userRoleIds) || in_array(18, $userRoleIds) || in_array(Auth::user()->id, $valuesArray)))
@@ -1125,7 +1125,7 @@
                                                     class="text-danger">*</span></label>
                                             <div class="calenderauditee">
                                                 <input type="text" id="failure_investigation_date" readonly placeholder="DD-MMM-YYYY" value="{{ Helpers::getdateFormat($data->failure_investigation_date) }}" />
-                                                <input type="date" name="failure_investigation_date" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" value=""
+                                                <input type="date" name="failure_investigation_date" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" value="{{ $data->failure_investigation_date }}"
                                                 class="hide-input"
                                                 oninput="handleDateInput(this, 'failure_investigation_date')" />
                                             </div>
@@ -1192,7 +1192,7 @@
                                                     class="text-danger">*</span></label>
                                             <div class="calenderauditee">
                                                 <input type="text" id="failure_investigation_reported_date" readonly placeholder="DD-MMM-YYYY" value="{{ Helpers::getdateFormat($data->failure_investigation_reported_date) }}" />
-                                                <input type="date" name="failure_investigation_reported_date" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" value=""
+                                                <input type="date" name="failure_investigation_reported_date" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" value="{{ $data->failure_investigation_reported_date }}"
                                                 class="hide-input"
                                                 oninput="handleDateInput(this, 'failure_investigation_reported_date')" />
                                             </div>
@@ -1670,7 +1670,8 @@
                                                         <tbody>
                                                             @if ($grid_data2->product_name)
                                                                 @foreach (unserialize($grid_data2->product_name) as $key => $temps)
-                                                                    <td><input disabled type="text"
+                                                                <tr>
+                                                                <td><input disabled type="text"
                                                                             name="serial[]"{{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
                                                                             value="{{ $key + 1 }}"></td>
                                                                     <td><input class="productName" type="text"
@@ -1728,6 +1729,8 @@
                                                                     </td>
                                                                     <td><input type="text" class="Removebtn"
                                                                             name="Action[]" readonly></td>
+                                                                </tr>
+                                                                    
                                                                 @endforeach
                                                             @endif
                                                         </tbody>
@@ -12485,15 +12488,15 @@
                         </div>
                         <div class="group-input">
                             <label for="username">Username <span class="text-danger">*</span></label>
-                            <input type="text" name="username" required>
+                            <input type="text" class="form-control" name="username" required>
                         </div>
-                        <div class="group-input">
+                        <div class="group-input mt-4">
                             <label for="password">Password <span class="text-danger">*</span></label>
-                            <input type="password" name="password" required>
+                            <input type="password" class="form-control" name="password" required>
                         </div>
-                        <div class="group-input">
+                        <div class="group-input mt-4">
                             <label for="comment">Comment <span class="text-danger">*</span></label>
-                            <input type="comment" name="comment" required>
+                            <input type="comment" class="form-control" name="comment" required>
                         </div>
                     </div>
 

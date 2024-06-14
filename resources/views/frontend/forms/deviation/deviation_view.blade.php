@@ -619,9 +619,9 @@
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#cft-not-reqired">
                                 CFT Review Not Required
                             </button>
-                            <!-- <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal">
+                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal">
                                 Child
-                            </button> -->
+                            </button>
                         @elseif(
                             $data->stage == 4 &&
                                 (in_array(5, $userRoleIds) || in_array(18, $userRoleIds) || in_array(Auth::user()->id, $valuesArray)))
@@ -647,9 +647,9 @@
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                 QA Final Review Complete
                             </button>
-                            <!-- <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal">
+                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal">
                                 Child
-                            </button> -->
+                            </button>
                         @elseif($data->stage == 6 && (in_array(39, $userRoleIds) || in_array(18, $userRoleIds)))
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#more-info-required-modal">
                                 More Info Required
@@ -1122,8 +1122,8 @@
 
                                             <div class="calenderauditee">
                                                 <input type="text" id="Deviation_date" readonly placeholder="DD-MMM-YYYY" value="{{ Helpers::getdateFormat($data->Deviation_date) }}" />
-                                                <input type="date" name="Deviation_date" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" value=""
-                                                class="hide-input"
+                                                <input type="date" name="Deviation_date" max="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
+                                                class="hide-input" value="{{ $data->Deviation_date }}"
                                                 oninput="handleDateInput(this, 'Deviation_date')" />
                                             </div>
                                             @error('Deviation_date')
@@ -1192,8 +1192,8 @@
 
                                             <div class="calenderauditee">
                                                 <input type="text" id="Deviation_reported_date" readonly placeholder="DD-MMM-YYYY" value="{{ Helpers::getdateFormat($data->Deviation_reported_date) }}" />
-                                                <input type="date" name="Deviation_reported_date" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" value=""
-                                                class="hide-input"
+                                                <input type="date" name="Deviation_reported_date" max="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
+                                                class="hide-input" value="{{ $data->Deviation_reported_date }}"
                                                 oninput="handleDateInput(this, 'Deviation_reported_date')" />
                                             </div>
                                             @error('Deviation_reported_date')
@@ -1412,7 +1412,7 @@
                                                                                 {{ isset($facility_name[$key]) && $facility_name[$key] == 'Facility' ? 'selected' : 'Facility' }}>
                                                                                 Facility</option>
                                                                             <option value="Equipment"
-                                                                                {{ isset($facility_name[$key]) && $facility_name[$key] == 'Facility' ? 'selected' : 'Equipment' }}>
+                                                                                {{ isset($facility_name[$key]) && $facility_name[$key] == 'Equipment' ? 'selected' : 'Equipment' }}>
                                                                                 Equipment</option>
                                                                             <option value="Instrument"
                                                                                 {{ isset($facility_name[$key]) && $facility_name[$key] == 'Instrument' ? 'selected' : 'Instrument' }}>
@@ -1670,7 +1670,9 @@
                                                         <tbody>
                                                             @if ($grid_data2->product_name)
                                                                 @foreach (unserialize($grid_data2->product_name) as $key => $temps)
-                                                                    <td><input disabled type="text"
+
+                                                                <tr>
+                                                                <td><input disabled type="text"
                                                                             name="serial[]"{{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
                                                                             value="{{ $key + 1 }}"></td>
                                                                     <td><input class="productName" type="text"
@@ -1728,6 +1730,8 @@
                                                                     </td>
                                                                     <td><input type="text" class="Removebtn"
                                                                             name="Action[]" readonly></td>
+                                                                </tr>
+                                                                    
                                                                 @endforeach
                                                             @endif
                                                         </tbody>
@@ -11792,7 +11796,7 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
             </div>
 
-            <form action="{{ route('launch-extension-qrm', $data->id) }}" method="post">
+            <form action="{{ route('dev-launch-extension-qrm', $data->id) }}" method="post">
                 @csrf
                 <div class="modal-body">
                     <!-- <div class="group-input">
@@ -11854,7 +11858,7 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
             </div>
 
-            <form action="{{ route('launch-extension-investigation', $data->id) }}" method="post">
+            <form action="{{ route('dev-launch-extension-investigation', $data->id) }}" method="post">
                 @csrf
                 <!-- Modal body -->
                 <div class="modal-body">
@@ -11918,7 +11922,7 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
             </div>
 
-            <form action="{{ route('launch-extension-capa', $data->id) }}" method="post">
+            <form action="{{ route('dev-launch-extension-capa', $data->id) }}" method="post">
                 @csrf
 
                 <!-- Modal body -->
@@ -11982,7 +11986,7 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
             </div>
 
-            <form action="{{ route('launch-extension-deviation', $data->id) }}" method="post">
+            <form action="{{ route('dev-launch-extension-deviation', $data->id) }}" method="post">
                 @csrf
                 <!-- Modal body -->
                 <div class="modal-body">
@@ -12658,15 +12662,15 @@
                         </div>
                         <div class="group-input">
                             <label for="username">Username <span class="text-danger">*</span></label>
-                            <input type="text" name="username" required>
+                            <input type="text" class="form-control" name="username" required>
                         </div>
-                        <div class="group-input">
+                        <div class="group-input mt-4">
                             <label for="password">Password <span class="text-danger">*</span></label>
-                            <input type="password" name="password" required>
+                            <input type="password" class="form-control" name="password" required>
                         </div>
-                        <div class="group-input">
+                        <div class="group-input mt-4">
                             <label for="comment">Comment <span class="text-danger">*</span></label>
-                            <input type="comment" name="comment" required>
+                            <input type="comment" class="form-control" name="comment" required>
                         </div>
                     </div>
 

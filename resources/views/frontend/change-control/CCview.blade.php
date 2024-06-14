@@ -63,33 +63,57 @@
     </script>
     <script>
         $(document).ready(function() {
-            $('#DocDetailbtn').click(function(e) {
+            let documentDetailIndex = {{ $productDetailGrid && is_array($productDetailGrid) ? count($productDetailGrid) : 1 }};
+            $('#documentAdd').click(function(e) {
                 function generateTableRow(serialNumber) {
-                    var users = @json($users);
-
                     var html =
                         '<tr>' +
-                        '<td><input disabled type="text" name="serial[]" value="' + serialNumber + '"></td>' +
-                        '<td><input type="text" name="current_doc_no[]"{{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}></td>' +
-                        '<td><input type="text" name="current_version_no[]"{{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}></td>' +
-                        '<td><input type="text" name="new_doc_no[]"{{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}></td>' +
-                        '<td><input type="text" name="new_version_no[]"{{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}></td>' +
-                        '<td><button class="removeRowBtn">Remove</button></td>' +
+                        '<td><input disabled type="text" name="serial[]" value="' + serialNumber +
+                        '"></td>' +
+                        ' <td><input type="text" name="documentDetails[' + documentDetailIndex + '][currentDocNumber]"></td>' +
+                        ' <td><input type="text" name="documentDetails[' + documentDetailIndex + '][currentVersionNumber]"></td>' +
+                        '<td><input type="text" name="documentDetails[' + documentDetailIndex + '][newDocNumber]"></td>' +
+                        '<td><input type="text" name="documentDetails[' + documentDetailIndex + '][newVersionNumber]"></td>' +
+                        '<td><button type="text" class="removeRowBtn">Remove</button></td>' +
 
                         '</tr>';
-
-                    for (var i = 0; i < users.length; i++) {
-                        html += '<option value="' + users[i].id + '">' + users[i].name + '</option>';
-                    }
-
-                    html += '</select></td>' +
-
-                        '</tr>';
-
+                    '</tr>';
+                    documentDetailIndex++;
                     return html;
                 }
 
-                var tableBody = $('#DocDetailbtn_details tbody');
+                var tableBody = $('#documentTableDetails tbody');
+                var rowCount = tableBody.children('tr').length;
+                var newRow = generateTableRow(rowCount + 1);
+                tableBody.append(newRow);
+            });
+        });
+    </script>
+
+    <script>
+        $(document).ready(function() {
+            let affectedDocumentDetailIndex = {{ $affetctedDocumnetGrid && is_array($affetctedDocumnetGrid) ? count($affetctedDocumnetGrid) : 1 }};
+            $('#addAffectedDoc').click(function(e) {
+                function generateTableRow(serialNumber) {
+                    var html =
+                        '<tr>' +
+                        '<td><input disabled type="text" name="serial[]" value="' + serialNumber + '"></td>' +
+                        ' <td><input type="text" name="affectedDocuments[' + affectedDocumentDetailIndex + '][afftectedDoc]"></td>' +
+                        ' <td><input type="text" name="affectedDocuments[' + affectedDocumentDetailIndex + '][documentName]"></td>' +
+                        '<td><input type="number" name="affectedDocuments[' + affectedDocumentDetailIndex + '][documentNumber]"></td>' +
+                        '<td><input type="text" name="affectedDocuments[' + affectedDocumentDetailIndex + '][versionNumber]"></td>' +
+                        ' <td><input type="date" name="affectedDocuments[' + affectedDocumentDetailIndex + '][implimentationDate]"></td>' +
+                        '<td><input type="text" name="affectedDocuments[' + affectedDocumentDetailIndex + '][newDocumentNumber]"></td>' +
+                        '<td><input type="text" name="affectedDocuments[' + affectedDocumentDetailIndex + '][newVersionNumber]"></td>' +
+                        '<td><button type="text" class="removeRowBtn">Remove</button></td>' +
+
+                        '</tr>';
+                    '</tr>';
+                    affectedDocumentDetailIndex++;
+                    return html;
+                }
+
+                var tableBody = $('#afftectedDocTable tbody');
                 var rowCount = tableBody.children('tr').length;
                 var newRow = generateTableRow(rowCount + 1);
                 tableBody.append(newRow);
@@ -322,9 +346,15 @@
                                                 <div class="group-input">
                                                     <label for="Initiator">Initiator</label>
                                                     <div class="static"><input disabled type="text"
-                                                            value="{{ Auth::user()->name }}"></div>
+                                                            value="{{ Helpers::getInitiatorName($data->initiator_id) }}"></div>
                                                 </div>
                                             </div>
+
+                                            @php
+                                                // Calculate the due date (30 days from the initiation date)
+                                                $initiationDate = date('Y-m-d'); // Current date as initiation date
+                                                $dueDate = date('Y-m-d', strtotime($initiationDate . '+30 days')); // Due date
+                                            @endphp
                                             <div class="col-lg-6">
                                                 <div class="group-input">
                                                     <label for="date_initiation">Date of Initiation</label>
@@ -385,21 +415,43 @@
 
                                                 </div>
                                             </div>
-                                            <div class="col-md-6">
-                                                <div class="group-input">
-                                                    <label for="due-date">Due Date <span
-                                                            class="text-danger"></span></label>
-                                                    <div><small class="text-primary">If revising Due Date, kindly mention
-                                                            revision reason in "Due Date Extension Justification" data
-                                                            field.</small></div>
-                                                    <input type="date" name="due_date" value="{{ $data->due_date }}"
-                                                        class="" >
-                                                    <!-- <input readonly type="text"
-                                                        value="{{ Helpers::getdateFormat($data->due_date) }}"
-                                                        name="due_date"
-                                                        {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}> -->
+                                            <div class="col-md-6 new-date-data-field">
+                                                <div class="group-input input-date">
+                                                    <label for="due-date">Due Date <span class="text-danger"></span></label>
+                                                    <div class="calenderauditee">
+                                                        <input type="text" id="due_date" readonly placeholder="DD-MM-YYYY" />
+                                                        <input type="date" name="due_date" readonly
+                                                            min="{{ \Carbon\Carbon::now()->format('d-M-Y') }}" class="hide-input"
+                                                            oninput="handleDateInput(this, 'due_date')" />
+                                                    </div>
                                                 </div>
                                             </div>
+
+                                            <script>
+                                                // Format the due date to DD-MM-YYYY
+                                                // Your input date
+                                                var dueDate = "{{ $dueDate }}"; // Replace {{ $dueDate }} with your actual date variable
+
+                                                // Create a Date object
+                                                var date = new Date(dueDate);
+
+                                                // Array of month names
+                                                var monthNames = [
+                                                    "Jan", "Feb", "Mar", "Apr", "May", "Jun",
+                                                    "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"
+                                                ];
+
+                                                // Extracting day, month, and year from the date
+                                                var day = date.getDate().toString().padStart(2, '0'); // Ensuring two digits
+                                                var monthIndex = date.getMonth();
+                                                var year = date.getFullYear();
+
+                                                // Formatting the date in "dd-MMM-yyyy" format
+                                                var dueDateFormatted = `${day}-${monthNames[monthIndex]}-${year}`;
+
+                                                // Set the formatted due date value to the input field
+                                                document.getElementById('due_date').value = dueDateFormatted;
+                                            </script>
                                             <div class="col-lg-6">
                                                 <div class="group-input">
                                                     <label for="initiator-group">Initiator Group</label>
@@ -679,9 +731,9 @@
                                                 <div class="group-input">
                                                     <label for="doc-detail">
                                                         Document Details<button type="button" name="ann"
-                                                            id="DocDetailbtn">+</button>
+                                                            id="documentAdd">+</button>
                                                     </label>
-                                                    <table class="table-bordered table" id="DocDetailbtn_details">
+                                                    <table class="table-bordered table" id="documentTableDetails">
                                                         <thead>
                                                             <tr>
                                                                 <th>Sr. No.</th>
@@ -693,25 +745,32 @@
                                                             </tr>
                                                         </thead>
                                                         <tbody>
-                                                            @if (!empty($docdetail->current_doc_no))
-                                                                @foreach (unserialize($docdetail->current_doc_no) as $key => $datas)
+                                                            @if ($productDetailGrid && is_array($productDetailGrid))
+                                                                @foreach ($productDetailGrid as $gridData)
                                                                     <tr>
-                                                                        <td><input disabled type="text" name="serial_number[]" value="{{ $key + 1 }}"></td>
+                                                                        <td> <input disabled type="text" name="documentDetails[{{ $loop->index }}][serial]" value="{{ $loop->index+1 }}"></td>
                                                                         <td>
-                                                                            <input class="currentDocNumber" type="text" name="current_doc_number[]" value="{{ (unserialize($docdetail->current_doc_no)[$key]) ? (unserialize($docdetail->current_doc_no)[$key]) : '' }}">
+                                                                            <input class="currentDocNumber" type="text" name="documentDetails[{{ $loop->index }}][currentDocNumber]" value="{{ isset($gridData['currentDocNumber']) ? $gridData['currentDocNumber'] : '' }}">
                                                                         </td>
                                                                         <td>
-                                                                            <input class="currentVersion" type="text" name="current_version_no[]" value="{{ (unserialize($docdetail->current_version_no)[$key]) ? (unserialize($docdetail->current_version_no)[$key]) : '' }}">
+                                                                            <input class="currentVersionNumber" type="text" name="documentDetails[{{ $loop->index }}][currentVersionNumber]" value="{{ isset($gridData['currentVersionNumber']) ? $gridData['currentVersionNumber'] : '' }}">
                                                                         </td>
                                                                         <td>
-                                                                            <input class="newDocNumber" type="text" name="new_doc_no[]" value="{{ (unserialize($docdetail->new_doc_no)[$key]) ? (unserialize($docdetail->new_doc_no)[$key]) : '' }}">
+                                                                            <input class="newDocNumber" type="text" name="documentDetails[{{ $loop->index }}][newDocNumber]" value="{{ isset($gridData['newDocNumber']) ? $gridData['newDocNumber'] : '' }}">
                                                                         </td>
                                                                         <td>
-                                                                            <input class="newVersionNumber" type="text" name="new_version_no[]" value="{{ (unserialize($docdetail->new_version_no)[$key]) ? (unserialize($docdetail->new_version_no)[$key]) : '' }}">
+                                                                            <input class="newVersionNumber" type="text" name="documentDetails[{{ $loop->index }}][newVersionNumber]" value="{{ isset($gridData['newVersionNumber']) ? $gridData['newVersionNumber'] : '' }}">
                                                                         </td>
                                                                         <td><input type="text" class="Removebtn" name="Action[]" readonly></td>
                                                                     </tr>
                                                                 @endforeach
+                                                                @else
+                                                                    <td><input type="text" name="documentDetails[0][serial]" value="1" readonly></td>
+                                                                    <td><input type="text" name="documentDetails[0][currentDocNumber]"></td>
+                                                                    <td><input type="text" name="documentDetails[0][currentVersionNumber]"></td>
+                                                                    <td><input type="text" name="documentDetails[0][newDocNumber]"></td>
+                                                                    <td><input type="text" name="documentDetails[0][newVersionNumber]"></td>
+                                                                    <td><input type="text" class="Action" name="" readonly></td>
                                                             @endif
                                                         </tbody>
                                                     </table>
@@ -798,12 +857,10 @@
                                             <div class="col-12">
                                                 <div class="group-input">
                                                     <label for="related_records">Related Records</label>
-                                                    {{--  <input type="text" name="related_records"
-                                                        value="{{ $review->related_records }}">  --}}
                                                     <select {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}
                                                         multiple id="related_records" name="related_records[]"
                                                         placeholder="Select Reference Records" data-search="false"
-                                                        data-silent-initial-value-set="true" id="related_records">
+                                                        data-silent-initial-value-set="true">
                                                         @foreach ($pre as $prix)
                                                             <option value="{{ $prix->id }}"
                                                                 {{ in_array($prix->id, explode(',', $data->related_records)) ? 'selected' : '' }}>
@@ -1070,9 +1127,9 @@
                                         <div class="group-input">
                                             <label for="risk-assessment">
                                                 Affected Documents<button type="button" name="ann"
-                                                    id="addAffectedDocumentsbtn">+</button>
+                                                    id="addAffectedDoc">+</button>
                                             </label>
-                                            <table class="table table-bordered" id="affected-documents">
+                                            <table class="table table-bordered" id="afftectedDocTable">
                                                 <thead>
                                                     <tr>
                                                         <th>Sr. No.</th>
@@ -1083,55 +1140,63 @@
                                                         <th>Implementation Date</th>
                                                         <th>New Document No.</th>
                                                         <th>New Version No.</th>
+                                                        <th>Action</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
-                                                    @if (!empty($closure->sno))
-                                                        @foreach (unserialize($closure->affected_document) as $key => $datas)
+                                                        @if ($affetctedDocumnetGrid && is_array($affetctedDocumnetGrid))
+                                                            @foreach ($affetctedDocumnetGrid as $gridData)
                                                             <tr>
-                                                                <td><input type="text" name="serial_number[]" readonly
-                                                                        value="{{ $key ? $key + 1 : '1' }}"></td>
-                                                                <td><input type="text" name="affected_documents[]"
-                                                                        value="{{ unserialize($closure->affected_document)[$key] }}">
-                                                                </td>
-                                                                <td><input type="text" name="document_name[]"
-                                                                        value="{{ unserialize($closure->doc_name)[$key] }}">
+                                                                <td>
+                                                                    <input disabled type="text" name="affectedDocuments[{{ $loop->index }}][serial]"
+                                                                        value="{{ $loop->index + 1 }}">
                                                                 </td>
                                                                 <td>
-                                                                    <input type="number" name="document_no[]"
-                                                                        value="{{ unserialize($closure->doc_no)[$key] }}">
+                                                                    <input class="afftectedDoc" type="text" name="affectedDocuments[{{ $loop->index }}][afftectedDoc]"
+                                                                        value="{{ isset($gridData['afftectedDoc']) ? $gridData['afftectedDoc'] : '' }}">
                                                                 </td>
                                                                 <td>
-                                                                    @if (!empty($closure->version_no))
-                                                                        <input type="text" name="version_no[]"
-                                                                            value="{{ unserialize($closure->version_no)[$key] }}">
-                                                                    @else
-                                                                        <input type="text" name="version_no[]"
-                                                                            value="">
-                                                                    @endif
+                                                                    <input class="documentName" type="text" name="affectedDocuments[{{ $loop->index }}][documentName]"
+                                                                        value="{{ isset($gridData['documentName']) ? $gridData['documentName'] : '' }}">
                                                                 </td>
-
                                                                 <td>
-                                                                    <input type="date" name="implementation_date[]" value="{{ unserialize($closure->implementation_date)[$key] }}"
-                                                                            oninput="handleDateInput(this, `implementation_date{{ $key }}`)">
+                                                                    <input class="documentNumber" type="number" name="affectedDocuments[{{ $loop->index }}][documentNumber]"
+                                                                        value="{{ isset($gridData['documentNumber']) ? $gridData['documentNumber'] : '' }}">
                                                                 </td>
-                                        </div>
-                                    </div>
-                                </div>
-                                </td>
-
-                                <td><input type="text" name="new_document_no[]"
-                                        value="{{ unserialize($closure->new_doc_no)[$key] }}">
-                                </td>
-                                <td><input type="text" name="new_version_no[]"
-                                        value="{{ unserialize($closure->new_version_no)[$key] }}">
-                                </td>
-                                </tr>
-                                @endforeach
-                                @endif
-                                <div id="docdetaildiv"></div>
-                                </tbody>
-                                </table>
+                                                                <td>
+                                                                    <input class="versionNumber" type="text" name="affectedDocuments[{{ $loop->index }}][versionNumber]"
+                                                                        value="{{ isset($gridData['versionNumber']) ? $gridData['versionNumber'] : '' }}">
+                                                                </td>
+                                                                <td>
+                                                                    <input class="implimentationDate" type="date"
+                                                                        name="affectedDocuments[{{ $loop->index }}][implimentationDate]"
+                                                                        value="{{ isset($gridData['implimentationDate']) ? $gridData['implimentationDate'] : '' }}">
+                                                                </td>
+                                                                <td>
+                                                                    <input class="newDocumentNumber" type="text"
+                                                                        name="affectedDocuments[{{ $loop->index }}][newDocumentNumber]"
+                                                                        value="{{ isset($gridData['newDocumentNumber']) ? $gridData['newDocumentNumber'] : '' }}">
+                                                                </td>
+                                                                <td>
+                                                                    <input class="newVersionNumber" type="text" name="affectedDocuments[{{ $loop->index }}][newVersionNumber]"
+                                                                        value="{{ isset($gridData['newVersionNumber']) ? $gridData['newVersionNumber'] : '' }}">
+                                                                </td>
+                                                                <td><input type="text" class="Removebtn" name="Action[]" readonly></td>
+                                                            </tr>
+                                                        @endforeach
+                                                        @else                                                        
+                                                            <td><input type="text" name="affectedDocuments[0][serial]" value="1" readonly></td>
+                                                            <td><input type="text" name="affectedDocuments[0][afftectedDoc]"></td>
+                                                            <td><input type="text" name="affectedDocuments[0][documentName]"></td>
+                                                            <td><input type="number" name="affectedDocuments[0][documentNumber]"></td>
+                                                            <td><input type="text" name="affectedDocuments[0][versionNumber]"></td>
+                                                            <td><input type="date" name="affectedDocuments[0][implimentationDate]"></td>
+                                                            <td><input type="text" name="affectedDocuments[0][newDocumentNumber]"></td>
+                                                            <td><input type="text" name="affectedDocuments[0][newVersionNumber]"></td>
+                                                            <td><input type="text" class="Action" name="" readonly></td>
+                                                    @endif
+                                                </tbody>
+                                            </table>
                             </div>
                             <div class="group-input">
                                 <label for="qa-closure-comments">QA Closure Comments</label>
@@ -1393,6 +1458,428 @@
             <div id="CCForm11" class="inner-block cctabcontent">
                         <div class="inner-block-content">
                             <div class="row">  
+                                <div class="sub-head">
+                                    RA Review
+                                </div>
+                                <script>
+                                    $(document).ready(function() {
+                                        $('.ra_review').hide();
+
+                                        $('[name="RA_Review"]').change(function() {
+                                            if ($(this).val() === 'yes') {
+
+                                                $('.ra_review').show();
+                                                $('.ra_review span').show();
+                                            } else {
+                                                $('.ra_review').hide();
+                                                $('.ra_review span').hide();
+                                            }
+                                        });
+                                    });
+                                </script>
+                                @php
+                                    $data1 = DB::table('cc_cfts')
+                                        ->where('cc_id', $data->id)
+                                        ->first();
+                                @endphp
+
+                                @if ($data->stage == 3 || $data->stage == 4)
+                                    <div class="col-lg-6">
+                                        <div class="group-input">
+                                            <label for="RA Review"> RA Review Required ? <span
+                                                    class="text-danger">*</span></label>
+                                            <select name="RA_Review" id="RA_Review"
+                                                @if ($data->stage == 4) disabled @endif
+                                                @if ($data->stage == 3) required @endif>
+                                                <option value="">-- Select --</option>
+                                                <option @if ($data1->RA_Review == 'yes') selected @endif value='yes'>
+                                                    Yes</option>
+                                                <option @if ($data1->RA_Review == 'no') selected @endif value='no'>
+                                                    No</option>
+                                                <option @if ($data1->RA_Review == 'na') selected @endif value='na'>
+                                                    NA</option>
+                                            </select>
+
+                                        </div>
+                                    </div>
+                                    @php
+                                        $userRoles = DB::table('user_roles')
+                                            ->where([
+                                                'q_m_s_roles_id' => 22,
+                                                'q_m_s_divisions_id' => $data->division_id,
+                                            ])
+                                            ->get();
+                                        $userRoleIds = $userRoles->pluck('user_id')->toArray();
+                                        $users = DB::table('users')->whereIn('id', $userRoleIds)->get(); // Fetch user data based on user IDs
+                                    @endphp
+                                    <div class="col-lg-6 ra_review">
+                                        <div class="group-input">
+                                            <label for="RA notification">RA Person <span
+                                                    id="asteriskRA"
+                                                    style="display: {{ $data1->RA_Review == 'yes' ? 'inline' : 'none' }}"
+                                                    class="text-danger">*</span>
+                                            </label>
+                                            <select @if ($data->stage == 4) disabled @endif
+                                                name="RA_person" class="RA_person"
+                                                id="RA_person">
+                                                <option value="">-- Select --</option>
+                                                @foreach ($users as $user)
+                                                    <option value="{{ $user->id }}"
+                                                        @if ($user->id == $data1->RA_person) selected @endif>
+                                                        {{ $user->name }}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12 mb-3 ra_review">
+                                        <div class="group-input">
+                                            <label for="RA assessment">Impact Assessment (By RA) <span
+                                                    id="asteriskRA1"
+                                                    style="display: {{ $data1->RA_Review == 'yes' && $data->stage == 4 ? 'inline' : 'none' }}"
+                                                    class="text-danger">*</span></label>
+                                            <div><small class="text-primary">Please insert "NA" in the data field if it
+                                                    does not require completion</small></div>
+                                            <textarea @if ($data1->RA_Review == 'yes' && $data->stage == 4) required @endif class="summernote RA_assessment"
+                                                @if ($data->stage == 3 || Auth::user()->id != $data1->RA_person) readonly @endif name="RA_assessment" id="summernote-17">{{ $data1->RA_assessment }}</textarea>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12 mb-3 ra_review">
+                                        <div class="group-input">
+                                            <label for="RA feedback">RA Feedback <span
+                                                    id="asteriskRA2"
+                                                    style="display: {{ $data1->RA_Review == 'yes' && $data->stage == 4 ? 'inline' : 'none' }}"
+                                                    class="text-danger">*</span></label>
+                                            <div><small class="text-primary">Please insert "NA" in the data field if it
+                                                    does not require completion</small></div>
+                                            <textarea class="summernote RA_feedback" @if ($data->stage == 3 || Auth::user()->id != $data1->RA_person) readonly @endif
+                                                name="RA_feedback" id="summernote-18" @if ($data1->RA_Review == 'yes' && $data->stage == 4) required @endif>{{ $data1->RA_feedback }}</textarea>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 ra_review">
+                                        <div class="group-input">
+                                            <label for="RA attachment">RA Attachments</label>
+                                            <div><small class="text-primary">Please Attach all relevant or supporting
+                                                    documents</small></div>
+                                            <div class="file-attachment-field">
+                                                <div disabled class="file-attachment-list" id="RA_attachment">
+                                                    @if ($data1->RA_attachment)
+                                                        @foreach (json_decode($data1->RA_attachment) as $file)
+                                                            <h6 type="button" class="file-container text-dark"
+                                                                style="background-color: rgb(243, 242, 240);">
+                                                                <b>{{ $file }}</b>
+                                                                <a href="{{ asset('upload/' . $file) }}"
+                                                                    target="_blank"><i class="fa fa-eye text-primary"
+                                                                        style="font-size:20px; margin-right:-10px;"></i></a>
+                                                                <a type="button" class="remove-file"
+                                                                    data-file-name="{{ $file }}"><i
+                                                                        class="fa-solid fa-circle-xmark"
+                                                                        style="color:red; font-size:20px;"></i></a>
+                                                            </h6>
+                                                        @endforeach
+                                                    @endif
+                                                </div>
+                                                <div class="add-btn">
+                                                    <div>Add</div>
+                                                    <input {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}
+                                                        type="file" id="myfile"
+                                                        name="RA_attachment[]"{{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
+                                                        oninput="addMultipleFiles(this, 'RA_attachment')" multiple>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 mb-3 ra_review">
+                                        <div class="group-input">
+                                            <label for="RA Review Completed By">RA Review Completed
+                                                By</label>
+                                            <input readonly type="text" value="{{ $data1->RA_by }}"
+                                                name="RA_by"{{ $data->stage == 0 || $data->stage == 7 ? 'readonly' : '' }}
+                                                id="RA_by">
+
+
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6 ra_review">
+                                        <div class="group-input ">
+                                            <label for="RA Review Completed On">RA Review Completed
+                                                On</label>
+                                            <!-- <div><small class="text-primary">Please select related information</small></div> -->
+                                            <input type="date"id="RA_on"
+                                                name="RA_on"{{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
+                                                value="{{ $data1->RA_on }}">
+                                        </div>
+                                    </div>
+                                    <script>
+                                        document.addEventListener('DOMContentLoaded', function() {
+                                            var selectField = document.getElementById('RA_Review');
+                                            var inputsToToggle = [];
+
+                                            // Add elements with class 'facility-name' to inputsToToggle
+                                            var facilityNameInputs = document.getElementsByClassName('RA_person');
+                                            for (var i = 0; i < facilityNameInputs.length; i++) {
+                                                inputsToToggle.push(facilityNameInputs[i]);
+                                            }
+                                            // var facilityNameInputs = document.getElementsByClassName('RA_assessment');
+                                            // for (var i = 0; i < facilityNameInputs.length; i++) {
+                                            //     inputsToToggle.push(facilityNameInputs[i]);
+                                            // }
+                                            // var facilityNameInputs = document.getElementsByClassName('RA_feedback');
+                                            // for (var i = 0; i < facilityNameInputs.length; i++) {
+                                            //     inputsToToggle.push(facilityNameInputs[i]);
+                                            // }
+
+                                            selectField.addEventListener('change', function() {
+                                                var isRequired = this.value === 'yes';
+                                                console.log(this.value, isRequired, 'value');
+
+                                                inputsToToggle.forEach(function(input) {
+                                                    input.required = isRequired;
+                                                    console.log(input.required, isRequired, 'input req');
+                                                });
+
+                                                // Show or hide the asterisk icon based on the selected value
+                                                var asteriskIcon = document.getElementById('asteriskRA');
+                                                asteriskIcon.style.display = isRequired ? 'inline' : 'none';
+                                            });
+                                        });
+                                    </script>
+                                @else
+                                    <div class="col-lg-6">
+                                        <div class="group-input">
+                                            <label for="RA Review">RA Review Required ?</label>
+                                            <select name="RA_Review" disabled id="RA_Review">
+                                                <option value="">-- Select --</option>
+                                                <option @if ($data1->RA_Review == 'yes') selected @endif value='yes'>
+                                                    Yes</option>
+                                                <option @if ($data1->RA_Review == 'no') selected @endif value='no'>
+                                                    No</option>
+                                                <option @if ($data1->RA_Review == 'na') selected @endif value='na'>
+                                                    NA</option>
+                                            </select>
+
+                                        </div>
+                                    </div>
+                                    @php
+                                        $userRoles = DB::table('user_roles')
+                                            ->where([
+                                                'q_m_s_roles_id' => 22,
+                                                'q_m_s_divisions_id' => $data->division_id,
+                                            ])
+                                            ->get();
+                                        $userRoleIds = $userRoles->pluck('user_id')->toArray();
+                                        $users = DB::table('users')->whereIn('id', $userRoleIds)->get(); // Fetch user data based on user IDs
+                                    @endphp
+                                    <div class="col-lg-6 ra_review">
+                                        <div class="group-input">
+                                            <label for="RA notification">RA Person <span
+                                                    id="asteriskInvi11" style="display: none"
+                                                    class="text-danger">*</span></label>
+                                            <select name="RA_person" disabled id="RA_person">
+                                                <option value="">-- Select --</option>
+                                                @foreach ($users as $user)
+                                                    <option value="{{ $user->id }}"
+                                                        @if ($user->id == $data1->RA_person) selected @endif>
+                                                        {{ $user->name }}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                    </div>
+                                    @if ($data->stage == 4)
+                                        <div class="col-md-12 mb-3 ra_review">
+                                            <div class="group-input">
+                                                <label for="RA assessment">Impact Assessment (By RA)
+                                                    <!-- <span
+                                                        id="asteriskInvi12" style="display: none"
+                                                        class="text-danger">*</span> -->
+                                                    </label>
+                                                <div><small class="text-primary">Please insert "NA" in the data field if it
+                                                        does not require completion</small></div>
+                                                <textarea class="tiny" name="RA_assessment" id="summernote-17">{{ $data1->RA_assessment }}</textarea>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12 mb-3 ra_review">
+                                            <div class="group-input">
+                                                <label for="RA feedback">RA Feedback
+                                                    <!-- <span
+                                                        id="asteriskInvi22" style="display: none"
+                                                        class="text-danger">*</span> -->
+                                                    </label>
+                                                <div><small class="text-primary">Please insert "NA" in the data field if it
+                                                        does not require completion</small></div>
+                                                <textarea class="tiny" name="RA_feedback" id="summernote-18">{{ $data1->RA_feedback }}</textarea>
+                                            </div>
+                                        </div>
+                                    @else
+                                        <div class="col-md-12 mb-3 ra_review">
+                                            <div class="group-input">
+                                                <label for="RA assessment">Impact Assessment (By RA)
+                                                    <!-- <span
+                                                        id="asteriskInvi12" style="display: none"
+                                                        class="text-danger">*</span> -->
+                                                    </label>
+                                                <div><small class="text-primary">Please insert "NA" in the data field if it
+                                                        does not require completion</small></div>
+                                                <textarea disabled class="tiny" name="RA_assessment" id="summernote-17">{{ $data1->RA_assessment }}</textarea>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12 mb-3 ra_review">
+                                            <div class="group-input">
+                                                <label for="RA feedback">RA Feedback
+                                                    <!-- <span
+                                                        id="asteriskInvi22" style="display: none"
+                                                        class="text-danger">*</span> -->
+                                                    </label>
+                                                <div><small class="text-primary">Please insert "NA" in the data field if it
+                                                        does not require completion</small></div>
+                                                <textarea disabled class="tiny" name="RA_feedback" id="summernote-18">{{ $data1->RA_feedback }}</textarea>
+                                            </div>
+                                        </div>
+                                    @endif
+                                    <div class="col-12 ra_review">
+                                        <div class="group-input">
+                                            <label for="RA attachment">RA Attachments</label>
+                                            <div><small class="text-primary">Please Attach all relevant or supporting
+                                                    documents</small></div>
+                                            <div class="file-attachment-field">
+                                                <div disabled class="file-attachment-list" id="RA_attachment">
+                                                    @if ($data1->RA_attachment)
+                                                        @foreach (json_decode($data1->RA_attachment) as $file)
+                                                            <h6 type="button" class="file-container text-dark"
+                                                                style="background-color: rgb(243, 242, 240);">
+                                                                <b>{{ $file }}</b>
+                                                                <a href="{{ asset('upload/' . $file) }}"
+                                                                    target="_blank"><i class="fa fa-eye text-primary"
+                                                                        style="font-size:20px; margin-right:-10px;"></i></a>
+                                                                <a type="button" class="remove-file"
+                                                                    data-file-name="{{ $file }}"><i
+                                                                        class="fa-solid fa-circle-xmark"
+                                                                        style="color:red; font-size:20px;"></i></a>
+                                                            </h6>
+                                                        @endforeach
+                                                    @endif
+                                                </div>
+                                                <div class="add-btn">
+                                                    <div>Add</div>
+                                                    <input disabled
+                                                        {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}
+                                                        type="file" id="myfile" name="RA_attachment[]"
+                                                        oninput="addMultipleFiles(this, 'RA_attachment')"
+                                                        multiple>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 mb-3 ra_review">
+                                        <div class="group-input">
+                                            <label for="RA Review Completed By">RA Review Completed
+                                                By</label>
+                                            <input readonly type="text" value="{{ $data1->RA_by }}"
+                                                name="RA_by" id="RA_by">
+
+
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6 ra_review">
+                                        <div class="group-input">
+                                            <label for="RA Review Completed On">RA Review Completed
+                                                On</label>
+                                            <!-- <div><small class="text-primary">Please select related information</small></div> -->
+                                            <input readonly type="date"id="RA_on" name="RA_on"
+                                                value="{{ $data1->RA_on }}">
+                                        </div>
+                                    </div>
+                                @endif
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
                                 <div class="sub-head">
                                     Production
                                 </div>
@@ -4809,7 +5296,7 @@
                                     </div>
                                 </div>
                             @endif
-                            <!-- @if ($data->stage == 3 || $data->stage == 4)
+                            @if ($data->stage == 3 || $data->stage == 4)
                                 <div class="sub-head">
                                     Other's 1 ( Additional Person Review From Departments If Required)
                                 </div>
@@ -6501,7 +6988,7 @@
                                             value="{{ $data1->Other5_on }}">
                                     </div>
                                 </div>
-                            @endif -->
+                            @endif
                         </div>
                         <div class="button-block">
                             <button style=" justify-content: center; width: 4rem; margin-left: 1px;;" type="submit"{{ $data->stage == 0 || $data->stage == 7 || $data->stage == 9 ? 'disabled' : '' }}

@@ -206,10 +206,10 @@ Route::group(['prefix' => 'rcms'], function () {
             Route::post('deviation/Qa/{id}', [DeviationController::class, 'deviation_qa_more_info'])->name('deviation_qa_more_info');
             Route::get('deviationSingleReport/{id}', [DeviationController::class, 'singleReport'])->name('deviationSingleReport');
 
-            Route::post('launch-extension-deviation/{id}', [DeviationController::class, 'launchExtensionDeviation'])->name('launch-extension-deviation');
-            Route::post('launch-extension-capa/{id}', [DeviationController::class, 'launchExtensionCapa'])->name('launch-extension-capa');
-            Route::post('launch-extension-qrm/{id}', [DeviationController::class, 'launchExtensionQrm'])->name('launch-extension-qrm');
-            Route::post('launch-extension-investigation/{id}', [DeviationController::class, 'launchExtensionInvestigation'])->name('launch-extension-investigation');
+            Route::post('dev-launch-extension-deviation/{id}', [DeviationController::class, 'launchExtensionDeviation'])->name('dev-launch-extension-deviation');
+            Route::post('dev-launch-extension-capa/{id}', [DeviationController::class, 'launchExtensionCapa'])->name('dev-launch-extension-capa');
+            Route::post('dev-launch-extension-qrm/{id}', [DeviationController::class, 'launchExtensionQrm'])->name('dev-launch-extension-qrm');
+            Route::post('dev-launch-extension-investigation/{id}', [DeviationController::class, 'launchExtensionInvestigation'])->name('dev-launch-extension-investigation');
 
             /********************* Deviation Routes Ends *******************/
 
