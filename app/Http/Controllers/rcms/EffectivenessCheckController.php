@@ -152,7 +152,7 @@ class EffectivenessCheckController extends Controller
         $openState->status = "Opened";
         $openState->stage = 1;
         $openState->save();
-        dd($openState->parent_id);
+        // dd($openState->parent_id);
 
 
         $counter = DB::table('record_numbers')->value('counter');
