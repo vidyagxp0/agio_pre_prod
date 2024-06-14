@@ -890,7 +890,7 @@
                                         <div class="group-input">
                                             <label for="record_number"><b>Record Number</b></label>
                                             @if ($data->stage >= 3)
-                                            <input disabled type="text" name="record" id="record" value="{{$data->initiator_group_code}}/LI/{{ date('y') }}/{{ $data->record}}">
+                                            <input disabled type="text" name="record" id="record" value="{{$data->initiator_group_code}}/NoC/{{ date('y') }}/{{ $data->record}}">
                                                 {{-- <input disabled type="text" value="{{ Helpers::getDivisionName($data->division_id) }}/Non Conformance/{{ date('Y') }}/{{ str_pad($data->record, 4, '0', STR_PAD_LEFT) }}"> --}}
                                             @else
                                                 <input disabled type="text" name="record">
@@ -1789,7 +1789,7 @@
                                             <div><small class="text-primary">Please insert "NA" in the data field if it
                                                     does not require completion</small></div>
                                             <textarea class="tiny"
-                                                name="Description_non_conformances"{{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }} id="summernote-1">{{ $data->Description_non_conformances }}</textarea>
+                                                name="Description_non_conformanceS"{{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }} id="summernote-1">{{ $data->Description_non_conformanceS }}</textarea>
                                         </div>
                                         @error('Description_non_conformances')
                                             <div class="text-danger">{{ $message }}</div>
@@ -1909,9 +1909,9 @@
                                                 <div><small class="text-primary">Please Attach all relevant or supporting
                                                         documents</small></div>
                                                 <div class="file-attachment-field">
-                                                    <div disabled class="file-attachment-list" id="Audit_file">
-                                                        @if ($data->Audit_file)
-                                                            @foreach (json_decode($data->Audit_file) as $file)
+                                                    <div disabled class="file-attachment-list" id="hod_file">
+                                                        @if ($data->hod_file)
+                                                            @foreach (json_decode($data->hod_file) as $file)
                                                                 <h6 class="file-container text-dark"
                                                                     style="background-color: rgb(243, 242, 240);">
                                                                     <b>{{ $file }}</b>
@@ -1930,9 +1930,9 @@
                                                         <div>Add</div>
                                                         <input
                                                             {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}
-                                                            type="file" id="HOD_Attachments"
-                                                            name="Audit_file[]"{{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
-                                                            oninput="addMultipleFiles(this, 'Audit_file')" multiple>
+                                                            type="file" id="hod_file"
+                                                            name="hod_file[]"{{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
+                                                            oninput="addMultipleFiles(this, 'hod_file')" multiple>
                                                     </div>
                                                 </div>
                                             </div>
@@ -1943,8 +1943,8 @@
                                                         documents</small></div>
                                                 <div class="file-attachment-field">
                                                     <div disabled class="file-attachment-list" id="Audit_file">
-                                                        @if ($data->Audit_file)
-                                                            @foreach (json_decode($data->Audit_file) as $file)
+                                                        @if ($data->hod_file)
+                                                            @foreach (json_decode($data->hod_file) as $file)
                                                                 <h6 class="file-container text-dark"
                                                                     style="background-color: rgb(243, 242, 240);">
                                                                     <b>{{ $file }}</b>
@@ -1963,9 +1963,9 @@
                                                         <div>Add</div>
                                                         <input disabled
                                                             {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}
-                                                            type="file" id="HOD_Attachments"
-                                                            name="Audit_file[]"{{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
-                                                            oninput="addMultipleFiles(this, 'Audit_file')" multiple>
+                                                            type="file" id="hod_file"
+                                                            name="hod_file[]"{{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
+                                                            oninput="addMultipleFiles(this, 'hod_file')" multiple>
                                                     </div>
                                                 </div>
                                             </div>
@@ -2604,7 +2604,7 @@
                                 </div>
                                 <div class="col-12">
                                     <div class="group-input">
-                                        <label for="QA Initial Attachments">QA Initial Attachments</label>
+                                        <label for="QA Initial Attachments">QA  Initial Attachments</label>
                                         <div><small class="text-primary">Please Attach all relevant or supporting
                                                 documents</small></div>
                                         <div class="file-attachment-field">
@@ -3650,9 +3650,9 @@
                                             value="{{ $data1->QualityAssurance_on }}">
                                     </div>
                                 </div>
-                                <div class="sub-head">
+                                {{-- <div class="sub-head">
                                     Engineering
-                                </div>
+                                </div> --}}
                                 <script>
                                     $(document).ready(function() {
                                         @if($data1->Engineering_review !== 'yes')

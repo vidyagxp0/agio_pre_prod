@@ -594,7 +594,7 @@
                                     <div class="group-input">
                                         <label for="RLS Record Number"><b>Record Number</b></label>
                                         {{-- <input disabled type="text" name="record_number"> --}}
-                                        <input disabled type="text" name="record" id="record" value="---/LI/{{ date('y') }}/{{ $data }}">
+                                        <input disabled type="text" name="record" id="record" value="---/NoC/{{ date('y') }}/{{ $data }}">
 
                                         {{-- value="{{ Helpers::getDivisionName(session()->get('division')) }}/DEV/{{ date('Y') }}/{{ $record_number }}"> --}}
                                         {{-- <div class="static">QMS-EMEA/CAPA/{{ date('Y') }}/{{ $record_number }}</div> --}}
@@ -1366,10 +1366,10 @@
                                         <label for="Description Non Conformance">Description of Non Conformance</label>
                                         <div><small class="text-primary">Please insert "NA" in the data field if it does
                                                 not require completion</small></div>
-                                        <textarea class="tiny" name="Description_non_conformances[]" id="summernote-1" required>
+                                        <textarea class="tiny" name="Description_non_conformanceS[]" id="summernote-1" required>
                                     </textarea>
                                     </div>
-                                    @error('Description_non_conformances[]')
+                                    @error('Description_non_conformanceS[]')
                                         <div class="text-danger">{{ $message }}</div>
                                     @enderror
                                 </div>
@@ -1416,11 +1416,11 @@
                                         <div><small class="text-primary">Please Attach all relevant or supporting
                                                 documents</small></div>
                                         <div class="file-attachment-field">
-                                            <div class="file-attachment-list" id="Audit_file"></div>
+                                            <div class="file-attachment-list" id="initial_file"></div>
                                             <div class="add-btn">
                                                 <div>Add</div>
-                                                <input type="file" id="HOD_Attachments" name="Audit_file[]"
-                                                    oninput="addMultipleFiles(this, 'Audit_file')" multiple>
+                                                <input type="file" id="HOD_Attachments" name="initial_file[]"
+                                                    oninput="addMultipleFiles(this, 'initial_file')" multiple>
                                             </div>
                                         </div>
                                     </div>
@@ -1468,16 +1468,15 @@
                                         <div><small class="text-primary">Please Attach all relevant or supporting
                                                 documents</small></div>
                                         <div class="file-attachment-field">
-                                            <div class="file-attachment-list" id="Audit_file"></div>
+                                            <div class="file-attachment-list" id="hod_file"></div>
                                             <div class="add-btn">
                                                 <div>Add</div>
-                                                <input type="file" id="HOD_Attachments" name="Audit_file[]"
-                                                    oninput="addMultipleFiles(this, 'Audit_file')" multiple>
+                                                <input type="file" id="HOD_Attachments" name="hod_file[]"
+                                                    oninput="addMultipleFiles(this, 'hod_file')" multiple>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-
 
                             </div>
                             <div class="button-block">

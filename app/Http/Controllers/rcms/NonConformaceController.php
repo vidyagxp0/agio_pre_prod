@@ -114,7 +114,7 @@ class NonConformaceController extends Controller
 
         $NonConformance->Product_Batch = $request->Product_Batch;
 
-        $NonConformance->Description_non_conformances = implode(',', $request->Description_non_conformances);
+        $NonConformance->Description_non_conformanceS = implode(',', $request->Description_non_conformanceS);
         $NonConformance->Immediate_Action = implode(',', $request->Immediate_Action);
         $NonConformance->Preliminary_Impact = implode(',', $request->Preliminary_Impact);
         $NonConformance->Product_Details_Required = $request->Product_Details_Required;
@@ -320,6 +320,23 @@ class NonConformaceController extends Controller
 
             $NonConformance->initial_file = json_encode($files);
         }
+
+        if (!empty ($request->hod_file)) {
+            $files = [];
+            if ($request->hasfile('hod_file')) {
+                foreach ($request->file('hod_file') as $file) {
+                    $name = $request->name . 'hod_file' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $file->move('upload/', $name);
+                    $files[] = $name;
+                }
+            }
+
+
+            $NonConformance->hod_file = json_encode($files);
+        }
+       
+        
+
         //dd($request->Initial_attachment);
         if (!empty ($request->Initial_attachment)) {
             $files = [];
@@ -1016,12 +1033,12 @@ class NonConformaceController extends Controller
             $history->action_name = 'Create';
             $history->save();
         }
-        if ($request->Description_non_conformances[0] !== null){
+        if ($request->Description_non_conformanceS[0] !== null){
             $history = new NonConformanceAuditTrails();
             $history->non_conformances_id = $NonConformance->id;
             $history->activity_type = 'Description of Failure Investigation';
             $history->previous = "Null";
-            $history->current = $NonConformance->Description_non_conformances;
+            $history->current = $NonConformance->Description_non_conformanceS;
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -1186,7 +1203,7 @@ class NonConformaceController extends Controller
                         }
                     },
                 ],
-                // 'Description_non_conformances' => [
+                // 'Description_non_conformanceS' => [
                 //     'required',
                 //     'array',
                 //     function($attribute, $value, $fail) {
@@ -1369,7 +1386,7 @@ class NonConformaceController extends Controller
         $NonConformance->others = $request->others;
         $NonConformance->Product_Batch = $request->Product_Batch;
 
-        $NonConformance->Description_non_conformances = $request->Description_non_conformances;
+        $NonConformance->Description_non_conformanceS = $request->Description_non_conformanceS;
         if ($request->related_records) {
             $NonConformance->Related_Records1 =  implode(',', $request->related_records);
         }
@@ -1825,25 +1842,29 @@ class NonConformaceController extends Controller
                     }
                 }
 
+            
+        if (!empty ($request->Initial_attachment)) {
 
-            if (!empty ($request->Initial_attachment)) {
-                $files = [];
+            $files = [];
 
-                if ($NonConformance->Initial_attachment) {
-                    $files = is_array(json_decode($NonConformance->Initial_attachment)) ? $NonConformance->Initial_attachment : [];
+            if ($NonConformance->Initial_attachment) {
+                $existingFiles = json_decode($NonConformance->Initial_attachment, true); // Convert to associative array
+                if (is_array($existingFiles)) {
+                    $files = $existingFiles;
                 }
-
-                if ($request->hasfile('Initial_attachment')) {
-                    foreach ($request->file('Initial_attachment') as $file) {
-                        $name = $request->name . 'Initial_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
-                        $file->move('upload/', $name);
-                        $files[] = $name;
-                    }
-                }
-
-
-                $NonConformance->Initial_attachment = json_encode($files);
+                // $files = is_array(json_decode($NonConformance->Audit_file)) ? $NonConformance->Audit_file : [];
             }
+
+            if ($request->hasfile('Initial_attachment')) {
+                foreach ($request->file('Initial_attachment') as $file) {
+                    $name = $request->name . 'Initial_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $file->move('upload/', $name);
+                    $files[] = $name;
+                }
+            }
+            $NonConformance->Initial_attachment = json_encode($files);
+        }
+
         }
 
 
@@ -1963,14 +1984,38 @@ class NonConformaceController extends Controller
 
             $NonConformance->Capa_attachment = json_encode($files);
         }
-        if (!empty ($request->QA_attachments)) {
+        // if (!empty ($request->QA_attachments)) {
 
+        //     $files = [];
+
+        //     if ($NonConformance->QA_attachments) {
+        //         $files = is_array(json_decode($NonConformance->QA_attachments)) ? $NonConformance->QA_attachments : [];
+        //     }
+
+        //     if ($request->hasfile('QA_attachments')) {
+        //         foreach ($request->file('QA_attachments') as $file) {
+        //             $name = $request->name . 'QA_attachments' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+        //             $file->move('upload/', $name);
+        //             $files[] = $name;
+        //         }
+        //     }
+
+
+        //     $NonConformance->QA_attachments = json_encode($files);
+        // }
+
+        if (!empty($request->QA_attachments)) {
             $files = [];
 
+            // Decode existing files if they exist
             if ($NonConformance->QA_attachments) {
-                $files = is_array(json_decode($NonConformance->QA_attachments)) ? $NonConformance->QA_attachments : [];
+                $existingFiles = json_decode($NonConformance->QA_attachments, true); // Convert to associative array
+                if (is_array($existingFiles)) {
+                    $files = $existingFiles;
+                }
             }
 
+            // Process and add new files
             if ($request->hasfile('QA_attachments')) {
                 foreach ($request->file('QA_attachments') as $file) {
                     $name = $request->name . 'QA_attachments' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
@@ -1979,7 +2024,7 @@ class NonConformaceController extends Controller
                 }
             }
 
-
+            // Encode the files array and update the model
             $NonConformance->QA_attachments = json_encode($files);
         }
 
@@ -2006,6 +2051,32 @@ class NonConformaceController extends Controller
 
             $NonConformance->closure_attachment = json_encode($files);
         }
+
+        
+        if (!empty ($request->hod_file)) {
+
+            $files = [];
+
+            if ($NonConformance->hod_file) {
+                $existingFiles = json_decode($NonConformance->hod_file, true); // Convert to associative array
+                if (is_array($existingFiles)) {
+                    $files = $existingFiles;
+                }
+                // $files = is_array(json_decode($NonConformance->closure_attachment)) ? $NonConformance->closure_attachment : [];
+            }
+
+            if ($request->hasfile('hod_file')) {
+                foreach ($request->file('hod_file') as $file) {
+                    $name = $request->name . 'hod_file' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $file->move('upload/', $name);
+                    $files[] = $name;
+                }
+            }
+
+
+            $NonConformance->hod_file = json_encode($files);
+        }
+    
         if($NonConformance->stage > 0){
 
 
@@ -2299,13 +2370,13 @@ class NonConformaceController extends Controller
             $history->save();
         }
 
-        if ($lastNonConformance->Description_non_conformances != $NonConformance->Description_non_conformances || !empty ($request->comment)) {
+        if ($lastNonConformance->Description_non_conformanceS != $NonConformance->Description_non_conformanceS || !empty ($request->comment)) {
             // return 'history';
             $history = new NonConformanceAuditTrails;
             $history->non_conformances_id = $id;
             $history->activity_type = 'Description of Failure Investigation';
-            $history->previous = $lastNonConformance->Description_non_conformances;
-            $history->current = $NonConformance->Description_non_conformances;
+            $history->previous = $lastNonConformance->Description_non_conformanceS;
+            $history->current = $NonConformance->Description_non_conformanceS;
             $history->comment = $request->comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
