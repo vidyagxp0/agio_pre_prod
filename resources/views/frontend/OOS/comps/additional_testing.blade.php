@@ -16,8 +16,7 @@
                 <div class="group-input">
                     <label for="Report Attachments"> Additional Test Proposal </label>
                     <select name="additional_test_proposal_atp">
-                        <option value="0" {{ $data->additional_test_proposal_atp == '0' ? 'selected' : ''
-                            }}>Enter Your Selection Here</option>
+                        <option value="">Enter Your Selection Here</option>
                         <option value="Yes" {{ $data->additional_test_proposal_atp == 'Yes' ? 'selected' :
                             '' }}>Yes</option>
                         <option value="No" {{ $data->additional_test_proposal_atp == 'No' ? 'selected' : ''
@@ -39,6 +38,7 @@
                 <div class="group-input">
                     <label for="Audit Attachments"> Any Other Actions Required</label>
                     <select name="any_other_actions_required_atp">
+                        <option value="">Enter Your Selection Here</option>
                         <option value="Yes" {{ $data->any_other_actions_required_atp == 'Yes' ? 'selected' :
                             '' }}>Yes</option>
                         <option value="No" {{ $data->any_other_actions_required_atp == 'No' ? 'selected' :

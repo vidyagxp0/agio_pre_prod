@@ -48,79 +48,7 @@
         }
     </style>
 
-    <!-- --------------------------------------button--------------------- -->
-    <script>
-        VirtualSelect.init({
-            ele: '#related_records, #hod'
-        });
 
-        function openCity(evt, cityName) {
-            var i, cctabcontent, cctablinks;
-            cctabcontent = document.getElementsByClassName("cctabcontent");
-            for (i = 0; i < cctabcontent.length; i++) {
-                cctabcontent[i].style.display = "none";
-            }
-            cctablinks = document.getElementsByClassName("cctablinks");
-            for (i = 0; i < cctablinks.length; i++) {
-                cctablinks[i].className = cctablinks[i].className.replace(" active", "");
-            }
-            document.getElementById(cityName).style.display = "block";
-            evt.currentTarget.className += " active";
-
-            // Find the index of the clicked tab button
-            const index = Array.from(cctablinks).findIndex(button => button === evt.currentTarget);
-
-            // Update the currentStep to the index of the clicked tab
-            currentStep = index;
-        }
-
-        const saveButtons = document.querySelectorAll(".saveButton");
-        const nextButtons = document.querySelectorAll(".nextButton");
-        const form = document.getElementById("step-form");
-        const stepButtons = document.querySelectorAll(".cctablinks");
-        const steps = document.querySelectorAll(".cctabcontent");
-        let currentStep = 0;
-
-        function nextStep() {
-            // Check if there is a next step
-            if (currentStep < steps.length - 1) {
-                // Hide current step
-                steps[currentStep].style.display = "none";
-
-                // Show next step
-                steps[currentStep + 1].style.display = "block";
-
-                // Add active class to next button
-                stepButtons[currentStep + 1].classList.add("active");
-
-                // Remove active class from current button
-                stepButtons[currentStep].classList.remove("active");
-
-                // Update current step
-                currentStep++;
-            }
-        }
-
-        function previousStep() {
-            // Check if there is a previous step
-            if (currentStep > 0) {
-                // Hide current step
-                steps[currentStep].style.display = "none";
-
-                // Show previous step
-                steps[currentStep - 1].style.display = "block";
-
-                // Add active class to previous button
-                stepButtons[currentStep - 1].classList.add("active");
-
-                // Remove active class from current button
-                stepButtons[currentStep].classList.remove("active");
-
-                // Update current step
-                currentStep--;
-            }
-        }
-    </script>
 
     <!-- -----------------------------grid-1----------------------------script -->
     <script>
@@ -136,7 +64,7 @@
                         '<div class="col-lg-6 new-date-data-field">' +
                         '<div class="group-input input-date">' +
                         '<div class="calenderauditee">' +
-                        '<input type="text" readonly id="info_mfg_date_' + serialNumber + '" placeholder="DD-MMM-YYYY" />' +
+                        '<input type="text" readonly id="info_mfg_date_' + serialNumber + '" placeholder="DD-MM-YYYY" />' +
                         '<input type="date" name="info_product_material[' + serialNumber + '][info_mfg_date]" value="" class="hide-input" oninput="handleDateInput(this, \'info_mfg_date_' + serialNumber + '\')">' +
                         '</div>' +
                         '</div>' +
@@ -146,7 +74,7 @@
                         '<div class="col-lg-6 new-date-data-field">' +
                         '<div class="group-input input-date">' +
                         '<div class="calenderauditee">' +
-                        '<input type="text" readonly id="info_expiry_date' + serialNumber + '" placeholder="DD-MMM-YYYY" />' +
+                        '<input type="text" readonly id="info_expiry_date' + serialNumber + '" placeholder="DD-MM-YYYY" />' +
                         '<input type="date" name="info_product_material[' + serialNumber + '][info_expiry_date]" value="" class="hide-input" oninput="handleDateInput(this, \'info_expiry_date' + serialNumber + '\')">' +
                         '</div>' +
                         '</div>' +
@@ -159,6 +87,7 @@
                         '<td><input type="text" name="info_product_material[' + serialNumber + '][info_process_sample_stage]" value=""></td>' +
                         '<td><select name="info_product_material[' + serialNumber + '][info_packing_material_type]"><option value="">--Select--</option><option value="Primary">Primary</option><option value="Secondary">Secondary</option><option value="Tertiary">Tertiary</option><option value="Not Applicable">Not Applicable</option></select></td>' +
                         '<td><select name="info_product_material[' + serialNumber + '][info_stability_for]"><option value="">--Select--</option><option vlaue="Submission">Submission</option><option vlaue="Commercial">Commercial</option><option vlaue="Pack Evaluation">Pack Evaluation</option><option vlaue="Not Applicable">Not Applicable</option></select></td>' +
+                        '<td><button type="text" class="removeRowBtn">Remove</button></td>' +
                     '</tr>';
                     // for (var i = 0; i < users.length; i++) {
                     //     html += '<option value="' + users[i].id + '">' + users[i].name + '</option>';
@@ -189,6 +118,7 @@
                         '<td><input type="text" name="details_stability[' + serialNumber + '][stability_study_pack_details]"></td>'+
                         '<td><input type="text" name="details_stability[' + serialNumber + '][stability_study_specification_no]"></td>'+
                         '<td><input type="text" name="details_stability[' + serialNumber + '][stability_study_sample_description]"></td>'+
+                        '<td><button type="text" class="removeRowBtn">Remove</button></td>' +
                         '</tr>';
                     return html;
                 }
@@ -200,32 +130,42 @@
         });
     </script>
     <!-- ------------------------------grid-3-------------------------script -->
-    <script>
+    
+
+<script>
         $(document).ready(function() {
             $('#oos_details').click(function(e) {
                 function generateTableRow(serialNumber) {
                     var html =
                         '<tr>' +
-                            '<td><input disabled type="text" name="serial[]" value="' + serialNumber + '"></td>' +
-                            '<td><input type="text"  name="oos_details[' + serialNumber + '][oos_arnumber]"value=""></td>'+
-                            '<td><input type="text" name="oos_details[' + serialNumber + '][oos_test_name]"></td>' +
-                            '<td><input type="text" name="oos_details[' + serialNumber + '][oos_results_obtained]"></td>' +
-                            '<td><input type="text" name="oos_details[' + serialNumber + '][oos_specification_limit]"></td>' +
-                            '<td><input type="text" name="oos_details[' + serialNumber + '][oos_details_obvious_error]"></td>' +
-                            '<td><input type="file" name="oos_details[' + serialNumber + '][oos_file_attachment]"></td>' +
+                            '<td><input disabled type="text" name="oos_detail['+ serialNumber +'][serial]" value="' + serialNumber +
+                            '"></td>' +
+                            '<td><input type="text" name="oos_detail['+ serialNumber +'][oos_arnumber]"></td>'+
+                            '<td><input type="text" name="oos_detail['+ serialNumber +'][oos_test_name]"></td>' +
+                            '<td><input type="text" name="oos_detail['+ serialNumber +'][oos_results_obtained]"></td>' +
+                            '<td><input type="text" name="oos_detail['+ serialNumber +'][oos_specification_limit]"></td>' +
+                            '<td><input type="text" name="oos_detail['+ serialNumber +'][oos_details_obvious_error]"></td>' +
+                            '<td><input type="file" name="oos_detail['+ serialNumber +'][oos_file_attachment]"></td>' +
                             '<td>' +
                             '<div class="col-lg-6 new-date-data-field">' +
                             '<div class="group-input input-date">' +
                             '<div class="calenderauditee">' +
-                            '<input type="text" readonly id="oos_submit_on' + serialNumber + '" placeholder="DD-MMM-YYYY" />' +
+                            '<input type="text" readonly id="oos_submit_on' + serialNumber + '" placeholder="DD-MM-YYYY" />' +
                             '<input type="date" name="oos_details[' + serialNumber + '][oos_submit_on]" value="" class="hide-input" oninput="handleDateInput(this, \'oos_submit_on' + serialNumber + '\')">' +
                             '</div>' +
                             '</div>' +
                             '</div>' +
                             '</td>' +
-                            '<td><input type="text" name="oos_details[' + serialNumber + '][oos_submit_by]"></td>' +
+                            '<td><input type="text" name="oos_detail['+ serialNumber +'][oos_submit_by]"></td>' +
+                            '<td><button type="text" class="removeRowBtn">Remove</button></td>' +
+
                         '</tr>';
-                   return html;
+                    // for (var i = 0; i < users.length; i++) {
+                    //     html += '<option value="' + users[i].id + '">' + users[i].name + '</option>';
+                    // }
+
+                    // html += '</select></td>' + 
+                    return html;
                 }
 
                 var tableBody = $('#oos_details_details tbody');
@@ -250,7 +190,7 @@
                             '<div class="col-lg-6 new-date-data-field">' +
                             '<div class="group-input input-date">' +
                             '<div class="calenderauditee">' +
-                            '<input type="text" readonly id="info_oos_reported_date' + serialNumber + '" placeholder="DD-MMM-YYYY" />' +
+                            '<input type="text" readonly id="info_oos_reported_date' + serialNumber + '" placeholder="DD-MM-YYYY" />' +
                             '<input type="date" name="oos_capa[' + serialNumber + '][info_oos_reported_date]" value="" class="hide-input" oninput="handleDateInput(this, \'info_oos_reported_date' + serialNumber + '\')">' +
                             '</div>' +
                             '</div>' +
@@ -263,14 +203,16 @@
                             '<div class="col-lg-6 new-date-data-field">' +
                             '<div class="group-input input-date">' +
                             '<div class="calenderauditee">' +
-                            '<input type="text" readonly id="info_oos_closure_date' + serialNumber + '" placeholder="DD-MMM-YYYY" />' +
+                            '<input type="text" readonly id="info_oos_closure_date' + serialNumber + '" placeholder="DD-MM-YYYY" />' +
                             '<input type="date" name="oos_capa[' + serialNumber + '][info_oos_closure_date]" value="" class="hide-input" oninput="handleDateInput(this, \'info_oos_closure_date' + serialNumber + '\')">' +
                             '</div>' +
                             '</div>' +
                             '</div>' +
                         '</td>' +
-                        '<td><select name="oos_capa['+ serialNumber +'][info_oos_capa_requirement]"><option value="yes">Yes</option><option value="No">No</option></select></td>' +
+                        '<td><select name="oos_capa['+ serialNumber +'][info_oos_capa_requirement]"><option vlaue="">--select--</option><option value="yes">Yes</option><option value="No">No</option></select></td>' +
                         '<td><input type="text" name="oos_capa[' + serialNumber + '][info_oos_capa_reference_number]" value=""></td>' +
+                        '<td><button type="text" class="removeRowBtn">Remove</button></td>' +
+
                         '</tr>';
                     return html;
                 }
@@ -298,6 +240,8 @@
                         '<td><input type="text" name="oos_conclusion[' + serialNumber + '][summary_results]"></td>' +
                         '<td><input type="text" name="oos_conclusion[' + serialNumber + '][summary_results_analyst_name]"></td>' +
                         '<td><input type="text" name="oos_conclusion[' + serialNumber + '][summary_results_remarks]"></td>' +
+                        '<td><button type="text" class="removeRowBtn">Remove</button></td>' +
+
                     '</tr>';
 
                     return html;
@@ -326,7 +270,8 @@
                         '<td><input type="text" name="oos_conclusion_review[' + serialNumber + '][conclusion_review_batch_no]"></td>' +
                         '<td><input type="text" name="oos_conclusion_review[' + serialNumber + '][conclusion_review_any_other_information]"></td>' +
                         '<td><input type="text" name="oos_conclusion_review[' + serialNumber + '][conclusion_review_action_affecte_batch]"></td>' +
-                    '</tr>';
+                        '<td><button type="text" class="removeRowBtn">Remove</button></td>' +
+                        '</tr>';
                     return html;
                 }
 
@@ -342,13 +287,11 @@
     <div class="form-field-head">
         <div class="division-bar pt-3">
             <strong>Site Division/Project</strong> :
-            QMS-North America / OOS
+            {{ Helpers::getDivisionName(session()->get('division')) }} / OOS Chemical
         </div>
     </div>
 
-
-
-    {{-- ======================================
+{{-- ======================================
                     DATA FIELDS
     ======================================= --}}
     <div id="change-control-fields">
@@ -525,7 +468,13 @@
             referenceContainer.parentNode.insertBefore(newReference, referenceContainer.nextSibling);
         }
     </script>
-
+    <script>
+        var maxLength = 255;
+        $('#docname').keyup(function() {
+            var textlen = maxLength - $(this).val().length;
+            $('#rchars').text(textlen);
+        });
+    </script>
     <script>
         VirtualSelect.init({
             ele: '#facility_name, #group_name, #auditee, #audit_team'
@@ -543,6 +492,84 @@
             }
             document.getElementById(cityName).style.display = "block";
             evt.currentTarget.className += " active";
+        }
+    </script>
+    <script>
+        $(document).on('click', '.removeRowBtn', function() {
+            $(this).closest('tr').remove();
+        })
+    </script>
+        <!-- --------------------------------------button--------------------- -->
+        <script>
+        VirtualSelect.init({
+            ele: '#related_records, #hod'
+        });
+
+        function openCity(evt, cityName) {
+            var i, cctabcontent, cctablinks;
+            cctabcontent = document.getElementsByClassName("cctabcontent");
+            for (i = 0; i < cctabcontent.length; i++) {
+                cctabcontent[i].style.display = "none";
+            }
+            cctablinks = document.getElementsByClassName("cctablinks");
+            for (i = 0; i < cctablinks.length; i++) {
+                cctablinks[i].className = cctablinks[i].className.replace(" active", "");
+            }
+            document.getElementById(cityName).style.display = "block";
+            evt.currentTarget.className += " active";
+
+            // Find the index of the clicked tab button
+            const index = Array.from(cctablinks).findIndex(button => button === evt.currentTarget);
+
+            // Update the currentStep to the index of the clicked tab
+            currentStep = index;
+        }
+
+        const saveButtons = document.querySelectorAll(".saveButton");
+        const nextButtons = document.querySelectorAll(".nextButton");
+        const form = document.getElementById("step-form");
+        const stepButtons = document.querySelectorAll(".cctablinks");
+        const steps = document.querySelectorAll(".cctabcontent");
+        let currentStep = 0;
+
+        function nextStep() {
+            // Check if there is a next step
+            if (currentStep < steps.length - 1) {
+                // Hide current step
+                steps[currentStep].style.display = "none";
+
+                // Show next step
+                steps[currentStep + 1].style.display = "block";
+
+                // Add active class to next button
+                stepButtons[currentStep + 1].classList.add("active");
+
+                // Remove active class from current button
+                stepButtons[currentStep].classList.remove("active");
+
+                // Update current step
+                currentStep++;
+            }
+        }
+
+        function previousStep() {
+            // Check if there is a previous step
+            if (currentStep > 0) {
+                // Hide current step
+                steps[currentStep].style.display = "none";
+
+                // Show previous step
+                steps[currentStep - 1].style.display = "block";
+
+                // Add active class to previous button
+                stepButtons[currentStep - 1].classList.add("active");
+
+                // Remove active class from current button
+                stepButtons[currentStep].classList.remove("active");
+
+                // Update current step
+                currentStep--;
+            }
         }
     </script>
 @endsection

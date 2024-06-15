@@ -307,7 +307,7 @@
                 <div class="d-flex justify-items-center align-items-center border border-1 border-dark p-2 border-start-0">Under Phase I Investigation</div>
                 @endif
 
-                @if ($data->stage >= 4 && $data->stage != 5)
+                @if ($data->stage >= 4 )
                     <div class=" active d-flex justify-items-center align-items-center border border-1 border-dark p-2 border-start-0"> Under Phase I Correction</div>
                 @else
                     <div class=" d-flex justify-items-center align-items-center border border-1 border-dark p-2 border-start-0"> Under Phase I Correction</div>
