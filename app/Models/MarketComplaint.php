@@ -9,11 +9,11 @@ class MarketComplaint extends Model
 {
     use HasFactory;
     protected $table='marketcompalints';
-   //  protected $fillable = [
+    protected $fillable = [
    //      // General Information
    //      'initiator_id_gi',
    //      'division_id_gi',
-   //      'initiator_group_gi',
+        'initiator_group_gi',
    //      'intiation_date_gi',
    //      'due_date_gi',
    //      'initiator_group_code_gi',
@@ -73,7 +73,7 @@ class MarketComplaint extends Model
    //      // {{-- grids --}}
 
        
-   //  ];
+    ];
 
                   // {{-- -casting --}}
 
