@@ -18,14 +18,14 @@ $rowSpanCount = $incidentReportsCollection->sum(function($secondIncident) {
     <td rowspan="{{ $rowSpanCount }}">{{ $lablog->Initiator_Group }}</td>
     <td rowspan="{{ $rowSpanCount }}">{{ $lablog->division ? $lablog->division->name : '-' }}</td>
     <td rowspan="{{ $rowSpanCount }}">{{ $lablog->short_desc }}</td>
+    <td rowspan="{{ $rowSpanCount}}">{{$lablog->type_incidence_ia;}}</td>
     @php
         $firstLablogPrinted = true;
     @endphp
 <td>{{ isset($dataaas['name_of_product']) ? $dataaas['name_of_product'] : '' }}</td>
 <td>{{ isset($dataaas['batch_no']) ? $dataaas['batch_no'] : '' }}</td>
-    {{-- <td>{{$lablog->Incident_Type}}</td> --}}
-    <td>{{$lablog->type_incidence_ia}}</td>
-                <td></td>
+
+
                 <td>{{ $lablog->due_date }}</td>
                 <td>{{ $lablog->closure_completed_on }}</td>
                 <td>{{ $lablog->status }}</td>

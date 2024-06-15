@@ -62,7 +62,7 @@ class LogFilterController extends Controller
            
             $capa = $query->get();
 
-            $htmlData = view('frontend.forms.Logs.comps.capa_data', compact('capa'))->render();
+            $htmlData = view('frontend.forms.Logs.filterData.capa_data', compact('capa'))->render();
 
             $res['body'] = $htmlData;
 
@@ -90,14 +90,14 @@ class LogFilterController extends Controller
                 
                 $query = FailureInvestigation::query();
                 
-                if ($request->department)
+                if ($request->department_failureLog)
                 {
-                    $query->where('Initiator_Group', $request->department);
+                    $query->where('Initiator_Group', $request->department_failureLog);
                 }
     
-                if($request->division_id)
+                if($request->div_id_failure)
                 {
-                    $query->where('division_id',$request->division_id);
+                    $query->where('division_id',$request->div_id_failure);
                 }
     
                 
@@ -107,9 +107,9 @@ class LogFilterController extends Controller
                 //     $query->where('doc_change',$request->nchange);
                 // }
     
-                if ($request->period) {
+                if ($request->period_failure) {
                     $currentDate = Carbon::now();
-                    switch ($request->period) {
+                    switch ($request->period_failure) {
                         case 'Yearly':
                             $startDate = $currentDate->startOfYear();
                             break;
@@ -128,18 +128,20 @@ class LogFilterController extends Controller
                     }
                 }
     
-                if ($request->date_from) {
-                    $query->whereDate('intiation_date', '>=', Carbon::parse($request->date_from));
+                
+                if ($request->dateFailureFrom) {
+               
+                    $datefrom = Carbon::parse($request->dateFailureFrom)->startOfDay();
+                   
+                    $query->whereDate('intiation_date', '>=', $datefrom);
                 }
                 
-                if ($request->date_to) {
-                    $query->whereDate('intiation_date', '<=', Carbon::parse($request->date_to));
+                if ($request->dateFailureTo) {
+                    $dateTo = Carbon::parse($request->dateFailureTo)->startOfDay();
+                    $query->whereDate('intiation_date', '>=', $dateTo);
+
                 }
                 
-                // if($request->error_er)
-                // {
-                //     $query->where('type_of_error',$request->error_er);
-                // }
                 
     
     
@@ -431,23 +433,32 @@ class LogFilterController extends Controller
             
             $query = OutOfCalibration::query();
             
-            if ($request->department_ooc)
+            if ($request->department_outofcalibration)
             {
-                $query->where('Initiator_Group', $request->department_ooc);
+                $query->where('Initiator_Group', $request->department_outofcalibration);
             }
 
-            if($request->div_id)
+            if($request->div_id_outofcalibration)
             {
-                $query->where('division_id',$request->div_id);
+                $query->where('division_id',$request->div_id_outofcalibration);
             }
+
+            if ($request->instrument_equipment && $request->instrument_value) {
+                if ($request->instrument_equipment === 'instrument_name') {
+                    $query->where('instrument_name', $request->instrument_value);
+                } elseif ($request->instrument_equipment === 'instrument_id') {
+                    $query->where('instrument_id', $request->instrument_value);
+                }
+            }
+    
             // if($request->categoryofcomplaints)
             // {
             //     $query->where('categorization_of_complaint_gi',$request->categoryofcomplaints);
             // }
 
-            if ($request->period_lab) {
+            if ($request->period_outofcalibration) {
                 $currentDate = Carbon::now();
-                switch ($request->period_lab) {
+                switch ($request->period_outofcalibration) {
                     case 'Yearly':
                         $startDate = $currentDate->startOfYear();
                         break;
@@ -479,16 +490,10 @@ class LogFilterController extends Controller
               
                 $query->whereDate('intiation_date', '<=', $dateo);
             }
-            
-            if($request->instrmentGrid)
-            {
-             $querys = OutOfCalibration::with('InstrumentDetails')->get();
-
-                $q
 
             $oocs = $query->get();
 
-            $htmlData = view('frontend.forms.Logs.comps.outofcalibration_data', compact('oocs'))->render();
+            $htmlData = view('frontend.forms.Logs.filterData.outofcalibration_data', compact('oocs'))->render();
             
 
             $res['body'] = $htmlData;

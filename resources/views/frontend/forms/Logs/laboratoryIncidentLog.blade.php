@@ -155,7 +155,7 @@
                                             <th>Type of Incident </th>
                                             <th>Name of Product</th>
                                             <th>Batch Number / A.R No. </th>
-                                            <th>Name of Analyst</th>
+                                            {{-- <th>Name of Analyst</th> --}}
                                             <th>Due Date </th>
                                             <th>Clouser Date </th>
                                             <th>Status</th>

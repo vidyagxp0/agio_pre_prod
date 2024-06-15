@@ -934,7 +934,7 @@
         <div class="group-input">
             <label for="Type Of Incidence"><b>Type Of Incidence</b></label>
             <select name="type_incidence_ia" id="initiator_group">
-                <option value="0" {{ $data->type_incidence_ia == '0' ? 'selected' : '' }}>-- Select --</option>
+                <option value="NA" {{ $data->type_incidence_ia == '0' ? 'selected' : '' }}>-- Select --</option>
                 <option value="Analyst Error" {{ $data->type_incidence_ia == 'Analyst Error' ? 'selected' : '' }}>Analyst Error</option>
                 <option value="Instrument Error" {{ $data->type_incidence_ia == 'Instrument Error' ? 'selected' : '' }}>Instrument Error</option>
                 <option value="Atypical Error" {{ $data->type_incidence_ia == 'Atypical Error' ? 'selected' : '' }}>Atypical Error</option>

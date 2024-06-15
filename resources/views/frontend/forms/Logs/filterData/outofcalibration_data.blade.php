@@ -1,9 +1,11 @@
 @forelse ($oocs as $ooclog)
-                                            
+
+                                      
            @php
                     $productDetails= $ooclog->InstrumentDetails;
                
-           @endphp          
+           @endphp 
+                    
                     @foreach ($productDetails['data'] as $data)
                     <tr>
                                             
@@ -15,7 +17,10 @@
                         <td>{{$ooclog->initiator ? $ooclog->initiator->name: '-'}}</td>
                         <td>{{$ooclog->division ? $ooclog->division->name:'-'}}</td>
                         <td>{{$ooclog->initiator_group_code}}</td>
-                        <td>{{$ooclog->initiator ? $ooclog->initiator->name:'-'}}</td>
+                        
+                       
+                        <td>{{$ooclog->assignedUser ? $ooclog->assignedUser->name:'-'}}</td>
+                       
                         <td>{{$ooclog->ooc_due_date}}</td>
                         <td>{{$ooclog->due_date}}</td>
                         <td>{{$ooclog->approved_ooc_completed_on}}</td>

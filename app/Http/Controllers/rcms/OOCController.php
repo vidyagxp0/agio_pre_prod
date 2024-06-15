@@ -49,6 +49,7 @@ class OOCController extends Controller
         $data->assign_to = $request->assign_to;
         $data->due_date = $request->due_date;
         $data->Initiator_Group= $request->Initiator_Group;
+        $data->intiation_date = $request->intiation_date;
         $data->initiator_group_code= $request->initiator_group_code;
         $data->initiated_through = $request->initiated_through;
         $data->initiated_if_other= $request->initiated_if_other;
@@ -1281,6 +1282,7 @@ if (!empty($data->initiated_through_impact_closure_ooc)) {
         $ooc = OutOfCalibration::find($id);
         $lastDocumentOocs = $ooc->replicate();
         $ooc->initiator_id = Auth::user()->id;
+        $ooc->intiation_date = $request->intiation_date;
         $ooc->assign_to = $request->assign_to;
         $ooc->due_date = $request->due_date;
         // $ooc->due_date = $validatedData['due_date'];
@@ -2915,14 +2917,7 @@ public function OOCAuditTrial($id){
     $today = Carbon::now()->format('d-m-y');
     $document = OOCAuditTrail::where('ooc_id',$id)->first();
     $auditrecord->initiator = User::where('id',$auditrecord->initiator_id)->value('name');
-    // dd($auditrecord->initiator);
-    
 
-
-//   foreach($document as $d)
-//   {
-//     return $document;
-//   }
     return view('frontend.OOC.audit-trail',compact('audit','document','today','auditrecord'));
 
 

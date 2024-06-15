@@ -108,15 +108,7 @@
 
                                             </select>
                                         </div>
-                                        <div class="filter-item">
-                                        <label for="criteria">Division</label>
-                                        <select class="custom-select" id="division_idcapa">
-                                            <option value="Null">Select Records</option>
-                                            <option value="1">Corporate</option>
-                                            <option value="2">Plant</option>
-
-                                        </select>
-                                        </div>
+   
                                         <div class="filter-item">
                                         <label for="date_from_capa">Date From</label>
                                         <input type="date" class="custom-select" id="date_from_capa">

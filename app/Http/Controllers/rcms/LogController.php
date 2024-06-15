@@ -17,6 +17,10 @@ use App\Models\OutOfCalibration;
 use App\Models\RiskManagement;
 use App\Models\InternalAudit;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use App\Models\User;
+
+
 
 class LogController extends Controller
 {
@@ -72,15 +76,19 @@ class LogController extends Controller
              case 'market-complaint':
                 
                 $marketcomplaint = MarketComplaint::with('product_details')->get();
-
+                
                     return view('frontend.forms.logs.Market-complaint-registerLog',compact('marketcomplaint'));
                         
                     break;        
                         
             case 'ooc':
             
-                $oocs = OutOfCalibration::with('InstrumentDetails')->get();
-                    return view('frontend.forms.logs.OOC_log' , compact('oocs'));
+                $oocs = OutOfCalibration::with('InstrumentDetails', 'assignedUser')->get();
+                
+                $users = User::all();
+                
+        
+                    return view('frontend.forms.logs.OOC_log' , compact('oocs','users'));
               
                                               
             case 'oot':

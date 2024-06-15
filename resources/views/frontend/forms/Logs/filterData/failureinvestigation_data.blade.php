@@ -1,12 +1,11 @@
 @forelse ($failure as $failurelog)
                                             
 <tr>
-    
     <td>{{$loop->index+1}}</td>
     <td>{{$failurelog->intiation_date}}</td>
     <td>{{$failurelog->short_description}}</td>
     <td>{{$failurelog->division ? $failurelog->division->name : '-'}}/FI/{{date('y')}}/{{$failurelog->record}}</td>
-    <td>{{ $failurelog->initiator ? $failurelog->initiator->name : '-'}}</td>
+    <td>{{$failurelog->initiator ? $failurelog->initiator->name : '-'}}</td>
     <td>{{$failurelog->Initiator_Group}}</td>
     <td>{{$failurelog->division ? $failurelog->division->name : '-'}}</td>
     <td>{{$failurelog->due_date}}</td>

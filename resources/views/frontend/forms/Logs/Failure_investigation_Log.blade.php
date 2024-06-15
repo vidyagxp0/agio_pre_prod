@@ -110,10 +110,11 @@
                                         </div>
                                         <div class="filter-item">
                                             <label for="division">Date From</label>
-                                            <input type="date" class="custom-select" id="date_from_failure">                                        </div>
+                                            <input type="date" class="custom-select" id="date_from_failure" >
+                                                                                </div>
                                         <div class="filter-item">
                                             <label for="originator">Date To</label>
-                                            <input type="date" class="custom-select" id="date_to_failure">
+                                            <input type="date" class="custom-select" id="date_to_failure" >
 
                                             
                                         </div> 
@@ -196,34 +197,41 @@
         $('#spinner').hide();
 
 const filterData = {
-    department_lab: null,
-    div_id: null,
-    period: null,
-    date_from: null,
-    date_to: null
+    department_failureLog: null,
+    div_id_failure: null,
+    period_failure: null,
+    dateFailureFrom: null,
+    dateFailureTo: null
 
 }
 
 $('#initiator_group').change(function() {
-    filterData.department_lab = $(this).val();
+    filterData.department_failureLog = $(this).val();
     filterRecords()
 });
 
 
 
   $('#division_id').change(function() {
-    filterData.div_id = $(this).val();
+    filterData.div_id_failure = $(this).val();
     filterRecords();
  });
- $('#date_from, #date_to').change(function() {
-        filterData.date_from = $('#date_from').val();
-        filterData.date_to = $('#date_to').val();
-
+ 
+ $('#date_from_failure').change(function() {
+        filterData.dateFailureFrom = $(this).val();
         filterRecords();
     });
 
+
+    $('#date_to_failure').change(function() {
+        filterData.dateFailureFrom = $(this).val();
+        // console.log('Date To changed:', filterData.dateTo);
+        filterRecords();
+    });
+
+
  $('#datewise').change(function() {
-filterData.period_lab = $(this).val();
+filterData.period_failure = $(this).val();
 filterRecords();
 });
 
@@ -240,7 +248,7 @@ async function filterRecords()
     try {
 
 
-        const postUrl = "{{ route('api.failureInv.filter') }}";
+        const postUrl = "{{ route('api.failure.filter') }}";
 
         const res = await axios.post(postUrl, filterData);
 

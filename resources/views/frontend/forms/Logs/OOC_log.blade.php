@@ -109,11 +109,11 @@
                                         </div>
                                         <div class="filter-item">
                                             <label for="date_from">Date From</label>
-                                            <input type="date" class="custom-select" id="date_ooc_from">
+                                            <input type="date" class="custom-select" id="date_ooc_from_ooc">
                                         </div>
                                         <div class="filter-item">
                                             <label for="date_to">Date To</label>
-                                            <input type="date" class="custom-select" id="date_ooc_to">
+                                            <input type="date" class="custom-select" id="date_ooc_to_ooc">
 
                                             </select>
                                         </div> 
@@ -196,51 +196,53 @@
         $('#spinner').hide();
 
 const filterData = {
-    department_ooc: null,
-    div_id: null,
-    period_ooc: null,
+    department_outofcalibration: null,
+    div_id_outofcalibration: null,
+    period_outofcalibration: null,
     date_OOC_from: null,
     date_OOC_to: null
-    date_OOC_to: null,
-    instrmentGrid:null
+    // date_OOC_to: null,
+
 
 }
 
 $('#initiator_group').change(function() {
-    filterData.department_ooc = $(this).val();
+    filterData.department_outofcalibration = $(this).val();
     filterRecords()
 });
 
  // Division ID change event
 
   $('#division_id').change(function() {
-    filterData.div_id = $(this).val();
+    filterData.div_id_outofcalibration = $(this).val();
     filterRecords();
  });
- $('#date_ooc_from, #date_ooc_to').change(function() {
-        filterData.date_OOC_from = $('#date_ooc_from').val();
-        filterData.date_OOC_to = $('#date_ooc_to').val();
-        // console.log('Date From:', filterData.dateFrom);
-        // console.log('Date To:', filterData.dateTo);
+ $('#date_ooc_from_ooc, #date_ooc_to_ooc').change(function() {
+        filterData.date_OOC_from = $('#date_ooc_from_ooc').val();
+        filterData.date_OOC_to = $('#date_ooc_to_ooc').val();
+       
         filterRecords();
     });
 
     
-$('#instrument_equipment').change(function() {
-    filterData.instrmentGrid = $(this).val();
-    filterRecords()
-});
+
 
  $('#datewise').change(function() {
-filterData.period_ooc = $(this).val();
+filterData.period_outofcalibration = $(this).val();
 filterRecords();
 });
 
-//  $('#deviationdate').change(function() {
-//     filterData.deviationDate = $(this).val();
-//     console.log('Deviation date changed:', filterData.deviationDate);
-//     filterRecords();
-//  });
+$('#instrument_equipment').change(function() {
+        filterData.instrument_equipment = $(this).val();
+        filterRecords();
+    });
+
+    $('#instrument_value').change(function() {
+        filterData.instrument_value = $(this).val();
+        filterRecords();
+    });
+
+
 
 
 

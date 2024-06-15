@@ -15,10 +15,10 @@ $productDetails= $marketlog->product_details;
     <td>{{ $marketlog->initiator_group }}</td>
     <td>{{ $marketlog->division ? $marketlog->division->name : '-' }}</td>
     <td>{{ $data['info_product_name']}}</td>
-    <td>{{$data['info_mfg_date']}}</td>
-    <td>{{$data['info_expiry_date']}} </td>
-    <td>{{$data['info_batch_size']}}<td>
-    <td>{{ $marketlog->details_of_nature_market_complaint_gi }}</td>
+    <td>{{$data['info_batch_no']}}</td>
+    <td>{{$data['info_mfg_date']}} </td>
+    <td>{{$data['info_expiry_date']}}<td>
+    {{-- <td>{{ $marketlog->details_of_nature_market_complaint_gi }}</td> --}}
     <td>{{ $marketlog->categorization_of_complaint_gi }}</td>
     <td>{{ $marketlog->complaint_reported_on_gi }}</td>
     <td>{{ $marketlog->due_date_gi }}</td>

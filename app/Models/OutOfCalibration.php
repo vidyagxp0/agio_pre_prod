@@ -82,4 +82,15 @@ class OutOfCalibration extends Model
         return $this->hasOne(OOC_Grid::class,'ooc_id');
     }
     
+    public function division()
+    {
+        return $this->belongsTo(QMSDivision::class,'division_id');
+
+    }
+    public function initiator(){
+        return $this->belongsTo(User::class,'initiator_id');
+    }
+    public function assignedUser(){
+        return $this->belongsTo(User::class,'assign_to');
+    }
 }
