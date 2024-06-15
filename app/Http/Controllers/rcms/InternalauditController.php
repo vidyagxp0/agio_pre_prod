@@ -250,6 +250,12 @@ class InternalauditController extends Controller
         $auditfacilityGrid->data = $request->auditfacilityChecklist;
         $auditfacilityGrid->save();
 
+        $auditMachinesGrid = InternalAuditChecklistGrid::where(['ia_id' => $internalAudit->id, 'identifier' => 'auditMachinesChecklist'])->firstOrNew();
+        $auditMachinesGrid->ia_id = $internalAudit->id;
+        $auditMachinesGrid->identifier = 'auditMachinesChecklist';
+        $auditMachinesGrid->data = $request->auditMachinesChecklist;
+        $auditMachinesGrid->save();
+
         $internalAudit->status = 'Opened';
         $internalAudit->stage = 1;
 
@@ -1559,6 +1565,12 @@ $Checklist_Capsule->save();
         $auditfacilityGrid->data = $request->auditfacilityChecklist;
         $auditfacilityGrid->save();
 
+        $auditMachinesGrid = InternalAuditChecklistGrid::where(['ia_id' => $ia_id, 'identifier' => 'auditMachinesChecklist'])->firstOrNew();
+        $auditMachinesGrid->ia_id = $ia_id;
+        $auditMachinesGrid->identifier = 'auditMachinesChecklist';
+        $auditMachinesGrid->data = $request->auditMachinesChecklist;
+        $auditMachinesGrid->save();
+
         $data3 = InternalAuditGrid::where('audit_id',$internalAudit->id)->where('type','internal_audit')->first();
         if (!empty($request->audit)) {
             $data3->area_of_audit = serialize($request->audit);
@@ -2154,11 +2166,13 @@ $Checklist_Capsule->save();
         $auditAssessmentChecklist = InternalAuditChecklistGrid::where(['ia_id' => $id, 'identifier' => 'auditAssessmentChecklist'])->first();
         $auditPersonnelChecklist = InternalAuditChecklistGrid::where(['ia_id' => $id, 'identifier' => 'auditPersonnelChecklist'])->firstOrNew();
         $auditfacilityChecklist = InternalAuditChecklistGrid::where(['ia_id' => $id, 'identifier' => 'auditfacilityChecklist'])->firstOrNew();
+        $auditMachinesChecklist = InternalAuditChecklistGrid::where(['ia_id' => $id, 'identifier' => 'auditMachinesChecklist'])->firstOrNew();
+
 
 
 
         // dd($auditAssessmentChecklist);
-        return view('frontend.internalAudit.view', compact('data','checklist1','checklist2','checklist3', 'checklist4','checklist6','checklist7','checklist9','checklist10','checklist11','checklist12','checklist13','checklist14','checklist15','checklist16','checklist17','old_record','grid_data','grid_data1', 'auditAssessmentChecklist','auditPersonnelChecklist','auditfacilityChecklist'));
+        return view('frontend.internalAudit.view', compact('data','checklist1','checklist2','checklist3', 'checklist4','checklist6','checklist7','checklist9','checklist10','checklist11','checklist12','checklist13','checklist14','checklist15','checklist16','checklist17','old_record','grid_data','grid_data1', 'auditAssessmentChecklist','auditPersonnelChecklist','auditfacilityChecklist','auditMachinesChecklist'));
     }
 
     public function InternalAuditStateChange(Request $request, $id)
