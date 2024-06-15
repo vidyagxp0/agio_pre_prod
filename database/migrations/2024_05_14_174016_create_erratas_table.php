@@ -20,6 +20,7 @@ return new class extends Migration
             $table->longText('initiator_id')->nullable();
             $table->string('intiation_date')->nullable();
             $table->string('initiated_by')->nullable();
+            $table->string('type')->nullable();
             $table->string('Department')->nullable();
             $table->string('department_code')->nullable();
             $table->string('document_type')->nullable();

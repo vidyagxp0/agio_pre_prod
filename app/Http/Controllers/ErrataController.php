@@ -16,6 +16,7 @@ use Illuminate\Support\Facades\App;
 use App\Models\QMSDivision;
 use PDF;
 use Helpers;
+
 class ErrataController extends Controller
 {
     public function index()
@@ -38,6 +39,7 @@ class ErrataController extends Controller
         $data->initiator_id = Auth::user()->id;
         $data->intiation_date = $request->intiation_date;
         $data->initiated_by = $request->initiated_by;
+        $data->type = "ERRATA";
         $data->Department = $request->Department;
         $data->department_code = $request->department_code;
         $data->document_type = $request->document_type;
@@ -68,16 +70,17 @@ class ErrataController extends Controller
 
         //     $data->QA_Attachments = json_encode($files);
         // }
-
-        $files = [];
-        if ($request->hasFile('QA_Attachments')) {
-            foreach ($request->file('QA_Attachments') as $file) {
-                $name = $request->name . 'QA_Attachments' . uniqid() . '.' . $file->getClientOriginalExtension();
-                $file->move(public_path('upload/'), $name);
-                $files[] = $name;
+        if (!empty($request->QA_Attachments)) {
+            $files = [];
+            if ($request->hasFile('QA_Attachments')) {
+                foreach ($request->file('QA_Attachments') as $file) {
+                    $name = $request->name . 'QA_Attachments' . uniqid() . '.' . $file->getClientOriginalExtension();
+                    $file->move(public_path('upload/'), $name);
+                    $files[] = $name;
+                }
             }
+            $data->QA_Attachments = json_encode($files);
         }
-        $data->QA_Attachments = json_encode($files);
 
         $data->HOD_Remarks = $request->HOD_Remarks;
 
@@ -92,17 +95,17 @@ class ErrataController extends Controller
         //     }
         //     $data->HOD_Attachments = json_encode($files);
         // }
-
-        $files = [];
-        if ($request->hasFile('HOD_Attachments')) {
-            foreach ($request->file('HOD_Attachments') as $file) {
-                $name = $request->name . 'HOD_Attachments' . uniqid() . '.' . $file->getClientOriginalExtension();
-                $file->move(public_path('upload/'), $name);
-                $files[] = $name;
+        if (!empty($request->HOD_Attachments)) {
+            $files = [];
+            if ($request->hasFile('HOD_Attachments')) {
+                foreach ($request->file('HOD_Attachments') as $file) {
+                    $name = $request->name . 'HOD_Attachments' . uniqid() . '.' . $file->getClientOriginalExtension();
+                    $file->move(public_path('upload/'), $name);
+                    $files[] = $name;
+                }
             }
+            $data->HOD_Attachments = json_encode($files);
         }
-        $data->HOD_Attachments = json_encode($files);
-
         $data->Closure_Comments = $request->Closure_Comments;
         $data->All_Impacting_Documents_Corrected = $request->All_Impacting_Documents_Corrected;
         $data->Remarks = $request->Remarks;
@@ -120,17 +123,17 @@ class ErrataController extends Controller
         //     $data->Closure_Attachments = json_encode($files);
         // }
 
-        $files = [];
-        if ($request->hasFile('Closure_Attachments')) {
-            foreach ($request->file('Closure_Attachments') as $file) {
-                $name = $request->name . 'Closure_Attachments' . uniqid() . '.' . $file->getClientOriginalExtension();
-                $file->move(public_path('upload/'), $name);
-                $files[] = $name;
+        if (!empty($request->Closure_Attachments)) {
+            $files = [];
+            if ($request->hasFile('Closure_Attachments')) {
+                foreach ($request->file('Closure_Attachments') as $file) {
+                    $name = $request->name . 'Closure_Attachments' . uniqid() . '.' . $file->getClientOriginalExtension();
+                    $file->move(public_path('upload/'), $name);
+                    $files[] = $name;
+                }
             }
+            $data->Closure_Attachments = json_encode($files);
         }
-        $data->Closure_Attachments = json_encode($files);
-
-
 
         $data->status = 'Opened';
         $data->stage = 1;
@@ -469,7 +472,7 @@ class ErrataController extends Controller
         $record_number = str_pad($record_number, 4, '0', STR_PAD_LEFT);
         $errata_id = $id;
         $grid_Data = ErrataGrid::where(['e_id' => $errata_id, 'identifier' => 'details'])->first();
-        return view('frontend.errata.errata_view', compact('showdata', 'grid_Data', 'errata_id','record_number'));
+        return view('frontend.errata.errata_view', compact('showdata', 'grid_Data', 'errata_id', 'record_number'));
     }
 
     public function stageChange(Request $request, $id)
@@ -625,12 +628,11 @@ class ErrataController extends Controller
                 $ErrataControl->update();
                 toastr()->success('Document Sent');
                 return back();
+            } else {
+                toastr()->error('E-signature Not match');
+                return back();
             }
-          else {
-            toastr()->error('E-signature Not match');
-            return back();
         }
-    }
     }
 
     public function stageReject(Request $request, $id)
@@ -693,8 +695,7 @@ class ErrataController extends Controller
                 $ErrataControl->update();
                 toastr()->success('Document Sent');
                 return back();
-
-        }
+            }
             if ($ErrataControl->stage == 6) {
                 $ErrataControl->stage = "5";
                 $ErrataControl->status = "Pending QA Head Approval";
@@ -710,8 +711,7 @@ class ErrataController extends Controller
 
     public function erratacancelstage(Request $request, $id)
     {
-        if ($request->username == Auth::user()->email && Hash::check($request->password, Auth::user()->password))
-        {
+        if ($request->username == Auth::user()->email && Hash::check($request->password, Auth::user()->password)) {
             $ErrataControl = errata::find($id);
             $lastDocument = errata::find($id);
             if ($ErrataControl->stage == 1) {
@@ -744,8 +744,7 @@ class ErrataController extends Controller
                 toastr()->success('Document Sent');
                 return back();
             }
-            if ($ErrataControl->stage == 2)
-            {
+            if ($ErrataControl->stage == 2) {
                 $ErrataControl->stage = "0";
                 $ErrataControl->status = "Closed-Cancelled";
                 $ErrataControl->cancel_by = Auth::user()->name;
@@ -774,21 +773,18 @@ class ErrataController extends Controller
                 $ErrataControl->update();
                 toastr()->success('Document Cancelled');
             }
-            if ($ErrataControl->stage == 3)
-            {
+            if ($ErrataControl->stage == 3) {
                 $ErrataControl->stage = "0";
                 $ErrataControl->status = "Closed-Cancelled";
                 $ErrataControl->update();
                 toastr()->success('Document Cancelled');
             }
             return back();
+        } else {
+            toastr()->error('E-signature Not match');
+            return back();
         }
-        else
-            {
-                toastr()->error('E-signature Not match');
-                return back();
-            }
-        }
+    }
 
     public function update(Request $request, $id)
     {
@@ -811,56 +807,59 @@ class ErrataController extends Controller
         $data->brief_description = $request->brief_description;
         $data->type_of_error = $request->type_of_error;
         // $data->details = $request->details;
-        if($request->has('Date_and_time_of_correction')&& $request->Date_and_time_of_correction!== null){
+        if ($request->has('Date_and_time_of_correction') && $request->Date_and_time_of_correction !== null) {
 
             $data->Date_and_time_of_correction = $request->Date_and_time_of_correction ? Carbon::parse($request->Date_and_time_of_correction)->format('d-M-Y H:i') : '';
         }
         $data->QA_Feedbacks = $request->QA_Feedbacks;
 
 
-
-        $files = [];
-        if ($request->hasFile('QA_Attachments')) {
-            foreach ($request->file('QA_Attachments') as $file) {
-                $name = $request->name . 'QA_Attachments' . uniqid() . '.' . $file->getClientOriginalExtension();
-                $file->move(public_path('upload/'), $name);
-                $files[] = $name;
+        if (!empty($request->QA_Attachments)) {
+            $files = [];
+            if ($request->hasFile('QA_Attachments')) {
+                foreach ($request->file('QA_Attachments') as $file) {
+                    $name = $request->name . 'QA_Attachments' . uniqid() . '.' . $file->getClientOriginalExtension();
+                    $file->move(public_path('upload/'), $name);
+                    $files[] = $name;
+                }
             }
+            $data->QA_Attachments = json_encode($files);
         }
-        $data->QA_Attachments = json_encode($files);
 
         $data->HOD_Remarks = $request->HOD_Remarks;
 
 
         $data->HOD_Remarks = $request->HOD_Remarks;
 
-        $files = [];
-        if ($request->hasFile('HOD_Attachments')) {
-            foreach ($request->file('HOD_Attachments') as $file) {
-                $name = $request->name . 'HOD_Attachments' . uniqid() . '.' . $file->getClientOriginalExtension();
-                $file->move(public_path('upload/'), $name);
-                $files[] = $name;
+        if (!empty($request->HOD_Attachments)) {
+            $files = [];
+            if ($request->hasFile('HOD_Attachments')) {
+                foreach ($request->file('HOD_Attachments') as $file) {
+                    $name = $request->name . 'HOD_Attachments' . uniqid() . '.' . $file->getClientOriginalExtension();
+                    $file->move(public_path('upload/'), $name);
+                    $files[] = $name;
+                }
             }
+            $data->HOD_Attachments = json_encode($files);
         }
-        $data->HOD_Attachments = json_encode($files);
         $data->Closure_Comments = $request->Closure_Comments;
         $data->All_Impacting_Documents_Corrected = $request->All_Impacting_Documents_Corrected;
         $data->Remarks = $request->Remarks;
 
-
-        $files = [];
-        if ($request->hasFile('Closure_Attachments')) {
-            foreach ($request->file('Closure_Attachments') as $file) {
-                $name = $request->name . 'Closure_Attachments' . uniqid() . '.' . $file->getClientOriginalExtension();
-                $file->move(public_path('upload/'), $name);
-                $files[] = $name;
+        if (!empty($request->Closure_Attachments)) {
+            $files = [];
+            if ($request->hasFile('Closure_Attachments')) {
+                foreach ($request->file('Closure_Attachments') as $file) {
+                    $name = $request->name . 'Closure_Attachments' . uniqid() . '.' . $file->getClientOriginalExtension();
+                    $file->move(public_path('upload/'), $name);
+                    $files[] = $name;
+                }
             }
+            $data->Closure_Attachments = json_encode($files);
         }
-        $data->Closure_Attachments = json_encode($files);
-
         $data->update();
 
-        if ($lastData->initiated_by != $data->initiated_by || !empty ($request->comment)) {
+        if ($lastData->initiated_by != $data->initiated_by || !empty($request->comment)) {
             // return 'history';
             $history = new ErrataAuditTrail;
             $history->errata_id = $id;
@@ -878,7 +877,7 @@ class ErrataController extends Controller
             $history->save();
         }
 
-        if ($lastData->Department != $data->Department || !empty ($request->comment)) {
+        if ($lastData->Department != $data->Department || !empty($request->comment)) {
             // return 'history';
             $history = new ErrataAuditTrail;
             $history->errata_id = $id;
@@ -896,7 +895,7 @@ class ErrataController extends Controller
             $history->save();
         }
 
-        if ($lastData->department_code != $data->department_code || !empty ($request->comment)) {
+        if ($lastData->department_code != $data->department_code || !empty($request->comment)) {
             // return 'history';
             $history = new ErrataAuditTrail;
             $history->errata_id = $id;
@@ -914,7 +913,7 @@ class ErrataController extends Controller
             $history->save();
         }
 
-        if ($lastData->document_type != $data->document_type || !empty ($request->comment)) {
+        if ($lastData->document_type != $data->document_type || !empty($request->comment)) {
             // return 'history';
             $history = new ErrataAuditTrail;
             $history->errata_id = $id;
@@ -932,7 +931,7 @@ class ErrataController extends Controller
             $history->save();
         }
 
-        if ($lastData->short_description != $data->short_description || !empty ($request->comment)) {
+        if ($lastData->short_description != $data->short_description || !empty($request->comment)) {
             // return 'history';
             $history = new ErrataAuditTrail;
             $history->errata_id = $id;
@@ -950,7 +949,7 @@ class ErrataController extends Controller
             $history->save();
         }
 
-        if ($lastData->reference_document != $data->reference_document || !empty ($request->comment)) {
+        if ($lastData->reference_document != $data->reference_document || !empty($request->comment)) {
             // return 'history';
             $history = new ErrataAuditTrail;
             $history->errata_id = $id;
@@ -968,7 +967,7 @@ class ErrataController extends Controller
             $history->save();
         }
 
-        if ($lastData->Observation_on_Page_No != $data->Observation_on_Page_No || !empty ($request->comment)) {
+        if ($lastData->Observation_on_Page_No != $data->Observation_on_Page_No || !empty($request->comment)) {
             // return 'history';
             $history = new ErrataAuditTrail;
             $history->errata_id = $id;
@@ -986,7 +985,7 @@ class ErrataController extends Controller
             $history->save();
         }
 
-        if ($lastData->brief_description != $data->brief_description || !empty ($request->comment)) {
+        if ($lastData->brief_description != $data->brief_description || !empty($request->comment)) {
             // return 'history';
             $history = new ErrataAuditTrail;
             $history->errata_id = $id;
@@ -1004,7 +1003,7 @@ class ErrataController extends Controller
             $history->save();
         }
 
-        if ($lastData->type_of_error != $data->type_of_error || !empty ($request->comment)) {
+        if ($lastData->type_of_error != $data->type_of_error || !empty($request->comment)) {
             // return 'history';
             $history = new ErrataAuditTrail;
             $history->errata_id = $id;
@@ -1022,7 +1021,7 @@ class ErrataController extends Controller
             $history->save();
         }
 
-        if ($lastData->details != $data->details || !empty ($request->comment)) {
+        if ($lastData->details != $data->details || !empty($request->comment)) {
             // return 'history';
             $history = new ErrataAuditTrail;
             $history->errata_id = $id;
@@ -1040,7 +1039,7 @@ class ErrataController extends Controller
             $history->save();
         }
 
-        if ($lastData->Date_and_time_of_correction != $data->Date_and_time_of_correction || !empty ($request->comment)) {
+        if ($lastData->Date_and_time_of_correction != $data->Date_and_time_of_correction || !empty($request->comment)) {
             // return 'history';
             $history = new ErrataAuditTrail;
             $history->errata_id = $id;
@@ -1058,7 +1057,7 @@ class ErrataController extends Controller
             $history->save();
         }
 
-        if ($lastData->QA_Feedbacks != $data->QA_Feedbacks || !empty ($request->comment)) {
+        if ($lastData->QA_Feedbacks != $data->QA_Feedbacks || !empty($request->comment)) {
             // return 'history';
             $history = new ErrataAuditTrail;
             $history->errata_id = $id;
@@ -1076,7 +1075,7 @@ class ErrataController extends Controller
             $history->save();
         }
 
-        if ($lastData->QA_Attachments != $data->QA_Attachments || !empty ($request->comment)) {
+        if ($lastData->QA_Attachments != $data->QA_Attachments || !empty($request->comment)) {
             // return 'history';
             $history = new ErrataAuditTrail;
             $history->errata_id = $id;
@@ -1094,7 +1093,7 @@ class ErrataController extends Controller
             $history->save();
         }
 
-        if ($lastData->HOD_Remarks != $data->HOD_Remarks || !empty ($request->comment)) {
+        if ($lastData->HOD_Remarks != $data->HOD_Remarks || !empty($request->comment)) {
             // return 'history';
             $history = new ErrataAuditTrail;
             $history->errata_id = $id;
@@ -1112,7 +1111,7 @@ class ErrataController extends Controller
             $history->save();
         }
 
-        if ($lastData->HOD_Attachments != $data->HOD_Attachments || !empty ($request->comment)) {
+        if ($lastData->HOD_Attachments != $data->HOD_Attachments || !empty($request->comment)) {
             // return 'history';
             $history = new ErrataAuditTrail;
             $history->errata_id = $id;
@@ -1130,7 +1129,7 @@ class ErrataController extends Controller
             $history->save();
         }
 
-        if ($lastData->Closure_Comments != $data->Closure_Comments || !empty ($request->comment)) {
+        if ($lastData->Closure_Comments != $data->Closure_Comments || !empty($request->comment)) {
             // return 'history';
             $history = new ErrataAuditTrail;
             $history->errata_id = $id;
@@ -1148,7 +1147,7 @@ class ErrataController extends Controller
             $history->save();
         }
 
-        if ($lastData->All_Impacting_Documents_Corrected != $data->All_Impacting_Documents_Corrected || !empty ($request->comment)) {
+        if ($lastData->All_Impacting_Documents_Corrected != $data->All_Impacting_Documents_Corrected || !empty($request->comment)) {
             // return 'history';
             $history = new ErrataAuditTrail;
             $history->errata_id = $id;
@@ -1166,7 +1165,7 @@ class ErrataController extends Controller
             $history->save();
         }
 
-        if ($lastData->Remarks != $data->Remarks || !empty ($request->comment)) {
+        if ($lastData->Remarks != $data->Remarks || !empty($request->comment)) {
             // return 'history';
             $history = new ErrataAuditTrail;
             $history->errata_id = $id;
@@ -1184,7 +1183,7 @@ class ErrataController extends Controller
             $history->save();
         }
 
-        if ($lastData->Closure_Attachments != $data->Closure_Attachments || !empty ($request->comment)) {
+        if ($lastData->Closure_Attachments != $data->Closure_Attachments || !empty($request->comment)) {
             // return 'history';
             $history = new ErrataAuditTrail;
             $history->errata_id = $id;
@@ -1214,7 +1213,8 @@ class ErrataController extends Controller
         return back();
     }
 
-    public function singleReports(Request $request, $id){
+    public function singleReports(Request $request, $id)
+    {
         $data = errata::find($id);
         $grid_Data = ErrataGrid::where(['e_id' => $id, 'identifier' => 'details'])->first();
         if (!empty($data)) {
@@ -1225,7 +1225,7 @@ class ErrataController extends Controller
             $data->originator = User::where('id', $data->initiator_id)->value('name');
             $pdf = App::make('dompdf.wrapper');
             $time = Carbon::now();
-            $pdf = PDF::loadview('frontend.errata.errata_single_pdf', compact('data','grid_Data'))
+            $pdf = PDF::loadview('frontend.errata.errata_single_pdf', compact('data', 'grid_Data'))
                 ->setOptions([
                     'defaultFont' => 'sans-serif',
                     'isHtml5ParserEnabled' => true,
@@ -1266,7 +1266,8 @@ class ErrataController extends Controller
         return view('frontend.errata.errata_audit_inner', compact('detail', 'doc', 'detail_data'));
     }
 
-    public function auditTrailPdf($id){
+    public function auditTrailPdf($id)
+    {
         $doc = errata::find($id);
         $doc->originator = User::where('id', $doc->initiator_id)->value('name');
         $data = ErrataAuditTrail::where('errata_id', $doc->id)->orderByDesc('id')->get();

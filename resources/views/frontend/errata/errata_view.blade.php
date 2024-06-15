@@ -313,7 +313,7 @@
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="group-input">
-                                        <label for="Initiator Group Code">Initiator Group Code</label>
+                                        <label for="Initiator Group Code">Department Code</label>
                                         <input readonly type="text"
                                             name="department_code"{{ $showdata->stage == 0 || $showdata->stage == 6 ? 'disabled' : '' }}
                                             value="{{ $showdata->department_code }}" id="initiator_group_code" readonly
@@ -642,6 +642,23 @@
                                     </div>
                                 </div>
 
+                                {{-- <script>
+                                    document.addEventListener('DOMContentLoaded', function () {
+                                        const removeButtons = document.querySelectorAll('.remove-file');
+
+                                        removeButtons.forEach(button => {
+                                            button.addEventListener('click', function () {
+                                                const fileName = this.getAttribute('data-file-name');
+                                                const fileContainer = this.closest('.file-container');
+
+                                                // Hide the file container
+                                                if (fileContainer) {
+                                                    fileContainer.style.display = 'none';
+                                                }
+                                            });
+                                        });
+                                    });
+                                </script> --}}
                                 <script>
                                     document.addEventListener('DOMContentLoaded', function () {
                                         const removeButtons = document.querySelectorAll('.remove-file');
@@ -658,7 +675,43 @@
                                             });
                                         });
                                     });
+
+                                    function addMultipleFiles(input, id) {
+                                        const fileListContainer = document.getElementById(id);
+                                        const files = input.files;
+
+                                        for (let i = 0; i < files.length; i++) {
+                                            const file = files[i];
+                                            const fileName = file.name;
+                                            const fileContainer = document.createElement('h6');
+                                            fileContainer.classList.add('file-container', 'text-dark');
+                                            fileContainer.style.backgroundColor = 'rgb(243, 242, 240)';
+
+                                            const fileText = document.createElement('b');
+                                            fileText.textContent = fileName;
+
+                                            const viewLink = document.createElement('a');
+                                            viewLink.href = '#'; // You might need to adjust this to handle local previews
+                                            viewLink.target = '_blank';
+                                            viewLink.innerHTML = '<i class="fa fa-eye text-primary" style="font-size:20px; margin-right:-10px;"></i>';
+
+                                            const removeLink = document.createElement('a');
+                                            removeLink.classList.add('remove-file');
+                                            removeLink.dataset.fileName = fileName;
+                                            removeLink.innerHTML = '<i class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i>';
+                                            removeLink.addEventListener('click', function () {
+                                                fileContainer.style.display = 'none';
+                                            });
+
+                                            fileContainer.appendChild(fileText);
+                                            fileContainer.appendChild(viewLink);
+                                            fileContainer.appendChild(removeLink);
+
+                                            fileListContainer.appendChild(fileContainer);
+                                        }
+                                    }
                                 </script>
+
 
                                 <div class="button-block">
                                     @if ($showdata->stage >= 6)
@@ -1923,9 +1976,8 @@
                                                         <h6 type="button" class="file-container text-dark"
                                                             style="background-color: rgba(255, 255, 255, 0);">
                                                             <b>{{ $file }}</b>
-                                                            <a href="{{ asset('upload/' . $file) }}" target="_blank"><i
-                                                                    class="fa fa-eye text-primary"
-                                                                    style="font-size:20px; margin-right:-10px;"></i></a>
+                                                            <a href="{{ asset('upload/' . $file) }}" target="_blank"><i class="fa fa-eye text-primary" style="font-size:20px; margin-right:-10px;"></i></a>
+                                                            <a type="button" class="remove-file" data-file-name="{{ $file }}"><i class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i></a>
                                                         </h6>
                                                     @endforeach
                                                 @endif
@@ -2004,7 +2056,35 @@
                                     </div>
                                 </div>
 
-                                <div class="col-12">
+                                <div class="col-lg-12">
+                                    <div class="group-input">
+                                        <label for="Initial Attachments">Closure Attachment</label>
+                                        <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
+                                        <div class="file-attachment-field">
+                                            <div class="file-attachment-list" id="Closure_Attachments">
+                                                @if ($showdata->Closure_Attachments)
+                                                    @foreach (json_decode($showdata->Closure_Attachments) as $file)
+                                                        <h6 type="button" class="file-container text-dark" style="background-color: rgb(243, 242, 240);">
+                                                            <b>{{ $file }}</b>
+                                                            <a href="{{ asset('upload/' . $file) }}" target="_blank">
+                                                                <i class="fa fa-eye text-primary" style="font-size:20px; margin-right:-10px;"></i>
+                                                            </a>
+                                                            <a type="button" class="remove-file" data-file-name="{{ $file }}">
+                                                                <i class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i>
+                                                            </a>
+                                                        </h6>
+                                                    @endforeach
+                                                @endif
+                                            </div>
+                                            <div class="add-btn">
+                                                <div>Add</div>
+                                                <input {{ $showdata->stage == 0 || $showdata->stage == 8 ? "disabled" : "" }} type="file" id="Closure_Attachments" name="Closure_Attachments[]" oninput="addMultipleFiles(this, 'Closure_Attachments')" multiple>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                {{-- <div class="col-12">
                                     <div class="group-input">
                                         <label for="Closure Attachments">Closure Attachments</label>
                                         <div><small class="text-primary">Please Attach all relevant or supporting
@@ -2017,9 +2097,8 @@
                                                         <h6 type="button" class="file-container text-dark"
                                                             style="background-color: rgba(255, 255, 255, 0);">
                                                             <b>{{ $file }}</b>
-                                                            <a href="{{ asset('upload/' . $file) }}" target="_blank"><i
-                                                                    class="fa fa-eye text-primary"
-                                                                    style="font-size:20px; margin-right:-10px;"></i></a>
+                                                            <a href="{{ asset('upload/' . $file) }}" target="_blank"><i class="fa fa-eye text-primary" style="font-size:20px; margin-right:-10px;"></i></a>
+                                                            <a type="button" class="remove-file" data-file-name="{{ $file }}"><i class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i></a>
                                                         </h6>
                                                     @endforeach
                                                 @endif
@@ -2032,7 +2111,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                </div>
+                                </div> --}}
 
 
 
