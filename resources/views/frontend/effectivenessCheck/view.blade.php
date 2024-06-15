@@ -20,19 +20,16 @@
     {{-- ======================================
                 CHANGE CONTROL VIEW
     ======================================= --}}
-    <!-- <div id="rcms_form-head">
-        <div class="container-fluid">
-            <div class="inner-block">
-                <div class="head">PR-0001</div>
-                <div class="slogan">
-                    <strong>Site Division/Project :</strong>
-                    QMS-EMEA / Change Control
-                </div>
-            </div>
-
+ 
+    <div class="form-field-head">
+        <div class="division-bar">
+            <!-- <strong>Site Division/Project</strong> :
+            {{ Helpers::getDivisionName(session()->get('division')) }} / Effectiveness-Check -->
+            <strong>Site Division/Project :</strong>
+            {{ Helpers::getDivisionName(session()->get('division')) }} / Effectiveness-Check
         </div>
-    </div> -->
-
+        
+    </div>
     <div id="change-control-view">
         <div class="container-fluid">
 
@@ -144,22 +141,7 @@
 
             @csrf
             @method('PUT')
-            <div class="form-field-head">
-                <div class="division-bar">
-                    <!-- <strong>Site Division/Project</strong> :
-                    {{ Helpers::getDivisionName(session()->get('division')) }} / Effectiveness-Check -->
-                    <strong>Site Division/Project :</strong>
-                    {{ Helpers::getDivisionName(session()->get('division')) }} / Effectiveness-Check
-                </div>
-                <div class="button-bar">
-                    {{--  <button type="button">Cancel</button>
-                <button type="button">New</button>
-                <button type="button">Copy</button>
-                <button type="button">Child</button>
-                <button type="button">Check Spelling</button>
-                <button type="button">Change Project</button>  --}}
-                </div>
-            </div>
+          
             {{-- ======================================
                             DATA FIELDS
             ======================================= --}}
