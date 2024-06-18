@@ -20,9 +20,14 @@ protected $fillable = [
         // 'aainfo_product_name' => 'array',
            ];
 
-      public function MarketComplaint()
+    //   public function MarketComplaint()
+    //        {
+    //            return $this->belongsTo(LabIncident::class,'labincident_id ');
+    //        }
+
+           public function marketComplaint()
            {
-               return $this->belongsTo(LabIncident::class,'labincident_id ');
+               return $this->hasMany(MarketComplaint::class);
            }
        
 }

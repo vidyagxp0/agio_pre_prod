@@ -13,4 +13,13 @@ class CC extends Model
     // {
     //     return $this->morphOne(QmsRecordNumber::class, 'recordable');
     // }
+
+    public function division()
+    {
+        return $this->belongsTo(QMSDivision::class,'division_id');
+    }
+    public function initiator()
+    {
+        return $this->belongsTo(User::class,'initiator_id');
+    }
 }
