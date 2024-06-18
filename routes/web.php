@@ -188,6 +188,11 @@ Route::post('DeviationAuditTrial/{id}', [DeviationController::class, 'store_audi
 
 /********************************************* Deviation Ends *******************************************/
 
+
+/******************************                         incident Controller              ******************  */
+Route::post('incident_child/{id}', [IncidentController::class, 'incident_child_1'])->name('incident_child_1');
+
+
 /********************************************* Deviation Starts *******************************************/
 
 Route::post('failure_investigation_child_1/{id}', [FailureInvestigationController::class, 'failure_investigation_child_1'])->name('failure_investigation_child_1');

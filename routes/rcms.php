@@ -26,6 +26,7 @@ use App\Http\Controllers\RiskManagementController;
 use App\Http\Controllers\rcms\DeviationController;
 use App\Http\Controllers\rcms\LogController;
 use App\Http\Controllers\rcms\OOCController;
+use App\Http\Controllers\rcms\IncidentController;
 use App\Models\EffectivenessCheck;
 use Illuminate\Support\Facades\Route;
 
@@ -296,7 +297,33 @@ Route::group(['prefix' => 'rcms'], function () {
 
 
 
+/********************* Incident Routes Starts *******************/
 
+Route::get('incident', [IncidentController::class, 'index'])->name('incident');    
+Route::post('incident-store', [IncidentController::class, 'store'])->name('incident-store');
+Route::get('incident-show/{id}', [IncidentController::class, 'incidentShow'])->name('incident-show');
+Route::post('incident-update/{id}', [IncidentController::class, 'update'])->name('incident-update');
+Route::post('incident-reject/{id}', [IncidentController::class, 'incidentReject'])->name('incident-reject');
+Route::post('incident-cancel/{id}', [IncidentController::class, 'incidentCancel'])->name('incident-cancel');
+Route::post('incidentIsCFTRequired/{id}', [IncidentController::class, 'incidentIsCFTRequired'])->name('incidentIsCFTRequired');
+Route::post('incidentCheck/{id}', [IncidentController::class, 'incidentCheck'])->name('incidentCheck');
+Route::post('incidentCheck2/{id}', [IncidentController::class, 'incidentCheck2'])->name('incidentCheck2');
+Route::post('incidentCheck3/{id}', [IncidentController::class, 'incidentCheck3'])->name('incidentCheck3');
+Route::post('pending_initiator_update/{id}', [IncidentController::class, 'pending_initiator_update'])->name('pending_initiator_update');
+Route::post('incidentStageChange/{id}', [IncidentController::class, 'incident_send_stage'])->name('incidentStageChange');
+Route::post('incidentCftnotreqired/{id}', [IncidentController::class, 'cftnotreqired'])->name('incidentCftnotreqired');
+Route::post('incidentQaMoreInfo/{id}', [IncidentController::class, 'incident_qa_more_info'])->name('incidentQaMoreInfo');
+
+Route::get('incident-audit-trail/{id}', [IncidentController::class, 'incidentAuditTrail'])->name('incident-audit-trail');
+Route::get('incident-audit-pdf/{id}', [IncidentController::class, 'incidentAuditTrailPdf'])->name('incident-audit-pdf');
+Route::get('incident-single-report/{id}', [IncidentController::class, 'singleReport'])->name('incident-single-report');
+
+Route::post('launch-extension-incident/{id}', [IncidentController::class, 'launchExtensionIncident'])->name('launch-extension-incident');
+Route::post('launch-extension-capa/{id}', [IncidentController::class, 'launchExtensionCapa'])->name('launch-extension-capa');
+Route::post('launch-extension-qrm/{id}', [IncidentController::class, 'launchExtensionQrm'])->name('launch-extension-qrm');
+Route::post('launch-extension-investigation/{id}', [IncidentController::class, 'launchExtensionInvestigation'])->name('launch-extension-investigation');
+
+/********************* Incident Routes Ends *******************/
 
 
             /**

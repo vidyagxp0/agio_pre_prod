@@ -13,6 +13,7 @@ use App\Models\ManagementReview;
 use App\Models\OutOfCalibration;
 use App\Models\RiskManagement;
 use App\Models\LabIncident;
+use App\Models\Incident;
 use App\Models\Auditee;
 use App\Models\NonConformance;
 use App\Models\AuditProgram;
@@ -72,6 +73,7 @@ class DashboardController extends Controller
         $datas6 = RiskManagement::orderByDesc('id')->get();
         $datas7 = ManagementReview::orderByDesc('id')->get();
         $datas8 = LabIncident::orderByDesc('id')->get();
+        $incident = Incident::orderByDesc('id')->get();
         $datas9 = Auditee::orderByDesc('id')->get();
         $datas10 = AuditProgram::orderByDesc('id')->get();
         $datas11 = RootCauseAnalysis::orderByDesc('id')->get();
@@ -530,6 +532,26 @@ class DashboardController extends Controller
                 "date_open" => $data->create,
                 "due_date" => $data->due_date,
                 "date_close" => $data->updated_at,
+            ]);
+        }
+        foreach ($incident as $data) {
+            $data->create = Carbon::parse($data->created_at)->format('d-M-Y h:i A');
+            array_push($table, [
+                "id" => $data->id,
+                "parent" => $data->cc_id ? $data->cc_id : "-",
+                "record" => $data->record,
+                "type" => "Incident",
+                "parent_id" => $data->parent_id,
+                "parent_type" => $data->parent_type,
+                "division_id" => $data->division_id,
+                "short_description" => $data->short_description ? $data->short_description : "-",
+                "initiator_id" => $data->initiator_id,
+                "initiated_through" => $data->initiated_through ? $data->initiated_through : "-",
+                "intiation_date" => $data->intiation_date,
+                "stage" => $data->status,
+                "date_open" => $data->create,
+                "date_close" => $data->updated_at,
+                "due_date" => $data->due_date,
             ]);
         }
         $table  = collect($table)->sortBy('record')->reverse()->toArray();
@@ -1003,6 +1025,21 @@ class DashboardController extends Controller
             $division = QMSDivision::find($data->division_id);
             $division_name = $division->name;
 
+        }
+        elseif ($type == "Incident") {
+            $data = Incident::find($id);
+            $single = "incident-single-report/" . $data->id;
+            $audit = "incident-audit-pdf/".$data->id;
+            $division = QMSDivision::find($data->division_id);
+            $division_name = $division->name;
+        }
+
+        elseif ($type == "Non Conformance") {
+            $data = NonConformance::find($id);
+            $single = "non-conformance-single-report/" . $data->id;
+            $audit = "non-conformance-audit-pdf/".$data->id;
+            $division = QMSDivision::find($data->division_id);
+            $division_name = $division->name;
         }
 
 

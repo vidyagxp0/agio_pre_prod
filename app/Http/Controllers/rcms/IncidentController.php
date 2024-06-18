@@ -4,16 +4,18 @@ namespace App\Http\Controllers\rcms;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Models\{NonConformance,NonConformanceAuditTrails,NonConformanceCFTs,
-NonConformanceCFTResponse,
-NonConformanceGrid,
-NonConformanceGridDatas,
-NonConformanceGridModes,
-NonConformanceHistories,
-NonConformanceLunchExtension,
+use App\Models\{Incident,
+IncidentAuditTrail,
+IncidentCft,
+IncidentCftResponse,
+IncidentGrid,
+IncidentGridData,
+IncidentGridFailureMode,
+IncidentHistory,
+IncidentLaunchExtension,
 };
 use App\Models\RootCauseAnalysis;
-use App\Models\{EffectivenessCheck,LaunchExtension};
+use App\Models\EffectivenessCheck;
 use App\Models\CC;
 use App\Models\ActionItem;
 use App\Models\Extension;
@@ -38,19 +40,18 @@ use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Validator;
 
-class NonConformaceController extends Controller
+class IncidentController extends Controller
 {
-    public function index(){
-        
-        
-        $old_record = NonConformance::select('id', 'division_id', 'record')->get();
+    public function index(Request $request){
+
+        $old_record = Incident::select('id', 'division_id', 'record')->get();
+        $currentDate = Carbon::now();
         $data = ((RecordNumber::first()->value('counter')) + 1);
         $data = str_pad($data, 4, '0', STR_PAD_LEFT);
-        $currentDate = Carbon::now();
         $formattedDate = $currentDate->addDays(30);
         $due_date = $formattedDate->format('d-M-Y');
-        $pre = NonConformance::all();
-        return response()->view('frontend.non-conformance.failure-inv-new', compact('formattedDate', 'due_date', 'old_record', 'pre','data'));
+        $pre = Incident::all();
+        return response()->view('frontend.incident.incident-new', compact('formattedDate','data', 'due_date', 'old_record', 'pre'));
     }
 
     public function store(Request $request)
@@ -83,80 +84,80 @@ class NonConformaceController extends Controller
             return response()->redirect()->back()->withInput();
         }
 
-        $NonConformance = new NonConformance();
-        $NonConformance->form_type = "Failure Investigation";
+        $incident = new Incident();
+        $incident->form_type = "Incident";
 
-        $NonConformance->record = ((RecordNumber::first()->value('counter')) + 1);
-        $NonConformance->initiator_id = Auth::user()->id;
+        $incident->record = ((RecordNumber::first()->value('counter')) + 1);
+        $incident->initiator_id = Auth::user()->id;
 
-        $NonConformance->form_progress = isset($form_progress) ? $form_progress : null;
+        $incident->form_progress = isset($form_progress) ? $form_progress : null;
 
         # -------------new-----------
-        //  $NonConformance->record_number = $request->record_number;
-        $NonConformance->division_id = $request->division_id;
-        $NonConformance->assign_to = $request->assign_to;
-        $NonConformance->Facility = $request->Facility;
-        $NonConformance->due_date = $request->due_date;
-        $NonConformance->intiation_date = $request->intiation_date;
-        $NonConformance->Initiator_Group = $request->Initiator_Group;
-        $NonConformance->due_date = Carbon::now()->addDays(30)->format('d-M-Y');
-        $NonConformance->initiator_group_code = $request->initiator_group_code;
-        $NonConformance->short_description = $request->short_description;
-        $NonConformance->non_conformances_date = $request->non_conformances_date;
-        $NonConformance->non_conformances_time = $request->non_conformances_time;
-        $NonConformance->non_conformances_reported_date = $request->non_conformances_reported_date;
+        //  $incident->record_number = $request->record_number;
+        $incident->division_id = $request->division_id;
+        $incident->assign_to = $request->assign_to;
+        $incident->Facility = $request->Facility;
+        $incident->due_date = $request->due_date;
+        $incident->intiation_date = $request->intiation_date;
+        $incident->Initiator_Group = $request->Initiator_Group;
+        $incident->due_date = Carbon::now()->addDays(30)->format('d-M-Y');
+        $incident->initiator_group_code = $request->initiator_group_code;
+        $incident->short_description = $request->short_description;
+        $incident->incident_date = $request->incident_date;
+        $incident->incident_time = $request->incident_time;
+        $incident->incident_reported_date = $request->incident_reported_date;
         if (is_array($request->audit_type)) {
-            $NonConformance->audit_type = implode(',', $request->audit_type);
+            $incident->audit_type = implode(',', $request->audit_type);
         }
-        $NonConformance->short_description_required = $request->short_description_required;
-        $NonConformance->nature_of_repeat = $request->nature_of_repeat;
-        $NonConformance->others = $request->others;
+        $incident->short_description_required = $request->short_description_required;
+        $incident->nature_of_repeat = $request->nature_of_repeat;
+        $incident->others = $request->others;
 
-        $NonConformance->Product_Batch = $request->Product_Batch;
+        $incident->Product_Batch = $request->Product_Batch;
 
-        $NonConformance->Description_non_conformanceS = implode(',', $request->Description_non_conformanceS);
-        $NonConformance->Immediate_Action = implode(',', $request->Immediate_Action);
-        $NonConformance->Preliminary_Impact = implode(',', $request->Preliminary_Impact);
-        $NonConformance->Product_Details_Required = $request->Product_Details_Required;
+        $incident->Description_incident = implode(',', $request->Description_incident);
+        $incident->Immediate_Action = implode(',', $request->Immediate_Action);
+        $incident->Preliminary_Impact = implode(',', $request->Preliminary_Impact);
+        $incident->Product_Details_Required = $request->Product_Details_Required;
 
-        $NonConformance->HOD_Remarks = $request->HOD_Remarks;
-        $NonConformance->non_conformances_category = $request->non_conformances_category;
-        if($request->non_conformances_category=='')
-        $NonConformance->Justification_for_categorization = $request->Justification_for_categorization;
-        $NonConformance->Investigation_required = $request->Investigation_required;
-        $NonConformance->capa_required = $request->capa_required;
-        $NonConformance->qrm_required = $request->qrm_required;
+        $incident->HOD_Remarks = $request->HOD_Remarks;
+        $incident->incident_category = $request->incident_category;
+        if($request->incident_category=='')
+        $incident->Justification_for_categorization = $request->Justification_for_categorization;
+        $incident->Investigation_required = $request->Investigation_required;
+        $incident->capa_required = $request->capa_required;
+        $incident->qrm_required = $request->qrm_required;
 
-        $NonConformance->Investigation_Details = $request->Investigation_Details;
-        $NonConformance->Customer_notification = $request->Customer_notification;
-        $NonConformance->customers = $request->customers;
-        $NonConformance->QAInitialRemark = $request->QAInitialRemark;
+        $incident->Investigation_Details = $request->Investigation_Details;
+        $incident->Customer_notification = $request->Customer_notification;
+        $incident->customers = $request->customers;
+        $incident->QAInitialRemark = $request->QAInitialRemark;
 
-        $NonConformance->Investigation_Summary = $request->Investigation_Summary;
-        $NonConformance->Impact_assessment = $request->Impact_assessment;
-        $NonConformance->Root_cause = $request->Root_cause;
-        $NonConformance->CAPA_Rquired = $request->CAPA_Rquired;
-        $NonConformance->capa_type = $request->capa_type;
-        $NonConformance->CAPA_Description = $request->CAPA_Description;
-        $NonConformance->Post_Categorization = $request->Post_Categorization;
-        $NonConformance->Investigation_Of_Review = $request->Investigation_Of_Review;
-        $NonConformance->QA_Feedbacks = $request->QA_Feedbacks;
-        $NonConformance->Closure_Comments = $request->Closure_Comments;
-        $NonConformance->Disposition_Batch = $request->Disposition_Batch;
-        $NonConformance->Facility_Equipment = $request->Facility_Equipment;
-        $NonConformance->Document_Details_Required = $request->Document_Details_Required;
+        $incident->Investigation_Summary = $request->Investigation_Summary;
+        $incident->Impact_assessment = $request->Impact_assessment;
+        $incident->Root_cause = $request->Root_cause;
+        $incident->CAPA_Rquired = $request->CAPA_Rquired;
+        $incident->capa_type = $request->capa_type;
+        $incident->CAPA_Description = $request->CAPA_Description;
+        $incident->Post_Categorization = $request->Post_Categorization;
+        $incident->Investigation_Of_Review = $request->Investigation_Of_Review;
+        $incident->QA_Feedbacks = $request->QA_Feedbacks;
+        $incident->Closure_Comments = $request->Closure_Comments;
+        $incident->Disposition_Batch = $request->Disposition_Batch;
+        $incident->Facility_Equipment = $request->Facility_Equipment;
+        $incident->Document_Details_Required = $request->Document_Details_Required;
       
-        if ($request->non_conformances_category == 'major' || $request->non_conformances_category == 'minor' || $request->non_conformances_category == 'critical') {
+        if ($request->incident_category == 'major' || $request->incident_category == 'minor' || $request->incident_category == 'critical') {
             $list = Helpers::getHeadoperationsUserList();
                     foreach ($list as $u) {
-                        if ($u->q_m_s_divisions_id == $NonConformance->division_id) {
+                        if ($u->q_m_s_divisions_id == $incident->division_id) {
                             $email = Helpers::getInitiatorEmail($u->user_id);
                             if ($email !== null) {
                                  // Add this if statement
                                 try {
                                     Mail::send(
                                         'mail.Categorymail',
-                                        ['data' => $NonConformance],
+                                        ['data' => $incident],
                                         function ($message) use ($email) {
                                             $message->to($email)
                                                 ->subject("Activity Performed By " . Auth::user()->name);
@@ -172,17 +173,17 @@ class NonConformaceController extends Controller
                 }
 
 
-                if ($request->non_conformances_category == 'major' || $request->non_conformances_category == 'minor' || $request->non_conformances_category == 'critical') {
+                if ($request->incident_category == 'major' || $request->incident_category == 'minor' || $request->incident_category == 'critical') {
                     $list = Helpers::getCEOUserList();
                             foreach ($list as $u) {
-                                if ($u->q_m_s_divisions_id == $NonConformance->division_id) {
+                                if ($u->q_m_s_divisions_id == $incident->division_id) {
                                     $email = Helpers::getInitiatorEmail($u->user_id);
                                     if ($email !== null) {
                                          // Add this if statement
                                          try {
                                                 Mail::send(
                                                     'mail.Categorymail',
-                                                    ['data' => $NonConformance],
+                                                    ['data' => $incident],
                                                     function ($message) use ($email) {
                                                         $message->to($email)
                                                             ->subject("Activity Performed By " . Auth::user()->name);
@@ -196,17 +197,17 @@ class NonConformaceController extends Controller
                                 }
                             }
                         }
-                        if ($request->non_conformances_category == 'major' || $request->non_conformances_category == 'minor' || $request->non_conformances_category == 'critical') {
+                        if ($request->incident_category == 'major' || $request->incident_category == 'minor' || $request->incident_category == 'critical') {
                             $list = Helpers::getCorporateEHSHeadUserList();
                                     foreach ($list as $u) {
-                                        if ($u->q_m_s_divisions_id == $NonConformance->division_id) {
+                                        if ($u->q_m_s_divisions_id == $incident->division_id) {
                                             $email = Helpers::getInitiatorEmail($u->user_id);
                                             if ($email !== null) {
                                                  // Add this if statement
                                                  try {
                                                         Mail::send(
                                                             'mail.Categorymail',
-                                                            ['data' => $NonConformance],
+                                                            ['data' => $incident],
                                                             function ($message) use ($email) {
                                                                 $message->to($email)
                                                                     ->subject("Activity Performed By " . Auth::user()->name);
@@ -224,14 +225,14 @@ class NonConformaceController extends Controller
                                 if ($request->Post_Categorization == 'major' || $request->Post_Categorization == 'minor' || $request->Post_Categorization == 'critical') {
                                     $list = Helpers::getHeadoperationsUserList();
                                             foreach ($list as $u) {
-                                                if ($u->q_m_s_divisions_id == $NonConformance->division_id) {
+                                                if ($u->q_m_s_divisions_id == $incident->division_id) {
                                                     $email = Helpers::getInitiatorEmail($u->user_id);
                                                     if ($email !== null) {
                                                          // Add this if statement
                                                          try {
                                                             Mail::send(
                                                                 'mail.Categorymail',
-                                                                ['data' => $NonConformance],
+                                                                ['data' => $incident],
                                                                 function ($message) use ($email) {
                                                                     $message->to($email)
                                                                         ->subject("Activity Performed By " . Auth::user()->name);
@@ -248,14 +249,14 @@ class NonConformaceController extends Controller
                                         if ($request->Post_Categorization == 'major' || $request->Post_Categorization == 'minor' || $request->Post_Categorization == 'critical') {
                                             $list = Helpers::getCEOUserList();
                                                     foreach ($list as $u) {
-                                                        if ($u->q_m_s_divisions_id == $NonConformance->division_id) {
+                                                        if ($u->q_m_s_divisions_id == $incident->division_id) {
                                                             $email = Helpers::getInitiatorEmail($u->user_id);
                                                             if ($email !== null) {
                                                                  // Add this if statement
                                                                  try {
                                                                         Mail::send(
                                                                             'mail.Categorymail',
-                                                                            ['data' => $NonConformance],
+                                                                            ['data' => $incident],
                                                                             function ($message) use ($email) {
                                                                                 $message->to($email)
                                                                                     ->subject("Activity Performed By " . Auth::user()->name);
@@ -272,14 +273,14 @@ class NonConformaceController extends Controller
                                                 if ($request->Post_Categorization == 'major' || $request->Post_Categorization == 'minor' || $request->Post_Categorization == 'critical') {
                                                     $list = Helpers::getCorporateEHSHeadUserList();
                                                             foreach ($list as $u) {
-                                                                if ($u->q_m_s_divisions_id == $NonConformance->division_id) {
+                                                                if ($u->q_m_s_divisions_id == $incident->division_id) {
                                                                     $email = Helpers::getInitiatorEmail($u->user_id);
                                                                     if ($email !== null) {
                                                                          // Add this if statement
                                                                          try {
                                                                                 Mail::send(
                                                                                     'mail.Categorymail',
-                                                                                    ['data' => $NonConformance],
+                                                                                    ['data' => $incident],
                                                                                     function ($message) use ($email) {
                                                                                         $message->to($email)
                                                                                             ->subject("Activity Performed By " . Auth::user()->name);
@@ -293,7 +294,21 @@ class NonConformaceController extends Controller
                                                                 }
                                                             }
                                                         }
+                                                          
+     if (!empty ($request->Initial_attachment)) {
 
+   $files = [];
+
+if ($incident->Initial_attachment) {
+    $existingFiles = json_decode($incident->Initial_attachment, true); // Convert to associative array
+    if (is_array($existingFiles)) {
+        $files = $existingFiles;
+    }
+    // $files = is_array(json_decode($NonConformance->Audit_file)) ? $NonConformance->Audit_file : [];
+}
+
+
+}
         if (!empty ($request->Audit_file)) {
             $files = [];
             if ($request->hasfile('Audit_file')) {
@@ -305,7 +320,7 @@ class NonConformaceController extends Controller
             }
 
 
-            $NonConformance->Audit_file = json_encode($files);
+            $incident->Audit_file = json_encode($files);
         }
         if (!empty ($request->initial_file)) {
             $files = [];
@@ -318,39 +333,10 @@ class NonConformaceController extends Controller
             }
 
 
-            $NonConformance->initial_file = json_encode($files);
+            $incident->initial_file = json_encode($files);
         }
-
-        if (!empty ($request->hod_file)) {
-            $files = [];
-            if ($request->hasfile('hod_file')) {
-                foreach ($request->file('hod_file') as $file) {
-                    $name = $request->name . 'hod_file' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
-                    $file->move('upload/', $name);
-                    $files[] = $name;
-                }
-            }
-
-
-            $NonConformance->hod_file = json_encode($files);
-        }
-       
-        
-
         //dd($request->Initial_attachment);
-        if (!empty ($request->Initial_attachment)) {
-            $files = [];
-            if ($request->hasfile('Initial_attachment')) {
-                foreach ($request->file('Initial_attachment') as $file) {
-                    $name = $request->name . 'Initial_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
-                    $file->move('upload/', $name);
-                    $files[] = $name;
-                }
-            }
-
-
-            $NonConformance->Initial_attachment = json_encode($files);
-        }
+       
 
         if (!empty ($request->QA_attachment)) {
             $files = [];
@@ -363,7 +349,7 @@ class NonConformaceController extends Controller
             }
 
 
-            $NonConformance->QA_attachment = json_encode($files);
+            $incident->QA_attachment = json_encode($files);
         }
         if (!empty ($request->Investigation_attachment)) {
             $files = [];
@@ -376,7 +362,7 @@ class NonConformaceController extends Controller
             }
 
 
-            $NonConformance->Investigation_attachment = json_encode($files);
+            $incident->Investigation_attachment = json_encode($files);
         }
         if (!empty ($request->Capa_attachment)) {
             $files = [];
@@ -389,7 +375,7 @@ class NonConformaceController extends Controller
             }
 
 
-            $NonConformance->Capa_attachment = json_encode($files);
+            $incident->Capa_attachment = json_encode($files);
         }
 
         if (!empty ($request->QA_attachments)) {
@@ -403,7 +389,7 @@ class NonConformaceController extends Controller
             }
 
 
-            $NonConformance->QA_attachments = json_encode($files);
+            $incident->QA_attachments = json_encode($files);
         }
 
         if (!empty ($request->closure_attachment)) {
@@ -417,7 +403,7 @@ class NonConformaceController extends Controller
             }
 
 
-            $NonConformance->closure_attachment = json_encode($files);
+            $incident->closure_attachment = json_encode($files);
         }
 
         $record = RecordNumber::first();
@@ -426,42 +412,40 @@ class NonConformaceController extends Controller
 
 
 
-        $NonConformance->status = 'Opened';
-        $NonConformance->stage = 1;
+        $incident->status = 'Opened';
+        $incident->stage = 1;
 
-        $NonConformance->save();
+        $incident->save();
 
-        
-        $teamInvestigationData = NonConformanceGridDatas::where(['non_conformances_id' => $NonConformance->id,'identifier' => "TeamInvestigation"])->firstOrCreate();
-        $teamInvestigationData->non_conformances_id = $NonConformance->id;
-        $teamInvestigationData->identifier = "TeamInvestigation";
-        $teamInvestigationData->data = $request->investigationTeam;
-        $teamInvestigationData->save();
+            $teamInvestigationData = IncidentGridData::where(['incident_id' => $incident->id,'identifier' => "TeamInvestigation"])->firstOrCreate();
+            $teamInvestigationData->incident_id = $incident->id;
+            $teamInvestigationData->identifier = "TeamInvestigation";
+            $teamInvestigationData->data = $request->investigationTeam;
+            $teamInvestigationData->save();
 
-        $rootCauseData = NonConformanceGridDatas::where(['non_conformances_id' => $NonConformance->id,'identifier' => "RootCause"])->firstOrCreate();
-        $rootCauseData->non_conformances_id = $NonConformance->id;
-        $rootCauseData->identifier = "RootCause";
-        $rootCauseData->data = $request->rootCauseData;
-        $rootCauseData->save();
+            $rootCauseData = IncidentGridData::where(['incident_id' => $incident->id,'identifier' => "RootCause"])->firstOrCreate();
+            $rootCauseData->incident_id = $incident->id;
+            $rootCauseData->identifier = "RootCause";
+            $rootCauseData->data = $request->rootCauseData;
+            $rootCauseData->save();
 
+            $newDataGridWhy = IncidentGridData::where(['incident_id' => $incident->id, 'identifier' => 'why'])->firstOrCreate();
+            $newDataGridWhy->incident_id = $incident->id;
+            $newDataGridWhy->identifier = 'why';
+            $newDataGridWhy->data = $request->why;
+            $newDataGridWhy->save();
 
-        $newDataGridWhy = NonConformanceGridDatas::where(['non_conformances_id' => $NonConformance->id, 'identifier' => 'why'])->firstOrCreate();
-        $newDataGridWhy->non_conformances_id = $NonConformance->id;
-        $newDataGridWhy->identifier = 'why';
-        $newDataGridWhy->data = $request->why;
-        $newDataGridWhy->save();
-
-        $newDataGridFishbone = NonConformanceGridDatas::where(['non_conformances_id' => $NonConformance->id, 'identifier' => 'fishbone'])->firstOrCreate();
-        $newDataGridFishbone->non_conformances_id = $NonConformance->id;
-        $newDataGridFishbone->identifier = 'fishbone';
-        $newDataGridFishbone->data = $request->fishbone;
-        $newDataGridFishbone->save();
+            $newDataGridFishbone = IncidentGridData::where(['incident_id' => $incident->id, 'identifier' => 'fishbone'])->firstOrCreate();
+            $newDataGridFishbone->incident_id = $incident->id;
+            $newDataGridFishbone->identifier = 'fishbone';
+            $newDataGridFishbone->data = $request->fishbone;
+            $newDataGridFishbone->save();
 
 
 
-        $data3 = new NonConformanceGrid();
-        $data3->non_conformances_grid_id = $NonConformance->id;
-        $data3->type = "NonConformance";
+        $data3 = new IncidentGrid();
+        $data3->incident_grid_id = $incident->id;
+        $data3->type = "Incident";
         if (!empty($request->facility_name)) {
             $data3->facility_name = serialize($request->facility_name);
         }
@@ -473,8 +457,8 @@ class NonConformaceController extends Controller
             $data3->Remarks = serialize($request->Remarks);
         }
         $data3->save();
-        $data4 = new NonConformanceGrid();
-        $data4->non_conformances_grid_id = $NonConformance->id;
+        $data4 = new IncidentGrid();
+        $data4->incident_grid_id = $incident->id;
         $data4->type = "Document ";
         if (!empty($request->Number)) {
             $data4->Number = serialize($request->Number);
@@ -488,8 +472,8 @@ class NonConformaceController extends Controller
         }
         $data4->save();
 
-        $data5 = new NonConformanceGrid();
-        $data5->non_conformances_grid_id = $NonConformance->id;
+        $data5 = new IncidentGrid();
+        $data5->incident_grid_id = $incident->id;
         $data5->type = "Product ";
         if (!empty($request->product_name)) {
             $data5->product_name = serialize($request->product_name);
@@ -505,8 +489,8 @@ class NonConformaceController extends Controller
 
 
 
-        $Cft = new NonConformanceCFTs();
-        $Cft->non_conformances_id = $NonConformance->id;
+        $Cft = new IncidentCft();
+        $Cft->incident_id = $incident->id;
         $Cft->Production_Review = $request->Production_Review;
         $Cft->Production_person = $request->Production_person;
         $Cft->Production_assessment = $request->Production_assessment;
@@ -855,8 +839,8 @@ class NonConformaceController extends Controller
 
         $Cft->save();
 
-            $history = new NonConformanceAuditTrails();
-            $history->non_conformances_id = $NonConformance->id;
+            $history = new IncidentAuditTrail();
+            $history->incident_id = $incident->id;
             $history->activity_type = 'Initiator';
             $history->previous = "Null";
             $history->current = Auth::user()->name;
@@ -864,29 +848,29 @@ class NonConformaceController extends Controller
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state = $NonConformance->status;
+            $history->origin_state = $incident->status;
             $history->change_to =   "Opened";
             $history->change_from = "Initiator";
             $history->action_name = 'Create';
             $history->save();
 
-            $history = new NonConformanceAuditTrails();
-            $history->non_conformances_id = $NonConformance->id;
+            $history = new IncidentAuditTrail();
+            $history->incident_id = $incident->id;
             $history->activity_type = 'Due Date';
             $history->previous = "Null";
-            $history->current = $NonConformance->due_date;
+            $history->current = $incident->due_date;
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state = $NonConformance->status;
+            $history->origin_state = $incident->status;
             $history->change_to =   "Opened";
             $history->change_from = "Initiator";
             $history->action_name = 'Create';
             $history->save();
 
-            $history = new NonConformanceAuditTrails();
-            $history->non_conformances_id = $NonConformance->id;
+            $history = new IncidentAuditTrail();
+            $history->incident_id = $incident->id;
             $history->activity_type = 'Date of Initiation';
             $history->previous = "Null";
             $history->current = Carbon::now()->format('d-M-Y');
@@ -894,23 +878,23 @@ class NonConformaceController extends Controller
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state = $NonConformance->status;
+            $history->origin_state = $incident->status;
             $history->change_to =   "Opened";
             $history->change_from = "Initiator";
             $history->action_name = 'Create';
             $history->save();
 
         if (!empty ($request->short_description)){
-            $history = new NonConformanceAuditTrails();
-            $history->non_conformances_id = $NonConformance->id;
+            $history = new IncidentAuditTrail();
+            $history->incident_id = $incident->id;
             $history->activity_type = 'Short Description';
             $history->previous = "Null";
-            $history->current = $NonConformance->short_description;
+            $history->current = $incident->short_description;
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state = $NonConformance->status;
+            $history->origin_state = $incident->status;
             $history->change_to =   "Opened";
             $history->change_from = "Initiator";
             $history->action_name = 'Create';
@@ -918,194 +902,194 @@ class NonConformaceController extends Controller
         }
 
         if (!empty ($request->Initiator_Group)){
-            $history = new NonConformanceAuditTrails();
-            $history->non_conformances_id = $NonConformance->id;
+            $history = new IncidentAuditTrail();
+            $history->incident_id = $incident->id;
             $history->activity_type = 'Department';
             $history->previous = "Null";
-            $history->current = $NonConformance->Initiator_Group;
+            $history->current = $incident->Initiator_Group;
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state = $NonConformance->status;
+            $history->origin_state = $incident->status;
             $history->change_to =   "Opened";
             $history->change_from = "Initiator";
             $history->action_name = 'Create';
             $history->save();
         }
-        if (!empty ($request->non_conformances_date)){
-            $history = new NonConformanceAuditTrails();
-            $history->non_conformances_id = $NonConformance->id;
-            $history->activity_type = 'Failure Investigation Observed';
+        if (!empty ($request->incident_date)){
+            $history = new IncidentAuditTrail();
+            $history->incident_id = $incident->id;
+            $history->activity_type = 'Incident Observed';
             $history->previous = "Null";
-            $history->current = $NonConformance->non_conformances_date;
+            $history->current = $incident->incident_date;
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state = $NonConformance->status;
+            $history->origin_state = $incident->status;
             $history->change_to =   "Opened";
             $history->change_from = "Initiator";
             $history->action_name = 'Create';
             $history->save();
         }
         if (is_array($request->Facility) && $request->Facility[0] !== null){
-            $history = new NonConformanceAuditTrails();
-            $history->non_conformances_id = $NonConformance->id;
+            $history = new IncidentAuditTrail();
+            $history->incident_id = $incident->id;
             $history->activity_type = 'Observed by';
             $history->previous = "Null";
-            $history->current = $NonConformance->Facility;
+            $history->current = $incident->Facility;
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state = $NonConformance->status;
+            $history->origin_state = $incident->status;
             $history->change_to =   "Opened";
             $history->change_from = "Initiator";
             $history->action_name = 'Create';
             $history->save();
         }
-        if (!empty ($request->non_conformances_reported_date)){
-            $history = new NonConformanceAuditTrails();
-            $history->non_conformances_id = $NonConformance->id;
-            $history->activity_type = 'Failure Investigation Reported on';
+        if (!empty ($request->incident_reported_date)){
+            $history = new IncidentAuditTrail();
+            $history->incident_id = $incident->id;
+            $history->activity_type = 'Incident Reported on';
             $history->previous = "Null";
-            $history->current = $NonConformance->non_conformances_reported_date;
+            $history->current = $incident->incident_reported_date;
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state = $NonConformance->status;
+            $history->origin_state = $incident->status;
             $history->change_to =   "Opened";
             $history->change_from = "Initiator";
             $history->action_name = 'Create';
             $history->save();
         }
         if ($request->audit_type[0] !== null){
-            $history = new NonConformanceAuditTrails();
-            $history->non_conformances_id = $NonConformance->id;
-            $history->activity_type = 'Failure Investigation Related To';
+            $history = new IncidentAuditTrail();
+            $history->incident_id = $incident->id;
+            $history->activity_type = 'Incident Related To';
             $history->previous = "Null";
-            $history->current = $NonConformance->audit_type;
+            $history->current = $incident->audit_type;
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state = $NonConformance->status;
+            $history->origin_state = $incident->status;
             $history->change_to =   "Opened";
             $history->change_from = "Initiator";
             $history->action_name = 'Create';
             $history->save();
         }
         if (!empty ($request->others)){
-            $history = new NonConformanceAuditTrails();
-            $history->non_conformances_id = $NonConformance->id;
+            $history = new IncidentAuditTrail();
+            $history->incident_id = $incident->id;
             $history->activity_type = 'Others';
             $history->previous = "Null";
-            $history->current = $NonConformance->others;
+            $history->current = $incident->others;
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state = $NonConformance->status;
+            $history->origin_state = $incident->status;
             $history->action_name = 'Create';
             $history->change_to =   "Opened";
             $history->change_from = "Initiator";
             $history->save();
         }
         if (!empty ($request->Facility_Equipment)){
-            $history = new NonConformanceAuditTrails();
-            $history->non_conformances_id = $NonConformance->id;
+            $history = new IncidentAuditTrail();
+            $history->incident_id = $incident->id;
             $history->activity_type = 'Facility/ Equipment/ Instrument/ System Details Required?';
             $history->previous = "Null";
-            $history->current = $NonConformance->Facility_Equipment;
+            $history->current = $incident->Facility_Equipment;
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state = $NonConformance->status;
+            $history->origin_state = $incident->status;
             $history->change_to =   "Opened";
             $history->change_from = "Initiator";
             $history->action_name = 'Create';
             $history->save();
         }
         if (!empty ($request->Document_Details_Required)){
-            $history = new NonConformanceAuditTrails();
-            $history->non_conformances_id = $NonConformance->id;
+            $history = new IncidentAuditTrail();
+            $history->incident_id = $incident->id;
             $history->activity_type = 'Document Details Required';
             $history->previous = "Null";
-            $history->current = $NonConformance->Document_Details_Required;
+            $history->current = $incident->Document_Details_Required;
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->change_to =   "Opened";
             $history->change_from = "Initiator";
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state = $NonConformance->status;
+            $history->origin_state = $incident->status;
             $history->action_name = 'Create';
             $history->save();
         }
         if (!empty ($request->Product_Batch)){
-            $history = new NonConformanceAuditTrails();
-            $history->non_conformances_id = $NonConformance->id;
+            $history = new IncidentAuditTrail();
+            $history->incident_id = $incident->id;
             $history->activity_type = 'Name of Product & Batch No';
             $history->previous = "Null";
-            $history->current = $NonConformance->Product_Batch;
+            $history->current = $incident->Product_Batch;
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->change_to =   "Opened";
             $history->change_from = "Initiator";
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state = $NonConformance->status;
+            $history->origin_state = $incident->status;
             $history->action_name = 'Create';
             $history->save();
         }
-        if ($request->Description_non_conformanceS[0] !== null){
-            $history = new NonConformanceAuditTrails();
-            $history->non_conformances_id = $NonConformance->id;
-            $history->activity_type = 'Description of Failure Investigation';
+        if ($request->Description_incident[0] !== null){
+            $history = new IncidentAuditTrail();
+            $history->incident_id = $incident->id;
+            $history->activity_type = 'Description of Incident';
             $history->previous = "Null";
-            $history->current = $NonConformance->Description_non_conformanceS;
+            $history->current = $incident->Description_incident;
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->change_to =   "Opened";
             $history->change_from = "Initiator";
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state = $NonConformance->status;
+            $history->origin_state = $incident->status;
             $history->action_name = 'Create';
             $history->save();
         }
         if ($request->Immediate_Action[0] !== null){
-            $history = new NonConformanceAuditTrails();
-            $history->non_conformances_id = $NonConformance->id;
-            $history->activity_type = 'Immediate Action (if any)';
-            $history->previous = "Null";
-            $history->current = $NonConformance->Immediate_Action;
-            $history->comment = "Not Applicable";
-            $history->user_id = Auth::user()->id;
-            $history->user_name = Auth::user()->name;
-            $history->change_to =   "Opened";
+            $history = new IncidentAuditTrail();
+        $history->incident_id = $incident->id;
+        $history->activity_type = 'Immediate Action (if any)';
+        $history->previous = "Null";
+        $history->current = $incident->Immediate_Action;
+        $history->comment = "Not Applicable";
+        $history->user_id = Auth::user()->id;
+        $history->user_name = Auth::user()->name;
+        $history->change_to =   "Opened";
             $history->change_from = "Initiator";
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state = $NonConformance->status;
-            $history->action_name = 'Create';
-            $history->save();
+        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        $history->origin_state = $incident->status;
+        $history->action_name = 'Create';
+        $history->save();
         }
         if ($request->Preliminary_Impact[0] !== null){
-            $history = new NonConformanceAuditTrails();
-            $history->non_conformances_id = $NonConformance->id;
-            $history->activity_type = 'Preliminary Impact of Failure Investigation';
+            $history = new IncidentAuditTrail();
+            $history->incident_id = $incident->id;
+            $history->activity_type = 'Preliminary Impact of Incident';
             $history->previous = "Null";
-            $history->current = $NonConformance->Preliminary_Impact;
+            $history->current = $incident->Preliminary_Impact;
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->change_to =   "Opened";
             $history->change_from = "Initiator";
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state = $NonConformance->status;
+            $history->origin_state = $incident->status;
             $history->action_name = 'Create';
             $history->save();
         }
@@ -1114,67 +1098,76 @@ class NonConformaceController extends Controller
         return redirect(url('rcms/qms-dashboard'));
     }
 
-    public function show($id)
+
+    public function incidentShow($id)
     {
-        $old_record = NonConformance::select('id', 'division_id', 'record')->get();
-        $data = NonConformance::find($id);
+        $old_record = Incident::select('id', 'division_id', 'record')->get();
+        $data = Incident::find($id);
         $userData = User::all();
-        $data1 = NonConformanceCFTs::where('non_conformances_id', $id)->latest()->first();
+        $data1 = IncidentCft::where('incident_id', $id)->latest()->first();
         $data->record = str_pad($data->record, 4, '0', STR_PAD_LEFT);
         $data->assign_to_name = User::where('id', $data->assign_id)->value('name');
-        $grid_data = NonConformanceGrid::where('non_conformances_grid_id', $id)->where('type', "NonConformance")->first();
-        $grid_data1 = NonConformanceGrid::where('non_conformances_grid_id', $id)->where('type', "Document")->first();
-        $grid_data2 = NonConformanceGrid::where('non_conformances_grid_id', $id)->where('type', "Product")->first();
+        $grid_data = IncidentGrid::where('incident_grid_id', $id)->where('type', "Incident")->first();
+        $grid_data1 = IncidentGrid::where('incident_grid_id', $id)->where('type', "Document")->first();
+        $grid_data2 = IncidentGrid::where('incident_grid_id', $id)->where('type', "Product")->first();
         $data->initiator_name = User::where('id', $data->initiator_id)->value('name');
-        $pre = NonConformance::all();
+        // dd($data->initiator_id);
+        $pre = Incident::all();
         $divisionName = DB::table('q_m_s_divisions')->where('id', $data->division_id)->value('name');
 
+        $incidentNewGrid = IncidentGridData::where('incident_id', $id)->latest()->first();
 
-        $grid_data_qrms = NonConformanceGridModes::where(['non_conformances_id' => $id, 'identifier' => 'failure_mode_qrms'])->first();
-        $grid_data_matrix_qrms = NonConformanceGridModes::where(['non_conformances_id' => $id, 'identifier' => 'matrix_qrms'])->first();
-
-        $capaExtension = NonConformanceLunchExtension::where(['non_conformances_id' => $id, "extension_identifier" => "Capa"])->first();
-        $qrmExtension = NonConformanceLunchExtension::where(['non_conformances_id' => $id, "extension_identifier" => "QRM"])->first();
-        $investigationExtension = NonConformanceLunchExtension::where(['non_conformances_id' => $id, "extension_identifier" => "Investigation"])->first();
-        $NonConformanceExtension = NonConformanceLunchExtension::where(['non_conformances_id' => $id, "extension_identifier" => "NonConformance"])->first();
-
-        $investigationTeam = NonConformanceGridDatas::where(['non_conformances_id' => $id, 'identifier' =>'TeamInvestigation'])->first();
-        $investigationTeamData = json_decode($investigationTeam->data, true);
+         $investigation_data = IncidentGridData::where(['incident_id' => $id, 'identifier' => 'investication'])->first();
         
-        $rootCause = NonConformanceGridDatas::where(['non_conformances_id' => $id, 'identifier' =>'RootCause'])->first();
+        // $why_data = IncidentGridData::where(['incident_id' => $id, 'identifier' => 'why'])->first();
+        // $fishbone_data = IncidentGridData::where(['incident_id' => $id, 'identifier' => 'fishbone'])->first();
+
+        $grid_data_qrms = IncidentGridFailureMode::where(['incident_id' => $id, 'identifier' => 'failure_mode_qrms'])->first();
+        $grid_data_matrix_qrms = IncidentGridFailureMode::where(['incident_id' => $id, 'identifier' => 'matrix_qrms'])->first();
+
+        $capaExtension = IncidentLaunchExtension::where(['incident_id' => $id, "extension_identifier" => "Capa"])->first();
+        $qrmExtension = IncidentLaunchExtension::where(['incident_id' => $id, "extension_identifier" => "QRM"])->first();
+        $investigationExtension = IncidentLaunchExtension::where(['incident_id' => $id, "extension_identifier" => "Investigation"])->first();
+        $incidentExtension = IncidentLaunchExtension::where(['incident_id' => $id, "extension_identifier" => "Incident"])->first();
+
+        $investigationTeam = IncidentGridData::where(['incident_id' => $id, 'identifier' =>'TeamInvestigation'])->first();
+        $investigationTeamData = json_decode($investigationTeam->data, true);
+
+        $rootCause = IncidentGridData::where(['incident_id' => $id, 'identifier' =>'RootCause'])->first();
         $rootCauseData = json_decode($rootCause->data, true);
 
 
-        $whyData = NonConformanceGridDatas::where(['non_conformances_id' => $id, 'identifier' => 'why'])->first();
+        $whyData = IncidentGridData::where(['incident_id' => $id, 'identifier' => 'why'])->first();
         $why_data = json_decode($whyData->data, true); 
         
 
-        $fishbone = NonConformanceGridDatas::where(['non_conformances_id' => $id, 'identifier' =>'fishbone'])->first();
+        $fishbone = IncidentGridData::where(['incident_id' => $id, 'identifier' =>'fishbone'])->first();
         $fishbone_data = json_decode($fishbone->data, true);
 
-        return view('frontend.non-conformance.failure-inv-view', compact('data','userData', 'grid_data_qrms','grid_data_matrix_qrms', 'capaExtension','qrmExtension','investigationExtension','NonConformanceExtension', 'old_record', 'pre', 'data1', 'divisionName','grid_data','grid_data1','grid_data2','investigationTeamData','rootCauseData', 'why_data', 'fishbone_data'));
+        return view('frontend.incident.incident-view', compact('data','userData', 'grid_data_qrms','grid_data_matrix_qrms', 'capaExtension','qrmExtension','investigationExtension','incidentExtension', 'old_record', 'pre', 'data1', 'divisionName','grid_data','grid_data1', 'incidentNewGrid','grid_data2','investigationTeamData','rootCauseData', 'why_data', 'fishbone_data'));
     }
 
-    public function update(Request $request,$id)
+
+    public function update(Request $request, $id)
     {
         $form_progress = null;
         
-        $lastNonConformance = NonConformance::find($id);
-        $NonConformance = NonConformance::find($id);
-        $NonConformance->Delay_Justification = $request->Delay_Justification;
+        $lastIncident = Incident::find($id);
+        $incident = Incident::find($id);
+        $incident->Delay_Justification = $request->Delay_Justification;
 
-        if ($request->non_conformances_category == 'major' || $request->non_conformances_category == 'critical')
+        if ($request->incident_category == 'major' || $request->incident_category == 'critical')
         {
-            $NonConformance->Investigation_required = "yes";
-            $NonConformance->capa_required = "yes";
-            $NonConformance->qrm_required = "yes";
+            $incident->Investigation_required = "yes";
+            $incident->capa_required = "yes";
+            $incident->qrm_required = "yes";
         }
 
-        if ($request->non_conformances_category == 'minor')
+        if ($request->incident_category == 'minor')
         {
-            $NonConformance->Investigation_required = $request->Investigation_required;
-            $NonConformance->capa_required = $request->capa_required;
-            $NonConformance->qrm_required = $request->qrm_required;
+            $incident->Investigation_required = $request->Investigation_required;
+            $incident->capa_required = $request->capa_required;
+            $incident->qrm_required = $request->qrm_required;
         }
 
         if ($request->form_name == 'general-open')
@@ -1186,14 +1179,14 @@ class NonConformaceController extends Controller
                 'short_description' => 'required',
                 'short_description_required' => 'required|in:Recurring,Non_Recurring',
                 'nature_of_repeat' => 'required_if:short_description_required,Recurring',
-                'non_conformances_date' => 'required',
-                'non_conformances_time' => 'required',
-                'non_conformances_reported_date' => 'required',
+                'incident_date' => 'required',
+                'incident_time' => 'required',
+                'incident_reported_date' => 'required',
                 'Delay_Justification' => [
                     function ($attribute, $value, $fail) use ($request) {
-                        $NonConformance_date = Carbon::parse($request->non_conformances_date);
-                        $reported_date = Carbon::parse($request->non_conformances_reported_date);
-                        $diff_in_days = $reported_date->diffInDays($NonConformance_date);
+                        $incident_date = Carbon::parse($request->incident_date);
+                        $reported_date = Carbon::parse($request->incident_reported_date);
+                        $diff_in_days = $reported_date->diffInDays($incident_date);
                         if ($diff_in_days !== 0) {
                             if(!$request->Delay_Justification){
                                 $fail('The Delay Justification is required!');
@@ -1241,12 +1234,12 @@ class NonConformaceController extends Controller
                         }
                     },
                 ],
-                // 'Description_non_conformanceS' => [
+                // 'Description_incident' => [
                 //     'required',
                 //     'array',
                 //     function($attribute, $value, $fail) {
                 //         if (count($value) === 1 && reset($value) === null) {
-                //             return $fail('Description of Failure Investigation must not be empty!.');
+                //             return $fail('Description of Incident must not be empty!.');
                 //         }
                 //     },
                 // ],
@@ -1271,7 +1264,7 @@ class NonConformaceController extends Controller
             ], [
                 'short_description_required.required' => 'Nature of Repeat required!',
                 'nature_of_repeat.required' =>  'The nature of repeat field is required when nature of repeat is Recurring.',
-                'audit_type' => 'Failure Investigation related to field required!'
+                'audit_type' => 'Incident related to field required!'
             ]);
 
             $validator->sometimes('others', 'required|string|min:1', function ($input) {
@@ -1289,7 +1282,7 @@ class NonConformaceController extends Controller
         if ($request->form_name == 'qa')
         {
             $validator = Validator::make($request->all(), [
-                'non_conformances_category' => 'required|not_in:0',
+                'incident_category' => 'required|not_in:0',
                 'Justification_for_categorization' => 'required',
 
                 // 'Investigation_required' => 'required|in:yes,no|not_in:0',
@@ -1315,21 +1308,21 @@ class NonConformaceController extends Controller
         if ($request->form_name == 'capa')
         {
             if($request->source_doc!=""){
-                $NonConformance->capa_number = $request->capa_number ? $request->capa_number : $NonConformance->capa_number;
-                $NonConformance->department_capa = $request->department_capa ? $request->department_capa : $NonConformance->department_capa;
-                $NonConformance->source_of_capa = $request->source_of_capa ? $request->source_of_capa : $NonConformance->source_of_capa;
-                $NonConformance->capa_others = $request->capa_others ? $request->capa_others : $NonConformance->capa_others;
-                $NonConformance->source_doc = $request->source_doc ? $request->source_doc : $NonConformance->source_doc;
-                $NonConformance->Description_of_Discrepancy = $request->Description_of_Discrepancy ? $request->Description_of_Discrepancy : $NonConformance->Description_of_Discrepancy;
-                $NonConformance->capa_root_cause = $request->capa_root_cause ? $request->capa_root_cause : $NonConformance->capa_root_cause;
-                $NonConformance->Immediate_Action_Take = $request->Immediate_Action_Take ? $request->Immediate_Action_Take : $NonConformance->Immediate_Action_Take;
-                $NonConformance->Corrective_Action_Details = $request->Corrective_Action_Details ? $request->Corrective_Action_Details : $NonConformance->Corrective_Action_Details;
-                $NonConformance->Preventive_Action_Details = $request->Preventive_Action_Details ? $request->Preventive_Action_Details : $NonConformance->Preventive_Action_Details;
-                $NonConformance->capa_completed_date = $request->capa_completed_date ? $request->capa_completed_date : $NonConformance->capa_completed_date;
-                $NonConformance->Interim_Control = $request->Interim_Control ? $request->Interim_Control : $NonConformance->Interim_Control;
-                $NonConformance->Corrective_Action_Taken = $request->Corrective_Action_Taken ? $request->Corrective_Action_Taken : $NonConformance->Corrective_Action_Taken;
-                $NonConformance->Preventive_action_Taken = $request->Preventive_action_Taken ? $request->Preventive_action_Taken : $NonConformance->Preventive_action_Taken;
-                $NonConformance->CAPA_Closure_Comments = $request->CAPA_Closure_Comments ? $request->CAPA_Closure_Comments : $NonConformance->CAPA_Closure_Comments;
+                $incident->capa_number = $request->capa_number ? $request->capa_number : $incident->capa_number;
+                $incident->department_capa = $request->department_capa ? $request->department_capa : $incident->department_capa;
+                $incident->source_of_capa = $request->source_of_capa ? $request->source_of_capa : $incident->source_of_capa;
+                $incident->capa_others = $request->capa_others ? $request->capa_others : $incident->capa_others;
+                $incident->source_doc = $request->source_doc ? $request->source_doc : $incident->source_doc;
+                $incident->Description_of_Discrepancy = $request->Description_of_Discrepancy ? $request->Description_of_Discrepancy : $incident->Description_of_Discrepancy;
+                $incident->capa_root_cause = $request->capa_root_cause ? $request->capa_root_cause : $incident->capa_root_cause;
+                $incident->Immediate_Action_Take = $request->Immediate_Action_Take ? $request->Immediate_Action_Take : $incident->Immediate_Action_Take;
+                $incident->Corrective_Action_Details = $request->Corrective_Action_Details ? $request->Corrective_Action_Details : $incident->Corrective_Action_Details;
+                $incident->Preventive_Action_Details = $request->Preventive_Action_Details ? $request->Preventive_Action_Details : $incident->Preventive_Action_Details;
+                $incident->capa_completed_date = $request->capa_completed_date ? $request->capa_completed_date : $incident->capa_completed_date;
+                $incident->Interim_Control = $request->Interim_Control ? $request->Interim_Control : $incident->Interim_Control;
+                $incident->Corrective_Action_Taken = $request->Corrective_Action_Taken ? $request->Corrective_Action_Taken : $incident->Corrective_Action_Taken;
+                $incident->Preventive_action_Taken = $request->Preventive_action_Taken ? $request->Preventive_action_Taken : $incident->Preventive_action_Taken;
+                $incident->CAPA_Closure_Comments = $request->CAPA_Closure_Comments ? $request->CAPA_Closure_Comments : $incident->CAPA_Closure_Comments;
 
                  if (!empty ($request->CAPA_Closure_attachment)) {
                     $files = [];
@@ -1341,10 +1334,10 @@ class NonConformaceController extends Controller
                             $files[] = $name;
                         }
                     }
-                    $NonConformance->CAPA_Closure_attachment = json_encode($files);
+                    $incident->CAPA_Closure_attachment = json_encode($files);
 
                 }
-                $NonConformance->update();
+                $incident->update();
                 toastr()->success('Document Sent');
                 return back();
                 }
@@ -1402,106 +1395,106 @@ class NonConformaceController extends Controller
             }
         }
 
-        $NonConformance->assign_to = $request->assign_to;
-        $NonConformance->Initiator_Group = $request->Initiator_Group;
+        $incident->assign_to = $request->assign_to;
+        $incident->Initiator_Group = $request->Initiator_Group;
 
-        if ($NonConformance->stage < 3) {
-            $NonConformance->short_description = $request->short_description;
+        if ($incident->stage < 3) {
+            $incident->short_description = $request->short_description;
         } else {
-            $NonConformance->short_description = $NonConformance->short_description;
+            $incident->short_description = $incident->short_description;
         }
-        $NonConformance->initiator_group_code = $request->initiator_group_code;
-        $NonConformance->non_conformances_reported_date = $request->non_conformances_reported_date;
-        $NonConformance->non_conformances_date = $request->non_conformances_date;
-        $NonConformance->non_conformances_time = $request->non_conformances_time;
-        $NonConformance->Delay_Justification = $request->Delay_Justification;
-        // $NonConformance->audit_type = implode(',', $request->audit_type);
+        $incident->initiator_group_code = $request->initiator_group_code;
+        $incident->incident_reported_date = $request->incident_reported_date;
+        $incident->incident_date = $request->incident_date;
+        $incident->incident_time = $request->incident_time;
+        $incident->Delay_Justification = $request->Delay_Justification;
+        // $incident->audit_type = implode(',', $request->audit_type);
         if (is_array($request->audit_type)) {
-            $NonConformance->audit_type = implode(',', $request->audit_type);
+            $incident->audit_type = implode(',', $request->audit_type);
         }
-        $NonConformance->short_description_required = $request->short_description_required;
-        $NonConformance->nature_of_repeat = $request->nature_of_repeat;
-        $NonConformance->others = $request->others;
-        $NonConformance->Product_Batch = $request->Product_Batch;
+        $incident->short_description_required = $request->short_description_required;
+        $incident->nature_of_repeat = $request->nature_of_repeat;
+        $incident->others = $request->others;
+        $incident->Product_Batch = $request->Product_Batch;
 
-        $NonConformance->Description_non_conformanceS = $request->Description_non_conformanceS;
+        $incident->Description_incident = $request->Description_incident;
         if ($request->related_records) {
-            $NonConformance->Related_Records1 =  implode(',', $request->related_records);
+            $incident->Related_Records1 =  implode(',', $request->related_records);
         }
-        $NonConformance->Facility = $request->Facility;
+        $incident->Facility = $request->Facility;
 
 
-        $NonConformance->Immediate_Action = implode(',', $request->Immediate_Action);
-        $NonConformance->Preliminary_Impact = implode(',', $request->Preliminary_Impact);
-        $NonConformance->Product_Details_Required = $request->Product_Details_Required;
+        $incident->Immediate_Action = implode(',', $request->Immediate_Action);
+        $incident->Preliminary_Impact = implode(',', $request->Preliminary_Impact);
+        $incident->Product_Details_Required = $request->Product_Details_Required;
 
 
-        $NonConformance->HOD_Remarks = $request->HOD_Remarks;
-        $NonConformance->Justification_for_categorization = !empty($request->Justification_for_categorization) ? $request->Justification_for_categorization : $NonConformance->Justification_for_categorization;
+        $incident->HOD_Remarks = $request->HOD_Remarks;
+        $incident->Justification_for_categorization = !empty($request->Justification_for_categorization) ? $request->Justification_for_categorization : $incident->Justification_for_categorization;
 
-        $NonConformance->Investigation_Details = !empty($request->Investigation_Details) ? $request->Investigation_Details : $NonConformance->Investigation_Details;
+        $incident->Investigation_Details = !empty($request->Investigation_Details) ? $request->Investigation_Details : $incident->Investigation_Details;
 
-        $NonConformance->QAInitialRemark = $request->QAInitialRemark;
-        $NonConformance->Investigation_Summary = $request->Investigation_Summary;
-        $NonConformance->Impact_assessment = $request->Impact_assessment;
-        $NonConformance->Root_cause = $request->Root_cause;
+        $incident->QAInitialRemark = $request->QAInitialRemark;
+        $incident->Investigation_Summary = $request->Investigation_Summary;
+        $incident->Impact_assessment = $request->Impact_assessment;
+        $incident->Root_cause = $request->Root_cause;
 
-        $NonConformance->Conclusion = $request->Conclusion;
-        $NonConformance->Identified_Risk = $request->Identified_Risk;
-        $NonConformance->severity_rate = $request->severity_rate ? $request->severity_rate : $NonConformance->severity_rate;
-        $NonConformance->Occurrence = $request->Occurrence ? $request->Occurrence : $NonConformance->Occurrence;
-        $NonConformance->detection = $request->detection ? $request->detection: $NonConformance->detection;
+        $incident->Conclusion = $request->Conclusion;
+        $incident->Identified_Risk = $request->Identified_Risk;
+        $incident->severity_rate = $request->severity_rate ? $request->severity_rate : $incident->severity_rate;
+        $incident->Occurrence = $request->Occurrence ? $request->Occurrence : $incident->Occurrence;
+        $incident->detection = $request->detection ? $request->detection: $incident->detection;
 
-        $newDataGridqrms = NonConformanceGridModes::where(['non_conformances_id' => $id, 'identifier' =>
+        $newDataGridqrms = IncidentGridFailureMode::where(['incident_id' => $id, 'identifier' =>
         'failure_mode_qrms'])->firstOrCreate();
-        $newDataGridqrms->non_conformances_id = $id;
+        $newDataGridqrms->incident_id = $id;
         $newDataGridqrms->identifier = 'failure_mode_qrms';
         $newDataGridqrms->data = $request->failure_mode_qrms;
         $newDataGridqrms->save();
 
-        $matrixDataGridqrms = NonConformanceGridModes::where(['non_conformances_id' => $id, 'identifier' => 'matrix_qrms'])->firstOrCreate();
-        $matrixDataGridqrms->non_conformances_id = $id;
+        $matrixDataGridqrms = IncidentGridFailureMode::where(['incident_id' => $id, 'identifier' => 'matrix_qrms'])->firstOrCreate();
+        $matrixDataGridqrms->incident_id = $id;
         $matrixDataGridqrms->identifier = 'matrix_qrms';
         $matrixDataGridqrms->data = $request->matrix_qrms;
         $matrixDataGridqrms->save();
 
-        if ($NonConformance->stage < 6) {
-            $NonConformance->CAPA_Rquired = $request->CAPA_Rquired;
+        if ($incident->stage < 6) {
+            $incident->CAPA_Rquired = $request->CAPA_Rquired;
         }
 
-        if ($NonConformance->stage < 6) {
-            $NonConformance->capa_type = $request->capa_type;
+        if ($incident->stage < 6) {
+            $incident->capa_type = $request->capa_type;
         }
 
-        $NonConformance->CAPA_Description = !empty($request->CAPA_Description) ? $request->CAPA_Description : $NonConformance->CAPA_Description;
-        $NonConformance->Post_Categorization = !empty($request->Post_Categorization) ? $request->Post_Categorization : $NonConformance->Post_Categorization;
-        $NonConformance->Investigation_Of_Review = $request->Investigation_Of_Review;
-        $NonConformance->QA_Feedbacks = $request->has('QA_Feedbacks') ? $request->QA_Feedbacks : $NonConformance->QA_Feedbacks;
-        $NonConformance->Closure_Comments = $request->Closure_Comments;
-        $NonConformance->Disposition_Batch = $request->Disposition_Batch;
-        $NonConformance->Facility_Equipment = $request->Facility_Equipment;
-        $NonConformance->Document_Details_Required = $request->Document_Details_Required;
+        $incident->CAPA_Description = !empty($request->CAPA_Description) ? $request->CAPA_Description : $incident->CAPA_Description;
+        $incident->Post_Categorization = !empty($request->Post_Categorization) ? $request->Post_Categorization : $incident->Post_Categorization;
+        $incident->Investigation_Of_Review = $request->Investigation_Of_Review;
+        $incident->QA_Feedbacks = $request->has('QA_Feedbacks') ? $request->QA_Feedbacks : $incident->QA_Feedbacks;
+        $incident->Closure_Comments = $request->Closure_Comments;
+        $incident->Disposition_Batch = $request->Disposition_Batch;
+        $incident->Facility_Equipment = $request->Facility_Equipment;
+        $incident->Document_Details_Required = $request->Document_Details_Required;
 
-        if ($NonConformance->stage == 3)
+        if ($incident->stage == 3)
         {
-            $NonConformance->Customer_notification = $request->Customer_notification;
-            // $NonConformance->Investigation_required = $request->Investigation_required;
-            // $NonConformance->capa_required = $request->capa_required;
-            // $NonConformance->qrm_required = $request->qrm_required;
-            $NonConformance->non_conformances_category = $request->non_conformances_category;
-            $NonConformance->QAInitialRemark = $request->QAInitialRemark;
-            // $NonConformance->customers = $request->customers;
+            $incident->Customer_notification = $request->Customer_notification;
+            // $incident->Investigation_required = $request->Investigation_required;
+            // $incident->capa_required = $request->capa_required;
+            // $incident->qrm_required = $request->qrm_required;
+            $incident->incident_category = $request->incident_category;
+            $incident->QAInitialRemark = $request->QAInitialRemark;
+            // $incident->customers = $request->customers;
         }
 
-        if($NonConformance->stage == 3 || $NonConformance->stage == 4 ){
+        if($incident->stage == 3 || $incident->stage == 4 ){
 
 
             if (!$form_progress) {
                 $form_progress = 'cft';
             }
 
-            $Cft = NonConformanceCFTs::withoutTrashed()->where('non_conformances_id', $id)->first();
-            if($Cft && $NonConformance->stage == 4 ){
+            $Cft = IncidentCft::withoutTrashed()->where('incident_id', $id)->first();
+            if($Cft && $incident->stage == 4 ){
                 $Cft->Production_Review = $request->Production_Review == null ? $Cft->Production_Review : $request->Production_Review;
                 $Cft->Production_person = $request->Production_person == null ? $Cft->Production_person : $request->Production_Review;
                 $Cft->Warehouse_review = $request->Warehouse_review == null ? $Cft->Warehouse_review : $request->Warehouse_review;
@@ -1841,8 +1834,8 @@ class NonConformaceController extends Controller
 
 
         $Cft->save();
-                $IsCFTRequired = NonConformanceCFTResponse::withoutTrashed()->where(['is_required' => 1, 'non_conformances_id' => $id])->latest()->first();
-                $cftUsers = DB::table('non_conformance_c_f_ts')->where(['non_conformances_id' => $id])->first();
+                $IsCFTRequired = IncidentCftResponse::withoutTrashed()->where(['is_required' => 1, 'incident_id' => $id])->latest()->first();
+                $cftUsers = DB::table('incident_cfts')->where(['incident_id' => $id])->first();
                 // Define the column names
                 $columns = ['Production_person', 'Warehouse_notification', 'Quality_Control_Person', 'QualityAssurance_person', 'Engineering_person', 'Analytical_Development_person', 'Kilo_Lab_person', 'Technology_transfer_person', 'Environment_Health_Safety_person', 'Human_Resource_person', 'Information_Technology_person', 'Project_management_person','Other1_person','Other2_person','Other3_person','Other4_person','Other5_person'];
 
@@ -1868,55 +1861,51 @@ class NonConformaceController extends Controller
                             try {
                                 Mail::send(
                                     'mail.view-mail',
-                                    ['data' => $NonConformance],
+                                    ['data' => $incident],
                                     function ($message) use ($email) {
                                         $message->to($email)
                                             ->subject("CFT Assgineed by " . Auth::user()->name);
                                     }
                                 );
                             } catch (\Exception $e) {
-                                //log error 
+                                //log error
                             }
                     }
                 }
+                if (!empty ($request->Initial_attachment)) {
+                $files = [];
 
-            
-        if (!empty ($request->Initial_attachment)) {
-
-            $files = [];
-
-            if ($NonConformance->Initial_attachment) {
-                $existingFiles = json_decode($NonConformance->Initial_attachment, true); // Convert to associative array
-                if (is_array($existingFiles)) {
-                    $files = $existingFiles;
+                if ($incident->Initial_attachment) {
+                    $files = is_array(json_decode($incident->Initial_attachment)) ? $incident->Initial_attachment : [];
                 }
-                // $files = is_array(json_decode($NonConformance->Audit_file)) ? $NonConformance->Audit_file : [];
+
+                if ($request->hasfile('Initial_attachment')) {
+                    foreach ($request->file('Initial_attachment') as $file) {
+                        $name = $request->name . 'Initial_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                        $file->move('upload/', $name);
+                        $files[] = $name;
+                    }
+                }
+
+                $incident->Initial_attachment = json_encode($files);
+                
             }
 
-            if ($request->hasfile('Initial_attachment')) {
-                foreach ($request->file('Initial_attachment') as $file) {
-                    $name = $request->name . 'Initial_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
-                    $file->move('upload/', $name);
-                    $files[] = $name;
-                }
-            }
-            $NonConformance->Initial_attachment = json_encode($files);
-        }
+
 
         }
 
-
-
+        
         if (!empty ($request->Audit_file)) {
 
             $files = [];
 
-            if ($NonConformance->Audit_file) {
-                $existingFiles = json_decode($NonConformance->Audit_file, true); // Convert to associative array
+            if ($incident->Audit_file) {
+                $existingFiles = json_decode($incident->Audit_file, true); // Convert to associative array
                 if (is_array($existingFiles)) {
                     $files = $existingFiles;
                 }
-                // $files = is_array(json_decode($NonConformance->Audit_file)) ? $NonConformance->Audit_file : [];
+                // $files = is_array(json_decode($incident->Audit_file)) ? $incident->Audit_file : [];
             }
 
             if ($request->hasfile('Audit_file')) {
@@ -1926,14 +1915,36 @@ class NonConformaceController extends Controller
                     $files[] = $name;
                 }
             }
-            $NonConformance->Audit_file = json_encode($files);
+            $incident->Audit_file = json_encode($files);
+        }
+
+        if (!empty ($request->hod_attachments)) {
+
+            $files = [];
+
+            if ($incident->hod_attachments) {
+                $existingFiles = json_decode($incident->hod_attachments, true); // Convert to associative array
+                if (is_array($existingFiles)) {
+                    $files = $existingFiles;
+                }
+                // $files = is_array(json_decode($incident->Audit_file)) ? $incident->Audit_file : [];
+            }
+
+            if ($request->hasfile('hod_attachments')) {
+                foreach ($request->file('hod_attachments') as $file) {
+                    $name = $request->name . 'hod_attachments' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $file->move('upload/', $name);
+                    $files[] = $name;
+                }
+            }
+            $incident->hod_attachments = json_encode($files);
         }
         if (!empty($request->initial_file)) {
             $files = [];
 
             // Decode existing files if they exist
-            if ($NonConformance->initial_file) {
-                $existingFiles = json_decode($NonConformance->initial_file, true); // Convert to associative array
+            if ($incident->initial_file) {
+                $existingFiles = json_decode($incident->initial_file, true); // Convert to associative array
                 if (is_array($existingFiles)) {
                     $files = $existingFiles;
                 }
@@ -1949,18 +1960,18 @@ class NonConformaceController extends Controller
             }
 
             // Encode the files array and update the model
-            $NonConformance->initial_file = json_encode($files);
+            $incident->initial_file = json_encode($files);
         }
 
         if (!empty ($request->QA_attachment)) {
             $files = [];
 
-            if ($NonConformance->QA_attachment) {
-                $existingFiles = json_decode($NonConformance->QA_attachment, true); // Convert to associative array
+            if ($incident->QA_attachment) {
+                $existingFiles = json_decode($incident->QA_attachment, true); // Convert to associative array
                 if (is_array($existingFiles)) {
                     $files = $existingFiles;
                 }
-                // $files = is_array(json_decode($NonConformance->QA_attachment)) ? $NonConformance->QA_attachment : [];
+                // $files = is_array(json_decode($incident->QA_attachment)) ? $incident->QA_attachment : [];
             }
 
             if ($request->hasfile('QA_attachment')) {
@@ -1972,19 +1983,19 @@ class NonConformaceController extends Controller
             }
 
 
-            $NonConformance->QA_attachment = json_encode($files);
+            $incident->QA_attachment = json_encode($files);
         }
 
         if (!empty ($request->Investigation_attachment)) {
 
             $files = [];
 
-            if ($NonConformance->Investigation_attachment) {
-                $existingFiles = json_decode($NonConformance->Investigation_attachment, true); // Convert to associative array
+            if ($incident->Investigation_attachment) {
+                $existingFiles = json_decode($incident->Investigation_attachment, true); // Convert to associative array
                 if (is_array($existingFiles)) {
                     $files = $existingFiles;
                 }
-                // $files = is_array(json_decode($NonConformance->QA_attachment)) ? $NonConformance->QA_attachment : [];
+                // $files = is_array(json_decode($incident->QA_attachment)) ? $incident->QA_attachment : [];
             }
 
             if ($request->hasfile('Investigation_attachment')) {
@@ -1996,19 +2007,19 @@ class NonConformaceController extends Controller
             }
 
 
-            $NonConformance->Investigation_attachment = json_encode($files);
+            $incident->Investigation_attachment = json_encode($files);
         }
 
         if (!empty ($request->Capa_attachment)) {
 
             $files = [];
 
-            if ($NonConformance->Capa_attachment) {
-                $existingFiles = json_decode($NonConformance->Capa_attachment, true); // Convert to associative array
+            if ($incident->Capa_attachment) {
+                $existingFiles = json_decode($incident->Capa_attachment, true); // Convert to associative array
                 if (is_array($existingFiles)) {
                     $files = $existingFiles;
                 }
-                // $files = is_array(json_decode($NonConformance->Capa_attachment)) ? $NonConformance->Capa_attachment : [];
+                // $files = is_array(json_decode($incident->Capa_attachment)) ? $incident->Capa_attachment : [];
             }
 
             if ($request->hasfile('Capa_attachment')) {
@@ -2020,40 +2031,16 @@ class NonConformaceController extends Controller
             }
 
 
-            $NonConformance->Capa_attachment = json_encode($files);
+            $incident->Capa_attachment = json_encode($files);
         }
-        // if (!empty ($request->QA_attachments)) {
+        if (!empty ($request->QA_attachments)) {
 
-        //     $files = [];
-
-        //     if ($NonConformance->QA_attachments) {
-        //         $files = is_array(json_decode($NonConformance->QA_attachments)) ? $NonConformance->QA_attachments : [];
-        //     }
-
-        //     if ($request->hasfile('QA_attachments')) {
-        //         foreach ($request->file('QA_attachments') as $file) {
-        //             $name = $request->name . 'QA_attachments' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
-        //             $file->move('upload/', $name);
-        //             $files[] = $name;
-        //         }
-        //     }
-
-
-        //     $NonConformance->QA_attachments = json_encode($files);
-        // }
-
-        if (!empty($request->QA_attachments)) {
             $files = [];
 
-            // Decode existing files if they exist
-            if ($NonConformance->QA_attachments) {
-                $existingFiles = json_decode($NonConformance->QA_attachments, true); // Convert to associative array
-                if (is_array($existingFiles)) {
-                    $files = $existingFiles;
-                }
+            if ($incident->QA_attachments) {
+                $files = is_array(json_decode($incident->QA_attachments)) ? $incident->QA_attachments : [];
             }
 
-            // Process and add new files
             if ($request->hasfile('QA_attachments')) {
                 foreach ($request->file('QA_attachments') as $file) {
                     $name = $request->name . 'QA_attachments' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
@@ -2062,20 +2049,20 @@ class NonConformaceController extends Controller
                 }
             }
 
-            // Encode the files array and update the model
-            $NonConformance->QA_attachments = json_encode($files);
+
+            $incident->QA_attachments = json_encode($files);
         }
 
         if (!empty ($request->closure_attachment)) {
 
             $files = [];
 
-            if ($NonConformance->closure_attachment) {
-                $existingFiles = json_decode($NonConformance->closure_attachment, true); // Convert to associative array
+            if ($incident->closure_attachment) {
+                $existingFiles = json_decode($incident->closure_attachment, true); // Convert to associative array
                 if (is_array($existingFiles)) {
                     $files = $existingFiles;
                 }
-                // $files = is_array(json_decode($NonConformance->closure_attachment)) ? $NonConformance->closure_attachment : [];
+                // $files = is_array(json_decode($incident->closure_attachment)) ? $incident->closure_attachment : [];
             }
 
             if ($request->hasfile('closure_attachment')) {
@@ -2087,95 +2074,70 @@ class NonConformaceController extends Controller
             }
 
 
-            $NonConformance->closure_attachment = json_encode($files);
+            $incident->closure_attachment = json_encode($files);
         }
-
-        
-        if (!empty ($request->hod_file)) {
-
-            $files = [];
-
-            if ($NonConformance->hod_file) {
-                $existingFiles = json_decode($NonConformance->hod_file, true); // Convert to associative array
-                if (is_array($existingFiles)) {
-                    $files = $existingFiles;
-                }
-                // $files = is_array(json_decode($NonConformance->closure_attachment)) ? $NonConformance->closure_attachment : [];
-            }
-
-            if ($request->hasfile('hod_file')) {
-                foreach ($request->file('hod_file') as $file) {
-                    $name = $request->name . 'hod_file' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
-                    $file->move('upload/', $name);
-                    $files[] = $name;
-                }
-            }
-
-
-            $NonConformance->hod_file = json_encode($files);
-        }
-    
-        if($NonConformance->stage > 0){
+        if($incident->stage > 0){
 
 
             //investiocation dynamic
-            $NonConformance->Discription_Event = $request->Discription_Event;
-            $NonConformance->objective = $request->objective;
-            $NonConformance->scope = $request->scope;
-            $NonConformance->imidiate_action = $request->imidiate_action;
-            $NonConformance->investigation_approach = is_array($request->investigation_approach) ? implode(',', $request->investigation_approach) : '';
-            $NonConformance->attention_issues = $request->attention_issues;
-            $NonConformance->attention_actions = $request->attention_actions;
-            $NonConformance->attention_remarks = $request->attention_remarks;
-            $NonConformance->understanding_issues = $request->understanding_issues;
-            $NonConformance->understanding_actions = $request->understanding_actions;
-            $NonConformance->understanding_remarks = $request->understanding_remarks;
-            $NonConformance->procedural_issues = $request->procedural_issues;
-            $NonConformance->procedural_actions = $request->procedural_actions;
-            $NonConformance->procedural_remarks = $request->procedural_remarks;
-            $NonConformance->behavioiral_issues = $request->behavioiral_issues;
-            $NonConformance->behavioiral_actions = $request->behavioiral_actions;
-            $NonConformance->behavioiral_remarks = $request->behavioiral_remarks;
-            $NonConformance->skill_issues = $request->skill_issues;
-            $NonConformance->skill_actions = $request->skill_actions;
-            $NonConformance->skill_remarks = $request->skill_remarks;
-            $NonConformance->what_will_be = $request->what_will_be;
-            $NonConformance->what_will_not_be = $request->what_will_not_be;
-            $NonConformance->what_rationable = $request->what_rationable;
-            $NonConformance->where_will_be = $request->where_will_be;
-            $NonConformance->where_will_not_be = $request->where_will_not_be;
-            $NonConformance->where_rationable = $request->where_rationable;
-            $NonConformance->when_will_not_be = $request->when_will_not_be;
-            $NonConformance->when_will_be = $request->when_will_be;
-            $NonConformance->when_rationable = $request->when_rationable;
-            $NonConformance->coverage_will_be = $request->coverage_will_be;
-            $NonConformance->coverage_will_not_be = $request->coverage_will_not_be;
-            $NonConformance->coverage_rationable = $request->coverage_rationable;
-            $NonConformance->who_will_be = $request->who_will_be;
-            $NonConformance->who_will_not_be = $request->who_will_not_be;
-            $NonConformance->who_rationable = $request->who_rationable;
+            $incident->Discription_Event = $request->Discription_Event;
+            $incident->objective = $request->objective;
+            $incident->scope = $request->scope;
+            $incident->imidiate_action = $request->imidiate_action;
+            $incident->investigation_approach = is_array($request->investigation_approach) ? implode(',', $request->investigation_approach) : '';
+            $incident->attention_issues = $request->attention_issues;
+            $incident->attention_actions = $request->attention_actions;
+            $incident->attention_remarks = $request->attention_remarks;
+            $incident->understanding_issues = $request->understanding_issues;
+            $incident->understanding_actions = $request->understanding_actions;
+            $incident->understanding_remarks = $request->understanding_remarks;
+            $incident->procedural_issues = $request->procedural_issues;
+            $incident->procedural_actions = $request->procedural_actions;
+            $incident->procedural_remarks = $request->procedural_remarks;
+            $incident->behavioiral_issues = $request->behavioiral_issues;
+            $incident->behavioiral_actions = $request->behavioiral_actions;
+            $incident->behavioiral_remarks = $request->behavioiral_remarks;
+            $incident->skill_issues = $request->skill_issues;
+            $incident->skill_actions = $request->skill_actions;
+            $incident->skill_remarks = $request->skill_remarks;
+            $incident->what_will_be = $request->what_will_be;
+            $incident->what_will_not_be = $request->what_will_not_be;
+            $incident->what_rationable = $request->what_rationable;
+            $incident->where_will_be = $request->where_will_be;
+            $incident->where_will_not_be = $request->where_will_not_be;
+            $incident->where_rationable = $request->where_rationable;
+            $incident->when_will_not_be = $request->when_will_not_be;
+            $incident->when_will_be = $request->when_will_be;
+            $incident->when_rationable = $request->when_rationable;
+            $incident->coverage_will_be = $request->coverage_will_be;
+            $incident->coverage_will_not_be = $request->coverage_will_not_be;
+            $incident->coverage_rationable = $request->coverage_rationable;
+            $incident->who_will_be = $request->who_will_be;
+            $incident->who_will_not_be = $request->who_will_not_be;
+            $incident->who_rationable = $request->who_rationable;
 
             // dd($id);
-            $newDataGridInvestication = NonConformanceGridDatas::where(['non_conformances_id' => $id, 'identifier' => 'investication'])->firstOrCreate();
-            $newDataGridInvestication->non_conformances_id = $id;
-            $newDataGridInvestication->identifier = 'investication';
-            $newDataGridInvestication->data = $request->investication;
-            $newDataGridInvestication->save();
 
-            $newDataGridRCA = NonConformanceGridDatas::where(['non_conformances_id' => $id, 'identifier' => 'rootCause'])->firstOrCreate();
-            $newDataGridRCA->non_conformances_id = $id;
-            $newDataGridRCA->identifier = 'rootCause';
-            $newDataGridRCA->data = $request->rootCause;
-            $newDataGridRCA->save();
+            $teamInvestigationData = IncidentGridData::where(['incident_id' => $incident->id,'identifier' => "TeamInvestigation"])->firstOrCreate();
+            $teamInvestigationData->incident_id = $incident->id;
+            $teamInvestigationData->identifier = "TeamInvestigation";
+            $teamInvestigationData->data = $request->investigationTeam;
+            $teamInvestigationData->save();
+    
+            $rootCauseData = IncidentGridData::where(['incident_id' => $incident->id,'identifier' => "RootCause"])->firstOrCreate();
+            $rootCauseData->incident_id = $incident->id;
+            $rootCauseData->identifier = "RootCause";
+            $rootCauseData->data = $request->rootCauseData;
+            $rootCauseData->save();
 
-            $newDataGridWhy = NonConformanceGridDatas::where(['non_conformances_id' => $id, 'identifier' => 'why'])->firstOrCreate();
-            $newDataGridWhy->non_conformances_id = $id;
+            $newDataGridWhy = IncidentGridData::where(['incident_id' => $id, 'identifier' => 'why'])->firstOrCreate();
+            $newDataGridWhy->incident_id = $id;
             $newDataGridWhy->identifier = 'why';
             $newDataGridWhy->data = $request->why;
             $newDataGridWhy->save();
 
-            $newDataGridFishbone = NonConformanceGridDatas::where(['non_conformances_id' => $id, 'identifier' => 'fishbone'])->firstOrCreate();
-            $newDataGridFishbone->non_conformances_id = $id;
+            $newDataGridFishbone = IncidentGridData::where(['incident_id' => $id, 'identifier' => 'fishbone'])->firstOrCreate();
+            $newDataGridFishbone->incident_id = $id;
             $newDataGridFishbone->identifier = 'fishbone';
             $newDataGridFishbone->data = $request->fishbone;
             $newDataGridFishbone->save();
@@ -2183,10 +2145,10 @@ class NonConformaceController extends Controller
         }
 
 
-        $NonConformance->form_progress = isset($form_progress) ? $form_progress : null;
-        $NonConformance->update();
+        $incident->form_progress = isset($form_progress) ? $form_progress : null;
+        $incident->update();
         // grid
-         $data3=NonConformanceGrid::where('non_conformances_grid_id', $NonConformance->id)->where('type', "NonConformance")->first();
+         $data3=IncidentGrid::where('incident_grid_id', $incident->id)->where('type', "Incident")->first();
                 if (!empty($request->IDnumber)) {
                     $data3->IDnumber = serialize($request->IDnumber);
                 }
@@ -2202,7 +2164,7 @@ class NonConformaceController extends Controller
                 // dd($request->Remarks);
 
 
-            $data4=NonConformanceGrid::where('non_conformances_grid_id', $NonConformance->id)->where('type', "Document")->first();
+            $data4=IncidentGrid::where('incident_grid_id', $incident->id)->where('type', "Document")->first();
             if (!empty($request->Number)) {
                 $data4->Number = serialize($request->Number);
             }
@@ -2215,7 +2177,7 @@ class NonConformaceController extends Controller
             }
             $data4->update();
 
-            $data5=NonConformanceGrid::where('non_conformances_grid_id', $NonConformance->id)->where('type', "Product")->first();
+            $data5=IncidentGrid::where('incident_grid_id', $incident->id)->where('type', "Product")->first();
             if (!empty($request->product_name)) {
                 $data5->product_name = serialize($request->product_name);
             }
@@ -2229,577 +2191,577 @@ class NonConformaceController extends Controller
             $data5->update();
 
 
-        if ($lastNonConformance->short_description != $NonConformance->short_description || !empty ($request->comment)) {
+        if ($lastIncident->short_description != $incident->short_description || !empty ($request->comment)) {
             // return 'history';
-            $history = new NonConformanceAuditTrails;
-            $history->non_conformances_id = $id;
+            $history = new IncidentAuditTrail;
+            $history->incident_id = $id;
             $history->activity_type = 'Short Description';
-             $history->previous = $lastNonConformance->short_description;
-            $history->current = $NonConformance->short_description;
-            $history->comment = $NonConformance->submit_comment;
+             $history->previous = $lastIncident->short_description;
+            $history->current = $incident->short_description;
+            $history->comment = $incident->submit_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state = $lastNonConformance->status;
+            $history->origin_state = $lastIncident->status;
             $history->change_to =   "Not Applicable";
-            $history->change_from = $lastNonConformance->status;
+            $history->change_from = $lastIncident->status;
             $history->action_name = "Update";
             $history->save();
         }
-        if ($lastNonConformance->Initiator_Group != $NonConformance->Initiator_Group || !empty ($request->comment)) {
+        if ($lastIncident->Initiator_Group != $incident->Initiator_Group || !empty ($request->comment)) {
             // return 'history';
-            $history = new NonConformanceAuditTrails;
-            $history->non_conformances_id = $id;
+            $history = new IncidentAuditTrail;
+            $history->incident_id = $id;
             $history->activity_type = 'Initiator Group';
-            $history->previous = $lastNonConformance->Initiator_Group;
-            $history->current = $NonConformance->Initiator_Group;
+            $history->previous = $lastIncident->Initiator_Group;
+            $history->current = $incident->Initiator_Group;
             $history->comment = $request->comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state = $lastNonConformance->status;
+            $history->origin_state = $lastIncident->status;
             $history->change_to =   "Not Applicable";
-            $history->change_from = $lastNonConformance->status;
+            $history->change_from = $lastIncident->status;
             $history->action_name = 'Update';
             $history->save();
         }
 
-        if ($lastNonConformance->non_conformances_date != $NonConformance->non_conformances_date || !empty ($request->comment)) {
+        if ($lastIncident->incident_date != $incident->incident_date || !empty ($request->comment)) {
             // return 'history';
-            $history = new NonConformanceAuditTrails;
-            $history->non_conformances_id = $id;
-            $history->activity_type = 'Failure Investigation Observed';
-            $history->previous = $lastNonConformance->non_conformances_date;
-            $history->current = $NonConformance->non_conformances_date;
+            $history = new IncidentAuditTrail;
+            $history->incident_id = $id;
+            $history->activity_type = 'Incident Observed';
+            $history->previous = $lastIncident->incident_date;
+            $history->current = $incident->incident_date;
             $history->comment = $request->comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state = $lastNonConformance->status;
+            $history->origin_state = $lastIncident->status;
             $history->change_to =   "Not Applicable";
-            $history->change_from = $lastNonConformance->status;
+            $history->change_from = $lastIncident->status;
             $history->action_name = 'Update';
             $history->save();
         }
 
-        if ($lastNonConformance->Observed_by != $NonConformance->Observed_by || !empty ($request->comment)) {
+        if ($lastIncident->Observed_by != $incident->Observed_by || !empty ($request->comment)) {
             // return 'history';
-            $history = new NonConformanceAuditTrails;
-            $history->non_conformances_id = $id;
+            $history = new IncidentAuditTrail;
+            $history->incident_id = $id;
             $history->activity_type = 'Observed by';
-            $history->previous = $lastNonConformance->Observed_by;
-            $history->current = $NonConformance->Observed_by;
+            $history->previous = $lastIncident->Observed_by;
+            $history->current = $incident->Observed_by;
             $history->comment = $request->comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state = $lastNonConformance->status;
+            $history->origin_state = $lastIncident->status;
             $history->change_to =   "Not Applicable";
-            $history->change_from = $lastNonConformance->status;
+            $history->change_from = $lastIncident->status;
             $history->action_name = 'Update';
             $history->save();
         }
 
-        if ($lastNonConformance->non_conformances_reported_date != $NonConformance->non_conformances_reported_date || !empty ($request->comment)) {
+        if ($lastIncident->incident_reported_date != $incident->incident_reported_date || !empty ($request->comment)) {
             // return 'history';
-            $history = new NonConformanceAuditTrails;
-            $history->non_conformances_id = $id;
-            $history->activity_type = 'Failure Investigation Reported on';
-            $history->previous = $lastNonConformance->non_conformances_reported_date;
-            $history->current = $NonConformance->non_conformances_reported_date;
+            $history = new IncidentAuditTrail;
+            $history->incident_id = $id;
+            $history->activity_type = 'Incident Reported on';
+            $history->previous = $lastIncident->incident_reported_date;
+            $history->current = $incident->incident_reported_date;
             $history->comment = $request->comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state = $lastNonConformance->status;
+            $history->origin_state = $lastIncident->status;
             $history->change_to =   "Not Applicable";
-            $history->change_from = $lastNonConformance->status;
+            $history->change_from = $lastIncident->status;
             $history->action_name = 'Update';
             $history->save();
         }
 
-        if ($lastNonConformance->audit_type != $NonConformance->audit_type || !empty ($request->comment)) {
+        if ($lastIncident->audit_type != $incident->audit_type || !empty ($request->comment)) {
             // return 'history';
-            $history = new NonConformanceAuditTrails;
-            $history->non_conformances_id = $id;
-            $history->activity_type = 'Failure Investigation Related To';
-            $history->previous = $lastNonConformance->audit_type;
-            $history->current = $NonConformance->audit_type;
+            $history = new IncidentAuditTrail;
+            $history->incident_id = $id;
+            $history->activity_type = 'Incident Related To';
+            $history->previous = $lastIncident->audit_type;
+            $history->current = $incident->audit_type;
             $history->comment = $request->comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state = $lastNonConformance->status;
+            $history->origin_state = $lastIncident->status;
             $history->change_to =   "Not Applicable";
-            $history->change_from = $lastNonConformance->status;
+            $history->change_from = $lastIncident->status;
             $history->action_name = 'Update';
             $history->save();
         }
 
-        if ($lastNonConformance->Others != $NonConformance->Others || !empty ($request->comment)) {
+        if ($lastIncident->Others != $incident->Others || !empty ($request->comment)) {
             // return 'history';
-            $history = new NonConformanceAuditTrails;
-            $history->non_conformances_id = $id;
+            $history = new IncidentAuditTrail;
+            $history->incident_id = $id;
             $history->activity_type = 'Others';
-            $history->previous = $lastNonConformance->Others;
-            $history->current = $NonConformance->Others;
+            $history->previous = $lastIncident->Others;
+            $history->current = $incident->Others;
             $history->comment = $request->comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state = $lastNonConformance->status;
+            $history->origin_state = $lastIncident->status;
             $history->change_to =   "Not Applicable";
-            $history->change_from = $lastNonConformance->status;
+            $history->change_from = $lastIncident->status;
             $history->action_name = 'Update';
             $history->save();
         }
 
-        if ($lastNonConformance->Facility_Equipment != $NonConformance->Facility_Equipment || !empty ($request->comment)) {
+        if ($lastIncident->Facility_Equipment != $incident->Facility_Equipment || !empty ($request->comment)) {
             // return 'history';
-            $history = new NonConformanceAuditTrails;
-            $history->non_conformances_id = $id;
+            $history = new IncidentAuditTrail;
+            $history->incident_id = $id;
             $history->activity_type = 'Facility/ Equipment/ Instrument/ System Details Required?';
-            $history->previous = $lastNonConformance->Facility_Equipment;
-            $history->current = $NonConformance->Facility_Equipment;
+            $history->previous = $lastIncident->Facility_Equipment;
+            $history->current = $incident->Facility_Equipment;
             $history->comment = $request->comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state = $lastNonConformance->status;
+            $history->origin_state = $lastIncident->status;
             $history->change_to =   "Not Applicable";
-            $history->change_from = $lastNonConformance->status;
+            $history->change_from = $lastIncident->status;
             $history->action_name = 'Update';
             $history->save();
         }
 
-        if ($lastNonConformance->Document_Details_Required != $NonConformance->Document_Details_Required || !empty ($request->comment)) {
+        if ($lastIncident->Document_Details_Required != $incident->Document_Details_Required || !empty ($request->comment)) {
             // return 'history';
-            $history = new NonConformanceAuditTrails;
-            $history->non_conformances_id = $id;
+            $history = new IncidentAuditTrail;
+            $history->incident_id = $id;
             $history->activity_type = 'Document Details Required';
-            $history->previous = $lastNonConformance->Document_Details_Required;
-            $history->current = $NonConformance->Document_Details_Required;
+            $history->previous = $lastIncident->Document_Details_Required;
+            $history->current = $incident->Document_Details_Required;
             $history->comment = $request->comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state = $lastNonConformance->status;
+            $history->origin_state = $lastIncident->status;
             $history->change_to =   "Not Applicable";
-            $history->change_from = $lastNonConformance->status;
+            $history->change_from = $lastIncident->status;
             $history->action_name = 'Update';
             $history->save();
         }
 
-        if ($lastNonConformance->Product_Batch != $NonConformance->Product_Batch || !empty ($request->comment)) {
+        if ($lastIncident->Product_Batch != $incident->Product_Batch || !empty ($request->comment)) {
             // return 'history';
-            $history = new NonConformanceAuditTrails;
-            $history->non_conformances_id = $id;
+            $history = new IncidentAuditTrail;
+            $history->incident_id = $id;
             $history->activity_type = 'Name of Product & Batch No';
-            $history->previous = $lastNonConformance->Product_Batch;
-            $history->current = $NonConformance->Product_Batch;
+            $history->previous = $lastIncident->Product_Batch;
+            $history->current = $incident->Product_Batch;
             $history->comment = $request->comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state = $lastNonConformance->status;
+            $history->origin_state = $lastIncident->status;
             $history->change_to =   "Not Applicable";
-            $history->change_from = $lastNonConformance->status;
+            $history->change_from = $lastIncident->status;
             $history->action_name = 'Update';
             $history->save();
         }
 
-        if ($lastNonConformance->Description_non_conformanceS != $NonConformance->Description_non_conformanceS || !empty ($request->comment)) {
+        if ($lastIncident->Description_incident != $incident->Description_incident || !empty ($request->comment)) {
             // return 'history';
-            $history = new NonConformanceAuditTrails;
-            $history->non_conformances_id = $id;
-            $history->activity_type = 'Description of Failure Investigation';
-            $history->previous = $lastNonConformance->Description_non_conformanceS;
-            $history->current = $NonConformance->Description_non_conformanceS;
+            $history = new IncidentAuditTrail;
+            $history->incident_id = $id;
+            $history->activity_type = 'Description of Incident';
+            $history->previous = $lastIncident->Description_incident;
+            $history->current = $incident->Description_incident;
             $history->comment = $request->comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state = $lastNonConformance->status;
+            $history->origin_state = $lastIncident->status;
             $history->change_to =   "Not Applicable";
-            $history->change_from = $lastNonConformance->status;
+            $history->change_from = $lastIncident->status;
             $history->action_name = 'Update';
             $history->save();
         }
 
-        if ($lastNonConformance->Immediate_Action != $NonConformance->Immediate_Action || !empty ($request->comment)) {
+        if ($lastIncident->Immediate_Action != $incident->Immediate_Action || !empty ($request->comment)) {
             // return 'history';
-            $history = new NonConformanceAuditTrails;
-            $history->non_conformances_id = $id;
+            $history = new IncidentAuditTrail;
+            $history->incident_id = $id;
             $history->activity_type = 'Immediate Action (if any)';
-            $history->previous = $lastNonConformance->Immediate_Action;
-            $history->current = $NonConformance->Immediate_Action;
+            $history->previous = $lastIncident->Immediate_Action;
+            $history->current = $incident->Immediate_Action;
             $history->comment = $request->comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state = $lastNonConformance->status;
+            $history->origin_state = $lastIncident->status;
             $history->change_to =   "Not Applicable";
-            $history->change_from = $lastNonConformance->status;
+            $history->change_from = $lastIncident->status;
             $history->action_name = 'Update';
             $history->save();
         }
 
-        if ($lastNonConformance->Preliminary_Impact != $NonConformance->Preliminary_Impact || !empty ($request->comment)) {
+        if ($lastIncident->Preliminary_Impact != $incident->Preliminary_Impact || !empty ($request->comment)) {
             // return 'history';
-            $history = new NonConformanceAuditTrails;
-            $history->non_conformances_id = $id;
-            $history->activity_type = 'Preliminary Impact of Failure Investigation';
-            $history->previous = $lastNonConformance->Preliminary_Impact;
-            $history->current = $NonConformance->Preliminary_Impact;
+            $history = new IncidentAuditTrail;
+            $history->incident_id = $id;
+            $history->activity_type = 'Preliminary Impact of Incident';
+            $history->previous = $lastIncident->Preliminary_Impact;
+            $history->current = $incident->Preliminary_Impact;
             $history->comment = $request->comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state = $lastNonConformance->status;
+            $history->origin_state = $lastIncident->status;
             $history->change_to =   "Not Applicable";
-            $history->change_from = $lastNonConformance->status;
+            $history->change_from = $lastIncident->status;
             $history->action_name = 'Update';
             $history->save();
         }
 
-        if ($lastNonConformance->HOD_Remarks != $NonConformance->HOD_Remarks || !empty ($request->comment)) {
+        if ($lastIncident->HOD_Remarks != $incident->HOD_Remarks || !empty ($request->comment)) {
             // return 'history';
-            $history = new NonConformanceAuditTrails;
-            $history->non_conformances_id = $id;
+            $history = new IncidentAuditTrail;
+            $history->incident_id = $id;
             $history->activity_type = 'HOD Remarks';
-            $history->previous = $lastNonConformance->HOD_Remarks;
-            $history->current = $NonConformance->HOD_Remarks;
+            $history->previous = $lastIncident->HOD_Remarks;
+            $history->current = $incident->HOD_Remarks;
             $history->comment = $request->comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state = $lastNonConformance->status;
+            $history->origin_state = $lastIncident->status;
             $history->change_to =   "Not Applicable";
-            $history->change_from = $lastNonConformance->status;
+            $history->change_from = $lastIncident->status;
             $history->action_name = 'Update';
             $history->save();
         }
 
-        if ($lastNonConformance->non_conformances_category != $NonConformance->non_conformances_category || !empty ($request->comment)) {
+        if ($lastIncident->incident_category != $incident->incident_category || !empty ($request->comment)) {
             // return 'history';
-            $history = new NonConformanceAuditTrails;
-            $history->non_conformances_id = $id;
-            $history->activity_type = 'Initial Failure Investigation Category';
-            $history->previous = $lastNonConformance->non_conformances_category;
-            $history->current = $NonConformance->non_conformances_category;
+            $history = new IncidentAuditTrail;
+            $history->incident_id = $id;
+            $history->activity_type = 'Initial Incident Category';
+            $history->previous = $lastIncident->incident_category;
+            $history->current = $incident->incident_category;
             $history->comment = $request->comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state = $lastNonConformance->status;
+            $history->origin_state = $lastIncident->status;
             $history->change_to =   "Not Applicable";
-            $history->change_from = $lastNonConformance->status;
+            $history->change_from = $lastIncident->status;
             $history->action_name = 'Update';
             $history->save();
         }
 
-        if ($lastNonConformance->Justification_for_categorization != $NonConformance->Justification_for_categorization || !empty ($request->comment)) {
+        if ($lastIncident->Justification_for_categorization != $incident->Justification_for_categorization || !empty ($request->comment)) {
             // return 'history';
-            $history = new NonConformanceAuditTrails;
-            $history->non_conformances_id = $id;
+            $history = new IncidentAuditTrail;
+            $history->incident_id = $id;
             $history->activity_type = 'Justification for Categorization';
-            $history->previous = $lastNonConformance->Justification_for_categorization;
-            $history->current = $NonConformance->Justification_for_categorization;
+            $history->previous = $lastIncident->Justification_for_categorization;
+            $history->current = $incident->Justification_for_categorization;
             $history->comment = $request->comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state = $lastNonConformance->status;
+            $history->origin_state = $lastIncident->status;
             $history->change_to =   "Not Applicable";
-            $history->change_from = $lastNonConformance->status;
+            $history->change_from = $lastIncident->status;
             $history->action_name = 'Update';
             $history->save();
         }
 
-        if ($lastNonConformance->Investigation_required != $NonConformance->Investigation_required || !empty ($request->comment)) {
+        if ($lastIncident->Investigation_required != $incident->Investigation_required || !empty ($request->comment)) {
             // return 'history';
-            $history = new NonConformanceAuditTrails;
-            $history->non_conformances_id = $id;
+            $history = new IncidentAuditTrail;
+            $history->incident_id = $id;
             $history->activity_type = 'Investigation Is required ?';
-            $history->previous = $lastNonConformance->Investigation_required;
-            $history->current = $NonConformance->Investigation_required;
+            $history->previous = $lastIncident->Investigation_required;
+            $history->current = $incident->Investigation_required;
             $history->comment = $request->comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state = $lastNonConformance->status;
+            $history->origin_state = $lastIncident->status;
             $history->change_to =   "Not Applicable";
-            $history->change_from = $lastNonConformance->status;
+            $history->change_from = $lastIncident->status;
             $history->action_name = 'Update';
             $history->save();
         }
 
-        if ($lastNonConformance->Investigation_Details != $NonConformance->Investigation_Details || !empty ($request->comment)) {
+        if ($lastIncident->Investigation_Details != $incident->Investigation_Details || !empty ($request->comment)) {
             // return 'history';
-            $history = new NonConformanceAuditTrails;
-            $history->non_conformances_id = $id;
+            $history = new IncidentAuditTrail;
+            $history->incident_id = $id;
             $history->activity_type = 'Investigation Details';
-            $history->previous = $lastNonConformance->Investigation_Details;
-            $history->current = $NonConformance->Investigation_Details;
+            $history->previous = $lastIncident->Investigation_Details;
+            $history->current = $incident->Investigation_Details;
             $history->comment = $request->comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state = $lastNonConformance->status;
+            $history->origin_state = $lastIncident->status;
             $history->change_to =   "Not Applicable";
-            $history->change_from = $lastNonConformance->status;
+            $history->change_from = $lastIncident->status;
             $history->action_name = 'Update';
             $history->save();
         }
 
-        if ($lastNonConformance->Customer_notification != $NonConformance->Customer_notification || !empty ($request->comment)) {
+        if ($lastIncident->Customer_notification != $incident->Customer_notification || !empty ($request->comment)) {
             // return 'history';
-            $history = new NonConformanceAuditTrails;
-            $history->non_conformances_id = $id;
+            $history = new IncidentAuditTrail;
+            $history->incident_id = $id;
             $history->activity_type = 'Customer Notification Required ?';
-            $history->previous = $lastNonConformance->Customer_notification;
-            $history->current = $NonConformance->Customer_notification;
+            $history->previous = $lastIncident->Customer_notification;
+            $history->current = $incident->Customer_notification;
             $history->comment = $request->comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state = $lastNonConformance->status;
+            $history->origin_state = $lastIncident->status;
             $history->change_to =   "Not Applicable";
-            $history->change_from = $lastNonConformance->status;
+            $history->change_from = $lastIncident->status;
             $history->action_name = 'Update';
             $history->save();
         }
 
-        if ($lastNonConformance->customers != $NonConformance->customers || !empty ($request->comment)) {
+        if ($lastIncident->customers != $incident->customers || !empty ($request->comment)) {
             // return 'history';
-            $history = new NonConformanceAuditTrails;
-            $history->non_conformances_id = $id;
+            $history = new IncidentAuditTrail;
+            $history->incident_id = $id;
             $history->activity_type = 'Customer';
-            $history->previous = $lastNonConformance->customers;
-            $history->current = $NonConformance->customers;
+            $history->previous = $lastIncident->customers;
+            $history->current = $incident->customers;
             $history->comment = $request->comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state = $lastNonConformance->status;
+            $history->origin_state = $lastIncident->status;
             $history->change_to =   "Not Applicable";
-            $history->change_from = $lastNonConformance->status;
+            $history->change_from = $lastIncident->status;
             $history->action_name = 'Update';
             $history->save();
         }
 
-        if ($lastNonConformance->QAInitialRemark != $NonConformance->QAInitialRemark || !empty ($request->comment)) {
+        if ($lastIncident->QAInitialRemark != $incident->QAInitialRemark || !empty ($request->comment)) {
             // return 'history';
-            $history = new NonConformanceAuditTrails;
-            $history->non_conformances_id = $id;
+            $history = new IncidentAuditTrail;
+            $history->incident_id = $id;
             $history->activity_type = 'QA Initial Remarks';
-            $history->previous = $lastNonConformance->QAInitialRemark;
-            $history->current = $NonConformance->QAInitialRemark;
+            $history->previous = $lastIncident->QAInitialRemark;
+            $history->current = $incident->QAInitialRemark;
             $history->comment = $request->comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state = $lastNonConformance->status;
+            $history->origin_state = $lastIncident->status;
             $history->change_to =   "Not Applicable";
-            $history->change_from = $lastNonConformance->status;
+            $history->change_from = $lastIncident->status;
             $history->action_name = 'Update';
             $history->save();
         }
 
-        if ($lastNonConformance->Investigation_Summary != $NonConformance->Investigation_Summary || !empty ($request->comment)) {
+        if ($lastIncident->Investigation_Summary != $incident->Investigation_Summary || !empty ($request->comment)) {
             // return 'history';
-            $history = new NonConformanceAuditTrails;
-            $history->non_conformances_id = $id;
+            $history = new IncidentAuditTrail;
+            $history->incident_id = $id;
             $history->activity_type = 'Investigation Summary';
-            $history->previous = $lastNonConformance->Investigation_Summary;
-            $history->current = $NonConformance->Investigation_Summary;
+            $history->previous = $lastIncident->Investigation_Summary;
+            $history->current = $incident->Investigation_Summary;
             $history->comment = $request->comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state = $lastNonConformance->status;
+            $history->origin_state = $lastIncident->status;
             $history->action_name = 'Update';
             $history->change_to =   "Not Applicable";
-            $history->change_from = $lastNonConformance->status;
+            $history->change_from = $lastIncident->status;
             $history->save();
         }
 
-        if ($lastNonConformance->Impact_assessment != $NonConformance->Impact_assessment || !empty ($request->comment)) {
+        if ($lastIncident->Impact_assessment != $incident->Impact_assessment || !empty ($request->comment)) {
             // return 'history';
-            $history = new NonConformanceAuditTrails;
-            $history->non_conformances_id = $id;
+            $history = new IncidentAuditTrail;
+            $history->incident_id = $id;
             $history->activity_type = 'Impact Assessment';
-            $history->previous = $lastNonConformance->Impact_assessment;
-            $history->current = $NonConformance->Impact_assessment;
+            $history->previous = $lastIncident->Impact_assessment;
+            $history->current = $incident->Impact_assessment;
             $history->comment = $request->comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state = $lastNonConformance->status;
+            $history->origin_state = $lastIncident->status;
             $history->change_to =   "Not Applicable";
-            $history->change_from = $lastNonConformance->status;
+            $history->change_from = $lastIncident->status;
             $history->action_name = 'Update';
             $history->save();
         }
 
-        if ($lastNonConformance->Root_cause != $NonConformance->Root_cause || !empty ($request->comment)) {
+        if ($lastIncident->Root_cause != $incident->Root_cause || !empty ($request->comment)) {
             // return 'history';
-            $history = new NonConformanceAuditTrails;
-            $history->non_conformances_id = $id;
+            $history = new IncidentAuditTrail;
+            $history->incident_id = $id;
             $history->activity_type = 'Root Cause';
-            $history->previous = $lastNonConformance->Root_cause;
-            $history->current = $NonConformance->Root_cause;
+            $history->previous = $lastIncident->Root_cause;
+            $history->current = $incident->Root_cause;
             $history->comment = $request->comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state = $lastNonConformance->status;
+            $history->origin_state = $lastIncident->status;
             $history->change_to =   "Not Applicable";
-            $history->change_from = $lastNonConformance->status;
+            $history->change_from = $lastIncident->status;
             $history->action_name = 'Update';
             $history->save();
         }
 
-        if ($lastNonConformance->CAPA_Rquired != $NonConformance->CAPA_Rquired || !empty ($request->comment)) {
+        if ($lastIncident->CAPA_Rquired != $incident->CAPA_Rquired || !empty ($request->comment)) {
             // return 'history';
-            $history = new NonConformanceAuditTrails;
-            $history->non_conformances_id = $id;
+            $history = new IncidentAuditTrail;
+            $history->incident_id = $id;
             $history->activity_type = 'CAPA Required ?';
-            $history->previous = $lastNonConformance->CAPA_Rquired;
-            $history->current = $NonConformance->CAPA_Rquired;
+            $history->previous = $lastIncident->CAPA_Rquired;
+            $history->current = $incident->CAPA_Rquired;
             $history->comment = $request->comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state = $lastNonConformance->status;
+            $history->origin_state = $lastIncident->status;
             $history->change_to =   "Not Applicable";
-            $history->change_from = $lastNonConformance->status;
+            $history->change_from = $lastIncident->status;
             $history->action_name = 'Update';
             $history->save();
         }
 
-        if ($lastNonConformance->capa_type != $NonConformance->capa_type || !empty ($request->comment)) {
+        if ($lastIncident->capa_type != $incident->capa_type || !empty ($request->comment)) {
             // return 'history';
-            $history = new NonConformanceAuditTrails;
-            $history->non_conformances_id = $id;
+            $history = new IncidentAuditTrail;
+            $history->incident_id = $id;
             $history->activity_type = 'CAPA Type?';
-            $history->previous = $lastNonConformance->capa_type;
-            $history->current = $NonConformance->capa_type;
+            $history->previous = $lastIncident->capa_type;
+            $history->current = $incident->capa_type;
             $history->comment = $request->comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state = $lastNonConformance->status;
+            $history->origin_state = $lastIncident->status;
             $history->change_to =   "Not Applicable";
-            $history->change_from = $lastNonConformance->status;
+            $history->change_from = $lastIncident->status;
             $history->action_name = 'Update';
             $history->save();
         }
 
-        if ($lastNonConformance->CAPA_Description != $NonConformance->CAPA_Description || !empty ($request->comment)) {
+        if ($lastIncident->CAPA_Description != $incident->CAPA_Description || !empty ($request->comment)) {
             // return 'history';
-            $history = new NonConformanceAuditTrails;
-            $history->non_conformances_id = $id;
+            $history = new IncidentAuditTrail;
+            $history->incident_id = $id;
             $history->activity_type = 'CAPA Description';
-            $history->previous = $lastNonConformance->CAPA_Description;
-            $history->current = $NonConformance->CAPA_Description;
+            $history->previous = $lastIncident->CAPA_Description;
+            $history->current = $incident->CAPA_Description;
             $history->comment = $request->comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state = $lastNonConformance->status;
+            $history->origin_state = $lastIncident->status;
             $history->change_to =   "Not Applicable";
-            $history->change_from = $lastNonConformance->status;
+            $history->change_from = $lastIncident->status;
             $history->action_name = 'Update';
             $history->save();
         }
 
-        if ($lastNonConformance->Post_Categorization != $NonConformance->Post_Categorization || !empty ($request->comment)) {
+        if ($lastIncident->Post_Categorization != $incident->Post_Categorization || !empty ($request->comment)) {
             // return 'history';
-            $history = new NonConformanceAuditTrails;
-            $history->non_conformances_id = $id;
-            $history->activity_type = 'Post Categorization Of Failure Investigation';
-            $history->previous = $lastNonConformance->Post_Categorization;
-            $history->current = $NonConformance->Post_Categorization;
+            $history = new IncidentAuditTrail;
+            $history->incident_id = $id;
+            $history->activity_type = 'Post Categorization Of Incident';
+            $history->previous = $lastIncident->Post_Categorization;
+            $history->current = $incident->Post_Categorization;
             $history->comment = $request->comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state = $lastNonConformance->status;
+            $history->origin_state = $lastIncident->status;
             $history->change_to =   "Not Applicable";
-            $history->change_from = $lastNonConformance->status;
+            $history->change_from = $lastIncident->status;
             $history->action_name = 'Update';
             $history->save();
         }
 
-        if ($lastNonConformance->Investigation_Of_Review != $NonConformance->Investigation_Of_Review || !empty ($request->comment)) {
+        if ($lastIncident->Investigation_Of_Review != $incident->Investigation_Of_Review || !empty ($request->comment)) {
             // return 'history';
-            $history = new NonConformanceAuditTrails;
-            $history->non_conformances_id = $id;
+            $history = new IncidentAuditTrail;
+            $history->incident_id = $id;
             $history->activity_type = 'Investigation Of Revised Categorization';
-            $history->previous = $lastNonConformance->Investigation_Of_Review;
-            $history->current = $NonConformance->Investigation_Of_Review;
+            $history->previous = $lastIncident->Investigation_Of_Review;
+            $history->current = $incident->Investigation_Of_Review;
             $history->comment = $request->comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state = $lastNonConformance->status;
+            $history->origin_state = $lastIncident->status;
             $history->change_to =   "Not Applicable";
-            $history->change_from = $lastNonConformance->status;
+            $history->change_from = $lastIncident->status;
             $history->action_name = 'Update';
             $history->save();
         }
 
-        if ($lastNonConformance->QA_Feedbacks != $NonConformance->QA_Feedbacks || !empty ($request->comment)) {
+        if ($lastIncident->QA_Feedbacks != $incident->QA_Feedbacks || !empty ($request->comment)) {
             // return 'history';
-            $history = new NonConformanceAuditTrails;
-            $history->non_conformances_id = $id;
+            $history = new IncidentAuditTrail;
+            $history->incident_id = $id;
             $history->activity_type = 'QA Feedbacks';
-            $history->previous = $lastNonConformance->QA_Feedbacks;
-            $history->current = $NonConformance->QA_Feedbacks;
+            $history->previous = $lastIncident->QA_Feedbacks;
+            $history->current = $incident->QA_Feedbacks;
             $history->comment = $request->comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state = $lastNonConformance->status;
+            $history->origin_state = $lastIncident->status;
             $history->change_to =   "Not Applicable";
-            $history->change_from = $lastNonConformance->status;
+            $history->change_from = $lastIncident->status;
             $history->action_name = 'Update';
             $history->save();
         }
 
-        if ($lastNonConformance->Closure_Comments != $NonConformance->Closure_Comments || !empty ($request->comment)) {
+        if ($lastIncident->Closure_Comments != $incident->Closure_Comments || !empty ($request->comment)) {
             // return 'history';
-            $history = new NonConformanceAuditTrails;
-            $history->non_conformances_id = $id;
+            $history = new IncidentAuditTrail;
+            $history->incident_id = $id;
             $history->activity_type = 'Closure Comments';
-            $history->previous = $lastNonConformance->Closure_Comments;
-            $history->current = $NonConformance->Closure_Comments;
+            $history->previous = $lastIncident->Closure_Comments;
+            $history->current = $incident->Closure_Comments;
             $history->comment = $request->comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state = $lastNonConformance->status;
+            $history->origin_state = $lastIncident->status;
             $history->change_to =   "Not Applicable";
-            $history->change_from = $lastNonConformance->status;
+            $history->change_from = $lastIncident->status;
             $history->action_name = 'Update';
             $history->save();
         }
 
-        if ($lastNonConformance->Disposition_Batch != $NonConformance->Disposition_Batch || !empty ($request->comment)) {
+        if ($lastIncident->Disposition_Batch != $incident->Disposition_Batch || !empty ($request->comment)) {
             // return 'history';
-            $history = new NonConformanceAuditTrails;
-            $history->non_conformances_id = $id;
+            $history = new IncidentAuditTrail;
+            $history->incident_id = $id;
             $history->activity_type = 'Disposition of Batch';
-            $history->previous = $lastNonConformance->Disposition_Batch;
-            $history->current = $NonConformance->Disposition_Batch;
+            $history->previous = $lastIncident->Disposition_Batch;
+            $history->current = $incident->Disposition_Batch;
             $history->comment = $request->comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state = $lastNonConformance->status;
+            $history->origin_state = $lastIncident->status;
             $history->change_to =   "Not Applicable";
-            $history->change_from = $lastNonConformance->status;
+            $history->change_from = $lastIncident->status;
             $history->action_name = 'Update';
             $history->save();
         }
@@ -2809,39 +2771,156 @@ class NonConformaceController extends Controller
         return back();
     }
 
-    public function nonConformaceReject(Request $request, $id)
+
+    public function launchExtensionIncident(Request $request, $id){
+        $incident = Incident::find($id);
+        $getCounter = IncidentLaunchExtension::where(['incident_id' => $incident->id, 'extension_identifier' => "Incident"])->first();
+        if($getCounter && $getCounter->counter == null){
+            $counter = 1;
+        } else {
+            $counter = $getCounter ? $getCounter->counter + 1 : 1;
+        }
+        if($incident->id != null){
+            $data = IncidentLaunchExtension::where([
+                'incident_id' => $incident->id,
+                'extension_identifier' => "Incident"
+            ])->firstOrCreate();
+
+            $data->incident_id = $request->incident_id;
+            $data->extension_identifier = $request->extension_identifier;
+            $data->counter = $counter;
+            $data->dev_proposed_due_date = $request->dev_proposed_due_date;
+            $data->dev_extension_justification = $request->dev_extension_justification;
+            $data->dev_extension_completed_by = $request->dev_extension_completed_by;
+            $data->dev_completed_on = $request->dev_completed_on;
+            $data->save();
+
+            toastr()->success('Record is Update Successfully');
+            return back();
+        }
+    }
+
+    public function launchExtensionCapa(Request $request, $id){
+        $incident = Incident::find($id);
+        $getCounter = IncidentLaunchExtension::where(['incident_id' => $incident->id, 'extension_identifier' => "Capa"])->first();
+        if($getCounter && $getCounter->counter == null){
+            $counter = 1;
+        } else {
+            $counter = $getCounter ? $getCounter->counter + 1 : 1;
+        }
+        if($incident->id != null){
+
+            $data = IncidentLaunchExtension::where([
+                'incident_id' => $incident->id,
+                'extension_identifier' => "Capa"
+            ])->firstOrCreate();
+
+            $data->incident_id = $request->incident_id;
+            $data->extension_identifier = $request->extension_identifier;
+            $data->counter = $counter;
+            $data->capa_proposed_due_date = $request->capa_proposed_due_date;
+            $data->capa_extension_justification = $request->capa_extension_justification;
+            $data->capa_extension_completed_by = $request->capa_extension_completed_by;
+            $data->capa_completed_on = $request->capa_completed_on;
+            $data->save();
+
+            toastr()->success('Record is Update Successfully');
+            return back();
+        }
+    }
+
+
+    public function launchExtensionQrm(Request $request, $id){
+        $incident = Incident::find($id);
+        $getCounter = IncidentLaunchExtension::where(['incident_id' => $incident->id, 'extension_identifier' => "QRM"])->first();
+        if($getCounter && $getCounter->counter == null){
+            $counter = 1;
+        } else {
+            $counter = $getCounter ? $getCounter->counter + 1 : 1;
+        }
+        if($incident->id != null){
+
+            $data = IncidentLaunchExtension::where([
+                'incident_id' => $incident->id,
+                'extension_identifier' => "QRM"
+            ])->firstOrCreate();
+
+            $data->incident_id = $request->incident_id;
+            $data->extension_identifier = $request->extension_identifier;
+            $data->counter = $counter;
+            $data->qrm_proposed_due_date = $request->qrm_proposed_due_date;
+            $data->qrm_extension_justification = $request->qrm_extension_justification;
+            $data->qrm_extension_completed_by = $request->qrm_extension_completed_by;
+            $data->qrm_completed_on = $request->qrm_completed_on;
+            $data->save();
+
+            toastr()->success('Record is Update Successfully');
+            return back();
+        }
+    }
+
+    public function launchExtensionInvestigation(Request $request, $id){
+        $incident = Incident::find($id);
+        $getCounter = IncidentLaunchExtension::where(['incident_id' => $incident->id, 'extension_identifier' => "Investigation"])->first();
+        if($getCounter && $getCounter->counter == null){
+            $counter = 1;
+        } else {
+            $counter = $getCounter ? $getCounter->counter + 1 : 1;
+        }
+        if($incident->id != null){
+
+            $data = IncidentLaunchExtension::where([
+                'incident_id' => $incident->id,
+                'extension_identifier' => "Investigation"
+            ])->firstOrCreate();
+
+            $data->incident_id = $request->incident_id;
+            $data->extension_identifier = $request->extension_identifier;
+            $data->counter = $counter;
+            $data->investigation_proposed_due_date = $request->investigation_proposed_due_date;
+            $data->investigation_extension_justification = $request->investigation_extension_justification;
+            $data->investigation_extension_completed_by = $request->investigation_extension_completed_by;
+            $data->investigation_completed_on = $request->investigation_completed_on;
+            $data->save();
+
+            toastr()->success('Record is Update Successfully');
+            return back();
+        }
+    }
+
+    public function incidentReject(Request $request, $id)
     {
 
         if ($request->username == Auth::user()->email && Hash::check($request->password, Auth::user()->password)) {
             // return $request;
-            $NonConformance = NonConformance::find($id);
-            $lastDocument = NonConformance::find($id);
+            $incident = Incident::find($id);
+            $lastDocument = Incident::find($id);
             $list = Helpers::getInitiatorUserList();
 
 
-            if ($NonConformance->stage == 2) {
+            if ($incident->stage == 2) {
 
-                $NonConformance->stage = "1";
-                $NonConformance->status = "Opened";
-                $NonConformance->rejected_by = Auth::user()->name;
-                $NonConformance->rejected_on = Carbon::now()->format('d-M-Y');
-                $NonConformance->update();
-                $history = new NonConformanceHistories();
-                $history->type = "Failure Investigation";
+                $incident->stage = "1";
+                $incident->status = "Opened";
+                $incident->rejected_by = Auth::user()->name;
+                $incident->rejected_on = Carbon::now()->format('d-M-Y');
+                $incident->update();
+                $history = new IncidentHistory();
+                $history->type = "Incident";
                 $history->doc_id = $id;
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
-                $history->stage_id = $NonConformance->stage;
+                $history->stage_id = $incident->stage;
                 $history->status = "Opened";
                 // foreach ($list as $u) {
-                //     if ($u->q_m_s_divisions_id == $NonConformance->division_id) {
+                //     if ($u->q_m_s_divisions_id == $incident->division_id) {
                 //         $email = Helpers::getInitiatorEmail($u->user_id);
                 //         if ($email !== null) {
 
                 //             try {
                 //                 Mail::send(
                 //                     'mail.view-mail',
-                //                     ['data' => $NonConformance],
+                //                     ['data' => $incident],
                 //                     function ($message) use ($email) {
                 //                         $message->to($email)
                 //                             ->subject("Activity Performed By " . Auth::user()->name);
@@ -2858,18 +2937,18 @@ class NonConformaceController extends Controller
                 toastr()->success('Document Sent');
                 return back();
             }
-            if ($NonConformance->stage == 3) {
-                $NonConformance->stage = "2";
-                $NonConformance->status = "HOD Review";
-                $NonConformance->form_progress = 'hod';
-                $NonConformance->qa_more_info_required_by = Auth::user()->name;
-                $NonConformance->qa_more_info_required_on = Carbon::now()->format('d-M-Y');
-                $history = new NonConformanceAuditTrails();
-                $history->non_conformances_id = $id;
+            if ($incident->stage == 3) {
+                $incident->stage = "2";
+                $incident->status = "HOD Review";
+                $incident->form_progress = 'hod';
+                $incident->qa_more_info_required_by = Auth::user()->name;
+                $incident->qa_more_info_required_on = Carbon::now()->format('d-M-Y');
+                $history = new IncidentAuditTrail();
+                $history->incident_id = $id;
                 $history->activity_type = 'Activity Log';
                 $history->previous = "";
                 $history->action='More Information Required';
-                $history->current = $NonConformance->qa_more_info_required_by;
+                $history->current = $incident->qa_more_info_required_by;
                 $history->comment = $request->comment;
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
@@ -2877,24 +2956,24 @@ class NonConformaceController extends Controller
                 $history->origin_state = $lastDocument->status;
                 $history->stage = 'More Info Required';
                 $history->save();
-                $NonConformance->update();
-                $history = new NonConformanceHistories();
-                $history->type = "Failure Investigation";
+                $incident->update();
+                $history = new IncidentHistory();
+                $history->type = "Incident";
                 $history->doc_id = $id;
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
-                $history->stage_id = $NonConformance->stage;
+                $history->stage_id = $incident->stage;
                 $history->status = "More Info Required";
 
                 // foreach ($list as $u) {
-                //     if ($u->q_m_s_divisions_id == $NonConformance->division_id) {
+                //     if ($u->q_m_s_divisions_id == $incident->division_id) {
                 //         $email = Helpers::getInitiatorEmail($u->user_id);
                 //         if ($email !== null) {
 
                 //             try {
                 //                 Mail::send(
                 //                     'mail.view-mail',
-                //                     ['data' => $NonConformance],
+                //                     ['data' => $incident],
                 //                     function ($message) use ($email) {
                 //                         $message->to($email)
                 //                             ->subject("Activity Performed By " . Auth::user()->name);
@@ -2912,35 +2991,35 @@ class NonConformaceController extends Controller
                 toastr()->success('Document Sent');
                 return back();
             }
-            if ($NonConformance->stage == 4) {
+            if ($incident->stage == 4) {
 
-                $cftResponse = NonConformanceCFTResponse::withoutTrashed()->where(['non_conformances_id' => $id])->get();
+                $cftResponse = IncidentCftResponse::withoutTrashed()->where(['incident_id' => $id])->get();
 
                 // Soft delete all records
                 $cftResponse->each(function ($response) {
                     $response->delete();
                 });
 
-                $stage = new NonConformanceCFTResponse();
-                $stage->non_conformances_id = $id;
+                $stage = new IncidentCftResponse();
+                $stage->incident_id = $id;
                 $stage->cft_user_id = Auth::user()->id;
                 $stage->status = "More Info Required";
                 // $stage->cft_stage = ;
                 $stage->comment = $request->comment;
                 $stage->save();
 
-                $NonConformance->stage = "3";
-                $NonConformance->status = "QA Initial Review";
-                $NonConformance->form_progress = 'qa';
+                $incident->stage = "3";
+                $incident->status = "QA Initial Review";
+                $incident->form_progress = 'qa';
 
-                $NonConformance->qa_more_info_required_by = Auth::user()->name;
-                $NonConformance->qa_more_info_required_on = Carbon::now()->format('d-M-Y');
-                $history = new NonConformanceAuditTrails();
-                $history->non_conformances_id = $id;
+                $incident->qa_more_info_required_by = Auth::user()->name;
+                $incident->qa_more_info_required_on = Carbon::now()->format('d-M-Y');
+                $history = new IncidentAuditTrail();
+                $history->incident_id = $id;
                 $history->activity_type = 'Activity Log';
                 $history->previous = "";
                 $history->action='More Information Required';
-                $history->current = $NonConformance->qa_more_info_required_by;
+                $history->current = $incident->qa_more_info_required_by;
                 $history->comment = $request->comment;
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
@@ -2948,23 +3027,23 @@ class NonConformaceController extends Controller
                 $history->origin_state = $lastDocument->status;
                 $history->stage = 'More Info Required';
                 $history->save();
-                $NonConformance->update();
-                $history = new NonConformanceHistories();
-                $history->type = "Failure Investigation";
+                $incident->update();
+                $history = new IncidentHistory();
+                $history->type = "Incident";
                 $history->doc_id = $id;
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
-                $history->stage_id = $NonConformance->stage;
+                $history->stage_id = $incident->stage;
                 $history->status = "More Info Required";
                 // foreach ($list as $u) {
-                //     if ($u->q_m_s_divisions_id == $NonConformance->division_id) {
+                //     if ($u->q_m_s_divisions_id == $incident->division_id) {
                 //         $email = Helpers::getInitiatorEmail($u->user_id);
                 //         if ($email !== null) {
 
                 //             try {
                 //                 Mail::send(
                 //                     'mail.view-mail',
-                //                     ['data' => $NonConformance],
+                //                     ['data' => $incident],
                 //                     function ($message) use ($email) {
                 //                         $message->to($email)
                 //                             ->subject("Activity Performed By " . Auth::user()->name);
@@ -2981,19 +3060,19 @@ class NonConformaceController extends Controller
                 return back();
             }
 
-            if ($NonConformance->stage == 6) {
-                $NonConformance->stage = "5";
-                $NonConformance->status = "QA Final Review";
-                $NonConformance->form_progress = 'capa';
+            if ($incident->stage == 6) {
+                $incident->stage = "5";
+                $incident->status = "QA Final Review";
+                $incident->form_progress = 'capa';
 
-                $NonConformance->qa_more_info_required_by = Auth::user()->name;
-                $NonConformance->qa_more_info_required_on = Carbon::now()->format('d-M-Y');
-                $history = new NonConformanceAuditTrails();
-                $history->non_conformances_id = $id;
+                $incident->qa_more_info_required_by = Auth::user()->name;
+                $incident->qa_more_info_required_on = Carbon::now()->format('d-M-Y');
+                $history = new IncidentAuditTrail();
+                $history->incident_id = $id;
                 $history->activity_type = 'Activity Log';
                 $history->previous = "";
                 $history->action='More Information Required';
-                $history->current = $NonConformance->qa_more_info_required_by;
+                $history->current = $incident->qa_more_info_required_by;
                 $history->comment = $request->comment;
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
@@ -3002,14 +3081,14 @@ class NonConformaceController extends Controller
                 $history->stage = 'More Info Required';
                 // dd();
                 // foreach ($list as $u) {
-                //     if ($u->q_m_s_divisions_id == $NonConformance->division_id) {
+                //     if ($u->q_m_s_divisions_id == $incident->division_id) {
                 //         $email = Helpers::getInitiatorEmail($u->user_id);
                 //         if ($email !== null) {
 
                 //             try {
                 //                 Mail::send(
                 //                     'mail.view-mail',
-                //                     ['data' => $NonConformance],
+                //                     ['data' => $incident],
                 //                     function ($message) use ($email) {
                 //                         $message->to($email)
                 //                             ->subject("Activity Performed By " . Auth::user()->name);
@@ -3022,13 +3101,13 @@ class NonConformaceController extends Controller
                 //     }
                 // }
                 $history->save();
-                $NonConformance->update();
-                $history = new NonConformanceHistories();
-                $history->type = "Failure Investigation";
+                $incident->update();
+                $history = new IncidentHistory();
+                $history->type = "Incident";
                 $history->doc_id = $id;
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
-                $history->stage_id = $NonConformance->stage;
+                $history->stage_id = $incident->stage;
                 $history->status = "More Info Required";
                 $history->save();
                 toastr()->success('Document Sent');
@@ -3041,49 +3120,48 @@ class NonConformaceController extends Controller
         }
     }
 
-    public function NonConformanceCancel(Request $request, $id)
+    public function incidentCancel(Request $request, $id)
     {
         if ($request->username == Auth::user()->email && Hash::check($request->password, Auth::user()->password)) {
-            $NonConformance = NonConformance::find($id);
-            $lastDocument = NonConformance::find($id);
+            $incident = Incident::find($id);
+            $lastDocument = Incident::find($id);
 
-
-            $NonConformance->stage = "0";
-            $NonConformance->status = "Closed-Cancelled";
-            $NonConformance->cancelled_by = Auth::user()->name;
-            $NonConformance->cancelled_on = Carbon::now()->format('d-M-Y');
-            $history = new NonConformanceAuditTrails();
-            $history->non_conformances_id = $id;
+            $incident->stage = "0";
+            $incident->status = "Closed-Cancelled";
+            $incident->cancelled_by = Auth::user()->name;
+            $incident->cancelled_on = Carbon::now()->format('d-M-Y');
+            $history = new IncidentAuditTrail();
+            $history->incident_id = $id;
             $history->activity_type = 'Activity Log';
             $history->previous = "";
-            $history->current = $NonConformance->cancelled_by;
+            $history->current = $incident->cancelled_by;
             $history->comment = $request->comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state = $NonConformance->status;
+            $history->origin_state = $incident->status;
             $history->stage = 'Cancelled';
             $history->save();
-            $NonConformance->update();
-            $history = new NonConformanceHistories();
-            $history->type = "Failure Investigation";
+            $incident->update();
+            $history = new IncidentHistory();
+            $history->type = "Incident";
             $history->doc_id = $id;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->stage_id = $NonConformance->stage;
-            $history->status = $NonConformance->status;
+            $history->stage_id = $incident->stage;
+            $history->status = $incident->status;
             $history->save();
 
             // $list = Helpers::getInitiatorUserList();
             // foreach ($list as $u) {
-            //     if ($u->q_m_s_divisions_id == $NonConformance->division_id) {
+            //     if ($u->q_m_s_divisions_id == $incident->division_id) {
             //         $email = Helpers::getInitiatorEmail($u->user_id);
             //         if ($email !== null) {
 
             //             try {
             //                 Mail::send(
             //                     'mail.view-mail',
-            //                     ['data' => $NonConformance],
+            //                     ['data' => $incident],
             //                     function ($message) use ($email) {
             //                         $message->to($email)
             //                             ->subject("Activity Performed By " . Auth::user()->name);
@@ -3104,21 +3182,21 @@ class NonConformaceController extends Controller
         }
     }
 
-    public function NonConformanceCftNotrequired(Request $request, $id)
+    public function incidentIsCFTRequired(Request $request, $id)
     {
         if ($request->username == Auth::user()->email && Hash::check($request->password, Auth::user()->password)) {
-            $NonConformance = NonConformance::find($id);
-            $lastDocument = NonConformance::find($id);
+            $incident = Incident::find($id);
+            $lastDocument = Incident::find($id);
             $list = Helpers::getInitiatorUserList();
-            $NonConformance->stage = "5";
-            $NonConformance->status = "QA Final Review";
-            $NonConformance->CFT_Review_Complete_By = Auth::user()->name;
-            $NonConformance->CFT_Review_Complete_On = Carbon::now()->format('d-M-Y');
-            $history = new NonConformanceAuditTrails();
-            $history->non_conformances_id = $id;
+            $incident->stage = "5";
+            $incident->status = "QA Final Review";
+            $incident->CFT_Review_Complete_By = Auth::user()->name;
+            $incident->CFT_Review_Complete_On = Carbon::now()->format('d-M-Y');
+            $history = new IncidentAuditTrail();
+            $history->incident_id = $id;
             $history->activity_type = 'Activity Log';
             $history->previous = "";
-            $history->current = $NonConformance->CFT_Review_Complete_By;
+            $history->current = $incident->CFT_Review_Complete_By;
             $history->comment = $request->comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -3126,14 +3204,14 @@ class NonConformaceController extends Controller
             $history->origin_state = $lastDocument->status;
             $history->stage = 'Send to HOD';
             // foreach ($list as $u) {
-            //     if ($u->q_m_s_divisions_id == $NonConformance->division_id) {
+            //     if ($u->q_m_s_divisions_id == $incident->division_id) {
             //         $email = Helpers::getInitiatorEmail($u->user_id);
             //         if ($email !== null) {
 
             //             try {
             //                 Mail::send(
             //                     'mail.view-mail',
-            //                     ['data' => $NonConformance],
+            //                     ['data' => $incident],
             //                     function ($message) use ($email) {
             //                         $message->to($email)
             //                             ->subject("Activity Performed By " . Auth::user()->name);
@@ -3146,14 +3224,14 @@ class NonConformaceController extends Controller
             //     }
             // }
             $history->save();
-            $NonConformance->update();
-            $history = new NonConformanceHistories();
-            $history->type = "Failure Investigation";
+            $incident->update();
+            $history = new IncidentHistory();
+            $history->type = "Incident";
             $history->doc_id = $id;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->stage_id = $NonConformance->stage;
-            $history->status = $NonConformance->status;
+            $history->stage_id = $incident->stage;
+            $history->status = $incident->status;
             $history->save();
 
             toastr()->success('Document Sent');
@@ -3164,12 +3242,12 @@ class NonConformaceController extends Controller
         }
     }
 
-    public function nonConformaceCheck(Request $request, $id)
+    public function incidentCheck(Request $request, $id)
     {
         if ($request->username == Auth::user()->email && Hash::check($request->password, Auth::user()->password)) {
-            $NonConformance = NonConformance::find($id);
-            $lastDocument = NonConformance::find($id);
-            $cftResponse = NonConformanceCFTResponse::withoutTrashed()->where(['non_conformances_id' => $id])->get();
+            $incident = Incident::find($id);
+            $lastDocument = Incident::find($id);
+            $cftResponse = IncidentCftResponse::withoutTrashed()->where(['incident_id' => $id])->get();
             $list = Helpers::getInitiatorUserList();
            // Soft delete all records
            $cftResponse->each(function ($response) {
@@ -3177,15 +3255,15 @@ class NonConformaceController extends Controller
         });
 
 
-        $NonConformance->stage = "1";
-        $NonConformance->status = "Opened";
-        $NonConformance->qa_more_info_required_by = Auth::user()->name;
-        $NonConformance->qa_more_info_required_on = Carbon::now()->format('d-M-Y');
-        $history = new NonConformanceAuditTrails();
-        $history->non_conformances_id = $id;
+        $incident->stage = "1";
+        $incident->status = "Opened";
+        $incident->qa_more_info_required_by = Auth::user()->name;
+        $incident->qa_more_info_required_on = Carbon::now()->format('d-M-Y');
+        $history = new IncidentAuditTrail();
+        $history->incident_id = $id;
         $history->activity_type = 'Activity Log';
         $history->previous = "";
-        $history->current = $NonConformance->qa_more_info_required_by;
+        $history->current = $incident->qa_more_info_required_by;
         $history->comment = $request->comment;
         $history->user_id = Auth::user()->id;
         $history->user_name = Auth::user()->name;
@@ -3193,24 +3271,24 @@ class NonConformaceController extends Controller
         $history->origin_state = $lastDocument->status;
         $history->stage = 'Send to Initiator';
         $history->save();
-        $NonConformance->update();
-        $history = new NonConformanceHistories();
-        $history->type = "Failure Investigation";
+        $incident->update();
+        $history = new IncidentHistory();
+        $history->type = "Incident";
         $history->doc_id = $id;
         $history->user_id = Auth::user()->id;
         $history->user_name = Auth::user()->name;
-        $history->stage_id = $NonConformance->stage;
+        $history->stage_id = $incident->stage;
         $history->status = "Send to Initiator";
         $history->save();
         // foreach ($list as $u) {
-        //     if ($u->q_m_s_divisions_id == $NonConformance->division_id) {
+        //     if ($u->q_m_s_divisions_id == $incident->division_id) {
         //         $email = Helpers::getInitiatorEmail($u->user_id);
         //         if ($email !== null) {
 
         //             try {
         //                 Mail::send(
         //                     'mail.view-mail',
-        //                     ['data' => $NonConformance],
+        //                     ['data' => $incident],
         //                     function ($message) use ($email) {
         //                         $message->to($email)
         //                             ->subject("Activity Performed By " . Auth::user()->name);
@@ -3222,7 +3300,7 @@ class NonConformaceController extends Controller
         //         }
         //     }
         // }
-        $NonConformance->update();
+        $incident->update();
         toastr()->success('Document Sent');
         return back();
 
@@ -3232,27 +3310,27 @@ class NonConformaceController extends Controller
         }
     }
 
-    public function nonConformaceCheck2(Request $request, $id)
+    public function incidentCheck2(Request $request, $id)
     {
         if ($request->username == Auth::user()->email && Hash::check($request->password, Auth::user()->password)) {
-            $NonConformance = NonConformance::find($id);
-            $lastDocument = NonConformance::find($id);
-            $cftResponse = NonConformanceCFTResponse::withoutTrashed()->where(['non_conformances_id' => $id])->get();
+            $incident = Incident::find($id);
+            $lastDocument = Incident::find($id);
+            $cftResponse = IncidentCftResponse::withoutTrashed()->where(['incident_id' => $id])->get();
             $list = Helpers::getInitiatorUserList();
 
         // Soft delete all records
         $cftResponse->each(function ($response) {
             $response->delete();
         });
-        $NonConformance->stage = "2";
-        $NonConformance->status = "HOD Review";
-        $NonConformance->qa_more_info_required_by = Auth::user()->name;
-        $NonConformance->qa_more_info_required_on = Carbon::now()->format('d-M-Y');
-        $history = new NonConformanceAuditTrails();
-        $history->non_conformances_id = $id;
+        $incident->stage = "2";
+        $incident->status = "HOD Review";
+        $incident->qa_more_info_required_by = Auth::user()->name;
+        $incident->qa_more_info_required_on = Carbon::now()->format('d-M-Y');
+        $history = new IncidentAuditTrail();
+        $history->incident_id = $id;
         $history->activity_type = 'Activity Log';
         $history->previous = "";
-        $history->current = $NonConformance->qa_more_info_required_by;
+        $history->current = $incident->qa_more_info_required_by;
         $history->comment = $request->comment;
         $history->user_id = Auth::user()->id;
         $history->user_name = Auth::user()->name;
@@ -3260,24 +3338,24 @@ class NonConformaceController extends Controller
         $history->origin_state = $lastDocument->status;
         $history->stage = 'Send to HOD';
         $history->save();
-        $NonConformance->update();
-        $history = new NonConformanceHistories();
-        $history->type = "Failure Investigation";
+        $incident->update();
+        $history = new IncidentHistory();
+        $history->type = "Incident";
         $history->doc_id = $id;
         $history->user_id = Auth::user()->id;
         $history->user_name = Auth::user()->name;
-        $history->stage_id = $NonConformance->stage;
+        $history->stage_id = $incident->stage;
         $history->status = "Send to HOD Review";
         $history->save();
         // foreach ($list as $u) {
-        //     if ($u->q_m_s_divisions_id == $NonConformance->division_id) {
+        //     if ($u->q_m_s_divisions_id == $incident->division_id) {
         //         $email = Helpers::getInitiatorEmail($u->user_id);
         //         if ($email !== null) {
 
         //             try {
         //                 Mail::send(
         //                     'mail.view-mail',
-        //                     ['data' => $NonConformance],
+        //                     ['data' => $incident],
         //                     function ($message) use ($email) {
         //                         $message->to($email)
         //                             ->subject("Activity Performed By " . Auth::user()->name);
@@ -3289,7 +3367,7 @@ class NonConformaceController extends Controller
         //         }
         //     }
         // }
-        $NonConformance->update();
+        $incident->update();
         toastr()->success('Document Sent');
         return back();
 
@@ -3299,27 +3377,27 @@ class NonConformaceController extends Controller
         }
     }
 
-    public function nonConformaceCheck3(Request $request, $id)
+    public function incidentCheck3(Request $request, $id)
     {
         if ($request->username == Auth::user()->email && Hash::check($request->password, Auth::user()->password)) {
-            $NonConformance = NonConformance::find($id);
-            $lastDocument = NonConformance::find($id);
-            $cftResponse = NonConformanceCFTResponse::withoutTrashed()->where(['non_conformances_id' => $id])->get();
+            $incident = Incident::find($id);
+            $lastDocument = Incident::find($id);
+            $cftResponse = IncidentCftResponse::withoutTrashed()->where(['incident_id' => $id])->get();
             $list = Helpers::getInitiatorUserList();
 
         // Soft delete all records
         $cftResponse->each(function ($response) {
             $response->delete();
         });
-        $NonConformance->stage = "3";
-            $NonConformance->status = "QA Initial Review";
-            $NonConformance->qa_more_info_required_by = Auth::user()->name;
-            $NonConformance->qa_more_info_required_on = Carbon::now()->format('d-M-Y');
-        $history = new NonConformanceAuditTrails();
-        $history->non_conformances_id = $id;
+        $incident->stage = "3";
+            $incident->status = "QA Initial Review";
+            $incident->qa_more_info_required_by = Auth::user()->name;
+            $incident->qa_more_info_required_on = Carbon::now()->format('d-M-Y');
+        $history = new IncidentAuditTrail();
+        $history->incident_id = $id;
         $history->activity_type = 'Activity Log';
         $history->previous = "";
-        $history->current = $NonConformance->qa_more_info_required_by;
+        $history->current = $incident->qa_more_info_required_by;
         $history->comment = $request->comment;
         $history->user_id = Auth::user()->id;
         $history->user_name = Auth::user()->name;
@@ -3327,24 +3405,24 @@ class NonConformaceController extends Controller
         $history->origin_state = $lastDocument->status;
         $history->stage = 'Send to HOD';
         $history->save();
-        $NonConformance->update();
-        $history = new NonConformanceHistories();
-        $history->type = "Failure Investigation";
+        $incident->update();
+        $history = new IncidentHistory();
+        $history->type = "Incident";
         $history->doc_id = $id;
         $history->user_id = Auth::user()->id;
         $history->user_name = Auth::user()->name;
-        $history->stage_id = $NonConformance->stage;
+        $history->stage_id = $incident->stage;
         $history->status = "Send to QA Initial Review";
         $history->save();
         // foreach ($list as $u) {
-        //     if ($u->q_m_s_divisions_id == $NonConformance->division_id) {
+        //     if ($u->q_m_s_divisions_id == $incident->division_id) {
         //         $email = Helpers::getInitiatorEmail($u->user_id);
         //         if ($email !== null) {
 
         //             try {
         //                 Mail::send(
         //                     'mail.view-mail',
-        //                     ['data' => $NonConformance],
+        //                     ['data' => $incident],
         //                     function ($message) use ($email) {
         //                         $message->to($email)
         //                             ->subject("Activity Performed By " . Auth::user()->name);
@@ -3356,7 +3434,7 @@ class NonConformaceController extends Controller
         //         }
         //     }
         // }
-        $NonConformance->update();
+        $incident->update();
         toastr()->success('Document Sent');
         return back();
 
@@ -3365,13 +3443,14 @@ class NonConformaceController extends Controller
             return back();
         }
     }
+
 
     public function pending_initiator_update(Request $request, $id)
     {
         if ($request->username == Auth::user()->email && Hash::check($request->password, Auth::user()->password)) {
-            $NonConformance = NonConformance::find($id);
-            $lastDocument = NonConformance::find($id);
-            // $cftResponse = NonConformanceCFTResponse::withoutTrashed()->where(['non_conformances_id' => $id])->get();
+            $incident = Incident::find($id);
+            $lastDocument = Incident::find($id);
+            // $cftResponse = IncidentCftResponse::withoutTrashed()->where(['incident_id' => $id])->get();
             $list = Helpers::getInitiatorUserList();
            // Soft delete all records
         //    $cftResponse->each(function ($response) {
@@ -3379,15 +3458,15 @@ class NonConformaceController extends Controller
         // });
 
 
-        $NonConformance->stage = "7";
-        $NonConformance->status = "Pending Initiator Update";
-        $NonConformance->qa_more_info_required_by = Auth::user()->name;
-        $NonConformance->qa_more_info_required_on = Carbon::now()->format('d-M-Y');
-        $history = new NonConformanceAuditTrails();
-        $history->non_conformances_id = $id;
+        $incident->stage = "7";
+        $incident->status = "Pending Initiator Update";
+        $incident->qa_more_info_required_by = Auth::user()->name;
+        $incident->qa_more_info_required_on = Carbon::now()->format('d-M-Y');
+        $history = new IncidentAuditTrail();
+        $history->incident_id = $id;
         $history->activity_type = 'Activity Log';
         $history->previous = "";
-        $history->current = $NonConformance->qa_more_info_required_by;
+        $history->current = $incident->qa_more_info_required_by;
         $history->comment = $request->comment;
         $history->user_id = Auth::user()->id;
         $history->user_name = Auth::user()->name;
@@ -3395,24 +3474,24 @@ class NonConformaceController extends Controller
         $history->origin_state = $lastDocument->status;
         $history->stage = 'Send to Pending Initiator Update';
         $history->save();
-        $NonConformance->update();
-        $history = new NonConformanceHistories();
-        $history->type = "Failure Investigation";
+        $incident->update();
+        $history = new IncidentHistory();
+        $history->type = "Incident";
         $history->doc_id = $id;
         $history->user_id = Auth::user()->id;
         $history->user_name = Auth::user()->name;
-        $history->stage_id = $NonConformance->stage;
+        $history->stage_id = $incident->stage;
         $history->status = "Send to Pending Initiator Update";
         $history->save();
         // foreach ($list as $u) {
-        //     if ($u->q_m_s_divisions_id == $NonConformance->division_id) {
+        //     if ($u->q_m_s_divisions_id == $incident->division_id) {
         //         $email = Helpers::getInitiatorEmail($u->user_id);
         //         if ($email !== null) {
 
         //             try {
         //                 Mail::send(
         //                     'mail.view-mail',
-        //                     ['data' => $NonConformance],
+        //                     ['data' => $incident],
         //                     function ($message) use ($email) {
         //                         $message->to($email)
         //                             ->subject("Activity Performed By " . Auth::user()->name);
@@ -3424,7 +3503,7 @@ class NonConformaceController extends Controller
         //         }
         //     }
         // }
-        $NonConformance->update();
+        $incident->update();
         toastr()->success('Document Sent');
         return back();
 
@@ -3434,19 +3513,19 @@ class NonConformaceController extends Controller
         }
     }
 
-    public function non_conformance_send_stage(Request $request, $id)
+    public function incident_send_stage(Request $request, $id)
     { 
         try {
             if ($request->username == Auth::user()->email && Hash::check($request->password, Auth::user()->password)) {
-                $NonConformance = NonConformance::find($id);
-                $updateCFT = NonConformanceCFTs::where('non_conformances_id', $id)->latest()->first();
-                $lastDocument = NonConformance::find($id);
-                $cftDetails = NonConformanceCFTResponse::withoutTrashed()->where(['status' => 'In-progress', 'non_conformances_id' => $id])->distinct('cft_user_id')->count();
+                $incident = Incident::find($id);
+                $updateCFT = IncidentCft::where('incident_id', $id)->latest()->first();
+                $lastDocument = Incident::find($id);
+                $cftDetails = IncidentCftResponse::withoutTrashed()->where(['status' => 'In-progress', 'incident_id' => $id])->distinct('cft_user_id')->count();
     
-                if ($NonConformance->stage == 1) {
-                    if ($NonConformance->form_progress !== 'general-open')
+                if ($incident->stage == 1) {
+                    if ($incident->form_progress !== 'general-open')
                     {
-                       
+                        dd('emnter');
                         Session::flash('swal', [
                             'type' => 'warning',
                             'title' => 'Mandatory Fields!',
@@ -3463,18 +3542,18 @@ class NonConformaceController extends Controller
                         ]);
                     }
                     
-                    $NonConformance->stage = "2";
-                    $NonConformance->status = "HOD Review";
-                    $NonConformance->submit_by = Auth::user()->name;
-                    $NonConformance->submit_on = Carbon::now()->format('d-M-Y');
-                    $NonConformance->submit_comment = $request->comment;
+                    $incident->stage = "2";
+                    $incident->status = "HOD Review";
+                    $incident->submit_by = Auth::user()->name;
+                    $incident->submit_on = Carbon::now()->format('d-M-Y');
+                    $incident->submit_comment = $request->comment;
                     
-                    $history = new NonConformanceAuditTrails();
-                    $history->non_conformances_id = $id;
+                    $history = new IncidentAuditTrail();
+                    $history->incident_id = $id;
                     $history->activity_type = 'Activity Log';
                     $history->previous = "";
                     $history->action='Submit';
-                    $history->current = $NonConformance->submit_by;
+                    $history->current = $incident->submit_by;
                     $history->comment = $request->comment;
                     $history->user_id = Auth::user()->id;
                     $history->user_name = Auth::user()->name;
@@ -3488,14 +3567,14 @@ class NonConformaceController extends Controller
     
                     // $list = Helpers::getHodUserList();
                     // foreach ($list as $u) {
-                    //     if ($u->q_m_s_divisions_id == $NonConformance->division_id) {
+                    //     if ($u->q_m_s_divisions_id == $incident->division_id) {
                     //         $email = Helpers::getInitiatorEmail($u->user_id);
                     //         if ($email !== null) {
     
                     //             try {
                     //                 Mail::send(
                     //                     'mail.view-mail',
-                    //                     ['data' => $NonConformance],
+                    //                     ['data' => $incident],
                     //                     function ($message) use ($email) {
                     //                         $message->to($email)
                     //                             ->subject("Activity Performed By " . Auth::user()->name);
@@ -3510,13 +3589,13 @@ class NonConformaceController extends Controller
     
                     // $list = Helpers::getHeadoperationsUserList();
                     // foreach ($list as $u) {
-                    //     if ($u->q_m_s_divisions_id == $NonConformance->division_id) {
+                    //     if ($u->q_m_s_divisions_id == $incident->division_id) {
                     //         $email = Helpers::getInitiatorEmail($u->user_id);
                     //         if ($email !== null) {
     
                     //             Mail::send(
                     //                 'mail.Categorymail',
-                    //                 ['data' => $NonConformance],
+                    //                 ['data' => $incident],
                     //                 function ($message) use ($email) {
                     //                     $message->to($email)
                     //                         ->subject("Activity Performed By " . Auth::user()->name);
@@ -3525,14 +3604,14 @@ class NonConformaceController extends Controller
                     //         }
                     //     }
                     // }
-                    // dd($NonConformance);
-                    $NonConformance->update();
+                    // dd($incident);
+                    $incident->update();
                     return back();
                 }
-                if ($NonConformance->stage == 2) {
+                if ($incident->stage == 2) {
     
                     // Check HOD remark value
-                    if (!$NonConformance->HOD_Remarks) {
+                    if (!$incident->HOD_Remarks) {
     
                         Session::flash('swal', [
                             'title' => 'Mandatory Fields Required!',
@@ -3549,16 +3628,16 @@ class NonConformaceController extends Controller
                         ]);
                     }
     
-                    $NonConformance->stage = "3";
-                    $NonConformance->status = "QA Initial Review";
-                    $NonConformance->HOD_Review_Complete_By = Auth::user()->name;
-                    $NonConformance->HOD_Review_Complete_On = Carbon::now()->format('d-M-Y');
-                    $NonConformance->HOD_Review_Comments = $request->comment;
-                    $history = new NonConformanceAuditTrails();
-                    $history->non_conformances_id = $id;
+                    $incident->stage = "3";
+                    $incident->status = "QA Initial Review";
+                    $incident->HOD_Review_Complete_By = Auth::user()->name;
+                    $incident->HOD_Review_Complete_On = Carbon::now()->format('d-M-Y');
+                    $incident->HOD_Review_Comments = $request->comment;
+                    $history = new IncidentAuditTrail();
+                    $history->incident_id = $id;
                     $history->activity_type = 'Activity Log';
                     $history->previous = "";
-                    $history->current = $NonConformance->HOD_Review_Complete_By;
+                    $history->current = $incident->HOD_Review_Complete_By;
                     $history->comment = $request->comment;
                     $history->action= 'HOD Review Complete';
                     $history->user_id = Auth::user()->id;
@@ -3572,13 +3651,13 @@ class NonConformaceController extends Controller
                     // dd($history->action);
                     // $list = Helpers::getQAUserList();
                     // foreach ($list as $u) {
-                    //     if ($u->q_m_s_divisions_id == $NonConformance->division_id) {
+                    //     if ($u->q_m_s_divisions_id == $incident->division_id) {
                     //         $email = Helpers::getInitiatorEmail($u->user_id);
                     //         if ($email !== null) {
                     //             try {
                     //                 Mail::send(
                     //                     'mail.view-mail',
-                    //                     ['data' => $NonConformance],
+                    //                     ['data' => $incident],
                     //                     function ($message) use ($email) {
                     //                         $message->to($email)
                     //                             ->subject("Activity Performed By " . Auth::user()->name);
@@ -3592,12 +3671,12 @@ class NonConformaceController extends Controller
                     // }
     
     
-                    $NonConformance->update();
+                    $incident->update();
                     toastr()->success('Document Sent');
                     return back();
                 }
-                if ($NonConformance->stage == 3) {
-                    if ($NonConformance->form_progress !== 'cft')
+                if ($incident->stage == 3) {
+                    if ($incident->form_progress !== 'cft')
                     {
                         Session::flash('swal', [
                             'type' => 'warning',
@@ -3614,12 +3693,12 @@ class NonConformaceController extends Controller
                         ]);
                     }
     
-                    $NonConformance->stage = "4";
-                    $NonConformance->status = "CFT Review";
+                    $incident->stage = "4";
+                    $incident->status = "CFT Review";
     
                     // Code for the CFT required
-                    $stage = new NonConformanceCFTResponse();
-                    $stage->non_conformances_id = $id;
+                    $stage = new IncidentCftResponse();
+                    $stage->incident_id = $id;
                     $stage->cft_user_id = Auth::user()->id;
                     $stage->status = "CFT Required";
                     // $stage->cft_stage = ;
@@ -3627,15 +3706,15 @@ class NonConformaceController extends Controller
                     $stage->is_required = 1;
                     $stage->save();
     
-                    $NonConformance->QA_Initial_Review_Complete_By = Auth::user()->name;
-                    $NonConformance->QA_Initial_Review_Complete_On = Carbon::now()->format('d-M-Y');
-                    $NonConformance->QA_Initial_Review_Comments = $request->comment;
-                    $history = new NonConformanceAuditTrails();
-                    $history->non_conformances_id = $id;
+                    $incident->QA_Initial_Review_Complete_By = Auth::user()->name;
+                    $incident->QA_Initial_Review_Complete_On = Carbon::now()->format('d-M-Y');
+                    $incident->QA_Initial_Review_Comments = $request->comment;
+                    $history = new IncidentAuditTrail();
+                    $history->incident_id = $id;
                     $history->activity_type = 'Activity Log';
                     $history->previous = "";
                     $history->action= 'QA Initial Review Complete';
-                    $history->current = $NonConformance->QA_Initial_Review_Complete_By;
+                    $history->current = $incident->QA_Initial_Review_Complete_By;
                     $history->comment = $request->comment;
                     $history->user_id = Auth::user()->id;
                     $history->user_name = Auth::user()->name;
@@ -3647,13 +3726,13 @@ class NonConformaceController extends Controller
                     $history->save();
                     // $list = Helpers::getQAUserList();
                     // foreach ($list as $u) {
-                    //     if ($u->q_m_s_divisions_id == $NonConformance->division_id) {
+                    //     if ($u->q_m_s_divisions_id == $incident->division_id) {
                     //         $email = Helpers::getInitiatorEmail($u->user_id);
                     //         if ($email !== null) {
                     //             try {
                     //                 Mail::send(
                     //                     'mail.view-mail',
-                    //                     ['data' => $NonConformance],
+                    //                     ['data' => $incident],
                     //                     function ($message) use ($email) {
                     //                         $message->to($email)
                     //                             ->subject("Activity Performed By " . Auth::user()->name);
@@ -3666,16 +3745,16 @@ class NonConformaceController extends Controller
                     //     }
                     // }
     
-                    if ($request->non_conformances_category == 'major' || $request->non_conformances_category == 'minor' || $request->non_conformances_category == 'critical') {
+                    if ($request->Incident_category == 'major' || $request->Incident_category == 'minor' || $request->Incident_category == 'critical') {
                         $list = Helpers::getHeadoperationsUserList();
                                 // foreach ($list as $u) {
-                                //     if ($u->q_m_s_divisions_id == $NonConformance->division_id) {
+                                //     if ($u->q_m_s_divisions_id == $incident->division_id) {
                                 //         $email = Helpers::getInitiatorEmail($u->user_id);
                                 //         if ($email !== null) {
                                 //              try {
                                 //                     Mail::send(
                                 //                         'mail.Categorymail',
-                                //                         ['data' => $NonConformance],
+                                //                         ['data' => $incident],
                                 //                         function ($message) use ($email) {
                                 //                             $message->to($email)
                                 //                                 ->subject("Activity Performed By " . Auth::user()->name);
@@ -3688,17 +3767,17 @@ class NonConformaceController extends Controller
                                 //     }
                                 // }
                             }
-                            if ($request->non_conformances_category == 'major' || $request->non_conformances_category == 'minor' || $request->non_conformances_category == 'critical') {
+                            if ($request->Incident_category == 'major' || $request->Incident_category == 'minor' || $request->Incident_category == 'critical') {
                                 $list = Helpers::getCEOUserList();
                                         // foreach ($list as $u) {
-                                        //     if ($u->q_m_s_divisions_id == $NonConformance->division_id) {
+                                        //     if ($u->q_m_s_divisions_id == $incident->division_id) {
                                         //         $email = Helpers::getInitiatorEmail($u->user_id);
                                         //         if ($email !== null) {
                                         //              // Add this if statement
                                         //              try {
                                         //                     Mail::send(
                                         //                         'mail.Categorymail',
-                                        //                         ['data' => $NonConformance],
+                                        //                         ['data' => $incident],
                                         //                         function ($message) use ($email) {
                                         //                             $message->to($email)
                                         //                                 ->subject("Activity Performed By " . Auth::user()->name);
@@ -3712,17 +3791,17 @@ class NonConformaceController extends Controller
                                         //     }
                                         // }
                                     }
-                                    if ($request->non_conformances_category == 'major' || $request->non_conformances_category == 'minor' || $request->non_conformances_category == 'critical') {
+                                    if ($request->Incident_category == 'major' || $request->Incident_category == 'minor' || $request->Incident_category == 'critical') {
                                         $list = Helpers::getCorporateEHSHeadUserList();
                                                 // foreach ($list as $u) {
-                                                //     if ($u->q_m_s_divisions_id == $NonConformance->division_id) {
+                                                //     if ($u->q_m_s_divisions_id == $incident->division_id) {
                                                 //         $email = Helpers::getInitiatorEmail($u->user_id);
                                                 //         if ($email !== null) {
                                                 //              // Add this if statement
                                                 //              try {
                                                 //                     Mail::send(
                                                 //                         'mail.Categorymail',
-                                                //                         ['data' => $NonConformance],
+                                                //                         ['data' => $incident],
                                                 //                         function ($message) use ($email) {
                                                 //                             $message->to($email)
                                                 //                                 ->subject("Activity Performed By " . Auth::user()->name);
@@ -3737,14 +3816,14 @@ class NonConformaceController extends Controller
                                                 // }
                                             }
     
-                    $NonConformance->update();
+                    $incident->update();
                     toastr()->success('Document Sent');
                     return back();
                 }
-                if ($NonConformance->stage == 4) {
+                if ($incident->stage == 4) {
     
                     // CFT review state update form_progress
-                    if ($NonConformance->form_progress !== 'cft')
+                    if ($incident->form_progress !== 'cft')
                     {
                         Session::flash('swal', [
                             'type' => 'warning',
@@ -3762,8 +3841,8 @@ class NonConformaceController extends Controller
                     }
     
     
-                    $IsCFTRequired = NonConformanceCFTResponse::withoutTrashed()->where(['is_required' => 1, 'non_conformances_id' => $id])->latest()->first();
-                    $cftUsers = DB::table('non_conformance_c_f_ts')->where(['non_conformances_id' => $id])->first();
+                    $IsCFTRequired = IncidentCftResponse::withoutTrashed()->where(['is_required' => 1, 'incident_id' => $id])->latest()->first();
+                    $cftUsers = DB::table('incident_cfts')->where(['incident_id' => $id])->first();
                     // Define the column names
                     $columns = ['Production_person', 'Warehouse_notification', 'Quality_Control_Person', 'QualityAssurance_person', 'Engineering_person', 'Analytical_Development_person', 'Kilo_Lab_person', 'Technology_transfer_person', 'Environment_Health_Safety_person', 'Human_Resource_person', 'Information_Technology_person', 'Project_management_person','Other1_person','Other2_person','Other3_person','Other4_person','Other5_person'];
                     // $columns2 = ['Production_review', 'Warehouse_review', 'Quality_Control_review', 'QualityAssurance_review', 'Engineering_review', 'Analytical_Development_review', 'Kilo_Lab_review', 'Technology_transfer_review', 'Environment_Health_Safety_review', 'Human_Resource_review', 'Information_Technology_review', 'Project_management_review'];
@@ -3852,16 +3931,16 @@ class NonConformaceController extends Controller
                     // dd($valuesArray, count(array_unique($valuesArray)), ($cftDetails+1));
                     if ($IsCFTRequired) {
                         if (count(array_unique($valuesArray)) == ($cftDetails + 1)) {
-                            $stage = new NonConformanceCFTResponse();
-                            $stage->non_conformances_id = $id;
+                            $stage = new IncidentCftResponse();
+                            $stage->incident_id = $id;
                             $stage->cft_user_id = Auth::user()->id;
                             $stage->status = "Completed";
                             // $stage->cft_stage = ;
                             $stage->comment = $request->comment;
                             $stage->save();
                         } else {
-                            $stage = new NonConformanceCFTResponse();
-                            $stage->non_conformances_id = $id;
+                            $stage = new IncidentCftResponse();
+                            $stage->incident_id = $id;
                             $stage->cft_user_id = Auth::user()->id;
                             $stage->status = "In-progress";
                             // $stage->cft_stage = ;
@@ -3870,24 +3949,24 @@ class NonConformaceController extends Controller
                         }
                     }
     
-                    $checkCFTCount = NonConformanceCFTResponse::withoutTrashed()->where(['status' => 'Completed', 'non_conformances_id' => $id])->count();
+                    $checkCFTCount = IncidentCftResponse::withoutTrashed()->where(['status' => 'Completed', 'incident_id' => $id])->count();
                     // dd(count(array_unique($valuesArray)), $checkCFTCount);
     
     
                     if (!$IsCFTRequired || $checkCFTCount) {
     
-                        $NonConformance->stage = "5";
-                        $NonConformance->status = "QA Final Review";
-                        $NonConformance->CFT_Review_Complete_By = Auth::user()->name;
-                        $NonConformance->CFT_Review_Complete_On = Carbon::now()->format('d-M-Y');
-                        $NonConformance->CFT_Review_Comments = $request->comment;
+                        $incident->stage = "5";
+                        $incident->status = "QA Final Review";
+                        $incident->CFT_Review_Complete_By = Auth::user()->name;
+                        $incident->CFT_Review_Complete_On = Carbon::now()->format('d-M-Y');
+                        $incident->CFT_Review_Comments = $request->comment;
     
-                        $history = new NonConformanceAuditTrails();
-                        $history->non_conformances_id = $id;
+                        $history = new IncidentAuditTrail();
+                        $history->incident_id = $id;
                         $history->activity_type = 'Activity Log';
                         $history->previous = "";
                         $history->action='CFT Review Complete';
-                        $history->current = $NonConformance->CFT_Review_Complete_By;
+                        $history->current = $incident->CFT_Review_Complete_By;
                         $history->comment = $request->comment;
                         $history->user_id = Auth::user()->id;
                         $history->user_name = Auth::user()->name;
@@ -3899,13 +3978,13 @@ class NonConformaceController extends Controller
                         $history->save();
                         // $list = Helpers::getQAUserList();
                         // foreach ($list as $u) {
-                        //     if ($u->q_m_s_divisions_id == $NonConformance->division_id) {
+                        //     if ($u->q_m_s_divisions_id == $incident->division_id) {
                         //         $email = Helpers::getInitiatorEmail($u->user_id);
                         //         if ($email !== null) {
                         //             try {
                         //                 Mail::send(
                         //                     'mail.view-mail',
-                        //                     ['data' => $NonConformance],
+                        //                     ['data' => $incident],
                         //                     function ($message) use ($email) {
                         //                         $message->to($email)
                         //                             ->subject("Activity Performed By " . Auth::user()->name);
@@ -3917,15 +3996,15 @@ class NonConformaceController extends Controller
                         //         }
                         //     }
                         // }
-                        $NonConformance->update();
+                        $incident->update();
                     }
                     toastr()->success('Document Sent');
                     return back();
                 }
     
-                if ($NonConformance->stage == 5) {
+                if ($incident->stage == 5) {
     
-                    if ($NonConformance->form_progress === 'capa' && !empty($NonConformance->QA_Feedbacks))
+                    if ($incident->form_progress === 'capa' && !empty($incident->QA_Feedbacks))
                     {
                         Session::flash('swal', [
                             'type' => 'success',
@@ -3944,17 +4023,17 @@ class NonConformaceController extends Controller
                     }
     
     
-                    $NonConformance->stage = "6";
-                    $NonConformance->status = "QA Head/Manager Designee Approval";
-                    $NonConformance->QA_Final_Review_Complete_By = Auth::user()->name;
-                    $NonConformance->QA_Final_Review_Complete_On = Carbon::now()->format('d-M-Y');
-                    $NonConformance->QA_Final_Review_Comments = $request->comment;
+                    $incident->stage = "6";
+                    $incident->status = "QA Head/Manager Designee Approval";
+                    $incident->QA_Final_Review_Complete_By = Auth::user()->name;
+                    $incident->QA_Final_Review_Complete_On = Carbon::now()->format('d-M-Y');
+                    $incident->QA_Final_Review_Comments = $request->comment;
     
-                    $history = new NonConformanceAuditTrails();
-                    $history->non_conformances_id = $id;
+                    $history = new IncidentAuditTrail();
+                    $history->incident_id = $id;
                     $history->activity_type = 'Activity Log';
                     $history->previous = "";
-                    $history->current = $NonConformance->QA_Final_Review_Complete_By;
+                    $history->current = $incident->QA_Final_Review_Complete_By;
                     $history->comment = $request->comment;
                     $history->action ='QA Final Review Complete';
                     $history->user_id = Auth::user()->id;
@@ -3967,13 +4046,13 @@ class NonConformaceController extends Controller
                     $history->save();
                     // $list = Helpers::getQAUserList();
                     // foreach ($list as $u) {
-                    //     if ($u->q_m_s_divisions_id == $NonConformance->division_id) {
+                    //     if ($u->q_m_s_divisions_id == $incident->division_id) {
                     //         $email = Helpers::getInitiatorEmail($u->user_id);
                     //         if ($email !== null) {
                     //             try {
                     //                 Mail::send(
                     //                     'mail.view-mail',
-                    //                     ['data' => $NonConformance],
+                    //                     ['data' => $incident],
                     //                     function ($message) use ($email) {
                     //                         $message->to($email)
                     //                             ->subject("Activity Performed By " . Auth::user()->name);
@@ -3985,13 +4064,13 @@ class NonConformaceController extends Controller
                     //         }
                     //     }
                     // }
-                    $NonConformance->update();
+                    $incident->update();
                     toastr()->success('Document Sent');
                     return back();
                 }
-                if ($NonConformance->stage == 6) {
+                if ($incident->stage == 6) {
     
-                    if ($NonConformance->form_progress !== 'qah')
+                    if ($incident->form_progress !== 'qah')
                     {
     
                         Session::flash('swal', [
@@ -4005,13 +4084,13 @@ class NonConformaceController extends Controller
                         Session::flash('swal', [
                             'type' => 'success',
                             'title' => 'Success',
-                            'message' => 'Failure Investigation sent to Intiator Update'
+                            'message' => 'Incident sent to Intiator Update'
                         ]);
                     }
     
-                    $extension = Extension::where('parent_id', $NonConformance->id)->first();
+                    $extension = Extension::where('parent_id', $incident->id)->first();
     
-                    $rca = RootCauseAnalysis::where('parent_record', str_pad($NonConformance->id, 4, 0, STR_PAD_LEFT))->first();
+                    $rca = RootCauseAnalysis::where('parent_record', str_pad($incident->id, 4, 0, STR_PAD_LEFT))->first();
     
                     if ($extension && $extension->status !== 'Closed-Done') {
                         Session::flash('swal', [
@@ -4035,18 +4114,18 @@ class NonConformaceController extends Controller
     
                     // return "PAUSE";
     
-                    $NonConformance->stage = "7";
-                    $NonConformance->status = "Pending Initiator Update";
-                    $NonConformance->QA_head_approved_by = Auth::user()->name;
-                    $NonConformance->QA_head_approved_on = Carbon::now()->format('d-M-Y');
-                    $NonConformance->QA_head_approved_comment	 = $request->comment;
+                    $incident->stage = "7";
+                    $incident->status = "Pending Initiator Update";
+                    $incident->QA_head_approved_by = Auth::user()->name;
+                    $incident->QA_head_approved_on = Carbon::now()->format('d-M-Y');
+                    $incident->QA_head_approved_comment	 = $request->comment;
     
-                    $history = new NonConformanceAuditTrails();
-                    $history->non_conformances_id = $id;
+                    $history = new IncidentAuditTrail();
+                    $history->incident_id = $id;
                     $history->activity_type = 'Activity Log';
                     $history->previous = "";
                     $history->action ='Approved';
-                    $history->current = $NonConformance->QA_head_approved_by;
+                    $history->current = $incident->QA_head_approved_by;
                     $history->comment = $request->comment;
                     $history->user_id = Auth::user()->id;
                     $history->user_name = Auth::user()->name;
@@ -4058,13 +4137,13 @@ class NonConformaceController extends Controller
                     $history->save();
                     // $list = Helpers::getQAUserList();
                     // foreach ($list as $u) {
-                    //     if ($u->q_m_s_divisions_id == $NonConformance->division_id) {
+                    //     if ($u->q_m_s_divisions_id == $incident->division_id) {
                     //         $email = Helpers::getInitiatorEmail($u->user_id);
                     //         if ($email !== null) {
                     //             try {
                     //                 Mail::send(
                     //                     'mail.view-mail',
-                    //                     ['data' => $NonConformance],
+                    //                     ['data' => $incident],
                     //                     function ($message) use ($email) {
                     //                         $message->to($email)
                     //                             ->subject("Activity Performed By " . Auth::user()->name);
@@ -4076,13 +4155,13 @@ class NonConformaceController extends Controller
                     //         }
                     //     }
                     // }
-                    $NonConformance->update();
+                    $incident->update();
                     toastr()->success('Document Sent');
                     return back();
                 }
-                if ($NonConformance->stage == 7) {
+                if ($incident->stage == 7) {
     
-                    if ($NonConformance->form_progress !== 'qah')
+                    if ($incident->form_progress !== 'qah')
                     {
     
                         Session::flash('swal', [
@@ -4096,13 +4175,13 @@ class NonConformaceController extends Controller
                         Session::flash('swal', [
                             'type' => 'success',
                             'title' => 'Success',
-                            'message' => 'Failure Investigation sent to QA Final Approval.'
+                            'message' => 'Incident sent to QA Final Approval.'
                         ]);
                     }
     
-                    $extension = Extension::where('parent_id', $NonConformance->id)->first();
+                    $extension = Extension::where('parent_id', $incident->id)->first();
     
-                    $rca = RootCauseAnalysis::where('parent_record', str_pad($NonConformance->id, 4, 0, STR_PAD_LEFT))->first();
+                    $rca = RootCauseAnalysis::where('parent_record', str_pad($incident->id, 4, 0, STR_PAD_LEFT))->first();
     
                     if ($extension && $extension->status !== 'Closed-Done') {
                         Session::flash('swal', [
@@ -4126,18 +4205,18 @@ class NonConformaceController extends Controller
     
                     // return "PAUSE";
     
-                    $NonConformance->stage = "8";
-                    $NonConformance->status = "QA Final Approval";
-                    $NonConformance->pending_initiator_approved_by = Auth::user()->name;
-                    $NonConformance->pending_initiator_approved_on = Carbon::now()->format('d-M-Y');
-                    $NonConformance->pending_initiator_approved_comment = $request->comment;
+                    $incident->stage = "8";
+                    $incident->status = "QA Final Approval";
+                    $incident->pending_initiator_approved_by = Auth::user()->name;
+                    $incident->pending_initiator_approved_on = Carbon::now()->format('d-M-Y');
+                    $incident->pending_initiator_approved_comment = $request->comment;
     
-                    $history = new NonConformanceAuditTrails();
-                    $history->non_conformances_id = $id;
+                    $history = new IncidentAuditTrail();
+                    $history->incident_id = $id;
                     $history->activity_type = 'Activity Log';
                     $history->previous = "";
                     $history->action ='Initiator Updated Complete';
-                    $history->current = $NonConformance->pending_initiator_approved_by;
+                    $history->current = $incident->pending_initiator_approved_by;
                     $history->comment = $request->comment;
                     $history->user_id = Auth::user()->id;
                     $history->user_name = Auth::user()->name;
@@ -4149,13 +4228,13 @@ class NonConformaceController extends Controller
                     $history->save();
                     // $list = Helpers::getQAUserList();
                     // foreach ($list as $u) {
-                    //     if ($u->q_m_s_divisions_id == $NonConformance->division_id) {
+                    //     if ($u->q_m_s_divisions_id == $incident->division_id) {
                     //         $email = Helpers::getInitiatorEmail($u->user_id);
                     //         if ($email !== null) {
                     //             try {
                     //                 Mail::send(
                     //                     'mail.view-mail',
-                    //                     ['data' => $NonConformance],
+                    //                     ['data' => $incident],
                     //                     function ($message) use ($email) {
                     //                         $message->to($email)
                     //                             ->subject("Activity Performed By " . Auth::user()->name);
@@ -4167,15 +4246,15 @@ class NonConformaceController extends Controller
                     //         }
                     //     }
                     // }
-                    $NonConformance->update();
+                    $incident->update();
                     toastr()->success('Document Sent');
                     return back();
                 }
     
     
-                if ($NonConformance->stage == 8) {
+                if ($incident->stage == 8) {
     
-                    if ($NonConformance->form_progress !== 'qah')
+                    if ($incident->form_progress !== 'qah')
                     {
     
                         Session::flash('swal', [
@@ -4189,13 +4268,13 @@ class NonConformaceController extends Controller
                         Session::flash('swal', [
                             'type' => 'success',
                             'title' => 'Success',
-                            'message' => 'Failure Investigation sent to Closed/Done state'
+                            'message' => 'Incident sent to Closed/Done state'
                         ]);
                     }
     
-                    $extension = Extension::where('parent_id', $NonConformance->id)->first();
+                    $extension = Extension::where('parent_id', $incident->id)->first();
     
-                    $rca = RootCauseAnalysis::where('parent_record', str_pad($NonConformance->id, 4, 0, STR_PAD_LEFT))->first();
+                    $rca = RootCauseAnalysis::where('parent_record', str_pad($incident->id, 4, 0, STR_PAD_LEFT))->first();
     
                     if ($extension && $extension->status !== 'Closed-Done') {
                         Session::flash('swal', [
@@ -4219,18 +4298,18 @@ class NonConformaceController extends Controller
     
                     // return "PAUSE";
     
-                    $NonConformance->stage = "9";
-                    $NonConformance->status = "Closed-Done";
-                    $NonConformance->QA_final_approved_by = Auth::user()->name;
-                    $NonConformance->QA_final_approved_on = Carbon::now()->format('d-M-Y');
-                    $NonConformance->QA_final_approved_comment = $request->comment;
+                    $incident->stage = "9";
+                    $incident->status = "Closed-Done";
+                    $incident->QA_final_approved_by = Auth::user()->name;
+                    $incident->QA_final_approved_on = Carbon::now()->format('d-M-Y');
+                    $incident->QA_final_approved_comment = $request->comment;
     
-                    $history = new NonConformanceAuditTrails();
-                    $history->non_conformances_id = $id;
+                    $history = new IncidentAuditTrail();
+                    $history->incident_id = $id;
                     $history->activity_type = 'Activity Log';
                     $history->previous = "";
                     $history->action ='Closed-Done';
-                    $history->current = $NonConformance->QA_final_approved_by;
+                    $history->current = $incident->QA_final_approved_by;
                     $history->comment = $request->comment;
                     $history->user_id = Auth::user()->id;
                     $history->user_name = Auth::user()->name;
@@ -4242,13 +4321,13 @@ class NonConformaceController extends Controller
                     $history->save();
                     // $list = Helpers::getQAUserList();
                     // foreach ($list as $u) {
-                    //     if ($u->q_m_s_divisions_id == $NonConformance->division_id) {
+                    //     if ($u->q_m_s_divisions_id == $incident->division_id) {
                     //         $email = Helpers::getInitiatorEmail($u->user_id);
                     //         if ($email !== null) {
                     //             try {
                     //                 Mail::send(
                     //                     'mail.view-mail',
-                    //                     ['data' => $NonConformance],
+                    //                     ['data' => $incident],
                     //                     function ($message) use ($email) {
                     //                         $message->to($email)
                     //                             ->subject("Activity Performed By " . Auth::user()->name);
@@ -4260,7 +4339,7 @@ class NonConformaceController extends Controller
                     //         }
                     //     }
                     // }
-                    $NonConformance->update();
+                    $incident->update();
                     toastr()->success('Document Sent');
                     return back();
                 }
@@ -4282,23 +4361,23 @@ class NonConformaceController extends Controller
 
 
         if ($request->username == Auth::user()->email && Hash::check($request->password, Auth::user()->password)) {
-            $NonConformance = NonConformance::find($id);
-            $lastDocument = NonConformance::find($id);
-            $cftDetails = NonConformanceCFTResponse::withoutTrashed()->where(['status' => 'In-progress', 'non_conformances_id' => $id])->distinct('cft_user_id')->count();
+            $incident = Incident::find($id);
+            $lastDocument = Incident::find($id);
+            $cftDetails = IncidentCftResponse::withoutTrashed()->where(['status' => 'In-progress', 'incident_id' => $id])->distinct('cft_user_id')->count();
 
-                $NonConformance->stage = "5";
-                $NonConformance->status = "QA Final Review";
-                $NonConformance->QA_Initial_Review_Complete_By = Auth::user()->name;
-                // dd($NonConformance->QA_Initial_Review_Complete_By);
-                $NonConformance->QA_Initial_Review_Complete_On = Carbon::now()->format('d-M-Y');
-                $NonConformance->QA_Initial_Review_Comments = $request->comment;
+                $incident->stage = "5";
+                $incident->status = "QA Final Review";
+                $incident->QA_Initial_Review_Complete_By = Auth::user()->name;
+                // dd($incident->QA_Initial_Review_Complete_By);
+                $incident->QA_Initial_Review_Complete_On = Carbon::now()->format('d-M-Y');
+                $incident->QA_Initial_Review_Comments = $request->comment;
 
-                $history = new NonConformanceAuditTrails();
-                $history->non_conformances_id = $id;
+                $history = new IncidentAuditTrail();
+                $history->incident_id = $id;
                 $history->activity_type = 'Activity Log';
                 $history->previous = "";
                 $history->action ='QA Final Review Complete';
-                $history->current = $NonConformance->QA_Initial_Review_Complete_By;
+                $history->current = $incident->QA_Initial_Review_Complete_By;
                 $history->comment = $request->comment;
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
@@ -4308,13 +4387,13 @@ class NonConformaceController extends Controller
                 $history->save();
                 // $list = Helpers::getQAUserList();
                 // foreach ($list as $u) {
-                //     if ($u->q_m_s_divisions_id == $NonConformance->division_id) {
+                //     if ($u->q_m_s_divisions_id == $incident->division_id) {
                 //         $email = Helpers::getInitiatorEmail($u->user_id);
                 //         if ($email !== null) {
                 //             try {
                 //                 Mail::send(
                 //                     'mail.view-mail',
-                //                     ['data' => $NonConformance],
+                //                     ['data' => $incident],
                 //                     function ($message) use ($email) {
                 //                         $message->to($email)
                 //                             ->subject("Activity Performed By " . Auth::user()->name);
@@ -4326,7 +4405,7 @@ class NonConformaceController extends Controller
                 //         }
                 //     }
                 // }
-                $NonConformance->update();
+                $incident->update();
                 toastr()->success('Document Sent');
                 return back();
         } else {
@@ -4335,22 +4414,22 @@ class NonConformaceController extends Controller
         }
     }
 
-    public function failure_inv_qa_more_info(Request $request, $id)
+    public function incident_qa_more_info(Request $request, $id)
     {
         if ($request->username == Auth::user()->email && Hash::check($request->password, Auth::user()->password)) {
-            $NonConformance = NonConformance::find($id);
-            $lastDocument = NonConformance::find($id);
+            $incident = Incident::find($id);
+            $lastDocument = Incident::find($id);
 
-            if ($NonConformance->stage == 2) {
-                $NonConformance->stage = "2";
-                $NonConformance->status = "Opened";
-                $NonConformance->qa_more_info_required_by = Auth::user()->name;
-                $NonConformance->qa_more_info_required_on = Carbon::now()->format('d-M-Y');
-                $history = new NonConformanceAuditTrails();
-                $history->non_conformances_id = $id;
+            if ($incident->stage == 2) {
+                $incident->stage = "2";
+                $incident->status = "Opened";
+                $incident->qa_more_info_required_by = Auth::user()->name;
+                $incident->qa_more_info_required_on = Carbon::now()->format('d-M-Y');
+                $history = new IncidentAuditTrail();
+                $history->incident_id = $id;
                 $history->activity_type = 'Activity Log';
                 $history->previous = "";
-                $history->current = $NonConformance->qa_more_info_required_by;
+                $history->current = $incident->qa_more_info_required_by;
                 $history->comment = $request->comment;
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
@@ -4358,24 +4437,24 @@ class NonConformaceController extends Controller
                 $history->origin_state = $lastDocument->status;
                 $history->stage = 'HOD Review';
                 $history->save();
-                $NonConformance->update();
-                $history = new NonConformanceHistories();
-                $history->type = "Failure Investigation";
+                $incident->update();
+                $history = new IncidentHistory();
+                $history->type = "Incident";
                 $history->doc_id = $id;
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
-                $history->stage_id = $NonConformance->stage;
-                $history->status = $NonConformance->status;
+                $history->stage_id = $incident->stage;
+                $history->status = $incident->status;
                 $history->save();
                 // $list = Helpers::getHodUserList();
                 // foreach ($list as $u) {
-                //     if ($u->q_m_s_divisions_id == $NonConformance->division_id) {
+                //     if ($u->q_m_s_divisions_id == $incident->division_id) {
                 //         $email = Helpers::getInitiatorEmail($u->user_id);
                 //         if ($email !== null) {
                 //             try {
                 //                 Mail::send(
                 //                     'mail.view-mail',
-                //                     ['data' => $NonConformance],
+                //                     ['data' => $incident],
                 //                     function ($message) use ($email) {
                 //                         $message->to($email)
                 //                             ->subject("Activity Performed By " . Auth::user()->name);
@@ -4390,17 +4469,17 @@ class NonConformaceController extends Controller
                 toastr()->success('Document Sent');
                 return back();
             }
-            if ($NonConformance->stage == 3) {
-                $NonConformance->stage = "2";
-                $NonConformance->status = "HOD Review";
-                $NonConformance->qa_more_info_required_by = Auth::user()->name;
-                $NonConformance->qa_more_info_required_on = Carbon::now()->format('d-M-Y');
-                $history = new NonConformanceAuditTrails();
-                $history->non_conformances_id = $id;
+            if ($incident->stage == 3) {
+                $incident->stage = "2";
+                $incident->status = "HOD Review";
+                $incident->qa_more_info_required_by = Auth::user()->name;
+                $incident->qa_more_info_required_on = Carbon::now()->format('d-M-Y');
+                $history = new IncidentAuditTrail();
+                $history->incident_id = $id;
                 $history->activity_type = 'Activity Log';
                 $history->previous = "";
                 $history->action='More Information Required';
-                $history->current = $NonConformance->qa_more_info_required_by;
+                $history->current = $incident->qa_more_info_required_by;
                 $history->comment = $request->comment;
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
@@ -4408,24 +4487,24 @@ class NonConformaceController extends Controller
                 $history->origin_state = $lastDocument->status;
                 $history->stage = 'More Info Required';
                 $history->save();
-                $NonConformance->update();
-                $history = new NonConformanceHistories();
-                $history->type = "Failure Investigation";
+                $incident->update();
+                $history = new IncidentHistory();
+                $history->type = "Incident";
                 $history->doc_id = $id;
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
-                $history->stage_id = $NonConformance->stage;
-                $history->status = $NonConformance->status;
+                $history->stage_id = $incident->stage;
+                $history->status = $incident->status;
                 $history->save();
                 // $list = Helpers::getHodUserList();
                 // foreach ($list as $u) {
-                //     if ($u->q_m_s_divisions_id == $NonConformance->division_id) {
+                //     if ($u->q_m_s_divisions_id == $incident->division_id) {
                 //         $email = Helpers::getInitiatorEmail($u->user_id);
                 //         if ($email !== null) {
                 //             try {
                 //                 Mail::send(
                 //                     'mail.view-mail',
-                //                     ['data' => $NonConformance],
+                //                     ['data' => $incident],
                 //                     function ($message) use ($email) {
                 //                         $message->to($email)
                 //                             ->subject("Activity Performed By " . Auth::user()->name);
@@ -4441,17 +4520,17 @@ class NonConformaceController extends Controller
                 return back();
             }
 
-            if ($NonConformance->stage == 4) {
-                $NonConformance->stage = "3";
-                $NonConformance->status = "QA Initial Review";
-                $NonConformance->qa_more_info_required_by = Auth::user()->name;
-                $NonConformance->qa_more_info_required_on = Carbon::now()->format('d-M-Y');
-                $history = new NonConformanceAuditTrails();
-                $history->non_conformances_id = $id;
+            if ($incident->stage == 4) {
+                $incident->stage = "3";
+                $incident->status = "QA Initial Review";
+                $incident->qa_more_info_required_by = Auth::user()->name;
+                $incident->qa_more_info_required_on = Carbon::now()->format('d-M-Y');
+                $history = new IncidentAuditTrail();
+                $history->incident_id = $id;
                 $history->activity_type = 'Activity Log';
                 $history->previous = "";
                 $history->action='More Information Required';
-                $history->current = $NonConformance->qa_more_info_required_by;
+                $history->current = $incident->qa_more_info_required_by;
                 $history->comment = $request->comment;
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
@@ -4459,14 +4538,14 @@ class NonConformaceController extends Controller
                 $history->origin_state = $lastDocument->status;
                 $history->stage = 'More Info Required';
                 $history->save();
-                $NonConformance->update();
-                $history = new NonConformanceHistories();
-                $history->type = "Failure Investigation";
+                $incident->update();
+                $history = new IncidentHistory();
+                $history->type = "Incident";
                 $history->doc_id = $id;
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
-                $history->stage_id = $NonConformance->stage;
-                $history->status = $NonConformance->status;
+                $history->stage_id = $incident->stage;
+                $history->status = $incident->status;
                 $history->save();
                 toastr()->success('Document Sent');
                 return back();
@@ -4477,24 +4556,24 @@ class NonConformaceController extends Controller
         }
     }
 
-    public function NonConformanceAuditTrails($id)
+    public function incidentAuditTrail($id)
     {
-        $audit = NonConformanceAuditTrails::where('non_conformances_id', $id)->orderByDesc('id')->paginate(5);
+        $audit = IncidentAuditTrail::where('incident_id', $id)->orderByDesc('id')->paginate(5);
         $today = Carbon::now()->format('d-m-y');
-        $document = NonConformance::where('id', $id)->first();
+        $document = Incident::where('id', $id)->first();
         $document->initiator = User::where('id', $document->initiator_id)->value('name');
         
-        return view('frontend.non-conformance.audit-trail', compact('audit', 'document', 'today'));
+        return view('frontend.incident.audit-trail', compact('audit', 'document', 'today'));
     }
 
-    public function NonConformanceAuditTrailPdf($id)
+    public function incidentAuditTrailPdf($id)
     {
-        $doc = NonConformance::find($id);
+        $doc = Incident::find($id);
         $doc->originator = User::where('id', $doc->initiator_id)->value('name');
-        $data = NonConformanceAuditTrails::where('non_conformances_id', $doc->id)->orderByDesc('id')->get();
+        $data = IncidentAuditTrail::where('incident_id', $doc->id)->orderByDesc('id')->get();
         $pdf = App::make('dompdf.wrapper');
         $time = Carbon::now();
-        $pdf = PDF::loadview('frontend.non-conformance.audit-trail-pdf', compact('data', 'doc'))
+        $pdf = PDF::loadview('frontend.incident.audit-trail-pdf', compact('data', 'doc'))
             ->setOptions([
                 'defaultFont' => 'sans-serif',
                 'isHtml5ParserEnabled' => true,
@@ -4523,29 +4602,29 @@ class NonConformaceController extends Controller
         return $pdf->stream('SOP' . $id . '.pdf');
     }
 
-    public function singleReport($id)
+    public static function singleReport($id)
     {
-        $data = NonConformance::find($id);
-        $data1 =  NonConformanceCFTs::where('non_conformances_id', $id)->first();
+        $data = Incident::find($id);
+        $data1 =  IncidentCft::where('incident_id', $id)->first();
         if (!empty ($data)) {
             $data->originator = User::where('id', $data->initiator_id)->value('name');
-            $grid_data = NonConformanceGrid::where('non_conformances_grid_id', $id)->where('type', "NonConformance")->first();
-            $grid_data1 = NonConformanceGrid::where('non_conformances_grid_id', $id)->where('type', "Document")->first();
+            $grid_data = IncidentGrid::where('incident_grid_id', $id)->where('type', "Incident")->first();
+            $grid_data1 = IncidentGrid::where('incident_grid_id', $id)->where('type', "Document")->first();
 
-            $investigation_data = NonConformanceGridDatas::where(['non_conformances_id' => $id, 'identifier' => 'investication'])->first();
-            $root_cause_data = NonConformanceGridDatas::where(['non_conformances_id' => $id, 'identifier' => 'rootCause'])->first();
-            $why_data = NonConformanceGridDatas::where(['non_conformances_id' => $id, 'identifier' => 'why'])->first();
+            $investigation_data = IncidentGridData::where(['incident_id' => $id, 'identifier' => 'investication'])->first();
+            $root_cause_data = IncidentGridData::where(['incident_id' => $id, 'identifier' => 'rootCause'])->first();
+            $why_data = IncidentGridData::where(['incident_id' => $id, 'identifier' => 'why'])->first();
 
-            $capaExtension = NonConformanceLunchExtension::where(['non_conformances_id' => $id, "extension_identifier" => "Capa"])->first();
-            $qrmExtension = NonConformanceLunchExtension::where(['non_conformances_id' => $id, "extension_identifier" => "QRM"])->first();
-            $investigationExtension = NonConformanceLunchExtension::where(['non_conformances_id' => $id, "extension_identifier" => "Investigation"])->first();
+            $capaExtension = IncidentLaunchExtension::where(['incident_id' => $id, "extension_identifier" => "Capa"])->first();
+            $qrmExtension = IncidentLaunchExtension::where(['incident_id' => $id, "extension_identifier" => "QRM"])->first();
+            $investigationExtension = IncidentLaunchExtension::where(['incident_id' => $id, "extension_identifier" => "Investigation"])->first();
 
-            $grid_data_qrms = NonConformanceGridModes::where(['non_conformances_id' => $id, 'identifier' => 'failure_mode_qrms'])->first();
-            $grid_data_matrix_qrms = NonConformanceGridModes::where(['non_conformances_id' => $id, 'identifier' => 'matrix_qrms'])->first();
+            $grid_data_qrms = IncidentGridFailureMode::where(['incident_id' => $id, 'identifier' => 'failure_mode_qrms'])->first();
+            $grid_data_matrix_qrms = IncidentGridFailureMode::where(['incident_id' => $id, 'identifier' => 'matrix_qrms'])->first();
 
             $pdf = App::make('dompdf.wrapper');
             $time = Carbon::now();
-            $pdf = PDF::loadview('frontend.non-conformance.single-report', compact('data','grid_data_qrms','grid_data_matrix_qrms','data1','capaExtension','qrmExtension','grid_data','grid_data1','investigation_data','root_cause_data','why_data','investigationExtension'))
+            $pdf = PDF::loadview('frontend.incident.single-report', compact('data','grid_data_qrms','grid_data_matrix_qrms','data1','capaExtension','qrmExtension','grid_data','grid_data1','investigation_data','root_cause_data','why_data','investigationExtension'))
                 ->setOptions([
                 'defaultFont' => 'sans-serif',
                 'isHtml5ParserEnabled' => true,

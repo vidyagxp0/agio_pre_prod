@@ -97,10 +97,13 @@ class OOTController extends Controller
         $data->analyst_name           = $request->analyst_name;
         $data->others                 = $request->others;
         $data->reference_record       = $request->reference_record;
-                
-        if (is_array($request->stability_for )) {
+
+        if (is_array($request->stability_for)) {
             $data->stability_for = implode(',', $request->stability_for);
         }
+    
+        
+    
         $data-> specification_procedure_number    = $request->specification_procedure_number;
         $data-> specification_limit               = $request->specification_limit;
         if (!empty($request->Attachment) && $request->file('Attachment')) {
@@ -199,9 +202,7 @@ class OOTController extends Controller
         $data->status = 'Opened';                 
         $data->stage = 1;
         $data->save();
-        
-        
-
+           
         $record = RecordNumber::first();
         $record->counter = ((RecordNumber::first()->value('counter'))+1);
         $record->update();
@@ -777,7 +778,7 @@ class OOTController extends Controller
         $data->is_repeat             = $request->is_repeat;
         $data->repeat_nature         = $request->repeat_nature;
         $data->nature_of_change      = $request->nature_of_change;
-        $data->oot_occured_on        = $request->oot_occured_on;
+        // $data->oot_occured_on        = $request->oot_occured_on;
         $data->oot_details           = $request->oot_details;
         $data->producct_history      = $request->producct_history;
         $data->probble_cause         = $request->probble_cause;
