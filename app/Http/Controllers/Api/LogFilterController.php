@@ -7,6 +7,7 @@ use App\Models\CC;
 use App\Models\errata;
 use App\Models\FailureInvestigation;
 use App\Models\MarketComplaint;
+use App\Models\RiskManagement;
 use App\Models\OutOfCalibration;
 use App\Models\LabIncident;
 use App\Models\InternalAudit;
@@ -75,6 +76,57 @@ class LogFilterController extends Controller
 
         return response()->json($res);
     }
+
+    public function changecontrol_filter(Request $request)
+{
+    $res = [
+        'status' => 'ok',
+        'message' => 'success',
+        'body' => []
+    ];
+
+    try {
+        $query = CC::query();
+        
+        if ($request->department_changecontrol) {
+            $query->where('Initiator_Group', $request->department_changecontrol);
+        }
+
+        if ($request->division_id_changecontrol) {
+            $query->where('division_id', $request->division_id_changecontrol);
+        }
+
+        if ($request->nchange) {
+            $query->where('doc_change', $request->nchange);
+        }
+
+        if ($request->date_from_changecontrol) {
+            $dateFrom = Carbon::parse($request->date_from_changecontrol)->startOfDay();
+            $query->whereDate('intiation_date', '>=', $dateFrom);
+        }
+
+        if ($request->date_to_changecontrol) {
+            $dateTo = Carbon::parse($request->date_to_changecontrol)->endOfDay();
+            $query->whereDate('intiation_date', '<=', $dateTo);
+        }
+
+        $ccontrol = $query->get();
+
+        $htmlData = view('frontend.forms.Logs.filterData.changecontrol_data', compact('ccontrol'))->render();
+
+        $res['body'] = $htmlData;
+
+    } catch (\Exception $e) {
+        $res['status'] = 'error';
+        $res['message'] = $e->getMessage();
+    }
+
+    return response()->json($res);
+}
+
+
+
+    
 
     
     public function failureInv_filter(Request $request)
@@ -233,7 +285,7 @@ class LogFilterController extends Controller
     
                 $internal_audi = $query->get();
     
-                $htmlData = view('frontend.forms.Logs.comps.internal_audit_data', compact('internal_audi'))->render();
+                $htmlData = view('frontend.forms.Logs.filterData.internal_audit_data', compact('internal_audi'))->render();
                 
     
                 $res['body'] = $htmlData;
@@ -509,6 +561,244 @@ class LogFilterController extends Controller
         return response()->json($res);
         
     }
+
+    
+    public function errata_filter(Request $request)
+    {
+        $res = [
+            'status' => 'ok',
+            'message' => 'success',
+            'body' => []
+        ];
+
+        try {
+
+            
+            $query = errata::query();
+            
+            if ($request->department_e)
+            {
+                $query->where('department_code', $request->department_e);
+            }
+
+            if($request->division_id)
+            {
+                $query->where('division_id',$request->division_id);
+            }
+
+            if($request->nchange)
+            {
+                $query->where('doc_change',$request->nchange);
+            }
+
+            if ($request->period) {
+                $currentDate = Carbon::now();
+                switch ($request->period) {
+                    case 'Yearly':
+                        $startDate = $currentDate->startOfYear();
+                        break;
+                    case 'Quarterly':
+                        $startDate = $currentDate->firstOfQuarter();
+                        break;
+                    case 'Monthly':
+                        $startDate = $currentDate->startOfMonth();
+                        break;
+                    default:
+                        $startDate = null;
+                        break;
+                }
+                if ($startDate) {
+                    $query->whereDate('intiation_date', '>=', $startDate);
+                }
+            }
+
+            if ($request->date_from) {
+                $query->whereDate('intiation_date', '>=', Carbon::parse($request->date_from));
+            }
+            
+            if ($request->date_to) {
+                $query->whereDate('intiation_date', '<=', Carbon::parse($request->date_to));
+            }
+
+            if($request->error_er)
+            {
+                $query->where('type_of_error',$request->error_er);
+            }
+            
+
+
+            $erratalog = $query->get();
+
+            $htmlData = view('frontend.forms.Logs.filterData.errata_data', compact('erratalog'))->render();
+            
+
+            $res['body'] = $htmlData;
+
+
+        } catch (\Exception $e) {
+            $res['status'] = 'error';
+            $res['message'] = $e->getMessage();
+        }
+
+
+        return response()->json($res);
+    }
+
+    public function risk_management_filter(Request $request)
+    {
+        $res = [
+            'status' => 'ok',
+            'message' => 'success',
+            'body' => []
+        ];
+
+        try {
+
+            
+            $query = RiskManagement::query();
+            
+            if ($request->department_risk)
+            {
+                $query->where('Initiator_Group', $request->department_risk);
+            }
+
+            if($request->division_id_risk)
+            {
+                $query->where('division_id',$request->division_id_risk);
+            }
+
+            if($request->sor)
+            {
+                $query->where('source_of_risk',$request->sor);
+            }
+
+            if ($request->period) {
+                $currentDate = Carbon::now();
+                switch ($request->period) {
+                    case 'Yearly':
+                        $startDate = $currentDate->startOfYear();
+                        break;
+                    case 'Quarterly':
+                        $startDate = $currentDate->firstOfQuarter();
+                        break;
+                    case 'Monthly':
+                        $startDate = $currentDate->startOfMonth();
+                        break;
+                    default:
+                        $startDate = null;
+                        break;
+                }
+                if ($startDate) {
+                    $query->whereDate('intiation_date', '>=', $startDate);
+                }
+            }
+
+            if ($request->date_from_risk) {
+                $query->whereDate('intiation_date', '>=', Carbon::parse($request->date_from_risk));
+            }
+            
+            if ($request->date_to_risk) {
+                $query->whereDate('intiation_date', '<=', Carbon::parse($request->date_to_risk));
+            }
+
+            if($request->error_er)
+            {
+                $query->where('type_of_error',$request->error_er);
+            }
+            
+
+
+            $riskmlog = $query->get();
+
+            $htmlData = view('frontend.forms.Logs.filterData.riskmanagement_data', compact('riskmlog'))->render();
+            
+
+            $res['body'] = $htmlData;
+
+
+        } catch (\Exception $e) {
+            $res['status'] = 'error';
+            $res['message'] = $e->getMessage();
+        }
+
+
+        return response()->json($res);
+    }
+
+    public function deviation_filter(Request $request)
+{
+    $res = [
+        'status' => 'ok',
+        'message' => 'success',
+        'body' => []
+    ];
+
+    try {
+        $query = Deviation::query();
+
+        if ($request->departmentDeviation) {
+            $query->where('Initiator_Group', $request->departmentDeviation);
+        }
+
+        if ($request->division_idDeviation) {
+            $query->where('division_id', $request->division_idDeviation);
+        }
+
+        if ($request->audit_type) {
+            $query->where('audit_type', $request->audit_type);
+        }
+
+        if ($request->period) {
+            $currentDate = Carbon::now();
+            switch ($request->period) {
+                case 'Yearly':
+                    $startDate = $currentDate->startOfYear();
+                    break;
+                case 'Quarterly':
+                    $startDate = $currentDate->firstOfQuarter();
+                    break;
+                case 'Monthly':
+                    $startDate = $currentDate->startOfMonth();
+                    break;
+                default:
+                    $startDate = null;
+                    break;
+            }
+            if ($startDate) {
+                $query->whereDate('intiation_date', '>=', $startDate);
+                \Log::info("Filtering from period: {$request->period}, Start Date: {$startDate}");
+            }
+        }
+
+        if ($request->date_fromDeviation) {
+            $dateFrom = Carbon::parse($request->date_fromDeviation)->startOfDay();
+            $query->whereDate('intiation_date', '>=', $dateFrom);
+            \Log::info("Filtering from Date From: {$dateFrom}");
+        }
+
+        if ($request->date_toDeviation) {
+            $dateTo = Carbon::parse($request->date_toDeviation)->endOfDay();
+            $query->whereDate('intiation_date', '<=', $dateTo);
+            \Log::info("Filtering to Date To: {$dateTo}");
+        }
+
+        $deviation = $query->get();
+
+        $htmlData = view('frontend.forms.Logs.filterData.deviation_data', compact('deviation'))->render();
+
+        $res['body'] = $htmlData;
+    } catch (\Exception $e) {
+        $res['status'] = 'error';
+        $res['message'] = $e->getMessage();
+        \Log::error("Deviation Filter Error: {$e->getMessage()}");
+    }
+
+    return response()->json($res);
+}
+
+    
+
+
 
     
 

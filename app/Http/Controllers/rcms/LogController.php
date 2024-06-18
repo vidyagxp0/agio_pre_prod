@@ -99,7 +99,18 @@ class LogController extends Controller
 
 
             case 'risk-management':
-                $riskmlog = RiskManagement::get();
+
+                $riskmlog = RiskManagement::with(['Action' => function ($query) {
+                    $query->where('type', 'Action_Plan')->take(5); // Limit to 5 records
+                }])->get();
+                
+                // foreach ($riskmlogs as $risk) {
+                //     foreach ($risk->Action as $action) {
+                //         return $action->action; // Return each action record
+                //     }
+                // }
+                
+
                 
                 return view('frontend.forms.Logs.riskmanagementLog',compact('riskmlog'));
 

@@ -65,6 +65,8 @@ Route::post('/lab-incident',[LogFilterController::class,'labincident_filter'])->
 Route::post('/marketcomplaint_data',[LogFilterController::class,'marketcomplaint_filter'])->name('api.marketcomplaint.filter');
 Route::post('/ooc',[LogFilterController::class,'ooc_filter'])->name('api.ooc.filter');
 Route::post('/capa',[LogFilterController::class,'capa_filter'])->name('api.capa.filter');
+Route::post('/risk-management',[LogFilterController::class,'risk_management_filter'])->name('api.riskmanagement.filter');
+
 
 
 
