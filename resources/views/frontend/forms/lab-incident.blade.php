@@ -1467,18 +1467,7 @@
 
                                 </div>
 
-                                <div class="col-lg-12">
-                                    <div class="group-input">
-                                        <label for="affected documents closed"><b>Affected Documents Closed</b></label>
-                                        <select name="affected_document_closure" id="affected_document_closure">
-                                            <option value="0">-- Select --</option>
-                                            <option value="Yes">Yes</option>
-                                            <option value="No">No</option>
-                                            <option value="NA">NA</option>
-
-                                        </select>
-                                    </div>
-                                </div>
+                                
 
                                 <div class="col-lg-12">
                                     <div class="group-input">
@@ -1489,7 +1478,7 @@
 
 
 
-                                <div class="col-md-12">
+                                <div class="col-md-6">
                                     <div class="group-input">
                                           <label for="search">
                                       QC Head Closure<span class="text-danger"></span>
@@ -1505,9 +1494,10 @@
                                     @enderror
                                              </div>
                             </div>
+                            
 
 
-                            <div class="col-lg-12">
+                            <div class="col-lg-6">
                                 <div class="group-input">
                                     <label for=" qa head remark"><b>QA Head Remark</b></label>
                                    <textarea name="qa_hear_remark_c"></textarea>
