@@ -326,7 +326,7 @@ class DocumentController extends Controller
             $division->pname = Process::where('id', $division->process_id)->value('process_name');
             $process = QMSProcess::where([
                 'process_name' => 'New Document',
-                'division_id' => $division->id
+                'division_id' => $division->division_id
             ])->first();
         } else {
             return "Division not found";
