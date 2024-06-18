@@ -25,6 +25,7 @@
             flex: 1 1 auto;
             border: 1px solid grey;
             padding: 5px;
+            border-radius: 20px;
             text-align: center;
             position: relative;
             /* border-right: none; */
