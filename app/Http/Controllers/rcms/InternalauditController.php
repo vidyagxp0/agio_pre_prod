@@ -40,6 +40,8 @@ class InternalauditController extends Controller
     }
     public function create(request $request)
     {
+        // dd($request->all());
+        // return "breaking";
        $internalAudit = new InternalAudit();
         $internalAudit->form_type = "Internal-audit";
         $internalAudit->record = ((RecordNumber::first()->value('counter')) + 1);
@@ -256,6 +258,42 @@ class InternalauditController extends Controller
         $auditMachinesGrid->data = $request->auditMachinesChecklist;
         $auditMachinesGrid->save();
 
+        $auditProductionGrid = InternalAuditChecklistGrid::where(['ia_id' => $internalAudit->id, 'identifier' => 'auditProductionChecklist'])->firstOrNew();
+        $auditProductionGrid->ia_id = $internalAudit->id;
+        $auditProductionGrid->identifier = 'auditProductionChecklist';
+        $auditProductionGrid->data = $request->auditProductionChecklist;
+        $auditProductionGrid->save();
+
+        $auditMaterialsGrid = InternalAuditChecklistGrid::where(['ia_id' => $internalAudit->id, 'identifier' => 'auditMaterialsChecklist'])->firstOrNew();
+        $auditMaterialsGrid->ia_id = $internalAudit->id;
+        $auditMaterialsGrid->identifier = 'auditMaterialsChecklist';
+        $auditMaterialsGrid->data = $request->auditMaterialsChecklist;
+        $auditMaterialsGrid->save();
+
+        $auditQualityGrid = InternalAuditChecklistGrid::where(['ia_id' => $internalAudit->id, 'identifier' => 'auditQualityControlChecklist'])->firstOrNew();
+        $auditQualityGrid->ia_id = $internalAudit->id;
+        $auditQualityGrid->identifier = 'auditQualityControlChecklist';
+        $auditQualityGrid->data = $request->auditQualityControlChecklist;
+        $auditQualityGrid->save();
+        
+        $auditQualityAssuranceGrid = InternalAuditChecklistGrid::where(['ia_id' => $internalAudit->id, 'identifier' => 'auditQualityAssuranceChecklist'])->firstOrNew();
+        $auditQualityAssuranceGrid->ia_id = $internalAudit->id;
+        $auditQualityAssuranceGrid->identifier = 'auditQualityAssuranceChecklist';
+        $auditQualityAssuranceGrid->data = $request->auditQualityAssuranceChecklist;
+        $auditQualityAssuranceGrid->save();
+
+        $auditPackagingGrid = InternalAuditChecklistGrid::where(['ia_id' => $internalAudit->id, 'identifier' => 'auditPackagingChecklist'])->firstOrNew();
+        $auditPackagingGrid->ia_id = $internalAudit->id;
+        $auditPackagingGrid->identifier = 'auditPackagingChecklist';
+        $auditPackagingGrid->data = $request->auditPackagingChecklist;
+        $auditPackagingGrid->save();
+
+        $auditsheGrid = InternalAuditChecklistGrid::where(['ia_id' => $internalAudit->id, 'identifier' => 'auditSheChecklist'])->firstOrNew();
+        $auditsheGrid->ia_id = $internalAudit->id;
+        $auditsheGrid->identifier = 'auditSheChecklist';
+        $auditsheGrid->data = $request->auditSheChecklist;
+        $auditsheGrid->save();
+        
         $internalAudit->status = 'Opened';
         $internalAudit->stage = 1;
 
@@ -1571,6 +1609,42 @@ $Checklist_Capsule->save();
         $auditMachinesGrid->data = $request->auditMachinesChecklist;
         $auditMachinesGrid->save();
 
+        $auditProductionGrid = InternalAuditChecklistGrid::where(['ia_id' => $ia_id, 'identifier' => 'auditProductionChecklist'])->firstOrNew();
+        $auditProductionGrid->ia_id = $ia_id;
+        $auditProductionGrid->identifier = 'auditProductionChecklist';
+        $auditProductionGrid->data = $request->auditProductionChecklist;
+        $auditProductionGrid->save();
+
+        $auditMaterialsGrid = InternalAuditChecklistGrid::where(['ia_id' => $ia_id, 'identifier' => 'auditMaterialsChecklist'])->firstOrNew();
+        $auditMaterialsGrid->ia_id = $ia_id;
+        $auditMaterialsGrid->identifier = 'auditMaterialsChecklist';
+        $auditMaterialsGrid->data = $request->auditMaterialsChecklist;
+        $auditMaterialsGrid->save();
+
+        $auditQualityGrid = InternalAuditChecklistGrid::where(['ia_id' => $ia_id, 'identifier' => 'auditQualityControlChecklist'])->firstOrNew();
+        $auditQualityGrid->ia_id = $ia_id;
+        $auditQualityGrid->identifier = 'auditQualityControlChecklist';
+        $auditQualityGrid->data = $request->auditQualityControlChecklist;
+        $auditQualityGrid->save();
+
+        $auditQualityAssuranceGrid = InternalAuditChecklistGrid::where(['ia_id' => $ia_id, 'identifier' => 'auditQualityAssuranceChecklist'])->firstOrNew();
+        $auditQualityAssuranceGrid->ia_id = $ia_id;
+        $auditQualityAssuranceGrid->identifier = 'auditQualityAssuranceChecklist';
+        $auditQualityAssuranceGrid->data = $request->auditQualityAssuranceChecklist;
+        $auditQualityAssuranceGrid->save();
+
+        $auditPackagingGrid = InternalAuditChecklistGrid::where(['ia_id' => $ia_id, 'identifier' => 'auditPackagingChecklist'])->firstOrNew();
+        $auditPackagingGrid->ia_id = $ia_id;
+        $auditPackagingGrid->identifier = 'auditPackagingChecklist';
+        $auditPackagingGrid->data = $request->auditPackagingChecklist;
+        $auditPackagingGrid->save();
+
+        $auditsheGrid = InternalAuditChecklistGrid::where(['ia_id' => $ia_id, 'identifier' => 'auditSheChecklist'])->firstOrNew();
+        $auditsheGrid->ia_id = $ia_id;
+        $auditsheGrid->identifier = 'auditSheChecklist';
+        $auditsheGrid->data = $request->auditSheChecklist;
+        $auditsheGrid->save();
+
         $data3 = InternalAuditGrid::where('audit_id',$internalAudit->id)->where('type','internal_audit')->first();
         if (!empty($request->audit)) {
             $data3->area_of_audit = serialize($request->audit);
@@ -2167,12 +2241,19 @@ $Checklist_Capsule->save();
         $auditPersonnelChecklist = InternalAuditChecklistGrid::where(['ia_id' => $id, 'identifier' => 'auditPersonnelChecklist'])->firstOrNew();
         $auditfacilityChecklist = InternalAuditChecklistGrid::where(['ia_id' => $id, 'identifier' => 'auditfacilityChecklist'])->firstOrNew();
         $auditMachinesChecklist = InternalAuditChecklistGrid::where(['ia_id' => $id, 'identifier' => 'auditMachinesChecklist'])->firstOrNew();
+        $auditProductionChecklist = InternalAuditChecklistGrid::where(['ia_id' => $id, 'identifier' => 'auditProductionChecklist'])->firstOrNew();
+        $auditMaterialsChecklist = InternalAuditChecklistGrid::where(['ia_id' => $id, 'identifier' => 'auditMaterialsChecklist'])->firstOrNew();
+        $auditQualityControlChecklist = InternalAuditChecklistGrid::where(['ia_id' => $id, 'identifier' => 'auditQualityControlChecklist'])->firstOrNew();
+        $auditQualityAssuranceChecklist = InternalAuditChecklistGrid::where(['ia_id' => $id, 'identifier' => 'auditQualityAssuranceChecklist'])->firstOrNew();
+        $auditPackagingChecklist = InternalAuditChecklistGrid::where(['ia_id' => $id, 'identifier' => 'auditPackagingChecklist'])->firstOrNew();
+        $auditSheChecklist = InternalAuditChecklistGrid::where(['ia_id' => $id, 'identifier' => 'auditSheChecklist'])->firstOrNew();
+
 
 
 
 
         // dd($auditAssessmentChecklist);
-        return view('frontend.internalAudit.view', compact('data','checklist1','checklist2','checklist3', 'checklist4','checklist6','checklist7','checklist9','checklist10','checklist11','checklist12','checklist13','checklist14','checklist15','checklist16','checklist17','old_record','grid_data','grid_data1', 'auditAssessmentChecklist','auditPersonnelChecklist','auditfacilityChecklist','auditMachinesChecklist'));
+        return view('frontend.internalAudit.view', compact('data','checklist1','checklist2','checklist3', 'checklist4','checklist6','checklist7','checklist9','checklist10','checklist11','checklist12','checklist13','checklist14','checklist15','checklist16','checklist17','old_record','grid_data','grid_data1', 'auditAssessmentChecklist','auditPersonnelChecklist','auditfacilityChecklist','auditMachinesChecklist','auditProductionChecklist','auditMaterialsChecklist','auditQualityControlChecklist','auditQualityAssuranceChecklist','auditPackagingChecklist','auditSheChecklist'));
     }
 
     public function InternalAuditStateChange(Request $request, $id)

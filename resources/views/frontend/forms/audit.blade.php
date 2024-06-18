@@ -25689,7 +25689,7 @@
 
                                                                         <div
                                                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                                            <select name="response" id="response"
+                                                                            <select name="auditProductionChecklist[0][response]" id="response"
                                                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                                                 <option value="">Select an Option</option>
                                                                                 <option value="Yes">Yes</option>
@@ -25705,7 +25705,7 @@
                                                                     <td style="vertical-align: middle;">
                                                                         <div
                                                                             style="margin: auto; display: flex; justify-content: center;">
-                                                                            <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                            <textarea name="auditProductionChecklist[0][remarks]" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                                         </div>
                                                                     </td>
 
@@ -25721,7 +25721,7 @@
                                                                     <td>
                                                                         <div
                                                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                                            <select name="response" id="response"
+                                                                            <select name="auditProductionChecklist[1][response]" id="response"
                                                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                                                 <option value="">Select an Option</option>
                                                                                 <option value="Yes">Yes</option>
@@ -25734,7 +25734,7 @@
                                                                     <td style="vertical-align: middle;">
                                                                         <div
                                                                             style="margin: auto; display: flex; justify-content: center;">
-                                                                            <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                            <textarea name="auditProductionChecklist[1][remarks]" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                                         </div>
                                                                     </td>
 
@@ -25750,7 +25750,7 @@
                                                                     <td>
                                                                         <div
                                                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                                            <select name="response" id="response"
+                                                                            <select name="auditProductionChecklist[2][response]" id="response"
                                                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                                                 <option value="">Select an Option</option>
                                                                                 <option value="Yes">Yes</option>
@@ -25763,7 +25763,7 @@
                                                                     <td style="vertical-align: middle;">
                                                                         <div
                                                                             style="margin: auto; display: flex; justify-content: center;">
-                                                                            <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                            <textarea name="auditProductionChecklist[2][remarks]" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                                         </div>
                                                                     </td>
                                                                 </tr>
@@ -25774,18 +25774,14 @@
                                                                         If you do: what is your target date for completion?
                                                                     </td>
                                                                     <td>
-                                                                        <div
-                                                    style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                    <input type="date"
-                                                        style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-
-                                                </div>
+                                                                        <div  style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
+                                                                  <input name="auditProductionChecklist[3][response]" type="date" style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
+                                                                         </div>
                                                                     </td>
-
                                                                     <td style="vertical-align: middle;">
                                                                         <div
                                                                             style="margin: auto; display: flex; justify-content: center;">
-                                                                            <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                            <textarea name="auditProductionChecklist[3][remarks]" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                                         </div>
                                                                     </td>
                                                                 </tr>
@@ -25798,7 +25794,7 @@
                                                                     <td>
                                                                         <div
                                                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                                            <select name="response" id="response"
+                                                                            <select name="auditProductionChecklist[4][response]" id="response"
                                                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                                                 <option value="">Select an Option</option>
                                                                                 <option value="Yes">Yes</option>
@@ -25811,7 +25807,7 @@
                                                                     <td style="vertical-align: middle;">
                                                                         <div
                                                                             style="margin: auto; display: flex; justify-content: center;">
-                                                                            <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                            <textarea name="auditProductionChecklist[4][remarks]" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                                         </div>
                                                                     </td>
                                                                 </tr>
@@ -25824,7 +25820,7 @@
                                                                     <td>
                                                                         <div
                                                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                                            <select name="response" id="response"
+                                                                            <select name="auditProductionChecklist[5][response]" id="response"
                                                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                                                 <option value="">Select an Option</option>
                                                                                 <option value="Yes">Yes</option>
@@ -25837,7 +25833,7 @@
                                                                     <td style="vertical-align: middle;">
                                                                         <div
                                                                             style="margin: auto; display: flex; justify-content: center;">
-                                                                            <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                            <textarea name="auditProductionChecklist[5][remarks]" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                                         </div>
                                                                     </td>
                                                                 </tr>
@@ -25848,18 +25844,16 @@
                                                                         What is your normal lot/batch size?
                                                                     </td>
                                                                     <td>
-                                                                        <div
-                                                    style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                    <input type="text"
-                                                        style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
+                                                                        <div style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
+                                                                  <input name="auditProductionChecklist[6][response]" type="text" style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
 
-                                                </div>
+                                                                  </div>
                                                                     </td>
 
                                                                     <td style="vertical-align: middle;">
                                                                         <div
                                                                             style="margin: auto; display: flex; justify-content: center;">
-                                                                            <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                            <textarea name="auditProductionChecklist[6][remarks]" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                                         </div>
                                                                     </td>
                                                                 </tr>
@@ -25872,7 +25866,7 @@
                                                                     <td>
                                                                         <div
                                                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                                            <select name="response" id="response"
+                                                                            <select name="auditProductionChecklist[7][response]" id="response"
                                                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                                                 <option value="">Select an Option</option>
                                                                                 <option value="Yes">Yes</option>
@@ -25885,7 +25879,7 @@
                                                                     <td style="vertical-align: middle;">
                                                                         <div
                                                                             style="margin: auto; display: flex; justify-content: center;">
-                                                                            <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                            <textarea name="auditProductionChecklist[7][remarks]" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                                         </div>
                                                                     </td>
                                                                 </tr>
@@ -25898,7 +25892,7 @@
                                                                     <td>
                                                                         <div
                                                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                                            <select name="response" id="response"
+                                                                            <select name="auditProductionChecklist[8][response]" id="response"
                                                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                                                 <option value="">Select an Option</option>
                                                                                 <option value="Yes">Yes</option>
@@ -25911,7 +25905,7 @@
                                                                     <td style="vertical-align: middle;">
                                                                         <div
                                                                             style="margin: auto; display: flex; justify-content: center;">
-                                                                            <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                            <textarea name="auditProductionChecklist[8][remarks]" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                                         </div>
                                                                     </td>
                                                                 </tr>
@@ -25924,7 +25918,7 @@
                                                                     <td>
                                                                         <div
                                                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                                            <select name="response" id="response"
+                                                                            <select name="auditProductionChecklist[9][response]" id="response"
                                                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                                                 <option value="">Select an Option</option>
                                                                                 <option value="Yes">Yes</option>
@@ -25937,7 +25931,7 @@
                                                                     <td style="vertical-align: middle;">
                                                                         <div
                                                                             style="margin: auto; display: flex; justify-content: center;">
-                                                                            <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                            <textarea name="auditProductionChecklist[9][remarks]" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                                         </div>
                                                                     </td>
                                                                 </tr>
@@ -25950,7 +25944,7 @@
                                                                     <td>
                                                                         <div
                                                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                                            <select name="response" id="response"
+                                                                            <select name="auditProductionChecklist[10][response]" id="response"
                                                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                                                 <option value="">Select an Option</option>
                                                                                 <option value="Yes">Yes</option>
@@ -25963,7 +25957,7 @@
                                                                     <td style="vertical-align: middle;">
                                                                         <div
                                                                             style="margin: auto; display: flex; justify-content: center;">
-                                                                            <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                            <textarea name="auditProductionChecklist[10][remarks]" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                                         </div>
                                                                     </td>
                                                                 </tr>
@@ -25992,18 +25986,17 @@
 
                                                                     </td>
                                                                     <td>
-                                                                        <div
-                                                    style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                    <input type="text"
-                                                        style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
+                                                                        <div style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
+                                                                    <input name="auditProductionChecklist[11][response]" type="text"
+                                                                        style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
 
-                                                </div>
+                                                                </div>
                                                                     </td>
 
                                                                     <td style="vertical-align: middle;">
                                                                         <div
                                                                             style="margin: auto; display: flex; justify-content: center;">
-                                                                            <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                            <textarea name="auditProductionChecklist[11][remarks]" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                                         </div>
                                                                     </td>
                                                                 </tr><tr>
@@ -26015,18 +26008,17 @@
 
                                                                     </td>
                                                                     <td>
-                                                                        <div
-                                                    style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                    <input type="text"
-                                                        style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
+                                                                        <div style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
+                                                                        <input name="auditProductionChecklist[12][response]" type="text"
+                                                                            style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
 
-                                                </div>
+                                                                    </div>
                                                                     </td>
 
                                                                     <td style="vertical-align: middle;">
                                                                         <div
                                                                             style="margin: auto; display: flex; justify-content: center;">
-                                                                            <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                            <textarea name="auditProductionChecklist[12][remarks]" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                                         </div>
                                                                     </td>
                                                                 </tr><tr>
@@ -26038,18 +26030,17 @@
 
                                                                     </td>
                                                                     <td>
-                                                                        <div
-                                                    style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                    <input type="text"
-                                                        style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
+                                                                        <div  style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
+                                                                    <input name="auditProductionChecklist[13][response]" type="text"
+                                                                        style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
 
-                                                </div>
+                                                                </div>
                                                                     </td>
 
                                                                     <td style="vertical-align: middle;">
                                                                         <div
                                                                             style="margin: auto; display: flex; justify-content: center;">
-                                                                            <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                            <textarea name="auditProductionChecklist[13][remarks]" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                                         </div>
                                                                     </td>
                                                                 </tr><tr>
@@ -26063,7 +26054,7 @@
                                                                     <td>
                                                                         <div
                                                                          style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                                         <input type="text"
+                                                                         <input name="auditProductionChecklist[14][response]" type="text"
                                                                          style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                                         </div>
 
@@ -26072,7 +26063,7 @@
                                                                     <td style="vertical-align: middle;">
                                                                         <div
                                                                             style="margin: auto; display: flex; justify-content: center;">
-                                                                            <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                            <textarea name="auditProductionChecklist[14][remarks]" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                                         </div>
                                                                     </td>
                                                                 </tr>
@@ -26087,7 +26078,7 @@
                                                                     <td>
                                                                         <div
                                                                          style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                                         <input type="text"
+                                                                         <input name="auditProductionChecklist[15][response]" type="text"
                                                                          style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                                         </div>
                                                                     </td>
@@ -26095,7 +26086,7 @@
                                                                     <td style="vertical-align: middle;">
                                                                         <div
                                                                             style="margin: auto; display: flex; justify-content: center;">
-                                                                            <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                            <textarea name="auditProductionChecklist[15][remarks]" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                                         </div>
                                                                     </td>
                                                                 </tr>
@@ -26111,7 +26102,7 @@
                                                                     <td>
                                                                         <div
                                                                          style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                                         <input type="text"
+                                                                         <input name="auditProductionChecklist[16][response]" type="text"
                                                                          style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                                         </div>
                                                                     </td>
@@ -26119,7 +26110,7 @@
                                                                     <td style="vertical-align: middle;">
                                                                         <div
                                                                             style="margin: auto; display: flex; justify-content: center;">
-                                                                            <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                            <textarea name="auditProductionChecklist[16][remarks]" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                                         </div>
                                                                     </td>
                                                                 </tr>
@@ -26130,18 +26121,16 @@
                                                                         If yes, for how long do you keep the batch records?
                                                                     </td>
                                                                     <td>
-                                                                        <div
-                                                    style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                    <input type="number"
-                                                    placeholder="Enter  value here"
-                                                        style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;" >
-                                                </div>
+                                                                        <div  style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
+                                                                    <input name="auditProductionChecklist[17][response]" type="number" placeholder="Enter  value here"
+                                                                        style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;" >
+                                                                </div>
                                                                     </td>
 
                                                                     <td style="vertical-align: middle;">
                                                                         <div
                                                                             style="margin: auto; display: flex; justify-content: center;">
-                                                                            <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                            <textarea name="auditProductionChecklist[17][remarks]" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                                         </div>
                                                                     </td>
                                                                 </tr>
@@ -26154,7 +26143,7 @@
                                                                     <td>
                                                                         <div
                                                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                                            <select name="response" id="response"
+                                                                            <select name="auditProductionChecklist[18][response]" id="response"
                                                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                                                 <option value="">Select an Option</option>
                                                                                 <option value="Yes">Yes</option>
@@ -26167,7 +26156,7 @@
                                                                     <td style="vertical-align: middle;">
                                                                         <div
                                                                             style="margin: auto; display: flex; justify-content: center;">
-                                                                            <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                            <textarea name="auditProductionChecklist[18][remarks]" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                                         </div>
                                                                     </td>
                                                                 </tr>
@@ -26180,7 +26169,7 @@
                                                                     <td>
                                                                         <div
                                                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                                            <select name="response" id="response"
+                                                                            <select name="auditProductionChecklist[19][response]" id="response"
                                                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                                                 <option value="">Select an Option</option>
                                                                                 <option value="Yes">Yes</option>
@@ -26193,7 +26182,7 @@
                                                                     <td style="vertical-align: middle;">
                                                                         <div
                                                                             style="margin: auto; display: flex; justify-content: center;">
-                                                                            <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                            <textarea name="auditProductionChecklist[19][remarks]" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                                         </div>
                                                                     </td>
                                                                 </tr>
@@ -26206,7 +26195,7 @@
                                                                     <td>
                                                                         <div
                                                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                                            <select name="response" id="response"
+                                                                            <select name="auditProductionChecklist[20][response]" id="response"
                                                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                                                 <option value="">Select an Option</option>
                                                                                 <option value="Yes">Yes</option>
@@ -26219,7 +26208,7 @@
                                                                     <td style="vertical-align: middle;">
                                                                         <div
                                                                             style="margin: auto; display: flex; justify-content: center;">
-                                                                            <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                            <textarea name="auditProductionChecklist[20][remarks]" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                                         </div>
                                                                     </td>
                                                                 </tr>
@@ -26232,7 +26221,7 @@
                                                                     <td>
                                                                         <div
                                                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                                            <select name="response" id="response"
+                                                                            <select name="auditProductionChecklist[21][response]" id="response"
                                                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                                                 <option value="">Select an Option</option>
                                                                                 <option value="Yes">Yes</option>
@@ -26245,7 +26234,7 @@
                                                                     <td style="vertical-align: middle;">
                                                                         <div
                                                                             style="margin: auto; display: flex; justify-content: center;">
-                                                                            <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                            <textarea name="auditProductionChecklist[21][remarks]" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                                         </div>
                                                                     </td>
                                                                 </tr>
@@ -26258,7 +26247,7 @@
                                                                     <td>
                                                                         <div
                                                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                                            <select name="response" id="response"
+                                                                            <select name="auditProductionChecklist[22][response]" id="response"
                                                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                                                 <option value="">Select an Option</option>
                                                                                 <option value="Yes">Yes</option>
@@ -26271,7 +26260,7 @@
                                                                     <td style="vertical-align: middle;">
                                                                         <div
                                                                             style="margin: auto; display: flex; justify-content: center;">
-                                                                            <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                            <textarea name="auditProductionChecklist[22][remarks]" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                                         </div>
                                                                     </td>
                                                                 </tr>
@@ -26284,7 +26273,7 @@
                                                                     <td>
                                                                         <div
                                                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                                            <select name="response" id="response"
+                                                                            <select name="auditProductionChecklist[23][response]" id="response"
                                                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                                                 <option value="">Select an Option</option>
                                                                                 <option value="Yes">Yes</option>
@@ -26297,7 +26286,7 @@
                                                                     <td style="vertical-align: middle;">
                                                                         <div
                                                                             style="margin: auto; display: flex; justify-content: center;">
-                                                                            <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                            <textarea name="auditProductionChecklist[23][remarks]" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                                         </div>
                                                                     </td>
                                                                 </tr>  <tr>
@@ -26308,7 +26297,7 @@
                                                                     <td>
                                                                         <div
                                                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                                            <select name="response" id="response"
+                                                                            <select name="auditProductionChecklist[24][response]" id="response"
                                                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                                                 <option value="">Select an Option</option>
                                                                                 <option value="Yes">Yes</option>
@@ -26321,7 +26310,7 @@
                                                                     <td style="vertical-align: middle;">
                                                                         <div
                                                                             style="margin: auto; display: flex; justify-content: center;">
-                                                                            <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                            <textarea name="auditProductionChecklist[24][remarks]" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                                         </div>
                                                                     </td>
                                                                 </tr>  <tr>
@@ -26332,7 +26321,7 @@
                                                                     <td>
                                                                         <div
                                                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                                            <select name="response" id="response"
+                                                                            <select name="auditProductionChecklist[25][response]" id="response"
                                                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                                                 <option value="">Select an Option</option>
                                                                                 <option value="Yes">Yes</option>
@@ -26345,7 +26334,7 @@
                                                                     <td style="vertical-align: middle;">
                                                                         <div
                                                                             style="margin: auto; display: flex; justify-content: center;">
-                                                                            <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                            <textarea name="auditProductionChecklist[25][remarks]" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                                         </div>
                                                                     </td>
                                                                 </tr>  <tr>
@@ -26356,7 +26345,7 @@
                                                                     <td>
                                                                         <div
                                                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                                            <select name="response" id="response"
+                                                                            <select name="auditProductionChecklist[26][response]" id="response"
                                                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                                                 <option value="">Select an Option</option>
                                                                                 <option value="Yes">Yes</option>
@@ -26369,7 +26358,7 @@
                                                                     <td style="vertical-align: middle;">
                                                                         <div
                                                                             style="margin: auto; display: flex; justify-content: center;">
-                                                                            <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                            <textarea name="auditProductionChecklist[26][remarks]" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                                         </div>
                                                                     </td>
                                                                 </tr>  <tr>
@@ -26380,7 +26369,7 @@
                                                                     <td>
                                                                         <div
                                                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                                            <select name="response" id="response"
+                                                                            <select name="auditProductionChecklist[27][response]" id="response"
                                                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                                                 <option value="">Select an Option</option>
                                                                                 <option value="Yes">Yes</option>
@@ -26393,7 +26382,7 @@
                                                                     <td style="vertical-align: middle;">
                                                                         <div
                                                                             style="margin: auto; display: flex; justify-content: center;">
-                                                                            <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                            <textarea name="auditProductionChecklist[27][remarks]" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                                         </div>
                                                                     </td>
                                                                 </tr>  <tr>
@@ -26404,7 +26393,7 @@
                                                                     <td>
                                                                         <div
                                                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                                            <select name="response" id="response"
+                                                                            <select name="auditProductionChecklist[28][response]" id="response"
                                                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                                                 <option value="">Select an Option</option>
                                                                                 <option value="Yes">Yes</option>
@@ -26417,7 +26406,7 @@
                                                                     <td style="vertical-align: middle;">
                                                                         <div
                                                                             style="margin: auto; display: flex; justify-content: center;">
-                                                                            <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                            <textarea name="auditProductionChecklist[28][remarks]" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                                         </div>
                                                                     </td>
                                                                 </tr>  <tr>
@@ -26428,7 +26417,7 @@
                                                                     <td>
                                                                         <div
                                                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                                            <select name="response" id="response"
+                                                                            <select name="auditProductionChecklist[29][response]" id="response"
                                                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                                                 <option value="">Select an Option</option>
                                                                                 <option value="Yes">Yes</option>
@@ -26441,7 +26430,7 @@
                                                                     <td style="vertical-align: middle;">
                                                                         <div
                                                                             style="margin: auto; display: flex; justify-content: center;">
-                                                                            <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                            <textarea name="auditProductionChecklist[29][remarks]" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                                         </div>
                                                                     </td>
                                                                 </tr>  <tr>
@@ -26452,7 +26441,7 @@
                                                                     <td>
                                                                         <div
                                                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                                            <select name="response" id="response"
+                                                                            <select name="auditProductionChecklist[30][response]" id="response"
                                                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                                                 <option value="">Select an Option</option>
                                                                                 <option value="Yes">Yes</option>
@@ -26465,7 +26454,7 @@
                                                                     <td style="vertical-align: middle;">
                                                                         <div
                                                                             style="margin: auto; display: flex; justify-content: center;">
-                                                                            <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                            <textarea name="auditProductionChecklist[30][remarks]" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                                         </div>
                                                                     </td>
                                                                 </tr>  <tr>
@@ -26476,7 +26465,7 @@
                                                                     <td>
                                                                         <div
                                                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                                            <select name="response" id="response"
+                                                                            <select name="auditProductionChecklist[31][response]" id="response"
                                                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                                                 <option value="">Select an Option</option>
                                                                                 <option value="Yes">Yes</option>
@@ -26489,7 +26478,7 @@
                                                                     <td style="vertical-align: middle;">
                                                                         <div
                                                                             style="margin: auto; display: flex; justify-content: center;">
-                                                                            <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                            <textarea name="auditProductionChecklist[31][remarks]" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                                         </div>
                                                                     </td>
                                                                 </tr>  <tr>
@@ -26500,7 +26489,7 @@
                                                                     <td>
                                                                         <div
                                                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                                            <select name="response" id="response"
+                                                                            <select name="auditProductionChecklist[32][response]" id="response"
                                                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                                                 <option value="">Select an Option</option>
                                                                                 <option value="Yes">Yes</option>
@@ -26513,7 +26502,7 @@
                                                                     <td style="vertical-align: middle;">
                                                                         <div
                                                                             style="margin: auto; display: flex; justify-content: center;">
-                                                                            <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                            <textarea name="auditProductionChecklist[32][remarks]" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                                         </div>
                                                                     </td>
                                                                 </tr>  <tr>
@@ -26524,7 +26513,7 @@
                                                                     <td>
                                                                         <div
                                                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                                            <select name="response" id="response"
+                                                                            <select name="auditProductionChecklist[33][response]" id="response"
                                                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                                                 <option value="">Select an Option</option>
                                                                                 <option value="Yes">Yes</option>
@@ -26537,7 +26526,7 @@
                                                                     <td style="vertical-align: middle;">
                                                                         <div
                                                                             style="margin: auto; display: flex; justify-content: center;">
-                                                                            <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                            <textarea name="auditProductionChecklist[33][remarks]" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                                         </div>
                                                                     </td>
                                                                 </tr>  <tr>
@@ -26548,7 +26537,7 @@
                                                                     <td>
                                                                         <div
                                                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                                            <select name="response" id="response"
+                                                                            <select name="auditProductionChecklist[34][response]" id="response"
                                                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                                                 <option value="">Select an Option</option>
                                                                                 <option value="Yes">Yes</option>
@@ -26561,7 +26550,7 @@
                                                                     <td style="vertical-align: middle;">
                                                                         <div
                                                                             style="margin: auto; display: flex; justify-content: center;">
-                                                                            <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                            <textarea name="auditProductionChecklist[34][remarks]" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                                         </div>
                                                                     </td>
                                                                 </tr>  <tr>
@@ -26572,7 +26561,7 @@
                                                                     <td>
                                                                         <div
                                                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                                            <select name="response" id="response"
+                                                                            <select name="auditProductionChecklist[35][response]" id="response"
                                                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                                                 <option value="">Select an Option</option>
                                                                                 <option value="Yes">Yes</option>
@@ -26585,7 +26574,7 @@
                                                                     <td style="vertical-align: middle;">
                                                                         <div
                                                                             style="margin: auto; display: flex; justify-content: center;">
-                                                                            <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                            <textarea name="auditProductionChecklist[35][remarks]" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                                         </div>
                                                                     </td>
                                                                 </tr>  <tr>
@@ -26596,7 +26585,7 @@
                                                                     <td>
                                                                         <div
                                                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                                            <select name="response" id="response"
+                                                                            <select name="auditProductionChecklist[36][response]" id="response"
                                                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                                                 <option value="">Select an Option</option>
                                                                                 <option value="Yes">Yes</option>
@@ -26609,7 +26598,7 @@
                                                                     <td style="vertical-align: middle;">
                                                                         <div
                                                                             style="margin: auto; display: flex; justify-content: center;">
-                                                                            <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                            <textarea name="auditProductionChecklist[36][remarks]" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                                         </div>
                                                                     </td>
                                                                 </tr>  <tr>
@@ -26620,7 +26609,7 @@
                                                                     <td>
                                                                         <div
                                                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                                            <select name="response" id="response"
+                                                                            <select name="auditProductionChecklist[37][response]" id="response"
                                                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                                                 <option value="">Select an Option</option>
                                                                                 <option value="Yes">Yes</option>
@@ -26633,7 +26622,7 @@
                                                                     <td style="vertical-align: middle;">
                                                                         <div
                                                                             style="margin: auto; display: flex; justify-content: center;">
-                                                                            <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                            <textarea name="auditProductionChecklist[37][remarks]" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                                         </div>
                                                                     </td>
                                                                 </tr>
@@ -26667,9 +26656,9 @@
 
                                                                 <div
                                                                     style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                                    <select name="response" id="response"
+                                                                    <select name="auditMaterialsChecklist[0][response]" id="response"
                                                                         style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                                        <option value="Yes">Select an Option</option>
+                                                                        <option value="">Select an Option</option>
                                                                         <option value="Yes">Yes</option>
                                                                         <option value="No">No</option>
                                                                         <option value="N/A">N/A</option>
@@ -26678,17 +26667,14 @@
 
 
                                                             </td>
-                                                            </td>
+                                                         </td>
 
                                                             <td style="vertical-align: middle;">
                                                                 <div
                                                                     style="margin: auto; display: flex; justify-content: center;">
-                                                                    <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                    <textarea name="auditMaterialsChecklist[0][remarks]" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                                 </div>
                                                             </td>
-
-
-
                                                         </tr>
                                                         <tr>
                                                             <td class="flex text-center">6.2</td>
@@ -26699,9 +26685,9 @@
                                                             <td>
                                                                 <div
                                                                     style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                                    <select name="response" id="response"
+                                                                    <select name="auditMaterialsChecklist[1][response]" id="response"
                                                                         style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                                        <option value="Yes">Select an Option</option>
+                                                                        <option value="">Select an Option</option>
                                                                         <option value="Yes">Yes</option>
                                                                         <option value="No">No</option>
                                                                         <option value="N/A">N/A</option>
@@ -26712,7 +26698,7 @@
                                                             <td style="vertical-align: middle;">
                                                                 <div
                                                                     style="margin: auto; display: flex; justify-content: center;">
-                                                                    <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                    <textarea name="auditMaterialsChecklist[1][remarks]" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                                 </div>
                                                             </td>
 
@@ -26728,9 +26714,9 @@
                                                             <td>
                                                                 <div
                                                                     style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                                    <select name="response" id="response"
+                                                                    <select name="auditMaterialsChecklist[2][response]" id="response"
                                                                         style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                                        <option value="Yes">Select an Option</option>
+                                                                        <option value="">Select an Option</option>
                                                                         <option value="Yes">Yes</option>
                                                                         <option value="No">No</option>
                                                                         <option value="N/A">N/A</option>
@@ -26741,7 +26727,7 @@
                                                             <td style="vertical-align: middle;">
                                                                 <div
                                                                     style="margin: auto; display: flex; justify-content: center;">
-                                                                    <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                    <textarea name="auditMaterialsChecklist[2][remarks]" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                                 </div>
                                                             </td>
                                                         </tr>
@@ -26754,8 +26740,7 @@
                                                             <td>
                                                                 <div
                                                     style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                    <input type="text"
-                                                        style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
+                                                    <input type="text" name="auditMaterialsChecklist[3][response]" style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
 
                                                 </div>
                                                             </td>
@@ -26763,7 +26748,7 @@
                                                             <td style="vertical-align: middle;">
                                                                 <div
                                                                     style="margin: auto; display: flex; justify-content: center;">
-                                                                    <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                    <textarea name="auditMaterialsChecklist[3][remarks]" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                                 </div>
                                                             </td>
                                                         </tr>
@@ -26776,9 +26761,9 @@
                                                             <td>
                                                                 <div
                                                                     style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                                    <select name="response" id="response"
+                                                                    <select name="auditMaterialsChecklist[4][response]" id="response"
                                                                         style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                                        <option value="Yes">Select an Option</option>
+                                                                        <option value="">Select an Option</option>
                                                                         <option value="Yes">Yes</option>
                                                                         <option value="No">No</option>
                                                                         <option value="N/A">N/A</option>
@@ -26789,7 +26774,7 @@
                                                             <td style="vertical-align: middle;">
                                                                 <div
                                                                     style="margin: auto; display: flex; justify-content: center;">
-                                                                    <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                    <textarea name="auditMaterialsChecklist[4][remarks]" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                                 </div>
                                                             </td>
                                                         </tr>
@@ -26802,9 +26787,9 @@
                                                             <td>
                                                                 <div
                                                                     style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                                    <select name="response" id="response"
+                                                                    <select name="auditMaterialsChecklist[5][response]" id="response"
                                                                         style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                                        <option value="Yes">Select an Option</option>
+                                                                        <option value="">Select an Option</option>
                                                                         <option value="Yes">Yes</option>
                                                                         <option value="No">No</option>
                                                                         <option value="N/A">N/A</option>
@@ -26815,7 +26800,7 @@
                                                             <td style="vertical-align: middle;">
                                                                 <div
                                                                     style="margin: auto; display: flex; justify-content: center;">
-                                                                    <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                    <textarea name="auditMaterialsChecklist[5][remarks]" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                                 </div>
                                                             </td>
                                                         </tr>
@@ -26828,9 +26813,9 @@
                                                             <td>
                                                                 <div
                                                                     style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                                    <select name="response" id="response"
+                                                                    <select name="auditMaterialsChecklist[6][response]" id="response"
                                                                         style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                                        <option value="Yes">Select an Option</option>
+                                                                        <option value="">Select an Option</option>
                                                                         <option value="Yes">Yes</option>
                                                                         <option value="No">No</option>
                                                                         <option value="N/A">N/A</option>
@@ -26841,7 +26826,7 @@
                                                             <td style="vertical-align: middle;">
                                                                 <div
                                                                     style="margin: auto; display: flex; justify-content: center;">
-                                                                    <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                    <textarea name="auditMaterialsChecklist[6][remarks]" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                                 </div>
                                                             </td>
                                                         </tr>
@@ -26854,9 +26839,9 @@
                                                             <td>
                                                                 <div
                                                                     style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                                    <select name="response" id="response"
+                                                                    <select name="auditMaterialsChecklist[7][response]" id="response"
                                                                         style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                                        <option value="Yes">Select an Option</option>
+                                                                        <option value="">Select an Option</option>
                                                                         <option value="Yes">Yes</option>
                                                                         <option value="No">No</option>
                                                                         <option value="N/A">N/A</option>
@@ -26867,7 +26852,7 @@
                                                             <td style="vertical-align: middle;">
                                                                 <div
                                                                     style="margin: auto; display: flex; justify-content: center;">
-                                                                    <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                    <textarea name="auditMaterialsChecklist[7][remarks]" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                                 </div>
                                                             </td>
                                                         </tr>
@@ -26880,9 +26865,9 @@
                                                             <td>
                                                                 <div
                                                                     style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                                    <select name="response" id="response"
+                                                                    <select name="auditMaterialsChecklist[8][response]" id="response"
                                                                         style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                                        <option value="Yes">Select an Option</option>
+                                                                        <option value="">Select an Option</option>
                                                                         <option value="Yes">Yes</option>
                                                                         <option value="No">No</option>
                                                                         <option value="N/A">N/A</option>
@@ -26893,7 +26878,7 @@
                                                             <td style="vertical-align: middle;">
                                                                 <div
                                                                     style="margin: auto; display: flex; justify-content: center;">
-                                                                    <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                    <textarea name="auditMaterialsChecklist[8][remarks]" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                                 </div>
                                                             </td>
                                                         </tr>
@@ -26901,16 +26886,15 @@
                                                         <tr>
                                                             <td class="flex text-center">6.10</td>
                                                             <td>
-                                                                Are starting materials visibly controlled and marked with
-Quarantine/Under test / Sampled / Approved / Rejected / Recalled
+                                                                Are starting materials visibly controlled and marked with Quarantine/Under test / Sampled / Approved / Rejected / Recalled
 
                                                             </td>
                                                             <td>
                                                                 <div
                                                                     style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                                    <select name="response" id="response"
+                                                                    <select name="auditMaterialsChecklist[9][response]" id="response"
                                                                         style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                                        <option value="Yes">Select an Option</option>
+                                                                        <option value="">Select an Option</option>
                                                                         <option value="Yes">Yes</option>
                                                                         <option value="No">No</option>
                                                                         <option value="N/A">N/A</option>
@@ -26921,7 +26905,7 @@ Quarantine/Under test / Sampled / Approved / Rejected / Recalled
                                                             <td style="vertical-align: middle;">
                                                                 <div
                                                                     style="margin: auto; display: flex; justify-content: center;">
-                                                                    <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                    <textarea name="auditMaterialsChecklist[9][remarks]" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                                 </div>
                                                             </td>
                                                         </tr>
@@ -26941,42 +26925,34 @@ Quarantine/Under test / Sampled / Approved / Rejected / Recalled
                                                             <td style="vertical-align: middle;">
 
                                                             </td>
-                                                        </tr> <tr>
+                                                        </tr> 
+                                                        <tr>
                                                             <td class="flex text-center">6.11.1</td>
                                                             <td>
-
                                                               	Your lot Identity?<br>
-
-
                                                             </td>
                                                             <td>
-                                                                <div
-                                                    style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                    <input type="text"
-                                                        style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
+                                                                <div   style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
+                                                    <input type="text" name="auditMaterialsChecklist[10][response]"  style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
 
-                                                </div>
+                                                     </div>
                                                             </td>
 
                                                             <td style="vertical-align: middle;">
                                                                 <div
                                                                     style="margin: auto; display: flex; justify-content: center;">
-                                                                    <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                    <textarea name="auditMaterialsChecklist[10][remarks]" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                                 </div>
                                                             </td>
                                                         </tr> <tr>
                                                             <td class="flex text-center">6.11.2</td>
                                                             <td>
-
                                                                   	Suppliers Lot No?
-
-
                                                             </td>
                                                             <td>
                                                                 <div
                                                     style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                    <input type="number"
-                                                        style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
+                                                    <input type="number" name="auditMaterialsChecklist[11][response]" style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
 
                                                 </div>
                                                             </td>
@@ -26984,21 +26960,19 @@ Quarantine/Under test / Sampled / Approved / Rejected / Recalled
                                                             <td style="vertical-align: middle;">
                                                                 <div
                                                                     style="margin: auto; display: flex; justify-content: center;">
-                                                                    <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                    <textarea name="auditMaterialsChecklist[11][remarks]" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                                 </div>
                                                             </td>
-                                                        </tr> <tr>
+                                                        </tr> 
+                                                        <tr>
                                                             <td class="flex text-center">6.11.3</td>
                                                             <td>
-
                                                                 	Date of Receipt?
-
-
                                                             </td>
                                                             <td>
                                                                 <div
                                                                 style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                                <input type="date"
+                                                                <input type="date" name="auditMaterialsChecklist[12][response]"
                                                                     style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
 
                                                             </div>
@@ -27007,22 +26981,18 @@ Quarantine/Under test / Sampled / Approved / Rejected / Recalled
                                                             <td style="vertical-align: middle;">
                                                                 <div
                                                                     style="margin: auto; display: flex; justify-content: center;">
-                                                                    <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                    <textarea name="auditMaterialsChecklist[12][remarks]" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                                 </div>
                                                             </td>
                                                         </tr> <tr>
                                                             <td class="flex text-center">6.11.4</td>
                                                             <td>
-
                                                                     	Quantity?
-
-
                                                             </td>
                                                             <td>
                                                                 <div
                                                     style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                    <input type="number"
-                                                        style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
+                                                    <input type="number" name="auditMaterialsChecklist[13][response]"   style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
 
                                                 </div>
                                                             </td>
@@ -27030,45 +27000,37 @@ Quarantine/Under test / Sampled / Approved / Rejected / Recalled
                                                             <td style="vertical-align: middle;">
                                                                 <div
                                                                     style="margin: auto; display: flex; justify-content: center;">
-                                                                    <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                    <textarea name="auditMaterialsChecklist[13][remarks]" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                                 </div>
                                                             </td>
                                                         </tr> <tr>
                                                             <td class="flex text-center">6.11.5</td>
                                                             <td>
-
                                                                 	Suppliers name?
-
-
                                                             </td>
                                                             <td>
-                                                                <div
-                                                    style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                    <input type="text"
+                                                                <div style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
+                                                    <input type="text" name="auditMaterialsChecklist[14][response]"
                                                         style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
 
-                                                </div>
+                                                    </div>
                                                             </td>
 
                                                             <td style="vertical-align: middle;">
                                                                 <div
                                                                     style="margin: auto; display: flex; justify-content: center;">
-                                                                    <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                    <textarea name="auditMaterialsChecklist[14][remarks]" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                                 </div>
                                                             </td>
                                                         </tr> <tr>
                                                             <td class="flex text-center">6.11.6</td>
                                                             <td>
-
                                                                 	Shelf Life?
-
-
                                                             </td>
                                                             <td>
                                                                 <div
                                                                 style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                                <input type="text"
-                                                                    style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
+                                                                <input type="text" name="auditMaterialsChecklist[15][response]" style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
 
                                                             </div>
                                                             </td>
@@ -27076,22 +27038,18 @@ Quarantine/Under test / Sampled / Approved / Rejected / Recalled
                                                             <td style="vertical-align: middle;">
                                                                 <div
                                                                     style="margin: auto; display: flex; justify-content: center;">
-                                                                    <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                    <textarea name="auditMaterialsChecklist[15][remarks]" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                                 </div>
                                                             </td>
                                                         </tr> <tr>
                                                             <td class="flex text-center">6.11.7</td>
                                                             <td>
-
                                                                 	Test Results?
-
-
                                                             </td>
                                                             <td>
                                                                 <div
                                                                 style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                                <input type="text"
-                                                                    style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
+                                                                <input type="text" name="auditMaterialsChecklist[16][response]" style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
 
                                                             </div>
                                                             </td>
@@ -27099,22 +27057,18 @@ Quarantine/Under test / Sampled / Approved / Rejected / Recalled
                                                             <td style="vertical-align: middle;">
                                                                 <div
                                                                     style="margin: auto; display: flex; justify-content: center;">
-                                                                    <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                    <textarea name="auditMaterialsChecklist[16][remarks]" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                                 </div>
                                                             </td>
                                                         </tr> <tr>
                                                             <td class="flex text-center">6.11.8</td>
                                                             <td>
-
                                                                 	Specification?
-
-
                                                             </td>
                                                             <td>
                                                                 <div
                                                                 style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                                <input type="text"
-                                                                    style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
+                                                                <input type="text" name="auditMaterialsChecklist[17][response]"   style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
 
                                                             </div>
                                                             </td>
@@ -27122,7 +27076,7 @@ Quarantine/Under test / Sampled / Approved / Rejected / Recalled
                                                             <td style="vertical-align: middle;">
                                                                 <div
                                                                     style="margin: auto; display: flex; justify-content: center;">
-                                                                    <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                    <textarea name="auditMaterialsChecklist[17][remarks]" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                                 </div>
                                                             </td>
                                                         </tr>
@@ -27137,9 +27091,9 @@ Quarantine/Under test / Sampled / Approved / Rejected / Recalled
                                                             <td>
                                                                 <div
                                                                     style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                                    <select name="response" id="response"
+                                                                    <select name="auditMaterialsChecklist[18][response]" id="response"
                                                                         style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                                        <option value="Yes">Select an Option</option>
+                                                                        <option value="">Select an Option</option>
                                                                         <option value="Yes">Accepted</option>
                                                                         <option value="No">Rejected</option>
                                                                         <option value="N/A">N/A</option>
@@ -27150,7 +27104,7 @@ Quarantine/Under test / Sampled / Approved / Rejected / Recalled
                                                             <td style="vertical-align: middle;">
                                                                 <div
                                                                     style="margin: auto; display: flex; justify-content: center;">
-                                                                    <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                    <textarea name="auditMaterialsChecklist[18][remarks]" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                                 </div>
                                                             </td>
                                                         </tr>
@@ -27166,9 +27120,9 @@ Quarantine/Under test / Sampled / Approved / Rejected / Recalled
                                                             <td>
                                                                 <div
                                                                     style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                                    <select name="response" id="response"
+                                                                    <select name="auditMaterialsChecklist[19][response]" id="response"
                                                                         style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                                        <option value="Yes">Select an Option</option>
+                                                                        <option value="">Select an Option</option>
                                                                         <option value="Yes">Yes</option>
                                                                         <option value="No">No</option>
                                                                         <option value="N/A">N/A</option>
@@ -27179,7 +27133,7 @@ Quarantine/Under test / Sampled / Approved / Rejected / Recalled
                                                             <td style="vertical-align: middle;">
                                                                 <div
                                                                     style="margin: auto; display: flex; justify-content: center;">
-                                                                    <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                    <textarea name="auditMaterialsChecklist[19][remarks]" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                                 </div>
                                                             </td>
                                                         </tr>
@@ -27191,9 +27145,9 @@ Quarantine/Under test / Sampled / Approved / Rejected / Recalled
                                                             <td>
                                                                 <div
                                                                     style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                                    <select name="response" id="response"
+                                                                    <select name="auditMaterialsChecklist[20][response]" id="response"
                                                                         style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                                        <option value="Yes">Select an Option</option>
+                                                                        <option value="">Select an Option</option>
                                                                         <option value="Yes">Yes</option>
                                                                         <option value="No">No</option>
                                                                         <option value="N/A">N/A</option>
@@ -27204,7 +27158,7 @@ Quarantine/Under test / Sampled / Approved / Rejected / Recalled
                                                             <td style="vertical-align: middle;">
                                                                 <div
                                                                     style="margin: auto; display: flex; justify-content: center;">
-                                                                    <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                    <textarea name="auditMaterialsChecklist[20][remarks]" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                                 </div>
                                                             </td>
                                                         </tr>
@@ -27217,9 +27171,9 @@ Quarantine/Under test / Sampled / Approved / Rejected / Recalled
                                                             <td>
                                                                 <div
                                                                     style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                                    <select name="response" id="response"
+                                                                    <select name="auditMaterialsChecklist[21][response]" id="response"
                                                                         style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                                        <option value="Yes">Select an Option</option>
+                                                                        <option value="">Select an Option</option>
                                                                         <option value="Yes">Yes</option>
                                                                         <option value="No">No</option>
                                                                         <option value="N/A">N/A</option>
@@ -27230,7 +27184,7 @@ Quarantine/Under test / Sampled / Approved / Rejected / Recalled
                                                             <td style="vertical-align: middle;">
                                                                 <div
                                                                     style="margin: auto; display: flex; justify-content: center;">
-                                                                    <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                    <textarea name="auditMaterialsChecklist[21][remarks]" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                                 </div>
                                                             </td>
                                                         </tr>
@@ -27243,9 +27197,9 @@ Quarantine/Under test / Sampled / Approved / Rejected / Recalled
                                                             <td>
                                                                 <div
                                                                     style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                                    <select name="response" id="response"
+                                                                    <select name="auditMaterialsChecklist[22][response]" id="response"
                                                                         style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                                        <option value="Yes">Select an Option</option>
+                                                                        <option value="">Select an Option</option>
                                                                         <option value="Yes">Yes</option>
                                                                         <option value="No">No</option>
                                                                         <option value="N/A">N/A</option>
@@ -27256,7 +27210,7 @@ Quarantine/Under test / Sampled / Approved / Rejected / Recalled
                                                             <td style="vertical-align: middle;">
                                                                 <div
                                                                     style="margin: auto; display: flex; justify-content: center;">
-                                                                    <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                    <textarea name="auditMaterialsChecklist[22][remarks]" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                                 </div>
                                                             </td>
                                                         </tr>
@@ -27269,9 +27223,9 @@ Quarantine/Under test / Sampled / Approved / Rejected / Recalled
                                                             <td>
                                                                 <div
                                                                     style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                                    <select name="response" id="response"
+                                                                    <select name="auditMaterialsChecklist[23][response]" id="response"
                                                                         style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                                        <option value="Yes">Select an Option</option>
+                                                                        <option value="">Select an Option</option>
                                                                         <option value="Yes">Yes</option>
                                                                         <option value="No">No</option>
                                                                         <option value="N/A">N/A</option>
@@ -27282,7 +27236,7 @@ Quarantine/Under test / Sampled / Approved / Rejected / Recalled
                                                             <td style="vertical-align: middle;">
                                                                 <div
                                                                     style="margin: auto; display: flex; justify-content: center;">
-                                                                    <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                    <textarea name="auditMaterialsChecklist[23][remarks]" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                                 </div>
                                                             </td>
                                                         </tr>
@@ -27295,9 +27249,9 @@ Quarantine/Under test / Sampled / Approved / Rejected / Recalled
                                                             <td>
                                                                 <div
                                                                     style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                                    <select name="response" id="response"
+                                                                    <select name="auditMaterialsChecklist[24][response]" id="response"
                                                                         style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                                        <option value="Yes">Select an Option</option>
+                                                                        <option value="">Select an Option</option>
                                                                         <option value="Yes">Yes</option>
                                                                         <option value="No">No</option>
                                                                         <option value="N/A">N/A</option>
@@ -27308,7 +27262,7 @@ Quarantine/Under test / Sampled / Approved / Rejected / Recalled
                                                             <td style="vertical-align: middle;">
                                                                 <div
                                                                     style="margin: auto; display: flex; justify-content: center;">
-                                                                    <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                    <textarea name="auditMaterialsChecklist[24][remarks]" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                                 </div>
                                                             </td>
                                                         </tr>
@@ -27321,9 +27275,9 @@ Quarantine/Under test / Sampled / Approved / Rejected / Recalled
                                                             <td>
                                                                 <div
                                                                     style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                                    <select name="response" id="response"
+                                                                    <select name="auditMaterialsChecklist[25][response]" id="response"
                                                                         style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                                        <option value="Yes">Select an Option</option>
+                                                                        <option value="">Select an Option</option>
                                                                         <option value="Yes">Yes</option>
                                                                         <option value="No">No</option>
                                                                         <option value="N/A">N/A</option>
@@ -27334,7 +27288,7 @@ Quarantine/Under test / Sampled / Approved / Rejected / Recalled
                                                             <td style="vertical-align: middle;">
                                                                 <div
                                                                     style="margin: auto; display: flex; justify-content: center;">
-                                                                    <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                    <textarea name="auditMaterialsChecklist[25][remarks]" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                                 </div>
                                                             </td>
                                                         </tr>
@@ -27347,9 +27301,9 @@ Quarantine/Under test / Sampled / Approved / Rejected / Recalled
                                                             <td>
                                                                 <div
                                                                     style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                                    <select name="response" id="response"
+                                                                    <select name="auditMaterialsChecklist[26][response]" id="response"
                                                                         style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                                        <option value="Yes">Select an Option</option>
+                                                                        <option value="">Select an Option</option>
                                                                         <option value="Yes">Yes</option>
                                                                         <option value="No">No</option>
                                                                         <option value="N/A">N/A</option>
@@ -27360,7 +27314,7 @@ Quarantine/Under test / Sampled / Approved / Rejected / Recalled
                                                             <td style="vertical-align: middle;">
                                                                 <div
                                                                     style="margin: auto; display: flex; justify-content: center;">
-                                                                    <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                    <textarea name="auditMaterialsChecklist[26][remarks]" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                                 </div>
                                                             </td>
                                                         </tr>
@@ -27372,9 +27326,9 @@ Quarantine/Under test / Sampled / Approved / Rejected / Recalled
                                                             <td>
                                                                 <div
                                                                     style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                                    <select name="response" id="response"
+                                                                    <select name="auditMaterialsChecklist[27][response]" id="response"
                                                                         style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                                        <option value="Yes">Select an Option</option>
+                                                                        <option value="">Select an Option</option>
                                                                         <option value="Yes">Yes</option>
                                                                         <option value="No">No</option>
                                                                         <option value="N/A">N/A</option>
@@ -27385,7 +27339,7 @@ Quarantine/Under test / Sampled / Approved / Rejected / Recalled
                                                             <td style="vertical-align: middle;">
                                                                 <div
                                                                     style="margin: auto; display: flex; justify-content: center;">
-                                                                    <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                    <textarea name="auditMaterialsChecklist[27][remarks]" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                                 </div>
                                                             </td>
                                                         </tr> <tr>
@@ -27396,9 +27350,9 @@ Quarantine/Under test / Sampled / Approved / Rejected / Recalled
                                                             <td>
                                                                 <div
                                                                     style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                                    <select name="response" id="response"
+                                                                    <select name="auditMaterialsChecklist[28][response]" id="response"
                                                                         style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                                        <option value="Yes">Select an Option</option>
+                                                                        <option value="">Select an Option</option>
                                                                         <option value="Yes">Yes</option>
                                                                         <option value="No">No</option>
                                                                         <option value="N/A">N/A</option>
@@ -27409,7 +27363,7 @@ Quarantine/Under test / Sampled / Approved / Rejected / Recalled
                                                             <td style="vertical-align: middle;">
                                                                 <div
                                                                     style="margin: auto; display: flex; justify-content: center;">
-                                                                    <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                    <textarea name="auditMaterialsChecklist[28][remarks]" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                                 </div>
                                                             </td>
                                                         </tr> <tr>
@@ -27420,9 +27374,9 @@ Quarantine/Under test / Sampled / Approved / Rejected / Recalled
                                                             <td>
                                                                 <div
                                                                     style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                                    <select name="response" id="response"
+                                                                    <select name="auditMaterialsChecklist[29][response]" id="response"
                                                                         style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                                        <option value="Yes">Select an Option</option>
+                                                                        <option value="">Select an Option</option>
                                                                         <option value="Yes">Yes</option>
                                                                         <option value="No">No</option>
                                                                         <option value="N/A">N/A</option>
@@ -27433,7 +27387,7 @@ Quarantine/Under test / Sampled / Approved / Rejected / Recalled
                                                             <td style="vertical-align: middle;">
                                                                 <div
                                                                     style="margin: auto; display: flex; justify-content: center;">
-                                                                    <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                    <textarea name="auditMaterialsChecklist[29][remarks]" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                                 </div>
                                                             </td>
                                                         </tr>
@@ -27441,7 +27395,8 @@ Quarantine/Under test / Sampled / Approved / Rejected / Recalled
                                                 </table>
                                             </div>
                                         </div>
-                                    </div> <div class="sub-head">
+                                    </div> 
+                                    <div class="sub-head">
                                         Checklist for Quality Control
                                         </div>
                                         <div class="col-12">
@@ -27465,7 +27420,7 @@ Quarantine/Under test / Sampled / Approved / Rejected / Recalled
 
                                                                     <div
                                                                         style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                                        <select name="response" id="response"
+                                                                        <select name="auditQualityControlChecklist[0][response]" id="response"
                                                                             style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                                             <option value="">Select an Option</option>
                                                                             <option value="Yes">Yes</option>
@@ -27481,7 +27436,7 @@ Quarantine/Under test / Sampled / Approved / Rejected / Recalled
                                                                 <td style="vertical-align: middle;">
                                                                     <div
                                                                         style="margin: auto; display: flex; justify-content: center;">
-                                                                        <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                        <textarea name="auditQualityControlChecklist[0][remarks]" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                                     </div>
                                                                 </td>
 
@@ -27497,7 +27452,7 @@ Quarantine/Under test / Sampled / Approved / Rejected / Recalled
                                                                 <td>
                                                                     <div
                                                                         style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                                        <select name="response" id="response"
+                                                                        <select name="auditQualityControlChecklist[1][response]" id="response"
                                                                             style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                                             <option value="">Select an Option</option>
                                                                             <option value="Yes">Yes</option>
@@ -27510,7 +27465,7 @@ Quarantine/Under test / Sampled / Approved / Rejected / Recalled
                                                                 <td style="vertical-align: middle;">
                                                                     <div
                                                                         style="margin: auto; display: flex; justify-content: center;">
-                                                                        <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                        <textarea name="auditQualityControlChecklist[1][remarks]" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                                     </div>
                                                                 </td>
 
@@ -27526,7 +27481,7 @@ Quarantine/Under test / Sampled / Approved / Rejected / Recalled
                                                                 <td>
                                                                     <div
                                                                         style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                                        <select name="response" id="response"
+                                                                        <select name="auditQualityControlChecklist[2][response]" id="response"
                                                                             style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                                             <option value="">Select an Option</option>
                                                                             <option value="Yes">Yes</option>
@@ -27539,7 +27494,7 @@ Quarantine/Under test / Sampled / Approved / Rejected / Recalled
                                                                 <td style="vertical-align: middle;">
                                                                     <div
                                                                         style="margin: auto; display: flex; justify-content: center;">
-                                                                        <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                        <textarea name="auditQualityControlChecklist[2][remarks]" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                                     </div>
                                                                 </td>
                                                             </tr>
@@ -27552,7 +27507,7 @@ Quarantine/Under test / Sampled / Approved / Rejected / Recalled
                                                                 <td>
                                                                     <div
                                                                         style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                                        <select name="response" id="response"
+                                                                        <select name="auditQualityControlChecklist[3][response]" id="response"
                                                                             style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                                             <option value="">Select an Option</option>
                                                                             <option value="Yes">Yes</option>
@@ -27565,7 +27520,7 @@ Quarantine/Under test / Sampled / Approved / Rejected / Recalled
                                                                 <td style="vertical-align: middle;">
                                                                     <div
                                                                         style="margin: auto; display: flex; justify-content: center;">
-                                                                        <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                        <textarea name="auditQualityControlChecklist[3][remarks]" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                                     </div>
                                                                 </td>
                                                             </tr>
@@ -27578,7 +27533,7 @@ Quarantine/Under test / Sampled / Approved / Rejected / Recalled
                                                                 <td>
                                                                     <div
                                                                         style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                                        <select name="response" id="response"
+                                                                        <select name="auditQualityControlChecklist[4][response]" id="response"
                                                                             style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                                             <option value="">Select an Option</option>
                                                                             <option value="Yes">Yes</option>
@@ -27591,7 +27546,7 @@ Quarantine/Under test / Sampled / Approved / Rejected / Recalled
                                                                 <td style="vertical-align: middle;">
                                                                     <div
                                                                         style="margin: auto; display: flex; justify-content: center;">
-                                                                        <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                        <textarea name="auditQualityControlChecklist[4][remarks]" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                                     </div>
                                                                 </td>
                                                             </tr>
@@ -27604,7 +27559,7 @@ Quarantine/Under test / Sampled / Approved / Rejected / Recalled
                                                                 <td>
                                                                     <div
                                                                         style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                                        <select name="response" id="response"
+                                                                        <select name="auditQualityControlChecklist[5][response]" id="response"
                                                                             style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                                             <option value="">Select an Option</option>
                                                                             <option value="Yes">Yes</option>
@@ -27617,7 +27572,7 @@ Quarantine/Under test / Sampled / Approved / Rejected / Recalled
                                                                 <td style="vertical-align: middle;">
                                                                     <div
                                                                         style="margin: auto; display: flex; justify-content: center;">
-                                                                        <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                        <textarea name="auditQualityControlChecklist[5][remarks]" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                                     </div>
                                                                 </td>
                                                             </tr>
@@ -27630,7 +27585,7 @@ Quarantine/Under test / Sampled / Approved / Rejected / Recalled
                                                                 <td>
                                                                     <div
                                                                         style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                                        <select name="response" id="response"
+                                                                        <select name="auditQualityControlChecklist[6][response]" id="response"
                                                                             style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                                             <option value="">Select an Option</option>
                                                                             <option value="Yes">Yes</option>
@@ -27643,7 +27598,7 @@ Quarantine/Under test / Sampled / Approved / Rejected / Recalled
                                                                 <td style="vertical-align: middle;">
                                                                     <div
                                                                         style="margin: auto; display: flex; justify-content: center;">
-                                                                        <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                        <textarea name="auditQualityControlChecklist[6][remarks]" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                                     </div>
                                                                 </td>
                                                             </tr>
@@ -27656,7 +27611,7 @@ Quarantine/Under test / Sampled / Approved / Rejected / Recalled
                                                                 <td>
                                                                     <div
                                                                         style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                                        <select name="response" id="response"
+                                                                        <select name="auditQualityControlChecklist[7][response]" id="response"
                                                                             style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                                             <option value="">Select an Option</option>
                                                                             <option value="Yes">Yes</option>
@@ -27669,7 +27624,7 @@ Quarantine/Under test / Sampled / Approved / Rejected / Recalled
                                                                 <td style="vertical-align: middle;">
                                                                     <div
                                                                         style="margin: auto; display: flex; justify-content: center;">
-                                                                        <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                        <textarea name="auditQualityControlChecklist[7][remarks]" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                                     </div>
                                                                 </td>
                                                             </tr>
@@ -27682,7 +27637,7 @@ Quarantine/Under test / Sampled / Approved / Rejected / Recalled
                                                                 <td>
                                                                     <div
                                                                         style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                                        <select name="response" id="response"
+                                                                        <select name="auditQualityControlChecklist[8][response]" id="response"
                                                                             style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                                             <option value="">Select an Option</option>
                                                                             <option value="Yes">Yes</option>
@@ -27695,7 +27650,7 @@ Quarantine/Under test / Sampled / Approved / Rejected / Recalled
                                                                 <td style="vertical-align: middle;">
                                                                     <div
                                                                         style="margin: auto; display: flex; justify-content: center;">
-                                                                        <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                        <textarea name="auditQualityControlChecklist[8][remarks]" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                                     </div>
                                                                 </td>
                                                             </tr>
@@ -27708,7 +27663,7 @@ Quarantine/Under test / Sampled / Approved / Rejected / Recalled
                                                                 <td>
                                                                     <div
                                                                         style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                                        <select name="response" id="response"
+                                                                        <select name="auditQualityControlChecklist[9][response]" id="response"
                                                                             style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                                             <option value="">Select an Option</option>
                                                                             <option value="Yes">Yes</option>
@@ -27721,7 +27676,7 @@ Quarantine/Under test / Sampled / Approved / Rejected / Recalled
                                                                 <td style="vertical-align: middle;">
                                                                     <div
                                                                         style="margin: auto; display: flex; justify-content: center;">
-                                                                        <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                        <textarea name="auditQualityControlChecklist[9][remarks]" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                                     </div>
                                                                 </td>
                                                             </tr>
@@ -27754,7 +27709,7 @@ Quarantine/Under test / Sampled / Approved / Rejected / Recalled
                                                                 <td>
                                                                     <div
                                                                         style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                                        <select name="response" id="response"
+                                                                        <select name="auditQualityControlChecklist[10][response]" id="response"
                                                                             style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                                             <option value="">Select an Option</option>
                                                                             <option value="Yes">Yes</option>
@@ -27767,7 +27722,7 @@ Quarantine/Under test / Sampled / Approved / Rejected / Recalled
                                                                 <td style="vertical-align: middle;">
                                                                     <div
                                                                         style="margin: auto; display: flex; justify-content: center;">
-                                                                        <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                        <textarea name="auditQualityControlChecklist[10][remarks]" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                                     </div>
                                                                 </td>
                                                             </tr>  <tr>
@@ -27781,7 +27736,7 @@ Quarantine/Under test / Sampled / Approved / Rejected / Recalled
                                                                 <td>
                                                                     <div
                                                                         style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                                        <select name="response" id="response"
+                                                                        <select name="auditQualityControlChecklist[11][response]" id="response"
                                                                             style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                                             <option value="">Select an Option</option>
                                                                             <option value="Yes">Yes</option>
@@ -27794,7 +27749,7 @@ Quarantine/Under test / Sampled / Approved / Rejected / Recalled
                                                                 <td style="vertical-align: middle;">
                                                                     <div
                                                                         style="margin: auto; display: flex; justify-content: center;">
-                                                                        <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                        <textarea name="auditQualityControlChecklist[11][remarks]" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                                     </div>
                                                                 </td>
                                                             </tr>  <tr>
@@ -27807,7 +27762,7 @@ Quarantine/Under test / Sampled / Approved / Rejected / Recalled
                                                                 <td>
                                                                     <div
                                                                         style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                                        <select name="response" id="response"
+                                                                        <select name="auditQualityControlChecklist[12][response]" id="response"
                                                                             style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                                             <option value="">Select an Option</option>
                                                                             <option value="Yes">Yes</option>
@@ -27820,7 +27775,7 @@ Quarantine/Under test / Sampled / Approved / Rejected / Recalled
                                                                 <td style="vertical-align: middle;">
                                                                     <div
                                                                         style="margin: auto; display: flex; justify-content: center;">
-                                                                        <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                        <textarea name="auditQualityControlChecklist[12][response]" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                                     </div>
                                                                 </td>
                                                             </tr>
@@ -27835,7 +27790,7 @@ Quarantine/Under test / Sampled / Approved / Rejected / Recalled
                                                                 <td>
                                                                     <div
                                                                         style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                                        <select name="response" id="response"
+                                                                        <select name="auditQualityControlChecklist[13][response]" id="response"
                                                                             style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                                             <option value="">Select an Option</option>
                                                                             <option value="Yes">Yes</option>
@@ -27848,7 +27803,7 @@ Quarantine/Under test / Sampled / Approved / Rejected / Recalled
                                                                 <td style="vertical-align: middle;">
                                                                     <div
                                                                         style="margin: auto; display: flex; justify-content: center;">
-                                                                        <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                        <textarea name="auditQualityControlChecklist[13][remarks]" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                                     </div>
                                                                 </td>
                                                             </tr>
@@ -27864,7 +27819,7 @@ Quarantine/Under test / Sampled / Approved / Rejected / Recalled
                                                                 <td>
                                                                     <div
                                                                         style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                                        <select name="response" id="response"
+                                                                        <select name="auditQualityControlChecklist[14][response]" id="response"
                                                                             style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                                             <option value="">Select an Option</option>
                                                                             <option value="Yes">Yes</option>
@@ -27877,7 +27832,7 @@ Quarantine/Under test / Sampled / Approved / Rejected / Recalled
                                                                 <td style="vertical-align: middle;">
                                                                     <div
                                                                         style="margin: auto; display: flex; justify-content: center;">
-                                                                        <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                        <textarea name="auditQualityControlChecklist[14][remarks]" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                                     </div>
                                                                 </td>
                                                             </tr>
@@ -27890,7 +27845,7 @@ Quarantine/Under test / Sampled / Approved / Rejected / Recalled
                                                                 <td>
                                                                     <div
                                                                         style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                                        <select name="response" id="response"
+                                                                        <select name="auditQualityControlChecklist[15][response]" id="response"
                                                                             style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                                             <option value="">Select an Option</option>
                                                                             <option value="Yes">Yes</option>
@@ -27903,7 +27858,7 @@ Quarantine/Under test / Sampled / Approved / Rejected / Recalled
                                                                 <td style="vertical-align: middle;">
                                                                     <div
                                                                         style="margin: auto; display: flex; justify-content: center;">
-                                                                        <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                        <textarea name="auditQualityControlChecklist[15][remarks]" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                                     </div>
                                                                 </td>
                                                             </tr>
@@ -27916,7 +27871,7 @@ Quarantine/Under test / Sampled / Approved / Rejected / Recalled
                                                                 <td>
                                                                     <div
                                                                         style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                                        <select name="response" id="response"
+                                                                        <select name="auditQualityControlChecklist[16][response]" id="response"
                                                                             style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                                             <option value="">Select an Option</option>
                                                                             <option value="Yes">Yes</option>
@@ -27929,7 +27884,7 @@ Quarantine/Under test / Sampled / Approved / Rejected / Recalled
                                                                 <td style="vertical-align: middle;">
                                                                     <div
                                                                         style="margin: auto; display: flex; justify-content: center;">
-                                                                        <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                        <textarea name="auditQualityControlChecklist[16][remarks]" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                                     </div>
                                                                 </td>
                                                             </tr>
@@ -27942,7 +27897,7 @@ Quarantine/Under test / Sampled / Approved / Rejected / Recalled
                                                                 <td>
                                                                     <div
                                                                         style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                                        <select name="response" id="response"
+                                                                        <select name="auditQualityControlChecklist[17][response]" id="response"
                                                                             style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                                             <option value="">Select an Option</option>
                                                                             <option value="Yes">Yes</option>
@@ -27955,13 +27910,10 @@ Quarantine/Under test / Sampled / Approved / Rejected / Recalled
                                                                 <td style="vertical-align: middle;">
                                                                     <div
                                                                         style="margin: auto; display: flex; justify-content: center;">
-                                                                        <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                        <textarea name="auditQualityControlChecklist[17][remarks]" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                                     </div>
                                                                 </td>
                                                             </tr>
-
-
-
                                                             <tr>
                                                                 <td class="flex text-center">7.15</td>
                                                                 <td>
@@ -27976,7 +27928,8 @@ Quarantine/Under test / Sampled / Approved / Rejected / Recalled
                                                                 <td style="vertical-align: middle;">
 
                                                                 </td>
-                                                            </tr><tr>
+                                                            </tr>
+                                                            <tr>
                                                                 <td class="flex text-center">7.15.1</td>
                                                                 <td>
 
@@ -27987,7 +27940,7 @@ Quarantine/Under test / Sampled / Approved / Rejected / Recalled
                                                                 <td>
                                                                     <div
                                                                         style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                                        <select name="response" id="response"
+                                                                        <select name="auditQualityControlChecklist[18][response]" id="response"
                                                                             style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                                             <option value="">Select an Option</option>
                                                                             <option value="Yes">Yes</option>
@@ -28000,21 +27953,18 @@ Quarantine/Under test / Sampled / Approved / Rejected / Recalled
                                                                 <td style="vertical-align: middle;">
                                                                     <div
                                                                         style="margin: auto; display: flex; justify-content: center;">
-                                                                        <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                        <textarea name="auditQualityControlChecklist[18][remarks]" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                                     </div>
                                                                 </td>
                                                             </tr><tr>
                                                                 <td class="flex text-center">7.15.2</td>
                                                                 <td>
-
                                                                     	Do you have calibration instructions?
-
-
                                                                 </td>
                                                                 <td>
                                                                     <div
                                                                         style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                                        <select name="response" id="response"
+                                                                        <select name="auditQualityControlChecklist[19][response]" id="response"
                                                                             style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                                             <option value="">Select an Option</option>
                                                                             <option value="Yes">Yes</option>
@@ -28027,7 +27977,7 @@ Quarantine/Under test / Sampled / Approved / Rejected / Recalled
                                                                 <td style="vertical-align: middle;">
                                                                     <div
                                                                         style="margin: auto; display: flex; justify-content: center;">
-                                                                        <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                        <textarea name="auditQualityControlChecklist[19][remarks]" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                                     </div>
                                                                 </td>
                                                             </tr>
@@ -28042,7 +27992,7 @@ Quarantine/Under test / Sampled / Approved / Rejected / Recalled
                                                                 <td>
                                                                     <div
                                                                         style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                                        <select name="response" id="response"
+                                                                        <select name="auditQualityControlChecklist[20][response]" id="response"
                                                                             style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                                             <option value="">Select an Option</option>
                                                                             <option value="Yes">Yes</option>
@@ -28055,7 +28005,7 @@ Quarantine/Under test / Sampled / Approved / Rejected / Recalled
                                                                 <td style="vertical-align: middle;">
                                                                     <div
                                                                         style="margin: auto; display: flex; justify-content: center;">
-                                                                        <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                        <textarea name="auditQualityControlChecklist[20][remarks]" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                                     </div>
                                                                 </td>
                                                             </tr>
@@ -28070,7 +28020,7 @@ Quarantine/Under test / Sampled / Approved / Rejected / Recalled
                                                                 <td>
                                                                     <div
                                                                         style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                                        <select name="response" id="response"
+                                                                        <select name="auditQualityControlChecklist[21][response]" id="response"
                                                                             style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                                             <option value="">Select an Option</option>
                                                                             <option value="Yes">Yes</option>
@@ -28083,7 +28033,7 @@ Quarantine/Under test / Sampled / Approved / Rejected / Recalled
                                                                 <td style="vertical-align: middle;">
                                                                     <div
                                                                         style="margin: auto; display: flex; justify-content: center;">
-                                                                        <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                        <textarea name="auditQualityControlChecklist[21][remarks]" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                                     </div>
                                                                 </td>
                                                             </tr>
@@ -28096,7 +28046,7 @@ Quarantine/Under test / Sampled / Approved / Rejected / Recalled
                                                                 <td>
                                                                     <div
                                                                         style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                                        <select name="response" id="response"
+                                                                        <select name="auditQualityControlChecklist[22][response]" id="response"
                                                                             style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                                             <option value="">Select an Option</option>
                                                                             <option value="Yes">Yes</option>
@@ -28109,7 +28059,7 @@ Quarantine/Under test / Sampled / Approved / Rejected / Recalled
                                                                 <td style="vertical-align: middle;">
                                                                     <div
                                                                         style="margin: auto; display: flex; justify-content: center;">
-                                                                        <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                        <textarea name="auditQualityControlChecklist[22][remarks]" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                                     </div>
                                                                 </td>
                                                             </tr>
@@ -28122,7 +28072,7 @@ Quarantine/Under test / Sampled / Approved / Rejected / Recalled
                                                                 <td>
                                                                     <div
                                                                         style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                                        <select name="response" id="response"
+                                                                        <select name="auditQualityControlChecklist[23][response]" id="response"
                                                                             style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                                             <option value="">Select an Option</option>
                                                                             <option value="Yes">Yes</option>
@@ -28135,7 +28085,7 @@ Quarantine/Under test / Sampled / Approved / Rejected / Recalled
                                                                 <td style="vertical-align: middle;">
                                                                     <div
                                                                         style="margin: auto; display: flex; justify-content: center;">
-                                                                        <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                        <textarea name="auditQualityControlChecklist[23][remarks]" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                                     </div>
                                                                 </td>
                                                             </tr>
@@ -28148,7 +28098,7 @@ Quarantine/Under test / Sampled / Approved / Rejected / Recalled
                                                                 <td>
                                                                     <div
                                                                         style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                                        <select name="response" id="response"
+                                                                        <select name="auditQualityControlChecklist[24][response]" id="response"
                                                                             style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                                             <option value="">Select an Option</option>
                                                                             <option value="Yes">Yes</option>
@@ -28161,7 +28111,7 @@ Quarantine/Under test / Sampled / Approved / Rejected / Recalled
                                                                 <td style="vertical-align: middle;">
                                                                     <div
                                                                         style="margin: auto; display: flex; justify-content: center;">
-                                                                        <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                        <textarea name="auditQualityControlChecklist[24][remarks]" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                                     </div>
                                                                 </td>
                                                             </tr>
@@ -28173,7 +28123,7 @@ Quarantine/Under test / Sampled / Approved / Rejected / Recalled
                                                                 <td>
                                                                     <div
                                                                     style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                                    <input type="number"
+                                                                    <input type="number" name="auditQualityControlChecklist[25][response]"
                                                                     placeholder="Enter  value here"
                                                                         style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;" >
                                                                 </div>
@@ -28182,7 +28132,7 @@ Quarantine/Under test / Sampled / Approved / Rejected / Recalled
                                                                 <td style="vertical-align: middle;">
                                                                     <div
                                                                         style="margin: auto; display: flex; justify-content: center;">
-                                                                        <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                        <textarea name="auditQualityControlChecklist[25][remarks]" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                                     </div>
                                                                 </td>
                                                             </tr><tr>
@@ -28193,7 +28143,7 @@ Quarantine/Under test / Sampled / Approved / Rejected / Recalled
                                                                 <td>
                                                                     <div
                                                                         style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                                        <select name="response" id="response"
+                                                                        <select name="auditQualityControlChecklist[26][response]" id="response"
                                                                             style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                                             <option value="">Select an Option</option>
                                                                             <option value="Yes">Yes</option>
@@ -28206,7 +28156,7 @@ Quarantine/Under test / Sampled / Approved / Rejected / Recalled
                                                                 <td style="vertical-align: middle;">
                                                                     <div
                                                                         style="margin: auto; display: flex; justify-content: center;">
-                                                                        <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                        <textarea name="auditQualityControlChecklist[26][remarks]" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                                     </div>
                                                                 </td>
                                                             </tr><tr>
@@ -28217,7 +28167,7 @@ Quarantine/Under test / Sampled / Approved / Rejected / Recalled
                                                                 <td>
                                                                     <div
                                                                         style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                                        <select name="response" id="response"
+                                                                        <select name="auditQualityControlChecklist[27][response]" id="response"
                                                                             style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                                             <option value="">Select an Option</option>
                                                                             <option value="Yes">Yes</option>
@@ -28230,7 +28180,7 @@ Quarantine/Under test / Sampled / Approved / Rejected / Recalled
                                                                 <td style="vertical-align: middle;">
                                                                     <div
                                                                         style="margin: auto; display: flex; justify-content: center;">
-                                                                        <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                        <textarea name="auditQualityControlChecklist[27][remarks]" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                                     </div>
                                                                 </td>
                                                             </tr><tr>
@@ -28241,7 +28191,7 @@ Quarantine/Under test / Sampled / Approved / Rejected / Recalled
                                                                 <td>
                                                                     <div
                                                                         style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                                        <select name="response" id="response"
+                                                                        <select name="auditQualityControlChecklist[28][response]" id="response"
                                                                             style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                                             <option value="">Select an Option</option>
                                                                             <option value="Yes">Yes</option>
@@ -28254,7 +28204,7 @@ Quarantine/Under test / Sampled / Approved / Rejected / Recalled
                                                                 <td style="vertical-align: middle;">
                                                                     <div
                                                                         style="margin: auto; display: flex; justify-content: center;">
-                                                                        <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                        <textarea name="auditQualityControlChecklist[28][remarks]" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                                     </div>
                                                                 </td>
                                                             </tr><tr>
@@ -28265,7 +28215,7 @@ Quarantine/Under test / Sampled / Approved / Rejected / Recalled
                                                                 <td>
                                                                     <div
                                                                         style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                                        <select name="response" id="response"
+                                                                        <select name="auditQualityControlChecklist[29][response]" id="response"
                                                                             style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                                             <option value="">Select an Option</option>
                                                                             <option value="Yes">Yes</option>
@@ -28278,7 +28228,7 @@ Quarantine/Under test / Sampled / Approved / Rejected / Recalled
                                                                 <td style="vertical-align: middle;">
                                                                     <div
                                                                         style="margin: auto; display: flex; justify-content: center;">
-                                                                        <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                        <textarea name="auditQualityControlChecklist[29][remarks]" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                                     </div>
                                                                 </td>
                                                             </tr><tr>
@@ -28289,7 +28239,7 @@ Quarantine/Under test / Sampled / Approved / Rejected / Recalled
                                                                 <td>
                                                                     <div
                                                                         style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                                        <select name="response" id="response"
+                                                                        <select name="auditQualityControlChecklist[30][response]" id="response"
                                                                             style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                                             <option value="">Select an Option</option>
                                                                             <option value="Yes">Yes</option>
@@ -28298,15 +28248,13 @@ Quarantine/Under test / Sampled / Approved / Rejected / Recalled
                                                                         </select>
                                                                     </div>
                                                                 </td>
-
                                                                 <td style="vertical-align: middle;">
                                                                     <div
                                                                         style="margin: auto; display: flex; justify-content: center;">
-                                                                        <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                        <textarea name="auditQualityControlChecklist[30][remarks]" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                                     </div>
                                                                 </td>
                                                             </tr>
-
                                                         </tbody>
                                                     </table>
                                                 </div>
@@ -28338,9 +28286,9 @@ Quarantine/Under test / Sampled / Approved / Rejected / Recalled
                                                             <td>
                                                                 <div
                                                                     style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                                    <select name="response" id="response"
+                                                                    <select name="auditQualityAssuranceChecklist[0][response]" id="response"
                                                                         style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                                        <option value="Yes">Select an Option</option>
+                                                                        <option value="">Select an Option</option>
                                                                         <option value="Yes">Yes</option>
                                                                         <option value="No">No</option>
                                                                         <option value="N/A">N/A</option>
@@ -28351,7 +28299,7 @@ Quarantine/Under test / Sampled / Approved / Rejected / Recalled
                                                             <td style="vertical-align: middle;">
                                                                 <div
                                                                     style="margin: auto; display: flex; justify-content: center;">
-                                                                    <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                    <textarea name="auditQualityAssuranceChecklist[0][remarks]" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                                 </div>
                                                             </td>
 
@@ -28366,9 +28314,9 @@ Quarantine/Under test / Sampled / Approved / Rejected / Recalled
                                                             <td>
                                                                 <div
                                                                     style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                                    <select name="response" id="response"
+                                                                    <select name="auditQualityAssuranceChecklist[1][response]" id="response"
                                                                         style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                                        <option value="Yes">Select an Option</option>
+                                                                        <option value="">Select an Option</option>
                                                                         <option value="Yes">Yes</option>
                                                                         <option value="No">No</option>
                                                                         <option value="N/A">N/A</option>
@@ -28379,7 +28327,7 @@ Quarantine/Under test / Sampled / Approved / Rejected / Recalled
                                                             <td style="vertical-align: middle;">
                                                                 <div
                                                                     style="margin: auto; display: flex; justify-content: center;">
-                                                                    <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                    <textarea name="auditQualityAssuranceChecklist[1][remarks]" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                                 </div>
                                                             </td>
 
@@ -28395,7 +28343,7 @@ Quarantine/Under test / Sampled / Approved / Rejected / Recalled
                                                             <td>
                                                                 <div
                                                                 style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                                <input type="text"
+                                                                <input type="text" name="auditQualityAssuranceChecklist[2][response]"
                                                                     style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
 
                                                             </div>
@@ -28404,7 +28352,7 @@ Quarantine/Under test / Sampled / Approved / Rejected / Recalled
                                                             <td style="vertical-align: middle;">
                                                                 <div
                                                                     style="margin: auto; display: flex; justify-content: center;">
-                                                                    <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                    <textarea name="auditQualityAssuranceChecklist[2][remarks]" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                                 </div>
                                                             </td>
                                                         </tr>
@@ -28417,9 +28365,9 @@ Quarantine/Under test / Sampled / Approved / Rejected / Recalled
                                                             <td>
                                                                 <div
                                                                     style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                                    <select name="response" id="response"
+                                                                    <select name="auditQualityAssuranceChecklist[3][response]" id="response"
                                                                         style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                                        <option value="Yes">Select an Option</option>
+                                                                        <option value="">Select an Option</option>
                                                                         <option value="Yes">Yes</option>
                                                                         <option value="No">No</option>
                                                                         <option value="N/A">N/A</option>
@@ -28430,7 +28378,7 @@ Quarantine/Under test / Sampled / Approved / Rejected / Recalled
                                                             <td style="vertical-align: middle;">
                                                                 <div
                                                                     style="margin: auto; display: flex; justify-content: center;">
-                                                                    <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                    <textarea name="auditQualityAssuranceChecklist[3][remarks]" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                                 </div>
                                                             </td>
                                                         </tr>
@@ -28443,9 +28391,9 @@ Quarantine/Under test / Sampled / Approved / Rejected / Recalled
                                                             <td>
                                                                 <div
                                                                     style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                                    <select name="response" id="response"
+                                                                    <select name="auditQualityAssuranceChecklist[4][response]" id="response"
                                                                         style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                                        <option value="Yes">Select an Option</option>
+                                                                        <option value="">Select an Option</option>
                                                                         <option value="Yes">Yes</option>
                                                                         <option value="No">No</option>
                                                                         <option value="N/A">N/A</option>
@@ -28456,7 +28404,7 @@ Quarantine/Under test / Sampled / Approved / Rejected / Recalled
                                                             <td style="vertical-align: middle;">
                                                                 <div
                                                                     style="margin: auto; display: flex; justify-content: center;">
-                                                                    <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                    <textarea name="auditQualityAssuranceChecklist[4][remarks]" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                                 </div>
                                                             </td>
                                                         </tr>
@@ -28469,9 +28417,9 @@ Quarantine/Under test / Sampled / Approved / Rejected / Recalled
                                                             <td>
                                                                 <div
                                                                     style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                                    <select name="response" id="response"
+                                                                    <select name="auditQualityAssuranceChecklist[5][response]" id="response"
                                                                         style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                                        <option value="Yes">Select an Option</option>
+                                                                        <option value="">Select an Option</option>
                                                                         <option value="Yes">Yes</option>
                                                                         <option value="No">No</option>
                                                                         <option value="N/A">N/A</option>
@@ -28482,7 +28430,7 @@ Quarantine/Under test / Sampled / Approved / Rejected / Recalled
                                                             <td style="vertical-align: middle;">
                                                                 <div
                                                                     style="margin: auto; display: flex; justify-content: center;">
-                                                                    <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                    <textarea name="auditQualityAssuranceChecklist[5][remarks]" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                                 </div>
                                                             </td>
                                                         </tr>
@@ -28495,9 +28443,9 @@ Quarantine/Under test / Sampled / Approved / Rejected / Recalled
                                                             <td>
                                                                 <div
                                                                     style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                                    <select name="response" id="response"
+                                                                    <select name="auditQualityAssuranceChecklist[6][response]" id="response"
                                                                         style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                                        <option value="Yes">Select an Option</option>
+                                                                        <option value="">Select an Option</option>
                                                                         <option value="Yes">Yes</option>
                                                                         <option value="No">No</option>
                                                                         <option value="N/A">N/A</option>
@@ -28508,7 +28456,7 @@ Quarantine/Under test / Sampled / Approved / Rejected / Recalled
                                                             <td style="vertical-align: middle;">
                                                                 <div
                                                                     style="margin: auto; display: flex; justify-content: center;">
-                                                                    <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                    <textarea name="auditQualityAssuranceChecklist[6][remarks]" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                                 </div>
                                                             </td>
                                                         </tr>
@@ -28521,9 +28469,9 @@ Quarantine/Under test / Sampled / Approved / Rejected / Recalled
                                                             <td>
                                                                 <div
                                                                     style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                                    <select name="response" id="response"
+                                                                    <select name="auditQualityAssuranceChecklist[7][response]" id="response"
                                                                         style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                                        <option value="Yes">Select an Option</option>
+                                                                        <option value="">Select an Option</option>
                                                                         <option value="Yes">Yes</option>
                                                                         <option value="No">No</option>
                                                                         <option value="N/A">N/A</option>
@@ -28534,7 +28482,7 @@ Quarantine/Under test / Sampled / Approved / Rejected / Recalled
                                                             <td style="vertical-align: middle;">
                                                                 <div
                                                                     style="margin: auto; display: flex; justify-content: center;">
-                                                                    <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                    <textarea name="auditQualityAssuranceChecklist[7][remarks]" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                                 </div>
                                                             </td>
                                                         </tr>
@@ -28547,9 +28495,9 @@ Quarantine/Under test / Sampled / Approved / Rejected / Recalled
                                                             <td>
                                                                 <div
                                                                     style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                                    <select name="response" id="response"
+                                                                    <select name="auditQualityAssuranceChecklist[8][response]" id="response"
                                                                         style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                                        <option value="Yes">Select an Option</option>
+                                                                        <option value="">Select an Option</option>
                                                                         <option value="Yes">Yes</option>
                                                                         <option value="No">No</option>
                                                                         <option value="N/A">N/A</option>
@@ -28560,7 +28508,7 @@ Quarantine/Under test / Sampled / Approved / Rejected / Recalled
                                                             <td style="vertical-align: middle;">
                                                                 <div
                                                                     style="margin: auto; display: flex; justify-content: center;">
-                                                                    <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                    <textarea name="auditQualityAssuranceChecklist[8][remarks]" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                                 </div>
                                                             </td>
                                                         </tr>
@@ -28573,9 +28521,9 @@ Quarantine/Under test / Sampled / Approved / Rejected / Recalled
                                                             <td>
                                                                 <div
                                                                     style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                                    <select name="response" id="response"
+                                                                    <select name="auditQualityAssuranceChecklist[9][response]" id="response"
                                                                         style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                                        <option value="Yes">Select an Option</option>
+                                                                        <option value="">Select an Option</option>
                                                                         <option value="Yes">Yes</option>
                                                                         <option value="No">No</option>
                                                                         <option value="N/A">N/A</option>
@@ -28586,7 +28534,7 @@ Quarantine/Under test / Sampled / Approved / Rejected / Recalled
                                                             <td style="vertical-align: middle;">
                                                                 <div
                                                                     style="margin: auto; display: flex; justify-content: center;">
-                                                                    <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                    <textarea name="auditQualityAssuranceChecklist[9][remarks]" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                                 </div>
                                                             </td>
                                                         </tr>
@@ -28599,9 +28547,9 @@ Quarantine/Under test / Sampled / Approved / Rejected / Recalled
                                                             <td>
                                                                 <div
                                                                     style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                                    <select name="response" id="response"
+                                                                    <select name="auditQualityAssuranceChecklist[10][response]" id="response"
                                                                         style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                                        <option value="Yes">Select an Option</option>
+                                                                        <option value="">Select an Option</option>
                                                                         <option value="Yes">Yes</option>
                                                                         <option value="No">No</option>
                                                                         <option value="N/A">N/A</option>
@@ -28612,7 +28560,7 @@ Quarantine/Under test / Sampled / Approved / Rejected / Recalled
                                                             <td style="vertical-align: middle;">
                                                                 <div
                                                                     style="margin: auto; display: flex; justify-content: center;">
-                                                                    <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                    <textarea name="auditQualityAssuranceChecklist[10][remarks]" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                                 </div>
                                                             </td>
                                                         </tr>
@@ -28625,9 +28573,9 @@ Quarantine/Under test / Sampled / Approved / Rejected / Recalled
                                                             <td>
                                                                 <div
                                                                     style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                                    <select name="response" id="response"
+                                                                    <select name="auditQualityAssuranceChecklist[11][response]" id="response"
                                                                         style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                                        <option value="Yes">Select an Option</option>
+                                                                        <option value="">Select an Option</option>
                                                                         <option value="Yes">Yes</option>
                                                                         <option value="No">No</option>
                                                                         <option value="N/A">N/A</option>
@@ -28638,7 +28586,7 @@ Quarantine/Under test / Sampled / Approved / Rejected / Recalled
                                                             <td style="vertical-align: middle;">
                                                                 <div
                                                                     style="margin: auto; display: flex; justify-content: center;">
-                                                                    <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                    <textarea name="auditQualityAssuranceChecklist[11][remarks]" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                                 </div>
                                                             </td>
                                                         </tr>
@@ -28651,9 +28599,9 @@ Quarantine/Under test / Sampled / Approved / Rejected / Recalled
                                                             <td>
                                                                 <div
                                                                     style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                                    <select name="response" id="response"
+                                                                    <select name="auditQualityAssuranceChecklist[12][response]" id="response"
                                                                         style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                                        <option value="Yes">Select an Option</option>
+                                                                        <option value="">Select an Option</option>
                                                                         <option value="Yes">Yes</option>
                                                                         <option value="No">No</option>
                                                                         <option value="N/A">N/A</option>
@@ -28664,7 +28612,7 @@ Quarantine/Under test / Sampled / Approved / Rejected / Recalled
                                                             <td style="vertical-align: middle;">
                                                                 <div
                                                                     style="margin: auto; display: flex; justify-content: center;">
-                                                                    <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                    <textarea name="auditQualityAssuranceChecklist[12][remarks]" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                                 </div>
                                                             </td>
                                                         </tr>
@@ -28677,9 +28625,9 @@ Quarantine/Under test / Sampled / Approved / Rejected / Recalled
                                                             <td>
                                                                 <div
                                                                     style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                                    <select name="response" id="response"
+                                                                    <select name="auditQualityAssuranceChecklist[13][response]" id="response"
                                                                         style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                                        <option value="Yes">Select an Option</option>
+                                                                        <option value="">Select an Option</option>
                                                                         <option value="Yes">Yes</option>
                                                                         <option value="No">No</option>
                                                                         <option value="N/A">N/A</option>
@@ -28690,7 +28638,7 @@ Quarantine/Under test / Sampled / Approved / Rejected / Recalled
                                                             <td style="vertical-align: middle;">
                                                                 <div
                                                                     style="margin: auto; display: flex; justify-content: center;">
-                                                                    <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                    <textarea name="auditQualityAssuranceChecklist[13][remarks]" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                                 </div>
                                                             </td>
                                                         </tr>
@@ -28703,9 +28651,9 @@ Quarantine/Under test / Sampled / Approved / Rejected / Recalled
                                                             <td>
                                                                 <div
                                                                     style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                                    <select name="response" id="response"
+                                                                    <select name="auditQualityAssuranceChecklist[14][response]" id="response"
                                                                         style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                                        <option value="Yes">Select an Option</option>
+                                                                        <option value="">Select an Option</option>
                                                                         <option value="Yes">Yes</option>
                                                                         <option value="No">No</option>
                                                                         <option value="N/A">N/A</option>
@@ -28716,7 +28664,7 @@ Quarantine/Under test / Sampled / Approved / Rejected / Recalled
                                                             <td style="vertical-align: middle;">
                                                                 <div
                                                                     style="margin: auto; display: flex; justify-content: center;">
-                                                                    <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                    <textarea name="auditQualityAssuranceChecklist[14][remarks]" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                                 </div>
                                                             </td>
                                                         </tr>
@@ -28729,9 +28677,9 @@ Quarantine/Under test / Sampled / Approved / Rejected / Recalled
                                                             <td>
                                                                 <div
                                                                     style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                                    <select name="response" id="response"
+                                                                    <select name="auditQualityAssuranceChecklist[15][response]" id="response"
                                                                         style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                                        <option value="Yes">Select an Option</option>
+                                                                        <option value="">Select an Option</option>
                                                                         <option value="Yes">Yes</option>
                                                                         <option value="No">No</option>
                                                                         <option value="N/A">N/A</option>
@@ -28742,7 +28690,7 @@ Quarantine/Under test / Sampled / Approved / Rejected / Recalled
                                                             <td style="vertical-align: middle;">
                                                                 <div
                                                                     style="margin: auto; display: flex; justify-content: center;">
-                                                                    <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                    <textarea name="auditQualityAssuranceChecklist[15][remarks]" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                                 </div>
                                                             </td>
                                                         </tr>
@@ -28801,7 +28749,7 @@ Quarantine/Under test / Sampled / Approved / Rejected / Recalled
                                                                 <td>
                                                                     <div
                                                                         style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                                        <select name="response" id="response"
+                                                                        <select name="auditPackagingChecklist[0][response]" id="response"
                                                                             style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                                             <option value="">Select an Option</option>
                                                                             <option value="Yes">Yes</option>
@@ -28814,7 +28762,7 @@ Quarantine/Under test / Sampled / Approved / Rejected / Recalled
                                                                 <td style="vertical-align: middle;">
                                                                     <div
                                                                         style="margin: auto; display: flex; justify-content: center;">
-                                                                        <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                        <textarea name="auditPackagingChecklist[0][remarks]" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                                     </div>
                                                                 </td>
 
@@ -28830,7 +28778,7 @@ Quarantine/Under test / Sampled / Approved / Rejected / Recalled
                                                                 <td>
                                                                     <div
                                                                         style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                                        <select name="response" id="response"
+                                                                        <select name="auditPackagingChecklist[1][response]" id="response"
                                                                             style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                                             <option value="">Select an Option</option>
                                                                             <option value="Yes">Yes</option>
@@ -28843,7 +28791,7 @@ Quarantine/Under test / Sampled / Approved / Rejected / Recalled
                                                                 <td style="vertical-align: middle;">
                                                                     <div
                                                                         style="margin: auto; display: flex; justify-content: center;">
-                                                                        <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                        <textarea name="auditPackagingChecklist[1][remarks]" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                                     </div>
                                                                 </td>
 
@@ -28861,7 +28809,7 @@ Quarantine/Under test / Sampled / Approved / Rejected / Recalled
                                                                 <td>
                                                                     <div
                                                                         style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                                        <select name="response" id="response"
+                                                                        <select name="auditPackagingChecklist[2][response]" id="response"
                                                                             style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                                             <option value="">Select an Option</option>
                                                                             <option value="Yes">Yes</option>
@@ -28874,7 +28822,7 @@ Quarantine/Under test / Sampled / Approved / Rejected / Recalled
                                                                 <td style="vertical-align: middle;">
                                                                     <div
                                                                         style="margin: auto; display: flex; justify-content: center;">
-                                                                        <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                        <textarea name="auditPackagingChecklist[2][remarks]" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                                     </div>
                                                                 </td>
 
@@ -28888,7 +28836,7 @@ Quarantine/Under test / Sampled / Approved / Rejected / Recalled
                                                                 <td>
                                                                     <div
                                                                         style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                                        <select name="response" id="response"
+                                                                        <select name="auditPackagingChecklist[3][response]" id="response"
                                                                             style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                                             <option value="">Select an Option</option>
                                                                             <option value="Yes">Yes</option>
@@ -28901,7 +28849,7 @@ Quarantine/Under test / Sampled / Approved / Rejected / Recalled
                                                                 <td style="vertical-align: middle;">
                                                                     <div
                                                                         style="margin: auto; display: flex; justify-content: center;">
-                                                                        <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                        <textarea name="auditPackagingChecklist[3][remarks]" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                                     </div>
                                                                 </td>
 
@@ -28917,7 +28865,7 @@ Quarantine/Under test / Sampled / Approved / Rejected / Recalled
                                                                 <td>
                                                                     <div
                                                                         style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                                        <select name="response" id="response"
+                                                                        <select name="auditPackagingChecklist[4][response]" id="response"
                                                                             style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                                             <option value="">Select an Option</option>
                                                                             <option value="Yes">Supplier-Contractor</option>
@@ -28930,7 +28878,7 @@ Quarantine/Under test / Sampled / Approved / Rejected / Recalled
                                                                 <td style="vertical-align: middle;">
                                                                     <div
                                                                         style="margin: auto; display: flex; justify-content: center;">
-                                                                        <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                        <textarea name="auditPackagingChecklist[4][remarks]" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                                     </div>
                                                                 </td>
                                                             </tr>
@@ -28943,7 +28891,7 @@ Quarantine/Under test / Sampled / Approved / Rejected / Recalled
                                                                 <td>
                                                                     <div
                                                                         style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                                        <select name="response" id="response"
+                                                                        <select name="auditPackagingChecklist[5][response]" id="response"
                                                                             style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                                             <option value="">Select an Option</option>
                                                                             <option value="Yes">Yes</option>
@@ -28956,7 +28904,7 @@ Quarantine/Under test / Sampled / Approved / Rejected / Recalled
                                                                 <td style="vertical-align: middle;">
                                                                     <div
                                                                         style="margin: auto; display: flex; justify-content: center;">
-                                                                        <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                        <textarea name="auditPackagingChecklist[5][remarks]" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                                     </div>
                                                                 </td>
                                                             </tr>
@@ -28986,7 +28934,7 @@ Quarantine/Under test / Sampled / Approved / Rejected / Recalled
                                                                 <td>
                                                                     <div
                                                                         style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                                        <select name="response" id="response"
+                                                                        <select name="auditPackagingChecklist[6][response]" id="response"
                                                                             style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                                             <option value="">Select an Option</option>
                                                                             <option value="Yes">Yes</option>
@@ -28999,7 +28947,7 @@ Quarantine/Under test / Sampled / Approved / Rejected / Recalled
                                                                 <td style="vertical-align: middle;">
                                                                     <div
                                                                         style="margin: auto; display: flex; justify-content: center;">
-                                                                        <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                        <textarea name="auditPackagingChecklist[6][remarks]" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                                     </div>
                                                                 </td>
                                                             </tr> <tr>
@@ -29012,7 +28960,7 @@ Quarantine/Under test / Sampled / Approved / Rejected / Recalled
                                                                 <td>
                                                                     <div
                                                                         style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                                        <select name="response" id="response"
+                                                                        <select name="auditPackagingChecklist[7][response]" id="response"
                                                                             style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                                             <option value="">Select an Option</option>
                                                                             <option value="Yes">Yes</option>
@@ -29025,7 +28973,7 @@ Quarantine/Under test / Sampled / Approved / Rejected / Recalled
                                                                 <td style="vertical-align: middle;">
                                                                     <div
                                                                         style="margin: auto; display: flex; justify-content: center;">
-                                                                        <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                        <textarea name="auditPackagingChecklist[7][remarks]" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                                     </div>
                                                                 </td>
                                                             </tr>
@@ -29038,7 +28986,7 @@ Quarantine/Under test / Sampled / Approved / Rejected / Recalled
                                                                 <td>
                                                                     <div
                                                                         style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                                        <select name="response" id="response"
+                                                                        <select name="auditPackagingChecklist[8][response]" id="response"
                                                                             style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                                             <option value="">Select an Option</option>
                                                                             <option value="Yes">Yes</option>
@@ -29051,7 +28999,7 @@ Quarantine/Under test / Sampled / Approved / Rejected / Recalled
                                                                 <td style="vertical-align: middle;">
                                                                     <div
                                                                         style="margin: auto; display: flex; justify-content: center;">
-                                                                        <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                        <textarea name="auditPackagingChecklist[8][remarks]" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                                     </div>
                                                                 </td>
                                                             </tr>
@@ -29064,7 +29012,7 @@ Quarantine/Under test / Sampled / Approved / Rejected / Recalled
                                                                 <td>
                                                                     <div
                                                                         style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                                        <select name="response" id="response"
+                                                                        <select name="auditPackagingChecklist[9][response]" id="response"
                                                                             style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                                             <option value="">Select an Option</option>
                                                                             <option value="Yes">Yes</option>
@@ -29077,7 +29025,7 @@ Quarantine/Under test / Sampled / Approved / Rejected / Recalled
                                                                 <td style="vertical-align: middle;">
                                                                     <div
                                                                         style="margin: auto; display: flex; justify-content: center;">
-                                                                        <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                        <textarea name="auditPackagingChecklist[9][remarks]" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                                     </div>
                                                                 </td>
                                                             </tr>
@@ -29090,7 +29038,7 @@ Quarantine/Under test / Sampled / Approved / Rejected / Recalled
                                                                 <td>
                                                                     <div
                                                                         style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                                        <select name="response" id="response"
+                                                                        <select name="auditPackagingChecklist[10][response]" id="response"
                                                                             style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                                             <option value="">Select an Option</option>
                                                                             <option value="Yes">Yes</option>
@@ -29103,7 +29051,7 @@ Quarantine/Under test / Sampled / Approved / Rejected / Recalled
                                                                 <td style="vertical-align: middle;">
                                                                     <div
                                                                         style="margin: auto; display: flex; justify-content: center;">
-                                                                        <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                        <textarea name="auditPackagingChecklist[10][remarks]" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                                     </div>
                                                                 </td>
                                                             </tr>
@@ -29135,7 +29083,7 @@ Quarantine/Under test / Sampled / Approved / Rejected / Recalled
                                                                 <td>
                                                                     <div
                                                                         style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                                        <select name="response" id="response"
+                                                                        <select name="auditPackagingChecklist[11][response]" id="response"
                                                                             style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                                             <option value="">Select an Option</option>
                                                                             <option value="Yes">Yes</option>
@@ -29148,7 +29096,7 @@ Quarantine/Under test / Sampled / Approved / Rejected / Recalled
                                                                 <td style="vertical-align: middle;">
                                                                     <div
                                                                         style="margin: auto; display: flex; justify-content: center;">
-                                                                        <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                        <textarea name="auditPackagingChecklist[11][remarks]" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                                     </div>
                                                                 </td>
                                                             </tr> <tr>
@@ -29162,7 +29110,7 @@ Quarantine/Under test / Sampled / Approved / Rejected / Recalled
                                                                 <td>
                                                                     <div
                                                     style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                    <input type="number"
+                                                    <input type="number" name="auditPackagingChecklist[12][response]"
                                                         style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
 
                                                 </div>
@@ -29171,7 +29119,7 @@ Quarantine/Under test / Sampled / Approved / Rejected / Recalled
                                                                 <td style="vertical-align: middle;">
                                                                     <div
                                                                         style="margin: auto; display: flex; justify-content: center;">
-                                                                        <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                        <textarea name="what_will_not_be" name="auditPackagingChecklist[12][remarks]" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                                     </div>
                                                                 </td>
                                                             </tr> <tr>
@@ -29185,7 +29133,7 @@ Quarantine/Under test / Sampled / Approved / Rejected / Recalled
                                                                 <td>
                                                                     <div
                                                                         style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                                        <select name="response" id="response"
+                                                                        <select name="auditPackagingChecklist[13][response]" id="response"
                                                                             style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                                             <option value="">Select an Option</option>
                                                                             <option value="Yes">Yes</option>
@@ -29198,7 +29146,7 @@ Quarantine/Under test / Sampled / Approved / Rejected / Recalled
                                                                 <td style="vertical-align: middle;">
                                                                     <div
                                                                         style="margin: auto; display: flex; justify-content: center;">
-                                                                        <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                        <textarea name="auditPackagingChecklist[13][remarks]" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                                     </div>
                                                                 </td>
                                                             </tr> <tr>
@@ -29211,7 +29159,7 @@ Quarantine/Under test / Sampled / Approved / Rejected / Recalled
                                                                 </td>
                                                                 <td> <div
                                                                     style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                                    <input type="number"
+                                                                    <input type="number" name="auditPackagingChecklist[14][response]"
                                                                         style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
 
                                                                 </div>
@@ -29220,7 +29168,7 @@ Quarantine/Under test / Sampled / Approved / Rejected / Recalled
                                                                 <td style="vertical-align: middle;">
                                                                     <div
                                                                         style="margin: auto; display: flex; justify-content: center;">
-                                                                        <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                        <textarea name="auditPackagingChecklist[14][remarks]" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                                     </div>
                                                                 </td>
                                                             </tr> <tr>
@@ -29234,7 +29182,7 @@ Quarantine/Under test / Sampled / Approved / Rejected / Recalled
                                                                 <td>
                                                                     <div
                                                     style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                    <input type="date"
+                                                    <input type="date" name="auditPackagingChecklist[15][response]"
                                                         style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
 
                                                 </div>
@@ -29243,7 +29191,7 @@ Quarantine/Under test / Sampled / Approved / Rejected / Recalled
                                                                 <td style="vertical-align: middle;">
                                                                     <div
                                                                         style="margin: auto; display: flex; justify-content: center;">
-                                                                        <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                        <textarea name="auditPackagingChecklist[15][remarks]" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                                     </div>
                                                                 </td>
                                                             </tr>
@@ -29258,7 +29206,7 @@ Quarantine/Under test / Sampled / Approved / Rejected / Recalled
                                                                 <td>
                                                                     <div
                                                     style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                    <input type="number"
+                                                    <input type="number" name="auditPackagingChecklist[16][response]"
                                                         style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
 
                                                 </div>
@@ -29267,7 +29215,7 @@ Quarantine/Under test / Sampled / Approved / Rejected / Recalled
                                                                 <td style="vertical-align: middle;">
                                                                     <div
                                                                         style="margin: auto; display: flex; justify-content: center;">
-                                                                        <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                        <textarea name="auditPackagingChecklist[16][remarks]" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                                     </div>
                                                                 </td>
                                                             </tr>
@@ -29280,7 +29228,7 @@ Quarantine/Under test / Sampled / Approved / Rejected / Recalled
                                                                 <td>
                                                                     <div
                                                     style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                    <input type="text"
+                                                    <input type="text" name="auditPackagingChecklist[17][response]"
                                                         style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
 
                                                 </div>
@@ -29289,7 +29237,7 @@ Quarantine/Under test / Sampled / Approved / Rejected / Recalled
                                                                 <td style="vertical-align: middle;">
                                                                     <div
                                                                         style="margin: auto; display: flex; justify-content: center;">
-                                                                        <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                        <textarea name="auditPackagingChecklist[17][remarks]" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                                     </div>
                                                                 </td>
                                                             </tr>
@@ -29326,7 +29274,7 @@ Quarantine/Under test / Sampled / Approved / Rejected / Recalled
                                                                     <td>
                                                                         <div
                                                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                                            <select name="response" id="response"
+                                                                            <select name="auditSheChecklist[0][response]" id="response"
                                                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                                                 <option value="">Select an Option</option>
                                                                                 <option value="Yes">Yes</option>
@@ -29339,7 +29287,7 @@ Quarantine/Under test / Sampled / Approved / Rejected / Recalled
                                                                     <td style="vertical-align: middle;">
                                                                         <div
                                                                             style="margin: auto; display: flex; justify-content: center;">
-                                                                            <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                            <textarea name="auditSheChecklist[0][remarks]" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                                         </div>
                                                                     </td>
 
@@ -29373,7 +29321,7 @@ Quarantine/Under test / Sampled / Approved / Rejected / Recalled
                                                                     <td>
                                                                         <div
                                                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                                            <select name="response" id="response"
+                                                                            <select  name="auditSheChecklist[1][response]" id="response"
                                                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                                                 <option value="">Select an Option</option>
                                                                                 <option value="Yes">Yes</option>
@@ -29386,7 +29334,7 @@ Quarantine/Under test / Sampled / Approved / Rejected / Recalled
                                                                     <td style="vertical-align: middle;">
                                                                         <div
                                                                             style="margin: auto; display: flex; justify-content: center;">
-                                                                            <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                            <textarea name="auditSheChecklist[1][remarks]" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                                         </div>
                                                                     </td>
 
@@ -29402,7 +29350,7 @@ Quarantine/Under test / Sampled / Approved / Rejected / Recalled
                                                                     <td>
                                                                         <div
                                                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                                            <select name="response" id="response"
+                                                                            <select  name="auditSheChecklist[2][response]" id="response"
                                                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                                                 <option value="">Select an Option</option>
                                                                                 <option value="Yes">Yes</option>
@@ -29415,7 +29363,7 @@ Quarantine/Under test / Sampled / Approved / Rejected / Recalled
                                                                     <td style="vertical-align: middle;">
                                                                         <div
                                                                             style="margin: auto; display: flex; justify-content: center;">
-                                                                            <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                            <textarea name="auditSheChecklist[2][remarks]" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                                         </div>
                                                                     </td>
 
@@ -29455,7 +29403,7 @@ Quarantine/Under test / Sampled / Approved / Rejected / Recalled
 
                                                                         <td>
                                                                             <div style="display: flex; justify-content: space-around; align-items: center; margin: 5%; gap: 5px; flex-direction: column;">
-                                                                                <select name="response1" id="response1" style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
+                                                                                <select  name="auditSheChecklist[3][response]" id="response1" style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
                                                                                     <option value="Select">Select an Option</option>
                                                                                     <option value="Yes">Yes</option>
                                                                                     <option value="No">No</option>
@@ -29471,7 +29419,7 @@ Quarantine/Under test / Sampled / Approved / Rejected / Recalled
                                                                     <td style="vertical-align: middle;">
                                                                         <div
                                                                             style="margin: auto; display: flex; justify-content: center;">
-                                                                            <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                            <textarea name="auditSheChecklist[3][remarks]" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                                         </div>
                                                                     </td>
 
@@ -29489,7 +29437,7 @@ Quarantine/Under test / Sampled / Approved / Rejected / Recalled
 
                                                                         <td>
                                                                             <div style="display: flex; justify-content: space-around; align-items: center; margin: 5%; gap: 5px; flex-direction: column;">
-                                                                                <select name="response1" id="response1" style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
+                                                                                <select  name="auditSheChecklist[4][response]" id="response1" style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
                                                                                     <option value="Select">Select an Option</option>
                                                                                     <option value="Yes">Yes</option>
                                                                                     <option value="No">No</option>
@@ -29505,7 +29453,7 @@ Quarantine/Under test / Sampled / Approved / Rejected / Recalled
                                                                     <td style="vertical-align: middle;">
                                                                         <div
                                                                             style="margin: auto; display: flex; justify-content: center;">
-                                                                            <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                            <textarea name="auditSheChecklist[4][remarks]" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                                         </div>
                                                                     </td>
 
@@ -29523,7 +29471,7 @@ Quarantine/Under test / Sampled / Approved / Rejected / Recalled
 
                                                                         <td>
                                                                             <div style="display: flex; justify-content: space-around; align-items: center; margin: 5%; gap: 5px; flex-direction: column;">
-                                                                                <select name="response1" id="response1" style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
+                                                                                <select  name="auditSheChecklist[5][response]" id="response1" style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
                                                                                     <option value="Select">Select an Option</option>
                                                                                     <option value="Yes">Yes</option>
                                                                                     <option value="No">No</option>
@@ -29539,7 +29487,7 @@ Quarantine/Under test / Sampled / Approved / Rejected / Recalled
                                                                     <td style="vertical-align: middle;">
                                                                         <div
                                                                             style="margin: auto; display: flex; justify-content: center;">
-                                                                            <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                            <textarea name="auditSheChecklist[5][remarks]" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                                         </div>
                                                                     </td>
 
@@ -29558,7 +29506,7 @@ Quarantine/Under test / Sampled / Approved / Rejected / Recalled
 
                                                                         <td>
                                                                             <div style="display: flex; justify-content: space-around; align-items: center; margin: 5%; gap: 5px; flex-direction: column;">
-                                                                                <select name="response1" id="response1" style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
+                                                                                <select  name="auditSheChecklist[6][response]" id="response1" style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
                                                                                     <option value="Select">Select an Option</option>
                                                                                     <option value="Yes">Yes</option>
                                                                                     <option value="No">No</option>
@@ -29574,7 +29522,7 @@ Quarantine/Under test / Sampled / Approved / Rejected / Recalled
                                                                     <td style="vertical-align: middle;">
                                                                         <div
                                                                             style="margin: auto; display: flex; justify-content: center;">
-                                                                            <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                            <textarea name="auditSheChecklist[6][remarks]" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                                         </div>
                                                                     </td>
 
@@ -29592,7 +29540,7 @@ Quarantine/Under test / Sampled / Approved / Rejected / Recalled
 
                                                                         <td>
                                                                             <div style="display: flex; justify-content: space-around; align-items: center; margin: 5%; gap: 5px; flex-direction: column;">
-                                                                                <select name="response1" id="response1" style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
+                                                                                <select  name="auditSheChecklist[7][response]" id="response1" style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
                                                                                     <option value="Select">Select an Option</option>
                                                                                     <option value="Yes">Yes</option>
                                                                                     <option value="No">No</option>
@@ -29608,7 +29556,7 @@ Quarantine/Under test / Sampled / Approved / Rejected / Recalled
                                                                     <td style="vertical-align: middle;">
                                                                         <div
                                                                             style="margin: auto; display: flex; justify-content: center;">
-                                                                            <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                            <textarea name="auditSheChecklist[7][remarks]" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                                         </div>
                                                                     </td>
 
@@ -29625,7 +29573,7 @@ Quarantine/Under test / Sampled / Approved / Rejected / Recalled
 
                                                                         <td>
                                                                             <div style="display: flex; justify-content: space-around; align-items: center; margin: 5%; gap: 5px; flex-direction: column;">
-                                                                                <select name="response1" id="response1" style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
+                                                                                <select  name="auditSheChecklist[8][response]" id="response1" style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
                                                                                     <option value="Select">Select an Option</option>
                                                                                     <option value="Yes">Yes</option>
                                                                                     <option value="No">No</option>
@@ -29641,7 +29589,7 @@ Quarantine/Under test / Sampled / Approved / Rejected / Recalled
                                                                     <td style="vertical-align: middle;">
                                                                         <div
                                                                             style="margin: auto; display: flex; justify-content: center;">
-                                                                            <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                            <textarea name="auditSheChecklist[8][remarks]" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                                         </div>
                                                                     </td>
 
@@ -29657,7 +29605,7 @@ Quarantine/Under test / Sampled / Approved / Rejected / Recalled
                                                                     <td>
                                                                         <div
                                                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                                            <select name="response" id="response"
+                                                                            <select  name="auditSheChecklist[9][response]" id="response"
                                                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                                                 <option value="">Select an Option</option>
                                                                                 <option value="Yes">Yes</option>
@@ -29670,7 +29618,7 @@ Quarantine/Under test / Sampled / Approved / Rejected / Recalled
                                                                     <td style="vertical-align: middle;">
                                                                         <div
                                                                             style="margin: auto; display: flex; justify-content: center;">
-                                                                            <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                            <textarea name="auditSheChecklist[9][remarks]" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                                         </div>
                                                                     </td>
                                                                 </tr>
@@ -29684,7 +29632,7 @@ Quarantine/Under test / Sampled / Approved / Rejected / Recalled
                                                                     <td>
                                                                         <div
                                                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                                            <select name="response" id="response"
+                                                                            <select  name="auditSheChecklist[10][response]" id="response"
                                                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                                                 <option value="">Select an Option</option>
                                                                                 <option value="Yes">Yes</option>
@@ -29697,7 +29645,7 @@ Quarantine/Under test / Sampled / Approved / Rejected / Recalled
                                                                     <td style="vertical-align: middle;">
                                                                         <div
                                                                             style="margin: auto; display: flex; justify-content: center;">
-                                                                            <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                            <textarea name="auditSheChecklist[10][remarks]" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                                         </div>
                                                                     </td>
                                                                 </tr>
@@ -29710,7 +29658,7 @@ Quarantine/Under test / Sampled / Approved / Rejected / Recalled
                                                                     <td>
                                                                         <div
                                                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                                            <select name="response" id="response"
+                                                                            <select  name="auditSheChecklist[11][response]" id="response"
                                                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                                                 <option value="">Select an Option</option>
                                                                                 <option value="Yes">Yes</option>
@@ -29723,7 +29671,7 @@ Quarantine/Under test / Sampled / Approved / Rejected / Recalled
                                                                     <td style="vertical-align: middle;">
                                                                         <div
                                                                             style="margin: auto; display: flex; justify-content: center;">
-                                                                            <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                            <textarea name="auditSheChecklist[11][remarks]" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                                         </div>
                                                                     </td>
                                                                 </tr>
@@ -29736,7 +29684,7 @@ Quarantine/Under test / Sampled / Approved / Rejected / Recalled
                                                                     <td>
                                                                         <div
                                                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                                            <select name="response" id="response"
+                                                                            <select  name="auditSheChecklist[12][response]" id="response"
                                                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                                                 <option value="">Select an Option</option>
                                                                                 <option value="Yes">Yes</option>
@@ -29749,7 +29697,7 @@ Quarantine/Under test / Sampled / Approved / Rejected / Recalled
                                                                     <td style="vertical-align: middle;">
                                                                         <div
                                                                             style="margin: auto; display: flex; justify-content: center;">
-                                                                            <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                            <textarea name="auditSheChecklist[12][remarks]" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                                         </div>
                                                                     </td>
                                                                 </tr>
@@ -29762,7 +29710,7 @@ Quarantine/Under test / Sampled / Approved / Rejected / Recalled
                                                                     <td>
                                                                         <div
                                                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                                            <select name="response" id="response"
+                                                                            <select  name="auditSheChecklist[13][response]" id="response"
                                                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                                                 <option value="">Select an Option</option>
                                                                                 <option value="Yes">Yes</option>
@@ -29775,7 +29723,7 @@ Quarantine/Under test / Sampled / Approved / Rejected / Recalled
                                                                     <td style="vertical-align: middle;">
                                                                         <div
                                                                             style="margin: auto; display: flex; justify-content: center;">
-                                                                            <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                            <textarea name="auditSheChecklist[13][remarks]" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                                         </div>
                                                                     </td>
                                                                 </tr>
@@ -29789,7 +29737,7 @@ Quarantine/Under test / Sampled / Approved / Rejected / Recalled
                                                                     <td>
                                                                         <div
                                                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                                            <select name="response" id="response"
+                                                                            <select  name="auditSheChecklist[14][response]" id="response"
                                                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                                                 <option value="">Select an Option</option>
                                                                                 <option value="Yes">Yes</option>
@@ -29802,7 +29750,7 @@ Quarantine/Under test / Sampled / Approved / Rejected / Recalled
                                                                     <td style="vertical-align: middle;">
                                                                         <div
                                                                             style="margin: auto; display: flex; justify-content: center;">
-                                                                            <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                            <textarea name="auditSheChecklist[14][remarks]" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                                         </div>
                                                                     </td>
                                                                 </tr>
@@ -29815,7 +29763,7 @@ Quarantine/Under test / Sampled / Approved / Rejected / Recalled
                                                                     <td>
                                                                         <div
                                                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                                            <select name="response" id="response"
+                                                                            <select  name="auditSheChecklist[15][response]" id="response"
                                                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                                                 <option value="">Select an Option</option>
                                                                                 <option value="Yes">Yes</option>
@@ -29828,7 +29776,7 @@ Quarantine/Under test / Sampled / Approved / Rejected / Recalled
                                                                     <td style="vertical-align: middle;">
                                                                         <div
                                                                             style="margin: auto; display: flex; justify-content: center;">
-                                                                            <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                            <textarea name="auditSheChecklist[15][remarks]" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                                         </div>
                                                                     </td>
                                                                 </tr>
@@ -29840,7 +29788,7 @@ Quarantine/Under test / Sampled / Approved / Rejected / Recalled
                                                                     <td>
                                                                         <div
                                                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                                            <select name="response" id="response"
+                                                                            <select  name="auditSheChecklist[16][response]" id="response"
                                                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                                                 <option value="">Select an Option</option>
                                                                                 <option value="Yes">Yes</option>
@@ -29853,7 +29801,7 @@ Quarantine/Under test / Sampled / Approved / Rejected / Recalled
                                                                     <td style="vertical-align: middle;">
                                                                         <div
                                                                             style="margin: auto; display: flex; justify-content: center;">
-                                                                            <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                            <textarea name="auditSheChecklist[16][remarks]" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                                         </div>
                                                                     </td>
                                                                 </tr>
