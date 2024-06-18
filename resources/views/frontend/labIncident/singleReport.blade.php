@@ -204,7 +204,7 @@
                     
                     <tr>
                         <th class="w-40">Site/Location Code</th>
-                        <td class="w-30">@if($data->division_id){{ $data->division_id }} @else Not Applicable @endif</td>
+                        <td class="w-30">{{$data->division?$data->division:'-'}}</td>
                         <th class="w-40">Assigned To</th>
                         <td class="w-30"> @isset($data->assign_to) {{ Helpers::getInitiatorName($data->assign_to) }} @else Not Applicable @endisset</td>
 
@@ -357,15 +357,6 @@
                 </table>
             </div>
 
-            {{-- <div class="block">
-                <div class="head">
-
-                    <table>
-                        
-                       
-                    </table>
-                </div>
-            </div> --}}
             <div class="block">
                 <div class="head">
                     <div class="block-head">
@@ -446,83 +437,18 @@
                     </table>
                 </div>
             </div>
-            <div class="block">
-                <div class="block-head">
-                   First Extension
-                </div>
-                <table>
-                    <tr>
-                        <th class="w-50" colspan="2">Reason For Extension</th>
-                        <td class="w-50" colspan="2">@if($data->reasoon_for_extension_e){{ $data->reasoon_for_extension_e }}@else Not Applicable @endif</td>
-                    </tr>
-                    <tr>
-                        <th class="w-20">Extension Date</th>
-                        <td class="w-30">@if($data->extension_date_esc){{ $data->extension_date_esc }}@else Not Applicable @endif</td>
-                        <th class="w-20">Extension Initiator Date
-                        </th>
-                        <td class="w-30">@if($data->extension_date_initiator){{ $data->extension_date_initiator }}@else Not Applicable @endif</td>
-                    </tr>
-                    <tr>
-                    <th class="w-20">Extension Initiator Date
-                    </th>
-                    <td class="w-30">@if($data->assign_to){{ $data->assign_to }}@else Not Applicable @endif</td>
-                </tr>
-                   
-                    </table>
+
+                
                     </div>
                     </div>
 
-                    <div class="block">
-                     <div class="block-head">
-                        Second Extension
-                     </div>
+                
+                     
                         <table>
-                        <tr>
-                        <th class="w-20">Reason For Extension</th>
-                        <td class="w-30">@if($data->reasoon_for_extension_esc){{ $data->reasoon_for_extension_esc }}@else Not Applicable @endif</td>
-                        <th class="w-20">Extension Date</th>
-                        <td class="w-30">@if($data->reasoon_for_extension_esc){{ $data->reasoon_for_extension_esc }}@else Not Applicable @endif</td>
                         
-                     </tr>
-                        <tr>
-                        <th class="w-20">Extension Initiator Date</th>
-                        <td class="w-80">@if($data->extension_date_idsc){{ $data->extension_date_idsc }}@else Not Applicable @endif</td>
-
-                        <th class="w-20">Extension HOD</th>
-                        <td class="w-30">@if($data->assign_to){{ $data->assign_to }}@else Not Applicable @endif</td>
-                     </tr>
-                     </div>
-                     <div class="block">
-                        <div class="block-head">
-                        Third Extension
-                        </div>
-                        <table>
-                        <tr>
-                            <th class="w-20">Reason For Extension</th>
-                            <td class="w-30">@if($data->reasoon_for_extension_tc){{ $data->reasoon_for_extension_tc }}@else Not Applicable @endif</td>
-                            <th class="w-20">Extension Date</th>
-                            <td class="w-30">@if($data->extension_date__tc){{ $data->extension_date__tc }}@else Not Applicable @endif</td>
-                            
-                        </tr>
-
-                        <tr>
-                            <th class="w-20">Extension Initiator Date</th>
-                                <td class="w-80">@if($data->extension_date_idsc){{ $data->extension_date_idsc }}@else Not Applicable @endif</td>
-        
-                                <th class="w-20">Extension Approved By QA</th>
-                                <td class="w-30">@if($data->assign_to){{ $data->assign_to }}@else Not Applicable @endif</td>
-                            </tr>
-                            <tr>
-                                <th class="w-20">Extension Approved By CQA</th>
-                                <td class="w-30">@if($data->assign_to){{ $data->assign_to }}@else Not Applicable @endif</td>
-                                
-                                <th class="w-30">Incident Investigation Attachment</th>
-                                <td class="w-80">@if($data->extension_attachments_e)<a href="{{ asset('upload/document/',$data->extension_attachments_e) }}">{{ $data->extension_attachments_e }}</a>@else Not Applicable @endif</td>
                         
-                            </tr>
-                        
-                      </table>
-                    </div>
+                     
+                     
                     {{-- @isset($singlereport) --}}
                     @foreach ($labtab as $singlereport)     
                     {{-- @foreach($labtab as $tab) --}}

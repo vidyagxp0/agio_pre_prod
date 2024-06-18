@@ -25,6 +25,7 @@
             flex: 1 1 auto;
             border: 1px solid grey;
             padding: 5px;
+            border-radius: 20px;
             text-align: center;
             position: relative;
             /* border-right: none; */
@@ -236,16 +237,15 @@
                                         </label>
                                         <select id="select-state" placeholder="Select..." name="initiated_by"
                                             {{ Helpers::disabledErrataFields($showdata->stage) }}>
-                                            <option value="{{ $showdata->initiated_by }}">
-                                                {{ $showdata->initiated_by }}</option>
-                                            <option value="Recall ">Recall </option>
-                                            <option value="Return ">Return </option>
-                                            <option value="Deviation">Deviation</option>
-                                            <option value="Complaint">Complaint</option>
-                                            <option value="Regulatory">Regulatory</option>
-                                            <option value="Lab Incident">Lab Incident</option>
-                                            <option value="Improvement">Improvement</option>
-                                            <option value="Others">Others</option>
+                                            <option value="">--Select--</option>
+                                            <option value="Recall "{{ $showdata->initiated_by == 'Recall' ? 'selected' : '' }}>Recall </option>
+                                            <option value="Return "{{ $showdata->initiated_by == 'Return' ? 'selected' : '' }}>Return </option>
+                                            <option value="Deviation"{{ $showdata->initiated_by == 'Deviation' ? 'selected' : '' }}>Deviation</option>
+                                            <option value="Complaint"{{ $showdata->initiated_by == 'Complaint' ? 'selected' : '' }}>Complaint</option>
+                                            <option value="Regulatory"{{ $showdata->initiated_by == 'Regulatory' ? 'selected' : '' }}>Regulatory</option>
+                                            <option value="Lab Incident"{{ $showdata->initiated_by == 'Lab Incident' ? 'selected' : '' }}>Lab Incident</option>
+                                            <option value="Improvement"{{ $showdata->initiated_by == 'Improvement' ? 'selected' : '' }}>Improvement</option>
+                                            <option value="Others"{{ $showdata->initiated_by == 'Others' ? 'selected' : '' }}>Others</option>
                                         </select>
                                     </div>
                                 </div>
@@ -258,6 +258,7 @@
                                         <select name="Department"
                                             {{ $showdata->stage == 0 || $showdata->stage == 6 ? 'disabled' : '' }}
                                             id="selectedOptions" {{ Helpers::disabledErrataFields($showdata->stage) }}>
+                                            <option value="">--Select--</option>
                                             <option value="CQA" @if ($showdata->Department == 'CQA') selected @endif>
                                                 Corporate
                                                 Quality Assurance</option>
@@ -313,7 +314,7 @@
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="group-input">
-                                        <label for="Initiator Group Code">Initiator Group Code</label>
+                                        <label for="Initiator Group Code">Department Code</label>
                                         <input readonly type="text"
                                             name="department_code"{{ $showdata->stage == 0 || $showdata->stage == 6 ? 'disabled' : '' }}
                                             value="{{ $showdata->department_code }}" id="initiator_group_code" readonly
@@ -357,17 +358,16 @@
                                         </label>
                                         <select id="select-state" placeholder="Select..." name="document_type"
                                             {{ Helpers::disabledErrataFields($showdata->stage) }}>
-                                            <option value="{{ $showdata->document_type }}">
-                                                {{ $showdata->document_type }}</option>
-                                            <option value="Procedure Document">Procedure Document</option>
-                                            <option value="Work Instruction">Work Instruction</option>
-                                            <option value="Form">Form</option>
-                                            <option value="Template">Template</option>
-                                            <option value="Policy Document">Policy Document</option>
-                                            <option value="Quality Record">Quality Record</option>
-                                            <option value="Specification Document">Specification Document</option>
-                                            <option value="Training Material">Training Material</option>
-                                            <option value="Other">Other</option>
+                                            <option value="">--Select--</option>
+                                            <option value="Procedure Document"@if ($showdata->document_type == 'Procedure Document') selected @endif>Procedure Document</option>
+                                            <option value="Work Instruction"@if ($showdata->document_type == 'Work Instruction') selected @endif>Work Instruction</option>
+                                            <option value="Form"@if ($showdata->document_type == 'Form') selected @endif>Form</option>
+                                            <option value="Template"@if ($showdata->document_type == 'Template') selected @endif>Template</option>
+                                            <option value="Policy Document"@if ($showdata->document_type == 'Policy Document') selected @endif>Policy Document</option>
+                                            <option value="Quality Record"@if ($showdata->document_type == 'Quality Record') selected @endif>Quality Record</option>
+                                            <option value="Specification Document"@if ($showdata->document_type == 'Specification Document') selected @endif>Specification Document</option>
+                                            <option value="Training Material"@if ($showdata->document_type == 'Training Material') selected @endif>Training Material</option>
+                                            <option value="Other"@if ($showdata->document_type == 'Other') selected @endif>Other</option>
                                         </select>
                                     </div>
                                 </div>
@@ -405,7 +405,7 @@
                                             @foreach ($old_record as $new)
                                                 <option value="{{ $new->id }}"
                                                     {{ in_array($new->id, $reference_documents) ? 'selected' : '' }}>
-                                                    {{ Helpers::getDivisionName($new->division_id) }}/ERRATA/{{ date('Y') }}/{{ $new->id }}
+                                                    {{ Helpers::getDivisionName($new->division_id) }}/ERRATA/{{ date('Y') }}/{{ str_pad($new->id, 4, '0', STR_PAD_LEFT) }}
                                                     {{-- to add record number{{ Helpers::recordFormat($new->record) }}/ --}}
                                                 </option>
                                             @endforeach
@@ -444,13 +444,12 @@
                                         </label>
                                         <select id="select-state" placeholder="Select..." name="type_of_error"
                                             {{ Helpers::disabledErrataFields($showdata->stage) }}>
-                                            <option value="{{ $showdata->type_of_error }}">
-                                                {{ $showdata->type_of_error }}</option>
-                                            <option value="Typographical Error (TE)">Typographical Error (TE)
+                                            <option value="">--Select--</option>
+                                            <option value="Typographical Error (TE)" @if ($showdata->type_of_error == 'Typographical Error (TE)') selected @endif>Typographical Error (TE)
                                             </option>
-                                            <option value="Calculation Error (CE)">Calculation Error (CE)</option>
-                                            <option value="Grammatical Error (GE)">Grammatical Error (GE)</option>
-                                            <option value="Missing Word Error (ME)">Missing Word Error (ME)
+                                            <option value="Calculation Error (CE)" @if ($showdata->type_of_error == 'Calculation Error (CE)') selected @endif>Calculation Error (CE)</option>
+                                            <option value="Grammatical Error (GE)" @if ($showdata->type_of_error == 'Grammatical Error (GE)') selected @endif>Grammatical Error (GE)</option>
+                                            <option value="Missing Word Error (ME)" @if ($showdata->type_of_error == 'Missing Word Error (ME)') selected @endif>Missing Word Error (ME)
                                             </option>
                                         </select>
                                     </div>
@@ -628,9 +627,8 @@
                                                         <h6 type="button" class="file-container text-dark"
                                                             style="background-color: rgba(255, 255, 255, 0);">
                                                             <b>{{ $file }}</b>
-                                                            <a href="{{ asset('upload/' . $file) }}" target="_blank"><i
-                                                                    class="fa fa-eye text-primary"
-                                                                    style="font-size:20px; margin-right:-10px;"></i></a>
+                                                            <a href="{{ asset('upload/' . $file) }}" target="_blank"><i class="fa fa-eye text-primary" style="font-size:20px; margin-right:-10px;"></i></a>
+                                                            <a type="button" class="remove-file" data-file-name="{{ $file }}"><i class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i></a>
                                                         </h6>
                                                     @endforeach
                                                 @endif
@@ -644,6 +642,76 @@
                                         </div>
                                     </div>
                                 </div>
+
+                                {{-- <script>
+                                    document.addEventListener('DOMContentLoaded', function () {
+                                        const removeButtons = document.querySelectorAll('.remove-file');
+
+                                        removeButtons.forEach(button => {
+                                            button.addEventListener('click', function () {
+                                                const fileName = this.getAttribute('data-file-name');
+                                                const fileContainer = this.closest('.file-container');
+
+                                                // Hide the file container
+                                                if (fileContainer) {
+                                                    fileContainer.style.display = 'none';
+                                                }
+                                            });
+                                        });
+                                    });
+                                </script> --}}
+                                <script>
+                                    document.addEventListener('DOMContentLoaded', function () {
+                                        const removeButtons = document.querySelectorAll('.remove-file');
+
+                                        removeButtons.forEach(button => {
+                                            button.addEventListener('click', function () {
+                                                const fileName = this.getAttribute('data-file-name');
+                                                const fileContainer = this.closest('.file-container');
+
+                                                // Hide the file container
+                                                if (fileContainer) {
+                                                    fileContainer.style.display = 'none';
+                                                }
+                                            });
+                                        });
+                                    });
+
+                                    function addMultipleFiles(input, id) {
+                                        const fileListContainer = document.getElementById(id);
+                                        const files = input.files;
+
+                                        for (let i = 0; i < files.length; i++) {
+                                            const file = files[i];
+                                            const fileName = file.name;
+                                            const fileContainer = document.createElement('h6');
+                                            fileContainer.classList.add('file-container', 'text-dark');
+                                            fileContainer.style.backgroundColor = 'rgb(243, 242, 240)';
+
+                                            const fileText = document.createElement('b');
+                                            fileText.textContent = fileName;
+
+                                            const viewLink = document.createElement('a');
+                                            viewLink.href = '#'; // You might need to adjust this to handle local previews
+                                            viewLink.target = '_blank';
+                                            viewLink.innerHTML = '<i class="fa fa-eye text-primary" style="font-size:20px; margin-right:-10px;"></i>';
+
+                                            const removeLink = document.createElement('a');
+                                            removeLink.classList.add('remove-file');
+                                            removeLink.dataset.fileName = fileName;
+                                            removeLink.innerHTML = '<i class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i>';
+                                            removeLink.addEventListener('click', function () {
+                                                fileContainer.style.display = 'none';
+                                            });
+
+                                            fileContainer.appendChild(fileText);
+                                            fileContainer.appendChild(viewLink);
+                                            fileContainer.appendChild(removeLink);
+
+                                            fileListContainer.appendChild(fileContainer);
+                                        }
+                                    }
+                                </script>
 
 
                                 <div class="button-block">
@@ -1909,9 +1977,8 @@
                                                         <h6 type="button" class="file-container text-dark"
                                                             style="background-color: rgba(255, 255, 255, 0);">
                                                             <b>{{ $file }}</b>
-                                                            <a href="{{ asset('upload/' . $file) }}" target="_blank"><i
-                                                                    class="fa fa-eye text-primary"
-                                                                    style="font-size:20px; margin-right:-10px;"></i></a>
+                                                            <a href="{{ asset('upload/' . $file) }}" target="_blank"><i class="fa fa-eye text-primary" style="font-size:20px; margin-right:-10px;"></i></a>
+                                                            <a type="button" class="remove-file" data-file-name="{{ $file }}"><i class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i></a>
                                                         </h6>
                                                     @endforeach
                                                 @endif
@@ -1975,10 +2042,9 @@
                                         <select id="select-state" placeholder="Select..."
                                             name="All_Impacting_Documents_Corrected"
                                             {{ Helpers::disabledErrataFields($showdata->stage) }}>
-                                            <option value="{{ $showdata->All_Impacting_Documents_Corrected }}">
-                                                {{ $showdata->All_Impacting_Documents_Corrected }}</option>
-                                            <option value="Yes">Yes</option>
-                                            <option value="No">No</option>
+                                            <option value="">--Select--</option>
+                                            <option value="Yes" @if ($showdata->All_Impacting_Documents_Corrected == 'Yes') selected @endif>Yes</option>
+                                            <option value="No" @if ($showdata->All_Impacting_Documents_Corrected == 'No') selected @endif>No</option>
                                         </select>
                                     </div>
                                 </div>
@@ -1991,7 +2057,35 @@
                                     </div>
                                 </div>
 
-                                <div class="col-12">
+                                <div class="col-lg-12">
+                                    <div class="group-input">
+                                        <label for="Initial Attachments">Closure Attachment</label>
+                                        <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
+                                        <div class="file-attachment-field">
+                                            <div class="file-attachment-list" id="Closure_Attachments">
+                                                @if ($showdata->Closure_Attachments)
+                                                    @foreach (json_decode($showdata->Closure_Attachments) as $file)
+                                                        <h6 type="button" class="file-container text-dark" style="background-color: rgb(243, 242, 240);">
+                                                            <b>{{ $file }}</b>
+                                                            <a href="{{ asset('upload/' . $file) }}" target="_blank">
+                                                                <i class="fa fa-eye text-primary" style="font-size:20px; margin-right:-10px;"></i>
+                                                            </a>
+                                                            <a type="button" class="remove-file" data-file-name="{{ $file }}">
+                                                                <i class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i>
+                                                            </a>
+                                                        </h6>
+                                                    @endforeach
+                                                @endif
+                                            </div>
+                                            <div class="add-btn">
+                                                <div>Add</div>
+                                                <input {{ $showdata->stage == 0 || $showdata->stage == 8 ? "disabled" : "" }} type="file" id="Closure_Attachments" name="Closure_Attachments[]" oninput="addMultipleFiles(this, 'Closure_Attachments')" multiple>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                {{-- <div class="col-12">
                                     <div class="group-input">
                                         <label for="Closure Attachments">Closure Attachments</label>
                                         <div><small class="text-primary">Please Attach all relevant or supporting
@@ -2004,9 +2098,8 @@
                                                         <h6 type="button" class="file-container text-dark"
                                                             style="background-color: rgba(255, 255, 255, 0);">
                                                             <b>{{ $file }}</b>
-                                                            <a href="{{ asset('upload/' . $file) }}" target="_blank"><i
-                                                                    class="fa fa-eye text-primary"
-                                                                    style="font-size:20px; margin-right:-10px;"></i></a>
+                                                            <a href="{{ asset('upload/' . $file) }}" target="_blank"><i class="fa fa-eye text-primary" style="font-size:20px; margin-right:-10px;"></i></a>
+                                                            <a type="button" class="remove-file" data-file-name="{{ $file }}"><i class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i></a>
                                                         </h6>
                                                     @endforeach
                                                 @endif
@@ -2019,7 +2112,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                </div>
+                                </div> --}}
 
 
 
