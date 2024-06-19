@@ -850,6 +850,103 @@ class MarketComplaintController extends Controller
                 $history->action_name = "store";
                 $history->save();
             }
+            if (!empty($marketComplaint->stability_study_data_review_ca)) {
+                $history = new MarketComplaintAuditTrial();
+                $history->market_id = $marketComplaint->id;
+                $history->activity_type = 'Stablity study data review';
+                $history->previous = "NA";
+                $history->current = $marketComplaint->stability_study_data_review_ca;
+                $history->comment = "Not Applicable";
+                $history->user_id = Auth::user()->id;
+                $history->user_name = Auth::user()->name;
+                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                $history->origin_state = $marketComplaint->status;
+                 $history->change_to = "Opened";
+                $history->change_from = "Initiator";
+                $history->action_name = "store";
+                $history->save();
+            }
+            if (!empty($marketComplaint->qms_events_ifany_review_observation_ca)) {
+                $history = new MarketComplaintAuditTrial();
+                $history->market_id = $marketComplaint->id;
+                $history->activity_type = 'QMS Events(if any) review Observation';
+                $history->previous = "NA";
+                $history->current = $marketComplaint->qms_events_ifany_review_observation_ca;
+                $history->comment = "Not Applicable";
+                $history->user_id = Auth::user()->id;
+                $history->user_name = Auth::user()->name;
+                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                $history->origin_state = $marketComplaint->status;
+                 $history->change_to = "Opened";
+                $history->change_from = "Initiator";
+                $history->action_name = "store";
+                $history->save();
+            }
+            if (!empty($marketComplaint->repeated_complaints_queries_for_product_ca)) {
+                $history = new MarketComplaintAuditTrial();
+                $history->market_id = $marketComplaint->id;
+                $history->activity_type = 'Repeated complaints/queries for product';
+                $history->previous = "NA";
+                $history->current = $marketComplaint->repeated_complaints_queries_for_product_ca;
+                $history->comment = "Not Applicable";
+                $history->user_id = Auth::user()->id;
+                $history->user_name = Auth::user()->name;
+                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                $history->origin_state = $marketComplaint->status;
+                 $history->change_to = "Opened";
+                $history->change_from = "Initiator";
+                $history->action_name = "store";
+                $history->save();
+            }
+            if (!empty($marketComplaint->interpretation_on_complaint_sample_ifrecieved_ca)) {
+                $history = new MarketComplaintAuditTrial();
+                $history->market_id = $marketComplaint->id;
+                $history->activity_type = 'Interpretation on compalint sample(if recieved)';
+                $history->previous = "NA";
+                $history->current = $marketComplaint->interpretation_on_complaint_sample_ifrecieved_ca;
+                $history->comment = "Not Applicable";
+                $history->user_id = Auth::user()->id;
+                $history->user_name = Auth::user()->name;
+                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                $history->origin_state = $marketComplaint->status;
+                 $history->change_to = "Opened";
+                $history->change_from = "Initiator";
+                $history->action_name = "store";
+                $history->save();
+            }
+            if (!empty($marketComplaint->comments_ifany_ca)) {
+                $history = new MarketComplaintAuditTrial();
+                $history->market_id = $marketComplaint->id;
+                $history->activity_type = 'Comments(if Any)';
+                $history->previous = "NA";
+                $history->current = $marketComplaint->comments_ifany_ca;
+                $history->comment = "Not Applicable";
+                $history->user_id = Auth::user()->id;
+                $history->user_name = Auth::user()->name;
+                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                $history->origin_state = $marketComplaint->status;
+                 $history->change_to = "Opened";
+                $history->change_from = "Initiator";
+                $history->action_name = "store";
+                $history->save();
+            }
+            if (!empty($marketComplaint->initial_attachment_ca)) {
+                $history = new MarketComplaintAuditTrial();
+                $history->market_id = $marketComplaint->id;
+                $history->activity_type = 'Acknowledgement Attachment';
+                $history->previous = "NA";
+                $history->current = $marketComplaint->initial_attachment_ca;
+                $history->comment = "Not Applicable";
+                $history->user_id = Auth::user()->id;
+                $history->user_name = Auth::user()->name;
+                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                $history->origin_state = $marketComplaint->status;
+                 $history->change_to = "Opened";
+                $history->change_from = "Initiator";
+                $history->action_name = "store";
+                $history->save();
+            }
+
 
 // ====================================================audit show end creatre ========================================
                 // -----------------------------------------------------grid string data

@@ -431,7 +431,7 @@
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Initiator Group">Complainant</label>
-                                        <select id="select-state" placeholder="Select..." name="assign_to">
+                                        <select id="select-state" placeholder="Select..." name="complainant_gi">
                                             <option value="">Select a value</option>
                                             @foreach ($users as $value)
                                                 <option value="{{ $value->id }}">{{ $value->name }}</option>
@@ -448,7 +448,7 @@
                                         <label for="complaint_reported_on">Complaint Reported On</label>
                                         <div class="calenderauditee">
                                             <input type="text" id="complaint_dat" readonly placeholder="DD-MMM-YYYY" />
-                                            <input type="date" id="complaint_date_picker" name="complaint_reported_on"
+                                            <input type="date" id="complaint_date_picker" name="complaint_reported_on_gi"
                                                 value=""
                                                 class="hide-input" oninput="handleDateInput(this, 'complaint_dat')" />
                                         </div>

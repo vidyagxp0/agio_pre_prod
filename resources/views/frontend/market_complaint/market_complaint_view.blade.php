@@ -956,13 +956,14 @@
                 <div class="col-lg-6">
                     <div class="group-input">
                         <label for="Initiator Group">Complainant</label>
-                        <select id="select-state" placeholder="Select..." name="assign_to">
+                        <select id="select-state" placeholder="Select..." name="complainant_gi">
                             <option value="">Select a value</option>
                             @foreach ($users as $value)
-                                <option value="{{ $value->id }}">{{ $value->name }}</option>
+                                <option {{ $data->complainant_gi == $value->id ? 'selected' : '' }}
+                                    value="{{ $value->id }}">{{ $value->name }}</option>
                             @endforeach
                         </select>
-                        @error('assign_to')
+                        @error('complainant_gi')
                             <p class="text-danger">{{ $message }}</p>
                         @enderror
                     </div>
@@ -1027,10 +1028,8 @@
                                 <div class="group-input input-date">
                                     <label for="complaint_reported_on">Complaint Reported On</label>
                                     <div class="calenderauditee">
-                                        <input type="text" id="complaint_dat" readonly placeholder="DD-MMM-YYYY"  value="{{ $data->complaint_reported_on_gi }}" />
-                                        <input type="date" id="complaint_date_picker" name="complaint_reported_on"
-                                            value="{{ $data->complaint_reported_on_gi }}"
-                                            class="hide-input" oninput="handleDateInput(this, 'complaint_dat')" />
+                                        <input type="text" id="complaint_dat" readonly placeholder="DD-MMM-YYYY" value="{{ $data->complaint_reported_on_gi ? \Carbon\Carbon::parse($data->complaint_reported_on_gi)->format('d-M-Y') : '' }}" />
+                                        <input type="date" id="complaint_date_picker" name="complaint_reported_on_gi" value="{{ $data->complaint_reported_on_gi }}" class="hide-input" oninput="handleDateInput(this, 'complaint_dat')" />
                                     </div>
                                 </div>
                             </div>
@@ -1051,8 +1050,7 @@
                                     // Update the readonly input when a date is selected
                                     dateInput.addEventListener('change', () => {
                                         const selectedDate = new Date(dateInput.value);
-                                        const options = { day: '2-digit', month: 'short', year: 'numeric' };
-                                        readonlyInput.value = selectedDate.toLocaleDateString('en-GB', options).replace(/ /g, '-');
+                                        readonlyInput.value = formatDate(selectedDate);
                                         dateInput.style.display = 'none';
                                     });
                                 });
@@ -1060,10 +1058,15 @@
                                 function handleDateInput(dateInput, readonlyInputId) {
                                     const readonlyInput = document.getElementById(readonlyInputId);
                                     const selectedDate = new Date(dateInput.value);
+                                    readonlyInput.value = formatDate(selectedDate);
+                                }
+                            
+                                function formatDate(date) {
                                     const options = { day: '2-digit', month: 'short', year: 'numeric' };
-                                    readonlyInput.value = selectedDate.toLocaleDateString('en-GB', options).replace(/ /g, '-');
+                                    return date.toLocaleDateString('en-GB', options).replace(/ /g, '-');
                                 }
                             </script>
+                            
 
 
                             <div class="col-md-12 mb-3">
