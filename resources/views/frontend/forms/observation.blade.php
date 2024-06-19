@@ -127,16 +127,23 @@
                                 </div> --}}
                                 <div class="col-lg-6 new-date-data-field">
                                     <div class="group-input input-date">
-                                        <label for="Date Due">Date Due</label>
+                                        <label for="Date Due">Due Date</label>
                                         <div><small class="text-primary">If revising Due Date, kindly mention revision
                                                 reason in "Due Date Extension Justification" data field.</small>
                                         </div>
                                         <div class="calenderauditee">
+                                            <input type="text" name="due_date"
+                                                id="due_date" readonly placeholder="DD-MMM-YYYY" />
+                                            <input type="date" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
+                                                class="hide-input"
+                                                oninput="handleDateInput(this, 'due_date')" />
+                                        </div>
+                                        {{-- <div class="calenderauditee">
                                             <input disabled type="text" name="due_date" id="due_date" value="{{ \Carbon\Carbon::now()->addDays(30)->format('d-M-Y') }}" />
                                             <input type="hidden" name="due_date"
                                                 min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input"
                                                 oninput="handleDateInput(this, 'due_date')" />
-                                        </div>
+                                        </div> --}}
                                     </div>
                                 </div>
                                 <div class="col-12">
@@ -286,7 +293,23 @@
                                         <input type="file" name="attach_files1" />
                                     </div>
                                 </div> --}}
-                                <div class="col-12">
+                                <div class="col-lg-12">
+                                    <div class="group-input">
+                                        <label for="Attached Files">Attached Files </label>
+                                        <div><small class="text-primary">
+                                            </small>
+                                        </div>
+                                        <div class="file-attachment-field">
+                                            <div class="file-attachment-list" id="attach_files_gi"></div>
+                                            <div class="add-btn">
+                                                <div>Add</div>
+                                                <input type="file" id="attach_files_gi" name="attach_files_gi[]"
+                                                    oninput="addMultipleFiles(this, 'attach_files_gi')" multiple>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                {{-- <div class="col-12">
                                     <div class="group-input">
                                         <label for="attach_files1">Attached Files</label>
                                         <div><small class="text-primary">Please Attach all relevant or supporting
@@ -301,7 +324,7 @@
                                         </div>
 
                                     </div>
-                                </div>
+                                </div> --}}
                                 {{-- <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="capa_date_due">Recomendation Date Due for CAPA</label>
@@ -376,9 +399,9 @@
                                 </div> --}}
                                 <div class="col-md-6 new-date-data-field">
                                     <div class="group-input input-date ">
-                                        <label for="date_Response_due1">Date Response Due</label>
+                                        <label for="date_Response_due2">Date Response Due</label>
                                         <div class="calenderauditee">
-                                            <input type="text" name="date_response_due1" id="date_Response_due"
+                                            <input type="text" name="date_Response_due2" id="date_Response_due"
                                                 readonly placeholder="DD-MMM-YYYY" />
                                             <input type="date" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
                                                 id="date_Response_due_checkdate" class="hide-input"
@@ -462,7 +485,7 @@
                                         <table class="table table-bordered" id="observation">
                                             <thead>
                                                 <tr>
-                                                    <th style="width: 25%;">S.No</th>
+                                                    <th style="width: 25px;">S.No.</th>
                                                     <th>Action</th>
                                                     <th>Responsible</th>
                                                     <th>Deadline</th>
@@ -815,15 +838,15 @@
                                     <div class="group-input">
                                         <label for="QA Approval Without CAPA By">QA Approval Without CAPA
                                             By</label>
-                                        <div class="static"></div>
-                                    </div>
+                                            <div class="static"></div>
+                                        </div>
                                 </div>
                                 <div class="col-lg-4">
                                     <div class="group-input">
                                         <label for="QA Approval Without CAPA On">QA Approval Without CAPA
                                             On</label>
-                                        <div class="static"></div>
-                                    </div>
+                                            <div class="static"></div>
+                                        </div>
                                 </div>
                                 <div class="col-lg-4">
                                     <div class="group-input">
@@ -890,12 +913,14 @@
                                 </div>
 
                             </div>
-                        <div class="button-block">
-                            <button type="submit" class="saveButton">Save</button>
-                            <button type="button" class="backButton" onclick="previousStep()">Back</button>
-                            <button type="submit">Submit</button>
-                            <button type="button"> <a class="text-white" href="{{ url('dashboard') }}"> Exit </a>
-                            </button>
+                            <div class="button-block">
+                                <button type="submit" class="saveButton">Save</button>
+                                <button type="button" class="backButton" onclick="previousStep()">Back</button>
+                                <button type="submit">Submit</button>
+                                <button type="button"> <a class="text-white"
+                                        href="{{ url('rcms/qms-dashboard') }}"> Exit </a>
+                                </button>
+                            </div>
                         </div>
                     </div>
                 </div>

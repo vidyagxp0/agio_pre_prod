@@ -138,6 +138,7 @@ Route::group(['prefix' => 'rcms'], function () {
             Route::post('root_cause_analysis/{id}', [LabIncidentController::class, 'root_cause_analysis'])->name('Child_root_cause_analysis');
             Route::get('LabIncidentSingleReport/{id}', [LabIncidentController::class, 'singleReport'])->name('LabIncidentSingleReport');
             Route::get('LabIncidentAuditReport/{id}', [LabIncidentController::class, 'auditReport'])->name('LabIncidentAuditReport');
+            Route::post('labExtChild/{id}', [LabIncidentController::class, 'lab_incident_extension_child'])->name('lab_incident_extension_child');
             //------------------------------------
 
 

@@ -94,7 +94,7 @@ class DashboardController extends Controller
             array_push($table, [
                 "id" => $data->id,
                 "parent" => $data->cc_id ? $data->cc_id : "-",
-                "parent" => $data->parent_record ? $data->parent_record : "-",
+                // "parent" => $data->parent_record ? $data->parent_record : "-",
                 "record" => $data->record,
                 "due_date" => $data->due_date,
                 "type" => "Change-Control",
@@ -1053,6 +1053,13 @@ class DashboardController extends Controller
             $data = Incident::find($id);
             $single = "incident-single-report/" . $data->id;
             $audit = "incident-audit-pdf/" . $data->id;
+            $division = QMSDivision::find($data->division_id);
+            $division_name = $division->name;
+        }
+        elseif ($type == "Non Conformance") {
+            $data = NonConformance::find($id);
+            $single = "non-conformance-single-report/" . $data->id;
+            $audit = "non-conformance-audit-pdf/" . $data->id;
             $division = QMSDivision::find($data->division_id);
             $division_name = $division->name;
         }

@@ -766,28 +766,35 @@
 
                             <div class="col-md-6 new-date-data-field">
                                 <div class="group-input input-date">
-                                    <label for="due-date">Due Date <span class="text-danger"></span></label>
-                                    <p class="text-primary"> last date this record should be closed by</p>
-
+                                    <label for="due-date">Due Date <span class="text-danger">*</span></label>
                                     <div class="calenderauditee">
-                                        <input type="text" id="due_date" readonly placeholder="DD-MMM-YYYY" value="{{ $data->due_date_gi ? \Carbon\Carbon::parse($data->due_date_gi)->format('d-M-Y') : '' }}" />
-                                        <input type="date" name="due_date_gi"
-                                            min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
-                                            value="{{ $data->due_date_gi ?? '' }}" class="hide-input"
-                                            oninput="handleDateInput(this, 'due_date')" />
+                                        <!-- Display the formatted date in a readonly input -->
+                                        <input type="text" id="due_date_display" readonly placeholder="DD-MMM-YYYY" value="{{ Helpers::getDueDate(30, true) }}" />
+                                       
+                                        <input type="date" name="due_date_gi" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" value="{{ Helpers::getDueDate(30, false) }}" class="hide-input" readonly />
                                     </div>
                                 </div>
                             </div>
-
                             <script>
-                            function handleDateInput(input, targetId) {
-                                const target = document.getElementById(targetId);
-                                const date = new Date(input.value);
-                                const options = { day: '2-digit', month: 'short', year: 'numeric' };
-                                const formattedDate = date.toLocaleDateString('en-US', options).replace(/ /g, '-');
-                                target.value = formattedDate;
-                            }
-                            </script>
+                                function handleDateInput(dateInput, displayId) {
+                                    const date = new Date(dateInput.value);
+                                    const options = { day: '2-digit', month: 'short', year: 'numeric' };
+                                    document.getElementById(displayId).value = date.toLocaleDateString('en-GB', options).replace(/ /g, '-');
+                                }
+                                
+                                // Call this function initially to ensure the correct format is shown on page load
+                                document.addEventListener('DOMContentLoaded', function() {
+                                    const dateInput = document.querySelector('input[name="due_date"]');
+                                    handleDateInput(dateInput, 'due_date_display');
+                                });
+                                </script>
+                                
+                                <style>
+                                .hide-input {
+                                    display: none;
+                                }
+                                </style>
+
 
                         <div class="col-md-12 mb-3">
                                     <div class="group-input">
@@ -912,7 +919,7 @@
 
                             <div class="col-12">
                     <div class="group-input">
-                        <label for="Inv Attachments">Initial Attachment</label>
+                        <label for="Inv Attachments">Information Attachment</label>
                         <div>
                             <small class="text-primary">
                                 Please Attach all relevant or supporting documents
@@ -946,18 +953,22 @@
                     </div>
                 </div>
 
-                            <div class="col-lg-6">
-                                <div class="group-input">
-                                    <label for="Initiator Group">Complainant</label>
-                                    <select name="complainant_gi" onchange="" {{ $data->stage == 0 || $data->stage == 8 ? "disabled" : "" }}>
-                                        <option value=""{{ $data->complainant_gi == 'o' ? 'selected' : '' }}>--
-                                            select --</option>
-                                        <option value="person"{{ $data->complainant_gi == 'person' ? 'selected' : '' }}>
-                                            person</option>
+                <div class="col-lg-6">
+                    <div class="group-input">
+                        <label for="Initiator Group">Complainant</label>
+                        <select id="select-state" placeholder="Select..." name="complainant_gi">
+                            <option value="">Select a value</option>
+                            @foreach ($users as $value)
+                                <option {{ $data->complainant_gi == $value->id ? 'selected' : '' }}
+                                    value="{{ $value->id }}">{{ $value->name }}</option>
+                            @endforeach
+                        </select>
+                        @error('complainant_gi')
+                            <p class="text-danger">{{ $message }}</p>
+                        @enderror
+                    </div>
+                </div>
 
-                                    </select>
-                                </div>
-                            </div>
 
                             {{-- <div class="col-lg-6 new-date-data-field">
                                 <div class="group-input input-date">
@@ -974,7 +985,7 @@
 
                                 </div>
                             </div> --}}
-                            <div class="col-lg-6 new-date-data-field">
+                            {{-- <div class="col-lg-6 new-date-data-field">
                                 <div class="group-input input-date">
                                     <label for="OOC Logged On">Complaint Reported On</label>
                                     <div class="calenderauditee">
@@ -1010,7 +1021,53 @@
                                         readonlyInput.value = new Date(dateInput.value).toLocaleDateString('en-GB');
                                     }
                                 });
+                            </script> --}}
+
+
+                            <div class="col-lg-6 new-date-data-field">
+                                <div class="group-input input-date">
+                                    <label for="complaint_reported_on">Complaint Reported On</label>
+                                    <div class="calenderauditee">
+                                        <input type="text" id="complaint_dat" readonly placeholder="DD-MMM-YYYY" value="{{ $data->complaint_reported_on_gi ? \Carbon\Carbon::parse($data->complaint_reported_on_gi)->format('d-M-Y') : '' }}" />
+                                        <input type="date" id="complaint_date_picker" name="complaint_reported_on_gi" value="{{ $data->complaint_reported_on_gi }}" class="hide-input" oninput="handleDateInput(this, 'complaint_dat')" />
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <script>
+                                document.addEventListener('DOMContentLoaded', (event) => {
+                                    const dateInput = document.getElementById('complaint_date_picker');
+                                    const today = new Date().toISOString().split('T')[0];
+                                    dateInput.setAttribute('max', today);
+                            
+                                    // Show the date picker when clicking on the readonly input
+                                    const readonlyInput = document.getElementById('complaint_dat');
+                                    readonlyInput.addEventListener('click', () => {
+                                        dateInput.style.display = 'block';
+                                        dateInput.focus();
+                                    });
+                            
+                                    // Update the readonly input when a date is selected
+                                    dateInput.addEventListener('change', () => {
+                                        const selectedDate = new Date(dateInput.value);
+                                        readonlyInput.value = formatDate(selectedDate);
+                                        dateInput.style.display = 'none';
+                                    });
+                                });
+                            
+                                function handleDateInput(dateInput, readonlyInputId) {
+                                    const readonlyInput = document.getElementById(readonlyInputId);
+                                    const selectedDate = new Date(dateInput.value);
+                                    readonlyInput.value = formatDate(selectedDate);
+                                }
+                            
+                                function formatDate(date) {
+                                    const options = { day: '2-digit', month: 'short', year: 'numeric' };
+                                    return date.toLocaleDateString('en-GB', options).replace(/ /g, '-');
+                                }
                             </script>
+                            
+
 
                             <div class="col-md-12 mb-3">
                                 <div class="group-input">
@@ -1872,7 +1929,7 @@
                            
                 <div class="col-12">
                     <div class="group-input">
-                        <label for="Inv Attachments">Initial Attachment</label>
+                        <label for="Inv Attachments">HOD Attachment</label>
                         <div>
                             <small class="text-primary">
                                 Please Attach all relevant or supporting documents
@@ -2320,7 +2377,7 @@
 
                     <div class="col-12">
                         <div class="group-input">
-                            <label for="Inv Attachments">Initial Attachment</label>
+                            <label for="Inv Attachments">Acknowledgement Attachment</label>
                             <div>
                                 <small class="text-primary">
                                     Please Attach all relevant or supporting documents
@@ -2408,7 +2465,7 @@
 
                 <div class="col-12">
                     <div class="group-input">
-                        <label for="Inv Attachments">Initial Attachment</label>
+                        <label for="Inv Attachments">Closure Attachment</label>
                         <div>
                             <small class="text-primary">
                                 Please Attach all relevant or supporting documents

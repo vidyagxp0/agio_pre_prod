@@ -43,12 +43,15 @@ use Illuminate\Support\Facades\Validator;
 class IncidentController extends Controller
 {
     public function index(Request $request){
+
         $old_record = Incident::select('id', 'division_id', 'record')->get();
         $currentDate = Carbon::now();
+        $data = ((RecordNumber::first()->value('counter')) + 1);
+        $data = str_pad($data, 4, '0', STR_PAD_LEFT);
         $formattedDate = $currentDate->addDays(30);
         $due_date = $formattedDate->format('d-M-Y');
         $pre = Incident::all();
-        return response()->view('frontend.incident.incident-new', compact('formattedDate', 'due_date', 'old_record', 'pre'));
+        return response()->view('frontend.incident.incident-new', compact('formattedDate','data', 'due_date', 'old_record', 'pre'));
     }
 
     public function store(Request $request)
@@ -145,151 +148,167 @@ class IncidentController extends Controller
         $incident->Document_Details_Required = $request->Document_Details_Required;
       
         if ($request->incident_category == 'major' || $request->incident_category == 'minor' || $request->incident_category == 'critical') {
-            // $list = Helpers::getHeadoperationsUserList();
-            //         foreach ($list as $u) {
-            //             if ($u->q_m_s_divisions_id == $incident->division_id) {
-            //                 $email = Helpers::getInitiatorEmail($u->user_id);
-            //                 if ($email !== null) {
-            //                     try {
-            //                         Mail::send(
-            //                             'mail.Categorymail',
-            //                             ['data' => $incident],
-            //                             function ($message) use ($email) {
-            //                                 $message->to($email)
-            //                                     ->subject("Activity Performed By " . Auth::user()->name);
-            //                             }
-            //                         );
-            //                     } catch (\Exception $e) {
-            //                     }
+            $list = Helpers::getHeadoperationsUserList();
+                    foreach ($list as $u) {
+                        if ($u->q_m_s_divisions_id == $incident->division_id) {
+                            $email = Helpers::getInitiatorEmail($u->user_id);
+                            if ($email !== null) {
+                                 // Add this if statement
+                                try {
+                                    Mail::send(
+                                        'mail.Categorymail',
+                                        ['data' => $incident],
+                                        function ($message) use ($email) {
+                                            $message->to($email)
+                                                ->subject("Activity Performed By " . Auth::user()->name);
+                                        }
+                                    );
+                                } catch (\Exception $e) {
+                                    //log error
+                                }
 
-            //                 }
-            //             }
-            //         }
+                            }
+                        }
+                    }
                 }
 
 
                 if ($request->incident_category == 'major' || $request->incident_category == 'minor' || $request->incident_category == 'critical') {
-                    // $list = Helpers::getCEOUserList();
-                    //         foreach ($list as $u) {
-                    //             if ($u->q_m_s_divisions_id == $incident->division_id) {
-                    //                 $email = Helpers::getInitiatorEmail($u->user_id);
-                    //                 if ($email !== null) {
-                                         
-                    //                      try {
-                    //                             Mail::send(
-                    //                                 'mail.Categorymail',
-                    //                                 ['data' => $incident],
-                    //                                 function ($message) use ($email) {
-                    //                                     $message->to($email)
-                    //                                         ->subject("Activity Performed By " . Auth::user()->name);
-                    //                                 }
-                    //                             );
-                    //                         } catch (\Exception $e) {
-                                                
-                    //                         }
+                    $list = Helpers::getCEOUserList();
+                            foreach ($list as $u) {
+                                if ($u->q_m_s_divisions_id == $incident->division_id) {
+                                    $email = Helpers::getInitiatorEmail($u->user_id);
+                                    if ($email !== null) {
+                                         // Add this if statement
+                                         try {
+                                                Mail::send(
+                                                    'mail.Categorymail',
+                                                    ['data' => $incident],
+                                                    function ($message) use ($email) {
+                                                        $message->to($email)
+                                                            ->subject("Activity Performed By " . Auth::user()->name);
+                                                    }
+                                                );
+                                            } catch (\Exception $e) {
+                                                //log error
+                                            }
 
-                    //                 }
-                    //             }
-                    //         }
+                                    }
+                                }
+                            }
                         }
                         if ($request->incident_category == 'major' || $request->incident_category == 'minor' || $request->incident_category == 'critical') {
-                            // $list = Helpers::getCorporateEHSHeadUserList();
-                            //         foreach ($list as $u) {
-                            //             if ($u->q_m_s_divisions_id == $incident->division_id) {
-                            //                 $email = Helpers::getInitiatorEmail($u->user_id);
-                            //                 if ($email !== null) {
-                                                 
-                            //                      try {
-                            //                             Mail::send(
-                            //                                 'mail.Categorymail',
-                            //                                 ['data' => $incident],
-                            //                                 function ($message) use ($email) {
-                            //                                     $message->to($email)
-                            //                                         ->subject("Activity Performed By " . Auth::user()->name);
-                            //                                 }
-                            //                             );
-                            //                         } catch (\Exception $e) {
-                                                        
-                            //                         }
+                            $list = Helpers::getCorporateEHSHeadUserList();
+                                    foreach ($list as $u) {
+                                        if ($u->q_m_s_divisions_id == $incident->division_id) {
+                                            $email = Helpers::getInitiatorEmail($u->user_id);
+                                            if ($email !== null) {
+                                                 // Add this if statement
+                                                 try {
+                                                        Mail::send(
+                                                            'mail.Categorymail',
+                                                            ['data' => $incident],
+                                                            function ($message) use ($email) {
+                                                                $message->to($email)
+                                                                    ->subject("Activity Performed By " . Auth::user()->name);
+                                                            }
+                                                        );
+                                                    } catch (\Exception $e) {
+                                                        //log error
+                                                    }
 
-                            //                 }
-                            //             }
-                            //         }
+                                            }
+                                        }
+                                    }
                                 }
 
                                 if ($request->Post_Categorization == 'major' || $request->Post_Categorization == 'minor' || $request->Post_Categorization == 'critical') {
-                                    // $list = Helpers::getHeadoperationsUserList();
-                                    //         foreach ($list as $u) {
-                                    //             if ($u->q_m_s_divisions_id == $incident->division_id) {
-                                    //                 $email = Helpers::getInitiatorEmail($u->user_id);
-                                    //                 if ($email !== null) {
-                                                         
-                                    //                      try {
-                                    //                         Mail::send(
-                                    //                             'mail.Categorymail',
-                                    //                             ['data' => $incident],
-                                    //                             function ($message) use ($email) {
-                                    //                                 $message->to($email)
-                                    //                                     ->subject("Activity Performed By " . Auth::user()->name);
-                                    //                             }
-                                    //                         );
-                                    //                     } catch (\Exception $e) {
-                                                            
-                                    //                     }
-
-                                    //                 }
-                                    //             }
-                                    //         }
-                                        }
-                                        if ($request->Post_Categorization == 'major' || $request->Post_Categorization == 'minor' || $request->Post_Categorization == 'critical') {
-                                            // $list = Helpers::getCEOUserList();
-                                            //         foreach ($list as $u) {
-                                            //             if ($u->q_m_s_divisions_id == $incident->division_id) {
-                                            //                 $email = Helpers::getInitiatorEmail($u->user_id);
-                                            //                 if ($email !== null) {
-                                                                 
-                                            //                      try {
-                                            //                             Mail::send(
-                                            //                                 'mail.Categorymail',
-                                            //                                 ['data' => $incident],
-                                            //                                 function ($message) use ($email) {
-                                            //                                     $message->to($email)
-                                            //                                         ->subject("Activity Performed By " . Auth::user()->name);
-                                            //                                 }
-                                            //                             );
-                                            //                         } catch (\Exception $e) {
-                                                                        
-                                            //                         }
-
-                                            //                 }
-                                            //             }
-                                            //         }
-                                                }
-                                                if ($request->Post_Categorization == 'major' || $request->Post_Categorization == 'minor' || $request->Post_Categorization == 'critical') {
-                                                    // $list = Helpers::getCorporateEHSHeadUserList();
-                                                    //         foreach ($list as $u) {
-                                                    //             if ($u->q_m_s_divisions_id == $incident->division_id) {
-                                                    //                 $email = Helpers::getInitiatorEmail($u->user_id);
-                                                    //                 if ($email !== null) {
-                                                                         
-                                                    //                      try {
-                                                    //                             Mail::send(
-                                                    //                                 'mail.Categorymail',
-                                                    //                                 ['data' => $incident],
-                                                    //                                 function ($message) use ($email) {
-                                                    //                                     $message->to($email)
-                                                    //                                         ->subject("Activity Performed By " . Auth::user()->name);
-                                                    //                                 }
-                                                    //                             );
-                                                    //                         } catch (\Exception $e) {
-                                                                                
-                                                    //                         }
-
-                                                    //                 }
-                                                    //             }
-                                                    //         }
+                                    $list = Helpers::getHeadoperationsUserList();
+                                            foreach ($list as $u) {
+                                                if ($u->q_m_s_divisions_id == $incident->division_id) {
+                                                    $email = Helpers::getInitiatorEmail($u->user_id);
+                                                    if ($email !== null) {
+                                                         // Add this if statement
+                                                         try {
+                                                            Mail::send(
+                                                                'mail.Categorymail',
+                                                                ['data' => $incident],
+                                                                function ($message) use ($email) {
+                                                                    $message->to($email)
+                                                                        ->subject("Activity Performed By " . Auth::user()->name);
+                                                                }
+                                                            );
+                                                        } catch (\Exception $e) {
+                                                            //log error
                                                         }
 
+                                                    }
+                                                }
+                                            }
+                                        }
+                                        if ($request->Post_Categorization == 'major' || $request->Post_Categorization == 'minor' || $request->Post_Categorization == 'critical') {
+                                            $list = Helpers::getCEOUserList();
+                                                    foreach ($list as $u) {
+                                                        if ($u->q_m_s_divisions_id == $incident->division_id) {
+                                                            $email = Helpers::getInitiatorEmail($u->user_id);
+                                                            if ($email !== null) {
+                                                                 // Add this if statement
+                                                                 try {
+                                                                        Mail::send(
+                                                                            'mail.Categorymail',
+                                                                            ['data' => $incident],
+                                                                            function ($message) use ($email) {
+                                                                                $message->to($email)
+                                                                                    ->subject("Activity Performed By " . Auth::user()->name);
+                                                                            }
+                                                                        );
+                                                                    } catch (\Exception $e) {
+                                                                        //log error
+                                                                    }
+
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                                if ($request->Post_Categorization == 'major' || $request->Post_Categorization == 'minor' || $request->Post_Categorization == 'critical') {
+                                                    $list = Helpers::getCorporateEHSHeadUserList();
+                                                            foreach ($list as $u) {
+                                                                if ($u->q_m_s_divisions_id == $incident->division_id) {
+                                                                    $email = Helpers::getInitiatorEmail($u->user_id);
+                                                                    if ($email !== null) {
+                                                                         // Add this if statement
+                                                                         try {
+                                                                                Mail::send(
+                                                                                    'mail.Categorymail',
+                                                                                    ['data' => $incident],
+                                                                                    function ($message) use ($email) {
+                                                                                        $message->to($email)
+                                                                                            ->subject("Activity Performed By " . Auth::user()->name);
+                                                                                    }
+                                                                                );
+                                                                            } catch (\Exception $e) {
+                                                                                //log error
+                                                                            }
+
+                                                                    }
+                                                                }
+                                                            }
+                                                        }
+                                                          
+     if (!empty ($request->Initial_attachment)) {
+
+   $files = [];
+
+if ($incident->Initial_attachment) {
+    $existingFiles = json_decode($incident->Initial_attachment, true); // Convert to associative array
+    if (is_array($existingFiles)) {
+        $files = $existingFiles;
+    }
+    // $files = is_array(json_decode($NonConformance->Audit_file)) ? $NonConformance->Audit_file : [];
+}
+
+
+}
         if (!empty ($request->Audit_file)) {
             $files = [];
             if ($request->hasfile('Audit_file')) {
@@ -317,19 +336,7 @@ class IncidentController extends Controller
             $incident->initial_file = json_encode($files);
         }
         //dd($request->Initial_attachment);
-        if (!empty ($request->Initial_attachment)) {
-            $files = [];
-            if ($request->hasfile('Initial_attachment')) {
-                foreach ($request->file('Initial_attachment') as $file) {
-                    $name = $request->name . 'Initial_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
-                    $file->move('upload/', $name);
-                    $files[] = $name;
-                }
-            }
-
-
-            $incident->Initial_attachment = json_encode($files);
-        }
+       
 
         if (!empty ($request->QA_attachment)) {
             $files = [];
@@ -409,6 +416,32 @@ class IncidentController extends Controller
         $incident->stage = 1;
 
         $incident->save();
+
+            $teamInvestigationData = IncidentGridData::where(['incident_id' => $incident->id,'identifier' => "TeamInvestigation"])->firstOrCreate();
+            $teamInvestigationData->incident_id = $incident->id;
+            $teamInvestigationData->identifier = "TeamInvestigation";
+            $teamInvestigationData->data = $request->investigationTeam;
+            $teamInvestigationData->save();
+
+            $rootCauseData = IncidentGridData::where(['incident_id' => $incident->id,'identifier' => "RootCause"])->firstOrCreate();
+            $rootCauseData->incident_id = $incident->id;
+            $rootCauseData->identifier = "RootCause";
+            $rootCauseData->data = $request->rootCauseData;
+            $rootCauseData->save();
+
+            $newDataGridWhy = IncidentGridData::where(['incident_id' => $incident->id, 'identifier' => 'why'])->firstOrCreate();
+            $newDataGridWhy->incident_id = $incident->id;
+            $newDataGridWhy->identifier = 'why';
+            $newDataGridWhy->data = $request->why;
+            $newDataGridWhy->save();
+
+            $newDataGridFishbone = IncidentGridData::where(['incident_id' => $incident->id, 'identifier' => 'fishbone'])->firstOrCreate();
+            $newDataGridFishbone->incident_id = $incident->id;
+            $newDataGridFishbone->identifier = 'fishbone';
+            $newDataGridFishbone->data = $request->fishbone;
+            $newDataGridFishbone->save();
+
+
 
         $data3 = new IncidentGrid();
         $data3->incident_grid_id = $incident->id;
@@ -1081,12 +1114,13 @@ class IncidentController extends Controller
         // dd($data->initiator_id);
         $pre = Incident::all();
         $divisionName = DB::table('q_m_s_divisions')->where('id', $data->division_id)->value('name');
+
         $incidentNewGrid = IncidentGridData::where('incident_id', $id)->latest()->first();
 
-        $investigation_data = IncidentGridData::where(['incident_id' => $id, 'identifier' => 'investication'])->first();
-        $root_cause_data = IncidentGridData::where(['incident_id' => $id, 'identifier' => 'rootCause'])->first();
-        $why_data = IncidentGridData::where(['incident_id' => $id, 'identifier' => 'why'])->first();
-        $fishbone_data = IncidentGridData::where(['incident_id' => $id, 'identifier' => 'fishbone'])->first();
+         $investigation_data = IncidentGridData::where(['incident_id' => $id, 'identifier' => 'investication'])->first();
+        
+        // $why_data = IncidentGridData::where(['incident_id' => $id, 'identifier' => 'why'])->first();
+        // $fishbone_data = IncidentGridData::where(['incident_id' => $id, 'identifier' => 'fishbone'])->first();
 
         $grid_data_qrms = IncidentGridFailureMode::where(['incident_id' => $id, 'identifier' => 'failure_mode_qrms'])->first();
         $grid_data_matrix_qrms = IncidentGridFailureMode::where(['incident_id' => $id, 'identifier' => 'matrix_qrms'])->first();
@@ -1096,7 +1130,21 @@ class IncidentController extends Controller
         $investigationExtension = IncidentLaunchExtension::where(['incident_id' => $id, "extension_identifier" => "Investigation"])->first();
         $incidentExtension = IncidentLaunchExtension::where(['incident_id' => $id, "extension_identifier" => "Incident"])->first();
 
-        return view('frontend.incident.incident-view', compact('data','userData', 'grid_data_qrms','grid_data_matrix_qrms', 'capaExtension','qrmExtension','investigationExtension','incidentExtension', 'old_record', 'pre', 'data1', 'divisionName','grid_data','grid_data1', 'incidentNewGrid','grid_data2','investigation_data','root_cause_data', 'why_data', 'fishbone_data'));
+        $investigationTeam = IncidentGridData::where(['incident_id' => $id, 'identifier' =>'TeamInvestigation'])->first();
+        $investigationTeamData = json_decode($investigationTeam->data, true);
+
+        $rootCause = IncidentGridData::where(['incident_id' => $id, 'identifier' =>'RootCause'])->first();
+        $rootCauseData = json_decode($rootCause->data, true);
+
+
+        $whyData = IncidentGridData::where(['incident_id' => $id, 'identifier' => 'why'])->first();
+        $why_data = json_decode($whyData->data, true); 
+        
+
+        $fishbone = IncidentGridData::where(['incident_id' => $id, 'identifier' =>'fishbone'])->first();
+        $fishbone_data = json_decode($fishbone->data, true);
+
+        return view('frontend.incident.incident-view', compact('data','userData', 'grid_data_qrms','grid_data_matrix_qrms', 'capaExtension','qrmExtension','investigationExtension','incidentExtension', 'old_record', 'pre', 'data1', 'divisionName','grid_data','grid_data1', 'incidentNewGrid','grid_data2','investigationTeamData','rootCauseData', 'why_data', 'fishbone_data'));
     }
 
 
@@ -1820,13 +1868,11 @@ class IncidentController extends Controller
                                     }
                                 );
                             } catch (\Exception $e) {
-                                
+                                //log error
                             }
                     }
                 }
-
-
-            if (!empty ($request->Initial_attachment)) {
+                if (!empty ($request->Initial_attachment)) {
                 $files = [];
 
                 if ($incident->Initial_attachment) {
@@ -1841,13 +1887,15 @@ class IncidentController extends Controller
                     }
                 }
 
-
                 $incident->Initial_attachment = json_encode($files);
+                
             }
+
+
+
         }
 
-
-
+        
         if (!empty ($request->Audit_file)) {
 
             $files = [];
@@ -1868,6 +1916,28 @@ class IncidentController extends Controller
                 }
             }
             $incident->Audit_file = json_encode($files);
+        }
+
+        if (!empty ($request->hod_attachments)) {
+
+            $files = [];
+
+            if ($incident->hod_attachments) {
+                $existingFiles = json_decode($incident->hod_attachments, true); // Convert to associative array
+                if (is_array($existingFiles)) {
+                    $files = $existingFiles;
+                }
+                // $files = is_array(json_decode($incident->Audit_file)) ? $incident->Audit_file : [];
+            }
+
+            if ($request->hasfile('hod_attachments')) {
+                foreach ($request->file('hod_attachments') as $file) {
+                    $name = $request->name . 'hod_attachments' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $file->move('upload/', $name);
+                    $files[] = $name;
+                }
+            }
+            $incident->hod_attachments = json_encode($files);
         }
         if (!empty($request->initial_file)) {
             $files = [];
@@ -2047,17 +2117,18 @@ class IncidentController extends Controller
             $incident->who_rationable = $request->who_rationable;
 
             // dd($id);
-            $newDataGridInvestication = IncidentGridData::where(['incident_id' => $id, 'identifier' => 'investication'])->firstOrCreate();
-            $newDataGridInvestication->incident_id = $id;
-            $newDataGridInvestication->identifier = 'investication';
-            $newDataGridInvestication->data = $request->investication;
-            $newDataGridInvestication->save();
 
-            $newDataGridRCA = IncidentGridData::where(['incident_id' => $id, 'identifier' => 'rootCause'])->firstOrCreate();
-            $newDataGridRCA->incident_id = $id;
-            $newDataGridRCA->identifier = 'rootCause';
-            $newDataGridRCA->data = $request->rootCause;
-            $newDataGridRCA->save();
+            $teamInvestigationData = IncidentGridData::where(['incident_id' => $incident->id,'identifier' => "TeamInvestigation"])->firstOrCreate();
+            $teamInvestigationData->incident_id = $incident->id;
+            $teamInvestigationData->identifier = "TeamInvestigation";
+            $teamInvestigationData->data = $request->investigationTeam;
+            $teamInvestigationData->save();
+    
+            $rootCauseData = IncidentGridData::where(['incident_id' => $incident->id,'identifier' => "RootCause"])->firstOrCreate();
+            $rootCauseData->incident_id = $incident->id;
+            $rootCauseData->identifier = "RootCause";
+            $rootCauseData->data = $request->rootCauseData;
+            $rootCauseData->save();
 
             $newDataGridWhy = IncidentGridData::where(['incident_id' => $id, 'identifier' => 'why'])->firstOrCreate();
             $newDataGridWhy->incident_id = $id;
@@ -2856,7 +2927,7 @@ class IncidentController extends Controller
                 //                     }
                 //                 );
                 //             } catch (\Exception $e) {
-                //                 
+                //                 //log error
                 //             }
                 //         }
                 //     }
@@ -2909,7 +2980,7 @@ class IncidentController extends Controller
                 //                     }
                 //                 );
                 //             } catch (\Exception $e) {
-                //                 
+                //                 //log error
                 //             }
                 //         }
                 //     }
@@ -2979,7 +3050,7 @@ class IncidentController extends Controller
                 //                     }
                 //                 );
                 //             } catch (\Exception $e) {
-                //                 
+                //                 //log error
                 //             }
                 //         }
                 //     }
@@ -3024,7 +3095,7 @@ class IncidentController extends Controller
                 //                     }
                 //                 );
                 //             } catch (\Exception $e) {
-                //                 
+                //                 //log error
                 //             }
                 //         }
                 //     }
@@ -3097,7 +3168,7 @@ class IncidentController extends Controller
             //                     }
             //                 );
             //             } catch (\Exception $e) {
-            //                 
+            //                 //log error
             //             }
             //         }
             //     }
@@ -3147,7 +3218,7 @@ class IncidentController extends Controller
             //                     }
             //                 );
             //             } catch (\Exception $e) {
-            //                 
+            //                 //log error
             //             }
             //         }
             //     }
@@ -3224,7 +3295,7 @@ class IncidentController extends Controller
         //                     }
         //                 );
         //             } catch (\Exception $e) {
-        //                 
+        //                 //log error
         //             }
         //         }
         //     }
@@ -3291,7 +3362,7 @@ class IncidentController extends Controller
         //                     }
         //                 );
         //             } catch (\Exception $e) {
-        //                 
+        //                 //log error
         //             }
         //         }
         //     }
@@ -3358,7 +3429,7 @@ class IncidentController extends Controller
         //                     }
         //                 );
         //             } catch (\Exception $e) {
-        //                 
+        //                 //log error
         //             }
         //         }
         //     }
@@ -3374,7 +3445,7 @@ class IncidentController extends Controller
     }
 
 
-    public function new_incident_stage(Request $request, $id)
+    public function pending_initiator_update(Request $request, $id)
     {
         if ($request->username == Auth::user()->email && Hash::check($request->password, Auth::user()->password)) {
             $incident = Incident::find($id);
@@ -3427,7 +3498,7 @@ class IncidentController extends Controller
         //                     }
         //                 );
         //             } catch (\Exception $e) {
-        //                 
+        //                 //log error
         //             }
         //         }
         //     }
@@ -3510,7 +3581,7 @@ class IncidentController extends Controller
                     //                     }
                     //                 );
                     //             } catch (\Exception $e) {
-                    //                 
+                    //                 //log error
                     //             }
                     //         }
                     //     }
@@ -3593,7 +3664,7 @@ class IncidentController extends Controller
                     //                     }
                     //                 );
                     //             } catch (\Exception $e) {
-                    //                 
+                    //                 //log error
                     //             }
                     //         }
                     //     }
@@ -3668,14 +3739,14 @@ class IncidentController extends Controller
                     //                     }
                     //                 );
                     //             } catch (\Exception $e) {
-                    //                 
+                    //                 //log error
                     //             }
                     //         }
                     //     }
                     // }
     
                     if ($request->Incident_category == 'major' || $request->Incident_category == 'minor' || $request->Incident_category == 'critical') {
-                        // $list = Helpers::getHeadoperationsUserList();
+                        $list = Helpers::getHeadoperationsUserList();
                                 // foreach ($list as $u) {
                                 //     if ($u->q_m_s_divisions_id == $incident->division_id) {
                                 //         $email = Helpers::getInitiatorEmail($u->user_id);
@@ -3697,12 +3768,12 @@ class IncidentController extends Controller
                                 // }
                             }
                             if ($request->Incident_category == 'major' || $request->Incident_category == 'minor' || $request->Incident_category == 'critical') {
-                                // $list = Helpers::getCEOUserList();
+                                $list = Helpers::getCEOUserList();
                                         // foreach ($list as $u) {
                                         //     if ($u->q_m_s_divisions_id == $incident->division_id) {
                                         //         $email = Helpers::getInitiatorEmail($u->user_id);
                                         //         if ($email !== null) {
-                                        //              
+                                        //              // Add this if statement
                                         //              try {
                                         //                     Mail::send(
                                         //                         'mail.Categorymail',
@@ -3713,7 +3784,7 @@ class IncidentController extends Controller
                                         //                         }
                                         //                     );
                                         //                 } catch (\Exception $e) {
-                                        //                     
+                                        //                     //log error
                                         //                 }
     
                                         //         }
@@ -3721,12 +3792,12 @@ class IncidentController extends Controller
                                         // }
                                     }
                                     if ($request->Incident_category == 'major' || $request->Incident_category == 'minor' || $request->Incident_category == 'critical') {
-                                        // $list = Helpers::getCorporateEHSHeadUserList();
+                                        $list = Helpers::getCorporateEHSHeadUserList();
                                                 // foreach ($list as $u) {
                                                 //     if ($u->q_m_s_divisions_id == $incident->division_id) {
                                                 //         $email = Helpers::getInitiatorEmail($u->user_id);
                                                 //         if ($email !== null) {
-                                                //              
+                                                //              // Add this if statement
                                                 //              try {
                                                 //                     Mail::send(
                                                 //                         'mail.Categorymail',
@@ -3737,7 +3808,7 @@ class IncidentController extends Controller
                                                 //                         }
                                                 //                     );
                                                 //                 } catch (\Exception $e) {
-                                                //                     
+                                                //                     //log error
                                                 //                 }
     
                                                 //         }
@@ -3920,7 +3991,7 @@ class IncidentController extends Controller
                         //                     }
                         //                 );
                         //             } catch (\Exception $e) {
-                        //                 
+                        //                 //log error
                         //             }
                         //         }
                         //     }
@@ -3988,7 +4059,7 @@ class IncidentController extends Controller
                     //                     }
                     //                 );
                     //             } catch (\Exception $e) {
-                    //                 
+                    //                 //log error
                     //             }
                     //         }
                     //     }
@@ -4079,7 +4150,7 @@ class IncidentController extends Controller
                     //                     }
                     //                 );
                     //             } catch (\Exception $e) {
-                    //                 
+                    //                 //log error
                     //             }
                     //         }
                     //     }
@@ -4170,7 +4241,7 @@ class IncidentController extends Controller
                     //                     }
                     //                 );
                     //             } catch (\Exception $e) {
-                    //                 
+                    //                 //log error
                     //             }
                     //         }
                     //     }
@@ -4263,7 +4334,7 @@ class IncidentController extends Controller
                     //                     }
                     //                 );
                     //             } catch (\Exception $e) {
-                    //                 
+                    //                 //log error
                     //             }
                     //         }
                     //     }
@@ -4329,7 +4400,7 @@ class IncidentController extends Controller
                 //                     }
                 //                 );
                 //             } catch (\Exception $e) {
-                //                 
+                //                 //log error
                 //             }
                 //         }
                 //     }
@@ -4390,7 +4461,7 @@ class IncidentController extends Controller
                 //                     }
                 //                 );
                 //             } catch (\Exception $e) {
-                //                 
+                //                 //log error
                 //             }
                 //         }
                 //     }
@@ -4440,7 +4511,7 @@ class IncidentController extends Controller
                 //                     }
                 //                 );
                 //             } catch (\Exception $e) {
-                //                 
+                //                 //log error
                 //             }
                 //         }
                 //     }

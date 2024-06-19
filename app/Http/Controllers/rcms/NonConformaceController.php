@@ -41,12 +41,16 @@ use Illuminate\Support\Facades\Validator;
 class NonConformaceController extends Controller
 {
     public function index(){
+        
+        
         $old_record = NonConformance::select('id', 'division_id', 'record')->get();
+        $data = ((RecordNumber::first()->value('counter')) + 1);
+        $data = str_pad($data, 4, '0', STR_PAD_LEFT);
         $currentDate = Carbon::now();
         $formattedDate = $currentDate->addDays(30);
         $due_date = $formattedDate->format('d-M-Y');
         $pre = NonConformance::all();
-        return response()->view('frontend.non-conformance.failure-inv-new', compact('formattedDate', 'due_date', 'old_record', 'pre'));
+        return response()->view('frontend.non-conformance.failure-inv-new', compact('formattedDate', 'due_date', 'old_record', 'pre','data'));
     }
 
     public function store(Request $request)
@@ -110,7 +114,7 @@ class NonConformaceController extends Controller
 
         $NonConformance->Product_Batch = $request->Product_Batch;
 
-        $NonConformance->Description_non_conformances = implode(',', $request->Description_non_conformances);
+        $NonConformance->Description_non_conformanceS = implode(',', $request->Description_non_conformanceS);
         $NonConformance->Immediate_Action = implode(',', $request->Immediate_Action);
         $NonConformance->Preliminary_Impact = implode(',', $request->Preliminary_Impact);
         $NonConformance->Product_Details_Required = $request->Product_Details_Required;
@@ -316,6 +320,23 @@ class NonConformaceController extends Controller
 
             $NonConformance->initial_file = json_encode($files);
         }
+
+        if (!empty ($request->hod_file)) {
+            $files = [];
+            if ($request->hasfile('hod_file')) {
+                foreach ($request->file('hod_file') as $file) {
+                    $name = $request->name . 'hod_file' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $file->move('upload/', $name);
+                    $files[] = $name;
+                }
+            }
+
+
+            $NonConformance->hod_file = json_encode($files);
+        }
+       
+        
+
         //dd($request->Initial_attachment);
         if (!empty ($request->Initial_attachment)) {
             $files = [];
@@ -409,6 +430,34 @@ class NonConformaceController extends Controller
         $NonConformance->stage = 1;
 
         $NonConformance->save();
+
+        
+        $teamInvestigationData = NonConformanceGridDatas::where(['non_conformances_id' => $NonConformance->id,'identifier' => "TeamInvestigation"])->firstOrCreate();
+        $teamInvestigationData->non_conformances_id = $NonConformance->id;
+        $teamInvestigationData->identifier = "TeamInvestigation";
+        $teamInvestigationData->data = $request->investigationTeam;
+        $teamInvestigationData->save();
+
+        $rootCauseData = NonConformanceGridDatas::where(['non_conformances_id' => $NonConformance->id,'identifier' => "RootCause"])->firstOrCreate();
+        $rootCauseData->non_conformances_id = $NonConformance->id;
+        $rootCauseData->identifier = "RootCause";
+        $rootCauseData->data = $request->rootCauseData;
+        $rootCauseData->save();
+
+
+        $newDataGridWhy = NonConformanceGridDatas::where(['non_conformances_id' => $NonConformance->id, 'identifier' => 'why'])->firstOrCreate();
+        $newDataGridWhy->non_conformances_id = $NonConformance->id;
+        $newDataGridWhy->identifier = 'why';
+        $newDataGridWhy->data = $request->why;
+        $newDataGridWhy->save();
+
+        $newDataGridFishbone = NonConformanceGridDatas::where(['non_conformances_id' => $NonConformance->id, 'identifier' => 'fishbone'])->firstOrCreate();
+        $newDataGridFishbone->non_conformances_id = $NonConformance->id;
+        $newDataGridFishbone->identifier = 'fishbone';
+        $newDataGridFishbone->data = $request->fishbone;
+        $newDataGridFishbone->save();
+
+
 
         $data3 = new NonConformanceGrid();
         $data3->non_conformances_grid_id = $NonConformance->id;
@@ -1012,12 +1061,12 @@ class NonConformaceController extends Controller
             $history->action_name = 'Create';
             $history->save();
         }
-        if ($request->Description_non_conformances[0] !== null){
+        if ($request->Description_non_conformanceS[0] !== null){
             $history = new NonConformanceAuditTrails();
             $history->non_conformances_id = $NonConformance->id;
             $history->activity_type = 'Description of Failure Investigation';
             $history->previous = "Null";
-            $history->current = $NonConformance->Description_non_conformances;
+            $history->current = $NonConformance->Description_non_conformanceS;
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -1080,10 +1129,6 @@ class NonConformaceController extends Controller
         $pre = NonConformance::all();
         $divisionName = DB::table('q_m_s_divisions')->where('id', $data->division_id)->value('name');
 
-        $investigation_data = NonConformanceGridDatas::where(['non_conformances_id' => $id, 'identifier' => 'investication'])->first();
-        $root_cause_data = NonConformanceGridDatas::where(['non_conformances_id' => $id, 'identifier' => 'rootCause'])->first();
-        $why_data = NonConformanceGridDatas::where(['non_conformances_id' => $id, 'identifier' => 'why'])->first();
-        $fishbone_data = NonConformanceGridDatas::where(['non_conformances_id' => $id, 'identifier' => 'fishbone'])->first();
 
         $grid_data_qrms = NonConformanceGridModes::where(['non_conformances_id' => $id, 'identifier' => 'failure_mode_qrms'])->first();
         $grid_data_matrix_qrms = NonConformanceGridModes::where(['non_conformances_id' => $id, 'identifier' => 'matrix_qrms'])->first();
@@ -1093,7 +1138,21 @@ class NonConformaceController extends Controller
         $investigationExtension = NonConformanceLunchExtension::where(['non_conformances_id' => $id, "extension_identifier" => "Investigation"])->first();
         $NonConformanceExtension = NonConformanceLunchExtension::where(['non_conformances_id' => $id, "extension_identifier" => "NonConformance"])->first();
 
-        return view('frontend.non-conformance.failure-inv-view', compact('data','userData', 'grid_data_qrms','grid_data_matrix_qrms', 'capaExtension','qrmExtension','investigationExtension','NonConformanceExtension', 'old_record', 'pre', 'data1', 'divisionName','grid_data','grid_data1','grid_data2','investigation_data','root_cause_data', 'why_data', 'fishbone_data'));
+        $investigationTeam = NonConformanceGridDatas::where(['non_conformances_id' => $id, 'identifier' =>'TeamInvestigation'])->first();
+        $investigationTeamData = json_decode($investigationTeam->data, true);
+        
+        $rootCause = NonConformanceGridDatas::where(['non_conformances_id' => $id, 'identifier' =>'RootCause'])->first();
+        $rootCauseData = json_decode($rootCause->data, true);
+
+
+        $whyData = NonConformanceGridDatas::where(['non_conformances_id' => $id, 'identifier' => 'why'])->first();
+        $why_data = json_decode($whyData->data, true); 
+        
+
+        $fishbone = NonConformanceGridDatas::where(['non_conformances_id' => $id, 'identifier' =>'fishbone'])->first();
+        $fishbone_data = json_decode($fishbone->data, true);
+
+        return view('frontend.non-conformance.failure-inv-view', compact('data','userData', 'grid_data_qrms','grid_data_matrix_qrms', 'capaExtension','qrmExtension','investigationExtension','NonConformanceExtension', 'old_record', 'pre', 'data1', 'divisionName','grid_data','grid_data1','grid_data2','investigationTeamData','rootCauseData', 'why_data', 'fishbone_data'));
     }
 
     public function update(Request $request,$id)
@@ -1182,7 +1241,7 @@ class NonConformaceController extends Controller
                         }
                     },
                 ],
-                // 'Description_non_conformances' => [
+                // 'Description_non_conformanceS' => [
                 //     'required',
                 //     'array',
                 //     function($attribute, $value, $fail) {
@@ -1365,7 +1424,7 @@ class NonConformaceController extends Controller
         $NonConformance->others = $request->others;
         $NonConformance->Product_Batch = $request->Product_Batch;
 
-        $NonConformance->Description_non_conformances = $request->Description_non_conformances;
+        $NonConformance->Description_non_conformanceS = $request->Description_non_conformanceS;
         if ($request->related_records) {
             $NonConformance->Related_Records1 =  implode(',', $request->related_records);
         }
@@ -1783,7 +1842,7 @@ class NonConformaceController extends Controller
 
         $Cft->save();
                 $IsCFTRequired = NonConformanceCFTResponse::withoutTrashed()->where(['is_required' => 1, 'non_conformances_id' => $id])->latest()->first();
-                $cftUsers = DB::table('non_conformances_cfts')->where(['non_conformances_id' => $id])->first();
+                $cftUsers = DB::table('non_conformance_c_f_ts')->where(['non_conformances_id' => $id])->first();
                 // Define the column names
                 $columns = ['Production_person', 'Warehouse_notification', 'Quality_Control_Person', 'QualityAssurance_person', 'Engineering_person', 'Analytical_Development_person', 'Kilo_Lab_person', 'Technology_transfer_person', 'Environment_Health_Safety_person', 'Human_Resource_person', 'Information_Technology_person', 'Project_management_person','Other1_person','Other2_person','Other3_person','Other4_person','Other5_person'];
 
@@ -1816,30 +1875,34 @@ class NonConformaceController extends Controller
                                     }
                                 );
                             } catch (\Exception $e) {
-                                //log error
+                                //log error 
                             }
                     }
                 }
 
+            
+        if (!empty ($request->Initial_attachment)) {
 
-            if (!empty ($request->Initial_attachment)) {
-                $files = [];
+            $files = [];
 
-                if ($NonConformance->Initial_attachment) {
-                    $files = is_array(json_decode($NonConformance->Initial_attachment)) ? $NonConformance->Initial_attachment : [];
+            if ($NonConformance->Initial_attachment) {
+                $existingFiles = json_decode($NonConformance->Initial_attachment, true); // Convert to associative array
+                if (is_array($existingFiles)) {
+                    $files = $existingFiles;
                 }
-
-                if ($request->hasfile('Initial_attachment')) {
-                    foreach ($request->file('Initial_attachment') as $file) {
-                        $name = $request->name . 'Initial_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
-                        $file->move('upload/', $name);
-                        $files[] = $name;
-                    }
-                }
-
-
-                $NonConformance->Initial_attachment = json_encode($files);
+                // $files = is_array(json_decode($NonConformance->Audit_file)) ? $NonConformance->Audit_file : [];
             }
+
+            if ($request->hasfile('Initial_attachment')) {
+                foreach ($request->file('Initial_attachment') as $file) {
+                    $name = $request->name . 'Initial_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $file->move('upload/', $name);
+                    $files[] = $name;
+                }
+            }
+            $NonConformance->Initial_attachment = json_encode($files);
+        }
+
         }
 
 
@@ -1959,14 +2022,38 @@ class NonConformaceController extends Controller
 
             $NonConformance->Capa_attachment = json_encode($files);
         }
-        if (!empty ($request->QA_attachments)) {
+        // if (!empty ($request->QA_attachments)) {
 
+        //     $files = [];
+
+        //     if ($NonConformance->QA_attachments) {
+        //         $files = is_array(json_decode($NonConformance->QA_attachments)) ? $NonConformance->QA_attachments : [];
+        //     }
+
+        //     if ($request->hasfile('QA_attachments')) {
+        //         foreach ($request->file('QA_attachments') as $file) {
+        //             $name = $request->name . 'QA_attachments' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+        //             $file->move('upload/', $name);
+        //             $files[] = $name;
+        //         }
+        //     }
+
+
+        //     $NonConformance->QA_attachments = json_encode($files);
+        // }
+
+        if (!empty($request->QA_attachments)) {
             $files = [];
 
+            // Decode existing files if they exist
             if ($NonConformance->QA_attachments) {
-                $files = is_array(json_decode($NonConformance->QA_attachments)) ? $NonConformance->QA_attachments : [];
+                $existingFiles = json_decode($NonConformance->QA_attachments, true); // Convert to associative array
+                if (is_array($existingFiles)) {
+                    $files = $existingFiles;
+                }
             }
 
+            // Process and add new files
             if ($request->hasfile('QA_attachments')) {
                 foreach ($request->file('QA_attachments') as $file) {
                     $name = $request->name . 'QA_attachments' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
@@ -1975,7 +2062,7 @@ class NonConformaceController extends Controller
                 }
             }
 
-
+            // Encode the files array and update the model
             $NonConformance->QA_attachments = json_encode($files);
         }
 
@@ -2002,6 +2089,32 @@ class NonConformaceController extends Controller
 
             $NonConformance->closure_attachment = json_encode($files);
         }
+
+        
+        if (!empty ($request->hod_file)) {
+
+            $files = [];
+
+            if ($NonConformance->hod_file) {
+                $existingFiles = json_decode($NonConformance->hod_file, true); // Convert to associative array
+                if (is_array($existingFiles)) {
+                    $files = $existingFiles;
+                }
+                // $files = is_array(json_decode($NonConformance->closure_attachment)) ? $NonConformance->closure_attachment : [];
+            }
+
+            if ($request->hasfile('hod_file')) {
+                foreach ($request->file('hod_file') as $file) {
+                    $name = $request->name . 'hod_file' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $file->move('upload/', $name);
+                    $files[] = $name;
+                }
+            }
+
+
+            $NonConformance->hod_file = json_encode($files);
+        }
+    
         if($NonConformance->stage > 0){
 
 
@@ -2295,13 +2408,13 @@ class NonConformaceController extends Controller
             $history->save();
         }
 
-        if ($lastNonConformance->Description_non_conformances != $NonConformance->Description_non_conformances || !empty ($request->comment)) {
+        if ($lastNonConformance->Description_non_conformanceS != $NonConformance->Description_non_conformanceS || !empty ($request->comment)) {
             // return 'history';
             $history = new NonConformanceAuditTrails;
             $history->non_conformances_id = $id;
             $history->activity_type = 'Description of Failure Investigation';
-            $history->previous = $lastNonConformance->Description_non_conformances;
-            $history->current = $NonConformance->Description_non_conformances;
+            $history->previous = $lastNonConformance->Description_non_conformanceS;
+            $history->current = $NonConformance->Description_non_conformanceS;
             $history->comment = $request->comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -2696,7 +2809,7 @@ class NonConformaceController extends Controller
         return back();
     }
 
-    public function NonConformanceReject(Request $request, $id)
+    public function nonConformaceReject(Request $request, $id)
     {
 
         if ($request->username == Auth::user()->email && Hash::check($request->password, Auth::user()->password)) {
@@ -3051,7 +3164,7 @@ class NonConformaceController extends Controller
         }
     }
 
-    public function NonConformanceCheck(Request $request, $id)
+    public function nonConformaceCheck(Request $request, $id)
     {
         if ($request->username == Auth::user()->email && Hash::check($request->password, Auth::user()->password)) {
             $NonConformance = NonConformance::find($id);
@@ -3119,7 +3232,7 @@ class NonConformaceController extends Controller
         }
     }
 
-    public function NonConformanceCheck2(Request $request, $id)
+    public function nonConformaceCheck2(Request $request, $id)
     {
         if ($request->username == Auth::user()->email && Hash::check($request->password, Auth::user()->password)) {
             $NonConformance = NonConformance::find($id);
@@ -3186,7 +3299,7 @@ class NonConformaceController extends Controller
         }
     }
 
-    public function NonConformanceCheck3(Request $request, $id)
+    public function nonConformaceCheck3(Request $request, $id)
     {
         if ($request->username == Auth::user()->email && Hash::check($request->password, Auth::user()->password)) {
             $NonConformance = NonConformance::find($id);
@@ -3321,7 +3434,7 @@ class NonConformaceController extends Controller
         }
     }
 
-    public function non_conformances_send_stage(Request $request, $id)
+    public function non_conformance_send_stage(Request $request, $id)
     { 
         try {
             if ($request->username == Auth::user()->email && Hash::check($request->password, Auth::user()->password)) {
@@ -3333,7 +3446,7 @@ class NonConformaceController extends Controller
                 if ($NonConformance->stage == 1) {
                     if ($NonConformance->form_progress !== 'general-open')
                     {
-                        dd('emnter');
+                       
                         Session::flash('swal', [
                             'type' => 'warning',
                             'title' => 'Mandatory Fields!',
@@ -3650,7 +3763,7 @@ class NonConformaceController extends Controller
     
     
                     $IsCFTRequired = NonConformanceCFTResponse::withoutTrashed()->where(['is_required' => 1, 'non_conformances_id' => $id])->latest()->first();
-                    $cftUsers = DB::table('non_conformances_cfts')->where(['non_conformances_id' => $id])->first();
+                    $cftUsers = DB::table('non_conformance_c_f_ts')->where(['non_conformances_id' => $id])->first();
                     // Define the column names
                     $columns = ['Production_person', 'Warehouse_notification', 'Quality_Control_Person', 'QualityAssurance_person', 'Engineering_person', 'Analytical_Development_person', 'Kilo_Lab_person', 'Technology_transfer_person', 'Environment_Health_Safety_person', 'Human_Resource_person', 'Information_Technology_person', 'Project_management_person','Other1_person','Other2_person','Other3_person','Other4_person','Other5_person'];
                     // $columns2 = ['Production_review', 'Warehouse_review', 'Quality_Control_review', 'QualityAssurance_review', 'Engineering_review', 'Analytical_Development_review', 'Kilo_Lab_review', 'Technology_transfer_review', 'Environment_Health_Safety_review', 'Human_Resource_review', 'Information_Technology_review', 'Project_management_review'];

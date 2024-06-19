@@ -234,7 +234,7 @@
                                 <div class="group-input">
                                     <label for="record_number"><b>Record Number</b></label>
                                     <input disabled type="text" name="record_number" id="record_number"
-                                        value="{{ $data->initiator_group_code }}/LI/{{ date('y') }}/{{ $record_number }}">
+                                        value="{{ $data->initiator_group_code }}/OOT/{{ date('y') }}/{{ $record_number }}">
 
                                 </div>
                             </div>
@@ -465,7 +465,7 @@
                                     <label for="Short Description">Nature Of Change<span
                                             class="text-danger"></span></label>
                                     <select multiple id="natureOfChange" name="nature_of_change">
-                                        <option>---select---</option>
+                                        
                                         <option value="temporary" @if ($data->nature_of_change == 'temporary') selected @endif>
                                             Temporary</option>
 
@@ -479,11 +479,11 @@
                             <div class="col-lg-6">
                                 <div class="group-input">
                                     <label>OOT Occured On</label>
-                                    <input type="hidden" value="{{ $data->occuredDate }}" name="oot_occured_on">
-                                    <input disabled type="text" value="{{ $data->oot_occured_on }}"
-                                        name="oot_occured_on">
-                                    <input type="hidden" value="{{ Helpers::getdateFormat($data->oot_occured_on) }}"
-                                        name="oot_occured_on">
+                                        <div class="calenderauditee">
+                                            <input type="text" id="oot_occured_on"  value="{{ Helpers::getdateFormat($data->oot_occured_on) }}" disabled/>
+                                            <input type="date" name="oot_occured_on" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input"
+                                                oninput="handleDateInput(this, 'due_date')" hidden/>
+                                        </div>
                                 </div>
                             </div>
 
@@ -710,7 +710,6 @@
                                     <label for="Reference Recores">Stability For </label>
                                     <select multiple id="stability_for" name="stability_for[]">
 
-                                        <option value="">--Select---</option>
                                         <option value="submission" @if ($data->stability_for == 'submission') selected @endif>Submission     </option>
                                         <option value="commercial" @if ($data->stability_for == 'commercial') selected @endif>Commercial    </option>
                                         <option value="pack_evalution" @if ($data->stability_for == 'pack_evalution') selected @endif>Pack  evalution </option>
@@ -748,29 +747,20 @@
                                                     <tr>
                                                         <td>{{ $loop->index + 1 }}</td>
                                                         <td>
-                                                            <input type="text" class="numberDetail"
-                                                                name="details_of_stability[{{ $loop->index }}][a_r_number]"
-                                                                value="{{ isset($gridData['a_r_number']) ? $gridData['a_r_number'] : '' }}">
+                                                            <input type="text" class="numberDetail"  name="details_of_stability[{{ $loop->index }}][a_r_number]"    value="{{ isset($gridData['a_r_number']) ? $gridData['a_r_number'] : '' }}">
                                                         </td>
                                                         <td>
-                                                            <input type="text" class="numberDetail"
-                                                                name="details_of_stability[{{ $loop->index }}][temprature]"
-                                                                value="{{ isset($gridData['temprature']) ? $gridData['temprature'] : '' }}">
+                                                            <input type="text" class="numberDetail"  name="details_of_stability[{{ $loop->index }}][temprature]"    value="{{ isset($gridData['temprature']) ? $gridData['temprature'] : '' }}">
                                                         </td>
                                                         <td>
-                                                            <input type="text" class="numberDetail"
-                                                                name="details_of_stability[{{ $loop->index }}][interval]"value="{{ isset($gridData['interval']) ? $gridData['interval'] : '' }}">
+                                                            <input type="text" class="numberDetail"  name="details_of_stability[{{ $loop->index }}][interval]"      value="{{ isset($gridData['interval']) ? $gridData['interval'] : '' }}">
                                                         </td>
                                                         <td>
-                                                            <input type="text" class="numberDetail"
-                                                                name="details_of_stability[{{ $loop->index }}][orientation]"
-                                                                value="{{ isset($gridData['orientation']) ? $gridData['orientation'] : '' }}">
+                                                            <input type="text" class="numberDetail"  name="details_of_stability[{{ $loop->index }}][orientation]"   value="{{ isset($gridData['orientation']) ? $gridData['orientation'] : '' }}">
                                                         </td>
 
                                                         <td>
-                                                            <input type="text" class="numberDetail"
-                                                                name="details_of_stability[{{ $loop->index }}][pack_details]"
-                                                                value="{{ isset($gridData['pack_details']) ? $gridData['pack_details'] : '' }}">
+                                                            <input type="text" class="numberDetail"  name="details_of_stability[{{ $loop->index }}][pack_details]"  value="{{ isset($gridData['pack_details']) ? $gridData['pack_details'] : '' }}">
                                                         </td>
 
                                                         <td><button type="text" class="removeRowBtn">Remove</button>
@@ -785,8 +775,7 @@
                                                 <td><input type="text" name="details_of_stability[0][a_r_number]"></td>
                                                 <td><input type="text" name="details_of_stability[0][temprature]"></td>
                                                 <td><input type="text" name="details_of_stability[0][interval]"></td>
-                                                <td><input type="text" name="details_of_stability[0][orientation]">
-                                                </td>
+                                                <td><input type="text" name="details_of_stability[0][orientation]"></td>
                                                 <td><input type="text" name="details_of_stability[0][pack_details]">
                                                 </td>
                                                 <td><input type="text" class="removeRowBtn" name=""> Remove
@@ -5024,7 +5013,7 @@
                         ' <td><input type="text" name="product_materiel[' + indexDetail +'][a_r_number]"></td>' +
                         '<td><input type="date" name="product_materiel[' + indexDetail + '][m_f_g_date]"></td>' +
                         '<td><input type="date" name="product_materiel[' + indexDetail + '][expiry_date]"></td>' +
-                        '<td><input type="text" name="product_materiel[' + indexDetail + '][lable_claim]"></td>' +
+                        '<td><input type="text" name="product_materiel[' + indexDetail + '][label_claim]"></td>' +
                         '<td><button type="text" class="removeRowBtn">Remove</button></td>' +
                         '</tr>';
                     '</tr>';

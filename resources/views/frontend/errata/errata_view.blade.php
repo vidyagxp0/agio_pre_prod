@@ -25,7 +25,7 @@
             flex: 1 1 auto;
             border: 1px solid grey;
             padding: 5px;
-            border-radius: 20px;
+            /* border-radius: 20px; */
             text-align: center;
             position: relative;
             /* border-right: none; */
@@ -2059,7 +2059,7 @@
 
                                 <div class="col-lg-12">
                                     <div class="group-input">
-                                        <label for="Initial Attachments">Closure Attachment</label>
+                                        <label for="Initial Attachments">Closure Attachments</label>
                                         <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
                                         <div class="file-attachment-field">
                                             <div class="file-attachment-list" id="Closure_Attachments">

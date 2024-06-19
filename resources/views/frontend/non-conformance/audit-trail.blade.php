@@ -207,7 +207,7 @@
                                 View
                             </button>
                             <button class="button_theme1"><a class="text-white"
-                                    href="{{ url('rcms/failure-investigation-show/' . $document->id) }}"> Back
+                                    href="{{ url('rcms/non-conformance-show/' . $document->id) }}"> Back
                                 </a>
                             </button>
                             <button class="button_theme1" onclick="window.print();">

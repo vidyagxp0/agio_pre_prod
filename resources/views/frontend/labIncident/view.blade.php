@@ -2228,32 +2228,32 @@
 
 
 
-                            {{-- <div class="col-md-12">
-                                <div class="group-input">
-                                      <label for="search">
-                                  QC Head <span class="text-danger"></span>
-                                </label>
-                                <select id="select-state" placeholder="Select..." name="assign_to">
-                                  <option value="">Select a value</option>
-                                  @foreach ($users as $data)
-                                      <option value="{{ $data->id }}">{{ $data->name }}</option>
-                                  @endforeach
-                               </select>
-                                @error('assign_to')
-                                  <p class="text-danger">{{ $message }}</p>
-                                @enderror
-                                         </div>
-                        </div> --}}
-
-
-                        <div class="col-lg-12">
+                          
+                        <div class="col-md-6">
                             <div class="group-input">
-                                <label for=" qa head remark"><b>QC Head Closure</b></label>
-                               <textarea name="qc_head_closure">{{$data->qc_head_closure}}</textarea>
+                                <label for="search">
+                                    QC Head Closure <span class="text-danger"></span>
+                                </label>
+                                <select id="select-state" placeholder="Select..." name="qc_head_closure" {{ $data->stage == 0 || $data->stage == 8 ? "disabled" : "" }}>
+                                    @foreach ($users as $value)
+                                        <option @if ($data->qc_head_closure == $value->id) selected @endif value="{{ $value->id }}">{{ $value->name }}</option>
+                                    @endforeach
+                                </select>
+                                @error('qc_head_closure')
+                                    <p class="text-danger">{{ $message }}</p>
+                                @enderror
                             </div>
                         </div>
 
-                        <div class="col-lg-12">
+
+                        {{-- <div class="col-lg-12">
+                            <div class="group-input">
+                                <label for=" qa head remark"><b>QC Head Closure</b></label>
+                               <textarea name="qc_head_closure">{{$data->}}</textarea>
+                            </div>
+                        </div> --}}
+
+                        <div class="col-lg-6">
                             <div class="group-input">
                                 <label for=" qa head remark"><b>QA Head Remark</b></label>
                                <textarea name="qa_hear_remark_c">{{$labnew->qa_hear_remark_c}}</textarea>
@@ -2400,7 +2400,7 @@
                                     </div>
                                 </div>
 
-                                <div class="col-lg-6">
+                                {{-- <div class="col-lg-6"> --}}
                                 <div class="col-lg-4">
                                     <div class="group-input">
                                         <label for="Comment">Comment</label>

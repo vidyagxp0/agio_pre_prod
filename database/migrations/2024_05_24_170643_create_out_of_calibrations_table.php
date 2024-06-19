@@ -72,8 +72,8 @@ return new class extends Migration
             $table->longText('initial_attachment_capa_post_ooc')->nullable();
             $table->text('short_description_closure_ooc')->nullable();
             $table->longText('initial_attachment_closure_ooc')->nullable();
-            $table->string('document_code_closure_ooc')->nullable();
-            $table->string('remarks_closure_ooc')->nullable();
+            $table->longText('document_code_closure_ooc')->nullable();
+            $table->longText('remarks_closure_ooc')->nullable();
             $table->longText('initiated_through_closure_ooc')->nullable();
             $table->longText('initiated_through_hodreview_ooc')->nullable();
             $table->longText('initial_attachment_hodreview_ooc')->nullable();

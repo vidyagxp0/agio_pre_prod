@@ -539,6 +539,82 @@
         });
     </script>
 
+<script>
+    $(document).ready(function() {
+        let rootCauseIndex = 1;
+        $('#rootCauseAdd').click(function(e) {
+            function generateTableRow(serialNumber) {
+                var users = @json($users);
+
+                var html =
+                    '<tr>' +
+                    '<td><input disabled type="text" name="serial[]" value="' + serialNumber +
+                    '"></td>' +
+                    '<td> <select name="rootCauseData[' + rootCauseIndex +
+                    '][rootCauseCategory]" id=""> <option value="">-- Select --</option><option value="">name   </option> </select></td>' +
+                    '<td><select name="rootCauseData[' + rootCauseIndex +
+                    '][rooCauseSubCategory]" id=""><option value="">-- Select --</option><option value="">name</option>  </select></td>' +
+                    '<td><input type="text" class="Document_Remarks" name="rootCauseData[' +
+                    rootCauseIndex + '][ifOthers]"></td>' +
+                    '<td><input type="text" class="Document_Remarks" name="rootCauseData[' +
+                    rootCauseIndex + '][probability]"></td>' +
+                    '<td><input type="text" class="Document_Remarks" name="rootCauseData[' +
+                    rootCauseIndex + '][remarks]"></td>' +
+                    '<td><button type="text" class="removeRowBtn" ">Remove</button></td>' +
+
+                    '</tr>';
+
+                rootCauseIndex++;
+                return html;
+            }
+
+            var tableBody = $('#rootCauseAddTable tbody');
+            var rowCount = tableBody.children('tr').length;
+            var newRow = generateTableRow(rowCount + 1);
+            tableBody.append(newRow);
+        });
+    });
+</script>
+
+
+<script>
+    $(document).ready(function() {
+        let investigationTeamIndex = 1;
+        $('#addInvestigationTeam').click(function(e) {
+            function generateTableRow(serialNumber) {
+                var users = @json($users);
+                var userOptionsHtml = '';
+                users.forEach(user => {
+                    userOptionsHtml = userOptionsHtml.concat(
+                        `<option value="${user.id}">${user.name}</option>`)
+                });
+
+                var html =
+                    '<tr>' +
+                    '<td><input disabled type="text" name="serial[]" value="' + serialNumber +
+                    '"></td>' +
+                    '<td> <select name="investigationTeam[' + investigationTeamIndex +
+                    '][teamMember]" > <option value="">-- Select --</option>' + userOptionsHtml +
+                    ' </select> </td>' +
+                    ' <td><input type="text" name="investigationTeam[' + investigationTeamIndex +
+                    '][responsibility]"></td>' +
+                    '<td><input type="text" name="investigationTeam[' + investigationTeamIndex +
+                    '][remarks]"></td>' +
+                    '<td><button type="text" class="removeRowBtn">Remove</button></td>' +
+                    '</tr>';
+                '</tr>';
+
+                docIndex++;
+                return html;
+            }
+            var tableBody = $('#investigationDetailAddTable tbody');
+            var rowCount = tableBody.children('tr').length;
+            var newRow = generateTableRow(rowCount + 1);
+            tableBody.append(newRow);
+        });
+    });
+</script>
+
     <div class="form-field-head">
 
         <div class="division-bar">
@@ -583,7 +659,7 @@
 
                     <div id="CCForm1" class="inner-block cctabcontent">
                         <div class="inner-block-content">
-                            <div class="row">
+                            <div class="row"> 
 
                                 @if (!empty($parent_id))
                                     <input type="hidden" name="parent_id" value="{{ $parent_id }}">
@@ -593,7 +669,9 @@
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="RLS Record Number"><b>Record Number</b></label>
-                                        <input disabled type="text" name="record_number">
+                                        {{-- <input disabled type="text" name="record_number"> --}}
+                                        <input disabled type="text" name="record" id="record" value="---/NoC/{{ date('y') }}/{{ $data }}">
+
                                         {{-- value="{{ Helpers::getDivisionName(session()->get('division')) }}/DEV/{{ date('Y') }}/{{ $record_number }}"> --}}
                                         {{-- <div class="static">QMS-EMEA/CAPA/{{ date('Y') }}/{{ $record_number }}</div> --}}
                                     </div>
@@ -1364,10 +1442,10 @@
                                         <label for="Description Non Conformance">Description of Non Conformance</label>
                                         <div><small class="text-primary">Please insert "NA" in the data field if it does
                                                 not require completion</small></div>
-                                        <textarea class="tiny" name="Description_non_conformances[]" id="summernote-1" required>
+                                        <textarea class="tiny" name="Description_non_conformanceS[]" id="summernote-1" required>
                                     </textarea>
                                     </div>
-                                    @error('Description_non_conformances[]')
+                                    @error('Description_non_conformanceS[]')
                                         <div class="text-danger">{{ $message }}</div>
                                     @enderror
                                 </div>
@@ -1414,11 +1492,11 @@
                                         <div><small class="text-primary">Please Attach all relevant or supporting
                                                 documents</small></div>
                                         <div class="file-attachment-field">
-                                            <div class="file-attachment-list" id="Audit_file"></div>
+                                            <div class="file-attachment-list" id="initial_file"></div>
                                             <div class="add-btn">
                                                 <div>Add</div>
-                                                <input type="file" id="HOD_Attachments" name="Audit_file[]"
-                                                    oninput="addMultipleFiles(this, 'Audit_file')" multiple>
+                                                <input type="file" id="HOD_Attachments" name="initial_file[]"
+                                                    oninput="addMultipleFiles(this, 'initial_file')" multiple>
                                             </div>
                                         </div>
                                     </div>
@@ -1466,16 +1544,15 @@
                                         <div><small class="text-primary">Please Attach all relevant or supporting
                                                 documents</small></div>
                                         <div class="file-attachment-field">
-                                            <div class="file-attachment-list" id="Audit_file"></div>
+                                            <div class="file-attachment-list" id="hod_file"></div>
                                             <div class="add-btn">
                                                 <div>Add</div>
-                                                <input type="file" id="HOD_Attachments" name="Audit_file[]"
-                                                    oninput="addMultipleFiles(this, 'Audit_file')" multiple>
+                                                <input type="file" id="HOD_Attachments" name="hod_file[]"
+                                                    oninput="addMultipleFiles(this, 'hod_file')" multiple>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-
 
                             </div>
                             <div class="button-block">
@@ -3945,22 +4022,18 @@
                                     </div>
                                 </div>
 
-
                                 <div class="col-lg-12">
                                     <div class="group-input" id="documentsRowna">
                                         <label for="audit-agenda-grid">
                                             Investigation team and Responsibilities
-                                            <button type="button" name="audit-agenda-grid"
-                                                id="investigation_Details">+</button>
-                                            <span class="text-primary" data-bs-toggle="modal"
-                                                data-bs-target="#investigationn-team-responsibilities"
+                                            <button type="button" name="audit-agenda-grid" id="addInvestigationTeam">+</button>
+                                            <span class="text-primary" data-bs-toggle="modal" data-bs-target="#investigationn-team-responsibilities"
                                                 style="font-size: 0.8rem; font-weight: 400; cursor: pointer;">
                                                 (Launch Instruction)
                                             </span>
                                         </label>
                                         <div class="table-responsive">
-                                            <table class="table table-bordered" id="investigation_Details_Details"
-                                                style="width: 100%;">
+                                            <table class="table table-bordered" id="investigationDetailAddTable" style="width: 100%;">
                                                 <thead>
                                                     <tr>
                                                         <th style="width: 4%">Row#</th>
@@ -3968,34 +4041,29 @@
                                                         <th style="width: 16%">Responsibility</th>
                                                         <th style="width: 16%">Remarks</th>
                                                         <th style="width: 8%">Action</th>
-
-
-
                                                     </tr>
                                                 </thead>
                                                 <tbody>
-                                                    <td><input disabled type="text" name="serial[]" value="1">
-                                                    </td>
-                                                    <td> <select name="Investigation_team[]" id="">
+                                                    <td><input disabled type="text" name="investigationTeam[]" value="1"></td>
+                                                    <td>
+                                                        <select name="investigationTeam[0][teamMember]" id="">
                                                             <option value="">-- Select --</option>
-                                                            <option value="">name</option>
-                                                        </select> </td>
-                                                    <td><input type="text" class="numberDetail"
-                                                            name="Responsibility[]"></td>
-                                                    <td><input type="text" class="Document_Remarks"
-                                                            name="Remarks[]"></td>
+                                                            @if (!empty($users))
+                                                                @foreach ($users as $user)
+                                                                    <option value="{{ $user->id }}">{{ $user->name }}</option>
+                                                                @endforeach
+                                                            @endif
+                                                        </select>
+                                                    </td>
+                                                    <td><input type="text" class="numberDetail" name="investigationTeam[0][responsibility]"></td>
+                                                    <td><input type="text" class="Document_Remarks" name="investigationTeam[0][remarks]"></td>
                                                     <td><input type="text" class="Action" name="Action[]"></td>
-
-
                                                 </tbody>
-
                                             </table>
                                         </div>
                                     </div>
-                                    {{-- @error('Product_Batch')
-                                    <div class="text-danger">{{ $message  }}</div>
-                                @enderror --}}
                                 </div>
+                                
 
                                 <div class="col-lg-12">
                                     <div class="group-input">
@@ -4017,56 +4085,40 @@
 
 
 
+                             
                                 <div class="col-lg-12">
                                     <div class="group-input" id="documentsRowname">
                                         <label for="audit-agenda-grid">
                                             Root Cause
-                                            <button type="button" name="audit-agenda-grid"
-                                                id="root_cause_Details">+</button>
-                                            <span class="text-primary" data-bs-toggle="modal"
-                                                data-bs-target="#root-cause"
+                                            <button type="button" name="audit-agenda-grid" id="rootCauseAdd">+</button>
+                                            <span class="text-primary" data-bs-toggle="modal" data-bs-target="#root-cause"
                                                 style="font-size: 0.8rem; font-weight: 400; cursor: pointer;">
                                                 (Launch Instruction)
                                             </span>
                                         </label>
                                         <div class="table-responsive">
-                                            <table class="table table-bordered" id="Root_cause_Details_Details"
-                                                style="width: 100%;">
+                                            <table class="table table-bordered" id="rootCauseAddTable" style="width: 100%;">
                                                 <thead>
                                                     <tr>
                                                         <th style="width: 4%">Row#</th>
-                                                        <th id="Root_Cause_Category" style="width: 12%">Root Cause
-                                                            Category</th>
-                                                        <th style="width: 16%" id="Root_Cause_Sub_Category">Root Cause
-                                                            Sub-Category</th>
+                                                        <th id="Root_Cause_Category" style="width: 12%">Root Cause Category</th>
+                                                        <th style="width: 16%" id="Root_Cause_Sub_Category">Root Cause Sub-Category</th>
                                                         <th style="width: 16%">If Others</th>
-
                                                         <th style="width: 16%"> Probability</th>
                                                         <th style="width: 16%"> Remarks</th>
-
                                                         <th style="width: 8%">Action</th>
-
-
                                                     </tr>
                                                 </thead>
                                                 <tbody>
-                                                    <td><input disabled type="text" name="serial[]" value="1">
-                                                    </td>
-                                                    {{-- <td> <select name="Root_Cause_Category[]" id=""> <option value="">-- Select --</option><option value="">name   </option> </select></td> --}}
-                                                    {{-- <td><select name="Root_Cause_Sub-Category[]" id=""><option value="">-- Select --</option><option value="">name</option>  </select></td> --}}
+                                                    <td><input disabled type="text" name="serial[]" value="1"></td>
                                                     <td>
-
-                                                        <select name="Root_Cause_Category[]"
-                                                            id="Root_Cause_Category_Select">
+                                                        <select name="rootCauseData[0][rootCauseCategory]" id="Root_Cause_Category_Select">
                                                             <option value="">-- Select --</option>
-
-                                                            <option value="M-Machine(Equipment)">M-Machine(Equipment)
-                                                            </option>
-                                                            <option value="">M-Maintenance</option>
-                                                            <option value="">M-Man Power (physical work)</option>
+                                                            <option value="M-Machine(Equipment)">M-Machine(Equipment)</option>
+                                                            <option value="M-Maintenance">M-Maintenance</option>
+                                                            <option value="M-Man Power (physical work)">M-Man Power (physical work)</option>
                                                             <option value="">M-Management</option>
-                                                            <option value="">M-Material (Raw,Consumables etc.)
-                                                            </option>
+                                                            <option value="">M-Material (Raw,Consumables etc.)</option>
                                                             <option value="">M-Method (Process/Inspection)</option>
                                                             <option value="">M-Mother Nature (Environment)</option>
                                                             <option value="">P-Place/Plant</option>
@@ -4078,13 +4130,12 @@
                                                             <option value="">S-Suppliers</option>
                                                             <option value="">S-Surroundings</option>
                                                             <option value="">S-Systems</option>
-
                                                         </select>
                                                     </td>
-                                                    <td> <select name="Root_Cause_Sub_Category[]"
-                                                            id="Root_Cause_Sub_Category_Select">
+                                                    <td>
+                                                        <select name="rootCauseData[0][rooCauseSubCategory]" id="Root_Cause_Sub_Category_Select">
                                                             <option value="">-- Select --</option>
-
+                                
                                                             <option value="Poor_Maintenance_or_Design">Infrequent Audits
                                                             </option>
                                                             <option value="No_Preventive_Maintenance">No Preventive
@@ -4100,7 +4151,7 @@
                                                             <option value="">Technical Error </option>
                                                             <option value="">Tolerable Failure </option>
                                                             <option value="">Calibration Issues </option>
-
+                                
                                                             <option value="Infrequent_Audits">Infrequent Audits</option>
                                                             <option value="No_Preventive_Maintenance">No Preventive
                                                                 Maintenance </option>
@@ -4111,8 +4162,8 @@
                                                             <option value="">System Deficiency </option>
                                                             <option value="">Technical Error </option>
                                                             <option value="">Tolerable Failure </option>
-
-
+                                
+                                
                                                             <option value="Failure_to_Follow_SOP">Failure to Follow SOP
                                                             </option>
                                                             <option value="Human_Machine_Interface">Human-Machine
@@ -4129,7 +4180,7 @@
                                                             <option value="">Procedural</option>
                                                             <option value="">Behavioral</option>
                                                             <option value="">Skill</option>
-
+                                
                                                             <option value="">Inattention to task</option>
                                                             <option value="">Lack of Process</option>
                                                             <option value="">Methods</option>
@@ -4137,172 +4188,162 @@
                                                             </option>
                                                             <option value="">Other</option>
                                                             <option value="">Personnel not Qualified</option>
-
-
-
-                                                        </select></td>
-                                                    <td><input type="text" class="Document_Remarks"
-                                                            name="ifother[]"></td>
-                                                    <td><input type="text" class="Document_Remarks"
-                                                            name="Probability[]"></td>
-                                                    <td><input type="text" class="Document_Remarks"
-                                                            name="remarks[]"></td>
-                                                    <td><input type="text" class="Removebtn" name="Action[]"></td>
-
-
-                                                </tbody>
-
-                                            </table>
-                                        </div>
-                                    </div>
-                                    {{-- @error('Product_Batch')
-                                <div class="text-danger">{{ $message  }}</div>
-                            @enderror --}}
-                                </div>
-
-
-                                <div class="col-12 sub-head"></div>
-                                <div class="col-12">
-                                    <div class="group-input">
-                                        <label for="fishbone">
-                                            Fishbone or Ishikawa Diagram
-                                            <button type="button" name="agenda"
-                                                onclick="addFishBone('.top-field-group', '.bottom-field-group')">+</button>
-                                            <button type="button" name="agenda" class="fishbone-del-btn"
-                                                onclick="deleteFishBone('.top-field-group', '.bottom-field-group')">
-                                                <i class="fa-solid fa-trash-can"></i>
-                                            </button>
-                                            <span class="text-primary" data-bs-toggle="modal"
-                                                data-bs-target="#fishbone-instruction-modal"
-                                                style="font-size: 0.8rem; font-weight: 400;">
-                                                (Launch Instruction)
-                                            </span>
-                                        </label>
-                                        <div class="fishbone-ishikawa-diagram">
-                                            <div class="left-group">
-                                                <div class="grid-field field-name">
-                                                    <div>Measurement</div>
-                                                    <div>Materials</div>
-                                                    <div>Methods</div>
-                                                </div>
-                                                <div class="top-field-group">
-                                                    <div class="grid-field fields top-field">
-                                                        <div><input type="text" name="measurement[]"></div>
-                                                        <div><input type="text" name="materials[]"></div>
-                                                        <div><input type="text" name="methods[]"></div>
-                                                    </div>
-                                                </div>
-                                                <div class="mid"></div>
-                                                <div class="bottom-field-group">
-                                                    <div class="grid-field fields bottom-field">
-                                                        <div><input type="text" name="environment[]"></div>
-                                                        <div><input type="text" name="manpower[]"></div>
-                                                        <div><input type="text" name="machine[]"></div>
-                                                    </div>
-                                                </div>
-                                                <div class="grid-field field-name">
-                                                    <div>Environment</div>
-                                                    <div>Manpower</div>
-                                                    <div>Machine</div>
-                                                </div>
-                                            </div>
-                                            <div class="right-group">
-                                                <div class="field-name">
-                                                    Problem Statement
-                                                </div>
-                                                <div class="field">
-                                                    <textarea name="problem_statement"></textarea>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-12 sub-head"></div>
-                                <div class="col-12">
-                                    <div class="group-input">
-                                        <label for="why-why-chart">
-                                            Why-Why Chart
-                                            <span class="text-primary" data-bs-toggle="modal"
-                                                data-bs-target="#why_chart-instruction-modal"
-                                                style="font-size: 0.8rem; font-weight: 400;">
-                                                (Launch Instruction)
-                                            </span>
-                                        </label>
-                                        <div class="why-why-chart">
-                                            <table class="table table-bordered">
-                                                <tbody>
-                                                    <tr style="background: #f4bb22">
-                                                        <th style="width:150px;">Problem Statement :</th>
-                                                        <td>
-                                                            <textarea name="why_problem_statement"></textarea>
-                                                        </td>
-                                                    </tr>
-                                                    <tr class="why-row">
-                                                        <th style="width:150px; color: #393cd4;">
-                                                            Why 1 <span
-                                                                onclick="addWhyField('why_1_block', 'why_1[]')">+</span>
-                                                        </th>
-                                                        <td>
-                                                            <div class="col-md-10 why_1_block">
-                                                                <textarea name="why_1[]"></textarea>
-                                                            </div>
-                                                        </td>
-                                                    </tr>
-                                                    <tr class="why-row">
-                                                        <th style="width:150px; color: #393cd4;">
-                                                            Why 2 <span
-                                                                onclick="addWhyField('why_2_block', 'why_2[]')">+</span>
-                                                        </th>
-                                                        <td>
-                                                            <div class="why_2_block">
-                                                                <textarea name="why_2[]"></textarea>
-                                                            </div>
-                                                        </td>
-                                                    </tr>
-                                                    <tr class="why-row">
-                                                        <th style="width:150px; color: #393cd4;">
-                                                            Why 3 <span
-                                                                onclick="addWhyField('why_3_block', 'why_3[]')">+</span>
-                                                        </th>
-                                                        <td>
-                                                            <div class="why_3_block">
-                                                                <textarea name="why_3[]"></textarea>
-                                                            </div>
-                                                        </td>
-                                                    </tr>
-                                                    <tr class="why-row">
-                                                        <th style="width:150px; color: #393cd4;">
-                                                            Why 4 <span
-                                                                onclick="addWhyField('why_4_block', 'why_4[]')">+</span>
-                                                        </th>
-                                                        <td>
-                                                            <div class="why_4_block">
-                                                                <textarea name="why_4[]"></textarea>
-                                                            </div>
-                                                        </td>
-                                                    </tr>
-                                                    <tr class="why-row">
-                                                        <th style="width:150px; color: #393cd4;">
-                                                            Why 5 <span
-                                                                onclick="addWhyField('why_5_block', 'why_5[]')">+</span>
-                                                        </th>
-                                                        <td>
-                                                            <div class="why_5_block">
-                                                                <textarea name="why_5[]"></textarea>
-                                                            </div>
-                                                        </td>
-                                                    </tr>
-                                                    <tr style="background: #0080006b;">
-                                                        <th style="width:150px;">Root Cause :</th>
-                                                        <td>
-                                                            <textarea name="root-cause"></textarea>
-                                                        </td>
-                                                    </tr>
+                                                        </select>
+                                                    </td>
+                                                    <td>
+                                                        <input type="text" class="ifOthers" name="rootCauseData[0][ifOthers]">
+                                                    </td>
+                                                    <td>
+                                                        <input type="text" class="Document_Remarks" name="rootCauseData[0][probability]">
+                                                    </td>
+                                                    <td>
+                                                        <input type="text" class="Document_Remarks" name="rootCauseData[0][remarks]">
+                                                    </td>
+                                                    <td>
+                                                        <input type="text" class="Removebtn" name="Action[]">
+                                                    </td>
                                                 </tbody>
                                             </table>
                                         </div>
                                     </div>
                                 </div>
+
+                                <div class="col-12 sub-head"></div>
+<div class="col-12">
+    <div class="group-input">
+        <label for="fishbone">
+            Fishbone or Ishikawa Diagram
+            <button type="button" name="agenda"
+                onclick="addFishBone('.top-field-group', '.bottom-field-group')">+</button>
+            <button type="button" name="agenda" class="fishbone-del-btn"
+                onclick="deleteFishBone('.top-field-group', '.bottom-field-group')">
+                <i class="fa-solid fa-trash-can"></i>
+            </button>
+            <span class="text-primary" data-bs-toggle="modal" data-bs-target="#fishbone-instruction-modal"
+                style="font-size: 0.8rem; font-weight: 400;">
+                (Launch Instruction)
+            </span>
+        </label>
+        <div class="fishbone-ishikawa-diagram">
+            <div class="left-group">
+                <div class="grid-field field-name">
+                    <div>Measurement</div>
+                    <div>Materials</div>
+                    <div>Methods</div>
+                </div>
+                <div class="top-field-group">
+                    <div class="grid-field fields top-field">
+                        <div><input type="text" name="measurement[]"></div>
+                        <div><input type="text" name="materials[]"></div>
+                        <div><input type="text" name="methods[]"></div>
+                    </div>
+                </div>
+                <div class="mid"></div>
+                <div class="bottom-field-group">
+                    <div class="grid-field fields bottom-field">
+                        <div><input type="text" name="environment[]"></div>
+                        <div><input type="text" name="manpower[]"></div>
+                        <div><input type="text" name="machine[]"></div>
+                    </div>
+                </div>
+                <div class="grid-field field-name">
+                    <div>Environment</div>
+                    <div>Manpower</div>
+                    <div>Machine</div>
+                </div>
+            </div>
+            <div class="right-group">
+                <div class="field-name">
+                    Problem Statement
+                </div>
+                <div class="field">
+                    <textarea name="problem_statement"></textarea>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="col-12 sub-head"></div>
+<div class="col-12">
+    <div class="group-input">
+        <label for="why-why-chart">
+            Why-Why Chart
+            <span class="text-primary" data-bs-toggle="modal" data-bs-target="#why_chart-instruction-modal"
+                style="font-size: 0.8rem; font-weight: 400;">
+                (Launch Instruction)
+            </span>
+        </label>
+        <div class="why-why-chart">
+            <table class="table table-bordered">
+                <tbody>
+                    <tr style="background: #f4bb22">
+                        <th style="width:150px;">Problem Statement :</th>
+                        <td>
+                            <textarea name="why_problem_statement"></textarea>
+                        </td>
+                    </tr>
+                    <tr class="why-row">
+                        <th style="width:150px; color: #393cd4;">
+                            Why 1 <span onclick="addWhyField('why_1_block', 'why_1[]')">+</span>
+                        </th>
+                        <td>
+                            <div class="col-md-10 why_1_block">
+                                <textarea name="why_1[]"></textarea>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr class="why-row">
+                        <th style="width:150px; color: #393cd4;">
+                            Why 2 <span onclick="addWhyField('why_2_block', 'why_2[]')">+</span>
+                        </th>
+                        <td>
+                            <div class="why_2_block">
+                                <textarea name="why_2[]"></textarea>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr class="why-row">
+                        <th style="width:150px; color: #393cd4;">
+                            Why 3 <span onclick="addWhyField('why_3_block', 'why_3[]')">+</span>
+                        </th>
+                        <td>
+                            <div class="why_3_block">
+                                <textarea name="why_3[]"></textarea>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr class="why-row">
+                        <th style="width:150px; color: #393cd4;">
+                            Why 4 <span onclick="addWhyField('why_4_block', 'why_4[]')">+</span>
+                        </th>
+                        <td>
+                            <div class="why_4_block">
+                                <textarea name="why_4[]"></textarea>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr class="why-row">
+                        <th style="width:150px; color: #393cd4;">
+                            Why 5 <span onclick="addWhyField('why_5_block', 'why_5[]')">+</span>
+                        </th>
+                        <td>
+                            <div class="why_5_block">
+                                <textarea name="why_5[]"></textarea>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr style="background: #0080006b;">
+                        <th style="width:150px;">Root Cause :</th>
+                        <td>
+                            <textarea name="root-cause"></textarea>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+                               
                                 <div class="sub-head"></div>
                                 <script>
                                     $(document).ready(function() {
