@@ -33,8 +33,8 @@ class CapaController extends Controller
     {
         $cft = [];
         $old_record = Capa::select('id', 'division_id', 'record')->get();
-        $record_number = ((RecordNumber::first()->value('counter')) + 1);
-        $record_number = str_pad($record_number, 4, '0', STR_PAD_LEFT);
+        $record = ((RecordNumber::first()->value('counter')) + 1);
+        $record = str_pad($record, 4, '0', STR_PAD_LEFT);
 
         $division = QMSDivision::where('name', Helpers::getDivisionName(session()->get('division')))->first();
 
@@ -42,9 +42,9 @@ class CapaController extends Controller
             $last_capa = Capa::where('division_id', $division->id)->latest()->first();
 
             if ($last_capa) {
-                $record_number = $last_capa->record_number ? str_pad($last_capa->record_number->record_number + 1, 4, '0', STR_PAD_LEFT) : '0001';
+                $record = $last_capa->record ? str_pad($last_capa->record->record + 1, 4, '0', STR_PAD_LEFT) : '0001';
             } else {
-                $record_number = '0001';
+                $record = '0001';
             }
         }
 
@@ -53,7 +53,7 @@ class CapaController extends Controller
         $due_date= $formattedDate->format('Y-m-d');
         $changeControl = OpenStage::find(1);
          if(!empty($changeControl->cft)) $cft = explode(',', $changeControl->cft);
-        return view("frontend.forms.capa", compact('due_date', 'record_number', 'old_record', 'cft'));
+        return view("frontend.forms.capa", compact('due_date', 'record', 'old_record', 'cft'));
     }
 
     public function capastore(Request $request)
@@ -1754,8 +1754,8 @@ class CapaController extends Controller
         $cft =[];
         $parent_id = $id;
         $parent_type = "Audit_Program";
-        $record_number = ((RecordNumber::first()->value('counter')) + 1);
-        $record_number = str_pad($record_number, 4, '0', STR_PAD_LEFT);
+        $record = ((RecordNumber::first()->value('counter')) + 1);
+        $record = str_pad($record, 4, '0', STR_PAD_LEFT);
         $currentDate = Carbon::now();
         $formattedDate = $currentDate->addDays(30);
         $due_date= $formattedDate->format('d-M-Y');
@@ -1771,7 +1771,7 @@ class CapaController extends Controller
         if(!empty($changeControl->cft)) $cft = explode(',', $changeControl->cft);
         // return $capa_data;
         if ($request->child_type == "Change_control") {
-            return view('frontend.change-control.new-change-control', compact('cft','pre','hod','parent_short_description', 'parent_initiator_id', 'parent_intiation_date', 'parent_division_id', 'parent_record', 'record_number', 'due_date', 'parent_id', 'parent_type'));
+            return view('frontend.change-control.new-change-control', compact('cft','pre','hod','parent_short_description', 'parent_initiator_id', 'parent_intiation_date', 'parent_division_id', 'parent_record', 'record', 'due_date', 'parent_id', 'parent_type'));
         }
         if ($request->child_type == "extension") {
             $parent_due_date = "";
@@ -1781,28 +1781,28 @@ class CapaController extends Controller
                 $parent_due_date = $request->due_date;
             }
 
-            $record_number = ((RecordNumber::first()->value('counter')) + 1);
-            $record_number = str_pad($record_number, 4, '0', STR_PAD_LEFT);
-            return view('frontend.forms.extension', compact('parent_id', 'parent_name', 'record_number', 'parent_due_date'));
+            $record = ((RecordNumber::first()->value('counter')) + 1);
+            $record = str_pad($record, 4, '0', STR_PAD_LEFT);
+            return view('frontend.forms.extension', compact('parent_id', 'parent_name', 'record', 'parent_due_date'));
         }
         $old_record = Capa::select('id', 'division_id', 'record')->get();
         if ($request->child_type == "Action_Item") {
             $parent_name = "CAPA";
 
-            return view('frontend.forms.action-item', compact('old_record','parent_short_description', 'parent_initiator_id', 'parent_intiation_date', 'parent_name', 'parent_division_id', 'parent_record', 'record_number', 'due_date', 'parent_id', 'parent_type'));
+            return view('frontend.action-item.action-item', compact('old_record','parent_short_description', 'parent_initiator_id', 'parent_intiation_date', 'parent_name', 'parent_division_id', 'parent_record', 'record', 'due_date', 'parent_id', 'parent_type'));
         } else {
-            return view('frontend.forms.effectiveness-check', compact('old_record','parent_short_description', 'parent_initiator_id', 'parent_intiation_date', 'parent_division_id', 'parent_record', 'record_number', 'due_date', 'parent_id', 'parent_type'));
+            return view('frontend.capa.effectiveness-check', compact('old_record','parent_short_description', 'parent_initiator_id', 'parent_intiation_date', 'parent_division_id', 'parent_record', 'record', 'due_date', 'parent_id', 'parent_type'));
         }
     }
 
     public function effectiveness_check(Request $request, $id)
     {
-        $record_number = ((RecordNumber::first()->value('counter')) + 1);
-        $record_number = str_pad($record_number, 4, '0', STR_PAD_LEFT);
+        $record = ((RecordNumber::first()->value('counter')) + 1);
+        $record = str_pad($record, 4, '0', STR_PAD_LEFT);
         $currentDate = Carbon::now();
         $formattedDate = $currentDate->addDays(30);
         $due_date= $formattedDate->format('Y-m-d');
-        return view("frontend.forms.effectiveness-check", compact('due_date', 'record_number'));
+        return view("frontend.forms.effectiveness-check", compact('due_date', 'record'));
     }
 
 

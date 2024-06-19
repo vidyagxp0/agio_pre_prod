@@ -113,11 +113,20 @@
                         <div class="inner-block-content">
                             <div class="row">
                                 <div class="col-lg-6">
-                                    <div class="group-input">
+                                    {{-- <div class="group-input">
                                         <label for="RLS Record Number">Record Number</label>
                                         <input disabled type="text" name="record_number"
                                             value="{{ Helpers::getDivisionName(session()->get('division')) }}/CAPA/{{ date('Y') }}/{{ $record_number }}">
                                         {{-- <div class="static">QMS-EMEA/CAPA/{{ date('Y') }}/{{ $record_number }}</div> --}}
+                                    {{-- </div> --}}
+                                    <div class="col-lg-6">
+                                        <div class="group-input">
+                                            <label for="RLS Record Number"><b>Record Number</b></label>
+                                            {{-- <input disabled type="text" name="record" value=""> --}}
+                                            {{-- <input disabled type="text" name="record" value=" {{ Helpers::getDivisionName(session()->get('division')) }}/LI/{{ date('Y') }}/{{ $record}}"> --}}
+                                            <input disabled type="text" name="record_number" id="record" 
+                                            value="---/CAPA/{{ date('y') }}/{{ $record_number }}">
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
@@ -173,7 +182,7 @@
                                                 </div>
                                             </div>
                                         </div> -->
-                                <div class="col-lg-6 new-date-data-field">
+                                {{-- <div class="col-lg-6 new-date-data-field">
                                     <div class="group-input input-date">
                                         <label for="Date Due"> Due Date</label>
                                         <div><small class="text-primary">If revising Due Date, kindly mention revision
@@ -185,7 +194,39 @@
                                                 oninput="handleDateInput(this, 'due_date')" />
                                         </div>
                                     </div>
+                                </div> --}}
+
+                                
+                                <div class="col-md-6 new-date-data-field">
+                                    <div class="group-input input-date">
+                                        <label for="due-date">Due Date <span class="text-danger">*</span></label>
+                                        <div class="calenderauditee">
+                                            <!-- Display the formatted date in a readonly input -->
+                                            <input type="text" id="due_date_display" readonly placeholder="DD-MMM-YYYY" value="{{ Helpers::getDueDate(30, true) }}" />
+                                           
+                                            <input type="date" name="due_date_gi" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" value="{{ Helpers::getDueDate(30, false) }}" class="hide-input" readonly />
+                                        </div>
+                                    </div>
                                 </div>
+                                <script>
+                                    function handleDateInput(dateInput, displayId) {
+                                        const date = new Date(dateInput.value);
+                                        const options = { day: '2-digit', month: 'short', year: 'numeric' };
+                                        document.getElementById(displayId).value = date.toLocaleDateString('en-GB', options).replace(/ /g, '-');
+                                    }
+                                    
+                                    // Call this function initially to ensure the correct format is shown on page load
+                                    document.addEventListener('DOMContentLoaded', function() {
+                                        const dateInput = document.querySelector('input[name="due_date"]');
+                                        handleDateInput(dateInput, 'due_date_display');
+                                    });
+                                    </script>
+                                    
+                                    <style>
+                                    .hide-input {
+                                        display: none;
+                                    }
+                                    </style>
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Initiator Group">Initiator Group</label>
@@ -1391,5 +1432,31 @@
             var textlen = maxLength - $(this).val().length;
             $('#rchars').text(textlen);
         });
+    </script>
+
+    {{-- =======================================================record number ============================================ --}}
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+    var originalRecordNumber = document.getElementById('record').value;
+    var initialPlaceholder = '---';
+    
+    document.getElementById('initiator_group').addEventListener('change', function() {
+        var selectedValue = this.value;
+        var recordNumberElement = document.getElementById('record');
+        var initiatorGroupCodeElement = document.getElementById('initiator_group_code');
+    
+        // Update the initiator group code
+        initiatorGroupCodeElement.value = selectedValue;
+    
+        // Update the record number by replacing the initial placeholder with the selected initiator group code
+        var newRecordNumber = originalRecordNumber.replace(initialPlaceholder, selectedValue);
+        recordNumberElement.value = newRecordNumber;
+    
+        // Update the original record number to keep track of changes
+        originalRecordNumber = newRecordNumber;
+        initialPlaceholder = selectedValue;
+    });
+    });
+    
     </script>
 @endsection

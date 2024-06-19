@@ -735,7 +735,7 @@
                                     {{-- <input disabled type="text" name="record"
                                         value="{{ $data->record }}"> --}}
                                         <input disabled type="text" name="record" id="record"
-                                        value="{{ $data->initiator_group_code_gi}}/LI/{{ Helpers::year($data->created_at) }}/{{ $data->record }}">
+                                        value="{{ $data->initiator_group_code_gi}}/MC/{{ Helpers::year($data->created_at) }}/{{ $data->record }}">
 
                                 </div>
                             </div>
@@ -1126,7 +1126,7 @@
                                                                         class="click_date"
                                                                         id="date_{{ $index }}_mfg_date"
                                                                         type="text"
-                                                                        name="serial_number_gi[{{ $index }}][info_mfg_date]"
+                                                                        name="serial_number_gi[{{ $index }}][info_mfg_date]" 
                                                                         placeholder="DD-MMM-YYYY"
                                                                         value="{{ !empty($detail['info_mfg_date']) ? \Carbon\Carbon::parse($detail['info_mfg_date'])->format('d-M-Y') : '' }}"
                                                                     />
