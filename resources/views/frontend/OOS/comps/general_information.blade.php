@@ -1,6 +1,5 @@
 <div id="CCForm1" class="inner-block cctabcontent">
     <div class="inner-block-content">
-
         <div class="sub-head">General Information</div>
         <div class="row">
             <div class="col-lg-6">
@@ -24,11 +23,8 @@
                     <label for="Initiator"> Record Number </label>
                      <input disabled type="text" name="record_number"
                       value="{{ Helpers::getDivisionName($data->division_id) }}/OOS Chemical/{{ Helpers::year($data->created_at) }}/{{ $data->record_number ? str_pad($data->record_number, 4, "0", STR_PAD_LEFT ) : '1' }}">
-                                               
                 </div>
             </div>
-
-
             <div class="col-lg-6">
                 <div class="group-input">
                     <label disabled for="Short Description">Division Code<span
