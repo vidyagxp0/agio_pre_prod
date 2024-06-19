@@ -107,6 +107,13 @@ class UserLoginSeeder extends Seeder
                 'departmentid' => 1,
                 'roles' => range(1, 433),
             ],
+            [
+                'name' => 'Vikash Prajapati',
+                'email' => 'vikash@gmail.com',
+                'password' => '$2y$10$ybcHMuQ8soPzXcdljEQ/wOUx0JximT3yb5naubluqz3TjOz/tGBlC',
+                'departmentid' => 1,
+                'roles' => range(1, 433),
+            ],
         ];
 
         foreach ($users as $userData) {

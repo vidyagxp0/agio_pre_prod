@@ -171,6 +171,7 @@ class DashboardController extends Controller
                 "stage" => $data->status,
                 "date_open" => $data->created_at,
                 "date_close" => $data->updated_at,
+                "due_date" => $data->due_date,
             ]);
         }
         foreach ($datas4 as $data) {
@@ -191,6 +192,7 @@ class DashboardController extends Controller
                 "stage" => $data->status,
                 "date_open" => $data->created_at,
                 "date_close" => $data->updated_at,
+                "due_date" => $data->due_date,
             ]);
         }
         foreach ($datas5 as $data) {
@@ -212,6 +214,7 @@ class DashboardController extends Controller
                 "stage" => $data->status,
                 "date_open" => $data->created_at,
                 "date_close" => $data->updated_at,
+                "due_date" => $data->due_date,
             ]);
         }
         foreach ($datas6 as $data) {
@@ -232,6 +235,7 @@ class DashboardController extends Controller
                 "stage" => $data->status,
                 "date_open" => $data->created_at,
                 "date_close" => $data->updated_at,
+                "due_date" => $data->due_date,
             ]);
         }
         foreach ($datas7 as $data) {
@@ -252,6 +256,7 @@ class DashboardController extends Controller
                 "stage" => $data->status,
                 "date_open" => $data->created_at,
                 "date_close" => $data->updated_at,
+                "due_date" => $data->due_date,
             ]);
         }
         foreach ($datas8 as $data) {
@@ -271,6 +276,7 @@ class DashboardController extends Controller
                 "stage" => $data->status,
                 "date_open" => $data->created_at,
                 "date_close" => $data->updated_at,
+                "due_date" => $data->due_date,
             ]);
         }
         foreach ($datas9 as $data) {
@@ -291,6 +297,7 @@ class DashboardController extends Controller
                 "stage" => $data->status,
                 "date_open" => $data->created_at,
                 "date_close" => $data->updated_at,
+                "due_date" => $data->due_date,
             ]);
         }
         foreach ($datas10 as $data) {
@@ -311,6 +318,7 @@ class DashboardController extends Controller
                 "stage" => $data->status,
                 "date_open" => $data->created_at,
                 "date_close" => $data->updated_at,
+                "due_date" => $data->due_date,
             ]);
         }
         foreach ($datas11 as $data) {
@@ -351,6 +359,8 @@ class DashboardController extends Controller
                 "stage" => $data->status,
                 "date_open" => $data->created_at,
                 "date_close" => $data->updated_at,
+                "due_date" => $data->due_date,
+
             ]);
         }
         foreach ($datas13 as $data) {
@@ -370,6 +380,7 @@ class DashboardController extends Controller
                 "stage" => $data->status,
                 "date_open" => $data->created_at,
                 "date_close" => $data->updated_at,
+                "due_date" => $data->due_date,
             ]);
         }
         foreach ($datas14 as $data) {
@@ -388,7 +399,6 @@ class DashboardController extends Controller
                 "initiated_through" => $data->initiated_through_gi,
                 "intiation_date" => $data->intiation_date,
                 "stage" => $data->status,
-
                 "date_open" => $data->created_at,
                 "date_close" => $data->updated_at,
             ]);
@@ -427,7 +437,7 @@ class DashboardController extends Controller
                 "initiated_through" => $data->initiated_by,
                 "intiation_date" => $data->intiation_date,
                 "stage" => $data->status,
-
+                "due_date" => $data->due_date,
                 "date_open" => $data->created_at,
                 "date_close" => $data->updated_at,
             ]);
@@ -449,6 +459,7 @@ class DashboardController extends Controller
                 "stage" => $data->status,
                 "date_open" => $data->created_at,
                 "date_close" => $data->updated_at,
+                "due_date" => $data->due_date,
             ]);
         }
         foreach ($deviation as $data) {
