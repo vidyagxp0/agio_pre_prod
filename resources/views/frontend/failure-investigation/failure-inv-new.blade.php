@@ -309,6 +309,39 @@
             });
         });
     </script>
+
+    <script>
+        $(document).ready(function() {
+            let investigationTeamIndex = 1;
+            $('#addInvestigationTeam').click(function(e) {
+                function generateTableRow(serialNumber) {
+                    var users = @json($users);
+                    var userOptionsHtml = '';
+                    users.forEach(user => {
+                        userOptionsHtml = userOptionsHtml.concat(`<option value="${user.id}">${user.name}</option>`)
+                    });
+
+                    var html =
+                        '<tr>' +
+                        '<td><input disabled type="text" name="serial[]" value="' + serialNumber + '"></td>' +
+                        '<td> <select name="investigationTeam[' + investigationTeamIndex + '][teamMember]" > <option value="">-- Select --</option>'+ userOptionsHtml +' </select> </td>' +
+                        ' <td><input type="text" name="investigationTeam[' + investigationTeamIndex +'][responsibility]"></td>' +
+                        '<td><input type="text" name="investigationTeam[' + investigationTeamIndex + '][remarks]"></td>' +
+                        '<td><button type="text" class="removeRowBtn">Remove</button></td>' +
+                        '</tr>';
+                    '</tr>';
+
+                    docIndex++;
+                    return html;
+                }
+                var tableBody = $('#investigationDetailAddTable tbody');
+                var rowCount = tableBody.children('tr').length;
+                var newRow = generateTableRow(rowCount + 1);
+                tableBody.append(newRow);
+            });
+        });
+    </script>
+    
     <script>
         $(document).ready(function() {
             $('#ObservationAdd').click(function(e) {
@@ -466,35 +499,28 @@
     </script>
     <script>
         $(document).ready(function() {
-            $('#root_cause_Details').click(function(e) {
+            let rootCauseIndex = 1;
+            $('#rootCauseAdd').click(function(e) {
                 function generateTableRow(serialNumber) {
                     var users = @json($users);
 
                     var html =
                         '<tr>' +
-                        '<td><input disabled type="text" name="serial[]" value="' + serialNumber +
-                        '"></td>' +
-                        '<td> <select name="Root_Cause_Category[]" id=""> <option value="">-- Select --</option><option value="">name   </option> </select></td>' +
-                        '<td><select name="Root_Cause_Sub-Category[]" id=""><option value="">-- Select --</option><option value="">name</option>  </select></td>' +
-                        '<td><input type="text" class="Document_Remarks" name="ifother[]"></td>' +
-                        '<td><input type="text" class="Document_Remarks" name="Probability[]"></td>' +
-                        '<td><input type="text" class="Document_Remarks" name="remarks[]"></td>' +
+                        '<td><input disabled type="text" name="serial[]" value="' + serialNumber + '"></td>' +
+                        '<td> <select name="rootCauseData[' + rootCauseIndex + '][rootCauseCategory]" id=""> <option value="">-- Select --</option><option value="">name   </option> </select></td>' +
+                        '<td><select name="rootCauseData[' + rootCauseIndex + '][rooCauseSubCategory]" id=""><option value="">-- Select --</option><option value="">name</option>  </select></td>' +
+                        '<td><input type="text" class="Document_Remarks" name="rootCauseData[' + rootCauseIndex + '][ifOthers]"></td>' +
+                        '<td><input type="text" class="Document_Remarks" name="rootCauseData[' + rootCauseIndex + '][probability]"></td>' +
+                        '<td><input type="text" class="Document_Remarks" name="rootCauseData[' + rootCauseIndex + '][remarks]"></td>' +
                         '<td><button type="text" class="removeRowBtn" ">Remove</button></td>' +
 
                         '</tr>';
 
-                    for (var i = 0; i < users.length; i++) {
-                        html += '<option value="' + users[i].id + '">' + users[i].name + '</option>';
-                    }
-
-                    html += '</select></td>' +
-
-                        '</tr>';
-
+                    rootCauseIndex++;
                     return html;
                 }
 
-                var tableBody = $('#Root_cause_Details_Details tbody');
+                var tableBody = $('#rootCauseAddTable tbody');
                 var rowCount = tableBody.children('tr').length;
                 var newRow = generateTableRow(rowCount + 1);
                 tableBody.append(newRow);
@@ -3952,7 +3978,7 @@
                                         <label for="audit-agenda-grid">
                                             Investigation team and Responsibilities
                                             <button type="button" name="audit-agenda-grid"
-                                                id="investigation_Details">+</button>
+                                                id="addInvestigationTeam">+</button>
                                             <span class="text-primary" data-bs-toggle="modal"
                                                 data-bs-target="#investigationn-team-responsibilities"
                                                 style="font-size: 0.8rem; font-weight: 400; cursor: pointer;">
@@ -3960,7 +3986,7 @@
                                             </span>
                                         </label>
                                         <div class="table-responsive">
-                                            <table class="table table-bordered" id="investigation_Details_Details"
+                                            <table class="table table-bordered" id="investigationDetailAddTable"
                                                 style="width: 100%;">
                                                 <thead>
                                                     <tr>
@@ -3969,27 +3995,24 @@
                                                         <th style="width: 16%">Responsibility</th>
                                                         <th style="width: 16%">Remarks</th>
                                                         <th style="width: 8%">Action</th>
-
-
-
                                                     </tr>
                                                 </thead>
                                                 <tbody>
-                                                    <td><input disabled type="text" name="serial[]" value="1">
-                                                    </td>
-                                                    <td> <select name="Investigation_team[]" id="">
+                                                    <td><input disabled type="text" name="investigationTeam[]" value="1"></td>
+                                                    <td> 
+                                                        <select name="investigationTeam[0][teamMember]" id="">
                                                             <option value="">-- Select --</option>
-                                                            <option value="">name</option>
-                                                        </select> </td>
-                                                    <td><input type="text" class="numberDetail"
-                                                            name="Responsibility[]"></td>
-                                                    <td><input type="text" class="Document_Remarks"
-                                                            name="Remarks[]"></td>
+                                                            @if(!empty($users))
+                                                                @foreach($users as $user)
+                                                                    <option value="{{ $user->id }}">{{ $user->name }}</option>
+                                                                @endforeach
+                                                            @endif
+                                                        </select>
+                                                    </td>
+                                                    <td><input type="text" class="numberDetail" name="investigationTeam[0][responsibility]"></td>
+                                                    <td><input type="text" class="Document_Remarks" name="investigationTeam[0][remarks]"></td>
                                                     <td><input type="text" class="Action" name="Action[]"></td>
-
-
                                                 </tbody>
-
                                             </table>
                                         </div>
                                     </div>
@@ -4023,7 +4046,7 @@
                                         <label for="audit-agenda-grid">
                                             Root Cause
                                             <button type="button" name="audit-agenda-grid"
-                                                id="root_cause_Details">+</button>
+                                                id="rootCauseAdd">+</button>
                                             <span class="text-primary" data-bs-toggle="modal"
                                                 data-bs-target="#root-cause"
                                                 style="font-size: 0.8rem; font-weight: 400; cursor: pointer;">
@@ -4031,43 +4054,29 @@
                                             </span>
                                         </label>
                                         <div class="table-responsive">
-                                            <table class="table table-bordered" id="Root_cause_Details_Details"
+                                            <table class="table table-bordered" id="rootCauseAddTable"
                                                 style="width: 100%;">
                                                 <thead>
                                                     <tr>
                                                         <th style="width: 4%">Row#</th>
-                                                        <th id="Root_Cause_Category" style="width: 12%">Root Cause
-                                                            Category</th>
-                                                        <th style="width: 16%" id="Root_Cause_Sub_Category">Root Cause
-                                                            Sub-Category</th>
+                                                        <th id="Root_Cause_Category" style="width: 12%">Root Cause Category</th>
+                                                        <th style="width: 16%" id="Root_Cause_Sub_Category">Root Cause Sub-Category</th>
                                                         <th style="width: 16%">If Others</th>
-
                                                         <th style="width: 16%"> Probability</th>
                                                         <th style="width: 16%"> Remarks</th>
-
                                                         <th style="width: 8%">Action</th>
-
-
                                                     </tr>
                                                 </thead>
                                                 <tbody>
-                                                    <td><input disabled type="text" name="serial[]" value="1">
-                                                    </td>
-                                                    {{-- <td> <select name="Root_Cause_Category[]" id=""> <option value="">-- Select --</option><option value="">name   </option> </select></td> --}}
-                                                    {{-- <td><select name="Root_Cause_Sub-Category[]" id=""><option value="">-- Select --</option><option value="">name</option>  </select></td> --}}
+                                                    <td><input disabled type="text" name="serial[]" value="1"></td>
                                                     <td>
-
-                                                        <select name="Root_Cause_Category[]"
-                                                            id="Root_Cause_Category_Select">
+                                                        <select name="rootCauseData[0][rootCauseCategory]" id="Root_Cause_Category_Select">
                                                             <option value="">-- Select --</option>
-
-                                                            <option value="M-Machine(Equipment)">M-Machine(Equipment)
-                                                            </option>
-                                                            <option value="">M-Maintenance</option>
-                                                            <option value="">M-Man Power (physical work)</option>
+                                                            <option value="M-Machine(Equipment)">M-Machine(Equipment)</option>
+                                                            <option value="M-Maintenance">M-Maintenance</option>
+                                                            <option value="M-Man Power (physical work)">M-Man Power (physical work)</option>
                                                             <option value="">M-Management</option>
-                                                            <option value="">M-Material (Raw,Consumables etc.)
-                                                            </option>
+                                                            <option value="">M-Material (Raw,Consumables etc.)</option>
                                                             <option value="">M-Method (Process/Inspection)</option>
                                                             <option value="">M-Mother Nature (Environment)</option>
                                                             <option value="">P-Place/Plant</option>
@@ -4079,11 +4088,10 @@
                                                             <option value="">S-Suppliers</option>
                                                             <option value="">S-Surroundings</option>
                                                             <option value="">S-Systems</option>
-
                                                         </select>
                                                     </td>
-                                                    <td> <select name="Root_Cause_Sub_Category[]"
-                                                            id="Root_Cause_Sub_Category_Select">
+                                                    <td> 
+                                                        <select name="rootCauseData[0][rooCauseSubCategory]" id="Root_Cause_Sub_Category_Select">
                                                             <option value="">-- Select --</option>
 
                                                             <option value="Poor_Maintenance_or_Design">Infrequent Audits
@@ -4138,27 +4146,24 @@
                                                             </option>
                                                             <option value="">Other</option>
                                                             <option value="">Personnel not Qualified</option>
-
-
-
-                                                        </select></td>
-                                                    <td><input type="text" class="Document_Remarks"
-                                                            name="ifother[]"></td>
-                                                    <td><input type="text" class="Document_Remarks"
-                                                            name="Probability[]"></td>
-                                                    <td><input type="text" class="Document_Remarks"
-                                                            name="remarks[]"></td>
-                                                    <td><input type="text" class="Removebtn" name="Action[]"></td>
-
-
+                                                        </select>
+                                                    </td>
+                                                    <td>
+                                                        <input type="text" class="ifOthers" name="rootCauseData[0][ifOthers]">
+                                                    </td>
+                                                    <td>
+                                                        <input type="text" class="Document_Remarks" name="rootCauseData[0][probability]">
+                                                    </td>
+                                                    <td>
+                                                        <input type="text" class="Document_Remarks" name="rootCauseData[0][remarks]">
+                                                    </td>
+                                                    <td>
+                                                        <input type="text" class="Removebtn" name="Action[]">
+                                                    </td>
                                                 </tbody>
-
                                             </table>
                                         </div>
                                     </div>
-                                    {{-- @error('Product_Batch')
-                                <div class="text-danger">{{ $message  }}</div>
-                            @enderror --}}
                                 </div>
 
 

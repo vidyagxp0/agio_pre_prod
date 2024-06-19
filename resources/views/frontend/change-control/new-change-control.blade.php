@@ -127,6 +127,7 @@
             <!-- Tab links -->
             <div class="cctab">
                 <button class="cctablinks active" onclick="openCity(event, 'CCForm1')">General Information</button>
+                <button class="cctablinks" onclick="openCity(event, 'CCForm8')" style="display: none" id="riskAssessmentButton">Risk Assessment</button>
                 <button class="cctablinks" onclick="openCity(event, 'CCForm2')">Change Details</button>
                 <button class="cctablinks" onclick="openCity(event, 'CCForm3')">Impact Assessment</button>
                 <button class="cctablinks" onclick="openCity(event, 'CCForm4')">QA Review</button>
@@ -134,7 +135,6 @@
                 <button class="cctablinks" onclick="openCity(event, 'CCForm5')">Evaluation</button>
                 {{-- <button class="cctablinks" onclick="openCity(event, 'CCForm6')">Additional Information</button> --}}
                 {{-- <button class="cctablinks" onclick="openCity(event, 'CCForm7')">Comments</button> --}}
-                <button class="cctablinks" onclick="openCity(event, 'CCForm8')">Risk Assessment</button>
                 <button class="cctablinks" onclick="openCity(event, 'CCForm9')">QA Approval Comments</button>
                 <button class="cctablinks" onclick="openCity(event, 'CCForm10')">Change Closure</button>
                 <button class="cctablinks" onclick="openCity(event, 'CCForm11')">Activity Log</button>
@@ -155,9 +155,7 @@
                                 <div class="col-6">
                                     <div class="group-input">
                                         <label for="RLS Record Number"><b>Record Number</b></label>
-                                        <input disabled type="text" name="record_number"
-                                            value="{{ Helpers::getDivisionName(session()->get('division')) }}/CC/{{ date('Y') }}/{{ $record_number }}">
-                                        {{-- <div class="static">QMS-EMEA/CAPA/{{ date('Y') }}/{{ $record_number }}</div> --}}
+                                        <input disabled type="text" placeholder="Record Number" readonly>
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
@@ -221,7 +219,7 @@
                                     </div>
                                 </div> -->
 
-                                <div class="col-lg-6">
+                                <!-- <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Microbiology-Person">CFT Reviewer Person</label>
                                         <select multiple name="Microbiology_Person[]" placeholder="Select CFT Reviewers"
@@ -234,7 +232,8 @@
                                             @endforeach
                                         </select>
                                     </div>
-                                </div>
+                                </div> -->
+
                                 <div class="col-md-6 new-date-data-field">
                                     <div class="group-input input-date ">
                                         <label for="due-date">Due Date<span class="text-danger"></span></label>
@@ -242,10 +241,7 @@
                                                 reason in "Due Date Extension Justification" data field.</small>
                                         </div>
                                         <div class="calenderauditee">
-                                            <input type="text" id="due_date" readonly placeholder="DD-MM-YYYY" />
-                                            <input type="date" name="due_date"
-                                                min="{{ \Carbon\Carbon::now()->format('d-M-Y') }}" class="hide-input"
-                                                oninput="handleDateInput(this, 'due_date')" />
+                                            <input type="text" readonly placeholder="DD-MM-YYYY" />
                                         </div>
                                     </div>
                                 </div>
@@ -278,7 +274,7 @@
 
                                 <div class="col-lg-6">
                                     <div class="group-input">
-                                        <label for="initiator-group">Initiator Group <span
+                                        <label for="initiator-group">Initiation Department <span
                                                 class="text-danger">*</span></label>
                                         <select name="Initiator_Group" id="initiator_group" required>
                                             <option value="">-- Select --</option>
@@ -327,7 +323,7 @@
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="group-input">
-                                        <label for="Initiator Group Code">Initiator Group Code</label>
+                                        <label for="Initiator Group Code">Initiation Department Code</label>
                                         <input type="text" name="initiator_group_code" id="initiator_group_code"
                                             value="" readonly>
                                     </div>
@@ -343,6 +339,62 @@
                                         @enderror
                                     </div>
                                 </div>  --}}
+
+                                            <script>
+                                                $(document).ready(function() {
+                                                    $('#risk_assessment_required').change(
+                                                        function() {
+                                                            var riskAssessmentRequired = $('#risk_assessment_required').val();
+                                                            if (riskAssessmentRequired === 'yes') {
+                                                                $('#riskAssessmentButton').show(); // Show the investigation button
+                                                            } else {
+                                                                $('#riskAssessmentButton').hide(); // Hide the investigation button
+                                                            }
+                                                        }
+                                                    );
+                                                });
+                                            </script>
+
+                                            <div class="col-lg-6">
+                                                <div class="group-input">
+                                                    <label for="Risk Assessment Required">Risk Assessment Required? </label>
+                                                    <select name="risk_assessment_required" id="risk_assessment_required">
+                                                        <option value="">-- Select --</option>
+                                                        <option @if ($data->risk_assessment_required == 'yes') selected @endif value='yes'>Yes</option>
+                                                        <option @if ($data->risk_assessment_required == 'no') selected @endif value='no'>No</option>
+                                                    </select>
+                                                    <!-- @error('capa_required')
+                                                        <div class="text-danger">{{ $message }}</div>
+                                                    @enderror -->
+                                                </div>
+                                            </div>
+
+                                            @php
+                                                $userRoles = DB::table('user_roles')
+                                                    ->where([
+                                                        'q_m_s_roles_id' => 4,
+                                                        'q_m_s_divisions_id' => $data->division_id,
+                                                    ])
+                                                    ->get();
+                                                $userRoleIds = $userRoles->pluck('user_id')->toArray();
+                                                $users = DB::table('users')->whereIn('id', $userRoleIds)->get();
+                                            @endphp
+
+                                            <div class="col-lg-6">
+                                                <div class="group-input">
+                                                    <label for="hod_person">HOD Person</label>
+                                                    <select name="hod_person" id="hod_person" >
+                                                        <option value="">Select HOD Persion</option>
+                                                        @if($users)
+                                                            @foreach($users as $user)
+                                                                <option value="{{ $user->id }}" >{{ $user->name }}</option>
+                                                            @endforeach
+                                                        @endif
+                                                    </select>
+                                                </div>
+                                            </div>
+
+
                                 <div class="col-12">
                                     <div class="group-input">
                                         <label for="Short Description">Short Description<span
@@ -354,7 +406,8 @@
                                             required>
                                     </div>
                                 </div>
-                                <div class="col-12">
+
+                                <!-- <div class="col-12">
                                     <div class="group-input">
                                         <label for="severity-level">Severity Level</label>
                                         <span class="text-primary">Severity levels in a QMS record gauge issue seriousness,
@@ -367,7 +420,8 @@
                                             <option value="critical">Critical</option>
                                         </select>
                                     </div>
-                                </div>
+                                </div> -->
+
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Initiator Group">Initiated Through</label>
@@ -492,7 +546,8 @@
                                 Change Details
                             </div>
                             <div class="row">
-                                <div class="col-12">
+
+                                <!-- <div class="col-12">
                                     <div class="group-input">
                                         <label for="doc-detail">
                                             Document Details<button type="button" name="ann"
@@ -519,7 +574,8 @@
                                             </tbody>
                                         </table>
                                     </div>
-                                </div>
+                                </div> -->
+                                
                                 <div class="col-12">
                                     <div class="group-input">
                                         <label for="current-practice">
@@ -2542,7 +2598,7 @@
                     </div>
                 </div>
 
-                {{-- <div id="CCForm6" class="inner-block cctabcontent">
+                    <!-- <div id="CCForm6" class="inner-block cctabcontent">
                         <div class="inner-block-content">
                             <div class="sub-head">
                                 CFT Information
@@ -2677,7 +2733,7 @@
 
                             </div>
                         </div>
-                    </div> --}}
+                    </div> -->
 
                 <div id="CCForm7" class="inner-block cctabcontent">
                     <div class="inner-block-content">
