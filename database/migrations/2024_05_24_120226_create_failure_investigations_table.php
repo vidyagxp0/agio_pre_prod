@@ -121,8 +121,8 @@ return new class extends Migration
             $table->string('capa_required')->nullable();
             $table->string('qrm_required')->nullable();
 
-            $table->string('Conclusion')->nullable();
-            $table->string('Identified_Risk')->nullable();
+            $table->longText('Conclusion')->nullable();
+            $table->lognText('Identified_Risk')->nullable();
             $table->string('severity_rate')->nullable();
             $table->string('Occurrence')->nullable();
             $table->string('detection')->nullable();
