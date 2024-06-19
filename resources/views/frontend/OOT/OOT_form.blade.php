@@ -98,7 +98,6 @@
                                 </div>
 
 
-
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label disabled for="Short Description">Division Code</label>
@@ -245,7 +244,7 @@
 
                                 <div class="col-lg-12 new-date-data-field">
                                     <div class="group-input input-date">
-                                        <label for="Due Date">OOT Occured On</label>
+                                        <label for="occured on">OOT Occured On</label>
                                         {{-- <div><small class="text-primary">If revising Due Date, kindly mention revision
                                                 reason in "Due Date Extension Justification" data field.</small></div> --}}
                                         <div class="calenderauditee">

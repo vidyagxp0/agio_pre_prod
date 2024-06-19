@@ -155,7 +155,7 @@
                 </td>
                 <td class="w-30">
                     <div class="logo">
-                        <img src="https://dms.mydemosoftware.com/user/images/logo.png" alt="" class="w-100">
+                        <img src="https://navin.mydemosoftware.com/public/user/images/logo.png" alt="" class="w-100">
                     </div>
                 </td>
             </tr>
@@ -176,11 +176,7 @@
     </header>
 
     <div class="inner-block">
-
         <div class="head">Audit Trial Histroy Configuration Report</div>
-
-
-
         <div class="first-table">
             <table>
                 <tr>
@@ -202,7 +198,6 @@
                         @endif
                     </td>
                 </tr>
-               
             </table>
         </div>
 

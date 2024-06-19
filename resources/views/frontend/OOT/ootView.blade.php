@@ -2969,8 +2969,6 @@
             <div id="CCForm4" class="inner-block cctabcontent">
                 <div class="inner-block-content">
                     <div class="row">
-
-
                         <div class="col-lg-6">
                             <div class="group-input">
                                 <label>Finaly Validity Check <span class="text-danger"></span></label>
@@ -3032,13 +3030,11 @@
                         <div class="col-lg-12">
                             <div class="group-input">
                                 <label for="closure attachment">Closure Attachment </label>
-                                <div><small class="text-primary">
-                                    </small>
-                                </div>
+                                
                                 <div class="file-attachment-field">
-                                    <div class="file-attachment-list" id="supporting_attechment">
-                                        @if ($data->supporting_attechment)
-                                            @foreach (json_decode($data->supporting_attechment) as $file)
+                                    <div class="file-attachment-list" id="doc_closure">
+                                        @if ($data->doc_closure)
+                                            @foreach (json_decode($data->doc_closure) as $file)
                                                 <h6 class="file-container text-dark"
                                                     style="background-color: rgb(243, 242, 240);">
                                                     <b>{{ $file }}</b>
@@ -3054,8 +3050,8 @@
                                     </div>
                                     <div class="add-btn">
                                         <div>Add</div>
-                                        <input type="file" id="myfile" name="supporting_attechment[]"
-                                            oninput="addMultipleFiles(this, 'supporting_attechment')" multiple>
+                                        <input type="file" id="myfile" name="doc_closure[]"
+                                            oninput="addMultipleFiles(this, 'doc_closure')" multiple>
                                     </div>
                                 </div>
                             </div>
@@ -3115,15 +3111,12 @@
                                         </thead>
                                         <tbody>
                                             <td><input disabled type="text" name="serial[]" value="1"></td>
-
                                             <td><input type="text" name="OOTNo[]"></td>
                                             <td><input type="text" name="OOTReportedDate[]"></td>
                                             <td><input type="text" name="DescriptionOfOOT[]"></td>
                                             <td><input type="text" name="previousIntervalDetails[]"></td>
                                             <td><input type="text" name="CAPA[]"></td>
                                             <td><input type="text" name="ClosureDateOfCAPA[]"></td>
-
-
                                         </tbody>
                                     </table>
                                 </div>
@@ -3177,10 +3170,6 @@
                                     </div>
                                 </div>
                             </div>
-
-
-                            
-
 
 
                         </div>

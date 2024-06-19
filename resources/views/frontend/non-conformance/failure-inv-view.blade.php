@@ -1247,7 +1247,6 @@
                                         </div>
                                     </div>
 
-
                                     <div class="col-lg-6 new-time-data-field">
                                         <div
                                             class="group-input input-time @error('Delay_Justification') @else delayJustificationBlock @enderror">
@@ -1259,7 +1258,6 @@
                                             <div class="text-danger">{{ $message }}</div>
                                         @enderror
                                     </div>
-
 
 
                                     <script>
@@ -1539,8 +1537,6 @@
                                             </table>
                                         </div>
                                         <div class="main-danger-block">
-
-
                                             @error('facility_name')
                                                 <div class="text-danger">{{ $message }}</div>
                                             @enderror
@@ -1572,7 +1568,6 @@
                                             for (var k = 0; k < remarksInputs.length; k++) {
                                                 inputsToToggle.push(remarksInputs[k]);
                                             }
-
 
                                             selectField.addEventListener('change', function() {
                                                 var isRequired = this.value === 'yes';
@@ -9132,7 +9127,7 @@
                                                             value="{{ $machine }}"></div>
                                                 @endforeach
                                             </div>
-                                        </div>
+                                        </div> 
                                         <div class="grid-field field-name">
                                             <div>Environment</div>
                                             <div>Manpower</div>
@@ -10066,17 +10061,12 @@
                                             <th>Recorded By Sign and Date</th>
                                             <th>Remarks</th>
                                             <th>Action</th>
-
-
-
                                         </tr>
                                     </thead>
                                     <tbody>
-
                                         @if ($grid_data_matrix_qrms && is_array($grid_data_matrix_qrms->data))
                                             @foreach ($grid_data_matrix_qrms->data as $grid_data_matrix_qrms)
                                                 <tr>
-
                                                     <!-- <td> <input disabled type="text" name="matrix_qrms[{{ $loop->index }}][serial]" value="1">  </td> -->
                                                     <td><input disabled type="text"name="serial[]"
                                                             {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
@@ -10131,15 +10121,11 @@
 
                                             <td><input type="text" class="Action" name="" disabled></td>
                                         @endif
-
-
-
                                     </tbody>
                                 </table>
                             </div>
                         </div>
                     </div>
-
                 </div>
                 <script>
                     function calculateRiskAnalysis(selectElement) {

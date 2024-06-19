@@ -2156,17 +2156,18 @@ class NonConformaceController extends Controller
             $NonConformance->who_rationable = $request->who_rationable;
 
             // dd($id);
-            $newDataGridInvestication = NonConformanceGridDatas::where(['non_conformances_id' => $id, 'identifier' => 'investication'])->firstOrCreate();
+            $newDataGridInvestication = NonConformanceGridDatas::where(['non_conformances_id' => $id, 'identifier' => 'TeamInvestigation'])->firstOrCreate();
             $newDataGridInvestication->non_conformances_id = $id;
-            $newDataGridInvestication->identifier = 'investication';
-            $newDataGridInvestication->data = $request->investication;
+            $newDataGridInvestication->identifier = 'TeamInvestigation';
+            $newDataGridInvestication->data = $request->investigationTeam;
             $newDataGridInvestication->save();
 
-            $newDataGridRCA = NonConformanceGridDatas::where(['non_conformances_id' => $id, 'identifier' => 'rootCause'])->firstOrCreate();
+            $newDataGridRCA = NonConformanceGridDatas::where(['non_conformances_id' => $id, 'identifier' => 'RootCause'])->firstOrCreate();
             $newDataGridRCA->non_conformances_id = $id;
-            $newDataGridRCA->identifier = 'rootCause';
-            $newDataGridRCA->data = $request->rootCause;
+            $newDataGridRCA->identifier = 'RootCause';
+            $newDataGridRCA->data = $request->rootCauseData;
             $newDataGridRCA->save();
+
 
             $newDataGridWhy = NonConformanceGridDatas::where(['non_conformances_id' => $id, 'identifier' => 'why'])->firstOrCreate();
             $newDataGridWhy->non_conformances_id = $id;
@@ -4279,7 +4280,6 @@ class NonConformaceController extends Controller
 
     public function cftnotreqired(Request $request, $id)
     {
-
 
         if ($request->username == Auth::user()->email && Hash::check($request->password, Auth::user()->password)) {
             $NonConformance = NonConformance::find($id);

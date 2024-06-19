@@ -4320,7 +4320,7 @@
                             <div class="why_4_block">
                                 <textarea name="why_4[]"></textarea>
                             </div>
-                        </td>
+                        </td> 
                     </tr>
                     <tr class="why-row">
                         <th style="width:150px; color: #393cd4;">

@@ -2805,7 +2805,7 @@
                                             <select name="Production_Review" id="Production_Review"
                                                 @if ($data->stage == 4) disabled @endif
                                                 @if ($data->stage == 3) required @endif>
-                                                <option value="">-- Select --</option>
+                                                <option value=""> Select</option>
                                                 <option @if ($data1->Production_Review == 'yes') selected @endif value='yes'>
                                                     Yes</option>
                                                 <option @if ($data1->Production_Review == 'no') selected @endif value='no'>
@@ -2836,7 +2836,7 @@
                                             <select @if ($data->stage == 4) disabled @endif
                                                 name="Production_person" class="Production_person"
                                                 id="Production_person">
-                                                <option value="">-- Select --</option>
+                                                <option value=""> Select</option>
                                                 @foreach ($users as $user)
                                                     <option value="{{ $user->id }}"
                                                         @if ($user->id == $data1->Production_person) selected @endif>
@@ -2962,7 +2962,7 @@
                                         <div class="group-input">
                                             <label for="Production Review">Production Review Required ?</label>
                                             <select name="Production_Review" disabled id="Production_Review">
-                                                <option value="">-- Select --</option>
+                                                <option value=""> Select </option>
                                                 <option @if ($data1->Production_Review == 'yes') selected @endif value='yes'>
                                                     Yes</option>
                                                 <option @if ($data1->Production_Review == 'no') selected @endif value='no'>
@@ -2989,7 +2989,7 @@
                                                     id="asteriskInvi11" style="display: none"
                                                     class="text-danger">*</span></label>
                                             <select name="Production_person" disabled id="Production_person">
-                                                <option value="0">-- Select --</option>
+                                                <option value="0"> Select</option>
                                                 @foreach ($users as $user)
                                                     <option value="{{ $user->id }}"
                                                         @if ($user->id == $data1->Production_person) selected @endif>
@@ -3125,7 +3125,7 @@
                                             <select @if ($data->stage == 3) required @endif
                                                 name="Warehouse_review" id="Warehouse_review"
                                                 @if ($data->stage == 4) disabled @endif>
-                                                <option value="0">-- Select --</option>
+                                                <option value="0">Select </option>
                                                 <option @if ($data1->Warehouse_review == 'yes') selected @endif
                                                     value="yes">Yes</option>
                                                 <option @if ($data1->Warehouse_review == 'no') selected @endif
@@ -7914,7 +7914,7 @@
                         <div class="col-lg-6">
                             <div class="group-input">
                                 <label for="Proposed Due Date">Proposed Due Date</label>
-                                <input name="investigation_proposed_due_date" id="investigation_proposed_due_date" placeholder="Incident Proposed Due Date"  disabled>
+                                <input name="investigation_proposed_due_date" id="investigation_proposed_due_date" placeholder=""  disabled>
                             </div>
                         </div>
                     @endif
@@ -7952,7 +7952,6 @@
                             <textarea class="tiny" name="imidiate_action" id="summernote-10">{{ $data->imidiate_action }}</textarea>
                         </div>
                     </div>
-
 
                     <div class="col-lg-12">
                         <div class="group-input" id="documentsRowna">
