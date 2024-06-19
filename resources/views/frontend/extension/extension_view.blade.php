@@ -200,7 +200,14 @@
                 <button class="cctablinks" onclick="openCity(event, 'CCForm6')">Activity Log</button>
 
             </div>
-            <form action="{{ route('extension_new.update',  $extensionNew->id) }}" method="POST" enctype="multipart/form-data">
+            <script>
+                $(document).ready(function() {
+                    <?php if ($extensionNew->stage == 5): ?>
+                        $("#target :input").prop("disabled", true);
+                    <?php endif; ?>
+                });
+            </script>
+            <form id="target" action="{{ route('extension_new.update',  $extensionNew->id) }}" method="POST" enctype="multipart/form-data">
             @csrf
             @method('PUT')
             <!-- Tab content -->
@@ -219,12 +226,13 @@
                                 <label for="RLS Record Number"><b>Record Number</b></label>
                                 <input disabled type="text" name="record_number"
                                 value="{{ Helpers::getDivisionName(session()->get('division')) }}/Ext/{{ Helpers::year($extensionNew->created_at) }}/{{ $extensionNew->record_number }}">
+                                
                             </div>
                         </div>
                         <div class="col-lg-6">
                             <div class="group-input">
                                 <label for="Division Code"><b>Site/Location Code</b></label>
-                                <input disabled type="text" name="site_location"   id="site_location" 
+                                <input disabled type="text" name="site_location"  id="site_location" 
                                     value="{{ Helpers::getDivisionName(session()->get('division')) }}">
                                 <input type="hidden" name="site_location_code"  id="site_location_code" value="{{ session()->get('division') }}">
                                 {{-- <div class="static">{{ Helpers::getDivisionName(session()->get('division')) }}</div> --}}
@@ -282,7 +290,6 @@
                                         name="reviewers" placeholder="Select Reviewers"  >
                                         <option value="">-- Select --</option>
                                         @if (!empty($reviewer))
-                                        
                                             @foreach ($reviewer as $lan)
                                                 @if(Helpers::checkUserRolesreviewer($lan))
                                                     <option value="{{ $lan->id }}">
@@ -294,14 +301,12 @@
                                     </select>
                                 </div>
                             </div>
-                            
                             <div class="col-lg-6">
                                 <div class="group-input">
                                     <label for="Assigned To">Approver </label>
                                     <select id="choices-multiple-remove-but" class="choices-multiple-reviewer"
                                         name="approvers" placeholder="Select Approvers" >
                                         <option value="">-- Select --</option>
-
                                         @if (!empty($approvers))
                                             @foreach ($approvers as $lan)
                                                 @if(Helpers::checkUserRolesApprovers($lan))
@@ -319,11 +324,12 @@
                                 <div class="group-input input-date">
                                     <label for="Actual Start Date">Current Due Date (Parent)</label>
                                     <div class="calenderauditee">
-                                        <input type="text" id="current_due_date" value="{{$extensionNew->current_due_date}}" readonly placeholder="DD-MMM-YYYY" />
-                                        <input type="date" name="current_due_date" value="{{$extensionNew->current_due_date}}"
-                                            min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" value=""
-                                            class="hide-input" oninput="handleDateInput(this, 'current_due_date')" />
-                                    </div>
+
+                                    <input type="text"  id="current_due_date"  value="{{  Helpers::getdateFormat($extensionNew->current_due_date) }}" readonly placeholder="DD-MMM-YYYY" />
+                                    <input type="date" name="current_due_date"    min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" value=""
+                                    class="hide-input"
+                                    oninput="handleDateInput(this, 'current_due_date')"/>
+                                </div>
                                 </div>
                             </div>
                            
@@ -331,11 +337,10 @@
                                 <div class="group-input input-date">
                                     <label for="Actual Start Date">Proposed Due Date</label>
                                     <div class="calenderauditee">
-                                        <input type="text" id="proposed_due_date" value="{{$extensionNew->proposed_due_date}}" readonly placeholder="DD-MMM-YYYY" />
-                                        <input type="date" name="proposed_due_date"
-                                            min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"value="{{$extensionNew->proposed_due_date}}"
-                                            class="hide-input" oninput="handleDateInput(this, 'proposed_due_date')" />
-                                    </div>
+                                        <input type="text"  id="proposed_due_date"  value="{{  Helpers::getdateFormat($extensionNew->proposed_due_date) }}" readonly placeholder="DD-MMM-YYYY" />
+                                    <input type="date" name="proposed_due_date"    min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" value=""
+                                    class="hide-input"
+                                    oninput="handleDateInput(this, 'proposed_due_date')"/> </div>
                                 </div>
                             </div>
                             <div class="col-12">
@@ -373,7 +378,7 @@
                                         </div>
                                         <div class="add-btn">
                                             <div>Add</div>
-                                            <input type="file" id="HOD_Attachments"
+                                            <input type="file" id="file_attachment_extension"
                                                 name="file_attachment_extension[]"
                                                 oninput="addMultipleFiles(this, 'file_attachment_extension')" multiple>
                                         </div>
@@ -381,12 +386,10 @@
                                 </div>
                             </div>
                         </div>
-
-
                         <div class="button-block">
                             <button type="submit" id="ChangesaveButton01" class="saveButton">Save</button>
                             <button type="button" id="ChangeNextButton" class="nextButton">Next</button>
-                            <button type="button"> <a href="{{ url('TMS') }}" class="text-white">
+                            <button type="button"> <a href="{{ url('qms/dashboard') }}" class="text-white">
                                     Exit </a> </button>
                         </div>
 
@@ -445,7 +448,7 @@
                                     </div>
                                     <div class="add-btn">
                                         <div>Add</div>
-                                        <input type="file" id="HOD_Attachments"
+                                        <input type="file" id="file_attachment_reviewer"
                                             name="file_attachment_reviewer[]"
                                             oninput="addMultipleFiles(this, 'file_attachment_reviewer')" multiple>
                                     </div>
@@ -498,7 +501,7 @@
                                     </div>
                                     <div class="add-btn">
                                         <div>Add</div>
-                                        <input type="file" id="HOD_Attachments"
+                                        <input type="file" id="file_attachment_approver"
                                             name="file_attachment_approver[]"
                                             oninput="addMultipleFiles(this, 'file_attachment_approver')" multiple>
                                     </div>

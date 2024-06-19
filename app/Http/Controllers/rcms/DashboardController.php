@@ -993,7 +993,7 @@ class DashboardController extends Controller
         } elseif ($type == "Extension") {
             $data = extension_new::find($id);
             $single = "singleReportNew/" .$data->id;
-            $audit = "extensionAuditReport/" .$data->id;
+            $audit = "audit_trailNew_pdf/" .$data->id;
             $division = QMSDivision::find($data->site_location_code);
             $division_name = $division->name;
         } elseif ($type == "Observation") {

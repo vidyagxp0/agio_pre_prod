@@ -26,7 +26,7 @@ return new class extends Migration
             $table->string('approvers')->nullable(); 
             $table->string('current_due_date')->nullable();
             $table->string('proposed_due_date')->nullable();
-            $table->string('description')->nullable();
+            $table->longText('description')->nullable();
             $table->longText('file_attachment_extension')->nullable();
             $table->string('reviewer_remarks')->nullable();
             $table->longText('file_attachment_reviewer')->nullable();
