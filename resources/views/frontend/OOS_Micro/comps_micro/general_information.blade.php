@@ -230,8 +230,8 @@
                             <div class="group-input">
                                 <label for="Reference Recores">Reference System Document</label>
                                 <select multiple id="reference_record" name="reference_system_document_gi[]" id="">
-                                <option value="1" {{ (!empty($micro_data->reference_system_document_gi) && in_array('1', explode(',', $micro_data->reference_system_document_gi[0]))) ? 'selected' : '' }}>1</option>
-                                <option value="2" {{ (!empty($micro_data->reference_system_document_gi) && in_array('2', explode(',', $micro_data->reference_system_document_gi[0]))) ? 'selected' : '' }}>2</option>
+                                    <option value="1" {{ (!empty($micro_data->reference_system_document_gi) && in_array('1', explode(',', $micro_data->reference_system_document_gi[0]))) ? 'selected' : '' }}>1</option>
+                                    <option value="2" {{ (!empty($micro_data->reference_system_document_gi) && in_array('2', explode(',', $micro_data->reference_system_document_gi[0]))) ? 'selected' : '' }}>2</option>
                                </select>
                             </div>
                         </div>
@@ -239,8 +239,8 @@
                             <div class="group-input">
                                 <label for="Reference Recores">Reference Document</label>
                                 <select multiple id="reference_record" name="reference_document_gi[]">
-                                    <option value="1" {{ (!empty($micro_data->reference_document_gi) && in_array('1', explode(',', $micro_data->reference_document_gi[0]))) ? 'selected' : '' }}>1</option>
-                                    <option value="2" {{ (!empty($micro_data->reference_document_gi) && in_array('2', explode(',', $micro_data->reference_document_gi[0]))) ? 'selected' : '' }}>2</option>
+                                    <option value="pdf" {{ (!empty($micro_data->reference_document_gi) && in_array('pdf', explode(',', $micro_data->reference_document_gi[0]))) ? 'selected' : '' }}>1</option>
+                                    <option value="doc" {{ (!empty($micro_data->reference_document_gi) && in_array('doc', explode(',', $micro_data->reference_document_gi[0]))) ? 'selected' : '' }}>2</option>
                                 </select>
                             </div>
                         </div>

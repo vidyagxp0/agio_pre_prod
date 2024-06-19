@@ -359,11 +359,9 @@
 
                 <button class="cctablinks" onclick="openCity(event, 'CCForm4')">Preliminary Lab Invst. Review</button>
 
-                <button class="cctablinks" onclick="openCity(event, 'CCForm18')">Checklist - Investigation of Bacterial
-                    Endotoxin Test</button>
+                <button class="cctablinks" onclick="openCity(event, 'CCForm18')">Checklist - Investigation of Bacterial Endotoxin Test</button>
 
-                <button class="cctablinks" onclick="openCity(event, 'CCForm19')">Checklist - Investigation of
-                    Sterility</button>
+                <button class="cctablinks" onclick="openCity(event, 'CCForm19')">Checklist - Investigation of Sterility</button>
 
                 <button class="cctablinks" onclick="openCity(event, 'CCForm20')">Checklist - Investigation of Microbial
                     limit test/Bioburden and Water Test </button>
@@ -403,9 +401,20 @@
                 @endif
                  <!-- General Information -->
                 @include('frontend.OOS_Micro.comps_micro.general_information')
+            <!-- Preliminary Lab. Investigation and Conclusion and Review tap2 and tap3 and tap4 and tab5-->
+                @include('frontend.OOS_Micro.comps_micro.preliminary_lab_icr')
+              
+            <!-- all_checklist_Investigation_bsmmem CCForm18 to CCForm23 -->
+                @include('frontend.OOS_Micro.comps_micro.all_checklist_Investigation_bsmmem')
 
-        <!--2to 4  -->
-        <!-- tap5to 22 -->
+             <!-- phaseII_investigation and qc review CCForm5 and CCForm6 -->
+                
+             @include('frontend.OOS_Micro.comps_micro.phaseII_investigation_qcr')
+
+                
+                
+
+        <!-- tap6to 22 -->
         <!-- Last Tap CCForm23 Checklist for Analyst training & Procedure -->
         <div id="CCForm23" class="inner-block cctabcontent">
             <div class="inner-block-content">
@@ -1042,7 +1051,7 @@
     ]
 ];
 
-                    @endphp
+     @endphp
                 <div class="row">
                     <div class="col-12">
                         <div class="group-input">

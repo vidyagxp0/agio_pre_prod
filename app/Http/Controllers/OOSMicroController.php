@@ -525,6 +525,9 @@ class OOSMicroController extends Controller
             ];
             
             $micro = OOS_micro::find($id);
+            $input['due_date'] = isset($request->due_date) ? $request->due_date : $micro['due_date'];
+            $input['deviation_occured_on_gi'] = isset($request->deviation_occured_on_gi) ? $request->deviation_occured_on_gi : $micro['deviation_occured_on_gi'];
+
             $micro->initiator_id = Auth::user()->id;
             
             foreach ($file_input_names as $file_input_name)
