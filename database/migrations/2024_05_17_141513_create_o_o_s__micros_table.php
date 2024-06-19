@@ -203,7 +203,10 @@ return new class extends Migration
             // extra field add by sonali
             $table->text('action_task_required')->nullable(); 
             $table->text('action_task_reference_no')->nullable();
-
+            $table->text('addi_testing_ref')->nullable(); 
+            $table->text('investigation_ref')->nullable();
+            $table->text('hypo_exp_ref')->nullable(); 
+            
             //Extras
             $table->text('initiator_group_gi')->nullable();
             $table->text('initiator_group_code_gi')->nullable();

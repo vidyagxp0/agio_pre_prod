@@ -165,10 +165,19 @@ class OOS_micro extends Model
         'action_task_reference_no',
         'addendum_review_comments',
         'reopen_approval_comments',
-        'verification_comments'
+        'verification_comments',
+        // === extra field
+        'addi_testing_ref',
+        'investigation_ref',
+        'hypo_exp_ref'
     ];
 
     protected $casts = [
+        'hypo_exp_ref' => 'array',
+        'investigation_ref' => 'array',
+        'addi_testing_ref' => 'array',
+
+        'action_task_reference_no' => 'array',
         'field_alert_ref_no_pli' => 'array',
         'verification_analysis_ref_pli' => 'array',
         'analyst_interview_ref_pli' => 'array',
