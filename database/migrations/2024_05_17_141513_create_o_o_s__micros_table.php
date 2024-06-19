@@ -76,19 +76,14 @@ return new class extends Migration
 
             // checklist investigation of bacteria endotoxin test
             $table->longtext('attachment_details_cibet')->nullable();
-
             //checklist investigation of sterility
             $table->longtext('attachment_details_cis')->nullable();
-
             //checklist investigation of microbial limit bioburden and water test
             $table->longtext('attachment_details_cimlbwt')->nullable();
-
             //checklist investigation of microbial assay
             $table->longtext('attachment_details_cima')->nullable();
-
             //checklist investigation of environmental monitoring
             $table->longtext('attachment_details_ciem')->nullable();
-
             //checklist investigation of media suitability test
             $table->longtext('attachment_details_cimst')->nullable();
 
@@ -206,6 +201,14 @@ return new class extends Migration
             $table->text('addi_testing_ref')->nullable(); 
             $table->text('investigation_ref')->nullable();
             $table->text('hypo_exp_ref')->nullable(); 
+            $table->longtext('verification_comments')->nullable(); 
+            
+            // attechment
+            $table->longtext('ua_approval_attachment')->nullable();
+            $table->longtext('ua_Execution_attachments')->nullable();
+            $table->longtext('uar_required_attachment')->nullable();
+            $table->longtext('uav_verification_attachment')->nullable(); 
+            
             
             //Extras
             $table->text('initiator_group_gi')->nullable();
@@ -261,9 +264,6 @@ return new class extends Migration
             $table->text('completed_by_close_done')->nullable();
             $table->text('completed_on_close_done')->nullable();
             $table->text('comment_close_done')->nullable();
-
-
-
 
             $table->timestamps();
 

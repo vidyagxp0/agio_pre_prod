@@ -19,6 +19,7 @@ use App\Models\Extension;
 use Carbon\Carbon;
 use Error;
 use Helpers;
+use App\Services\FileService;
 use PDF;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\App;
@@ -54,223 +55,37 @@ class OOSMicroController extends Controller
 
      public function store(Request $request){
         $micro = $request->all();
-        // ======================== all file attechment ======================
-        // if (!empty($request->attachment_piii)) {
-        //     $files = [];
-        //     if ($request->hasfile('attachment_piii')) {
-        //         foreach ($request->file('attachment_piii') as $file) {
-        //             $name = $request->name . '-attachment_piii' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
-        //             $file->move('upload/', $name);
-        //             $files[] = $name;
-        //         }
-        //     }
-        //     $micro['attachment_piii'] = $files;
-        // }
-        // if (!empty($request->attachments_piiqcr)) {
-        //     $files = [];
-        //     if ($request->hasfile('attachments_piiqcr')) {
-        //         foreach ($request->file('attachments_piiqcr') as $file) {
-        //             $name = $request->name . '-attachments_piiqcr' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
-        //             $file->move('upload/', $name);
-        //             $files[] = $name;
-        //         }
-        //     }
-        //     $micro['attachments_piiqcr'] = $files;
-        // }
-        // if (!empty($request->additional_testing_attachment_atp)) {
-        //     $files = [];
-        //     if ($request->hasfile('additional_testing_attachment_atp')) {
-        //         foreach ($request->file('additional_testing_attachment_atp') as $file) {
-        //             $name = $request->name . '-additional_testing_attachment_atp' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
-        //             $file->move('upload/', $name);
-        //             $files[] = $name;
-        //         }
-        //     }
-        //     $micro['additional_testing_attachment_atp'] = $files;
-        // }
-        // if (!empty($request->attachments_if_any_oosc)) {
-        //     $files = [];
-        //     if ($request->hasfile('attachments_if_any_oosc')) {
-        //         foreach ($request->file('attachments_if_any_oosc') as $file) {
-        //             $name = $request->name . '-attachments_if_any_oosc' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
-        //             $file->move('upload/', $name);
-        //             $files[] = $name;
-        //         }
-        //     }
-        //     $micro['attachments_if_any_oosc'] = $files;
-        // }
-        // if (!empty($request->conclusion_attachment_ocr)) {
-        //     $files = [];
-        //     if ($request->hasfile('conclusion_attachment_ocr')) {
-        //         foreach ($request->file('conclusion_attachment_ocr') as $file) {
-        //             $name = $request->name . '-conclusion_attachment_ocr' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
-        //             $file->move('upload/', $name);
-        //             $files[] = $name;
-        //         }
-        //     }
-        //     $micro['conclusion_attachment_ocr'] = $files;
-        // }
-        // if (!empty($request->cq_attachment_OOS_CQ)) {
-        //     $files = [];
-        //     if ($request->hasfile('cq_attachment_OOS_CQ')) {
-        //         foreach ($request->file('cq_attachment_OOS_CQ') as $file) {
-        //             $name = $request->name . '-cq_attachment_OOS_CQ' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
-        //             $file->move('upload/', $name);
-        //             $files[] = $name;
-        //         }
-        //     }
-        //     $micro->cq_attachment_OOS_CQ = $files;
-        // }
-        // ============ Batch Disposition ===========
-        // if (!empty($request->disposition_attachment_BI)) {
-        //     $files = [];
-        //     if ($request->hasfile('disposition_attachment_BI')) {
-        //         foreach ($request->file('disposition_attachment_BI') as $file) {
-        //             $name = $request->name . '-disposition_attachment_BI' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
-        //             $file->move('upload/', $name);
-        //             $files[] = $name;
-        //         }
-        //     }
-        //     $micro['disposition_attachment_BI'] = $files;
-        // }
-        // if (!empty($request->initial_attachment_gi)) {
-        //     $files = [];
-        //     if ($request->hasfile('initial_attachment_gi')) {
-        //         foreach ($request->file('initial_attachment_gi') as $file) {
-        //             $name = $request->name . '-initial_attachment_gi' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
-        //             $file->move('upload/', $name);
-        //             $files[] = $name;
-        //         }
-        //     }
-        //     $micro['initial_attachment_gi'] = $files;
-        // }
-        // if (!empty($request->file_attachments_pli)) {
-        //     $files = [];
-        //     if ($request->hasfile('file_attachments_pli')) {
-        //         foreach ($request->file('file_attachments_pli') as $file) {
-        //             $name = $request->name . '-file_attachments_pli' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
-        //             $file->move('upload/', $name);
-        //             $files[] = $name;
-        //         }
-        //     }
-        //     $micro['file_attachments_pli'] = $files;
-        // }
-        // if (!empty($request->supporting_attachment_plic)) {
-        //     $files = [];
-        //     if ($request->hasfile('supporting_attachment_plic')) {
-        //         foreach ($request->file('supporting_attachment_plic') as $file) {
-        //             $name = $request->name . '-supporting_attachment_plic' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
-        //             $file->move('upload/', $name);
-        //             $files[] = $name;
-        //         }
-        //     }
-        //     $micro['supporting_attachment_plic'] = $files;
-        // }
-        // if (!empty($request->supporting_attachments_plir)) {
-        //     $files = [];
-        //     if ($request->hasfile('supporting_attachments_plir')) {
-        //         foreach ($request->file('supporting_attachments_plir') as $file) {
-        //             $name = $request->name . '-supporting_attachments_plir' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
-        //             $file->move('upload/', $name);
-        //             $files[] = $name;
-        //         }
-        //     }
-        //     $micro['supporting_attachments_plir'] = $files;
-        // }
-       // checklist investigation of bacteria endotoxin test
+        
+        $file_input_names = [
+            'initial_attachment_gi',
+            'file_attachments_pli',
+            'supporting_attachment_plic',
+            'supporting_attachments_plir',
+            'attachment_piii',
+            'attachments_piiqcr',
+            'additional_testing_attachment_atp',
+            'attachments_if_any_oosc',
+            'conclusion_attachment_ocr',
+            'cq_attachment_OOS_CQ',
+            'disposition_attachment_BI',
+            'reopen_attachment',
+            'ua_approval_attachment',
+            'ua_Execution_attachments',
+            'uar_required_attachment',
+            'uav_verification_attachment',
+            'attachment_details_cibet',
+            'attachment_details_cis',
+            'attachment_details_cimlbwt',
+            'attachment_details_cima',
+            'attachment_details_ciem',
+            'attachment_details_cimst',
+        ];
 
-        // if (!empty($request->attachment_details_cibet)) {
-        //     $files = [];
-        //     if ($request->hasfile('attachment_details_cibet')) {
-        //         foreach ($request->file('attachment_details_cibet') as $file) {
-        //             $name = $request->name . '-attachment_details_cibet' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
-        //             $file->move('upload/', $name);
-        //             $files[] = $name;
-        //         }
-        //     }
-        //     $micro['attachment_details_cibet'] = $files;
-        // }
-        //checklist investigation of sterility
+        foreach ($file_input_names as $file_input_name)
+        {
+            $micro[$file_input_name] = FileService::uploadMultipleFiles($request, $file_input_name);
+        }
 
-        // if (!empty($request->attachment_details_cis)) {
-        //     $files = [];
-        //     if ($request->hasfile('attachment_details_cis')) {
-        //         foreach ($request->file('attachment_details_cis') as $file) {
-        //             $name = $request->name . '-attachment_details_cis' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
-        //             $file->move('upload/', $name);
-        //             $files[] = $name;
-        //         }
-        //     }
-        //     $micro['attachment_details_cis'] = $files;
-        // }
-
-//checklist investigation of microbial limit bioburden and water test
-
-        // if (!empty($request->attachment_details_cimlbwt)) {
-        //     $files = [];
-        //     if ($request->hasfile('attachment_details_cimlbwt')) {
-        //         foreach ($request->file('attachment_details_cimlbwt') as $file) {
-        //             $name = $request->name . '-attachment_details_cimlbwt' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
-        //             $file->move('upload/', $name);
-        //             $files[] = $name;
-        //         }
-        //     }
-        //     $micro['attachment_details_cimlbwt'] = $files;
-        // }
-
-//checklist investigation of microbial assay
-
-        // if (!empty($request->attachment_details_cima)) {
-        //     $files = [];
-        //     if ($request->hasfile('attachment_details_cima')) {
-        //         foreach ($request->file('attachment_details_cima') as $file) {
-        //             $name = $request->name . '-attachment_details_cima' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
-        //             $file->move('upload/', $name);
-        //             $files[] = $name;
-        //         }
-        //     }
-        //     $micro['attachment_details_cima'] = $files;
-        // }
-
-// ======= checklist investigation of environmental monitoring
-
-        // if (!empty($request->attachment_details_ciem)) {
-        //     $files = [];
-        //     if ($request->hasfile('attachment_details_ciem')) {
-        //         foreach ($request->file('attachment_details_ciem') as $file) {
-        //             $name = $request->name . '-attachment_details_ciem' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
-        //             $file->move('upload/', $name);
-        //             $files[] = $name;
-        //         }
-        //     }
-        //     $micro['attachment_details_ciem'] = $files;
-        // }
-
-//=====checklist investigation of media suitability test
-
-        // if (!empty($request->attachment_details_cimst)) {
-        //     $files = [];
-        //     if ($request->hasfile('attachment_details_cimst')) {
-        //         foreach ($request->file('attachment_details_cimst') as $file) {
-        //             $name = $request->name . '-attachment_details_cimst' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
-        //             $file->move('upload/', $name);
-        //             $files[] = $name;
-        //         }
-        //     }
-        //     $micro['attachment_details_cimst'] = $files;
-        // }
-        //re open
-        // if (!empty($request->reopen_attachment)) {
-        //     $files = [];
-        //     if ($request->hasfile('reopen_attachment')) {
-        //         foreach ($request->file('reopen_attachment') as $file) {
-        //             $name = $request->name . '-reopen_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
-        //             $file->move('upload/', $name);
-        //             $files[] = $name;
-        //         }
-        //     }
-        //     $micro['reopen_attachment'] = $files;
-        // }
         // ==================== close file attechment ================
         $micro['form_type'] = "OOS Microbiology";
         $micro['status'] = "Opened";
