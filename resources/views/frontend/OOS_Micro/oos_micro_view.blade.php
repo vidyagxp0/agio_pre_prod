@@ -650,24 +650,20 @@
                             <div class="group-input">
                                 <label for="Reference Recores">Reference System Document</label>
                                 <select multiple id="reference_record" name="reference_system_document_gi[]" id="">
-                                    <option value="1" @if (in_array(1, explode(',', $micro_data->reference_system_document_gi))) selected @endif>1</option>
-                                    <option value="2" @if (in_array(2, explode(',', $micro_data->reference_system_document_gi))) selected @endif>2</option>
-                                </select>
+                                <option value="1" {{ (!empty($micro_data->reference_system_document_gi) && in_array('1', explode(',', $micro_data->reference_system_document_gi[0]))) ? 'selected' : '' }}>1</option>
+                                <option value="2" {{ (!empty($micro_data->reference_system_document_gi) && in_array('2', explode(',', $micro_data->reference_system_document_gi[0]))) ? 'selected' : '' }}>2</option>
+                               </select>
                             </div>
                         </div>
                         <div class="col-lg-6">
                             <div class="group-input">
                                 <label for="Reference Recores">Reference Document</label>
                                 <select multiple id="reference_record" name="reference_document_gi[]">
-                                    @foreach ($old_record as $new)
-                                        <option value="{{ $new->id }}" {{ in_array($new->id, explode(',', $micro_data->reference_document_gi)) ? 'selected' : '' }}>
-                                            {{ Helpers::getDivisionName($new->division_id) }}/OOS_MICRO/{{ date('Y') }}/{{ Helpers::recordFormat($new->record) }}
-                                        </option>
-                                    @endforeach
+                                    <option value="1" {{ (!empty($micro_data->reference_document_gi) && in_array('1', explode(',', $micro_data->reference_document_gi[0]))) ? 'selected' : '' }}>1</option>
+                                    <option value="2" {{ (!empty($micro_data->reference_document_gi) && in_array('2', explode(',', $micro_data->reference_document_gi[0]))) ? 'selected' : '' }}>2</option>
                                 </select>
                             </div>
                         </div>
-
                         <div class="sub-head pt-3">OOS Information</div>
                         <div class="col-lg-6">
                             <div class="group-input">
@@ -1798,10 +1794,7 @@
                 </div>
 
             </div>
-
-
-
-            <!-- Preliminary Lab Inv. Conclusion -->
+           <!-- Preliminary Lab Inv. Conclusion -->
             <div id="CCForm3" class="inner-block cctabcontent">
                 <div class="inner-block-content">
                     <div class="sub-head">Investigation Conclusion</div>
@@ -1959,8 +1952,10 @@
                     </div>
                 </div>
             </div>
-            <!-- Preliminary Lab Invst. Review--->
-            <div id="CCForm4" class="inner-block cctabcontent">
+            
+
+<!-- Preliminary Lab Invst. Review--->
+<div id="CCForm4" class="inner-block cctabcontent">
                 <div class="inner-block-content">
                     <div class="sub-head">Preliminary Lab Invstigation Review</div>
                     <div class="row">
@@ -2457,9 +2452,6 @@
                 </div>
             </div>
         </div>
-
-
-
         <!--Additional Testing Proposal  -->
         <div id="CCForm7" class="inner-block cctabcontent">
             <div class="inner-block-content">
@@ -2564,9 +2556,7 @@
                 </div>
             </div>
         </div>
-
-
-        <!--OOS Conclusion  -->
+       <!--OOS Conclusion  -->
         <div id="CCForm8" class="inner-block cctabcontent">
             <div class="inner-block-content">
                 <div class="sub-head">
@@ -2777,8 +2767,7 @@
             </div>
         </div>
 
-
-        <!--OOS Conclusion Review -->
+    <!--OOS Conclusion Review -->
         <div id="CCForm9" class="inner-block cctabcontent">
             <div class="inner-block-content">
                 <div class="sub-head">
@@ -2986,10 +2975,6 @@
             </div>
         </div>
 
-
-
-
-
         <!--CQ Review Comments -->
         <div id="CCForm10" class="inner-block cctabcontent">
             <div class="inner-block-content">
@@ -3096,11 +3081,6 @@
 
             </div>
         </div>
-
-
-
-
-
         <!-- Batch Disposition -->
         <div id="CCForm11" class="inner-block cctabcontent">
             <div class="inner-block-content">
@@ -3684,8 +3664,6 @@
                 </div>
             </div>
         </div>
-
-
         <!----- Signature ----->
 
         <div id="CCForm17" class="inner-block cctabcontent">

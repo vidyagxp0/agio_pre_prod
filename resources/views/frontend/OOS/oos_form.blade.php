@@ -445,17 +445,7 @@ $users = DB::table('users')
                                 </div>
                             </div>
                         </div>
-                        <div class="col-lg-6">
-                            <div class="group-input">
-                                <label for="Short Description"> Severity Level</label>
-                                <select name="severity_level_gi" >
-                                    <option>Enter Your Selection Here</option>
-                                    <option  value="Major">Major</option>
-                                    <option value="Minor">Minor</option>
-                                    <option value="Critical">Critical</option>
-                                </select>
-                            </div>
-                        </div>
+                        
                         <div class="col-lg-6">
                             <div class="group-input">
                                 <label for="Short Description">Short Description
@@ -468,6 +458,17 @@ $users = DB::table('users')
                                 @enderror
                         </div>
                         <p id="docnameError" style="color:red">**Short Description is required</p>
+                        <div class="col-lg-6">
+                            <div class="group-input">
+                                <label for="Short Description"> Severity Level</label>
+                                <select name="severity_level_gi" >
+                                    <option>Enter Your Selection Here</option>
+                                    <option  value="Major">Major</option>
+                                    <option value="Minor">Minor</option>
+                                    <option value="Critical">Critical</option>
+                                </select>
+                            </div>
+                        </div>
                         <div class="col-lg-6">
                             <div class="group-input">
                                 <label for="Short Description">Initiator Group <span class="text-danger"></span></label>
@@ -524,17 +525,16 @@ $users = DB::table('users')
                             </div>
                         </div>
                         <div class="col-md-6 new-date-data-field">
-                                    <div class="group-input input-date">
-                                        <label for="due-date">Deviation Occured On</label>
-                                        <div class="calenderauditee">                                    
-                                            <input type="text"  id="deviation_occured_on_gi" readonly placeholder="DD-MM-YYYY" />
-                                            <input type="date" name="deviation_occured_on_gi"    min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" value=""
-                                            class="hide-input"
-                                            oninput="handleDateInput(this, 'deviation_occured_on_gi')"/>
-                                        </div>
-                                    </div>
+                            <div class="group-input input-date">
+                                <label for="due-date">Deviation Occured On</label>
+                                <div class="calenderauditee">                                    
+                                    <input type="text"  id="deviation_occured_on_gi" readonly placeholder="DD-MM-YYYY" />
+                                    <input type="date" name="deviation_occured_on_gi"    min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" value=""
+                                    class="hide-input"
+                                    oninput="handleDateInput(this, 'deviation_occured_on_gi')"/>
                                 </div>
-
+                            </div>
+                        </div>
                         <div class="col-lg-6">
                             <div class="group-input">
                                 <label for="Audit Attachments">Initial Attachments</label>
@@ -549,7 +549,6 @@ $users = DB::table('users')
                                             oninput="addMultipleFiles(this, 'initial_attachment_gi')" multiple>
                                     </div>
                                 </div>
-
                             </div>
                         </div>
                        

@@ -21,18 +21,18 @@ return new class extends Migration
             $table->integer('initiator_id')->nullable();
             $table->string('intiation_date')->nullable();
             $table->string('due_date')->nullable();
+            $table->longText('description_gi')->nullable();
             $table->string('severity_level_gi')->nullable();
             $table->string('initiator_Group')->nullable();
             $table->string('initiator_group_code')->nullable();
             $table->text('initiated_through')->nullable();
-            $table->text('if_others_gi')->nullable();
-            $table->longText('is_repeat_gi')->nullable();
+            $table->longText('if_others_gi')->nullable();
+            $table->string('is_repeat_gi')->nullable();
             $table->longText('repeat_nature_gi')->nullable();
             $table->string('nature_of_change_gi')->nullable();
             $table->string('deviation_occured_on_gi')->nullable();
-            $table->longText('description_gi')->nullable();
             $table->longText('initial_attachment_gi')->nullable();
-            $table->longText('source_document_type_gi')->nullable();
+            $table->string('source_document_type_gi')->nullable();
             $table->longText('reference_system_document_gi')->nullable();
             $table->longText('reference_document_gi')->nullable();
             $table->text('sample_type_gi')->nullable();
@@ -185,8 +185,10 @@ return new class extends Migration
             $table->longText('phase_III_inves_reference_BI')->nullable();
             $table->longText('justify_for_delay_BI')->nullable();
             $table->longText('disposition_attachment_BI')->nullable();
-
-
+            $table->longText('reopen_approval_comments')->nullable();
+            $table->longText('addendum_review_comments')->nullable();
+            // $table->longText('reopen_approval_comments')->nullable();
+            
             //REOpen
             $table->string('reopen_request')->nullable();
             $table->longText('reopen_attachment')->nullable();
@@ -198,7 +200,9 @@ return new class extends Migration
             $table->text('parent_record')->nullable();
             $table->text('Description_Deviation')->nullable();
 
-
+            // extra field add by sonali
+            $table->text('action_task_required')->nullable(); 
+            $table->text('action_task_reference_no')->nullable();
 
             //Extras
             $table->text('initiator_group_gi')->nullable();
@@ -207,7 +211,7 @@ return new class extends Migration
             $table->text('initiated_through_gi')->nullable();
 
 
-
+            //====== write code by sonali ===========
             // workflow start stage
             $table->text('cancelled_by')->nullable();
             $table->text('cancelled_on')->nullable();
