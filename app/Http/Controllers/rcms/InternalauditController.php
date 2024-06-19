@@ -226,12 +226,13 @@ class InternalauditController extends Controller
         $internalAudit->remark_61 = $request->remark_61;
         $internalAudit->remark_62 = $request->remark_62;
         $internalAudit->remark_63 = $request->remark_63;
-
+        
         $internalAudit->save();
 //------------------------------------response and remarks input---------------------------------
 //$internalaudit   = new table_cc_impactassement();
 
 //$internalAudit->save();
+          $ia_id = $internalAudit->id;
 
 
         $auditAssessmentGrid = InternalAuditChecklistGrid::where(['ia_id' => $internalAudit->id, 'identifier' => 'auditAssessmentChecklist'])->firstOrNew();
@@ -294,6 +295,26 @@ class InternalauditController extends Controller
         $auditsheGrid->data = $request->auditSheChecklist;
         $auditsheGrid->save();
         
+        $internalAuditComments = InternalAuditChecklistGrid::where(['ia_id' => $ia_id])->firstOrNew();        
+        $internalAuditComments->auditSheChecklist_comment = $request->auditSheChecklist_comment;
+        if (!empty($request->auditSheChecklist_attachment)) {
+            $files = [];
+            if ($request->hasfile('auditSheChecklist_attachment')) {
+                foreach ($request->file('auditSheChecklist_attachment') as $file) {
+                    $name = $request->name . 'auditSheChecklist_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $file->move('upload/', $name);
+                    $files[] = $name;
+                }
+            }
+
+
+            $internalAuditComments->auditSheChecklist_attachment = json_encode($files);
+            
+        }
+
+        $internalAuditComments->save();
+
+
         $internalAudit->status = 'Opened';
         $internalAudit->stage = 1;
 
@@ -1645,6 +1666,24 @@ $Checklist_Capsule->save();
         $auditsheGrid->data = $request->auditSheChecklist;
         $auditsheGrid->save();
 
+        $internalAuditComments = InternalAuditChecklistGrid::where(['ia_id' => $ia_id])->firstOrNew();        
+        $internalAuditComments->auditSheChecklist_comment = $request->auditSheChecklist_comment;
+        if (!empty($request->auditSheChecklist_attachment)) {
+            $files = [];
+            if ($request->hasfile('auditSheChecklist_attachment')) {
+                foreach ($request->file('auditSheChecklist_attachment') as $file) {
+                    $name = "IA-" . 'auditSheChecklist_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $file->move('upload/', $name);
+                    $files[] = $name;
+                }
+            }
+
+
+            $internalAuditComments->auditSheChecklist_attachment = json_encode($files);
+            // dd($internalAuditComments->auditSheChecklist_attachment);
+        }
+        $internalAuditComments->save();
+
         $data3 = InternalAuditGrid::where('audit_id',$internalAudit->id)->where('type','internal_audit')->first();
         if (!empty($request->audit)) {
             $data3->area_of_audit = serialize($request->audit);
@@ -2247,13 +2286,14 @@ $Checklist_Capsule->save();
         $auditQualityAssuranceChecklist = InternalAuditChecklistGrid::where(['ia_id' => $id, 'identifier' => 'auditQualityAssuranceChecklist'])->firstOrNew();
         $auditPackagingChecklist = InternalAuditChecklistGrid::where(['ia_id' => $id, 'identifier' => 'auditPackagingChecklist'])->firstOrNew();
         $auditSheChecklist = InternalAuditChecklistGrid::where(['ia_id' => $id, 'identifier' => 'auditSheChecklist'])->firstOrNew();
-
+        $gridcomment = InternalAuditChecklistGrid::where(['ia_id' => $id])->first();
+            // dd($gridcomment);
 
 
 
 
         // dd($auditAssessmentChecklist);
-        return view('frontend.internalAudit.view', compact('data','checklist1','checklist2','checklist3', 'checklist4','checklist6','checklist7','checklist9','checklist10','checklist11','checklist12','checklist13','checklist14','checklist15','checklist16','checklist17','old_record','grid_data','grid_data1', 'auditAssessmentChecklist','auditPersonnelChecklist','auditfacilityChecklist','auditMachinesChecklist','auditProductionChecklist','auditMaterialsChecklist','auditQualityControlChecklist','auditQualityAssuranceChecklist','auditPackagingChecklist','auditSheChecklist'));
+        return view('frontend.internalAudit.view', compact('data','checklist1','checklist2','checklist3', 'checklist4','checklist6','checklist7','checklist9','checklist10','checklist11','checklist12','checklist13','checklist14','checklist15','checklist16','checklist17','old_record','grid_data','grid_data1', 'auditAssessmentChecklist','auditPersonnelChecklist','auditfacilityChecklist','auditMachinesChecklist','auditProductionChecklist','auditMaterialsChecklist','auditQualityControlChecklist','auditQualityAssuranceChecklist','auditPackagingChecklist','auditSheChecklist','gridcomment'));
     }
 
     public function InternalAuditStateChange(Request $request, $id)

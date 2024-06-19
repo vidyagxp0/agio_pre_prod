@@ -29816,7 +29816,7 @@
                             <div class="group-input">
                                 <label for="Description Deviation">Final Comments</label>
                                 <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
-                                <textarea class="summernote" name="Description_Deviation[]" id="summernote-1">
+                                <textarea class="summernote" name="auditSheChecklist_comment" id="summernote-1">
                                     </textarea>
                             </div>
                         </div>
@@ -29828,11 +29828,11 @@
                                     Please Attach all relevant or supporting documents
                                 </small>
                                 <div class="file-attachment-field">
-                                    <div class="file-attachment-list" id="file_attach"></div>
+                                    <div class="file-attachment-list" id="auditSheChecklist_attachment"></div>
                                     <div class="add-btn">
                                         <div>Add</div>
-                                        <input type="file" id="myfile" name="file_attach[]"
-                                            oninput="addMultipleFiles(this, 'file_attach')" multiple>
+                                        <input type="file" id="myfile" name="auditSheChecklist_attachment[]"
+                                            oninput="addMultipleFiles(this, 'auditSheChecklist_attachment')" multiple>
                                     </div>
                                 </div>
                             </div>

@@ -3268,8 +3268,7 @@ function addMultipleFiles(input, block_id) {
                         <div class="group-input">
                             <label for="Description Deviation">Final Comments</label>
                             <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
-                            <textarea class="summernote" value="{{ $data->Description_Deviation }}" name="Description_Deviation" id="summernote-1">
-                               {{ $data->Description_Deviation }} </textarea>
+                            <textarea class="summernote" value="{{ $data->Description_Deviation }}" name="Description_Deviation" id="summernote-1">{{ $data->Description_Deviation }} </textarea>
                         </div>
                     </div>
 
@@ -13665,28 +13664,35 @@ $checklistqualitycontrol = [
                                 <div class="col-md-12 mb-4">
                                 <div class="group-input">
                                     <label for="Description Deviation">Final Comments</label>
-                                    <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
-                                    <textarea class="summernote" name="Description_Deviation[]" id="summernote-1">
-                                        </textarea>
+                                    <textarea class="summernote" name="auditSheChecklist_comment" id="summernote-1"> {{ $gridcomment->auditSheChecklist_comment }}</textarea>
+
                                 </div>
                             </div>
 
-                            <div class="col-12">
+                            <div class="col-lg-12">
                                 <div class="group-input">
-                                    <label for="Audit Attachments"> Supporting Attachment </label>
-                                    <small class="text-primary">
-                                        Please Attach all relevant or supporting documents
-                                    </small>
-                                    <div class="file-attachment-field">
-                                        <div class="file-attachment-list" id="file_attach"></div>
-                                        <div class="add-btn">
-                                            <div>Add</div>
-                                            <input type="file" id="myfile" name="file_attach[]"
-                                                oninput="addMultipleFiles(this, 'file_attach')" multiple>
+                                    <label for="File Attachments">File Attachment</label>
+                                    <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
+                                        <div class="file-attachment-field">
+                                            <div class="file-attachment-list" id="auditSheChecklist_attachment">
+                                                @if ($data->auditSheChecklist_attachment)
+                                                @foreach(json_decode($data->auditSheChecklist_attachment) as $file)
+                                                <h6 type="button" class="file-container text-dark" style="background-color: rgb(243, 242, 240);">
+                                                    <b>{{ $file }}</b>
+                                                    <a href="{{ asset('upload/' . $file) }}" target="_blank"><i class="fa fa-eye text-primary" style="font-size:20px; margin-right:-10px;"></i></a>
+                                                    <a type="button" class="remove-file" data-file-name="{{ $file }}"><i class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i></a>
+                                                </h6>
+                                           @endforeach
+                                                @endif
+                                            </div>
+                                            <div class="add-btn">
+                                                <div>Add</div>
+                                                <input type="file" id="myfile" name="auditSheChecklist_attachment[]"
+                                                    oninput="addMultipleFiles(this, 'auditSheChecklist_attachment')" multiple>
+                                            </div>
                                         </div>
-                                    </div>
                                 </div>
-                                </div>
+                            </div>
                                     <div class="button-block">
                                         <button type="submit" class="saveButton">Save</button>
                                         <button type="button" class="backButton" onclick="previousStep()">Back</button>
