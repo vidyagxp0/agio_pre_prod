@@ -16,10 +16,6 @@ class OOS_micro extends Model
         return $this->hasMany(OOS_Micro_grid::class, 'oos_micro_id', 'id');
     }
 
-    // public function grids()
-    // {
-    //   return $this->hasMany(Oosgrids::class, 'oos_id');
-    // }
     public function record_number()
     {
         return $this->morphOne(QmsRecordNumber::class, 'recordable');
@@ -28,7 +24,7 @@ class OOS_micro extends Model
     protected $fillable = [
         'record',
         'form_type',
-        'division_code',
+        'division_id',
         'initiator_id',
         'intiation_date',
         'due_date',

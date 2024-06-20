@@ -17,7 +17,7 @@ return new class extends Migration
             $table->id();
             $table->integer('record')->nullable();
             $table->string('form_type')->nullable();
-            $table->string('division_code')->nullable();
+            $table->string('division_id')->nullable();
             $table->integer('initiator_id')->nullable();
             $table->string('intiation_date')->nullable();
             $table->string('due_date')->nullable();
@@ -213,7 +213,6 @@ return new class extends Migration
             //Extras
             $table->text('initiator_group_gi')->nullable();
             $table->text('initiator_group_code_gi')->nullable();
-            $table->text('division_id')->nullable();
             $table->text('initiated_through_gi')->nullable();
 
 

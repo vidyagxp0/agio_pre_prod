@@ -90,7 +90,7 @@ class OOSMicroController extends Controller
         $micro['form_type'] = "OOS Microbiology";
         $micro['status'] = "Opened";
         $micro['stage'] = 1;
-       
+        $micro['division_id'] = $request->division_id;
         $OOSmicro = OOS_micro::create($micro);
         $record = RecordNumber::first();
         $record->counter = ((RecordNumber::first()->value('counter')) + 1);
@@ -162,20 +162,7 @@ class OOSMicroController extends Controller
 
         //=========== Audit Trail -- For Store  =========================//
 
-        if(!empty($micro->division_code)){
-            $history = new OOSmicroAuditTrail();
-            $history->OOS_micro_id = $OOSmicro->id;
-            $history->activity_type = 'Division Code';
-            $history->previous = "Null";
-            $history->current = $micro->division_code;
-            $history->comment = "NA";
-            $history->user_id = Auth::user()->id;
-            $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state = $micro->status;
-            $history->save();
-
-        }
+       
         if (!empty($micro->intiation_date)) {
             $history = new OOSmicroAuditTrail();
             $history->OOS_micro_id = $OOSmicro->id;
@@ -435,11 +422,10 @@ class OOSMicroController extends Controller
        public function edit($id){
 
             $micro_data = OOS_micro::find($id);
-            //return $micro_data->grids;
             $old_record = OOS_micro::select('id', 'division_id', 'record')->get();
             $record_number = ((RecordNumber::first()->value('counter')) + 1);
             $record_number = str_pad($record_number, 4, '0', STR_PAD_LEFT);
-
+            // =========grid data========
             $info_product_materials = $micro_data->grids()->where('identifier', 'info_product_material')->first();
             $details_stabilities = $micro_data->grids()->where('identifier', 'details_stability')->first();
             $oos_details = $micro_data->grids()->where('identifier', 'oos_detail')->first();
@@ -503,23 +489,10 @@ class OOSMicroController extends Controller
             $micro = OOS_micro::with('grids')->find($id);
 
      //---------------------Audit Trail Update-------------------------------/////////////////
-          $OOSmicro = OOS_micro::find($id);
-           $lastDocument = OOS_micro::find($id);
-            
-           if($lastDocument->division_code != $micro->division_code || !empty($request->comment)){
-            $history =  new OOSmicroAuditTrail();
-            $history->OOS_micro_id =$id;
-            $history->activity_type = 'Division Code';
-            $history->previous = $lastDocument->division_code;
-            $history->current = $micro->division_code;
-            $history->comment = $request->comment;
-            $history->user_id = Auth::user()->id;
-            $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state = $lastDocument->status;
-            $history->save();
-        }
+           $OOSmicro = OOS_micro::find($id);
 
+           $lastDocument = OOS_micro::find($id);
+          
         if($lastDocument->intiation_date != $micro->intiation_date || !empty($request->comment)){
             $history =  new OOSmicroAuditTrail();
             $history->OOS_micro_id =$id;
