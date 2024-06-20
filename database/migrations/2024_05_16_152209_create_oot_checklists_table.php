@@ -15,7 +15,6 @@ return new class extends Migration
     {
         Schema::create('oot_checklists', function (Blueprint $table) {
             $table->id();
-            $table->text('data')->nullable();
             $table->text('p_l_irequired')->nullable();
             $table->text('responce_one')->nullable();
             $table->text('responce_two')->nullable();

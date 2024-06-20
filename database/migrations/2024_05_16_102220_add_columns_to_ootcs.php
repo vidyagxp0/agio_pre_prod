@@ -16,13 +16,13 @@ return new class extends Migration
         Schema::table('ootcs', function (Blueprint $table) {
             $table->string('action_taken_result')->nullable();
             $table->string('retraining_to_analyst_required')->nullable();
-            $table->string('cheklist_part_b_remarks')->nullable();
+            $table->longText('cheklist_part_b_remarks')->nullable();
             $table->string('analysis_on_same_sample')->nullable();
-            $table->string('any_other_action')->nullable();
-            $table->string('re_analysis_result')->nullable();
-            $table->string('reanalysis_result_oot')->nullable();
-            $table->string('part_b_comments')->nullable();
-            $table->string('supporting_attechment')->nullable();
+            $table->longText('any_other_action')->nullable();
+            $table->longText('re_analysis_result')->nullable();
+            $table->longText('reanalysis_result_oot')->nullable();
+            $table->longText('part_b_comments')->nullable();
+            $table->longText('supporting_attechment')->nullable();
         });
     }
 

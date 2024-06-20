@@ -14,12 +14,12 @@ return new class extends Migration
     public function up()
     {
         Schema::table('ootcs', function (Blueprint $table) {
-            $table->string('r_d_comments_part_b')->nullable();
-            $table->string('a_d_l_comments')->nullable();
-            $table->string('regulatory_comments')->nullable();
-            $table->string('manufacturing_comments')->nullable();
-            $table->string('technical_commitee_comments')->nullable();
-            $table->string('supporting_documents')->nullable();
+            $table->longText('r_d_comments_part_b')->nullable();
+            $table->longText('a_d_l_comments')->nullable();
+            $table->longText('regulatory_comments')->nullable();
+            $table->longText('manufacturing_comments')->nullable();
+            $table->longText('technical_commitee_comments')->nullable();
+            $table->longText('supporting_documents')->nullable();
         });
     }
 

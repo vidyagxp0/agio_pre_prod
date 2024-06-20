@@ -72,8 +72,8 @@ return new class extends Migration
             $table->longText('initial_attachment_capa_post_ooc')->nullable();
             $table->text('short_description_closure_ooc')->nullable();
             $table->longText('initial_attachment_closure_ooc')->nullable();
-            $table->string('document_code_closure_ooc')->nullable();
-            $table->string('remarks_closure_ooc')->nullable();
+            $table->longText('document_code_closure_ooc')->nullable();
+            $table->longText('remarks_closure_ooc')->nullable();
             $table->longText('initiated_through_closure_ooc')->nullable();
             $table->longText('initiated_through_hodreview_ooc')->nullable();
             $table->longText('initial_attachment_hodreview_ooc')->nullable();
@@ -94,7 +94,43 @@ return new class extends Migration
             $table->text('initial_phase_i_investigation_comment')->nullable();
             $table->integer('parent_id')->nullable();
             $table->text('parent_type')->nullable();
-            
+            $table->text('initial_phase_i_investigation_completed_by')->nullable();
+            $table->text('initial_phase_i_investigation_completed_on')->nullable();
+            $table->text('assignable_cause_f_completed_by')->nullable();
+            $table->text('assignable_cause_f_completed_on')->nullable();
+            $table->text('assignable_cause_f_completed_comment')->nullable();
+            $table->text('assignable_cause_f_n_completed_by')->nullable();
+            $table->text('assignable_cause_f_n_completed_on')->nullable();
+            $table->text('assignable_cause_f__ncompleted_comment')->nullable();
+            $table->text('correction_completed_by')->nullable();
+            $table->text('correction_completed_on')->nullable();
+            $table->text('correction_completed_comment')->nullable();
+            $table->text('cause_f_completed_by')->nullable();
+            $table->text('cause_f_completed_on')->nullable();
+            $table->text('cause_f_completed_comment')->nullable();
+            $table->text('cause_i_completed_by')->nullable();
+            $table->text('cause_i_completed_on')->nullable();
+            $table->text('cause_i_ncompleted_comment')->nullable();
+            $table->text('obvious_r_completed_by')->nullable();           
+            $table->text('obvious_r_completed_on')->nullable();           
+            $table->text('obvious_r_ncompleted_comment')->nullable();  
+            $table->text('correction_r_completed_by')->nullable();           
+            $table->text('correction_r_completed_on')->nullable();           
+            $table->text('correction_r_ncompleted_comment')->nullable();
+            $table->text('cause_n_i_completed_by')->nullable();            
+            $table->text('cause_n_i_completed_on')->nullable();            
+            $table->text('cause_n_i_completed_comment')->nullable();
+            $table->text('correction_ooc_completed_by')->nullable();
+            $table->text('correction_ooc_completed_on')->nullable();
+            $table->text('correction_ooc_comment')->nullable();
+            $table->text('qareview_ooc_completed_by')->nullable();
+            $table->text('qareview_ooc_completed_on')->nullable();
+            $table->text('qareview_ooc_comment')->nullable();
+            $table->text('cancelled_by')->nullable();
+            $table->text('cancell_comment')->nullable();
+            $table->text('cancelled_on')->nullable();
+
+
 
             $table->timestamps();
         });

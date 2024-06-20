@@ -15,7 +15,7 @@ return new class extends Migration
     {
         Schema::create('failure_investigation_cft_responses', function (Blueprint $table) {
             $table->id();
-            $table->string('deviation_id');
+            $table->string('failure_investigation_id');
             $table->string('cft_user_id')->comment('user_id');
             $table->string('cft_stage')->nullable();
             $table->string('status')->nullable();

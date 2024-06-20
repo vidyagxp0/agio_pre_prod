@@ -181,4 +181,9 @@ class MarketComplaint extends Model
       return $this->hasMany(MarketComplaintGrids::class,'');
     }
 
+    public function product_details()
+    {
+        return $this->hasOne(MarketComplaintGrids::class,'mc_id');
+    }
+
 }

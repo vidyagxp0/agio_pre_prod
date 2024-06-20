@@ -75,8 +75,6 @@ class ExtensionNewController extends Controller
         // dd($request->initiator);
         $extensionNew->initiation_date = $request->initiation_date;
         $extensionNew->short_description = $request->short_description;
-        $extensionNew->parent_id = $request->parent_id;
-        $extensionNew->parent_record = $request->parent_record;
         $extensionNew->reviewers = $request->reviewers;
         $extensionNew->approvers = $request->approvers;
         $extensionNew->current_due_date = $request->current_due_date;
@@ -270,7 +268,8 @@ class ExtensionNewController extends Controller
         }
         // return redirect()->back()->with('success', 'Induction training data saved successfully!');
         // return redirect()->route('TMS.index')->with('success', 'Induction training data saved successfully!');
-        return redirect(url('rcms/qms-dashboard'))->with('success', 'Extension data saved successfully!');
+        toastr()->success("Record is created Successfully");
+        return redirect(url('rcms/qms-dashboard'));
 
     }
 
@@ -299,6 +298,7 @@ class ExtensionNewController extends Controller
         $extensionNew->file_attachment_reviewer = $request->file_attachment_reviewer;
         $extensionNew->approver_remarks = $request->approver_remarks;
         $extensionNew->file_attachment_approver = $request->file_attachment_approver;
+        
         if (!empty ($request->file_attachment_extension)) {
             $files = [];
             if ($request->hasfile('file_attachment_extension')) {
@@ -471,7 +471,9 @@ class ExtensionNewController extends Controller
             $history->action_name = 'Create';
             $history->save();
         }
-        return redirect()->back()->with('success', 'Extension data saved successfully!');
+        toastr()->success("Record is created Successfully");
+
+        return redirect()->back();
 
 
     }

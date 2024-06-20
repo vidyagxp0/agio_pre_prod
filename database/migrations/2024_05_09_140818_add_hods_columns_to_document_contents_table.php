@@ -15,8 +15,8 @@ return new class extends Migration
     {
         Schema::table('document_contents', function (Blueprint $table) {
             $table->longText('hod_comments')->nullable();
-            $table->string('hod_attachments')->nullable();
-        });
+           $table->string('hod_attachments')->nullable();
+        }); 
     }
 
     /**

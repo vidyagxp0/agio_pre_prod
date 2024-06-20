@@ -45,6 +45,64 @@
         }
     </script>
 
+    <script>
+        $(document).ready(function() {
+            let docIndex = 1;
+            $('#documentAdd').click(function(e) {
+                function generateTableRow(serialNumber) {
+                    var html =
+                        '<tr>' +
+                        '<td><input disabled type="text" name="serial[]" value="' + serialNumber +
+                        '"></td>' +
+                        ' <td><input type="text" name="documentDetails[' + docIndex + '][currentDocNumber]"></td>' +
+                        ' <td><input type="text"name="documentDetails[' + docIndex +'][currentVersionNumber]"></td>' +
+                        '<td><input type="text" name="documentDetails[' + docIndex + '][newDocNumber]"></td>' +
+                        '<td><input type="text" name="documentDetails[' + docIndex + '][newVersionNumber\]"></td>' +
+                        '<td><button type="text" class="removeRowBtn">Remove</button></td>' +
+                        '</tr>';
+                    '</tr>';
+
+                    docIndex++;
+                    return html;
+                }
+                var tableBody = $('#documentTableDetails tbody');
+                var rowCount = tableBody.children('tr').length;
+                var newRow = generateTableRow(rowCount + 1);
+                tableBody.append(newRow);
+            });
+        });
+    </script>
+
+    <script>
+        $(document).ready(function() {
+            let affectedDocIndex = 1;
+            $('#affectedDocAdd').click(function(e) {
+                function generateTableRow(serialNumber) {
+                    var html =
+                        '<tr>' +
+                        '<td><input disabled type="text" name="serial[]" value="' + serialNumber + '"></td>' +
+                        ' <td><input type="text" name="affectedDocuments[' + affectedDocIndex + '][afftectedDoc]"></td>' +
+                        ' <td><input type="text"name="affectedDocuments[' + affectedDocIndex +'][documentName]"></td>' +
+                        '<td><input type="number" name="affectedDocuments[' + affectedDocIndex + '][documentNumber]"></td>' +
+                        '<td><input type="text" name="affectedDocuments[' + affectedDocIndex + '][versionNumber]"></td>' +
+                        ' <td><input type="date"name="affectedDocuments[' + affectedDocIndex +'][implimentationDate]"></td>' +
+                        '<td><input type="text" name="affectedDocuments[' + affectedDocIndex + '][newDocumentNumber]"></td>' +
+                        '<td><input type="text" name="affectedDocuments[' + affectedDocIndex + '][newVersionNumber]"></td>' +
+                        '<td><button type="text" class="removeRowBtn">Remove</button></td>' +
+                        '</tr>';
+                    '</tr>';
+
+                    docIndex++;
+                    return html;
+                }
+                var tableBody = $('#affectedDocAddTable tbody');
+                var rowCount = tableBody.children('tr').length;
+                var newRow = generateTableRow(rowCount + 1);
+                tableBody.append(newRow);
+            });
+        });
+    </script>
+
     <div id="rcms_form-head">
         <div class="container-fluid">
             <div class="inner-block">
@@ -69,14 +127,14 @@
             <!-- Tab links -->
             <div class="cctab">
                 <button class="cctablinks active" onclick="openCity(event, 'CCForm1')">General Information</button>
+                <button class="cctablinks" onclick="openCity(event, 'CCForm8')" style="display: none" id="riskAssessmentButton">Risk Assessment</button>
                 <button class="cctablinks" onclick="openCity(event, 'CCForm2')">Change Details</button>
                 <button class="cctablinks" onclick="openCity(event, 'CCForm3')">Impact Assessment</button>
                 <button class="cctablinks" onclick="openCity(event, 'CCForm4')">QA Review</button>
                 <button class="cctablinks " onclick="openCity(event, 'CCForm12')">CFT</button>
                 <button class="cctablinks" onclick="openCity(event, 'CCForm5')">Evaluation</button>
                 {{-- <button class="cctablinks" onclick="openCity(event, 'CCForm6')">Additional Information</button> --}}
-                <button class="cctablinks" onclick="openCity(event, 'CCForm7')">Comments</button>
-                <button class="cctablinks" onclick="openCity(event, 'CCForm8')">Risk Assessment</button>
+                {{-- <button class="cctablinks" onclick="openCity(event, 'CCForm7')">Comments</button> --}}
                 <button class="cctablinks" onclick="openCity(event, 'CCForm9')">QA Approval Comments</button>
                 <button class="cctablinks" onclick="openCity(event, 'CCForm10')">Change Closure</button>
                 <button class="cctablinks" onclick="openCity(event, 'CCForm11')">Activity Log</button>
@@ -97,9 +155,7 @@
                                 <div class="col-6">
                                     <div class="group-input">
                                         <label for="RLS Record Number"><b>Record Number</b></label>
-                                        <input disabled type="text" name="record_number"
-                                            value="{{ Helpers::getDivisionName(session()->get('division')) }}/CC/{{ date('Y') }}/{{ $record_number }}">
-                                        {{-- <div class="static">QMS-EMEA/CAPA/{{ date('Y') }}/{{ $record_number }}</div> --}}
+                                        <input disabled type="text" placeholder="Record Number" readonly>
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
@@ -110,6 +166,13 @@
                                         <input type="hidden" name="division_id" value="{{ session()->get('division') }}">
                                     </div>
                                 </div>
+
+                                @php
+                                    // Calculate the due date (30 days from the initiation date)
+                                    $initiationDate = date('Y-m-d'); // Current date as initiation date
+                                    $dueDate = date('Y-m-d', strtotime($initiationDate . '+30 days')); // Due date
+                                @endphp
+                                
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Initiator"><b>Initiator</b></label>
@@ -156,7 +219,7 @@
                                     </div>
                                 </div> -->
 
-                                <div class="col-lg-6">
+                                <!-- <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Microbiology-Person">CFT Reviewer Person</label>
                                         <select multiple name="Microbiology_Person[]" placeholder="Select CFT Reviewers"
@@ -169,7 +232,8 @@
                                             @endforeach
                                         </select>
                                     </div>
-                                </div>
+                                </div> -->
+
                                 <div class="col-md-6 new-date-data-field">
                                     <div class="group-input input-date ">
                                         <label for="due-date">Due Date<span class="text-danger"></span></label>
@@ -177,17 +241,40 @@
                                                 reason in "Due Date Extension Justification" data field.</small>
                                         </div>
                                         <div class="calenderauditee">
-                                            <input type="text" name="due_date" id="due_date" readonly
-                                                placeholder="DD-MMM-YYYY" />
-                                            <input type="date" name="due_date"
-                                                min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input"
-                                                oninput="handleDateInput(this, 'due_date')" />
+                                            <input type="text" readonly placeholder="DD-MM-YYYY" />
                                         </div>
                                     </div>
                                 </div>
+
+                                <script>
+                                    // Format the due date to DD-MM-YYYY
+                                    // Your input date
+                                    var dueDate = "{{ $dueDate }}"; // Replace {{ $dueDate }} with your actual date variable
+
+                                    // Create a Date object
+                                    var date = new Date(dueDate);
+
+                                    // Array of month names
+                                    var monthNames = [
+                                        "Jan", "Feb", "Mar", "Apr", "May", "Jun",
+                                        "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"
+                                    ];
+
+                                    // Extracting day, month, and year from the date
+                                    var day = date.getDate().toString().padStart(2, '0'); // Ensuring two digits
+                                    var monthIndex = date.getMonth();
+                                    var year = date.getFullYear();
+
+                                    // Formatting the date in "dd-MMM-yyyy" format
+                                    var dueDateFormatted = `${day}-${monthNames[monthIndex]}-${year}`;
+
+                                    // Set the formatted due date value to the input field
+                                    document.getElementById('due_date').value = dueDateFormatted;
+                                </script>
+
                                 <div class="col-lg-6">
                                     <div class="group-input">
-                                        <label for="initiator-group">Initiator Group <span
+                                        <label for="initiator-group">Initiation Department <span
                                                 class="text-danger">*</span></label>
                                         <select name="Initiator_Group" id="initiator_group" required>
                                             <option value="">-- Select --</option>
@@ -236,7 +323,7 @@
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="group-input">
-                                        <label for="Initiator Group Code">Initiator Group Code</label>
+                                        <label for="Initiator Group Code">Initiation Department Code</label>
                                         <input type="text" name="initiator_group_code" id="initiator_group_code"
                                             value="" readonly>
                                     </div>
@@ -252,6 +339,62 @@
                                         @enderror
                                     </div>
                                 </div>  --}}
+
+                                            <script>
+                                                $(document).ready(function() {
+                                                    $('#risk_assessment_required').change(
+                                                        function() {
+                                                            var riskAssessmentRequired = $('#risk_assessment_required').val();
+                                                            if (riskAssessmentRequired === 'yes') {
+                                                                $('#riskAssessmentButton').show(); // Show the investigation button
+                                                            } else {
+                                                                $('#riskAssessmentButton').hide(); // Hide the investigation button
+                                                            }
+                                                        }
+                                                    );
+                                                });
+                                            </script>
+
+                                            <div class="col-lg-6">
+                                                <div class="group-input">
+                                                    <label for="Risk Assessment Required">Risk Assessment Required? </label>
+                                                    <select name="risk_assessment_required" id="risk_assessment_required">
+                                                        <option value="">-- Select --</option>
+                                                        <option @if ($data->risk_assessment_required == 'yes') selected @endif value='yes'>Yes</option>
+                                                        <option @if ($data->risk_assessment_required == 'no') selected @endif value='no'>No</option>
+                                                    </select>
+                                                    <!-- @error('capa_required')
+                                                        <div class="text-danger">{{ $message }}</div>
+                                                    @enderror -->
+                                                </div>
+                                            </div>
+
+                                            @php
+                                                $userRoles = DB::table('user_roles')
+                                                    ->where([
+                                                        'q_m_s_roles_id' => 4,
+                                                        'q_m_s_divisions_id' => $data->division_id,
+                                                    ])
+                                                    ->get();
+                                                $userRoleIds = $userRoles->pluck('user_id')->toArray();
+                                                $users = DB::table('users')->whereIn('id', $userRoleIds)->get();
+                                            @endphp
+
+                                            <div class="col-lg-6">
+                                                <div class="group-input">
+                                                    <label for="hod_person">HOD Person</label>
+                                                    <select name="hod_person" id="hod_person" >
+                                                        <option value="">Select HOD Persion</option>
+                                                        @if($users)
+                                                            @foreach($users as $user)
+                                                                <option value="{{ $user->id }}" >{{ $user->name }}</option>
+                                                            @endforeach
+                                                        @endif
+                                                    </select>
+                                                </div>
+                                            </div>
+
+
                                 <div class="col-12">
                                     <div class="group-input">
                                         <label for="Short Description">Short Description<span
@@ -263,7 +406,8 @@
                                             required>
                                     </div>
                                 </div>
-                                <div class="col-12">
+
+                                <!-- <div class="col-12">
                                     <div class="group-input">
                                         <label for="severity-level">Severity Level</label>
                                         <span class="text-primary">Severity levels in a QMS record gauge issue seriousness,
@@ -276,7 +420,8 @@
                                             <option value="critical">Critical</option>
                                         </select>
                                     </div>
-                                </div>
+                                </div> -->
+
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Initiator Group">Initiated Through</label>
@@ -401,13 +546,14 @@
                                 Change Details
                             </div>
                             <div class="row">
-                                <div class="col-12">
+
+                                <!-- <div class="col-12">
                                     <div class="group-input">
                                         <label for="doc-detail">
                                             Document Details<button type="button" name="ann"
-                                                id="DocDetailbtn">+</button>
+                                                id="documentAdd">+</button>
                                         </label>
-                                        <table class="table-bordered table" id="doc-detail">
+                                        <table class="table-bordered table" id="documentTableDetails">
                                             <thead>
                                                 <tr>
                                                     <th>Sr. No.</th>
@@ -419,18 +565,17 @@
                                             </thead>
                                             <tbody>
                                                 <tr>
-                                                    <td><input type="text" value="1" name="serial_number[]"
-                                                            readonly></td>
-                                                    <td><input type="text" name="current_doc_number[]"></td>
-                                                    <td><input type="text" name="current_version[]"></td>
-                                                    <td><input type="text" name="new_doc_number[]"></td>
-                                                    <td><input type="text" name="new_version[]"></td>
+                                                    <td><input type="text" value="1" name="documentDetails[]" readonly></td>
+                                                    <td><input type="text" name="documentDetails[0][currentDocNumber]"></td>
+                                                    <td><input type="text" name="documentDetails[0][currentVersionNumber]"></td>
+                                                    <td><input type="text" name="documentDetails[0][newDocNumber]"></td>
+                                                    <td><input type="text" name="documentDetails[0][newVersionNumber]"></td>
                                                 </tr>
-                                                <div id="docdetaildiv"></div>
                                             </tbody>
                                         </table>
                                     </div>
-                                </div>
+                                </div> -->
+                                
                                 <div class="col-12">
                                     <div class="group-input">
                                         <label for="current-practice">
@@ -2453,7 +2598,7 @@
                     </div>
                 </div>
 
-                {{-- <div id="CCForm6" class="inner-block cctabcontent">
+                    <!-- <div id="CCForm6" class="inner-block cctabcontent">
                         <div class="inner-block-content">
                             <div class="sub-head">
                                 CFT Information
@@ -2588,7 +2733,7 @@
 
                             </div>
                         </div>
-                    </div> --}}
+                    </div> -->
 
                 <div id="CCForm7" class="inner-block cctabcontent">
                     <div class="inner-block-content">
@@ -2822,9 +2967,9 @@
                         <div class="group-input">
                             <label for="risk-assessment">
                                 Affected Documents<button type="button" name="ann"
-                                    id="addAffectedDocumentsbtn">+</button>
+                                    id="affectedDocAdd">+</button>
                             </label>
-                            <table class="table table-bordered" id="affected-documents">
+                            <table class="table table-bordered" id="affectedDocAddTable">
                                 <thead>
                                     <tr>
                                         <th>Sr. No.</th>
@@ -2839,38 +2984,14 @@
                                 </thead>
                                 <tbody>
                                     <tr>
-                                        <td><input type="text" Value="1" name="serial_number[]" readonly>
-                                        </td>
-
-                                        <td><input type="text" name="affected_documents[]">
-                                        </td>
-                                        <td><input type="text" name="document_name[]">
-                                        </td>
-                                        <td><input type="number" name="document_no[]">
-                                        </td>
-                                        <td><input type="text" name="version_no[]">
-                                        </td>
-                                        {{-- <td><input type="date" name="implementation_date[]">
-                                            </td> --}}
-                                        <td>
-                                            <div class="group-input new-date-data-field mb-0">
-                                                <div class="input-date ">
-                                                    <div class="calenderauditee">
-                                                        <input type="text"
-                                                            id="implementation_date' + serialNumber +'" readonly
-                                                            placeholder="DD-MMM-YYYY" />
-                                                        <input type="date" name="implementation_date[]"
-                                                            class="hide-input"
-                                                            oninput="handleDateInput(this, `implementation_date' + serialNumber +'`)" />
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </td>
-                                        <td><input type="text" name="new_document_no[]">
-                                        </td>
-                                        <td><input type="text" name="new_version_no[]">
-                                        </td>
-
+                                        <td><input type="text" value="1" name="affectedDocuments[]" readonly></td>
+                                        <td><input type="text" name="affectedDocuments[0][afftectedDoc]"></td>
+                                        <td><input type="text" name="affectedDocuments[0][documentName]"></td>
+                                        <td><input type="number" name="affectedDocuments[0][documentNumber]"></td>
+                                        <td><input type="text" name="affectedDocuments[0][versionNumber]"></td>
+                                        <td><input type="date" name="affectedDocuments[0][implimentationDate]"></td>
+                                        <td><input type="text" name="affectedDocuments[0][newDocumentNumber]"></td>
+                                        <td><input type="text" name="affectedDocuments[0][newVersionNumber]"></td>
                                     </tr>
                                 </tbody>
                             </table>

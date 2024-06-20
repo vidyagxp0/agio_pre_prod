@@ -32,7 +32,7 @@ return new class extends Migration
             $table->longtext('Date_and_time_of_correction')->nullable();
             $table->longText('QA_Feedbacks')->nullable();
             $table->string('QA_Attachments')->nullable();
-            // $table->string('file_path')->nullable();
+            $table->string('type')->nullable();
             $table->longText('HOD_Remarks')->nullable();
             $table->string('HOD_Attachments')->nullable();
             $table->longtext('Closure_Comments')->nullable();

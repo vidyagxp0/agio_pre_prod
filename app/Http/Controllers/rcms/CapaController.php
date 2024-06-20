@@ -52,9 +52,7 @@ class CapaController extends Controller
         $formattedDate = $currentDate->addDays(30);
         $due_date= $formattedDate->format('Y-m-d');
         $changeControl = OpenStage::find(1);
-        if(!empty($changeControl->cft)){
-            $cft = explode(',', $changeControl->cft); 
-        }
+         if(!empty($changeControl->cft)) $cft = explode(',', $changeControl->cft);
         return view("frontend.forms.capa", compact('due_date', 'record_number', 'old_record', 'cft'));
     }
 

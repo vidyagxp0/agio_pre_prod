@@ -193,7 +193,7 @@
                             {{-- <div style="margin-bottom: 5px;  font-weight: bold;"> Originator
                                 :{{ $document->record_initiator ? $document->record_initiator->name : '' }}</div> --}}
                                 <div style="margin-bottom: 5px;  font-weight: bold;"> Originator
-                                    :{{ $document->record_initiator ? $document->record_initiator->name : '' }}</div>
+                                    :{{ $auditrecord->initiator ? $auditrecord->initiator : '' }}</div>
                             <div style="margin-bottom: 5px; font-weight: bold;">Short Description :
                                 {{ $auditrecord->description_ooc }}</div>
                             <div style="margin-bottom: 5px;  font-weight: bold;">Due Date : {{ $auditrecord->due_date }}</div>

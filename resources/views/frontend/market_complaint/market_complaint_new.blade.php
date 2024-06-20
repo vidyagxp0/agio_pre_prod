@@ -203,7 +203,7 @@
                                         {{-- <input disabled type="text" name="record" value=""> --}}
                                         {{-- <input disabled type="text" name="record" value=" {{ Helpers::getDivisionName(session()->get('division')) }}/LI/{{ date('Y') }}/{{ $record}}"> --}}
                                         <input disabled type="text" name="record" id="record" 
-                                        value="---/LI/{{ date('y') }}/{{ $record }}">
+                                        value="---/MC/{{ date('y') }}/{{ $record }}">
                                     </div>
                                 </div>
                                
@@ -235,9 +235,9 @@
                                         <input type="hidden" value="{{ date('Y-m-d') }}" name="intiation_date">
                                     </div>
                                 </div>
-                                <div class="col-md-6 new-date-data-field">
+                                {{-- <div class="col-md-6 new-date-data-field">
                                     <div class="group-input input-date">
-                                        <label for="due-date">Due Date <span class="text-danger">*</span></label>
+                                        <label for="due-date">Due Date <span class="text-danger"></span></label>
                                         <p class="text-primary"> last date this record should be closed by</p>
 
                                         <div class="calenderauditee">
@@ -247,13 +247,47 @@
                                                 class="hide-input" oninput="handleDateInput(this, 'due_date')" />
                                         </div>
                                     </div>
+                                </div> --}}
+
+                                <div class="col-md-6 new-date-data-field">
+                                    <div class="group-input input-date">
+                                        <label for="due-date">Due Date <span class="text-danger">*</span></label>
+                                        <div class="calenderauditee">
+                                            <!-- Display the formatted date in a readonly input -->
+                                            <input type="text" id="due_date_display" readonly placeholder="DD-MMM-YYYY" value="{{ Helpers::getDueDate(30, true) }}" />
+                                           
+                                            <input type="date" name="due_date_gi" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" value="{{ Helpers::getDueDate(30, false) }}" class="hide-input" readonly />
+                                        </div>
+                                    </div>
                                 </div>
+                                <script>
+                                    function handleDateInput(dateInput, displayId) {
+                                        const date = new Date(dateInput.value);
+                                        const options = { day: '2-digit', month: 'short', year: 'numeric' };
+                                        document.getElementById(displayId).value = date.toLocaleDateString('en-GB', options).replace(/ /g, '-');
+                                    }
+                                    
+                                    // Call this function initially to ensure the correct format is shown on page load
+                                    document.addEventListener('DOMContentLoaded', function() {
+                                        const dateInput = document.querySelector('input[name="due_date"]');
+                                        handleDateInput(dateInput, 'due_date_display');
+                                    });
+                                    </script>
+                                    
+                                    <style>
+                                    .hide-input {
+                                        display: none;
+                                    }
+                                    </style>
+
                                 <div class="col-md-12 mb-3">
                                     <div class="group-input">
                                         <label for="Short Description">Short Description<span
-                                            class="text-danger">*</span></label><span id="rchars">255</span>
-                                    Characters remaining
-                                        <input  name="description_gi" id="summernote-1" required >
+                                            class="text-danger">*</span></label>
+                                            <span id="rchars">255</span>
+                                        <div><small class="text-primary">Please insert "NA" in the data field if it does
+                                                not require completion</small></div>
+                                        <input  name="description_gi" id="docname" maxlength="255" required >
                                     
                                     </div>
                                 </div>
@@ -311,7 +345,7 @@
                                     <div class="group-input">
                                         <label for="Initiator Group Code">Initiator Group Code</label>
                                         <input type="text" name="initiator_group_code_gi" id="initiator_group_code"
-                                            value="">
+                                            value="" readonly>
                                     </div>
                                 </div>
 
@@ -374,7 +408,7 @@
 
                                 <div class="col-12">
                                     <div class="group-input">
-                                        <label for="Inv Attachments">Initial Attachment</label>
+                                        <label for="Inv Attachments">Information Attachment</label>
                                         <div>
                                             <small class="text-primary">
                                                 Please Attach all relevant or supporting documents
@@ -397,46 +431,60 @@
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Initiator Group">Complainant</label>
-                                        <select name="complainant_gi" onchange="">
-                                            <option value="">-- select --</option>
-                                            <option value="person">person</option>
-
+                                        <select id="select-state" placeholder="Select..." name="complainant_gi">
+                                            <option value="">Select a value</option>
+                                            @foreach ($users as $value)
+                                                <option value="{{ $value->id }}">{{ $value->name }}</option>
+                                            @endforeach
                                         </select>
+                                        @error('assign_to')
+                                            <p class="text-danger">{{ $message }}</p>
+                                        @enderror
                                     </div>
                                 </div>
 
                                 <div class="col-lg-6 new-date-data-field">
                                     <div class="group-input input-date">
-                                        <label for="OOC Logged On">Complaint Reported On</label>
+                                        <label for="complaint_reported_on">Complaint Reported On</label>
                                         <div class="calenderauditee">
-                                            <input type="text" id="compalint_dat" readonly placeholder="DD-MMM-YYYY" />
-                                            <input type="date" name="complaint_reported_on_gi"
-                                            min="{{ \Carbon\Carbon::now()->format('d-M-Y') }}" value=""
-                                            class="hide-input" oninput="handleDateInput(this, 'compalint_dat')" />
+                                            <input type="text" id="complaint_dat" readonly placeholder="DD-MMM-YYYY" />
+                                            <input type="date" id="complaint_date_picker" name="complaint_reported_on_gi"
+                                                value=""
+                                                class="hide-input" oninput="handleDateInput(this, 'complaint_dat')" />
                                         </div>
                                     </div>
                                 </div>
-
+                                
                                 <script>
                                     document.addEventListener('DOMContentLoaded', (event) => {
                                         const dateInput = document.getElementById('complaint_date_picker');
                                         const today = new Date().toISOString().split('T')[0];
                                         dateInput.setAttribute('max', today);
-
+                                
                                         // Show the date picker when clicking on the readonly input
-                                        const readonlyInput = document.getElementById('compalint_dat');
+                                        const readonlyInput = document.getElementById('complaint_dat');
                                         readonlyInput.addEventListener('click', () => {
                                             dateInput.style.display = 'block';
                                             dateInput.focus();
                                         });
-
+                                
                                         // Update the readonly input when a date is selected
                                         dateInput.addEventListener('change', () => {
-                                            readonlyInput.value = new Date(dateInput.value).toLocaleDateString('en-GB');
+                                            const selectedDate = new Date(dateInput.value);
+                                            const options = { day: '2-digit', month: 'short', year: 'numeric' };
+                                            readonlyInput.value = selectedDate.toLocaleDateString('en-GB', options).replace(/ /g, '-');
                                             dateInput.style.display = 'none';
                                         });
                                     });
+                                
+                                    function handleDateInput(dateInput, readonlyInputId) {
+                                        const readonlyInput = document.getElementById(readonlyInputId);
+                                        const selectedDate = new Date(dateInput.value);
+                                        const options = { day: '2-digit', month: 'short', year: 'numeric' };
+                                        readonlyInput.value = selectedDate.toLocaleDateString('en-GB', options).replace(/ /g, '-');
+                                    }
                                 </script>
+                                
                                 <div class="col-md-12 mb-3">
                                     <div class="group-input">
                                         <label for="Details Of Nature Market Complaint">Details Of Nature Market
@@ -1183,7 +1231,7 @@
 
                                                            <div class="col-12">
                                     <div class="group-input">
-                                        <label for="Inv Attachments">Initial Attachment</label>
+                                        <label for="Inv Attachments">HOD Attachment</label>
                                         <div>
                                             <small class="text-primary">
                                                 Please Attach all relevant or supporting documents
@@ -1609,7 +1657,7 @@
 
                         <div class="col-12">
                             <div class="group-input">
-                                <label for="Inv Attachments">Initial Attachment</label>
+                                <label for="Inv Attachments">Acknowledgement Attachment</label>
                                 <div>
                                     <small class="text-primary">
                                         Please Attach all relevant or supporting documents
@@ -1659,7 +1707,7 @@
 
                     <div class="col-12">
                         <div class="group-input">
-                            <label for="Inv Attachments">Initial Attachment</label>
+                            <label for="Inv Attachments">Closure Attachment</label>
                             <div>
                                 <small class="text-primary">
                                     Please Attach all relevant or supporting documents
@@ -1887,7 +1935,7 @@
                 // Remove active class from current button
                 stepButtons[currentStep].classList.remove("active");
 
-                // Update current step
+                // Update current stepkmlkmlmkmklm
                 currentStep--;
             }
         }

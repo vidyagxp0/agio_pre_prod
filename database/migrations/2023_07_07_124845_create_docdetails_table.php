@@ -17,6 +17,8 @@ return new class extends Migration
             $table->id();
             $table->string('cc_id')->nullable();
             $table->string('sno')->nullable();
+            $table->text('identifier')->nullable();
+            $table->longText('data')->nullable();
             $table->longText('current_doc_no')->nullable();
             $table->longText('current_version_no')->nullable();
             $table->longText('new_doc_no')->nullable();

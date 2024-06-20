@@ -1055,8 +1055,7 @@
                                                     ->where('document_id', $data->id)
                                                     ->where(function ($query) {
                                                         $query->where('stage', 'In-Review')
-                                                            ->orWhere('stage', 'In-Approval')
-                                                            ->orWhere('stage', 'In-HOD Review');
+                                                            ->orWhere('stage', 'In-Approval');
                                                     })
                                                     ->latest()
                                                     ->first();

@@ -174,13 +174,13 @@
         <table>
             <tr>
                 <td class="w-30">
-                    <strong> Deviation No.</strong>
+                    <strong> OOT  No.</strong>
                 </td>
                 <td class="w-40">
-                    {{ Helpers::divisionNameForQMS($data->ootc_id) }}/{{ Helpers::year($data->created_at) }}/{{ str_pad($data->record, 4, '0', STR_PAD_LEFT) }}
+                    {{ Helpers::divisionNameForQMS($data->ootc_id) }}/OOT/{{ Helpers::year($data->created_at) }}/{{ str_pad($data->record_number, 4, '0', STR_PAD_LEFT) }}
                 </td>
                 <td class="w-30">
-                    <strong>Record No.</strong> {{ str_pad($data->record, 4, '0', STR_PAD_LEFT) }}
+                    <strong>Record No.</strong> {{ str_pad($data->record_number, 4, '0', STR_PAD_LEFT) }}
                 </td>
             </tr>
         </table>
@@ -195,13 +195,13 @@
                             General Information
                         </div>
                         <table>
-                            <tr> {{ $data->created_at }} added by {{ $data->originator }}
+                            {{-- <tr> {{ $data->created_at }} added by {{ $data->originator }}
                                 <th class="w-20">Site/Location Code</th>
                                 <td class="w-30"> {{ Helpers::getDivisionName(session()->get('division')) }}</td>
                                 <th class="w-20">Initiator</th>
                                 <td class="w-30">{{ Helpers::getInitiatorName($data->initiator_id) }}</td>
                                 </td>
-                            </tr>
+                            </tr> --}}
                             <tr>
                                 <th class="w-20">Date of Initiation</th>
                                 <td class="w-30">{{ $data->created_at ? $data->created_at->format('d-M-Y') : '' }} </td>
@@ -214,10 +214,51 @@
                                         Not Applicable
                                     @endif
                                 </td>
-                            </tr>
-                            <tr>
                                 <th class="w-20">Severity Level</th>
-                               
+                                <td class="w-30">
+                                    @if ($data->severity_level)
+                                        {{ $data->severity_level }}
+                                    @else
+                                        Not Applicable
+                                    @endif
+                                </td>
+                            </tr>
+                        
+
+                            <tr>
+                                <th class="w-20">Initiated Through</th>
+                                <td class="w-30">
+                                    @if ($data->initiator_group)
+                                        {{ $data->initiator_group }}
+                                    @else
+                                        Not Applicable
+                                    @endif
+                                </td>
+        
+                                <th class="w-20">Department</th>
+                                @php
+                                    $departments = [
+                                        'CQA' => 'Corporate Quality Assurance',
+                                        'QAB' => 'Quality Assurance Biopharma',
+                                        'CQC' => 'Central Quality Control',
+                                        'PSG' => 'Plasma Sourcing Group',
+                                        'CS' => 'Central Stores',
+                                        'ITG' => 'Information Technology Group',
+                                        'MM' => 'Molecular Medicine',
+                                        'CL' => 'Central Laboratory',
+                                        'TT' => 'Tech Team',
+                                        'QA' => 'Quality Assurance',
+                                        'QM' => 'Quality Management',
+                                        'IA' => 'IT Administration',
+                                        'ACC' => 'Accounting',
+                                        'LOG' => 'Logistics',
+                                        'SM' => 'Senior Management',
+                                        'BA' => 'Business Administration',
+                                    ];
+                                @endphp
+                                <td class="w-80">{{ $departments[$data->initiator_group] ?? 'Unknown Department' }}</td>
+                            </tr>
+                            {{-- <tr>
                                 <th class="w-20">Intiater Group</th>
                                 <td class="w-30">
                                     @if ($data->initiator_group)
@@ -226,8 +267,6 @@
                                         Not Applicable
                                     @endif
                                 </td>
-                            </tr>
-                            <tr>
                                 <th class="w-20">Initiator Group Code</th>
                                 <td class="w-30">
                                     @if ($data->initiator_group_code)
@@ -236,8 +275,6 @@
                                         Not Applicable
                                     @endif
                                 </td>
-                            </tr>
-                            <tr>
                                 <th class="w-20"> Initiated Through</th>
                                 <td class="w-30">
                                     @if ($data->initiated_through)
@@ -246,6 +283,18 @@
                                         Not Applicable
                                     @endif
                                 </td>
+                            </tr> --}}
+                            <tr>
+
+                                <th class="w-20">Short Description</th>
+                                <td class="w-30">
+                                    @if ($data->short_description)
+                                        {{ strip_tags($data->short_description) }}
+                                    @else
+                                        Not Applicable
+                                    @endif
+                                </td>
+                                
                                 <th class="w-20">If Others</th>
                                 <td class="w-30">
                                     @if ($data->if_others)
@@ -293,7 +342,7 @@
                                         Not Applicable
                                     @endif
                                 </td>
-                                <th class="w-20">Oot Details</th>
+                                <th class="w-10">Oot Details</th>
                                 <td class="w-30">
                                     @if ($data->oot_details)
                                         {{ strip_tags($data->oot_details) }}
@@ -342,6 +391,15 @@
                                 <td class="w-30">
                                     @if ($data->comments)
                                         {{ strip_tags($data->comments) }}
+                                    @else
+                                        Not Applicable
+                                    @endif
+                                </td>
+
+                                <th class="w-20">Refrence Record</th>
+                                <td class="w-30">
+                                    @if ($data->refrence_record)
+                                        {{ strip_tags($data->refrence_record) }}
                                     @else
                                         Not Applicable
                                     @endif
@@ -715,6 +773,16 @@
                                     <table>
         
                                         <tr>
+                                            <th class="w-20">Preliminary Laboratory Investigation Required </th>
+                                            <td class="w-30">
+                                                <div>
+                                                    @if ($data->pli_finaly_validity_check)
+                                                        {{ strip_tags($data->pli_finaly_validity_check) }}
+                                                    @else
+                                                        Not Applicable
+                                                    @endif
+                                                </div>
+                                            </td>
         
                                             <th class="w-20">Corrective Action </th>
                                             <td class="w-30">
@@ -750,10 +818,12 @@
                                                     @endif
                                                 </div>
                                             </td>
+
+                                            
                                             
                                         </tr>
                                         <tr>
-                                            <th class="w-20">Person Name</th>
+                                            <th class="w-20">Head QA/Designee</th>
                                             <td class="w-30">
                                                 <div>
                                                     @if ($data->inv_head_designee)
@@ -764,6 +834,7 @@
                                                 </div>
                                             </td>
                                         </tr>
+                                    
                                     </table>
                                 </div>
                             </div>
@@ -1707,7 +1778,7 @@
                                                     @endif
                                                 </div>
                                             </td>
-                                            <th class="w-20"> In Charge</th>
+                                            <th class="w-20"> LabIn Charge</th>
                                             <td class="w-30">
                                                 <div>
                                                     @if ($data->in_charge)
@@ -1764,7 +1835,7 @@
                                                 </div>
                                             </td>
 
-                                            <th class="w-20">Remark </th>
+                                            <th class="w-20">Remarks </th>
                                             <td class="w-30">
                                                 <div>
                                                     @if ($data->cheklist_part_b_remarks)
@@ -1822,7 +1893,7 @@
                                                 </div>
                                             </td>
 
-                                            <th class="w-20"> Reanalisis Result OOT</th>
+                                            <th class="w-20"> Reanalysis Result OOT</th>
                                             <td class="w-30">
                                                 <div>
                                                     @if ($data->reanalysis_result_oot)
@@ -1928,7 +1999,7 @@
                                                     @endif
                                                 </div>
                                             </td>
-                                            <th class="w-20">Technical Comment</th>
+                                            <th class="w-20">Comments</th>
                                             <td class="w-30">
                                                 <div>
                                                     @if ($data->technical_commitee_comments)
@@ -1945,7 +2016,7 @@
                             </div>
                             <div class="border-table">
                                 <div class="block-">
-                                   Supporting Attechment
+                                   Conclusion  Attechment
                                 </div>
                                 <table>
                                     <tr class="table_bg">
@@ -2027,7 +2098,7 @@
                             </div>
                             <div class="border-table">
                                 <div class="block-">
-                                   Supporting Attechment
+                                   Conclusion Attechment
                                 </div>
                                 <table>
                                     <tr class="table_bg">
@@ -2058,7 +2129,20 @@
                                     <table>
                                         <tr>
        
-                                           <th class="w-20"> Closure Comments    </th>
+                                            <th class="w-20">Finaly Validity Check</th>
+                                             <td class="w-30">
+                                                 <div>
+                                                     @if ($data->finaly_validity_check)
+                                                         {{ strip_tags($data->finaly_validity_check) }}
+                                                     @else
+                                                         Not Applicable
+                                                     @endif
+                                                 </div>
+                                             </td>
+                                         </tr>
+                                        <tr>
+       
+                                           <th class="w-20"> Closure Comments</th>
                                             <td class="w-30">
                                                 <div>
                                                     @if ($data->closure_comments)
@@ -2075,7 +2159,7 @@
 
                             <div class="border-table">
                                 <div class="block-">
-                                   Supporting Attechment
+                                   Closure Attechment
                                 </div>
                                 <table>
                                     <tr class="table_bg">

@@ -174,7 +174,7 @@
                     <table>
                         <tr>
                             <div class="logo">
-                                <img src="https://development.vidyagxp.com/public/user/images/logo.png" alt=""
+                                <img src="https://vidyagxp.com/vidyaGxp_logo.png" alt=""
                                     class="w-100">
                             </div>
 

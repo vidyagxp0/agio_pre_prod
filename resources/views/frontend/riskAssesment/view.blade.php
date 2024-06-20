@@ -322,7 +322,7 @@
                         <button class="cctablinks" onclick="openCity(event, 'CCForm4')">Risk/Opportunity Analysis</button>
                         <button class="cctablinks" onclick="openCity(event, 'CCForm5')">Residual Risk</button>
                         <button class="cctablinks" onclick="openCity(event, 'CCForm6')">Risk Mitigation</button>
-                        <button class="cctablinks" onclick="openCity(event, 'CCForm7')">Signatures</button>
+                        <button class="cctablinks" onclick="openCity(event, 'CCForm7')">Activity Log</button>
                     </div>
 
                     <form action="{{ route('riskUpdate', $data->id) }}" method="post" enctype="multipart/form-data">
@@ -347,7 +347,7 @@
                                                 <label for="Division Code"><b>Site/Location Code</b></label>
                                                 <input readonly type="text" name="division_code"
                                                     value=" {{ Helpers::getDivisionName($data->division_id) }}">
-                                                {{-- <div class="static">QMS-North America</div> --}}
+                                                {{-- <div class="static">{{ Helpers::getDivisionName(session()->get('division')) }}</div> --}}
                                             </div>
                                         </div>
                                         <div class="col-lg-6">
@@ -374,7 +374,7 @@
                                                 <label for="search">
                                                     Assigned To <span class="text-danger"></span>
                                                 </label>
-                                                <select id="select-state" placeholder="Select..." name="assign_to"
+                                                <select id="select-state" {{Helpers::isRiskAssessment($data->stage)}} placeholder="Select..." name="assign_to"
                                                     {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}>
                                                     <option value="">Select a value</option>
                                                     @foreach ($users as $key => $value)
@@ -392,7 +392,7 @@
                                             <div class="group-input">
                                                 <label for="due-date">Due Date <span class="text-danger"></span></label>
                                                 <div><small class="text-primary">If revising Due Date, kindly mention revision reason in "Due Date Extension Justification" data field.</small></div>
-                                                <input readonly type="text"
+                                                <input {{Helpers::isRiskAssessment($data->stage)}} readonly type="text"
                                                     value="{{ Helpers::getdateFormat($data->due_date) }}"  
                                                     name="due_date">
 
@@ -401,7 +401,7 @@
                                         <div class="col-lg-6">
                                             <div class="group-input">
                                                 <label for="Initiator Group"><b>Initiator Group</b></label>
-                                                <select name="Initiator_Group" {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
+                                                <select {{Helpers::isRiskAssessment($data->stage)}} name="Initiator_Group" {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
                                                      id="initiator_group">
                                                     <option value="CQA"
                                                         @if ($data->Initiator_Group== 'CQA') selected @endif>Corporate
@@ -461,7 +461,7 @@
                                         <div class="col-lg-6">
                                             <div class="group-input">
                                                 <label for="Initiator Group Code">Initiator Group Code</label>
-                                                <input type="text" name="initiator_group_code" 
+                                                <input {{Helpers::isRiskAssessment($data->stage)}} type="text" name="initiator_group_code" 
                                                     value="{{ $data->Initiator_Group}}" id="initiator_group_code"
                                                     readonly>
                                             </div>
@@ -483,7 +483,7 @@
                                                 <textarea name="short_description"   id="docname" type="text"    maxlength="255" required  {{ $data->stage == 0 || $data->stage == 7 ? "disabled" : "" }}>{{ $data->short_description }}</textarea>
                                             </div>
                                                   {{-- <p id="docnameError" style="color:red">**Short Description is required</p> --}}
-                                     </div>
+                                        </div>
                                         <div class="col-12">
                                             <div class="group-input">
                                                 <label for="severity-level">Severity Level</label>
@@ -536,6 +536,7 @@
                                                 });
                                             });
                                         </script>
+                                        
                                         {{-- <div class="col-12">
                                             <div class="group-input">
                                                 <label for="Team Members">Team Members</label>
@@ -1241,7 +1242,7 @@
                                                             <th>Item static</th>
                                                         </tr>
                                                     </thead>
-                                                    <tbody>
+                                                    <tbody {{Helpers::isRiskAssessment($data->stage)}} >
                                                         @foreach (unserialize($action_plan->action) as $key => $temps)
                                                             <tr>
                                                                 <td><input disabled type="text" name="serial_number[]"
@@ -1313,7 +1314,7 @@
                                                         </div>
                                                         <div class="add-btn">
                                                             <div>Add</div>
-                                                            <input {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }} type="file" id="myfile" name="reference[]"
+                                                            <input  {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }} type="file" id="myfile" name="reference[]"
                                                                 oninput="addMultipleFiles(this, 'reference')" multiple>
                                                         </div>
                                                     </div>
@@ -1341,7 +1342,7 @@
                                         <div class="col-12">
                                             <div class="group-input">
                                                 <label for="root-cause-methodology">Root Cause Methodology</label>
-                                                <select name="root_cause_methodology[]" multiple {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
+                                                <select  name="root_cause_methodology[]" multiple {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
                                                     placeholder="-- Select --" data-search="false"
                                                     data-silent-initial-value-set="true" id="root-cause-methodology">
                                                     {{-- <option value="0">-- Select --</option> --}}
@@ -1521,13 +1522,13 @@
                                                             <div class="grid-field fields top-field">
                                                                 @if (!empty($fishbone->measurement))
                                                                     @foreach (unserialize($fishbone->measurement) as $key => $measure)
-                                                                        <div><input type="text"
+                                                                        <div><input {{Helpers::isRiskAssessment($data->stage)}} type="text"
                                                                                 value="{{ $measure }}"
                                                                                 name="measurement[]"></div>
-                                                                        <div><input type="text"
+                                                                        <div><input {{Helpers::isRiskAssessment($data->stage)}} type="text"
                                                                                 value="{{ unserialize($fishbone->materials)[$key] ? unserialize($fishbone->materials)[$key] : '' }}"
                                                                                 name="materials[]"></div>
-                                                                        <div><input type="text"
+                                                                        <div><input {{Helpers::isRiskAssessment($data->stage)}} type="text"
                                                                                 value="{{ unserialize($fishbone->methods)[$key] ? unserialize($fishbone->methods)[$key] : '' }}"
                                                                                 name="methods[]"></div>
                                                                     @endforeach
@@ -1539,13 +1540,13 @@
                                                             <div class="grid-field fields bottom-field">
                                                                 @if (!empty($fishbone->environment))
                                                                     @foreach (unserialize($fishbone->environment) as $key => $measure)
-                                                                        <div><input type="text"
+                                                                        <div><input {{Helpers::isRiskAssessment($data->stage)}} type="text"
                                                                                 value="{{ $measure }}"
                                                                                 name="environment[]"></div>
-                                                                        <div><input type="text"
+                                                                        <div><input {{Helpers::isRiskAssessment($data->stage)}} type="text"
                                                                                 value="{{ unserialize($fishbone->manpower)[$key] ? unserialize($fishbone->manpower)[$key] : '' }}"
                                                                                 name="manpower[]"></div>
-                                                                        <div><input type="text"
+                                                                        <div><input {{Helpers::isRiskAssessment($data->stage)}} type="text"
                                                                                 value="{{ unserialize($fishbone->machine)[$key] ? unserialize($fishbone->machine)[$key] : '' }}"
                                                                                 name="machine[]"></div>
                                                                     @endforeach
@@ -1565,7 +1566,7 @@
                                                         </div>
                                                         <div class="field">
 
-                                                            <textarea name="problem_statement">{{ $fishbone->problem_statement }}</textarea>
+                                                            <textarea {{Helpers::isRiskAssessment($data->stage)}} name="problem_statement">{{ $fishbone->problem_statement }}</textarea>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -1589,7 +1590,7 @@
                                                                 <th style="width:150px;">Problem Statement :</th>
                                                                 <td>
 
-                                                                    <textarea name="why_problem_statement">{{ $whyChart->why_problem_statement }}</textarea>
+                                                                    <textarea {{Helpers::isRiskAssessment($data->stage)}} name="why_problem_statement">{{ $whyChart->why_problem_statement }}</textarea>
                                                                 </td>
                                                             </tr>
                                                             <tr class="why-row">
@@ -1601,7 +1602,7 @@
                                                                     <div class="why_1_block">
                                                                         @if (!empty($whyChart->why_1))
                                                                             @foreach (unserialize($whyChart->why_1) as $key => $measure)
-                                                                                <textarea name="why_1[]">{{ $measure }}</textarea>
+                                                                                <textarea {{Helpers::isRiskAssessment($data->stage)}} name="why_1[]">{{ $measure }}</textarea>
                                                                             @endforeach
                                                                         @endif
 
@@ -1617,7 +1618,7 @@
                                                                     <div class="why_2_block">
                                                                         @if (!empty($whyChart->why_2))
                                                                             @foreach (unserialize($whyChart->why_2) as $key => $measure)
-                                                                                <textarea name="why_2[]">{{ $measure }}</textarea>
+                                                                                <textarea {{Helpers::isRiskAssessment($data->stage)}} name="why_2[]">{{ $measure }}</textarea>
                                                                             @endforeach
                                                                         @endif
                                                                     </div>
@@ -1632,7 +1633,7 @@
                                                                     <div class="why_3_block">
                                                                         @if (!empty($whyChart->why_3))
                                                                             @foreach (unserialize($whyChart->why_3) as $key => $measure)
-                                                                                <textarea name="why_3[]">{{ $measure }}</textarea>
+                                                                                <textarea {{Helpers::isRiskAssessment($data->stage)}} name="why_3[]">{{ $measure }}</textarea>
                                                                             @endforeach
                                                                         @endif
                                                                     </div>
@@ -1647,7 +1648,7 @@
                                                                     <div class="why_4_block">
                                                                         @if (!empty($whyChart->why_4))
                                                                             @foreach (unserialize($whyChart->why_4) as $key => $measure)
-                                                                                <textarea name="why_4[]">{{ $measure }}</textarea>
+                                                                                <textarea {{Helpers::isRiskAssessment($data->stage)}} name="why_4[]">{{ $measure }}</textarea>
                                                                             @endforeach
                                                                         @endif
                                                                     </div>
@@ -1662,7 +1663,7 @@
                                                                     <div class="why_5_block">
                                                                         @if (!empty($whyChart->why_5))
                                                                             @foreach (unserialize($whyChart->why_5) as $key => $measure)
-                                                                                <textarea name="why_5[]">{{ $measure }}</textarea>
+                                                                                <textarea {{Helpers::isRiskAssessment($data->stage)}} name="why_5[]">{{ $measure }}</textarea>
                                                                             @endforeach
                                                                         @endif
                                                                     </div>
@@ -1671,7 +1672,7 @@
                                                             <tr style="background: #0080006b;">
                                                                 <th style="width:150px;">Root Cause :</th>
                                                                 <td>
-                                                                    <textarea name="why_root_cause">{{ $whyChart->why_root_cause }}</textarea>
+                                                                    <textarea {{Helpers::isRiskAssessment($data->stage)}} name="why_root_cause">{{ $whyChart->why_root_cause }}</textarea>
                                                                 </td>
                                                             </tr>
                                                         </tbody>
@@ -1704,61 +1705,61 @@
                                                             <tr>
                                                                 <th style="background: #0039bd85">What</th>
                                                                 <td>
-                                                                    <textarea name="what_will_be">{{ $what_who_where->what_will_be }}</textarea>
+                                                                    <textarea {{Helpers::isRiskAssessment($data->stage)}} name="what_will_be">{{ $what_who_where->what_will_be }}</textarea>
                                                                 </td>
                                                                 <td>
-                                                                    <textarea name="what_will_not_be">{{ $what_who_where->what_will_not_be }}</textarea>
+                                                                    <textarea {{Helpers::isRiskAssessment($data->stage)}} name="what_will_not_be">{{ $what_who_where->what_will_not_be }}</textarea>
                                                                 </td>
                                                                 <td>
-                                                                    <textarea name="what_rationable"> {{ $what_who_where->what_rationable }}</textarea>
+                                                                    <textarea {{Helpers::isRiskAssessment($data->stage)}} name="what_rationable"> {{ $what_who_where->what_rationable }}</textarea>
                                                                 </td>
                                                             </tr>
                                                             <tr>
                                                                 <th style="background: #0039bd85">Where</th>
                                                                 <td>
-                                                                    <textarea name="where_will_be"> {{ $what_who_where->where_will_be }}</textarea>
+                                                                    <textarea {{Helpers::isRiskAssessment($data->stage)}} name="where_will_be"> {{ $what_who_where->where_will_be }}</textarea>
                                                                 </td>
                                                                 <td>
-                                                                    <textarea name="where_will_not_be"> {{ $what_who_where->where_will_be }}</textarea>
+                                                                    <textarea {{Helpers::isRiskAssessment($data->stage)}} name="where_will_not_be"> {{ $what_who_where->where_will_be }}</textarea>
                                                                 </td>
                                                                 <td>
-                                                                    <textarea name="where_rationable"> {{ $what_who_where->where_will_be }}</textarea>
+                                                                    <textarea  {{Helpers::isRiskAssessment($data->stage)}} name="where_rationable"> {{ $what_who_where->where_will_be }}</textarea>
                                                                 </td>
                                                             </tr>
                                                             <tr>
                                                                 <th style="background: #0039bd85">When</th>
                                                                 <td>
-                                                                    <textarea name="when_will_be"> {{ $what_who_where->when_will_be }}</textarea>
+                                                                    <textarea {{Helpers::isRiskAssessment($data->stage)}} name="when_will_be"> {{ $what_who_where->when_will_be }}</textarea>
                                                                 </td>
                                                                 <td>
-                                                                    <textarea name="when_will_not_be">{{ $what_who_where->when_will_not_be }}</textarea>
+                                                                    <textarea {{Helpers::isRiskAssessment($data->stage)}} name="when_will_not_be">{{ $what_who_where->when_will_not_be }}</textarea>
                                                                 </td>
                                                                 <td>
-                                                                    <textarea name="when_rationable"> {{ $what_who_where->when_rationable }}</textarea>
+                                                                    <textarea {{Helpers::isRiskAssessment($data->stage)}} name="when_rationable"> {{ $what_who_where->when_rationable }}</textarea>
                                                                 </td>
                                                             </tr>
                                                             <tr>
                                                                 <th style="background: #0039bd85">Coverage</th>
                                                                 <td>
-                                                                    <textarea name="coverage_will_be"> {{ $what_who_where->coverage_will_be }}</textarea>
+                                                                    <textarea {{Helpers::isRiskAssessment($data->stage)}} name="coverage_will_be"> {{ $what_who_where->coverage_will_be }}</textarea>
                                                                 </td>
                                                                 <td>
-                                                                    <textarea name="coverage_will_not_be"> {{ $what_who_where->coverage_will_not_be }}</textarea>
+                                                                    <textarea {{Helpers::isRiskAssessment($data->stage)}} name="coverage_will_not_be"> {{ $what_who_where->coverage_will_not_be }}</textarea>
                                                                 </td>
                                                                 <td>
-                                                                    <textarea name="coverage_rationable"> {{ $what_who_where->coverage_rationable }}</textarea>
+                                                                    <textarea {{Helpers::isRiskAssessment($data->stage)}} name="coverage_rationable"> {{ $what_who_where->coverage_rationable }}</textarea>
                                                                 </td>
                                                             </tr>
                                                             <tr>
                                                                 <th style="background: #0039bd85">Who</th>
                                                                 <td>
-                                                                    <textarea name="who_will_be"> {{ $what_who_where->who_will_be }}</textarea>
+                                                                    <textarea {{Helpers::isRiskAssessment($data->stage)}} name="who_will_be"> {{ $what_who_where->who_will_be }}</textarea>
                                                                 </td>
                                                                 <td>
-                                                                    <textarea name="who_will_not_be"> {{ $what_who_where->who_will_not_be }}</textarea>
+                                                                    <textarea {{Helpers::isRiskAssessment($data->stage)}} name="who_will_not_be"> {{ $what_who_where->who_will_not_be }}</textarea>
                                                                 </td>
                                                                 <td>
-                                                                    <textarea name="who_rationable"> {{ $what_who_where->who_rationable }}</textarea>
+                                                                    <textarea {{Helpers::isRiskAssessment($data->stage)}} name="who_rationable"> {{ $what_who_where->who_rationable }}</textarea>
                                                                 </td>
                                                             </tr>
                                                         </tbody>
@@ -1790,13 +1791,13 @@
                                                 <select name="severity_rate" id="analysisR" onchange='calculateRiskAnalysis(this)'
                                                     {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}>
                                                     <option value="">Enter Your Selection Here</option>
-                                                    <option {{ $data->severity_rate == 'Negligible' ? 'selected' : '' }}
+                                                    <option {{ $data->severity_rate == 1 ? 'selected' : '' }}
                                                         value="1">Negligible</option>
-                                                    <option {{ $data->severity_rate == 'Moderate' ? 'selected' : '' }}
+                                                    <option {{ $data->severity_rate == 2 ? 'selected' : '' }}
                                                         value="2">Moderate</option>
-                                                    <option {{ $data->severity_rate == 'Major' ? 'selected' : '' }}
+                                                    <option {{ $data->severity_rate == 3 ? 'selected' : '' }}
                                                         value="3">Major</option>
-                                                    <option {{ $data->severity_rate == 'Fatal' ? 'selected' : '' }}
+                                                    <option {{ $data->severity_rate == 4 ? 'selected' : '' }}
                                                         value="4">Fatal</option>
                                                 </select>
                                             </div>
@@ -1947,9 +1948,9 @@
                                                 </label> --}}
                                                 <label for="mitigation_plan_details">
                                                     Mitigation Plan Details<button type="button" name="ann"
-                                                        id="action_plan2">+</button>
+                                                        id="mitigation_plan_deatails">+</button>
                                                 </label>
-                                                <table class="table table-bordered" id="action_plan_details2">
+                                                <table class="table table-bordered" id="mitigation_plan_deatails_details">
                                                     <thead>
                                                         <tr>
                                                             <th>Row #</th>
@@ -1977,8 +1978,7 @@
                                                                     value="{{ unserialize($mitigation_plan_details->deadline2)[$key] ? unserialize($mitigation_plan_details->deadline2)[$key] : '' }}">
                                                             </td> --}}
                                                             <td><div class="group-input new-date-data-field mb-0">
-                                                                <div class="input-date "><div
-                                                                class="calenderauditee">
+                                                                <div class="input-date "><div class="calenderauditee">
                                                                 <input type="text" id="deadline2{{$key}}' + serialNumber +'" readonly placeholder="DD-MMM-YYYY" value="{{ Helpers::getdateFormat(unserialize($mitigation_plan_details->deadline2)[$key]) }}" />
                                                                 <input type="date" name="deadline2[]" class="hide-input" value="{{ unserialize($mitigation_plan_details->deadline2)[$key] }}"
                                                                 oninput="handleDateInput(this, `deadline2{{$key}}' + serialNumber +'`)" /></div></div></div></td>
@@ -1987,7 +1987,7 @@
                                                             </td> --}}
                                                             <td> <select id="select-state" placeholder="Select..."
                                                                 name="responsible_person[]">
-                                                                <option value="">-Select-</option>
+                                                                <option value="">Select a Value</option>
                                                                 @foreach ($users as $value)
                                                                     <option
                                                                         {{ unserialize($mitigation_plan_details->responsible_person)[$key] ? (unserialize($mitigation_plan_details->responsible_person)[$key] == $value->id ? 'selected' : ' ') : '' }}
@@ -2478,10 +2478,10 @@
                         var newRow = generateTableRow(rowCount + 1);
                         tableBody.append(newRow);
                     });
-                    $('#action_plan2').click(function(e) {
+                    $('#mitigation_plan_deatails').click(function(e) {
                         function generateTableRow(serialNumber) {
                             var users = @json($users);
-                            console.log(users);
+                            // console.log(users);
                             var html =
                             '<tr>' +
                                 '<td><input disabled type="text" name="serial_number[]" value="' + serialNumber + '"></td>' +
@@ -2504,7 +2504,7 @@
                             return html;
                         }
 
-                        var tableBody = $('#action_plan_details2 tbody');
+                        var tableBody = $('#mitigation_plan_deatails_details tbody');
                         var rowCount = tableBody.children('tr').length;
                         var newRow = generateTableRow(rowCount + 1);
                         tableBody.append(newRow);
