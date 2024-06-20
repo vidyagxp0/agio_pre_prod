@@ -8,9 +8,8 @@
                     <div class="col-md-12 mb-4">
                         <div class="group-input">
                             <label for="Description Deviation">Review Comment</label>
-                            <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
                             <textarea class="summernote" name="review_comment_atp" id="summernote-1">{{ $micro_data->review_comment_atp }}
-                                    </textarea>
+                            </textarea>
                         </div>
                     </div>
                     <div class="col-lg-6">
@@ -30,8 +29,8 @@
                             </label>
                             <select multiple id="reference_record" name="additional_test_reference_atp[]" id="">
                                 <option value="">--Select---</option>
-                                <option value="1" @if (in_array(1, explode(',', $micro_data->additional_test_reference_atp))) selected @endif>1</option>
-                                <option value="2" @if (in_array(2, explode(',', $micro_data->additional_test_reference_atp))) selected @endif>2</option>
+                                <option value="1" {{ (!empty($micro_data->additional_test_reference_atp) && in_array('1', explode(',', $micro_data->additional_test_reference_atp[0]))) ? 'selected' : '' }}>1</option>
+                                <option value="2" {{ (!empty($micro_data->additional_test_reference_atp) && in_array('2', explode(',', $micro_data->additional_test_reference_atp[0]))) ? 'selected' : '' }}>2</option>
                             </select>
                         </div>
                     </div>
@@ -50,8 +49,8 @@
                             <label for="Reference Recores">Action Task Reference</label>
                             <select multiple id="reference_record" name="action_task_reference_atp[]" id="">
                                 <option value="">--Select---</option>
-                                <option value="1" @if (in_array(1, explode(',', $micro_data->action_task_reference_atp))) selected @endif>1</option>
-                                <option value="2" @if (in_array(2, explode(',', $micro_data->action_task_reference_atp))) selected @endif>2</option>
+                                <option value="1" {{ (!empty($micro_data->action_task_reference_atp) && in_array('1', explode(',', $micro_data->action_task_reference_atp[0]))) ? 'selected' : '' }}>1</option>
+                                <option value="2" {{ (!empty($micro_data->action_task_reference_atp) && in_array('2', explode(',', $micro_data->action_task_reference_atp[0]))) ? 'selected' : '' }}>2</option>
                             </select>
                         </div>
                     </div>
@@ -63,7 +62,7 @@
                                 Please Attach all relevant or supporting documents
                             </small>
                             <div class="file-attachment-field">
-                                <div class="file-attachment-list" id="file_attach">
+                                <div class="file-attachment-list" id="additional_testing_attachment_atp">
                                     @if ($micro_data->additional_testing_attachment_atp)
                                     @foreach ($micro_data->additional_testing_attachment_atp as $file)
                                         <h6 type="button" class="file-container text-dark"
@@ -84,7 +83,7 @@
                                 <div class="add-btn">
                                     <div>Add</div>
                                     <input type="file" id="myfile" name="additional_testing_attachment_atp[]"
-                                        oninput="addMultipleFiles(this, 'file_attach')" multiple>
+                                        oninput="addMultipleFiles(this, 'additional_testing_attachment_atp')" multiple>
                                 </div>
                             </div>
 

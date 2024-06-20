@@ -13,8 +13,6 @@
                     </textarea>
                 </div>
             </div>
-
-
             <!-- ---------------------------grid-1 ------"OOSConclusion_Review-------------------------- -->
             <div class="group-input">
                 <label for="audit-agenda-grid">
@@ -56,8 +54,7 @@
                     </table>
                 </div>
             </div>
-
-
+            <!-- close grid -->
             <div class="col-md-12 mb-4">
                 <div class="group-input">
                     <label for="Description Deviation">Action Taken on Affec.batch</label>

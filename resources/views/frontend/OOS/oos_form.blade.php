@@ -263,7 +263,6 @@ $users = DB::table('users')
         });
     </script>
 
-
     <!-- -----------------------------grid-1----------OOS Conclusion ---------------- -->
 
     <script>
@@ -293,8 +292,6 @@ $users = DB::table('users')
             });
         });
     </script>
-
-
     <!-- -----------------------------grid-1----------OOSConclusion_Review ---------------- -->
 
     <script>
@@ -750,8 +747,7 @@ $users = DB::table('users')
                                 </table>
                             </div>
                         </div>
-        <!----------------grid-3----------------------------------- -->
-
+                       <!----------------grid-3----------------------------------- -->
                         <div class="group-input">
                             <label for="audit-agenda-grid">
                                 OOS Details
@@ -806,6 +802,7 @@ $users = DB::table('users')
                                 </table>
                             </div>
                         </div>
+                        <!-- close grid -->
                         <div class="button-block">
                             <button type="submit" class="saveButton">Save</button>
                             <!-- <button type="button" class="backButton" onclick="previousStep()">Back</button> -->

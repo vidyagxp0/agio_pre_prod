@@ -85,85 +85,79 @@
         }
     </script>
 
-<!-- -----------------------------grid-1----------------------------script -->
+ <!-- -----------------------------grid-1----------------------------script -->
     <script>
         $(document).ready(function() {
-            $('#Product_Material').click(function(e) {
-                let loopIndex= 0 ;
+            $('#info_product_material').click(function(e) {
                 function generateTableRow(serialNumber) {
-                    loopIndex++;
-
                     var html =
-                        '<tr>' +
-                        '<td><input disabled type="text" name="info_of_product_material['+ loopIndex +'][serial]" value="' + serialNumber +
-                        '"></td>' +
-                        '<td><input type="text" name="info_of_product_material['+ loopIndex +'][item_product_code]"></td>' +
-                        '<td><input type="text" name="info_of_product_material['+ loopIndex +'][batch_no]"></td>' +
-                        '<td><input type="text" name="info_of_product_material['+ loopIndex +'][mfg_date]"></td>' +
-                        '<td><input type="text" name="info_of_product_material['+ loopIndex +'][expiry_date]"></td>'+
-                        '<td><input type="text" name="info_of_product_material['+ loopIndex +'][label_claim]"></td>'+
-                        '<td><input type="text" name="info_of_product_material['+ loopIndex +'][pack_size]"></td>'+
-                        '<td><input type="text" name="info_of_product_material['+ loopIndex +'][analyst_name]"></td>'+
-                        '<td><input type="text" name="info_of_product_material['+ loopIndex +'][others_specify]"></td>'+
-                        '<td><input type="text" name="info_of_product_material['+ loopIndex +'][in_process_sample_stage]"></td>'+
-                        '<td><select name="info_of_product_material['+ loopIndex +'][packingMaterialType]"><option value="primary">Primary</option><option value="secondary">Secondary</option><option value="tertiary">Tertiary</option><option value="not_applicable">Not Applicable</option></select></td>'+
-                        '<td><select name="info_of_product_material['+ loopIndex +'][stabilityfor]"><option value="submission">Submission</option><option value="commercial">Commercial</option><option value="pack_evaluation">Pack Evaluation</option><option value="not_applicable">Not Applicable</option></select></td>'+
-                        '</tr>';
-
+                    '<tr>' +
+                        '<td><input disabled type="text" name="serial[]" value="' + serialNumber + '"></td>' +
+                        '<td><input type="text" name="info_product_material[' + serialNumber + '][info_product_code]" value=""></td>' +
+                        '<td><input type="text" name="info_product_material[' + serialNumber + '][info_batch_no]" value=""></td>'+
+                        '<td>' +
+                        '<div class="col-lg-6 new-date-data-field">' +
+                        '<div class="group-input input-date">' +
+                        '<div class="calenderauditee">' +
+                        '<input type="text" readonly id="info_mfg_date_' + serialNumber + '" placeholder="DD-MM-YYYY" />' +
+                        '<input type="date" name="info_product_material[' + serialNumber + '][info_mfg_date]" value="" class="hide-input" oninput="handleDateInput(this, \'info_mfg_date_' + serialNumber + '\')">' +
+                        '</div>' +
+                        '</div>' +
+                        '</div>' +
+                        '</td>' +
+                        '<td>' +
+                        '<div class="col-lg-6 new-date-data-field">' +
+                        '<div class="group-input input-date">' +
+                        '<div class="calenderauditee">' +
+                        '<input type="text" readonly id="info_expiry_date' + serialNumber + '" placeholder="DD-MM-YYYY" />' +
+                        '<input type="date" name="info_product_material[' + serialNumber + '][info_expiry_date]" value="" class="hide-input" oninput="handleDateInput(this, \'info_expiry_date' + serialNumber + '\')">' +
+                        '</div>' +
+                        '</div>' +
+                        '</div>' +
+                        '</td>' +
+                        '<td><input type="text" name="info_product_material[' + serialNumber + '][info_label_claim]" value=""></td>' +
+                        '<td><input type="text" name="info_product_material[' + serialNumber + '][info_pack_size]" value=""></td>' +
+                        '<td><input type="text" name="info_product_material[' + serialNumber + '][info_analyst_name]" value=""></td>' +
+                        '<td><input type="text" name="info_product_material[' + serialNumber + '][info_others_specify]" value=""></td>' +
+                        '<td><input type="text" name="info_product_material[' + serialNumber + '][info_process_sample_stage]" value=""></td>' +
+                        '<td><select name="info_product_material[' + serialNumber + '][info_packing_material_type]"><option value="">--Select--</option><option value="Primary">Primary</option><option value="Secondary">Secondary</option><option value="Tertiary">Tertiary</option><option value="Not Applicable">Not Applicable</option></select></td>' +
+                        '<td><select name="info_product_material[' + serialNumber + '][info_stability_for]"><option value="">--Select--</option><option vlaue="Submission">Submission</option><option vlaue="Commercial">Commercial</option><option vlaue="Pack Evaluation">Pack Evaluation</option><option vlaue="Not Applicable">Not Applicable</option></select></td>' +
+                        '<td><button type="text" class="removeRowBtn">Remove</button></td>' +
+                    '</tr>';
                     // for (var i = 0; i < users.length; i++) {
                     //     html += '<option value="' + users[i].id + '">' + users[i].name + '</option>';
                     // }
-
-                    // html += '</select></td>' +
-
-                    '</tr>';
-
+                    // html += '</select></td>' + 
                     return html;
                 }
 
-                var tableBody = $('#Product_Material_details tbody');
+                var tableBody = $('#info_product_material_details tbody');
                 var rowCount = tableBody.children('tr').length;
                 var newRow = generateTableRow(rowCount + 1);
                 tableBody.append(newRow);
             });
         });
     </script>
-
-<!-- --------------------------------grid-2--------------------------script -->
-
+    <!-- --------------------------------grid-2--------------------------->
     <script>
         $(document).ready(function() {
-            $('#Details_Stability').click(function(e) {
-                let loopIndex = 0 ;
+            $('#details_stability').click(function(e) {
                 function generateTableRow(serialNumber) {
-                    loopIndex++;
-
                     var html =
                         '<tr>' +
-
-                            '<td><input disabled type="text" name="stability_study['+ loopIndex +'][serial_no]" value="'+  serialNumber +'"></td>'+
-                            '<td><input type="text" name="stability_study['+ loopIndex +'][ar_number]"></td>'+
-                            '<td><input type="text" name="stability_study['+ loopIndex +'][condition_temperature_rh]"></td>'+
-                            '<td><input type="text" name="stability_study['+ loopIndex +'][interval]"></td>'+
-                            '<td><input type="text" name="stability_study['+ loopIndex +'][orientation]"></td>'+
-                            '<td><input type="text" name="stability_study['+ loopIndex +'][pack_details]"></td>'+
-                            '<td><input type="text" name="stability_study['+ loopIndex +'][specification_no]"></td>'+
-                            '<td><input type="text" name="stability_study['+ loopIndex +'][sample_description]"></td>'+
-
+                        '<td><input disabled type="text" name="serial[]" value="' + serialNumber +'"></td>' +
+                        '<td><input type="text" name="details_stability[' + serialNumber + '][stability_study_arnumber]"></td>'+
+                        '<td><input type="text" name="details_stability[' + serialNumber + '][stability_study_condition_temprature_rh]"></td>'+
+                        '<td><input type="text" name="details_stability[' + serialNumber + '][stability_study_Interval]"></td>'+
+                        '<td><input type="text" name="details_stability[' + serialNumber + '][stability_study_orientation]"></td>'+
+                        '<td><input type="text" name="details_stability[' + serialNumber + '][stability_study_pack_details]"></td>'+
+                        '<td><input type="text" name="details_stability[' + serialNumber + '][stability_study_specification_no]"></td>'+
+                        '<td><input type="text" name="details_stability[' + serialNumber + '][stability_study_sample_description]"></td>'+
+                        '<td><button type="text" class="removeRowBtn">Remove</button></td>' +
                         '</tr>';
-
-                    // for (var i = 0; i < users.length; i++) {
-                    //     html += '<option value="' + users[i].id + '">' + users[i].name + '</option>';
-                    // }
-
-                    // html += '</select></td>' +
-
-                    '</tr>';
-
                     return html;
                 }
-
-                var tableBody = $('#Details_Stability_details tbody');
+                var tableBody = $('#details_stability_details tbody');
                 var rowCount = tableBody.children('tr').length;
                 var newRow = generateTableRow(rowCount + 1);
                 tableBody.append(newRow);
@@ -173,37 +167,37 @@
     <!-- ------------------------------grid-3-------------------------script -->
     <script>
         $(document).ready(function() {
-            $('#OOS_Details').click(function(e) {
-                let loopIndex = 0;
+            $('#oos_details').click(function(e) {
                 function generateTableRow(serialNumber) {
-                    loopIndex++;
-
                     var html =
                         '<tr>' +
-                       '<td><input disabled type="text" name="oos_details['+ loopIndex +'][serial]" value="' + serialNumber +
-                        '"></td>'+
-                                        '<td><input type="text" name="oos_details['+ loopIndex +'][ar_number]"></td>'+
-                                        '<td><input type="text" name="oos_details['+ loopIndex +'][test_name_of_oos]"></td>'+
-                                        '<td><input type="text" name="oos_details['+ loopIndex +'][results_obtained]"></td>'+
-                                        '<td><input type="text" name="oos_details['+ loopIndex +'][specification_limit]"></td>'+
-                                        '<td><input type="text" name="oos_details['+ loopIndex +'][details_of_obvious_error]"></td>'+
-                                        '<td><input type="file" name="oos_details['+ loopIndex +'][file_attachment_oos_details]"></td>'+
-
+                            '<td><input disabled type="text" name="oos_detail['+ serialNumber +'][serial]" value="' + serialNumber +
+                            '"></td>' +
+                            '<td><input type="text" name="oos_detail['+ serialNumber +'][oos_arnumber]"></td>'+
+                            '<td><input type="text" name="oos_detail['+ serialNumber +'][oos_test_name]"></td>' +
+                            '<td><input type="text" name="oos_detail['+ serialNumber +'][oos_results_obtained]"></td>' +
+                            '<td><input type="text" name="oos_detail['+ serialNumber +'][oos_specification_limit]"></td>' +
+                            '<td><input type="text" name="oos_detail['+ serialNumber +'][oos_details_obvious_error]"></td>' +
+                            '<td><input type="file" name="oos_detail['+ serialNumber +'][oos_file_attachment]"></td>' +
+                            '<td>' +
+                            '<div class="col-lg-6 new-date-data-field">' +
+                            '<div class="group-input input-date">' +
+                            '<div class="calenderauditee">' +
+                            '<input type="text" readonly id="oos_submit_on' + serialNumber + '" placeholder="DD-MM-YYYY" />' +
+                            '<input type="date" name="oos_details[' + serialNumber + '][oos_submit_on]" value="" class="hide-input" oninput="handleDateInput(this, \'oos_submit_on' + serialNumber + '\')">' +
+                            '</div>' +
+                            '</div>' +
+                            '</div>' +
+                            '</td>' +
+                            '<td><input type="text" name="oos_detail['+ serialNumber +'][oos_submit_by]"></td>' +
+                            '<td><button type="text" class="removeRowBtn">Remove</button></td>' +
 
                         '</tr>';
-
-                    // for (var i = 0; i < users.length; i++) {
-                    //     html += '<option value="' + users[i].id + '">' + users[i].name + '</option>';
-                    // }
-
-                    // html += '</select></td>' +
-
-                    '</tr>';
-
+                    
                     return html;
                 }
 
-                var tableBody = $('#OOS_Details_details tbody');
+                var tableBody = $('#oos_details_details tbody');
                 var rowCount = tableBody.children('tr').length;
                 var newRow = generateTableRow(rowCount + 1);
                 tableBody.append(newRow);
@@ -211,36 +205,43 @@
         });
     </script>
 
-    <!-- ---------------------------grid-1 ---Preliminary Lab Invst. Review----------------------------- -->
-
-    <script>
+<!-- ---------------------------grid-1 ---Preliminary Lab Invst. Review----------------------------- -->
+<script>
         $(document).ready(function() {
             $('#oos_capa').click(function(e) {
-                let loopIndex = 0
-
                 function generateTableRow(serialNumber) {
-                    loopIndex++;
-
                     var html =
                         '<tr>' +
-                        '<td><input disabled type="text" name="info_product_oos_capa['+loopIndex+'][serial]" value="' + serialNumber +
-                        '"></td>'+
-                                       ' <td><input type="text" name="info_product_oos_capa['+loopIndex+'][oos_number]"></td>'+
-                                       ' <td><input type="text" name="info_product_oos_capa['+loopIndex+'][oos_reported_date]"></td>'+
-                                       ' <td><input type="text" name="info_product_oos_capa['+loopIndex+'][description_of_oos]"></td>'+
-                                       ' <td><input type="text" name="info_product_oos_capa['+loopIndex+'][previous_oos_root_cause]"></td>'+
-                                       ' <td><input type="text" name="info_product_oos_capa['+loopIndex+'][capa]"></td>'+
-                                        '<td><input type="text" name="info_product_oos_capa['+loopIndex+'][closure_date_of_capa]"></td>'+
-                                        '<td><select name="info_product_oos_capa['+loopIndex+'][capa_Requirement]"><option  value="yes">Yes</option><option value="no">No</option></select></td>'+
-                                       ' <td><input type="text" name="info_product_oos_capa['+loopIndex+'][reference_capa_number]"></td>'+
+                        '<td><input disabled type="text" name="serial[]" value="' + serialNumber +'"></td>' +
+                        '<td><input type="text" name="oos_capa[' + serialNumber + '][info_oos_number]" value=""></td>' +
+                        '<td>' +
+                            '<div class="col-lg-6 new-date-data-field">' +
+                            '<div class="group-input input-date">' +
+                            '<div class="calenderauditee">' +
+                            '<input type="text" readonly id="info_oos_reported_date' + serialNumber + '" placeholder="DD-MM-YYYY" />' +
+                            '<input type="date" name="oos_capa[' + serialNumber + '][info_oos_reported_date]" value="" class="hide-input" oninput="handleDateInput(this, \'info_oos_reported_date' + serialNumber + '\')">' +
+                            '</div>' +
+                            '</div>' +
+                            '</div>' +
+                        '</td>' +
+                        '<td><input type="text" name="oos_capa[' + serialNumber + '][info_oos_description]" value=""></td>' +
+                        '<td><input type="text" name="oos_capa[' + serialNumber + '][info_oos_previous_root_cause]" value=""></td>' +
+                        '<td><input type="text" name="oos_capa[' + serialNumber + '][info_oos_capa]" value=""></td>' +
+                        '<td>' +
+                            '<div class="col-lg-6 new-date-data-field">' +
+                            '<div class="group-input input-date">' +
+                            '<div class="calenderauditee">' +
+                            '<input type="text" readonly id="info_oos_closure_date' + serialNumber + '" placeholder="DD-MM-YYYY" />' +
+                            '<input type="date" name="oos_capa[' + serialNumber + '][info_oos_closure_date]" value="" class="hide-input" oninput="handleDateInput(this, \'info_oos_closure_date' + serialNumber + '\')">' +
+                            '</div>' +
+                            '</div>' +
+                            '</div>' +
+                        '</td>' +
+                        '<td><select name="oos_capa['+ serialNumber +'][info_oos_capa_requirement]"><option vlaue="">--select--</option><option value="yes">Yes</option><option value="No">No</option></select></td>' +
+                        '<td><input type="text" name="oos_capa[' + serialNumber + '][info_oos_capa_reference_number]" value=""></td>' +
+                        '<td><button type="text" class="removeRowBtn">Remove</button></td>' +
+
                         '</tr>';
-                    // for (var i = 0; i < users.length; i++) {
-                    //     html += '<option value="' + users[i].id + '">' + users[i].name + '</option>';
-                    // }
-
-                    // html += '</select></td>' +
-
-                    '</tr>';
                     return html;
                 }
 
@@ -251,36 +252,26 @@
             });
         });
     </script>
-
-
     <!-- -----------------------------grid-1----------OOS Conclusion ---------------- -->
-
     <script>
         $(document).ready(function() {
             $('#oos_conclusion').click(function(e) {
-                let loopIndex = 0
                 function generateTableRow(serialNumber) {
-                    loopIndex++;
-
                     var html =
-                        '<tr>' +
-                        '<td><input disabled type="text" name="oos_conclusion['+ loopIndex +'][serial]" value="' + serialNumber +
-                        '"></td>'
-                                    '<td><input type="text" name="oos_conclusion['+ loopIndex +'][analysis_details]"></td>'
-                                    '<td><input type="text" name="oos_conclusion['+ loopIndex +'][hypo_exp_add_test_pr_no]"></td>'
-                                    '<td><input type="text" name="oos_conclusion['+ loopIndex +'][results]"></td>'
-                                   '<td><input type="text" name="oos_conclusion['+ loopIndex +'][analyst_name]"></td>'
-                                   '<td><input type="text" name="oos_conclusion['+ loopIndex +'][Remarks]"></td>'
-                        '</tr>';
-                    // for (var i = 0; i < users.length; i++) {
-                    //     html += '<option value="' + users[i].id + '">' + users[i].name + '</option>';
-                    // }
-
-                    // html += '</select></td>' +
+                    '<tr>' +
+                        '<td><input disabled type="text" name="serial[]" value="' + serialNumber +'"></td>' +
+                        '<td><input type="text" name="oos_conclusion[' + serialNumber + '][summary_results_analysis_detials]"></td>' +
+                        '<td><input type="text" name="oos_conclusion[' + serialNumber + '][summary_results_hypothesis_experimentation_test_pr_no]"></td>' +
+                        '<td><input type="text" name="oos_conclusion[' + serialNumber + '][summary_results]"></td>' +
+                        '<td><input type="text" name="oos_conclusion[' + serialNumber + '][summary_results_analyst_name]"></td>' +
+                        '<td><input type="text" name="oos_conclusion[' + serialNumber + '][summary_results_remarks]"></td>' +
+                        '<td><button type="text" class="removeRowBtn">Remove</button></td>' +
 
                     '</tr>';
+
                     return html;
                 }
+
                 var tableBody = $('#oos_conclusion_details tbody');
                 var rowCount = tableBody.children('tr').length;
                 var newRow = generateTableRow(rowCount + 1);
@@ -288,36 +279,21 @@
             });
         });
     </script>
-
-
     <!-- -----------------------------grid-1----------OOSConclusion_Review ---------------- -->
-
     <script>
         $(document).ready(function() {
             $('#oosconclusion_review').click(function(e) {
-                let loopIndex = 0;
                 function generateTableRow(serialNumber) {
-                    loopIndex++ ;
-
                     var html =
                         '<tr>' +
-                      ' <td><input disabled type="text" name="oosConclusion_review['+ loopIndex +'][serial]" value="' + serialNumber +
-                        '"></td>'+
-                                    '<td><input type="text" name="oosConclusion_review['+ loopIndex +'][material_product_no]"></td>'+
-                                    '<td><input type="text" name="oosConclusion_review['+ loopIndex +'][batch_no_ar_no]"></td>'+
-                                   ' <td><input type="text" name="oosConclusion_review['+ loopIndex +'][any_other_information]"></td>'+
-                                    '<td><input type="text" name="oosConclusion_review['+ loopIndex +'][action_taken_on_affecBatch]"></td>'+
-
-
+                        '<td><input disabled type="text" name="serial[]" value="' + serialNumber +
+                        '"></td>' +
+                        '<td><input type="text" name="oos_conclusion_review[' + serialNumber + '][conclusion_review_product_name]"></td>' +
+                        '<td><input type="text" name="oos_conclusion_review[' + serialNumber + '][conclusion_review_batch_no]"></td>' +
+                        '<td><input type="text" name="oos_conclusion_review[' + serialNumber + '][conclusion_review_any_other_information]"></td>' +
+                        '<td><input type="text" name="oos_conclusion_review[' + serialNumber + '][conclusion_review_action_affecte_batch]"></td>' +
+                        '<td><button type="text" class="removeRowBtn">Remove</button></td>' +
                         '</tr>';
-                    // for (var i = 0; i < users.length; i++) {
-                    //     html += '<option value="' + users[i].id + '">' + users[i].name + '</option>';
-                    // }
-
-                    // html += '</select></td>' +
-
-                    '</tr>';
-
                     return html;
                 }
 
@@ -328,9 +304,7 @@
             });
         });
     </script>
-
-
-
+    <!-- ======GRID END  =============-->
     <div class="form-field-head">
 
         <div class="division-bar pt-3">
@@ -388,9 +362,7 @@
                 {{--<button class="cctablinks" onclick="openCity(event, 'CCForm15')">Under Addendum Review</button>--}}
                 {{--<button class="cctablinks" onclick="openCity(event, 'CCForm16')">Under Addendum Verification</button>--}}
                 {{--<button class="cctablinks" onclick="openCity(event, 'CCForm17')">Signature</button>--}}
-
             </div>
-
             <!-- General Information -->
             <form action="{{ route('oos_micro.update', $micro_data->id) }}" method="POST" enctype="multipart/form-data">
                 @csrf
@@ -401,864 +373,26 @@
                 @endif
                  <!-- General Information -->
                 @include('frontend.OOS_Micro.comps_micro.general_information')
-            <!-- Preliminary Lab. Investigation and Conclusion and Review tap2 and tap3 and tap4 and tab5-->
+                <!-- Preliminary Lab. Investigation and Conclusion and Review tap2 and tap3 and tap4 and tab5-->
                 @include('frontend.OOS_Micro.comps_micro.preliminary_lab_icr')
-              
-            <!-- all_checklist_Investigation_bsmmem CCForm18 to CCForm23 -->
+                <!-- all_checklist_Investigation_bsmmem CCForm18 to CCForm22 -->
                 @include('frontend.OOS_Micro.comps_micro.all_checklist_Investigation_bsmmem')
+                <!-- phaseII_investigation and qc review CCForm5 and CCForm6 -->
+                @include('frontend.OOS_Micro.comps_micro.phaseII_investigation_qcr')
+                <!-- additional_testing -->
+                @include('frontend.OOS_Micro.comps_micro.additional_testing')
+                <!-- oos_conclusion_cq_review -->
+                @include('frontend.OOS_Micro.comps_micro.oos_conclusion_cq_review')
+                <!-- batch_disposition -->
+                @include('frontend.OOS_Micro.comps_micro.batch_disposition') 
+                <!-- reopen -->
+                @include('frontend.OOS_Micro.comps_micro.reopen')
+                <!-- Signature  -->
 
-             <!-- phaseII_investigation and qc review CCForm5 and CCForm6 -->
-                
-             @include('frontend.OOS_Micro.comps_micro.phaseII_investigation_qcr')
-
-                
-                
-
-        <!-- tap6to 22 -->
-        <!-- Last Tap CCForm23 Checklist for Analyst training & Procedure -->
-        <div id="CCForm23" class="inner-block cctabcontent">
-            <div class="inner-block-content">
-                <div class="sub-head">
-                    Checklist for Analyst training & Procedure
-                </div>
-                    @php
-                        $checklist_for_analyst_training_CIMTs = [
-    [
-        'question' => "Is the analyst trained/qualified GPT test procedure?",
-        'is_sub_question' => false,
-        'input_type' => 'text'
-    ],
-    [
-        'question' => "Date of qualification:",
-        'is_sub_question' => true,
-        'input_type' => 'date'
-    ],
-    [
-        'question' => "Were appropriate precaution taken by the analyst throughout the test?",
-        'is_sub_question' => false,
-        'input_type' => 'text'
-    ],
-    [
-        'question' => "Analyst interview record.......",
-        'is_sub_question' => true,
-        'input_type' => 'number'
-    ],
-    [
-        'question' => "Was an analyst persons suffering from any ailment such as cough/cold or open wound or skin infections?",
-        'is_sub_question' => false,
-        'input_type' => 'text'
-    ],
-    [
-        'question' => "Was the correct procedure for the transfer of samples and accessories to sampling testing areas followed?",
-        'is_sub_question' => false,
-        'input_type' => 'text'
-    ]
-];
-
-                    @endphp
-                <div class="row">
-                    <div class="col-12">
-                        <div class="group-input">
-                            <div class="why-why-chart">
-                                <table class="table table-bordered">
-                                    <thead>
-                                        <tr>
-                                            <th style="width: 5%;">Sr.No.</th>
-                                            <th style="width: 40%;">Question</th>
-                                            <th style="width: 20%;">Response</th>
-                                            <th>Remarks</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        @php
-                                            $main_question_index = 1.0;
-                                            $sub_question_index = 0;
-                                        @endphp
-
-                                        @foreach ($checklist_for_analyst_training_CIMTs as $index => $review_item)
-                                        @php
-                                            if ($review_item['is_sub_question']) {
-                                                $sub_question_index++;
-                                            } else {
-                                                $sub_question_index = 0;
-                                                $main_question_index += 0.1;
-                                            }
-                                        @endphp
-                                        <tr>
-                                            <td class="flex text-center">{{ $review_item['is_sub_question'] ? $main_question_index .'.'. $sub_question_index : number_format($main_question_index, 1) }}</td>
-                                            <td>{{$review_item['question']}}</td>
-                                            <td>
-                                                <div style="display: flex; justify-content: space-around; align-items: center; margin: 5%; gap:5px">
-                                                    @if ($review_item['input_type'] == 'date')
-                                                    <input type="date" name="checklist_for_analyst_training_CIMT[{{$index}}][response]"
-                                                        value="{{ Helpers::getMicroGridData($micro_data, 'checklist_for_analyst_training_CIMT', true, 'response', true, $index) ?? '' }}"
-                                                        style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
-                                                    @elseif ($review_item['input_type'] == 'number')
-                                                    <input type="number" name="checklist_for_analyst_training_CIMT[{{$index}}][response]"
-                                                        value="{{ Helpers::getMicroGridData($micro_data, 'checklist_for_analyst_training_CIMT', true, 'response', true, $index) ?? '' }}"
-                                                        style="padding: 2px; width:90%; border: 1px solid black; background-color: #f0f0f0;">
-                                                    @else
-                                                    <select name="checklist_for_analyst_training_CIMT[{{$index}}][response]"
-                                                            id="response"
-                                                            style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
-                                                        <option value="">Select an Option</option>
-                                                        <option value="Yes" {{ Helpers::getMicroGridData($micro_data, 'checklist_for_analyst_training_CIMT', true, 'response', true, $index) == 'Yes' ? 'selected' : '' }}>Yes</option>
-                                                        <option value="No" {{ Helpers::getMicroGridData($micro_data, 'checklist_for_analyst_training_CIMT', true, 'response', true, $index) == 'No' ? 'selected' : '' }}>No</option>
-                                                        <option value="N/A" {{ Helpers::getMicroGridData($micro_data, 'checklist_for_analyst_training_CIMT', true, 'response', true, $index) == 'N/A' ? 'selected' : '' }}>N/A</option>
-                                                    </select>
-                                                    @endif
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <div style="margin: auto; display: flex; justify-content: center;">
-                                                    <textarea name="checklist_for_analyst_training_CIMT[{{$index}}][remark]"
-                                                              style="border-radius: 7px; border: 1.5px solid black;">{{ Helpers::getMicroGridData($micro_data, 'checklist_for_analyst_training_CIMT', true, 'remark', true, $index) ?? '' }}</textarea>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        @endforeach
-                                    </tbody>
-
-                                </table>
-
-                            </div>
-                        </div>
-                    </div>
-                </div>
-             </div>
-            <div class="inner-block-content">
-                <div class="sub-head">
-                    Checklist for Comparison of results (With same & Previous Day Media GPT) :
-                </div>
-                    @php
-                       $checklist_for_comp_results_CIMTs = [
-    [
-        'question' => "Which media GPT performed at previous day:",
-        'is_sub_question' => false,
-        'input_type' => 'text'
-    ],
-    [
-        'question' => "Were dehydrated and ready to use media used for GPT?",
-        'is_sub_question' => false,
-        'input_type' => 'text'
-    ],
-    [
-        'question' => "Lot No./Batch No:",
-        'is_sub_question' => false,
-        'input_type' => 'number'
-    ],
-    [
-        'question' => "Date /Time of Incubation:",
-        'is_sub_question' => false,
-        'input_type' => 'date'
-    ],
-    [
-        'question' => "Date/Time of Release:",
-        'is_sub_question' => true,
-        'input_type' => 'date'
-    ],
-    [
-        'question' => "Results of previous day GPT record?",
-        'is_sub_question' => false,
-        'input_type' => 'text'
-    ],
-    [
-        'question' => "Results of other plates released for GPT is within acceptance?",
-        'is_sub_question' => false,
-        'input_type' => 'text'
-    ]
-];
-
-                    @endphp
-                <div class="row">
-                    <div class="col-12">
-                        <div class="group-input">
-                            <div class="why-why-chart">
-                                <table class="table table-bordered">
-                                    <thead>
-                                        <tr>
-                                            <th style="width: 5%;">Sr.No.</th>
-                                            <th style="width: 40%;">Question</th>
-                                            <th style="width: 20%;">Response</th>
-                                            <th>Remarks</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        @php
-                                            $main_question_index = 2.0;
-                                            $sub_question_index = 0;
-                                        @endphp
-
-                                        @foreach ($checklist_for_comp_results_CIMTs as $index => $review_item)
-                                        @php
-                                            if ($review_item['is_sub_question']) {
-                                                $sub_question_index++;
-                                            } else {
-                                                $sub_question_index = 0;
-                                                $main_question_index += 0.1;
-                                            }
-                                        @endphp
-                                        <tr>
-                                            <td class="flex text-center">{{ $review_item['is_sub_question'] ? $main_question_index .'.'. $sub_question_index : number_format($main_question_index, 1) }}</td>
-                                            <td>{{$review_item['question']}}</td>
-                                            <td>
-                                                <div style="display: flex; justify-content: space-around; align-items: center; margin: 5%; gap:5px">
-                                                    @if ($review_item['input_type'] == 'date')
-                                                    <input type="date" name="checklist_for_comp_results_CIMT[{{$index}}][response]"
-                                                        value="{{ Helpers::getMicroGridData($micro_data, 'checklist_for_comp_results_CIMT', true, 'response', true, $index) ?? '' }}"
-                                                        style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
-                                                    @elseif ($review_item['input_type'] == 'number')
-                                                    <input type="number" name="checklist_for_comp_results_CIMT[{{$index}}][response]"
-                                                        value="{{ Helpers::getMicroGridData($micro_data, 'checklist_for_comp_results_CIMT', true, 'response', true, $index) ?? '' }}"
-                                                        style="padding: 2px; width:90%; border: 1px solid black; background-color: #f0f0f0;">
-                                                    @else
-                                                    <select name="checklist_for_comp_results_CIMT[{{$index}}][response]"
-                                                            id="response"
-                                                            style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
-                                                        <option value="">Select an Option</option>
-                                                        <option value="Yes" {{ Helpers::getMicroGridData($micro_data, 'checklist_for_comp_results_CIMT', true, 'response', true, $index) == 'Yes' ? 'selected' : '' }}>Yes</option>
-                                                        <option value="No" {{ Helpers::getMicroGridData($micro_data, 'checklist_for_comp_results_CIMT', true, 'response', true, $index) == 'No' ? 'selected' : '' }}>No</option>
-                                                        <option value="N/A" {{ Helpers::getMicroGridData($micro_data, 'checklist_for_comp_results_CIMT', true, 'response', true, $index) == 'N/A' ? 'selected' : '' }}>N/A</option>
-                                                    </select>
-                                                    @endif
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <div style="margin: auto; display: flex; justify-content: center;">
-                                                    <textarea name="checklist_for_comp_results_CIMT[{{$index}}][remark]"
-                                                              style="border-radius: 7px; border: 1.5px solid black;">{{ Helpers::getMicroGridData($micro_data, 'checklist_for_comp_results_CIMT', true, 'remark', true, $index) ?? '' }}</textarea>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        @endforeach
-                                    </tbody>
-
-
-                                </table>
-                            </div>
-                        </div>
-                    </div>
-
-
-                </div>
-            </div>
-            <div class="inner-block-content">
-                <div class="sub-head">
-                    Checklist for Culture verification ?
-                </div>
-                    @php
-                     $checklist_for_Culture_verification_CIMTs = [
-    [
-        'question' => "Is culture COA checked?",
-        'is_sub_question' => false,
-        'input_type' => 'text'
-    ],
-    [
-        'question' => "Was the correct Inoculum used for GPT?",
-        'is_sub_question' => false,
-        'input_type' => 'text'
-    ],
-    [
-        'question' => "Was used culture within culture due date?",
-        'is_sub_question' => false,
-        'input_type' => 'text'
-    ],
-    [
-        'question' => "Date of culture dilution:",
-        'is_sub_question' => true,
-        'input_type' => 'date'
-    ],
-    [
-        'question' => "Due date of culture dilution:",
-        'is_sub_question' => true,
-        'input_type' => 'date'
-    ],
-    [
-        'question' => "Was the storage condition of culture is appropriate?",
-        'is_sub_question' => false,
-        'input_type' => 'text'
-    ],
-    [
-        'question' => "Was culture strength used within acceptance range?",
-        'is_sub_question' => false,
-        'input_type' => 'text'
-    ]
-];
-
-                    @endphp
-                <div class="row">
-                    <div class="col-12">
-                        <div class="group-input">
-                            <div class="why-why-chart">
-                                <table class="table table-bordered">
-                                    <thead>
-                                        <tr>
-                                            <th style="width: 5%;">Sr.No.</th>
-                                            <th style="width: 40%;">Question</th>
-                                            <th style="width: 20%;">Response</th>
-                                            <th>Remarks</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        @php
-                                            $main_question_index = 3.0;
-                                            $sub_question_index = 0;
-                                        @endphp
-
-                                        @foreach ($checklist_for_Culture_verification_CIMTs as $index => $review_item)
-                                        @php
-                                            if ($review_item['is_sub_question']) {
-                                                $sub_question_index++;
-                                            } else {
-                                                $sub_question_index = 0;
-                                                $main_question_index += 0.1;
-                                            }
-                                        @endphp
-                                        <tr>
-                                            <td class="flex text-center">{{ $review_item['is_sub_question'] ? $main_question_index .'.'. $sub_question_index : number_format($main_question_index, 1) }}</td>
-                                            <td>{{$review_item['question']}}</td>
-                                            <td>
-                                                <div style="display: flex; justify-content: space-around; align-items: center; margin: 5%; gap:5px">
-                                                    @if ($review_item['input_type'] == 'date')
-                                                    <input type="date" name="checklist_for_Culture_verification_CIMT[{{$index}}][response]"
-                                                        value="{{ Helpers::getMicroGridData($micro_data, 'checklist_for_Culture_verification_CIMT', true, 'response', true, $index) ?? '' }}"
-                                                        style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
-                                                    @elseif ($review_item['input_type'] == 'number')
-                                                    <input type="number" name="checklist_for_Culture_verification_CIMT[{{$index}}][response]"
-                                                        value="{{ Helpers::getMicroGridData($micro_data, 'checklist_for_Culture_verification_CIMT', true, 'response', true, $index) ?? '' }}"
-                                                        style="padding: 2px; width:90%; border: 1px solid black; background-color: #f0f0f0;">
-                                                    @else
-                                                    <select name="checklist_for_Culture_verification_CIMT[{{$index}}][response]"
-                                                            id="response"
-                                                            style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
-                                                        <option value="">Select an Option</option>
-                                                        <option value="Yes" {{ Helpers::getMicroGridData($micro_data, 'checklist_for_Culture_verification_CIMT', true, 'response', true, $index) == 'Yes' ? 'selected' : '' }}>Yes</option>
-                                                        <option value="No" {{ Helpers::getMicroGridData($micro_data, 'checklist_for_Culture_verification_CIMT', true, 'response', true, $index) == 'No' ? 'selected' : '' }}>No</option>
-                                                        <option value="N/A" {{ Helpers::getMicroGridData($micro_data, 'checklist_for_Culture_verification_CIMT', true, 'response', true, $index) == 'N/A' ? 'selected' : '' }}>N/A</option>
-                                                    </select>
-                                                    @endif
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <div style="margin: auto; display: flex; justify-content: center;">
-                                                    <textarea name="checklist_for_Culture_verification_CIMT[{{$index}}][remark]"
-                                                              style="border-radius: 7px; border: 1.5px solid black;">{{ Helpers::getMicroGridData($micro_data, 'checklist_for_Culture_verification_CIMT', true, 'remark', true, $index) ?? '' }}</textarea>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        @endforeach
-                                    </tbody>
-
-                                                                    </table>
-                            </div>
-                        </div>
-                    </div>
-
-
-
-                </div>
-            </div><div class="inner-block-content">
-                <div class="sub-head">
-                    Checklist for Sterilize Accessories :
-                </div>
-                        @php
-                            $sterilize_accessories_CIMTs = [
-    [
-        'question' => "Was the media sterilized and sterilization cycle found satisfactory?",
-        'is_sub_question' => false,
-        'input_type' => 'text'
-    ],
-    [
-        'question' => "Sterilization cycle No.:",
-        'is_sub_question' => true,
-        'input_type' => 'number'
-    ],
-    [
-        'question' => "Whether disposable sterilized gloves used during testing were within the expiry date?",
-        'is_sub_question' => false,
-        'input_type' => 'text'
-    ],
-    [
-        'question' => "Results of other plates released for GPT is within acceptance?",
-        'is_sub_question' => false,
-        'input_type' => 'text'
-    ]
-];
-
-                        @endphp
-                <div class="row">
-                    <div class="col-12">
-                        <div class="group-input">
-                            <div class="why-why-chart">
-                                <table class="table table-bordered">
-                                    <thead>
-                                        <tr>
-                                            <th style="width: 5%;">Sr.No.</th>
-                                            <th style="width: 40%;">Question</th>
-                                            <th style="width: 20%;">Response</th>
-                                            <th>Remarks</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        @php
-                                            $main_question_index = 4.0;
-                                            $sub_question_index = 0;
-                                        @endphp
-
-                                        @foreach ($sterilize_accessories_CIMTs as $index => $review_item)
-                                        @php
-                                            if ($review_item['is_sub_question']) {
-                                                $sub_question_index++;
-                                            } else {
-                                                $sub_question_index = 0;
-                                                $main_question_index += 0.1;
-                                            }
-                                        @endphp
-                                        <tr>
-                                            <td class="flex text-center">{{ $review_item['is_sub_question'] ? $main_question_index .'.'. $sub_question_index : number_format($main_question_index, 1) }}</td>
-                                            <td>{{$review_item['question']}}</td>
-                                            <td>
-                                                <div style="display: flex; justify-content: space-around; align-items: center; margin: 5%; gap:5px">
-                                                    @if ($review_item['input_type'] == 'date')
-                                                    <input type="date" name="sterilize_accessories_CIMT[{{$index}}][response]"
-                                                        value="{{ Helpers::getMicroGridData($micro_data, 'sterilize_accessories_CIMT', true, 'response', true, $index) ?? '' }}"
-                                                        style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
-                                                    @elseif ($review_item['input_type'] == 'number')
-                                                    <input type="number" name="sterilize_accessories_CIMT[{{$index}}][response]"
-                                                        value="{{ Helpers::getMicroGridData($micro_data, 'sterilize_accessories_CIMT', true, 'response', true, $index) ?? '' }}"
-                                                        style="padding: 2px; width:90%; border: 1px solid black; background-color: #f0f0f0;">
-                                                    @else
-                                                    <select name="sterilize_accessories_CIMT[{{$index}}][response]"
-                                                            id="response"
-                                                            style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
-                                                        <option value="">Select an Option</option>
-                                                        <option value="Yes" {{ Helpers::getMicroGridData($micro_data, 'sterilize_accessories_CIMT', true, 'response', true, $index) == 'Yes' ? 'selected' : '' }}>Yes</option>
-                                                        <option value="No" {{ Helpers::getMicroGridData($micro_data, 'sterilize_accessories_CIMT', true, 'response', true, $index) == 'No' ? 'selected' : '' }}>No</option>
-                                                        <option value="N/A" {{ Helpers::getMicroGridData($micro_data, 'sterilize_accessories_CIMT', true, 'response', true, $index) == 'N/A' ? 'selected' : '' }}>N/A</option>
-                                                    </select>
-                                                    @endif
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <div style="margin: auto; display: flex; justify-content: center;">
-                                                    <textarea name="sterilize_accessories_CIMT[{{$index}}][remark]"
-                                                              style="border-radius: 7px; border: 1.5px solid black;">{{ Helpers::getMicroGridData($micro_data, 'sterilize_accessories_CIMT', true, 'remark', true, $index) ?? '' }}</textarea>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        @endforeach
-                                    </tbody>
-                                                                                                       </table>
-                            </div>
-                        </div>
-                    </div>
-
-
-
-                </div>
-            </div>
-            <div class="inner-block-content">
-                <div class="sub-head">
-                    Checklist for Instrument/Equipment Details:
-                </div>
-                    @php
-                       $checklist_for_intrument_equip_last_CIMTs = [
-    [
-        'question' => "Was the equipment used, calibrated/qualified and within the specified range?",
-        'is_sub_question' => false,
-        'input_type' => 'text'
-    ],
-    [
-        'question' => "Biosafety equipment ID:",
-        'is_sub_question' => true,
-        'input_type' => 'number'
-    ],
-    [
-        'question' => "Validation date:",
-        'is_sub_question' => true,
-        'input_type' => 'date'
-    ],
-    [
-        'question' => "Next due date:",
-        'is_sub_question' => true,
-        'input_type' => 'date'
-    ],
-    [
-        'question' => "Colony counter equipment ID:",
-        'is_sub_question' => false,
-        'input_type' => 'number'
-    ],
-    [
-        'question' => "Calibration date:",
-        'is_sub_question' => true,
-        'input_type' => 'date'
-    ],
-    [
-        'question' => "Was used pipettes within calibration?",
-        'is_sub_question' => false,
-        'input_type' => 'text'
-    ],
-    [
-        'question' => "Pipettes ID:",
-        'is_sub_question' => true,
-        'input_type' => 'number'
-    ],
-    [
-        'question' => "Calibration date",
-        'is_sub_question' => true,
-        'input_type' => 'date'
-    ],
-    [
-        'question' => "Was the refrigerator used for storage of culture is validated?",
-        'is_sub_question' => false,
-        'input_type' => 'text'
-    ],
-    [
-        'question' => "Refrigerator (2-8̊ C) ID:",
-        'is_sub_question' => true,
-        'input_type' => 'number'
-    ],
-    [
-        'question' => "Validation date:",
-        'is_sub_question' => true,
-        'input_type' => 'date'
-    ],
-    [
-        'question' => "Incubator ID:",
-        'is_sub_question' => false,
-        'input_type' => 'number'
-    ],
-    [
-        'question' => "Validation date and next due date:",
-        'is_sub_question' => true,
-        'input_type' => 'date'
-    ],
-    [
-        'question' => "Was there any power failure noticed during the incubation of samples in the heating block?",
-        'is_sub_question' => false,
-        'input_type' => 'text'
-    ],
-    [
-        'question' => "Were any other media GPT tested along with this sample?",
-        'is_sub_question' => false,
-        'input_type' => 'text'
-    ],
-    [
-        'question' => "If yes, whether those media GPT results found satisfactory?",
-        'is_sub_question' => true,
-        'input_type' => 'text'
-    ]
-];
-
-                    @endphp
-                <div class="row">
-                    <div class="col-12">
-                        <div class="group-input">
-                            <div class="why-why-chart">
-                                <table class="table table-bordered">
-                                    <thead>
-                                        <tr>
-                                            <th style="width: 5%;">Sr.No.</th>
-                                            <th style="width: 40%;">Question</th>
-                                            <th style="width: 20%;">Response</th>
-                                            <th>Remarks</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        @php
-                                            $main_question_index = 5.0;
-                                            $sub_question_index = 0;
-                                        @endphp
-
-                                        @foreach ($checklist_for_intrument_equip_last_CIMTs as $index => $review_item)
-                                        @php
-                                            if ($review_item['is_sub_question']) {
-                                                $sub_question_index++;
-                                            } else {
-                                                $sub_question_index = 0;
-                                                $main_question_index += 0.1;
-                                            }
-                                        @endphp
-                                        <tr>
-                                            <td class="flex text-center">{{ $review_item['is_sub_question'] ? $main_question_index .'.'. $sub_question_index : number_format($main_question_index, 1) }}</td>
-                                            <td>{{$review_item['question']}}</td>
-                                            <td>
-                                                <div style="display: flex; justify-content: space-around; align-items: center; margin: 5%; gap:5px">
-                                                    @if ($review_item['input_type'] == 'date')
-                                                    <input type="date" name="checklist_for_intrument_equip_last_CIMT[{{$index}}][response]"
-                                                        value="{{ Helpers::getMicroGridData($micro_data, 'checklist_for_intrument_equip_last_CIMT', true, 'response', true, $index) ?? '' }}"
-                                                        style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
-                                                    @elseif ($review_item['input_type'] == 'number')
-                                                    <input type="number" name="checklist_for_intrument_equip_last_CIMT[{{$index}}][response]"
-                                                        value="{{ Helpers::getMicroGridData($micro_data, 'checklist_for_intrument_equip_last_CIMT', true, 'response', true, $index) ?? '' }}"
-                                                        style="padding: 2px; width:90%; border: 1px solid black; background-color: #f0f0f0;">
-                                                    @else
-                                                    <select name="checklist_for_intrument_equip_last_CIMT[{{$index}}][response]"
-                                                            id="response"
-                                                            style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
-                                                        <option value="">Select an Option</option>
-                                                        <option value="Yes" {{ Helpers::getMicroGridData($micro_data, 'checklist_for_intrument_equip_last_CIMT', true, 'response', true, $index) == 'Yes' ? 'selected' : '' }}>Yes</option>
-                                                        <option value="No" {{ Helpers::getMicroGridData($micro_data, 'checklist_for_intrument_equip_last_CIMT', true, 'response', true, $index) == 'No' ? 'selected' : '' }}>No</option>
-                                                        <option value="N/A" {{ Helpers::getMicroGridData($micro_data, 'checklist_for_intrument_equip_last_CIMT', true, 'response', true, $index) == 'N/A' ? 'selected' : '' }}>N/A</option>
-                                                    </select>
-                                                    @endif
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <div style="margin: auto; display: flex; justify-content: center;">
-                                                    <textarea name="checklist_for_intrument_equip_last_CIMT[{{$index}}][remark]"
-                                                              style="border-radius: 7px; border: 1.5px solid black;">{{ Helpers::getMicroGridData($micro_data, 'checklist_for_intrument_equip_last_CIMT', true, 'remark', true, $index) ?? '' }}</textarea>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        @endforeach
-                                    </tbody>
-
-                                </table>
-                            </div>
-                        </div>
-                    </div>
-
-
-
-                </div>
-            </div>
-            <div class="inner-block-content">
-                <div class="sub-head">
-                    Checklist for Disinfectant Details:
-                </div>
-                    @php
-                       $disinfectant_details_last_CIMTs = [
-    [
-        'question' => "Name of the disinfectant used for area cleaning",
-        'is_sub_question' => false,
-        'input_type' => 'number'
-    ],
-    [
-        'question' => "Was the disinfectant used for cleaning and sanitization validated?",
-        'is_sub_question' => false,
-        'input_type' => 'text'
-    ],
-    [
-        'question' => "Concentration:",
-        'is_sub_question' => true,
-        'input_type' => 'text'
-    ],
-    [
-        'question' => "Was the disinfectant prepared as per validated concentration?",
-        'is_sub_question' => false,
-        'input_type' => 'text'
-    ]
-];
-
-     @endphp
-                <div class="row">
-                    <div class="col-12">
-                        <div class="group-input">
-                            <div class="why-why-chart">
-                                <table class="table table-bordered">
-                                    <thead>
-                                        <tr>
-                                            <th style="width: 5%;">Sr.No.</th>
-                                            <th style="width: 40%;">Question</th>
-                                            <th style="width: 20%;">Response</th>
-                                            <th>Remarks</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        @php
-                                            $main_question_index = 6.0;
-                                            $sub_question_index = 0;
-                                        @endphp
-
-                                        @foreach ($disinfectant_details_last_CIMTs as $index => $review_item)
-                                        @php
-                                            if ($review_item['is_sub_question']) {
-                                                $sub_question_index++;
-                                            } else {
-                                                $sub_question_index = 0;
-                                                $main_question_index += 0.1;
-                                            }
-                                        @endphp
-                                        <tr>
-                                            <td class="flex text-center">{{ $review_item['is_sub_question'] ? $main_question_index .'.'. $sub_question_index : number_format($main_question_index, 1) }}</td>
-                                            <td>{{$review_item['question']}}</td>
-                                            <td>
-                                                <div style="display: flex; justify-content: space-around; align-items: center; margin: 5%; gap:5px">
-                                                    @if ($review_item['input_type'] == 'date')
-                                                    <input type="date" name="disinfectant_details_last_CIMT[{{$index}}][response]"
-                                                        value="{{ Helpers::getMicroGridData($micro_data, 'disinfectant_details_last_CIMT', true, 'response', true, $index) ?? '' }}"
-                                                        style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
-                                                    @elseif ($review_item['input_type'] == 'number')
-                                                    <input type="number" name="disinfectant_details_last_CIMT[{{$index}}][response]"
-                                                        value="{{ Helpers::getMicroGridData($micro_data, 'disinfectant_details_last_CIMT', true, 'response', true, $index) ?? '' }}"
-                                                        style="padding: 2px; width:90%; border: 1px solid black; background-color: #f0f0f0;">
-                                                    @else
-                                                    <select name="disinfectant_details_last_CIMT[{{$index}}][response]"
-                                                            id="response"
-                                                            style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
-                                                        <option value="">Select an Option</option>
-                                                        <option value="Yes" {{ Helpers::getMicroGridData($micro_data, 'disinfectant_details_last_CIMT', true, 'response', true, $index) == 'Yes' ? 'selected' : '' }}>Yes</option>
-                                                        <option value="No" {{ Helpers::getMicroGridData($micro_data, 'disinfectant_details_last_CIMT', true, 'response', true, $index) == 'No' ? 'selected' : '' }}>No</option>
-                                                        <option value="N/A" {{ Helpers::getMicroGridData($micro_data, 'disinfectant_details_last_CIMT', true, 'response', true, $index) == 'N/A' ? 'selected' : '' }}>N/A</option>
-                                                    </select>
-                                                    @endif
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <div style="margin: auto; display: flex; justify-content: center;">
-                                                    <textarea name="disinfectant_details_last_CIMT[{{$index}}][remark]"
-                                                              style="border-radius: 7px; border: 1.5px solid black;">{{ Helpers::getMicroGridData($micro_data, 'disinfectant_details_last_CIMT', true, 'remark', true, $index) ?? '' }}</textarea>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        @endforeach
-                                    </tbody>
-
-                              </table>
-                            </div>
-                        </div>
-                    </div>
-
-
-
-                </div>
-            </div>
-            <div class="inner-block-content">
-                <div class="sub-head">
-                    Checklist for Results and Calculation :
-                </div>
-                    @php
-                       $checklist_for_result_calculation_CIMTs = [
-    [
-        'question' => "Were results taken properly?",
-        'is_sub_question' => false,
-        'input_type' => 'text'
-    ],
-    [
-        'question' => "Raw data checked?",
-        'is_sub_question' => false,
-        'input_type' => 'text'
-    ],
-    [
-        'question' => "Was formula dilution factor used for calculating the results corrected?",
-        'is_sub_question' => false,
-        'input_type' => 'text'
-    ]
-];
-
-                    @endphp
-                <div class="row">
-                    <div class="col-12">
-                        <div class="group-input">
-                            <div class="why-why-chart">
-                                <table class="table table-bordered">
-                                    <thead>
-                                        <tr>
-                                            <th style="width: 5%;">Sr.No.</th>
-                                            <th style="width: 40%;">Question</th>
-                                            <th style="width: 20%;">Response</th>
-                                            <th>Remarks</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        @php
-                                            $main_question_index = 7.0;
-                                            $sub_question_index = 0;
-                                        @endphp
-
-                                        @foreach ($checklist_for_result_calculation_CIMTs as $index => $review_item)
-                                        @php
-                                            if ($review_item['is_sub_question']) {
-                                                $sub_question_index++;
-                                            } else {
-                                                $sub_question_index = 0;
-                                                $main_question_index += 0.1;
-                                            }
-                                        @endphp
-                                        <tr>
-                                            <td class="flex text-center">{{ $review_item['is_sub_question'] ? $main_question_index .'.'. $sub_question_index : number_format($main_question_index, 1) }}</td>
-                                            <td>{{$review_item['question']}}</td>
-                                            <td>
-                                                <div style="display: flex; justify-content: space-around; align-items: center; margin: 5%; gap:5px">
-                                                    @if ($review_item['input_type'] == 'date')
-                                                    <input type="date" name="checklist_for_result_calculation_CIMT[{{$index}}][response]"
-                                                        value="{{ Helpers::getMicroGridData($micro_data, 'checklist_for_result_calculation_CIMT', true, 'response', true, $index) ?? '' }}"
-                                                        style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
-                                                    @elseif ($review_item['input_type'] == 'number')
-                                                    <input type="number" name="checklist_for_result_calculation_CIMT[{{$index}}][response]"
-                                                        value="{{ Helpers::getMicroGridData($micro_data, 'checklist_for_result_calculation_CIMT', true, 'response', true, $index) ?? '' }}"
-                                                        style="padding: 2px; width:90%; border: 1px solid black; background-color: #f0f0f0;">
-                                                    @else
-                                                    <select name="checklist_for_result_calculation_CIMT[{{$index}}][response]"
-                                                            id="response"
-                                                            style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
-                                                        <option value="">Select an Option</option>
-                                                        <option value="Yes" {{ Helpers::getMicroGridData($micro_data, 'checklist_for_result_calculation_CIMT', true, 'response', true, $index) == 'Yes' ? 'selected' : '' }}>Yes</option>
-                                                        <option value="No" {{ Helpers::getMicroGridData($micro_data, 'checklist_for_result_calculation_CIMT', true, 'response', true, $index) == 'No' ? 'selected' : '' }}>No</option>
-                                                        <option value="N/A" {{ Helpers::getMicroGridData($micro_data, 'checklist_for_result_calculation_CIMT', true, 'response', true, $index) == 'N/A' ? 'selected' : '' }}>N/A</option>
-                                                    </select>
-                                                    @endif
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <div style="margin: auto; display: flex; justify-content: center;">
-                                                    <textarea name="checklist_for_result_calculation_CIMT[{{$index}}][remark]"
-                                                              style="border-radius: 7px; border: 1.5px solid black;">{{ Helpers::getMicroGridData($micro_data, 'checklist_for_result_calculation_CIMT', true, 'remark', true, $index) ?? '' }}</textarea>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        @endforeach
-                                    </tbody>
-
-                                </table>
-                                <div class="col-lg-12">
-
-                                    <div class="group-input">
-
-                                        <label for="Audit Attachments">If Yes, Provide attachment details</label>
-
-
-                                        <div class="file-attachment-field">
-
-                                            <div class="file-attachment-list" id="file_attach"></div>
-
-                                            <div class="add-btn">
-
-                                                <div>Add</div>
-
-                                                <input type="file" id="myfile" name="attachment_details_cimst[]"
-
-                                                    oninput="addMultipleFiles(this, 'file_attach')" multiple/>
-
-                                            </div>
-
-                                        </div>
-
-
-
-                                    </div>
-
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="button-block">
-                        <button type="submit" id="ChangesaveButton" class="saveButton">Save</button>
-                        <button type="button" class="backButton" onclick="previousStep()">Back</button>
-                        <button type="button" id="ChangeNextButton" class="nextButton"
-                        onclick="nextStep()">Next</button>
-                        <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white">Exit </a> </button>
-                    </div>
-                  </div>
-                </div>
-            </div>
         </div>
       </form>
     </div>
 </div>
-
 <script>
         VirtualSelect.init({
             ele: '#reference_record, #notify_to'
@@ -1350,5 +484,17 @@
                 });
             });
         });
+    </script>
+    <script>
+        var maxLength = 255;
+        $('#docname').keyup(function() {
+            var textlen = maxLength - $(this).val().length;
+            $('#rchars').text(textlen);
+        });
+    </script>
+    <script>
+        $(document).on('click', '.removeRowBtn', function() {
+            $(this).closest('tr').remove();
+        })
     </script>
 @endsection

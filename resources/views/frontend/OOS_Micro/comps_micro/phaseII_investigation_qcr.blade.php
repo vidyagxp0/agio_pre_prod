@@ -241,6 +241,7 @@ $phase_II_OOS_investigations = [
                         <div class="group-input">
                             <label for="Cancelled By"> Root Casue Identified. </label>
                             <select name="root_casue_identified_piiqcr">
+                                <option value="">Enter Your Selection Here</option>
                                 <option value="yes" @if ($micro_data->root_casue_identified_piiqcr == 'yes') selected @endif>Yes</option>
                                 <option value="no" @if ($micro_data->root_casue_identified_piiqcr == 'no') selected @endif>No</option>
                             </select>
@@ -251,10 +252,10 @@ $phase_II_OOS_investigations = [
                             <label for="Cancelled By">OOS Category-Reason identified </label>
                             <select name="oos_category_reason_identified_piiqcr">
                                 <option value="">Enter Your Selection Here</option>
-                                <option value="analyst-error" @if ($micro_data->root_casue_identified_piiqcr == 'analyst-error') selected @endif>Analyst Error</option>
-                                <option value="instrument-error" @if ($micro_data->root_casue_identified_piiqcr == 'instrument-error') selected @endif>Instrument Error</option>
-                                <option value="product-material-related-error" @if ($micro_data->root_casue_identified_piiqcr == 'product-material-related-error') selected @endif>Product/Material Related Error</option>
-                                <option value="other-error" @if ($micro_data->root_casue_identified_piiqcr == 'other-error') selected @endif>Other Error</option>
+                                <option value="analyst-error" @if ($micro_data->oos_category_reason_identified_piiqcr == 'analyst-error') selected @endif>Analyst Error</option>
+                                <option value="instrument-error" @if ($micro_data->oos_category_reason_identified_piiqcr == 'instrument-error') selected @endif>Instrument Error</option>
+                                <option value="product-material-related-error" @if ($micro_data->oos_category_reason_identified_piiqcr == 'product-material-related-error') selected @endif>Product/Material Related Error</option>
+                                <option value="other-error" @if ($micro_data->oos_category_reason_identified_piiqcr == 'other-error') selected @endif>Other Error</option>
                             </select>
                         </div>
                     </div>
@@ -284,8 +285,8 @@ $phase_II_OOS_investigations = [
                             <label for="Audit Mgr.more Info Reqd On">Recommended Action Required? </label>
                             <select name="recommended_action_required_piiqcr">
                                 <option> Select Option </option>
-                                <option value="yes" @if ($micro_data->recommended_action_required_piiqcr == 'yes') selected @endif>Yes</option>
-                                <option value="no" @if ($micro_data->recommended_action_required_piiqcr == 'yes') selected @endif>No</option>
+                                <option value="yes" @if ($micro_data->recommended_action_required_piiqcr == 'yes') selected @endif>yes</option>
+                                <option value="No" @if ($micro_data->recommended_action_required_piiqcr == 'No') selected @endif>No</option>
                             </select>
                         </div>
                     </div>
@@ -303,8 +304,9 @@ $phase_II_OOS_investigations = [
                         <div class="group-input">
                             <label for="Audit Observation Submitted On">Investi. Required</label>
                             <select name="investi_required_piiqcr">
-                                <option value="yes" @if ($micro_data->investi_required_piiqcr == 'yes') selected @endif>Yes</option>
-                                <option value="no" @if ($micro_data->investi_required_piiqcr == 'yes') selected @endif>No</option>
+                                <option value="">Enter Your Selection Here</option>
+                                <option value="Yes" @if ($micro_data->investi_required_piiqcr == 'Yes') selected @endif>Yes</option>
+                                <option value="No" @if ($micro_data->investi_required_piiqcr == 'No') selected @endif>No</option>
                             </select>
                         </div>
                     </div>

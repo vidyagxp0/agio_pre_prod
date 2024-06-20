@@ -1,5 +1,11 @@
 @extends('frontend.layout.main')
 @section('container')
+@php
+$users = DB::table('users')
+    ->select('id', 'name')
+    ->get();
+
+    @endphp
     <style>
         textarea.note-codable {
             display: none !important;
@@ -86,35 +92,60 @@
         }
     </script>
 
-<!-- -----------------------------grid-1----------------------------script -->
+    <!-- -----------------------------grid-1----------------------------script -->
     <script>
         $(document).ready(function() {
-            $('#Product_Material').click(function(e) {
-                let loopIndex= 0 ;
+            $('#info_product_material').click(function(e) {
                 function generateTableRow(serialNumber) {
-                    loopIndex++;
-
+                    var users = @json($users); 
                     var html =
-                        '<tr>' +
-                        '<td><input disabled type="text" name="info_of_product_material['+ loopIndex +'][serial]" value="' + serialNumber +
+                    '<tr>' +
+                        '<td><input disabled type="text" name="info_product_material[' + serialNumber + '][serial]" value="' + serialNumber +
                         '"></td>' +
-                        '<td><input type="text" name="info_of_product_material['+ loopIndex +'][item_product_code]"></td>' +
-                        '<td><input type="text" name="info_of_product_material['+ loopIndex +'][batch_no]"></td>' +
-                        '<td><input type="text" name="info_of_product_material['+ loopIndex +'][mfg_date]"></td>' +
-                        '<td><input type="text" name="info_of_product_material['+ loopIndex +'][expiry_date]"></td>'+
-                        '<td><input type="text" name="info_of_product_material['+ loopIndex +'][label_claim]"></td>'+
-                        '<td><input type="text" name="info_of_product_material['+ loopIndex +'][pack_size]"></td>'+
-                        '<td><input type="text" name="info_of_product_material['+ loopIndex +'][analyst_name]"></td>'+
-                        '<td><input type="text" name="info_of_product_material['+ loopIndex +'][others_specify]"></td>'+
-                        '<td><input type="text" name="info_of_product_material['+ loopIndex +'][in_process_sample_stage]"></td>'+
-                        '<td><select name="info_of_product_material[' + loopIndex + '][packingMaterialType]"><option value="">--Select--</option><option value="Primary">Primary</option><option value="Secondary">Secondary</option><option value="Tertiary">Tertiary</option><option value="Not Applicable">Not Applicable</option></select></td>' +
-                        '<td><select name="info_of_product_material[' + loopIndex + '][stabilityfor]"><option value="">--Select--</option><option vlaue="Submission">Submission</option><option vlaue="Commercial">Commercial</option><option vlaue="Pack Evaluation">Pack Evaluation</option><option vlaue="Not Applicable">Not Applicable</option></select></td>' +
+                        '<td><input type="text" id="info_product_code" name="info_product_material[' + serialNumber + '][info_product_code]" value=""></td>' +
+                        '<td><input type="text" name="info_product_material[' + serialNumber + '][info_batch_no]" value=""></td>'+
+                        '<td>' +
+                        '<div class="col-lg-6 new-date-data-field">' +
+                        '<div class="group-input input-date">' +
+                        '<div class="calenderauditee">' +
+                        '<input type="text" readonly id="info_mfg_date_' + serialNumber + '" placeholder="DD-MM-YYYY" />' +
+                        '<input type="date" name="info_product_material[' + serialNumber + '][info_mfg_date]" value="" class="hide-input" oninput="handleDateInput(this, \'info_mfg_date_' + serialNumber + '\')">' +
+                        '</div>' +
+                        '</div>' +
+                        '</div>' +
+                        '</td>' +
+                        '<td>' +
+                        '<div class="col-lg-6 new-date-data-field">' +
+                        '<div class="group-input input-date">' +
+                        '<div class="calenderauditee">' +
+                        '<input type="text" readonly id="info_expiry_date' + serialNumber + '" placeholder="DD-MM-YYYY" />' +
+                        '<input type="date" name="info_product_material[' + serialNumber + '][info_expiry_date]" value="" class="hide-input" oninput="handleDateInput(this, \'info_expiry_date' + serialNumber + '\')">' +
+                        '</div>' +
+                        '</div>' +
+                        '</div>' +
+                        '</td>' +
+                        '<td><input type="text" name="info_product_material[' + serialNumber + '][info_label_claim]" value=""></td>' +
+                        '<td><input type="text" name="info_product_material[' + serialNumber + '][info_pack_size]" value=""></td>' +
+                        '<td><input type="text" name="info_product_material[' + serialNumber + '][info_analyst_name]" value=""></td>' +
+                        '<td><input type="text" name="info_product_material[' + serialNumber + '][info_others_specify]" value=""></td>' +
+                        '<td><input type="text" name="info_product_material[' + serialNumber + '][info_process_sample_stage]" value=""></td>' +
+                        '<td><select name="info_product_material[' + serialNumber + '][info_packing_material_type]"><option value="">--Select--</option><option value="Primary">Primary</option><option value="Secondary">Secondary</option><option value="Tertiary">Tertiary</option><option value="Not Applicable">Not Applicable</option></select></td>' +
+                        '<td><select name="info_product_material[' + serialNumber + '][info_stability_for]"><option value="">--Select--</option><option vlaue="Submission">Submission</option><option vlaue="Commercial">Commercial</option><option vlaue="Pack Evaluation">Pack Evaluation</option><option vlaue="Not Applicable">Not Applicable</option></select></td>' +
                         '<td><button type="text" class="removeRowBtn">Remove</button></td>' +
-                       '</tr>';
+
+                    '</tr>';
+                    for (var i = 0; i < users.length; i++) {
+                        html += '<option value="' + users[i].id + '">' + users[i].name + '</option>';
+                    }
+
+                    html += '</select></td>' +
+
+                        '</tr>';
+
                     return html;
                 }
 
-                var tableBody = $('#Product_Material_details tbody');
+                var tableBody = $('#info_product_material_details tbody');
                 var rowCount = tableBody.children('tr').length;
                 var newRow = generateTableRow(rowCount + 1);
                 tableBody.append(newRow);
@@ -122,31 +153,33 @@
         });
     </script>
 
- <!-- --------------------------------grid-2--------------------------script -->
-
+    <!-- --------------------------------grid-2--------------------------->
     <script>
         $(document).ready(function() {
-            $('#Details_Stability').click(function(e) {
-                let loopIndex = 0 ;
+            $('#details_stability').click(function(e) {
                 function generateTableRow(serialNumber) {
-                    loopIndex++;
-
                     var html =
-                        '<tr>' +    
-                        '<td><input disabled type="text" name="stability_study['+ loopIndex +'][serial_no]" value="'+  serialNumber +'"></td>'+
-                        '<td><input type="text" name="stability_study['+ loopIndex +'][ar_number]"></td>'+
-                        '<td><input type="text" name="stability_study['+ loopIndex +'][condition_temperature_rh]"></td>'+
-                        '<td><input type="text" name="stability_study['+ loopIndex +'][interval]"></td>'+
-                        '<td><input type="text" name="stability_study['+ loopIndex +'][orientation]"></td>'+
-                        '<td><input type="text" name="stability_study['+ loopIndex +'][pack_details]"></td>'+
-                        '<td><input type="text" name="stability_study['+ loopIndex +'][specification_no]"></td>'+
-                        '<td><input type="text" name="stability_study['+ loopIndex +'][sample_description]"></td>'+
-                        '<td><button type="text" class="removeRowBtn">Remove</button></td>' +
+                        '<tr>' +
+                            '<td><input disabled type="text" name="details_stability[ '+ serialNumber + '][serial]" value="' + serialNumber +
+                            '"></td>' +
+                            '<td><input type="text" name="details_stability[ '+ serialNumber + '][stability_study_arnumber]"></td>'+
+                            '<td><input type="text" name="details_stability[ '+ serialNumber + '][stability_study_condition_temprature_rh]"></td>'+
+                            '<td><input type="text" name="details_stability[ '+ serialNumber + '][stability_study_Interval]"></td>'+
+                            '<td><input type="text" name="details_stability[ '+ serialNumber + '][stability_study_orientation]"></td>'+
+                            '<td><input type="text" name="details_stability[ '+ serialNumber + '][stability_study_pack_details]"></td>'+
+                            '<td><input type="text" name="details_stability[ '+ serialNumber + '][stability_study_specification_no]"></td>'+
+                            '<td><input type="text" name="details_stability[ '+ serialNumber + '][stability_study_sample_description]"></td>'+
+                            '<td><button type="text" class="removeRowBtn">Remove</button></td>' +
                         '</tr>';
+                    // for (var i = 0; i < users.length; i++) {
+                    //     html += '<option value="' + users[i].id + '">' + users[i].name + '</option>';
+                    // }
+
+                    // html += '</select></td>' + 
                     return html;
                 }
 
-                var tableBody = $('#Details_Stability_details tbody');
+                var tableBody = $('#details_stability_details tbody');
                 var rowCount = tableBody.children('tr').length;
                 var newRow = generateTableRow(rowCount + 1);
                 tableBody.append(newRow);
@@ -156,27 +189,40 @@
     <!-- ------------------------------grid-3-------------------------script -->
     <script>
         $(document).ready(function() {
-            $('#OOS_Details').click(function(e) {
-                let loopIndex = 0;
+            $('#oos_details').click(function(e) {
                 function generateTableRow(serialNumber) {
-                    loopIndex++;
-
                     var html =
                         '<tr>' +
-                            '<td><input disabled type="text" name="oos_details['+ loopIndex +'][serial]" value="' + serialNumber +
-                            '"></td>'+
-                            '<td><input type="text" name="oos_details['+ loopIndex +'][ar_number]"></td>'+
-                            '<td><input type="text" name="oos_details['+ loopIndex +'][test_name_of_oos]"></td>'+
-                            '<td><input type="text" name="oos_details['+ loopIndex +'][results_obtained]"></td>'+
-                            '<td><input type="text" name="oos_details['+ loopIndex +'][specification_limit]"></td>'+
-                            '<td><input type="text" name="oos_details['+ loopIndex +'][details_of_obvious_error]"></td>'+
-                            '<td><input type="file" name="oos_details['+ loopIndex +'][file_attachment_oos_details]"></td>'+
-                            '<td><button type="text" class="removeRowBtn">Remove</button></td>' +
-                        '</tr>';
+                            '<td><input disabled type="text" name="oos_detail['+ serialNumber +'][serial]" value="' + serialNumber +
+                            '"></td>' +
+                            '<td><input type="text" name="oos_detail['+ serialNumber +'][oos_arnumber]"></td>'+
+                            '<td><input type="text" name="oos_detail['+ serialNumber +'][oos_test_name]"></td>' +
+                            '<td><input type="text" name="oos_detail['+ serialNumber +'][oos_results_obtained]"></td>' +
+                            '<td><input type="text" name="oos_detail['+ serialNumber +'][oos_specification_limit]"></td>' +
+                            '<td><input type="text" name="oos_detail['+ serialNumber +'][oos_details_obvious_error]"></td>' +
+                            '<td><input type="file" name="oos_detail['+ serialNumber +'][oos_file_attachment]"></td>' +
+                            '<td><input type="text" name="oos_detail['+ serialNumber +'][oos_submit_by]"></td>' +
+                            '<td>' +
+                            '<div class="col-lg-6 new-date-data-field">' +
+                            '<div class="group-input input-date">' +
+                            '<div class="calenderauditee">' +
+                            '<input type="text" readonly id="oos_submit_on' + serialNumber + '" placeholder="DD-MM-YYYY" />' +
+                            '<input type="date" name="oos_details[' + serialNumber + '][oos_submit_on]" value="" class="hide-input" oninput="handleDateInput(this, \'oos_submit_on' + serialNumber + '\')">' +
+                            '</div>' +
+                            '</div>' +
+                            '</div>' +
+                            '</td>' +
+                            '<td><button type="text" class="removeRowBtn">Remove</button></td>'
+                         '</tr>';
+                    // for (var i = 0; i < users.length; i++) {
+                    //     html += '<option value="' + users[i].id + '">' + users[i].name + '</option>';
+                    // }
+
+                    // html += '</select></td>' + 
                     return html;
                 }
 
-                var tableBody = $('#OOS_Details_details tbody');
+                var tableBody = $('#oos_details_details tbody');
                 var rowCount = tableBody.children('tr').length;
                 var newRow = generateTableRow(rowCount + 1);
                 tableBody.append(newRow);
@@ -189,25 +235,26 @@
     <script>
         $(document).ready(function() {
             $('#oos_capa').click(function(e) {
-                let loopIndex = 0
-
                 function generateTableRow(serialNumber) {
-                    loopIndex++;
-
                     var html =
                         '<tr>' +
-                        '<td><input disabled type="text" name="info_product_oos_capa['+loopIndex+'][serial]" value="' + serialNumber +
-                        '"></td>'+
-                        ' <td><input type="text" name="info_product_oos_capa['+loopIndex+'][oos_number]"></td>'+
-                        ' <td><input type="text" name="info_product_oos_capa['+loopIndex+'][oos_reported_date]"></td>'+
-                        ' <td><input type="text" name="info_product_oos_capa['+loopIndex+'][description_of_oos]"></td>'+
-                        ' <td><input type="text" name="info_product_oos_capa['+loopIndex+'][previous_oos_root_cause]"></td>'+
-                        ' <td><input type="text" name="info_product_oos_capa['+loopIndex+'][capa]"></td>'+
-                        '<td><input type="text" name="info_product_oos_capa['+loopIndex+'][closure_date_of_capa]"></td>'+
-                        '<td><select name="info_product_oos_capa['+loopIndex+'][capa_Requirement]"><option  value="yes">Yes</option><option value="no">No</option></select></td>'+
-                        ' <td><input type="text" name="info_product_oos_capa['+loopIndex+'][reference_capa_number]"></td>'+
+                        '<td><input disabled type="text" name="oos_capa['+ serialNumber +'][serial]" value="' + serialNumber +
+                        '"></td>' +
+                        '<td><input type="text" name="oos_capa['+ serialNumber +'][info_oos_number]" value=""></td>' +
+                        '<td><input type="date" name="oos_capa['+ serialNumber +'][info_oos_reported_date]" value=""></td>' +
+                        '<td><input type="text" name="oos_capa['+ serialNumber +'][info_oos_description]" value=""></td>' +
+                        '<td><input type="text" name="oos_capa['+ serialNumber +'][info_oos_previous_root_cause]"value=""></td>' +
+                        '<td><input type="text" name="oos_capa['+ serialNumber +'][info_oos_capa]" value=""></td>' +
+                        '<td><input type="date" name="oos_capa['+ serialNumber +'][info_oos_closure_date]" value=""></td>' +
+                        '<td><select name="oos_capa['+ serialNumber +'][info_oos_capa_requirement]"><option value="">Select an Option</option><option value="yes">Yes</option><option value="No">No</option></select></td>' +
+                        '<td><input type="text" name="oos_capa['+ serialNumber +'][info_oos_capa_reference_number]" value=""></td>' +
                         '<td><button type="text" class="removeRowBtn">Remove</button></td>' +
                         '</tr>';
+                    // for (var i = 0; i < users.length; i++) {
+                    //     html += '<option value="' + users[i].id + '">' + users[i].name + '</option>';
+                    // }
+
+                    // html += '</select></td>' + 
                     return html;
                 }
 
@@ -219,29 +266,28 @@
         });
     </script>
 
-
-<!-- -----------------------------grid-1----------OOS Conclusion ---------------- -->
+    <!-- -----------------------------grid-1----------OOS Conclusion ---------------- -->
 
     <script>
         $(document).ready(function() {
             $('#oos_conclusion').click(function(e) {
-                let loopIndex = 0
                 function generateTableRow(serialNumber) {
-                    loopIndex++;
-
                     var html =
                         '<tr>' +
-                        '<td><input disabled type="text" name="oos_conclusion['+ loopIndex +'][serial]" value="' + serialNumber +
-                        '"></td>'
-                        '<td><input type="text" name="oos_conclusion['+ loopIndex +'][analysis_details]"></td>'
-                        '<td><input type="text" name="oos_conclusion['+ loopIndex +'][hypo_exp_add_test_pr_no]"></td>'
-                        '<td><input type="text" name="oos_conclusion['+ loopIndex +'][results]"></td>'
-                        '<td><input type="text" name="oos_conclusion['+ loopIndex +'][analyst_name]"></td>'
-                        '<td><input type="text" name="oos_conclusion['+ loopIndex +'][Remarks]"></td>'
+                        '<td><input disabled type="text" name="oos_conclusion[' + serialNumber + '][serial]" value="' + serialNumber +
+                        '"></td>' +
+                        '<td><input type="text" name="oos_conclusion[' + serialNumber + '][summary_results_analysis_detials]"></td>' +
+                        '<td><input type="text" name="oos_conclusion[' + serialNumber + '][summary_results_hypothesis_experimentation_test_pr_no]"></td>' +
+                        '<td><input type="text" name="oos_conclusion[' + serialNumber + '][summary_results]"></td>' +
+                        '<td><input type="text" name="oos_conclusion[' + serialNumber + '][summary_results_analyst_name]"></td>' +
+                        '<td><input type="text" name="oos_conclusion[' + serialNumber + '][summary_results_remarks]"></td>' +
                         '<td><button type="text" class="removeRowBtn">Remove</button></td>' +
                         '</tr>';
+                    '</tr>';
+
                     return html;
                 }
+
                 var tableBody = $('#oos_conclusion_details tbody');
                 var rowCount = tableBody.children('tr').length;
                 var newRow = generateTableRow(rowCount + 1);
@@ -249,27 +295,25 @@
             });
         });
     </script>
-
- <!-- -----------------------------grid-1----------OOSConclusion_Review ---------------- -->
+    <!-- -----------------------------grid-1----------OOSConclusion_Review ---------------- -->
 
     <script>
         $(document).ready(function() {
             $('#oosconclusion_review').click(function(e) {
-                let loopIndex = 0;
                 function generateTableRow(serialNumber) {
-                    loopIndex++ ;
-
                     var html =
                         '<tr>' +
-                        '<td><input disabled type="text" name="oosConclusion_review['+ loopIndex +'][serial]" value="' + serialNumber +
-                        '"></td>'+
-                        '<td><input type="text" name="oosConclusion_review['+ loopIndex +'][material_product_no]"></td>'+
-                        '<td><input type="text" name="oosConclusion_review['+ loopIndex +'][batch_no_ar_no]"></td>'+
-                        '<td><input type="text" name="oosConclusion_review['+ loopIndex +'][any_other_information]"></td>'+
-                        '<td><input type="text" name="oosConclusion_review['+ loopIndex +'][action_taken_on_affecBatch]"></td>'+
-                        '<td><button type="text" class="removeRowBtn">Remove</button></td>' +
+                        '<td><input disabled type="text" name="oos_conclusion_review[' + serialNumber + '][serial]" value="' + serialNumber +
+                        '"></td>' +
+                        '<td><input type="text" name="oos_conclusion_review[' + serialNumber + '][conclusion_review_product_name]"></td>' +
+                        '<td><input type="text" name="oos_conclusion_review[' + serialNumber + '][conclusion_review_batch_no]"></td>' +
+                        '<td><input type="text" name="oos_conclusion_review[' + serialNumber + '][conclusion_review_any_other_information]"></td>' +
+                        '<td><input type="text" name="oos_conclusion_review[' + serialNumber + '][conclusion_review_action_affecte_batch]"></td>' +
+                        '<td><button type="text" class="removeRowBtn">Remove</button></td>'
                         '</tr>';
-                        return html;
+                    '</tr>';
+
+                    return html;
                 }
 
                 var tableBody = $('#oosconclusion_review_details tbody');
@@ -279,8 +323,7 @@
             });
         });
     </script>
-
-
+    <!-- ======GRID END  =============-->
 
     <div class="form-field-head">
       
@@ -633,7 +676,8 @@
                         <div class="group-input">
                             <label for="audit-agenda-grid">
                                 Info. On Product/ Material
-                                <button type="button" name="audit-agenda-grid" id="Product_Material">+</button>
+                                <button type="button" name="audit-agenda-grid" id="info_product_material">+</button>
+
                                 <span class="text-primary" data-bs-toggle="modal"
                                     data-bs-target="#document-details-field-instruction-modal"
                                     style="font-size: 0.8rem; font-weight: 400; cursor: pointer;">
@@ -641,14 +685,14 @@
                                 </span>
                             </label>
                             <div class="table-responsive">
-                                <table class="table table-bordered" id="Product_Material_details" style="width: 100%;">
+                                <table class="table table-bordered" id="info_product_material_details" style="width: 100%;">
                                     <thead>
                                         <tr>
                                             <th style="width: 4%">Row#</th>
                                             <th style="width: 10%">Item/Product Code</th>
                                             <th style="width: 8%"> Batch No*.</th>
-                                            <th style="width: 8%"> Mfg.Date</th>
-                                            <th style="width: 8%">Expiry Date</th>
+                                            <th style="width: 12%"> Mfg.Date</th>
+                                            <th style="width: 12%">Expiry Date</th>
                                             <th style="width: 8%"> Label Claim.</th>
                                             <th style="width: 8%">Pack Size</th>
                                             <th style="width: 8%">Analyst Name</th>
@@ -659,46 +703,71 @@
                                             <th style="width: 15%">Action</th>
                                         </tr>
                                     </thead>
-                                    @php
-                                        $serialNumber= 1;
-                                    @endphp
                                     <tbody>
-                                        <td disabled >{{$serialNumber++}}</td>
-                                        <td><input type="text" name="productMaterial[0][item_product_code]"></td>
-                                        <td><input type="text" name="productMaterial[0][batch_no]"></td>
-                                        <td><input type="text" name="productMaterial[0][mfg_date]"></td>
-                                        <td><input type="text" name="productMaterial[0][expiry_date]"></td>
-                                        <td><input type="text" name="productMaterial[0][label_claim]"></td>
-                                        <td><input type="text" name="productMaterial[0][pack_size]"></td>
-                                        <td><input type="text" name="productMaterial[0][analyst_name]"></td>
-                                        <td><input type="text" name="productMaterial[0][others_specify]"></td>
-                                        <td><input type="text" name="productMaterial[0][in_process_sample_stage]"></td>
-                                        <td><select name="productMaterial[0][packingMaterialType]">
-                                                <option value=''> Select Option</option>
-                                                <option value='primary'>Primary</option>
-                                                <option value='Secondary'>Secondary</option>
-                                                <option value='tertiary'>Tertiary</option>
-                                                <option value='not applicable'>Not Applicable</option>
-                                            </select> </td>
-                                        <td><select name="productMaterial[0][stabilityfor]">
-                                               <option value=''> Select Option </option>
-                                                <option value='Submission'>Submission</option>
-                                                <option value='commercial'>Commercial</option>
-                                                <option value='pack evaluation'>Pack Evaluation</option>
-                                                <option value='not applicable'>Not Applicable</option>
-                                            </select> </td>
+                                        <tr>
+                                            <td><input disabled type="text" name="info_product_material[0][serial]" value="1"></td>
+                                            <td><input type="text" name="info_product_material[0][info_product_code]" value=""></td>
+                                            <td><input type="text" name="info_product_material[0][info_batch_no]" value=""></td>
+                                            <td>
+                                            <div class="col-lg-6 new-date-data-field">
+                                                <div class="group-input input-date">
+                                                    <div class="calenderauditee">
+                                                        <input type="text" id="info_mfg_date" readonly 
+                                                        placeholder="DD-MM-YYYY" />
+                                                        <input type="date" name="info_product_material[0][info_mfg_date]" value="" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
+                                                        class="hide-input" oninput="handleDateInput(this, 'info_mfg_date')">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            </td> 
+                                            <td>
+                                            <div class="col-lg-6 new-date-data-field">
+                                                <div class="group-input input-date">
+                                                    <div class="calenderauditee">
+                                                        <input type="text" id="info_expiry_date" readonly 
+                                                        placeholder="DD-MM-YYYY" />
+                                                        <input type="date" name="info_product_material[0][info_expiry_date]" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
+                                                        class="hide-input" oninput="handleDateInput(this, 'info_expiry_date')">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                           </td>
+                                            
+                                            <td><input type="text" name="info_product_material[0][info_label_claim]" value=""></td>
+                                            <td><input type="text" name="info_product_material[0][info_pack_size]" value=""></td>
+                                            <td><input type="text" name="info_product_material[0][info_analyst_name]" value=""></td>
+                                            <td><input type="text" name="info_product_material[0][info_others_specify]" value=""></td>
+                                            <td><input type="text" name="info_product_material[0][info_process_sample_stage]" value=""></td>
+                                            <td>
+                                                <select name="info_product_material[0][info_packing_material_type]">
+                                                    <option value="">--Select-- </option>
+                                                    <option value="Primary">Primary</option>
+                                                    <option value="Secondary">Secondary</option>
+                                                    <option value="Tertiary">Tertiary</option>
+                                                    <option value="Not Applicable">Not Applicable</option>
+                                                </select>
+                                            </td>
+                                            <td>
+                                                <select name="info_product_material[0][info_stability_for]">
+                                                    <option value="">--Select-- </option>
+                                                    <option vlaue="Submission">Submission</option>
+                                                    <option vlaue="Commercial">Commercial</option>
+                                                    <option vlaue="Pack Evaluation">Pack Evaluation</option>
+                                                    <option vlaue="Not Applicable">Not Applicable</option>
+                                                </select>
+                                            </td>
                                             <td><button type="text" class="removeRowBtn">Remove</button></td>
-
+                                        </tr>
+                                       
                                     </tbody>
                                 </table>
                             </div>
                         </div>
-
                         <!-- -------------------------------grid-2  ----------------------------------   -->
                         <div class="group-input">
                             <label for="audit-agenda-grid">
                                 Details of Stability Study
-                                <button type="button" name="audit-agenda-grid" id="Details_Stability">+</button>
+                                <button type="button" name="audit-agenda-grid" id="details_stability">+</button>
                                 <span class="text-primary" data-bs-toggle="modal"
                                     data-bs-target="#document-details-field-instruction-modal"
                                     style="font-size: 0.8rem; font-weight: 400; cursor: pointer;">
@@ -706,7 +775,7 @@
                                 </span>
                             </label>
                             <div class="table-responsive">
-                                <table class="table table-bordered" id="Details_Stability_details" style="width: 100%;">
+                                <table class="table table-bordered" id="details_stability_details" style="width: 100%;">
                                     <thead>
                                         <tr>
                                             <th style="width: 4%">Row#</th>
@@ -717,29 +786,31 @@
                                             <th style="width: 16%">Pack Details (if any)</th>
                                             <th style="width: 16%">Specification No.</th>
                                             <th style="width: 16%">Sample Description</th>
-                                            <th style="width:4%">Action </th>
+                                            <th style="width: 15%">Action</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <td><input disabled type="text" name="stability_study[0][serial_no]" value="1"></td>
-                                        <td><input type="text" name="stability_study[0][ar_number]"></td>
-                                        <td><input type="text" name="stability_study[0][condition_temperature_rh]"></td>
-                                        <td><input type="text" name="stability_study[0][interval]"></td>
-                                        <td><input type="text" name="stability_study[0][orientation]"></td>
-                                        <td><input type="text" name="stability_study[0][pack_details]"></td>
-                                        <td><input type="text" name="stability_study[0][specification_no]"></td>
-                                        <td><input type="text" name="stability_study[0][sample_description]"></td>
-                                        <td><button type="text" class="removeRowBtn">Remove</button></td>
+                                        <tr>
+                                            <td><input disabled type="text" name="details_stability[0][serial]" value="1"></td>
+                                            <td><input type="text" name="details_stability[0][stability_study_arnumber]"></td>
+                                            <td><input type="text" name="details_stability[0][stability_study_condition_temprature_rh]"></td>
+                                            <td><input type="text" name="details_stability[0][stability_study_Interval]"></td>
+                                            <td><input type="text" name="details_stability[0][stability_study_orientation]"></td>
+                                            <td><input type="text" name="details_stability[0][stability_study_pack_details]"></td>
+                                            <td><input type="text" name="details_stability[0][stability_study_specification_no]"></td>
+                                            <td><input type="text" name="details_stability[0][stability_study_sample_description]"></td> 
+                                            <td><button type="text" class="removeRowBtn">Remove</button></td>
+
+                                        </tr>
                                     </tbody>
                                 </table>
                             </div>
                         </div>
-                        <!--------------------------------------------grid-3----------------------------------- -->
-
+                       <!----------------grid-3----------------------------------- -->
                         <div class="group-input">
                             <label for="audit-agenda-grid">
                                 OOS Details
-                                <button type="button" name="audit-agenda-grid" id="OOS_Details">+</button>
+                                <button type="button" name="audit-agenda-grid" id="oos_details">+</button>
                                 <span class="text-primary" data-bs-toggle="modal"
                                     data-bs-target="#document-details-field-instruction-modal"
                                     style="font-size: 0.8rem; font-weight: 400; cursor: pointer;">
@@ -747,32 +818,50 @@
                                 </span>
                             </label>
                             <div class="table-responsive">
-                                <table class="table table-bordered" id="OOS_Details_details" style="width: 100%;">
+                                <table class="table table-bordered" id="oos_details_details" style="width: 100%;">
                                     <thead>
                                         <tr>
                                             <th style="width: 4%">Row#</th>
                                             <th style="width: 8%">AR Number.</th>
                                             <th style="width: 8%">Test Name of OOS</th>
-                                            <th style="width: 12%">Results Obtained</th>
-                                            <th style="width: 16%">Specification Limit</th>
-                                            <th style="width: 16%">Details of Obvious Error</th>
+                                            <th style="width: 8%">Results Obtained</th>
+                                            <th style="width: 8%">Specification Limit</th>
+                                            <th style="width: 8%">Details of Obvious Error</th>
                                             <th style="width: 16%">File Attachment</th>
-                                            <th style="width:4%"> Action </th>
+                                            <th style="width: 8%">Submit By</th>
+                                            <th style="width: 16%">Submit On</th>
+                                            <th style="width: 15%">Action</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <td><input disabled type="text" name="oos_details[0][serial]" value="1"></td>
-                                        <td><input type="text" name="oos_details[0][ar_number]"></td>
-                                        <td><input type="text" name="oos_details[0][test_name_of_oos]"></td>
-                                        <td><input type="text" name="oos_details[0][results_obtained]"></td>
-                                        <td><input type="text" name="oos_details[0][specification_limit]"></td>
-                                        <td><input type="text" name="oos_details[0][details_of_obvious_error]"></td>
-                                        <td><input type="file" name="oos_details[0][file_attachment_oos_details]"></td>
-                                        <td><button type="text" class="removeRowBtn">Remove</button></td>
+                                        <tr>
+                                            <td><input disabled type="text" name="oos_detail[0][serial]" value="1"></td>
+                                            <td><input type="text" name="oos_detail[0][oos_arnumber]"></td>
+                                            <td><input type="text" name="oos_detail[0][oos_test_name]"></td>
+                                            <td><input type="text" name="oos_detail[0][oos_results_obtained]"></td>
+                                            <td><input type="text" name="oos_detail[0][oos_specification_limit]"></td>
+                                            <td><input type="text" name="oos_detail[0][oos_details_obvious_error]"></td>
+                                            <td><input type="file" name="oos_detail[0][oos_file_attachment]"></td>
+                                            <td><input type="text" name="oos_detail[0][oos_submit_by]"></td>
+                                            <td>
+                                                <div class="col-lg-6 new-date-data-field">
+                                                <div class="group-input input-date">
+                                                    <div class="calenderauditee">
+                                                        <input type="text" id="oos_submit_on" readonly 
+                                                        placeholder="DD-MM-YYYY" />
+                                                        <input type="date" name="oos_detail[0][oos_submit_on]" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
+                                                        class="hide-input" oninput="handleDateInput(this, 'oos_submit_on')">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            </td>
+                                            <td><button type="text" class="removeRowBtn">Remove</button></td>
+                                        </tr>
                                     </tbody>
                                 </table>
                             </div>
                         </div>
+                        <!-- close grid -->
                         <div class="button-block">
                             <button type="submit" class="saveButton">Save</button>
                             <!-- <button type="button" class="backButton" onclick="previousStep()">Back</button> -->
@@ -1174,6 +1263,7 @@
                         <div class="sub-head">OOS Review for Similar Nature</div>
 
                         <!-- ---------------------------grid-1 ---Preliminary Lab Invst. Review----------------------------- -->
+                        <!-- ---------------------------grid-1 ---Preliminary Lab Invst. Review----------------------------- -->
                         <div class="group-input">
                             <label for="audit-agenda-grid">
                                 Info. On Product/ Material
@@ -1190,34 +1280,59 @@
                                         <tr>
                                             <th style="width: 4%">Row#</th>
                                             <th style="width: 8%">OOS Number</th>
-                                            <th style="width: 8%"> OOS Reported Date</th>
+                                            <th style="width: 16%"> OOS Reported Date</th>
                                             <th style="width: 12%">Description of OOS</th>
-                                            <th style="width: 16%">Previous OOS Root Cause</th>
-                                            <th style="width: 16%"> CAPA</th>
+                                            <th style="width: 8%">Previous OOS Root Cause</th>
+                                            <th style="width: 8%"> CAPA</th>
                                             <th style="width: 16% pt-3">Closure Date of CAPA</th>
                                             <th style="width: 16%">CAPA Requirement</th>
                                             <th style="width: 16%">Reference CAPA Number</th>
+                                            <th style="width: 4%">Action</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <td><input disabled type="text" name="info_product_oos_capa[0][serial]" value="1"></td>
-                                        <td><input type="text" name="info_product_oos_capa[0][oos_number]"></td>
-                                        <td><input type="text" name="info_product_oos_capa[0][oos_reported_date]"></td>
-                                        <td><input type="text" name="info_product_oos_capa[0][description_of_oos]"></td>
-                                        <td><input type="text" name="info_product_oos_capa[0][previous_oos_root_cause]"></td>
-                                        <td><input type="text" name="info_product_oos_capa[0][capa]"></td>
-                                        <td><input type="text" name="info_product_oos_capa[0][closure_date_of_capa]"></td>
-                                        <td><select name="info_product_oos_capa[0][capa_Requirement]">
-                                                <option>Yes</option>
-                                                <option>No</option>
-                                            </select></td>
-                                        <td><input type="text" name="info_product_oos_capa[0][reference_capa_number]"></td>
+                                        <tr>
+                                            <td><input disabled type="text" name="oos_capa[0][serial]" value="1"></td>
+                                            <td><input type="text" id="info_oos_number" name="oos_capa[0][info_oos_number]" value=""></td>
+                                            <td>
+                                            <div class="col-lg-6 new-date-data-field">
+                                                <div class="group-input input-date">
+                                                    <div class="calenderauditee">
+                                                        <input type="text" id="info_oos_reported_date" readonly 
+                                                        placeholder="DD-MM-YYYY" />
+                                                        <input type="date" name="oos_capa[0][info_oos_reported_date]" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
+                                                        class="hide-input" oninput="handleDateInput(this, 'info_oos_reported_date')">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            </td>
+                                            <td><input type="text" name="oos_capa[0][info_oos_description]" value=""></td>
+                                            <td><input type="text" name="oos_capa[0][info_oos_previous_root_cause]"value=""></td>
+                                            <td><input type="text" name="oos_capa[0][info_oos_capa]" value=""></td>
+                                            <td>
+                                                <div class="col-lg-6 new-date-data-field">
+                                                <div class="group-input input-date">
+                                                    <div class="calenderauditee">
+                                                        <input type="text" id="info_oos_closure_date" readonly 
+                                                        placeholder="DD-MM-YYYY" />
+                                                        <input type="date" name="oos_capa[0][info_oos_closure_date]" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
+                                                        class="hide-input" oninput="handleDateInput(this, 'info_oos_closure_date')">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            </td>
+                                            <td><select name="oos_capa[0][info_oos_capa_requirement]">
+                                                   <option value="">Select</option>
+                                                    <option value="yes">Yes</option>
+                                                    <option value="No">No</option>
+                                                </select></td>
+                                            <td><input type="text" name="oos_capa[0][info_oos_capa_reference_number]" value=""></td> 
+                                            <td><button type="text" class="removeRowBtn">Remove</button></td>
+                                        </tr>
                                     </tbody>
                                 </table>
                             </div>
                         </div>
-
-
 
                         <div class="col-lg-6">
                             <div class="group-input">
@@ -1691,41 +1806,41 @@
                         </div>
                         <!-- ---------------------------grid-1 -------------------------------- -->
                         <div class="group-input">
-                            <label for="audit-agenda-grid">
-                                Summary of OOS Test Results
-                                <button type="button" name="audit-agenda-grid" id="oos_conclusion">+</button>
-                                <span class="text-primary" data-bs-toggle="modal"
-                                    data-bs-target="#document-details-field-instruction-modal"
-                                    style="font-size: 0.8rem; font-weight: 400; cursor: pointer;">
-                                    (Launch Instruction)
-                                </span>
-                            </label>
-                            <div class="table-responsive">
-                                <table class="table table-bordered" id="oos_conclusion_details" style="width: 100%;">
-                                    <thead>
-                                        <tr>
-                                            <th style="width: 4%">Row#</th>
-                                            <th style="width: 16%">Analysis Detials</th>
-                                            <th style="width: 16%">Hypo./Exp./Add.Test PR No.</th>
-                                            <th style="width: 16%">Results</th>
-                                            <th style="width: 16%">Analyst Name.</th>
-                                            <th style="width: 16%">Remarks</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <td><input disabled type="text" name="summary_of_oos_test_results[0][serial]" value="1"></td>
-                                        <td><input type="text" name="summary_of_oos_test_results[0][analysis_details]"></td>
-                                        <td><input type="text" name="summary_of_oos_test_results[0][hypo_exp_add_test_pr_no]"></td>
-                                        <td><input type="text" name="summary_of_oos_test_results[0][results]"></td>
-                                        <td><input type="text" name="summary_of_oos_test_results[0][analyst_name]"></td>
-                                        <td><input type="text" name="summary_of_oos_test_results[0][Remarks]"></td>
-                                    </tbody>
-                                </table>
+                        <label for="audit-agenda-grid">
+                            Summary of OOS Test Results
+                            <button type="button" name="audit-agenda-grid" id="oos_conclusion">+</button>
+                            <span class="text-primary" data-bs-toggle="modal"
+                                data-bs-target="#document-details-field-instruction-modal"
+                                style="font-size: 0.8rem; font-weight: 400; cursor: pointer;">
+                                (Launch Instruction)
+                            </span>
+                        </label>
+                        <div class="table-responsive">
+                            <table class="table table-bordered" id="oos_conclusion_details" style="width: 100%;">
+                                <thead>
+                                    <tr>
+                                        <th style="width: 4%">Row#</th>
+                                        <th style="width: 16%">Analysis Detials</th>
+                                        <th style="width: 16%">Hypo./Exp./Add.Test PR No.</th>
+                                        <th style="width: 16%">Results</th>
+                                        <th style="width: 16%">Analyst Name.</th>
+                                        <th style="width: 16%">Remarks</th>
+                                        <th style="width: 16%">Action</th>
+                                        
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                     <td><input disabled type="text" name="oos_conclusion[0][serial]" value="1"></td>
+                                    <td><input type="text" name="oos_conclusion[0][summary_results_analysis_detials]"></td>
+                                    <td><input type="text" name="oos_conclusion[0][summary_results_hypothesis_experimentation_test_pr_no]"></td>
+                                    <td><input type="text" name="oos_conclusion[0][summary_results]"></td>
+                                    <td><input type="text" name="oos_conclusion[0][summary_results_analyst_name]"></td>
+                                    <td><input type="text" name="oos_conclusion[0][summary_results_remarks]"></td> 
+                                    <td><button type="text" class="removeRowBtn">Remove</button></td>
+                                </tbody>
+                            </table>
                             </div>
                         </div>
-
-
-
                         <div class="col-lg-6">
                             <div class="group-input">
                                 <label for="Report Attachments">Specification Limit </label>
@@ -1874,45 +1989,37 @@
 
                         <!-- ---------------------------grid-1 ------"OOSConclusion_Review-------------------------- -->
                         <div class="group-input">
-                            <label for="audit-agenda-grid">
-                                Summary of OOS Test Results
-                                <button type="button" name="audit-agenda-grid" id="oosconclusion_review">+</button>
-                                <span class="text-primary" data-bs-toggle="modal"
-                                    data-bs-target="#document-details-field-instruction-modal"
-                                    style="font-size: 0.8rem; font-weight: 400; cursor: pointer;">
-                                    (Launch Instruction)
-                                </span>
-                            </label>
-                            <div class="table-responsive">
-                                <table class="table table-bordered" id="oosconclusion_review_details"
-                                    style="width: 100%;">
-                                    <thead>
-                                        <tr>
-                                            <th style="width: 4%">Row#</th>
-                                            <th style="width: 16%">Material/Product Name</th>
-                                            <th style="width: 16%">Batch No.(s) / A.R. No. (s)</th>
-                                            <th style="width: 16%">Any Other Information</th>
-                                            <th style="width: 16%">Action Taken on Affec.batch</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-
-                                        <td><input disabled type="text" name="serial[]" value="1"></td>
-                                        <td><input type="text" name="oosConclusion_review[0][material_product_no]"></td>
-                                        <td><input type="text" name="oosConclusion_review[0][batch_no_ar_no]"></td>
-                                        <td><input type="text" name="oosConclusion_review[0][any_other_information]"></td>
-                                        <td><input type="text" name="oosConclusion_review[0][action_taken_on_affecBatch]"></td>
-
-
-
-
-                                    </tbody>
-
-                                </table>
-                            </div>
+                        <label for="audit-agenda-grid">
+                            Summary of OOS Test Results
+                            <button type="button" name="audit-agenda-grid" id="oosconclusion_review">+</button>
+                            <span class="text-primary" data-bs-toggle="modal"
+                                data-bs-target="#document-details-field-instruction-modal"
+                                style="font-size: 0.8rem; font-weight: 400; cursor: pointer;">
+                                (Launch Instruction)
+                            </span>
+                        </label>
+                        <div class="table-responsive">
+                            <table class="table table-bordered" id="oosconclusion_review_details"
+                                style="width: 100%;">
+                                <thead>
+                                    <tr>
+                                        <th style="width: 4%">Row#</th>
+                                        <th style="width: 16%">Material/Product Name</th>
+                                        <th style="width: 16%">Batch No.(s) / A.R. No. (s)</th>
+                                        <th style="width: 16%">Any Other Information</th>
+                                        <th style="width: 16%">Action Taken on Affec.batch</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <td><input disabled type="text" name="oos_conclusion_review[0][serial]" value="1"></td>
+                                    <td><input type="text" name="oos_conclusion_review[0][conclusion_review_product_name]"></td>
+                                    <td><input type="text" name="oos_conclusion_review[0][conclusion_review_batch_no]"></td>
+                                    <td><input type="text" name="oos_conclusion_review[0][conclusion_review_any_other_information]"></td>
+                                    <td><input type="text" name="oos_conclusion_review[0][conclusion_review_action_affecte_batch]"></td>
+                                </tbody>
+                            </table>
                         </div>
-
-
+                        </div>
                         <div class="col-md-12 mb-4">
                             <div class="group-input">
                                 <label for="Description Deviation">Action Taken on Affec.batch</label>

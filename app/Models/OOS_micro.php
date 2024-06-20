@@ -16,6 +16,15 @@ class OOS_micro extends Model
         return $this->hasMany(OOS_Micro_grid::class, 'oos_micro_id', 'id');
     }
 
+    // public function grids()
+    // {
+    //   return $this->hasMany(Oosgrids::class, 'oos_id');
+    // }
+    public function record_number()
+    {
+        return $this->morphOne(QmsRecordNumber::class, 'recordable');
+    }
+
     protected $fillable = [
         'record',
         'form_type',
@@ -80,6 +89,7 @@ class OOS_micro extends Model
         'oos_category_reason_identified_piiqcr',
         'others_oos_category_piiqcr',
         'details_of_root_cause_piiqcr',
+        'impact_assessment_piiqc',
         'impact_assessment_piiqcr',
         'recommended_action_required_piiqcr',
         'recommended_action_reference_piiqcr',

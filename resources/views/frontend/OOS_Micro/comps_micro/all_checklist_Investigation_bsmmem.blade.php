@@ -5362,3 +5362,840 @@
                 </div>
             </div>
         </div>
+
+        <div id="CCForm23" class="inner-block cctabcontent">
+            <div class="inner-block-content">
+                <div class="sub-head">Checklist for Analyst training & Procedure </div>
+                    @php
+                        $checklist_for_analyst_training_CIMTs = [
+    [
+        'question' => "Is the analyst trained/qualified GPT test procedure?",
+        'is_sub_question' => false,
+        'input_type' => 'text'
+    ],
+    [
+        'question' => "Date of qualification:",
+        'is_sub_question' => true,
+        'input_type' => 'date'
+    ],
+    [
+        'question' => "Were appropriate precaution taken by the analyst throughout the test?",
+        'is_sub_question' => false,
+        'input_type' => 'text'
+    ],
+    [
+        'question' => "Analyst interview record.......",
+        'is_sub_question' => true,
+        'input_type' => 'number'
+    ],
+    [
+        'question' => "Was an analyst persons suffering from any ailment such as cough/cold or open wound or skin infections?",
+        'is_sub_question' => false,
+        'input_type' => 'text'
+    ],
+    [
+        'question' => "Was the correct procedure for the transfer of samples and accessories to sampling testing areas followed?",
+        'is_sub_question' => false,
+        'input_type' => 'text'
+    ]
+];
+
+                    @endphp
+                <div class="row">
+                    <div class="col-12">
+                        <div class="group-input">
+                            <div class="why-why-chart">
+                                <table class="table table-bordered">
+                                    <thead>
+                                        <tr>
+                                            <th style="width: 5%;">Sr.No.</th>
+                                            <th style="width: 40%;">Question</th>
+                                            <th style="width: 20%;">Response</th>
+                                            <th>Remarks</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @php
+                                            $main_question_index = 1.0;
+                                            $sub_question_index = 0;
+                                        @endphp
+
+                                        @foreach ($checklist_for_analyst_training_CIMTs as $index => $review_item)
+                                        @php
+                                            if ($review_item['is_sub_question']) {
+                                                $sub_question_index++;
+                                            } else {
+                                                $sub_question_index = 0;
+                                                $main_question_index += 0.1;
+                                            }
+                                        @endphp
+                                        <tr>
+                                            <td class="flex text-center">{{ $review_item['is_sub_question'] ? $main_question_index .'.'. $sub_question_index : number_format($main_question_index, 1) }}</td>
+                                            <td>{{$review_item['question']}}</td>
+                                            <td>
+                                                <div style="display: flex; justify-content: space-around; align-items: center; margin: 5%; gap:5px">
+                                                    @if ($review_item['input_type'] == 'date')
+                                                    <input type="date" name="checklist_for_analyst_training_CIMT[{{$index}}][response]"
+                                                        value="{{ Helpers::getMicroGridData($micro_data, 'checklist_for_analyst_training_CIMT', true, 'response', true, $index) ?? '' }}"
+                                                        style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
+                                                    @elseif ($review_item['input_type'] == 'number')
+                                                    <input type="number" name="checklist_for_analyst_training_CIMT[{{$index}}][response]"
+                                                        value="{{ Helpers::getMicroGridData($micro_data, 'checklist_for_analyst_training_CIMT', true, 'response', true, $index) ?? '' }}"
+                                                        style="padding: 2px; width:90%; border: 1px solid black; background-color: #f0f0f0;">
+                                                    @else
+                                                    <select name="checklist_for_analyst_training_CIMT[{{$index}}][response]"
+                                                            id="response"
+                                                            style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
+                                                        <option value="">Select an Option</option>
+                                                        <option value="Yes" {{ Helpers::getMicroGridData($micro_data, 'checklist_for_analyst_training_CIMT', true, 'response', true, $index) == 'Yes' ? 'selected' : '' }}>Yes</option>
+                                                        <option value="No" {{ Helpers::getMicroGridData($micro_data, 'checklist_for_analyst_training_CIMT', true, 'response', true, $index) == 'No' ? 'selected' : '' }}>No</option>
+                                                        <option value="N/A" {{ Helpers::getMicroGridData($micro_data, 'checklist_for_analyst_training_CIMT', true, 'response', true, $index) == 'N/A' ? 'selected' : '' }}>N/A</option>
+                                                    </select>
+                                                    @endif
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div style="margin: auto; display: flex; justify-content: center;">
+                                                    <textarea name="checklist_for_analyst_training_CIMT[{{$index}}][remark]"
+                                                              style="border-radius: 7px; border: 1.5px solid black;">{{ Helpers::getMicroGridData($micro_data, 'checklist_for_analyst_training_CIMT', true, 'remark', true, $index) ?? '' }}</textarea>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        @endforeach
+                                    </tbody>
+
+                                </table>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+             </div>
+            <div class="inner-block-content">
+                <div class="sub-head">
+                    Checklist for Comparison of results (With same & Previous Day Media GPT) :
+                </div>
+                    @php
+                       $checklist_for_comp_results_CIMTs = [
+    [
+        'question' => "Which media GPT performed at previous day:",
+        'is_sub_question' => false,
+        'input_type' => 'text'
+    ],
+    [
+        'question' => "Were dehydrated and ready to use media used for GPT?",
+        'is_sub_question' => false,
+        'input_type' => 'text'
+    ],
+    [
+        'question' => "Lot No./Batch No:",
+        'is_sub_question' => false,
+        'input_type' => 'number'
+    ],
+    [
+        'question' => "Date /Time of Incubation:",
+        'is_sub_question' => false,
+        'input_type' => 'date'
+    ],
+    [
+        'question' => "Date/Time of Release:",
+        'is_sub_question' => true,
+        'input_type' => 'date'
+    ],
+    [
+        'question' => "Results of previous day GPT record?",
+        'is_sub_question' => false,
+        'input_type' => 'text'
+    ],
+    [
+        'question' => "Results of other plates released for GPT is within acceptance?",
+        'is_sub_question' => false,
+        'input_type' => 'text'
+    ]
+];
+
+                    @endphp
+                <div class="row">
+                    <div class="col-12">
+                        <div class="group-input">
+                            <div class="why-why-chart">
+                                <table class="table table-bordered">
+                                    <thead>
+                                        <tr>
+                                            <th style="width: 5%;">Sr.No.</th>
+                                            <th style="width: 40%;">Question</th>
+                                            <th style="width: 20%;">Response</th>
+                                            <th>Remarks</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @php
+                                            $main_question_index = 2.0;
+                                            $sub_question_index = 0;
+                                        @endphp
+
+                                        @foreach ($checklist_for_comp_results_CIMTs as $index => $review_item)
+                                        @php
+                                            if ($review_item['is_sub_question']) {
+                                                $sub_question_index++;
+                                            } else {
+                                                $sub_question_index = 0;
+                                                $main_question_index += 0.1;
+                                            }
+                                        @endphp
+                                        <tr>
+                                            <td class="flex text-center">{{ $review_item['is_sub_question'] ? $main_question_index .'.'. $sub_question_index : number_format($main_question_index, 1) }}</td>
+                                            <td>{{$review_item['question']}}</td>
+                                            <td>
+                                                <div style="display: flex; justify-content: space-around; align-items: center; margin: 5%; gap:5px">
+                                                    @if ($review_item['input_type'] == 'date')
+                                                    <input type="date" name="checklist_for_comp_results_CIMT[{{$index}}][response]"
+                                                        value="{{ Helpers::getMicroGridData($micro_data, 'checklist_for_comp_results_CIMT', true, 'response', true, $index) ?? '' }}"
+                                                        style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
+                                                    @elseif ($review_item['input_type'] == 'number')
+                                                    <input type="number" name="checklist_for_comp_results_CIMT[{{$index}}][response]"
+                                                        value="{{ Helpers::getMicroGridData($micro_data, 'checklist_for_comp_results_CIMT', true, 'response', true, $index) ?? '' }}"
+                                                        style="padding: 2px; width:90%; border: 1px solid black; background-color: #f0f0f0;">
+                                                    @else
+                                                    <select name="checklist_for_comp_results_CIMT[{{$index}}][response]"
+                                                            id="response"
+                                                            style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
+                                                        <option value="">Select an Option</option>
+                                                        <option value="Yes" {{ Helpers::getMicroGridData($micro_data, 'checklist_for_comp_results_CIMT', true, 'response', true, $index) == 'Yes' ? 'selected' : '' }}>Yes</option>
+                                                        <option value="No" {{ Helpers::getMicroGridData($micro_data, 'checklist_for_comp_results_CIMT', true, 'response', true, $index) == 'No' ? 'selected' : '' }}>No</option>
+                                                        <option value="N/A" {{ Helpers::getMicroGridData($micro_data, 'checklist_for_comp_results_CIMT', true, 'response', true, $index) == 'N/A' ? 'selected' : '' }}>N/A</option>
+                                                    </select>
+                                                    @endif
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div style="margin: auto; display: flex; justify-content: center;">
+                                                    <textarea name="checklist_for_comp_results_CIMT[{{$index}}][remark]"
+                                                              style="border-radius: 7px; border: 1.5px solid black;">{{ Helpers::getMicroGridData($micro_data, 'checklist_for_comp_results_CIMT', true, 'remark', true, $index) ?? '' }}</textarea>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        @endforeach
+                                    </tbody>
+
+
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+
+
+                </div>
+            </div>
+            <div class="inner-block-content">
+                <div class="sub-head">
+                    Checklist for Culture verification ?
+                </div>
+                    @php
+                     $checklist_for_Culture_verification_CIMTs = [
+    [
+        'question' => "Is culture COA checked?",
+        'is_sub_question' => false,
+        'input_type' => 'text'
+    ],
+    [
+        'question' => "Was the correct Inoculum used for GPT?",
+        'is_sub_question' => false,
+        'input_type' => 'text'
+    ],
+    [
+        'question' => "Was used culture within culture due date?",
+        'is_sub_question' => false,
+        'input_type' => 'text'
+    ],
+    [
+        'question' => "Date of culture dilution:",
+        'is_sub_question' => true,
+        'input_type' => 'date'
+    ],
+    [
+        'question' => "Due date of culture dilution:",
+        'is_sub_question' => true,
+        'input_type' => 'date'
+    ],
+    [
+        'question' => "Was the storage condition of culture is appropriate?",
+        'is_sub_question' => false,
+        'input_type' => 'text'
+    ],
+    [
+        'question' => "Was culture strength used within acceptance range?",
+        'is_sub_question' => false,
+        'input_type' => 'text'
+    ]
+];
+
+                    @endphp
+                <div class="row">
+                    <div class="col-12">
+                        <div class="group-input">
+                            <div class="why-why-chart">
+                                <table class="table table-bordered">
+                                    <thead>
+                                        <tr>
+                                            <th style="width: 5%;">Sr.No.</th>
+                                            <th style="width: 40%;">Question</th>
+                                            <th style="width: 20%;">Response</th>
+                                            <th>Remarks</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @php
+                                            $main_question_index = 3.0;
+                                            $sub_question_index = 0;
+                                        @endphp
+
+                                        @foreach ($checklist_for_Culture_verification_CIMTs as $index => $review_item)
+                                        @php
+                                            if ($review_item['is_sub_question']) {
+                                                $sub_question_index++;
+                                            } else {
+                                                $sub_question_index = 0;
+                                                $main_question_index += 0.1;
+                                            }
+                                        @endphp
+                                        <tr>
+                                            <td class="flex text-center">{{ $review_item['is_sub_question'] ? $main_question_index .'.'. $sub_question_index : number_format($main_question_index, 1) }}</td>
+                                            <td>{{$review_item['question']}}</td>
+                                            <td>
+                                                <div style="display: flex; justify-content: space-around; align-items: center; margin: 5%; gap:5px">
+                                                    @if ($review_item['input_type'] == 'date')
+                                                    <input type="date" name="checklist_for_Culture_verification_CIMT[{{$index}}][response]"
+                                                        value="{{ Helpers::getMicroGridData($micro_data, 'checklist_for_Culture_verification_CIMT', true, 'response', true, $index) ?? '' }}"
+                                                        style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
+                                                    @elseif ($review_item['input_type'] == 'number')
+                                                    <input type="number" name="checklist_for_Culture_verification_CIMT[{{$index}}][response]"
+                                                        value="{{ Helpers::getMicroGridData($micro_data, 'checklist_for_Culture_verification_CIMT', true, 'response', true, $index) ?? '' }}"
+                                                        style="padding: 2px; width:90%; border: 1px solid black; background-color: #f0f0f0;">
+                                                    @else
+                                                    <select name="checklist_for_Culture_verification_CIMT[{{$index}}][response]"
+                                                            id="response"
+                                                            style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
+                                                        <option value="">Select an Option</option>
+                                                        <option value="Yes" {{ Helpers::getMicroGridData($micro_data, 'checklist_for_Culture_verification_CIMT', true, 'response', true, $index) == 'Yes' ? 'selected' : '' }}>Yes</option>
+                                                        <option value="No" {{ Helpers::getMicroGridData($micro_data, 'checklist_for_Culture_verification_CIMT', true, 'response', true, $index) == 'No' ? 'selected' : '' }}>No</option>
+                                                        <option value="N/A" {{ Helpers::getMicroGridData($micro_data, 'checklist_for_Culture_verification_CIMT', true, 'response', true, $index) == 'N/A' ? 'selected' : '' }}>N/A</option>
+                                                    </select>
+                                                    @endif
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div style="margin: auto; display: flex; justify-content: center;">
+                                                    <textarea name="checklist_for_Culture_verification_CIMT[{{$index}}][remark]"
+                                                              style="border-radius: 7px; border: 1.5px solid black;">{{ Helpers::getMicroGridData($micro_data, 'checklist_for_Culture_verification_CIMT', true, 'remark', true, $index) ?? '' }}</textarea>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        @endforeach
+                                    </tbody>
+
+                                                                    </table>
+                            </div>
+                        </div>
+                    </div>
+
+
+
+                </div>
+            </div><div class="inner-block-content">
+                <div class="sub-head">
+                    Checklist for Sterilize Accessories :
+                </div>
+                        @php
+                            $sterilize_accessories_CIMTs = [
+    [
+        'question' => "Was the media sterilized and sterilization cycle found satisfactory?",
+        'is_sub_question' => false,
+        'input_type' => 'text'
+    ],
+    [
+        'question' => "Sterilization cycle No.:",
+        'is_sub_question' => true,
+        'input_type' => 'number'
+    ],
+    [
+        'question' => "Whether disposable sterilized gloves used during testing were within the expiry date?",
+        'is_sub_question' => false,
+        'input_type' => 'text'
+    ],
+    [
+        'question' => "Results of other plates released for GPT is within acceptance?",
+        'is_sub_question' => false,
+        'input_type' => 'text'
+    ]
+];
+
+                        @endphp
+                <div class="row">
+                    <div class="col-12">
+                        <div class="group-input">
+                            <div class="why-why-chart">
+                                <table class="table table-bordered">
+                                    <thead>
+                                        <tr>
+                                            <th style="width: 5%;">Sr.No.</th>
+                                            <th style="width: 40%;">Question</th>
+                                            <th style="width: 20%;">Response</th>
+                                            <th>Remarks</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @php
+                                            $main_question_index = 4.0;
+                                            $sub_question_index = 0;
+                                        @endphp
+
+                                        @foreach ($sterilize_accessories_CIMTs as $index => $review_item)
+                                        @php
+                                            if ($review_item['is_sub_question']) {
+                                                $sub_question_index++;
+                                            } else {
+                                                $sub_question_index = 0;
+                                                $main_question_index += 0.1;
+                                            }
+                                        @endphp
+                                        <tr>
+                                            <td class="flex text-center">{{ $review_item['is_sub_question'] ? $main_question_index .'.'. $sub_question_index : number_format($main_question_index, 1) }}</td>
+                                            <td>{{$review_item['question']}}</td>
+                                            <td>
+                                                <div style="display: flex; justify-content: space-around; align-items: center; margin: 5%; gap:5px">
+                                                    @if ($review_item['input_type'] == 'date')
+                                                    <input type="date" name="sterilize_accessories_CIMT[{{$index}}][response]"
+                                                        value="{{ Helpers::getMicroGridData($micro_data, 'sterilize_accessories_CIMT', true, 'response', true, $index) ?? '' }}"
+                                                        style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
+                                                    @elseif ($review_item['input_type'] == 'number')
+                                                    <input type="number" name="sterilize_accessories_CIMT[{{$index}}][response]"
+                                                        value="{{ Helpers::getMicroGridData($micro_data, 'sterilize_accessories_CIMT', true, 'response', true, $index) ?? '' }}"
+                                                        style="padding: 2px; width:90%; border: 1px solid black; background-color: #f0f0f0;">
+                                                    @else
+                                                    <select name="sterilize_accessories_CIMT[{{$index}}][response]"
+                                                            id="response"
+                                                            style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
+                                                        <option value="">Select an Option</option>
+                                                        <option value="Yes" {{ Helpers::getMicroGridData($micro_data, 'sterilize_accessories_CIMT', true, 'response', true, $index) == 'Yes' ? 'selected' : '' }}>Yes</option>
+                                                        <option value="No" {{ Helpers::getMicroGridData($micro_data, 'sterilize_accessories_CIMT', true, 'response', true, $index) == 'No' ? 'selected' : '' }}>No</option>
+                                                        <option value="N/A" {{ Helpers::getMicroGridData($micro_data, 'sterilize_accessories_CIMT', true, 'response', true, $index) == 'N/A' ? 'selected' : '' }}>N/A</option>
+                                                    </select>
+                                                    @endif
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div style="margin: auto; display: flex; justify-content: center;">
+                                                    <textarea name="sterilize_accessories_CIMT[{{$index}}][remark]"
+                                                              style="border-radius: 7px; border: 1.5px solid black;">{{ Helpers::getMicroGridData($micro_data, 'sterilize_accessories_CIMT', true, 'remark', true, $index) ?? '' }}</textarea>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        @endforeach
+                                    </tbody>
+                                                                                                       </table>
+                            </div>
+                        </div>
+                    </div>
+
+
+
+                </div>
+            </div>
+            <div class="inner-block-content">
+                <div class="sub-head">
+                    Checklist for Instrument/Equipment Details:
+                </div>
+                    @php
+                       $checklist_for_intrument_equip_last_CIMTs = [
+    [
+        'question' => "Was the equipment used, calibrated/qualified and within the specified range?",
+        'is_sub_question' => false,
+        'input_type' => 'text'
+    ],
+    [
+        'question' => "Biosafety equipment ID:",
+        'is_sub_question' => true,
+        'input_type' => 'number'
+    ],
+    [
+        'question' => "Validation date:",
+        'is_sub_question' => true,
+        'input_type' => 'date'
+    ],
+    [
+        'question' => "Next due date:",
+        'is_sub_question' => true,
+        'input_type' => 'date'
+    ],
+    [
+        'question' => "Colony counter equipment ID:",
+        'is_sub_question' => false,
+        'input_type' => 'number'
+    ],
+    [
+        'question' => "Calibration date:",
+        'is_sub_question' => true,
+        'input_type' => 'date'
+    ],
+    [
+        'question' => "Was used pipettes within calibration?",
+        'is_sub_question' => false,
+        'input_type' => 'text'
+    ],
+    [
+        'question' => "Pipettes ID:",
+        'is_sub_question' => true,
+        'input_type' => 'number'
+    ],
+    [
+        'question' => "Calibration date",
+        'is_sub_question' => true,
+        'input_type' => 'date'
+    ],
+    [
+        'question' => "Was the refrigerator used for storage of culture is validated?",
+        'is_sub_question' => false,
+        'input_type' => 'text'
+    ],
+    [
+        'question' => "Refrigerator (2-8̊ C) ID:",
+        'is_sub_question' => true,
+        'input_type' => 'number'
+    ],
+    [
+        'question' => "Validation date:",
+        'is_sub_question' => true,
+        'input_type' => 'date'
+    ],
+    [
+        'question' => "Incubator ID:",
+        'is_sub_question' => false,
+        'input_type' => 'number'
+    ],
+    [
+        'question' => "Validation date and next due date:",
+        'is_sub_question' => true,
+        'input_type' => 'date'
+    ],
+    [
+        'question' => "Was there any power failure noticed during the incubation of samples in the heating block?",
+        'is_sub_question' => false,
+        'input_type' => 'text'
+    ],
+    [
+        'question' => "Were any other media GPT tested along with this sample?",
+        'is_sub_question' => false,
+        'input_type' => 'text'
+    ],
+    [
+        'question' => "If yes, whether those media GPT results found satisfactory?",
+        'is_sub_question' => true,
+        'input_type' => 'text'
+    ]
+];
+
+                    @endphp
+                <div class="row">
+                    <div class="col-12">
+                        <div class="group-input">
+                            <div class="why-why-chart">
+                                <table class="table table-bordered">
+                                    <thead>
+                                        <tr>
+                                            <th style="width: 5%;">Sr.No.</th>
+                                            <th style="width: 40%;">Question</th>
+                                            <th style="width: 20%;">Response</th>
+                                            <th>Remarks</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @php
+                                            $main_question_index = 5.0;
+                                            $sub_question_index = 0;
+                                        @endphp
+
+                                        @foreach ($checklist_for_intrument_equip_last_CIMTs as $index => $review_item)
+                                        @php
+                                            if ($review_item['is_sub_question']) {
+                                                $sub_question_index++;
+                                            } else {
+                                                $sub_question_index = 0;
+                                                $main_question_index += 0.1;
+                                            }
+                                        @endphp
+                                        <tr>
+                                            <td class="flex text-center">{{ $review_item['is_sub_question'] ? $main_question_index .'.'. $sub_question_index : number_format($main_question_index, 1) }}</td>
+                                            <td>{{$review_item['question']}}</td>
+                                            <td>
+                                                <div style="display: flex; justify-content: space-around; align-items: center; margin: 5%; gap:5px">
+                                                    @if ($review_item['input_type'] == 'date')
+                                                    <input type="date" name="checklist_for_intrument_equip_last_CIMT[{{$index}}][response]"
+                                                        value="{{ Helpers::getMicroGridData($micro_data, 'checklist_for_intrument_equip_last_CIMT', true, 'response', true, $index) ?? '' }}"
+                                                        style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
+                                                    @elseif ($review_item['input_type'] == 'number')
+                                                    <input type="number" name="checklist_for_intrument_equip_last_CIMT[{{$index}}][response]"
+                                                        value="{{ Helpers::getMicroGridData($micro_data, 'checklist_for_intrument_equip_last_CIMT', true, 'response', true, $index) ?? '' }}"
+                                                        style="padding: 2px; width:90%; border: 1px solid black; background-color: #f0f0f0;">
+                                                    @else
+                                                    <select name="checklist_for_intrument_equip_last_CIMT[{{$index}}][response]"
+                                                            id="response"
+                                                            style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
+                                                        <option value="">Select an Option</option>
+                                                        <option value="Yes" {{ Helpers::getMicroGridData($micro_data, 'checklist_for_intrument_equip_last_CIMT', true, 'response', true, $index) == 'Yes' ? 'selected' : '' }}>Yes</option>
+                                                        <option value="No" {{ Helpers::getMicroGridData($micro_data, 'checklist_for_intrument_equip_last_CIMT', true, 'response', true, $index) == 'No' ? 'selected' : '' }}>No</option>
+                                                        <option value="N/A" {{ Helpers::getMicroGridData($micro_data, 'checklist_for_intrument_equip_last_CIMT', true, 'response', true, $index) == 'N/A' ? 'selected' : '' }}>N/A</option>
+                                                    </select>
+                                                    @endif
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div style="margin: auto; display: flex; justify-content: center;">
+                                                    <textarea name="checklist_for_intrument_equip_last_CIMT[{{$index}}][remark]"
+                                                              style="border-radius: 7px; border: 1.5px solid black;">{{ Helpers::getMicroGridData($micro_data, 'checklist_for_intrument_equip_last_CIMT', true, 'remark', true, $index) ?? '' }}</textarea>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        @endforeach
+                                    </tbody>
+
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+
+
+
+                </div>
+            </div>
+            <div class="inner-block-content">
+                <div class="sub-head">
+                    Checklist for Disinfectant Details:
+                </div>
+                    @php
+                       $disinfectant_details_last_CIMTs = [
+    [
+        'question' => "Name of the disinfectant used for area cleaning",
+        'is_sub_question' => false,
+        'input_type' => 'number'
+    ],
+    [
+        'question' => "Was the disinfectant used for cleaning and sanitization validated?",
+        'is_sub_question' => false,
+        'input_type' => 'text'
+    ],
+    [
+        'question' => "Concentration:",
+        'is_sub_question' => true,
+        'input_type' => 'text'
+    ],
+    [
+        'question' => "Was the disinfectant prepared as per validated concentration?",
+        'is_sub_question' => false,
+        'input_type' => 'text'
+    ]
+];
+
+     @endphp
+                <div class="row">
+                    <div class="col-12">
+                        <div class="group-input">
+                            <div class="why-why-chart">
+                                <table class="table table-bordered">
+                                    <thead>
+                                        <tr>
+                                            <th style="width: 5%;">Sr.No.</th>
+                                            <th style="width: 40%;">Question</th>
+                                            <th style="width: 20%;">Response</th>
+                                            <th>Remarks</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @php
+                                            $main_question_index = 6.0;
+                                            $sub_question_index = 0;
+                                        @endphp
+
+                                        @foreach ($disinfectant_details_last_CIMTs as $index => $review_item)
+                                        @php
+                                            if ($review_item['is_sub_question']) {
+                                                $sub_question_index++;
+                                            } else {
+                                                $sub_question_index = 0;
+                                                $main_question_index += 0.1;
+                                            }
+                                        @endphp
+                                        <tr>
+                                            <td class="flex text-center">{{ $review_item['is_sub_question'] ? $main_question_index .'.'. $sub_question_index : number_format($main_question_index, 1) }}</td>
+                                            <td>{{$review_item['question']}}</td>
+                                            <td>
+                                                <div style="display: flex; justify-content: space-around; align-items: center; margin: 5%; gap:5px">
+                                                    @if ($review_item['input_type'] == 'date')
+                                                    <input type="date" name="disinfectant_details_last_CIMT[{{$index}}][response]"
+                                                        value="{{ Helpers::getMicroGridData($micro_data, 'disinfectant_details_last_CIMT', true, 'response', true, $index) ?? '' }}"
+                                                        style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
+                                                    @elseif ($review_item['input_type'] == 'number')
+                                                    <input type="number" name="disinfectant_details_last_CIMT[{{$index}}][response]"
+                                                        value="{{ Helpers::getMicroGridData($micro_data, 'disinfectant_details_last_CIMT', true, 'response', true, $index) ?? '' }}"
+                                                        style="padding: 2px; width:90%; border: 1px solid black; background-color: #f0f0f0;">
+                                                    @else
+                                                    <select name="disinfectant_details_last_CIMT[{{$index}}][response]"
+                                                            id="response"
+                                                            style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
+                                                        <option value="">Select an Option</option>
+                                                        <option value="Yes" {{ Helpers::getMicroGridData($micro_data, 'disinfectant_details_last_CIMT', true, 'response', true, $index) == 'Yes' ? 'selected' : '' }}>Yes</option>
+                                                        <option value="No" {{ Helpers::getMicroGridData($micro_data, 'disinfectant_details_last_CIMT', true, 'response', true, $index) == 'No' ? 'selected' : '' }}>No</option>
+                                                        <option value="N/A" {{ Helpers::getMicroGridData($micro_data, 'disinfectant_details_last_CIMT', true, 'response', true, $index) == 'N/A' ? 'selected' : '' }}>N/A</option>
+                                                    </select>
+                                                    @endif
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div style="margin: auto; display: flex; justify-content: center;">
+                                                    <textarea name="disinfectant_details_last_CIMT[{{$index}}][remark]"
+                                                              style="border-radius: 7px; border: 1.5px solid black;">{{ Helpers::getMicroGridData($micro_data, 'disinfectant_details_last_CIMT', true, 'remark', true, $index) ?? '' }}</textarea>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        @endforeach
+                                    </tbody>
+
+                              </table>
+                            </div>
+                        </div>
+                    </div>
+
+
+
+                </div>
+            </div>
+            <div class="inner-block-content">
+                <div class="sub-head">
+                    Checklist for Results and Calculation :
+                </div>
+                    @php
+                       $checklist_for_result_calculation_CIMTs = [
+    [
+        'question' => "Were results taken properly?",
+        'is_sub_question' => false,
+        'input_type' => 'text'
+    ],
+    [
+        'question' => "Raw data checked?",
+        'is_sub_question' => false,
+        'input_type' => 'text'
+    ],
+    [
+        'question' => "Was formula dilution factor used for calculating the results corrected?",
+        'is_sub_question' => false,
+        'input_type' => 'text'
+    ]
+];
+
+                    @endphp
+                <div class="row">
+                    <div class="col-12">
+                        <div class="group-input">
+                            <div class="why-why-chart">
+                                <table class="table table-bordered">
+                                    <thead>
+                                        <tr>
+                                            <th style="width: 5%;">Sr.No.</th>
+                                            <th style="width: 40%;">Question</th>
+                                            <th style="width: 20%;">Response</th>
+                                            <th>Remarks</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @php
+                                            $main_question_index = 7.0;
+                                            $sub_question_index = 0;
+                                        @endphp
+
+                                        @foreach ($checklist_for_result_calculation_CIMTs as $index => $review_item)
+                                        @php
+                                            if ($review_item['is_sub_question']) {
+                                                $sub_question_index++;
+                                            } else {
+                                                $sub_question_index = 0;
+                                                $main_question_index += 0.1;
+                                            }
+                                        @endphp
+                                        <tr>
+                                            <td class="flex text-center">{{ $review_item['is_sub_question'] ? $main_question_index .'.'. $sub_question_index : number_format($main_question_index, 1) }}</td>
+                                            <td>{{$review_item['question']}}</td>
+                                            <td>
+                                                <div style="display: flex; justify-content: space-around; align-items: center; margin: 5%; gap:5px">
+                                                    @if ($review_item['input_type'] == 'date')
+                                                    <input type="date" name="checklist_for_result_calculation_CIMT[{{$index}}][response]"
+                                                        value="{{ Helpers::getMicroGridData($micro_data, 'checklist_for_result_calculation_CIMT', true, 'response', true, $index) ?? '' }}"
+                                                        style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
+                                                    @elseif ($review_item['input_type'] == 'number')
+                                                    <input type="number" name="checklist_for_result_calculation_CIMT[{{$index}}][response]"
+                                                        value="{{ Helpers::getMicroGridData($micro_data, 'checklist_for_result_calculation_CIMT', true, 'response', true, $index) ?? '' }}"
+                                                        style="padding: 2px; width:90%; border: 1px solid black; background-color: #f0f0f0;">
+                                                    @else
+                                                    <select name="checklist_for_result_calculation_CIMT[{{$index}}][response]"
+                                                            id="response"
+                                                            style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
+                                                        <option value="">Select an Option</option>
+                                                        <option value="Yes" {{ Helpers::getMicroGridData($micro_data, 'checklist_for_result_calculation_CIMT', true, 'response', true, $index) == 'Yes' ? 'selected' : '' }}>Yes</option>
+                                                        <option value="No" {{ Helpers::getMicroGridData($micro_data, 'checklist_for_result_calculation_CIMT', true, 'response', true, $index) == 'No' ? 'selected' : '' }}>No</option>
+                                                        <option value="N/A" {{ Helpers::getMicroGridData($micro_data, 'checklist_for_result_calculation_CIMT', true, 'response', true, $index) == 'N/A' ? 'selected' : '' }}>N/A</option>
+                                                    </select>
+                                                    @endif
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div style="margin: auto; display: flex; justify-content: center;">
+                                                    <textarea name="checklist_for_result_calculation_CIMT[{{$index}}][remark]"
+                                                              style="border-radius: 7px; border: 1.5px solid black;">{{ Helpers::getMicroGridData($micro_data, 'checklist_for_result_calculation_CIMT', true, 'remark', true, $index) ?? '' }}</textarea>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        @endforeach
+                                    </tbody>
+
+                                </table>
+                                <div class="col-lg-12">
+
+                                    <div class="group-input">
+
+                                        <label for="Audit Attachments">If Yes, Provide attachment details</label>
+
+
+                                        <div class="file-attachment-field">
+
+                                            <div class="file-attachment-list" id="file_attach"></div>
+
+                                            <div class="add-btn">
+
+                                                <div>Add</div>
+
+                                                <input type="file" id="myfile" name="attachment_details_cimst[]"
+
+                                                    oninput="addMultipleFiles(this, 'file_attach')" multiple/>
+
+                                            </div>
+
+                                        </div>
+
+
+
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+        <div class="button-block">
+            <button type="submit" id="ChangesaveButton" class="saveButton">Save</button>
+            <button type="button" class="backButton" onclick="previousStep()">Back</button>
+            <button type="button" id="ChangeNextButton" class="nextButton"
+            onclick="nextStep()">Next</button>
+            <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white">Exit </a> </button>
+        </div>
+        </div>
+    </div>
+</div>        

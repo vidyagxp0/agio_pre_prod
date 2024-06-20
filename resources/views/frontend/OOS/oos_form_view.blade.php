@@ -47,9 +47,7 @@
 
         }
     </style>
-
-
-
+    
     <!-- -----------------------------grid-1----------------------------script -->
     <script>
         $(document).ready(function() {
@@ -130,9 +128,7 @@
         });
     </script>
     <!-- ------------------------------grid-3-------------------------script -->
-    
-
-<script>
+    <script>
         $(document).ready(function() {
             $('#oos_details').click(function(e) {
                 function generateTableRow(serialNumber) {
@@ -175,9 +171,7 @@
             });
         });
     </script>
-
     <!-- ---------------------------grid-1 ---Preliminary Lab Invst. Review----------------------------- -->
-
     <script>
         $(document).ready(function() {
             $('#oos_capa').click(function(e) {
@@ -224,10 +218,7 @@
             });
         });
     </script>
-
-
     <!-- -----------------------------grid-1----------OOS Conclusion ---------------- -->
-
     <script>
         $(document).ready(function() {
             $('#oos_conclusion').click(function(e) {
@@ -254,10 +245,7 @@
             });
         });
     </script>
-
-
     <!-- -----------------------------grid-1----------OOSConclusion_Review ---------------- -->
-
     <script>
         $(document).ready(function() {
             $('#oosconclusion_review').click(function(e) {

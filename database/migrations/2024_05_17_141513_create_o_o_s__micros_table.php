@@ -208,7 +208,7 @@ return new class extends Migration
             $table->longtext('ua_Execution_attachments')->nullable();
             $table->longtext('uar_required_attachment')->nullable();
             $table->longtext('uav_verification_attachment')->nullable(); 
-            
+            $table->longtext('impact_assessment_piiqc')->nullable();
             
             //Extras
             $table->text('initiator_group_gi')->nullable();
