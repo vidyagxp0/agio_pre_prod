@@ -3120,8 +3120,7 @@
                                         ->get();
 
                                 @endphp
-                                @foreach ($inreview as $temp)
-                                    <div class="name">{{ $temp->user_name }}</div>
+                                    <div class="name">{{ $document->originator ? $document->originator->name : 'null' }}</div>
 
                             </div>
                         </div>
@@ -3130,8 +3129,7 @@
                                 <div class="orig-head">
                                     Originated On 
                                 </div>
-                                <div class="name">{{ $temp->created_at }}</div>
-                                @endforeach
+                                <div class="name">{{ $document->created_at }}</div>
                             </div>
 
                         </div>
@@ -3193,6 +3191,38 @@
                                 @endforeach
                             </div>
                         </div> --}}
+                        <div class="col-md-6">
+                            <div class="review-names">
+                                <div class="orig-head">
+                                    HOD Review By
+                                </div>
+                                @php
+                                    $inhodreview = DB::table('stage_manages')
+                                        ->join('users', 'stage_manages.user_id', '=', 'users.id')
+                                        ->select('stage_manages.*', 'users.name as user_name')
+                                        ->where('document_id', $document->id)
+                                        ->where('stage', 'HOD Review-Submit')
+                                        ->where('deleted_at', null)
+                                        ->get();
+
+                                @endphp
+                                @foreach ($inhodreview as $temp)
+                                    <div class="name">{{ $temp->user_name }}</div>
+                                @endforeach
+
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="review-names">
+                                <div class="orig-head">
+                                    HOD Reviewed On
+                                </div>
+                                @foreach ($inhodreview as $temp)
+                                    <div class="name">{{ $temp->created_at }}</div>
+                                @endforeach
+                            </div>
+                        </div>
+
                         <div class="col-md-6">
                             <div class="review-names">
                                 <div class="orig-head">
