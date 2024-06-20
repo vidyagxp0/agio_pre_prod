@@ -113,10 +113,10 @@
                         </div>
                     </div>
 
-                    @if (Helpers::checkRoles(4) && ($document->stage >= 2))
+                    @if (Helpers::checkRoles(4) && Helpers::checkRoles_check_hods($document) && ($document->stage >= 2))
                         <div class="col-8">
                             <div class="inner-block tracker">
-                                <div class="d-flex justify-content-between align-items-center">
+                                <div class="d-flex justify-content-between align-items-center hods">
                                     <div class="main-title">
                                         Record Workflow
                                     </div>
@@ -188,7 +188,7 @@
                     @if (Helpers::checkRoles(2) AND Helpers::checkRoles_check_reviewers($document) && $document->stage == 4)
                         <div class="col-8">
                             <div class="inner-block tracker">
-                                <div class="d-flex justify-content-between align-items-center">
+                                <div class="d-flex justify-content-between align-items-center reviewer">
                                     <div class="main-title">
                                         Record Workflow
                                     </div>
@@ -269,7 +269,7 @@
                     @if (Helpers::checkRoles(1) AND Helpers::checkRoles_check_approvers($document) && $document->stage == 6)
                         <div class="col-8">
                             <div class="inner-block tracker">
-                                <div class="d-flex justify-content-between align-items-center">
+                                <div class="d-flex justify-content-between align-items-center approver">
                                     <div class="main-title">
                                         Record Workflow
                                     </div>

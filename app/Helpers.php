@@ -249,7 +249,7 @@ class Helpers
     public static function checkRoles_check_hods($document)
     {
         if ($document->hods) {
-            $datauser = explode(',', $document->approvers);
+            $datauser = explode(',', $document->hods);
             for ($i = 0; $i < count($datauser); $i++) {
                 if ($datauser[$i] == Auth::user()->id) {
                     if($document->stage >= 2){
@@ -259,9 +259,8 @@ class Helpers
                     }
                 }
             }
-        } else {
-            return false;
         }
+        return false;
     }
 
     public static function checkUserRolesApprovers($data)
