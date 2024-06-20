@@ -13,6 +13,8 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Carbon\Carbon;
+use Illuminate\Pagination\Paginator;
+
 use PDF;
 use Helpers;
 use Illuminate\Support\Facades\Mail;
@@ -2238,7 +2240,7 @@ class RiskManagementController extends Controller
             if ($changeControl->stage == 2) {
                 $changeControl->stage = "1";
                 $changeControl->status = "Opened";
-                $changeControl->status = "Closed - Cancelled";
+               // $changeControl->status = "Closed - Cancelled";
                 $changeControl->cancelled_by = Auth::user()->name;
                 $changeControl->update();
                 toastr()->success('Document Sent');
@@ -2279,15 +2281,32 @@ class RiskManagementController extends Controller
     }
 
 
+
     public function riskAuditTrial($id)
     {
-        $audit = RiskAuditTrail::where('risk_id', $id)->orderByDESC('id')->get()->unique('activity_type');
+        //$audit = RiskAuditTrail::where('risk_id', $id)->orderByDESC('id')->get()->unique('activity_type');
+        $audit = RiskAuditTrail::where('risk_id', $id)->orderByDesc('id')->paginate(5);
         $today = Carbon::now()->format('d-m-y');
         $document = RiskManagement::where('id', $id)->first();
         $document->initiator = User::where('id', $document->initiator_id)->value('name');
 
-        return view("frontend.riskAssesment.audit-trail", compact('audit', 'document', 'today'));
+
+        //dd($audit);
+        return view("frontend.riskAssesment.new_audit_trail", compact('audit', 'document', 'today'));
     }
+
+
+    // public function riskAuditTrial($id)
+    // {
+    //     $audit = RiskAuditTrail::where('risk_id', $id)->orderByDESC('id')->get()->unique('activity_type');
+    //     $today = Carbon::now()->format('d-m-y');
+    //     $document = RiskManagement::where('id', $id)->first();
+    //     $document->initiator = User::where('id', $document->initiator_id)->value('name');
+
+
+    //     //dd($audit);
+    //     return view("frontend.riskAssesment.audit-trail", compact('audit', 'document', 'today'));
+    // }
 
     public function auditDetailsrisk($id)
     {
@@ -2305,6 +2324,7 @@ class RiskManagementController extends Controller
     public static function singleReport($id)
     {
         $data = RiskManagement::find($id);
+       // dd($data);
         if (!empty($data)) {
 
             $riskgrdfishbone = RiskAssesmentGrid::where('risk_id', $data->id)->where('type','fishbone')->first();
@@ -2312,7 +2332,7 @@ class RiskManagementController extends Controller
             $riskgrdwhy_chart = RiskAssesmentGrid::where('risk_id', $data->id)->where('type','why_chart')->first();
             $riskgrdwhat_who_where = RiskAssesmentGrid::where('risk_id', $data->id)->where('type','what_who_where')->first();
 
-             //dd($riskgrd);
+            // dd($riskgrdwhat_who_where);
             $data->originator = User::where('id', $data->initiator_id)->value('name');
             $pdf = App::make('dompdf.wrapper');
             $time = Carbon::now();
@@ -2377,6 +2397,6 @@ class RiskManagementController extends Controller
         $parent_short_description = RiskManagement::where('id', $id)->value('short_description');
         $old_record = RiskManagement::select('id', 'division_id', 'record')->get();
 
-        return view('frontend.forms.action-item', compact('parent_id', 'parent_type', 'record_number', 'currentDate', 'formattedDate', 'due_date', 'parent_record', 'parent_record', 'parent_division_id', 'parent_initiator_id', 'parent_intiation_date', 'parent_short_description','old_record'));
+        return view('frontend.action-item.action-item', compact('parent_id', 'parent_type', 'record_number', 'currentDate', 'formattedDate', 'due_date', 'parent_record', 'parent_record', 'parent_division_id', 'parent_initiator_id', 'parent_intiation_date', 'parent_short_description','old_record'));
     }
 }

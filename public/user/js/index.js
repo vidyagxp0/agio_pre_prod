@@ -413,6 +413,10 @@ function addRiskAssessment(tableId) {
 
     var cell17 = newRow.insertCell(16);
     cell17.innerHTML = "<input name='mitigation_proposal[]' type='text'>";
+    
+    var cell18 = newRow.insertCell(17);
+    cell18.innerHTML = "<button class='btn btn-dark removeBtn'>Remove</button>";
+
     for (var i = 1; i < currentRowCount; i++) {
 
         var row = table.rows[i];

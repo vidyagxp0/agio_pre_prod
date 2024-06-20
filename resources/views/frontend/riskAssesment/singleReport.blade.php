@@ -216,27 +216,45 @@
                         <td class="w-30">@if($data->initiator_group_code){{ $data->initiator_group_code }} @else Not Applicable @endif</td>
                     </tr>
                     <tr>
-                        <th class="w-20">Team Members</th>
-                        <td class="w-30">@if($data->team_members){{ Helpers::getInitiatorName($data->team_members) }}@else Not Applicable @endif</td>
+                        {{--  <th class="w-20">Team Members</th>
+                        <td class="w-30">@if($data->team_members){{ Helpers::getInitiatorName($data->team_members) }}@else Not Applicable @endif</td>  --}}
                         <th class="w-20">Due Date</th>
                         <td class="w-80"> @if($data->due_date){{ $data->due_date }} @else Not Applicable @endif</td>
                     </tr>
                     <tr>
                         <th class="w-20">Risk/Opportunity Description</th>
-                        <td class="w-30">@if($data->description){{ $data->description }} @else Not Applicable @endif</td>
+                        <td class="w-80">@if($data->description){{ $data->description }} @else Not Applicable @endif</td>
+                    </tr> 
+                    <tr> 
+                      
                         <th class="w-20">Risk/Opportunity Comments</th>
-                        <td class="w-30">@if($data->comments){{ $data->comments }} @else Not Applicable @endif</td>
+                        <td class="w-80">@if($data->comments){{ $data->comments }} @else Not Applicable @endif</td>
                     </tr>
                     <tr>
+                     {{--  {{dd($data->departments)}}  --}}
                          <th class="w-20">Department(s)</th>
                          <td class="w-80">@if($data->departments){{  Helpers::getDepartmentNameWithString($data->departments )}}@else Not Applicable @endif</td>
+                       {{--  <td class="w-80">
+                            @php
+                                $departments = Helpers::getDepartmentNameWithString($data->departments);
+                            @endphp
+
+                            {{dd($departments)}}
+                            @if(!empty($departments))
+                                {{ implode(',', $departments) }}
+                            @else
+                                Not Applicable
+                            @endif
+                        </td>  --}}
                         <th class="w-20"> Short Description</th>
                         <td class="w-30">@if($data->short_description){{ $data->short_description }} @else Not Applicable @endif</td>
                     </tr>
                     <tr>
                             <th class="w-20">Type</th>
                             <td class="w-80">@if($data->type){{ $data->type }}@else Not Applicable @endif</td>
-                            <th class="w-20">Comments</th>
+                    </tr>      
+                    <tr>      
+                            <th class="w-20">Risk/Opportunity Comments</th>
                             <td class="w-80">@if($data->comments){{ $data->comments }}@else Not Applicable @endif</td>
                         
                     </tr>
@@ -256,43 +274,48 @@
                     Risk/Opportunity details
                 </div>
                 <table>
-                        <tr>
+                    <tr>
                             <th class="w-20">Department(s)</th>
                             <td class="w-80">@if($data->departments){{  Helpers::getDepartmentNameWithString($data->departments) }}@else Not Applicable @endif</td>
                             <th class="w-20">Source of Risk</th>
                             <td class="w-80">@if($data->source_of_risk){{ $data->source_of_risk }}@else Not Applicable @endif</td>
-                        </tr>
-                        <tr>
-                            <th class="w-20">Site Name</th>
-                            <td class="w-80">@if($data->site_name){{ $data->site_name }}@else Not Applicable @endif</td>
-                            <th class="w-20">Building</th>
-                            <td class="w-80">@if($data->building){{ $data->building }}@else Not Applicable @endif</td>
-                        </tr>
-                        <tr>
-                            <th class="w-20">Floor</th>
-                            <td class="w-80">@if($data->floor){{ $data-> floor}}@else Not Applicable @endif</td>
-                            <th class="w-20">Duration</th>
-                            <td class="w-80">@if($data->duration){{ $data->duration }}@else Not Applicable @endif</td>
-                        </tr>
-                        <tr>
-                            <th class="w-20">Hazard</th>
-                            <td class="w-80">@if($data->hazard){{ $data->hazard }}@else Not Applicable @endif</td>
-                            <th class="w-20">Room</th>
-                            <td class="w-80">@if($data->room){{ $data->room }}@else Not Applicable @endif</td>
-                        </tr>
-                        <tr>
-                            <th class="w-20">Regulatory Climate</th>
-                            <td class="w-80">@if($data->regulatory_climate){{ $data->regulatory_climate }}@else Not Applicable @endif</td>
-                            <th class="w-20">Number of Employees</th>
-                            <td class="w-80">@if($data->Number_of_employees){{ $data->Number_of_employees }}@else Not Applicable @endif</td>
-                        </tr>
+                    </tr>
+                    <tr>
+                        <th class="w-20">Site Name</th>
+                        <td class="w-30">{{ $data->site_name ?? 'Not Applicable' }}</td>
                         
-                        <tr>
-                             <th class="w-20">Room</th>
-                            <td class="w-80">@if($data->room2){{ $data->room2 }}@else Not Applicable @endif</td>
-                            <th class="w-20">Risk Management Strategy</th>
-                            <td class="w-80">@if($data->risk_management_strategy){{ $data->risk_management_strategy }}@else Not Applicable @endif</td>
-                        </tr>
+                        <th class="w-20">Building</th>
+                        <td class="w-30">{{ $data->building ?? 'Not Applicable' }}</td>
+                    </tr>
+                    <tr>
+                        <th class="w-20">Floor</th>
+                        <td class="w-30">{{ $data->floor ?? 'Not Applicable' }}</td>
+                        
+                        <th class="w-20">Duration</th>
+                        <td class="w-30">{{ $data->duration ?? 'Not Applicable' }}</td>
+                    </tr>
+                    <tr>
+                        <th class="w-20">Hazard</th>
+                        <td class="w-30">{{ $data->hazard ?? 'Not Applicable' }}</td>
+                        
+                        <th class="w-20">Room</th>
+                        <td class="w-30">{{ $data->room ?? 'Not Applicable' }}</td>
+                    </tr>
+                    <tr>
+                        <th class="w-20">Regulatory Climate</th>
+                        <td class="w-30">{{ $data->regulatory_climate ?? 'Not Applicable' }}</td>
+                        
+                        <th class="w-20">Number of Employees</th>
+                        <td class="w-30">{{ $data->Number_of_employees ?? 'Not Applicable' }}</td>
+                    </tr>
+                    <tr>
+                        <th class="w-20">Room</th>
+                        <td class="w-30">{{ $data->room2 ?? 'Not Applicable' }}</td>
+                        
+                        <th class="w-20">Risk Management Strategy</th>
+                        <td class="w-30">{{ $data->risk_management_strategy ?? 'Not Applicable' }}</td>
+                    </tr>
+
                    </table>
                 </div>
             </div>
@@ -365,29 +388,138 @@
                     <table>
                       <tr>
                         <th class="w-20">Root Cause Methodology</th>
-                        <td class="w-30">@if($data->root_cause_methodology){{ $data->root_cause_methodology }}@else Not Applicable @endif</td>
+                        <td class="w-80">
+                        @if($data->root_cause_methodology)
+                         @php
+                             $method = explode(',',$data->root_cause_methodology);
+
+                         @endphp 
+                        @if(in_array('1',$method))
+                             Why-Why Chart,<br>
+                         @endif   
+                          @if (in_array('2',$method))
+                               Failure Mode and Efect Analysis,<br>
+                          @endif
+                         
+                         @if (in_array('3',$method))
+                             Fishbone or Ishikawa Diagram,<br>
+                         @endif
+                         @if (in_array('4',$method))
+                            Is/Is Not Analysis,<br>
+                         @endif
+                        
+                        @else Not Applicable 
+                        
+                        @endif
+                        
+                        </td>
+                        </tr>
+                        <tr>
                         <th class="w-20">Root Cause Description</th>
-                        <td class="w-30">@if($data->root_cause_description){{ $data->root_cause_description}}@else Not Applicable @endif</td>
+                        <td class="w-80">@if($data->root_cause_description){{ $data->root_cause_description}}@else Not Applicable @endif</td>
                        </tr>
                         <tr>
                            <th class="w-20">Investigation Summary</th>
-                           <td class="w-30">@if($data->investigation_summary){{ $data->investigation_summary }}@else Not Applicable @endif</td>
+                           <td class="w-80">@if($data->investigation_summary){{ $data->investigation_summary }}@else Not Applicable @endif</td>
                         </tr>
                         <tr>
                             <th class="w-20">Severity Rate</th>
-                            <td class="w-80">@if($data->severity_rate){{ $data->severity_rate }}@else Not Applicable @endif</td>
+                            <td class="w-80">
+                                <div>
+                                    @if($data->severity_rate)
+                                        @switch($data->severity_rate)
+                                            @case(1)
+                                                Negligible
+                                                @break
+                                            @case(2)
+                                                Moderate
+                                                @break
+                                            @case(3)
+                                                Major
+                                                @break
+                                            @case(4)
+                                                Fatal
+                                                @break
+                                            @default
+                                                Not Applicable
+                                        @endswitch
+                                    @else
+                                        Not Applicable
+                                    @endif
+                                </div>
+                            </td>
                         </tr>
                         <tr>
                             <th class="w-20">Occurrence</th>
-                            <td class="w-80">@if($data->occurrence){{ $data->occurrence }}@else Not Applicable @endif</td>
+                            <td class="w-80">
+                                <div>
+                                    @if($data->occurrence)
+                                        @switch($data->occurrence)
+                                            @case(1)
+                                                Very Likely
+                                                @break
+                                            @case(2)
+                                                Likely
+                                                @break
+                                            @case(3)
+                                                Unlikely
+                                                @break
+                                            @case(4)
+                                                Rare
+                                                @break
+                                            @case('Extremely Unlikely')
+                                                Extremely Unlikely
+                                                @break
+                                            @default
+                                                Not Applicable
+                                        @endswitch
+                                    @else
+                                        Not Applicable
+                                    @endif
+                                </div>
+                            </td>
                         </tr>
                         <tr>
                             <th class="w-20">Detection</th>
-                            <td class="w-80">@if($data->detection){{ $data->detection }}@else Not Applicable @endif</td>
+                            <td class="w-80">
+                                <div>
+                                    @if($data->detection)
+                                        @switch($data->detection)
+                                            @case(1)
+                                                Very Likely
+                                                @break
+                                            @case(2)
+                                                Likely
+                                                @break
+                                            @case(3)
+                                                Unlikely
+                                                @break
+                                            @case(4)
+                                                Rare
+                                                @break
+                                            @case(5)
+                                                Impossible
+                                                @break
+                                            @default
+                                                Not Applicable
+                                        @endswitch
+                                    @else
+                                        Not Applicable
+                                    @endif
+                                </div>
+                            </td>
                         </tr>
                         <tr>
                             <th class="w-20">RPN</th>
-                            <td class="w-80">@if($data->rpn){{ $data->rpn }}@else Not Applicable @endif</td>
+                            <td class="w-80">
+                                <div>
+                                    @if($data->rpn)
+                                        {{ $data->rpn }}
+                                    @else
+                                        Not Applicable
+                                    @endif
+                                </div>
+                            </td>
                         </tr>
                     </table>
 
@@ -491,6 +623,7 @@
                           <td class="w-80">
                             @php
                                 $machine = unserialize($riskgrdfishbone->machine);
+                               // dd($machine);
                             @endphp
                             
                             @if(is_array($machine))
@@ -506,7 +639,13 @@
                     </tr>
                     <tr>
                         <th class="w-20">Problem Statement1</th>
-                        <td class="w-80">@if($riskgrdfishbone->problem_statement){{ $data->problem_statement }}@else Not Applicable @endif</td>
+                        <td class="w-80">
+                        @if($riskgrdfishbone->problem_statement)
+                        
+                        {{ $riskgrdfishbone->problem_statement }}
+                        @else 
+                        Not Applicable
+                         @endif</td>
                       
                     </tr> 
              </table>
@@ -614,55 +753,72 @@
               
             </tr> 
      </table>
+
+<div>     
      <div class="block-head">
         Is/Is Not Analysis
     </div>
+
     <table>
-    - <tr>
-        <th class="w-20">What Will Be</th>
-        <td class="w-80">@if($riskgrdwhat_who_where->what_will_be){{ $riskgrdwhat_who_where->what_will_be }}@else Not Applicable @endif</td>
-        <th class="w-20">What Will Not Be </th>
-        <td class="w-80">@if($riskgrdwhat_who_where->what_will_not_be){{ $riskgrdwhat_who_where->what_will_not_be }}@else Not Applicable @endif</td>
-        <th class="w-20">What Will Rationale </th>
-        <td class="w-80">@if($riskgrdwhat_who_where->what_rationable){{ $riskgrdwhat_who_where->what_rationable }}@else Not Applicable @endif</td>
+    <tr>
+    <th class="w-20">What Will Be</th>
+    <td class="w-80">@if($riskgrdwhat_who_where->what_will_be) {!! nl2br(e($riskgrdwhat_who_where->what_will_be)) !!} @else Not Applicable @endif</td>
+    <th class="w-20">What Will Not Be</th>
+    <td class="w-80">@if($riskgrdwhat_who_where->what_will_not_be) {!! nl2br(e($riskgrdwhat_who_where->what_will_not_be)) !!} @else Not Applicable @endif</td>
+   
+   </tr>
+    <tr>
+    <th class="w-20">What Will Rationale</th>
+    <td class="w-80">@if($riskgrdwhat_who_where->what_rationable) {!! nl2br(e($riskgrdwhat_who_where->what_rationable)) !!} @else Not Applicable @endif</td>
+    
+    <th class="w-20">Where Will Be</th>
+    <td class="w-80">@if($riskgrdwhat_who_where->where_will_be) {!! nl2br(e($riskgrdwhat_who_where->where_will_be)) !!} @else Not Applicable @endif</td>
     </tr>
-       <tr>
-        <th class="w-20">Where Will Be</th>
-        <td class="w-80">@if($riskgrdwhat_who_where->where_will_be){{ $riskgrdwhat_who_where->where_will_be }}@else Not Applicable @endif</td>
-        <th class="w-20">Where Will Not Be </th>
-        <td class="w-80">@if($riskgrdwhat_who_where->where_will_not_be){{ $riskgrdwhat_who_where->where_will_not_be }}@else Not Applicable @endif</td>
-        <th class="w-20">Where Will Rationale </th>
-        <td class="w-80">@if($riskgrdwhat_who_where->where_rationable){{ $riskgrdwhat_who_where->where_rationable }}@else Not Applicable @endif</td>
+    <tr>
+
+        <th class="w-20">Where Will Not Be</th>
+        <td class="w-80">@if($riskgrdwhat_who_where->where_will_not_be) {!! nl2br(e($riskgrdwhat_who_where->where_will_not_be)) !!} @else Not Applicable @endif</td>
+        <th class="w-20">Where Will Rationale</th>
+        <td class="w-80">@if($riskgrdwhat_who_where->where_rationable) {!! nl2br(e($riskgrdwhat_who_where->where_rationable)) !!} @else Not Applicable @endif</td>
+    
     </tr>
     <tr>
         <th class="w-20">When Will Be</th>
-        <td class="w-80">@if($riskgrdwhat_who_where->when_will_be){{ $riskgrdwhat_who_where->when_will_be }}@else Not Applicable @endif</td>
-        <th class="w-20">When Will Not Be </th>
-        <td class="w-80">@if($riskgrdwhat_who_where->when_will_not_be){{ $riskgrdwhat_who_where->when_will_not_be }}@else Not Applicable @endif</td>
-        <th class="w-20">When Will Rationale </th>
-        <td class="w-80">@if($riskgrdwhat_who_where->when_rationable){{ $riskgrdwhat_who_where->when_rationable }}@else Not Applicable @endif</td>
+        <td class="w-80">@if($riskgrdwhat_who_where->when_will_be) {!! nl2br(e($riskgrdwhat_who_where->when_will_be)) !!} @else Not Applicable @endif</td>
+        <th class="w-20">When Will Not Be</th>
+        <td class="w-80">@if($riskgrdwhat_who_where->when_will_not_be) {!! nl2br(e($riskgrdwhat_who_where->when_will_not_be)) !!} @else Not Applicable @endif</td>
+    </tr>
+    <tr> 
+        <th class="w-20">When Will Rationale</th>
+        <td class="w-80">@if($riskgrdwhat_who_where->when_rationable) {!! nl2br(e($riskgrdwhat_who_where->when_rationable)) !!} @else Not Applicable @endif</td>
+   
+        <th class="w-20">Coverage Will Be</th>
+        <td class="w-80">@if($riskgrdwhat_who_where->coverage_will_be) {!! nl2br(e($riskgrdwhat_who_where->coverage_will_be)) !!} @else Not Applicable @endif</td>
+    </tr>
+    <tr>   
+       
+        <th class="w-20">Coverage Will Not Be</th>
+        <td class="w-80">@if($riskgrdwhat_who_where->coverage_will_not_be) {!! nl2br(e($riskgrdwhat_who_where->coverage_will_not_be)) !!} @else Not Applicable @endif</td>
+    </tr>
+    <tr>  
+        <th class="w-20">Coverage Will Rationale</th>
+        <td class="w-80">@if($riskgrdwhat_who_where->coverage_rationable) {!! nl2br(e($riskgrdwhat_who_where->coverage_rationable)) !!} @else Not Applicable @endif</td>
     </tr>
     <tr>
-        <th class="w-20">Coverage Will Be</th>
-        <td class="w-80">@if($riskgrdwhat_who_where->coverage_will_be){{ $riskgrdwhat_who_where->coverage_will_be }}@else Not Applicable @endif</td>
-        <th class="w-20">Coverage Will Not Be </th>
-        <td class="w-80">@if($riskgrdwhat_who_where->coverage_will_not_be){{ $riskgrdwhat_who_where->coverage_will_not_be }}@else Not Applicable @endif</td>
-        <th class="w-20">Coverage Will Rationale </th>
-        <td class="w-80">@if($riskgrdwhat_who_where->coverage_rationable){{ $riskgrdwhat_who_where->coverage_rationable }}@else Not Applicable @endif</td>
-      
-    </tr> 
-    <tr>
         <th class="w-20">Who Will Be</th>
-        <td class="w-80">@if($riskgrdwhat_who_where->who_will_be){{ $riskgrdwhat_who_where->wh0_will_be }}@else Not Applicable @endif</td>
-        <th class="w-20">Who Will Not Be </th>
-        <td class="w-80">@if($riskgrdwhat_who_where->who_will_not_be){{ $riskgrdwhat_who_where->who_will_not_be }}@else Not Applicable @endif</td>
-        <th class="w-20">Who Will Rationale </th>
-        <td class="w-80">@if($riskgrdwhat_who_where->who_rationable){{ $riskgrdwhat_who_where->who_rationable }}@else Not Applicable @endif</td>
-      
-    </tr> 
-</table>        
-                </div>
-            </div>
+        <td class="w-80">@if($riskgrdwhat_who_where->who_will_be) {!! nl2br(e($riskgrdwhat_who_where->who_will_be)) !!} @else Not Applicable @endif</td>
+        <th class="w-20">Who Will Not Be</th>
+        <td class="w-80">@if($riskgrdwhat_who_where->who_will_not_be) {!! nl2br(e($riskgrdwhat_who_where->who_will_not_be)) !!} @else Not Applicable @endif</td>
+    </tr>
+    <tr>   
+       
+        <th class="w-20">Who Will Rationale</th>
+        <td class="w-80">@if($riskgrdwhat_who_where->who_rationable) {!! nl2br(e($riskgrdwhat_who_where->who_rationable)) !!} @else Not Applicable @endif</td>
+    </tr>
+    
+    </table>        
+
+ </div>              
 
             <!-- <div class="block">
                 <div class="head">
@@ -670,12 +826,37 @@
                        Risk/Opportunity Analysis
                     </div>
                     <table>
-                      <tr>
+                     <tr>
                         <th class="w-20">Root Cause Methodology</th>
-                        <td class="w-30">@if($data->root_cause_methodology){{ $data->root_cause_methodology }}@else Not Applicable @endif</td>
+                        <td class="w-30">
+                            @if($data->root_cause_methodology)
+                             @php
+                                 $methogies= explode(',',$data->root_cause_methodology);
+                             @endphp
+                              @if(in_array('1',$methogies))
+                                  Why-Why Chart<br>
+                              @endif
+                              @if(in_array('2',$methogies))
+                                   Failure Mode and Efect Analysis<br>
+                              @endif
+                              @if(in_array('3',$methogies))
+                                  Fishbone or Ishikawa Diagram<br>
+                              @endif
+
+                             @if(in_array('4',$methogies))
+                                  Is/Is Not Analysis<br>
+                              @endif
+
+
+                            @else
+                                Not Applicable
+                            @endif
+                        </td>
+
                         <th class="w-20">Root Cause Description</th>
-                        <td class="w-30">@if($data->root_cause_description){{ $data->root_cause_description}}@else Not Applicable @endif</td>
-                       </tr>
+                        <td class="w-30">@if($data->root_cause_description){{ $data->root_cause_description }}@else Not Applicable @endif</td>
+                    </tr>
+
                         <tr>
                            <th class="w-20">Investigation Summary</th>
                            <td class="w-30">@if($data->investigation_summary){{ $data->investigation_summary }}@else Not Applicable @endif</td>
@@ -730,18 +911,83 @@
                         <th class="w-20">Residual Risk</th>
                         <td class="w-30">@if($data->residual_risk){{ $data->residual_risk }}@else Not Applicable @endif</td>
                         <th class="w-20">Residual Risk Impact</th>
-                        <td class="w-30">@if($data->residual_risk_impact){{ $data->residual_risk_impact}}@else Not Applicable @endif</td>
+                        <td class="w-30">
+                            @if($data->residual_risk_impact)
+                            
+                                @switch($data->residual_risk_impact)
+                                    @case(1)
+                                        High
+                                        @break
+                                    @case(2)
+                                        Low
+                                        @break
+                                    @case(3)
+                                        Medium
+                                        @break
+                                    @case(4)
+                                        None
+                                        @break
+                                    @default
+                                        Not Applicable
+                                @endswitch
+                            @else
+                                Not Applicable
+                            @endif
+                        </td>
                     </tr>
                     <tr>
                         <th class="w-20">Residual Risk Probability</th>
-                        <td class="w-30">@if($data->residual_risk_probability){{ $data->residual_risk_probability }}@else Not Applicable @endif</td>
+                        <td class="w-30">
+                            @if($data->residual_risk_probability)
+                                @switch($data->residual_risk_probability)
+                                    @case(1)
+                                        High
+                                        @break
+                                    @case(2)
+                                        Medium
+                                        @break
+                                    @case(3)
+                                        Low
+                                        @break
+                                    @default
+                                        Not Applicable
+                                @endswitch
+                            @else
+                                Not Applicable
+                            @endif
+                        </td>
                     </tr>
                     <tr>
                         <th class="w-20">Residual Detection</th>
-                        <td class="w-30">@if($data->detection2){{ $data->detection2 }}@else Not Applicable @endif</td>
+                        <td class="w-30">
+                        @if ($data->detection2)
+                            @switch($data->detection2)
+                                @case(5)
+                                    Impossible
+                                    @break
+                            @case(4)
+                                    Rare
+                                    @break
+                            @case(3)
+                                    Unlikely
+                                    @break
+                            @case(2)
+                                    Likely
+                                    @break
+                                @case(1)
+                                    Very Likely
+                                    @break
+                            
+                                @default
+                                Not Applicable     
+                            @endswitch
+                            @else
+                            Not Applicable  
+                        @endif
+                        </td>
                         <th class="w-20">Residual RPN</th>
-                        <td class="w-30">@if($data->rpn2){{ $data->rpn2}}@else Not Applicable @endif</td>
-                    </tr>
+                        <td class="w-30">@if($data->rpn2){{ $data->rpn2 }}@else Not Applicable @endif</td>
+                    </tr>                  
                     <tr>
                         <th class="w-20">Comments</th>
                         <td class="w-30">@if($data->comments2){{ $data->comments2 }}@else Not Applicable @endif</td>
@@ -781,15 +1027,15 @@
                     </tr>
                     <tr>
                         <th class="w-20">Impact Analysis</th>
-                        <td class="w-30">@if($data->impact_analysis){{ $data->impact_analysis }}@else Not Applicable @endif</td>
+                        <td class="w-80">@if($data->impact_analysis){{ $data->impact_analysis }}@else Not Applicable @endif</td>
                         <th class="w-20">Risk Analysis</th>
-                        <td class="w-30">@if($data->risk_analysis){{ $data->risk_analysis}}@else Not Applicable @endif</td>
+                        <td class="w-80">@if($data->risk_analysis){{ $data->risk_analysis}}@else Not Applicable @endif</td>
                     </tr>
                     <tr>
                         <th class="w-20">Reference Record</th>
                         <td class="w-30">@if($data->refrence_record){{ Helpers::getDivisionName($data->refrence_record) }}/RA/{{ date('Y') }}/{{ Helpers::recordFormat($data->record) }}@else Not Applicable @endif</td>
                         <th class="w-20">Due Date Extension Justification</th>
-                        <td class="w-30">@if($data->due_date_extension){{ $data->due_date_extension}}@else Not Applicable @endif</td>
+                        <td class="w-80">@if($data->due_date_extension){{ $data->due_date_extension}}@else Not Applicable @endif</td>
                     </tr>
                   </table>
                 </div>

@@ -221,6 +221,7 @@ class DashboardController extends Controller
                 "id" => $data->id,
                 "parent" => $data->parent_record ? $data->parent_record : "-",
                 "record" => $data->record,
+                'due_date'=>$data->due_date,
                 "type" => "Risk-Assesment",
                 "parent_id" => $data->parent_id,
                 "parent_type" => $data->parent_type,
@@ -281,6 +282,7 @@ class DashboardController extends Controller
                 "parent" => $data->parent_record ? $data->parent_record : "-",
                 "record" => $data->record,
                 "type" => "External-Audit",
+                'due_date'=>$data->due_date,
                 "parent_id" => $data->parent_id,
                 "parent_type" => $data->parent_type,
                 "division_id" => $data->division_id,
@@ -759,6 +761,7 @@ class DashboardController extends Controller
                         "id" => $data2->id,
                         "parent" => $data2->parent_record ? $data2->parent_record : "-",
                         "record" => $data2->record,
+                       
                         "type" => "External-Audit",
                         "parent_id" => $data2->parent_id,
                         "parent_type" => $data2->parent_type,

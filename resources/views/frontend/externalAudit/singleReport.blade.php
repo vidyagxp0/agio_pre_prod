@@ -218,9 +218,9 @@
                     </tr>
                     <tr>
                         <th class="w-20">Description</th>
-                        <td class="w-30">@if($data->initial_comments){{ $data->initial_comments }} @else Not Applicable @endif</td>
+                        <td class="w-80">@if($data->initial_comments){{ $data->initial_comments }} @else Not Applicable @endif</td>
                         <th class="w-20">If Others</th>
-                        <td class="w-30">@if($data->if_other){{ $data->if_other }}@else Not Applicable @endif</td>                       
+                        <td class="w-80">@if($data->if_other){{ $data->if_other }}@else Not Applicable @endif</td>                       
                     </tr>
                     <tr>
                         <th class="w-20">Assigned To</th>
@@ -315,65 +315,138 @@
                   Audit Preparation
                 </div>
                 <table>
-                   
                     <tr>
                         <th class="w-20">Lead Auditor</th>
-                        <td class="w-30">@if($data->lead_auditor){{ Helpers::getInitiatorName($data->lead_auditor) }}@else Not Applicable @endif</td>
-                        <th class="w-20">External Auditor Details</th>
-                        <td class="w-30">@if($data->Auditor_Details){{ $data->Auditor_Details }}@else Not Applicable @endif</td>
+                        <td class="w-80">
+                            @if($data->lead_auditor)
+                                {{ Helpers::getInitiatorName($data->lead_auditor) }}
+                            @else
+                                Not Applicable
+                            @endif
+                        </td>
                     </tr>
                     <tr>
+                        <th class="w-20">External Auditor Details</th>
+                        <td class="w-80">
+                            @if(!empty($data->Auditor_Details))
+                                {{ $data->Auditor_Details }}
+                            @else
+                                Not Applicable
+                            @endif
+                        </td>
+                        </tr>
+                        <tr>
                         <th class="w-20">External Auditing Agency</th>
-                        <td class="w-30">@if($data->External_Auditing_Agency){{ $data->External_Auditing_Agency }}@else Not Applicable @endif</td>
+                        <td class="w-80">
+                            @if(!empty($data->External_Auditing_Agency))
+                                {{ $data->External_Auditing_Agency }}
+                            @else
+                                Not Applicable
+                            @endif
+                        </td>
+                    </tr>
+
+
+                    <tr>
                         <th class="w-20">Relevant Guidelines / Industry Standards</th>
-                        <td class="w-30">@if($data->Relevant_Guidelines){{ $data->Relevant_Guidelines }}@else Not Applicable @endif</td>
+                        <td class="w-80">
+                            @if($data->Relevant_Guidelines)
+                                {{ $data->Relevant_Guidelines }}
+                            @else
+                                Not Applicable
+                            @endif
+                        </td>
                     </tr>
                     <tr>
                         <th class="w-20">QA Comments</th>
-                        <td class="w-30">@if($data->QA_Comments){{$data->QA_Comments}}@else Not Applicable @endif</td>
+                        <td class="w-80">
+                            @if($data->QA_Comments)
+                                {{ $data->QA_Comments }}
+                            @else
+                                Not Applicable
+                            @endif
+                        </td>
+                        </tr>
+                        <tr>
                         <th class="w-20">Guideline Attachment</th>
-                        <td class="w-30">@if($data->file_attachment_guideline){{ $data->file_attachment_guideline }}@else Not Applicable @endif</td>
+                        <td class="w-80">
+                            @if($data->file_attachment_guideline)
+                                {{ $data->file_attachment_guideline }}
+                            @else
+                                Not Applicable
+                            @endif
+                        </td>
                     </tr>
                     <tr>
                         <th class="w-20">Audit Category</th>
-                        <td class="w-30">@if($data->Audit_Category){{ Helpers::getInitiatorName($data->Audit_Category) }}@else Not Applicable @endif</td>
-                        
+                        <td class="w-80">
+                            @if($data->Audit_Category)
+                                {{ Helpers::getInitiatorName($data->Audit_Category) }}
+                            @else
+                                Not Applicable
+                            @endif
+                        </td>
                     </tr>
                     <tr>
                         <th class="w-20">Supplier/Vendor/Manufacturer Site</th>
-                        <td class="w-30">@if($data->Supplier_Site){{$data->Supplier_Site }}@else Not Applicable @endif</td>
+                        <td class="w-80">
+                            @if($data->Supplier_Site)
+                                {{ $data->Supplier_Site }}
+                            @else
+                                Not Applicable
+                            @endif
+                        </td>
+                        </tr>
+                    <tr>
                         <th class="w-20">Supplier/Vendor/Manufacturer Details</th>
-                        <td class="w-30">@if($data->Supplier_Details){{ $data->Supplier_Details }}@else Not Applicable @endif</td>
+                        <td class="w-30">
+                            @if($data->Supplier_Details)
+                                {{ $data->Supplier_Details }}
+                            @else
+                                Not Applicable
+                            @endif
+                        </td>
                     </tr>
-
                     <tr>
                         <th class="w-20">Audit team</th>
-                        <td class="w-30">
+                        <td class="w-80">
                             @if($data->Audit_team)
-                            @foreach (explode(',', $data->Audit_team) as $Key => $value)
-                                <li>{{ Helpers::getInitiatorName($value) }}</li>
-                            @endforeach
-                            @else Not Applicable
+                                <ul>
+                                    @foreach (explode(',', $data->Audit_team) as $value)
+                                        <li>{{ Helpers::getInitiatorName($value) }}</li>
+                                    @endforeach
+                                </ul>
+                            @else
+                                Not Applicable
                             @endif
                         </td>
+                        </tr>
+                    <tr>
                         <th class="w-20">Auditee</th>
-                        <td class="w-30">
+                        <td class="w-80">
                             @if($data->Auditee)
-                            @foreach (explode(',', $data->Auditee) as $Key => $value)
-                                <li>{{ Helpers::getInitiatorName($value) }}</li>
-                            @endforeach
-                            @else Not Applicable
+                                <ul>
+                                    @foreach (explode(',', $data->Auditee) as $value)
+                                        <li>{{ Helpers::getInitiatorName($value) }}</li>
+                                    @endforeach
+                                </ul>
+                            @else
+                                Not Applicable
                             @endif
                         </td>
-
                     </tr>
                     <tr>
                         <th class="w-20">Comments</th>
-                        <td class="w-30">@if($data->Comments){{ $data->Comments }}@else Not Applicable @endif</td>
-                        {{-- <th class="w-20">Audit Comments</th>
-                        <td class="w-30">@if($data->Audit_Comments1){{ $data->Audit_Comments1 }}@else Not Applicable @endif</td> --}}
+                        <td class="w-80">
+                            @if($data->Comments)
+                                {{ $data->Comments }}
+                            @else
+                                Not Applicable
+                            @endif
+                        </td>
                     </tr>
                 </table>
+
             </div>
             <div class="border-table">
                 <div class="block-head">

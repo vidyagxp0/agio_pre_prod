@@ -1791,12 +1791,15 @@ class AuditeeController extends Controller
 
     public function AuditTrialExternalShow($id)
     {
-        $audit = AuditTrialExternal::where('ExternalAudit_id', $id)->orderByDESC('id')->get()->unique('activity_type');
+        // $audit = AuditTrialExternal::where('ExternalAudit_id', $id)->orderByDESC('id')->get()->unique('activity_type');
+        $audit = AuditTrialExternal::where('ExternalAudit_id', $id)->orderByDESC('id')->paginate(5);
         $today = Carbon::now()->format('d-m-y');
         $document = Auditee::where('id', $id)->first();
         $document->initiator = User::where('id', $document->initiator_id)->value('name');
-        return view('frontend.externalAudit.audit-trial', compact('audit', 'document', 'today'));
+      //  return view('frontend.externalAudit.audit-trial', compact('audit', 'document', 'today'));
+      return view('frontend.externalAudit.new_audit_trail', compact('audit', 'document', 'today'));
     }
+
 
 
     public function AuditTrialExternalDetails($id)

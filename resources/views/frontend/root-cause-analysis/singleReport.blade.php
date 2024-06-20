@@ -525,52 +525,64 @@
      <div class="block-head">
         Is/Is Not Analysis
     </div>
+<div style="max-width: 700px!important; overflow: hidden;">
     <table>
-    - <tr>
-        <th class="w-20">What Will Be</th>
-        <td class="w-80">@if($data->what_will_be){{ $data->what_will_be }}@else Not Applicable @endif</td>
-        <th class="w-20">What Will Not Be </th>
-        <td class="w-80">@if($data->what_will_not_be){{ $data->what_will_not_be }}@else Not Applicable @endif</td>
-        <th class="w-20">What Will Rationale </th>
-        <td class="w-80">@if($data->what_rationable){{ $data->what_rationable }}@else Not Applicable @endif</td>
-    </tr>
-       <tr>
-        <th class="w-20">Where Will Be</th>
-        <td class="w-80">@if($data->where_will_be){{ $data->where_will_be }}@else Not Applicable @endif</td>
-        <th class="w-20">Where Will Not Be </th>
-        <td class="w-80">@if($data->where_will_not_be){{ $data->where_will_not_be }}@else Not Applicable @endif</td>
-        <th class="w-20">Where Will Rationale </th>
-        <td class="w-80">@if($data->where_rationable){{ $data->where_rationable }}@else Not Applicable @endif</td>
-    </tr>
-    <tr>
-        <th class="w-20">When Will Be</th>
-        <td class="w-80">@if($data->when_will_be){{ $data->when_will_be }}@else Not Applicable @endif</td>
-        <th class="w-20">When Will Not Be </th>
-        <td class="w-80">@if($data->when_will_not_be){{ $data->when_will_not_be }}@else Not Applicable @endif</td>
-        <th class="w-20">When Will Rationale </th>
-        <td class="w-80">@if($data->when_rationable){{ $data->when_rationable }}@else Not Applicable @endif</td>
-    </tr>
-    <tr>
-        <th class="w-20">Coverage Will Be</th>
-        <td class="w-80">@if($data->coverage_will_be){{ $data->coverage_will_be }}@else Not Applicable @endif</td>
-        <th class="w-20">Coverage Will Not Be </th>
-        <td class="w-80">@if($data->coverage_will_not_be){{ $data->coverage_will_not_be }}@else Not Applicable @endif</td>
-        <th class="w-20">Coverage Will Rationale </th>
-        <td class="w-80">@if($data->coverage_rationable){{ $data->coverage_rationable }}@else Not Applicable @endif</td>
-      
-    </tr> 
-    <tr>
-        <th class="w-20">Who Will Be</th>
-        <td class="w-80">@if($data->who_will_be){{ $data->who_will_be }}@else Not Applicable @endif</td>
-        <th class="w-20">Who Will Not Be </th>
-        <td class="w-80">@if($data->who_will_not_be){{ $data->who_will_not_be }}@else Not Applicable @endif</td>
-        <th class="w-20">Who Will Rationale </th>
-        <td class="w-80">@if($data->who_rationable){{ $data->who_rationable }}@else Not Applicable @endif</td>
-      
-    </tr> 
-</table>        
-                </div>
-            </div>
+        <tr>
+            <th class="20">What Will Be</th>
+            <td class="80">@if($data->what_will_be){{ $data->what_will_be }}@else Not Applicable @endif</td>
+          
+            <th class="20">What Will Not Be </th>
+            <td class="80">@if($data->what_will_not_be){{ $data->what_will_not_be }}@else Not Applicable @endif</td>   
+        </tr>
+        <tr>   
+            <th class="20">What Will Rationale </th>
+            <td class="80">@if($data->what_rationable){{ $data->what_rationable }}@else Not Applicable @endif</td>
+        
+            <th class="w-20">Where Will Be</th>
+            <td class="w-80">@if($data->where_will_be){{ $data->where_will_be }}@else Not Applicable @endif</td>
+        </tr>  
+            <th class="w-20">Where Will Not Be </th>
+            <td class="w-80">@if($data->where_will_not_be){{ $data->where_will_not_be }}@else Not Applicable @endif</td>
+            <th class="w-20">Where Will Rationale </th>
+            <td class="w-80">@if($data->where_rationable){{ $data->where_rationable }}@else Not Applicable @endif</td>
+        </tr>
+        <tr>
+            <th class="w-20">When Will Be</th>
+            <td class="w-80">@if($data->when_will_be){{ $data->when_will_be }}@else Not Applicable @endif</td>
+            <th class="w-20">When Will Not Be </th>
+            <td class="w-80">@if($data->when_will_not_be){{ $data->when_will_not_be }}@else Not Applicable @endif</td>
+        </tr>
+        <tr>  
+            <th class="w-20">When Will Rationale </th>
+            <td class="w-80">@if($data->when_rationable){{ $data->when_rationable }}@else Not Applicable @endif</td>
+       
+            <th class="w-20">Coverage Will Be</th>
+            <td class="w-80">@if($data->coverage_will_be){{ $data->coverage_will_be }}@else Not Applicable @endif</td>
+        </tr>
+        <tr>   
+
+            <th class="w-20">Coverage Will Not Be </th>
+            <td class="w-80">@if($data->coverage_will_not_be){{ $data->coverage_will_not_be }}@else Not Applicable @endif</td>
+            <th class="w-20">Coverage Will Rationale </th>
+            <td class="w-80">@if($data->coverage_rationable){{ $data->coverage_rationable }}@else Not Applicable @endif</td>
+        
+        </tr> 
+        <tr>
+            <th class="w-20">Who Will Be</th>
+            <td class="w-80">@if($data->who_will_be){{ $data->who_will_be }}@else Not Applicable @endif</td>
+            <th class="w-20">Who Will Not Be </th>
+            <td class="w-80">@if($data->who_will_not_be){{ $data->who_will_not_be }}@else Not Applicable @endif</td>
+        </tr>
+        <tr>
+
+           
+            <th class="w-20">Who Will Rationale </th>
+            <td class="w-80">@if($data->who_rationable){{ $data->who_rationable }}@else Not Applicable @endif</td>
+        
+        </tr> 
+    </table>        
+               
+</div>
             <div class="block">
                 <div class="block-head">
                     QA Review
@@ -632,7 +644,7 @@
                         <th class="w-20">Submited On</th>
                         <td class="w-30">{{ Helpers::getdateFormat($data->submitted_on) }}</td>
                     </tr>
-                     <tr>
+                    <tr>
                         <th class="w-20">QA Review Completed By</th>
                         <td class="w-30">{{ $data->qA_review_complete_by }}</td>
                         <th class="w-20">QA Review Completed On</th>

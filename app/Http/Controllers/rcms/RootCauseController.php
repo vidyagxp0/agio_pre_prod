@@ -1049,12 +1049,12 @@ use Illuminate\Support\Facades\Hash;
 
     public function rootAuditTrial($id)
     {
-        $audit = RootAuditTrial::where('root_id', $id)->orderByDESC('id')->get()->unique('activity_type');
+        $audit = RootAuditTrial::where('root_id', $id)->orderByDESC('id')->paginate(5);
         $today = Carbon::now()->format('d-m-y');
         $document = RootCauseAnalysis::where('id', $id)->first();
         $document->initiator = User::where('id', $document->initiator_id)->value('name');
 
-        return view("frontend.root-cause-analysis.root-audit-trail", compact('audit', 'document', 'today'));
+        return view("frontend.root-cause-analysis.new_root_AuditTrail", compact('audit', 'document', 'today'));
     }
 
     public function auditDetailsroot($id)

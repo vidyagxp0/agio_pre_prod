@@ -67,15 +67,15 @@ return new class extends Migration
             $table->longText('Root_Cause_Sub_Category')->nullable();
             $table->longText('Probability')->nullable();
             $table->longText('Remarks')->nullable();
-            $table->string('action')->nullable();
+            $table->longText('action')->nullable();
             $table->string('responsible')->nullable();
             $table->string('deadline')->nullable();
-            $table->string('item_static')->nullable();
-            $table->string('mitigation_steps')->nullable();
-            $table->string('deadline2')->nullable();
-            $table->string('responsible_person')->nullable();
+            $table->longText('item_static')->nullable();
+            $table->longtext('mitigation_steps')->nullable();
+            $table->longtext('deadline2')->nullable();
+            $table->longtext('responsible_person')->nullable();
             $table->string('status')->nullable();
-            $table->string('remark')->nullable();
+            $table->longtext('remark')->nullable();
 
             $table->timestamps();
         });

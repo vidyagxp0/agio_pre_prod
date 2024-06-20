@@ -510,15 +510,15 @@
                                             <label for="Site Name">Site Name</label>
                                             <select name="site_name" id="site_name">
                                                 <option value="">Enter Your Selection Here</option>
-                                                <option value="1">City MFR A</option>
-                                                <option value="2">City MFR B</option>
-                                                <option value="3">City MFR C</option>
-                                                <option value="4">Complex A</option>
-                                                <option value="5">Complex B</option>
-                                                <option value="6">Maerketing A</option>
-                                                <option value="7">Maerketing B</option>
-                                                <option value="8">Maerketing C</option>
-                                                <option value="9">Oceanside</option>
+                                                <option value="City MFR A">City MFR A</option>
+                                                <option value="City MFR B">City MFR B</option>
+                                                <option value="City MFR C">City MFR C</option>
+                                                <option value="Complex A">Complex A</option>
+                                                <option value="Complex B">Complex B</option>
+                                                <option value="Marketing A">Marketing A</option>
+                                                <option value="Marketing B">Marketing B</option>
+                                                <option value="Marketing C">Marketing C</option>
+                                                <option value="Oceanside">Oceanside</option>
                                             </select>
                                         </div>
                                     </div>
@@ -580,13 +580,13 @@
                                             <label for="Duration">Duration</label>
                                             <select name="duration" id="duration">
                                                 <option value="">Enter Your Selection Here</option>
-                                                <option value="1">2 hours</option>
-                                                <option value="2">4 hours</option>
-                                                <option value="3">8 hours</option>
-                                                <option value="4">16 hours</option>
-                                                <option value="5">24 hours</option>
-                                                <option value="6">36 hours</option>
-                                                <option value="7">72 hours</option>
+                                                <option value="2 hours">2 hours</option>
+                                                <option value="4 hours">4 hours</option>
+                                                <option value="8 hours">8 hours</option>
+                                                <option value="16 hours">16 hours</option>
+                                                <option value="24 hours">24 hours</option>
+                                                <option value="36 hours">36 hours</option>
+                                                <option value="72 hours">72 hours</option>
                                             </select>
                                         </div>
                                     </div>
@@ -595,63 +595,63 @@
                                             <label for="Hazard">Hazard</label>
                                             <select name="hazard" id="hazard">
                                                 <option value="">Enter Your Selection Here</option>
-                                                <option value="1">Confined Space</option>
-                                                <option value="2">Electrical</option>
-                                                <option value="3">Energy use</option>
-                                                <option value="4">Ergonomics</option>
-                                                <option value="5">Machine Guarding</option>
-                                                <option value="6">Material Storage</option>
-                                                <option value="7">Material use</option>
-                                                <option value="8">Pressure</option>
-                                                <option value="9">Thermal</option>
-                                                <option value="10">Water use</option>
+                                                <option value="Confined Space">Confined Space</option>
+                                                <option value="Electrical">Electrical</option>
+                                                <option value="Energy use">Energy use</option>
+                                                <option value="Ergonomics">Ergonomics</option>
+                                                <option value="Machine Guarding">Machine Guarding</option>
+                                                <option value="Material Storage">Material Storage</option>
+                                                <option value="Material use">Material use</option>
+                                                <option value="Pressure">Pressure</option>
+                                                <option value="Thermal">Thermal</option>
+                                                <option value="Water use">Water use</option>
                                             </select>
                                         </div>
                                     </div>
                                     <div class="col-lg-6">
                                         <div class="group-input">
                                             <label for="Room">Room</label>
-                                            <select name="room2" id="room2">
+                                              <select name="room2" id="room2">
                                                 <option value="">Enter Your Selection Here</option>
-                                                <option value="1">Automation</option>
-                                                <option value="2">Biochemistry</option>
-                                                <option value="3">Blood Collection</option>
-                                                <option value="4">Enter Yo</option>
-                                                <option value="5">Buffer Preparation</option>
-                                                <option value="6">Bulk Fill</option>
-                                                <option value="7">Calibration</option>
-                                                <option value="8">Component Manufacturing</option>
-                                                <option value="9">Computer</option>
-                                                <option value="10">Computer / Automated Systems</option>
-                                                <option value="11">Despensing Donor Suitability</option>
-                                                <option value="12">Filling</option>
-                                                <option value="13">Filtration</option>
-                                                <option value="14">Formulation</option>
-                                                <option value="15">Incoming QA</option>
-                                                <option value="16">Hazard</option>
-                                                <option value="17">Laboratory</option>
-                                                <option value="18">Laboratory Support Facility</option>
-                                                <option value="19">Enter Your</option>
-                                                <option value="20">Lot Release</option>
-                                                <option value="21">Manufacturing</option>
-                                                <option value="22">Materials Management</option>
-                                                <option value="23">Room</option>
-                                                <option value="24">Operations</option>
-                                                <option value="25">Packaging</option>
-                                                <option value="26">Plant Engineering</option>
-                                                <option value="27">Enter Your Sele</option>
-                                                <option value="29">Njown</option>
-                                                <option value="30">Powder Filling</option>
-                                                <option value="31">Process Development</option>
-                                                <option value="32">Product Distribution</option>
-                                                <option value="33">Product Testing</option>
-                                                <option value="34">Production Purification</option>
-                                                <option value="35">QA</option>
-                                                <option value="36">QA Laboratory Quality Control</option>
-                                                <option value="37">Quality Control / Assurance</option>
-                                                <option value="38">Sanitization</option>
-                                                <option value="39">Shipping/Distribution Storage/Distribution</option>
-                                                <option value="40">Storage and Distribution</option>
+                                                <option value="Automation">Automation</option>
+                                                <option value="Biochemistry">Biochemistry</option>
+                                                <option value="Blood Collection">Blood Collection</option>
+                                                <option value="Enter Yo">Enter Yo</option>
+                                                <option value="Buffer Preparation">Buffer Preparation</option>
+                                                <option value="Bulk Fill">Bulk Fill</option>
+                                                <option value="Calibration">Calibration</option>
+                                                <option value="Component Manufacturing">Component Manufacturing</option>
+                                                <option value="Computer">Computer</option>
+                                                <option value="Computer / Automated Systems">Computer / Automated Systems</option>
+                                                <option value="Despensing Donor Suitability">Despensing Donor Suitability</option>
+                                                <option value="Filling">Filling</option>
+                                                <option value="Filtration">Filtration</option>
+                                                <option value="Formulation">Formulation</option>
+                                                <option value="Incoming QA">Incoming QA</option>
+                                                <option value="Hazard">Hazard</option>
+                                                <option value="Laboratory">Laboratory</option>
+                                                <option value="Laboratory Support Facility">Laboratory Support Facility</option>
+                                                <option value="Enter Your">Enter Your</option>
+                                                <option value="Lot Release">Lot Release</option>
+                                                <option value="Manufacturing">Manufacturing</option>
+                                                <option value="Materials Management">Materials Management</option>
+                                                <option value="Room">Room</option>
+                                                <option value="Operations">Operations</option>
+                                                <option value="Packaging">Packaging</option>
+                                                <option value="Plant Engineering">Plant Engineering</option>
+                                                <option value="Enter Your Sele">Enter Your Sele</option>
+                                                <option value="Njown">Njown</option>
+                                                <option value="Powder Filling">Powder Filling</option>
+                                                <option value="Process Development">Process Development</option>
+                                                <option value="Product Distribution">Product Distribution</option>
+                                                <option value="Product Testing">Product Testing</option>
+                                                <option value="Production Purification">Production Purification</option>
+                                                <option value="QA">QA</option>
+                                                <option value="QA Laboratory Quality Control">QA Laboratory Quality Control</option>
+                                                <option value="Quality Control / Assurance">Quality Control / Assurance</option>
+                                                <option value="Sanitization">Sanitization</option>
+                                                <option value="Shipping/Distribution Storage/Distribution">Shipping/Distribution Storage/Distribution</option>
+                                                <option value="Storage and Distribution">Storage and Distribution</option>
                                             </select>
                                         </div>
                                     </div>
@@ -660,56 +660,39 @@
                                             <label for="Regulatory Climate">Regulatory Climate</label>
                                             <select name="regulatory_climate" id="regulatory_climate">
                                                 <option value="">Enter Your Selection Here</option>
-                                                <option value="1">0. No significant regulatory issues affecting operation
-                                                </option>
-                                                <option value="2">1. Some regulatory or enforcement changes potentially
-                                                    affecting
-                                                    operation are
-                                                    anticipated </option>
-                                                <option value="3">2. A few regulatory or enforcement changes affect
-                                                    operations</option>
-                                                <option value="4">3. Regulatory and enforcement changes affect operation
-                                                </option>
-                                                <option value="5">4. Significant programatic regulatory and enforcement
-                                                    changes affect
-                                                    operation
-                                                </option>
-                                                <option value="2">1. Some regulatory or enforcement changes potentially
-                                                    affecting operation are anticipated </option>
-                                                <option value="3">2. A few regulatory or enforcement changes affect
-                                                    operations</option>
-                                                <option value="4">3. Regulatory and enforcement changes affect operation
-                                                </option>
-                                                <option value="5">4. Significant programatic regulatory and enforcement
-                                                    changes affect operation</option>
+                                                <option value="0. No significant regulatory issues affecting operation">0. No significant regulatory issues affecting operation</option>
+                                                <option value="1. Some regulatory or enforcement changes potentially affecting operation are anticipated">1. Some regulatory or enforcement changes potentially affecting operation are anticipated</option>
+                                                <option value="2. A few regulatory or enforcement changes affect operations">2. A few regulatory or enforcement changes affect operations</option>
+                                                <option value="3. Regulatory and enforcement changes affect operation">3. Regulatory and enforcement changes affect operation</option>
+                                                <option value="4. Significant programatic regulatory and enforcement changes affect operation">4. Significant programatic regulatory and enforcement changes affect operation</option>
                                             </select>
                                         </div>
                                     </div>
                                     <div class="col-lg-6">
                                         <div class="group-input">
                                             <label for="Number of Employees">Number of Employees</label>
-                                            <select name="Number_of_employees" id="Number_of_employees">
-                                                <option value="">Enter Your Selection Here</option>
-                                                <option value="1">0-50</option>
-                                                <option value="2">50-100</option>
-                                                <option value="3">100-200</option>
-                                                <option value="4">200-300</option>
-                                                <option value="5">300-500</option>
-                                                <option value="6">500-1000</option>
-                                                <option value="7">1000+</option>
-                                            </select>
+                                                <select name="Number_of_employees" id="Number_of_employees">
+                                                    <option value="">Enter Your Selection Here</option>
+                                                    <option value="0-50">0-50</option>
+                                                    <option value="50-100">50-100</option>
+                                                    <option value="100-200">100-200</option>
+                                                    <option value="200-300">200-300</option>
+                                                    <option value="300-500">300-500</option>
+                                                    <option value="500-1000">500-1000</option>
+                                                    <option value="1000+">1000+</option>
+                                                </select>
                                         </div>
                                     </div>
                                     <div class="col-lg-6">
                                         <div class="group-input">
                                             <label for="Risk Management Strategy">Risk Management Strategy</label>
-                                            <select name="risk_management_strategy" id="risk_management_strategy">
-                                                <option value="">Enter Your Selection Here</option>
-                                                <option value="1">Accept</option>
-                                                <option value="2">Avoid the Risk</option>
-                                                <option value="3">Mitigate</option>
-                                                <option value="4">Transfer</option>
-                                            </select>
+                                                <select name="risk_management_strategy" id="risk_management_strategy">
+                                                    <option value="">Enter Your Selection Here</option>
+                                                    <option value="Accept">Accept</option>
+                                                    <option value="Avoid the Risk">Avoid the Risk</option>
+                                                    <option value="Mitigate">Mitigate</option>
+                                                    <option value="Transfer">Transfer</option>
+                                                </select>
                                         </div>
                                     </div>
                                 </div>
@@ -772,26 +755,29 @@
                                     <div class="col-lg-6">
                                         <div class="group-input">
                                             <label for="Currency">Currency</label>
-                                            <select name="currency" id="currency">
+                                             <select name="currency" id="currency">
                                                 <option value="">Enter Your Selection Here</option>
-                                                <option value="1">ARS-Argentine Peso</option>
-                                                <option value="2">AUD-Australian Dollar</option>
-                                                <option value="3">BRL-Brazilian Real CAD-Canadian Dollar</option>
-                                                <option value="4">CHF-Swiss Franc</option>
-                                                <option value="5">CNY-Chinese Yuan</option>
-                                                <option value="6">EUR-Euro</option>
-                                                <option value="7">HKD-Hong Kong Dollar ILS-Israeli New Sheqel</option>
-                                                <option value="8">INR-Indian Rupee JPY-Japanese Yen</option>
-                                                <option value="9">KRW-South Korean Won</option>
-                                                <option value="10">MXN-Mexican Peso</option>
-                                                <option value="11">RUB-Russian Rouble</option>
-                                                <option value="12">SAR-Saudi Riyal</option>
-                                                <option value="13">TRY-Turkish Lira</option>
-                                                <option value="14">USD-US Dollar</option>
-                                                <option value="15">XAG-Silver</option>
-                                                <option value="16">XAU-Gold</option>
-                                                <option value="17">XPD-Palladium</option>
-                                                <option value="18">XPT-Platinum</option>
+                                                <option value="ARS-Argentine Peso">ARS-Argentine Peso</option>
+                                                <option value="AUD-Australian Dollar">AUD-Australian Dollar</option>
+                                                <option value="BRL-Brazilian Real">BRL-Brazilian Real</option>
+                                                <option value="CAD-Canadian Dollar">CAD-Canadian Dollar</option>
+                                                <option value="CHF-Swiss Franc">CHF-Swiss Franc</option>
+                                                <option value="CNY-Chinese Yuan">CNY-Chinese Yuan</option>
+                                                <option value="EUR-Euro">EUR-Euro</option>
+                                                <option value="HKD-Hong Kong Dollar">HKD-Hong Kong Dollar</option>
+                                                <option value="ILS-Israeli New Sheqel">ILS-Israeli New Sheqel</option>
+                                                <option value="INR-Indian Rupee">INR-Indian Rupee</option>
+                                                <option value="JPY-Japanese Yen">JPY-Japanese Yen</option>
+                                                <option value="KRW-South Korean Won">KRW-South Korean Won</option>
+                                                <option value="MXN-Mexican Peso">MXN-Mexican Peso</option>
+                                                <option value="RUB-Russian Rouble">RUB-Russian Rouble</option>
+                                                <option value="SAR-Saudi Riyal">SAR-Saudi Riyal</option>
+                                                <option value="TRY-Turkish Lira">TRY-Turkish Lira</option>
+                                                <option value="USD-US Dollar">USD-US Dollar</option>
+                                                <option value="XAG-Silver">XAG-Silver</option>
+                                                <option value="XAU-Gold">XAU-Gold</option>
+                                                <option value="XPD-Palladium">XPD-Palladium</option>
+                                                <option value="XPT-Platinum">XPT-Platinum</option>
                                             </select>
                                         </div>
                                     </div>
@@ -835,43 +821,51 @@
                                     Action Plan
                                 </div>
                                 <div class="row">
-                                    <div class="col-12">
-                                        <div class="group-input">
-                                            <label for="Product/Material">
-                                                Action Plan<button type="button" name="ann"
-                                                    id="action_plan">+</button>
-                                            </label>
-                                            <table class="table table-bordered" id="action_plan_details">
-                                                <thead>
-                                                    <tr>
-                                                        <th>Row #</th>
-                                                        <th>Action</th>
-                                                        <th>Responsible Person</th>
-                                                        <th>Deadline</th>
-                                                        <th>Item static</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                    <td><input disabled ="text" name="serial_number[]" value="1"></td>
-                                                    <td><input type="text" name="action[]"></td>
-                                                    {{-- <td><input type="text" name="responsible[]"></td> --}}
-                                                    <td> <select id="select-state" placeholder="Select..." name="responsible[]">
-                                                        <option value="">Select a value</option>
-                                                        @foreach ($users as $data)
-                                                            <option value="{{ $data->id }}">{{ $data->name }}
-                                                            </option>
-                                                        @endforeach
-                                                    </select></td>
-                                                    {{-- <td><input type="date" name="deadline[]"></td> --}}
-                                                    <td><div class="group-input new-date-data-field mb-0">
-                                                        <div class="input-date "><div
-                                                        class="calenderauditee">
-                                                        <input type="text" id="deadline' + serialNumber +'" readonly placeholder="DD-MMM-YYYY" />
-                                                        <input type="date" name="deadline[]" class="hide-input" 
-                                                        oninput="handleDateInput(this, `deadline' + serialNumber +'`)" /></div></div></div></td>
-                                                    <td><input type="text" name="item_static[]"></td>
-                                                </tbody>
-                                            </table>
+                                      <div class="container-fluid">
+                                        <div class="col-12">
+                                            <div class="group-input">
+                                                <label for="Product/Material">
+                                                    Action Plan<button type="button" name="ann" id="action_plan">+</button>
+                                                </label>
+                                                <table class="table table-bordered" id="action_plan_details">
+                                                    <thead>
+                                                        <tr>
+                                                            <th style="width:78px;">Row #</th>
+                                                            <th>Action</th>
+                                                            <th>Responsible Person</th>
+                                                            <th>Deadline</th>
+                                                            <th>Item static</th>
+                                                            <th>Actions</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr>
+                                                            <td><input type="text" name="serial_number[]" value="1" disabled></td>
+                                                            <td><input type="text" name="action[]"></td>
+                                                            <td>
+                                                                <select id="select-state" placeholder="Select..." name="responsible[]">
+                                                                    <option value="">Select a value</option>
+                                                                    @foreach ($users as $user)
+                                                                        <option value="{{ $user->id }}">{{ $user->name }}</option>
+                                                                    @endforeach
+                                                                </select>
+                                                            </td>
+                                                            <td>
+                                                                <div class="group-input new-date-data-field mb-0">
+                                                                    <div class="input-date">
+                                                                        <div class="calenderauditee">
+                                                                            <input type="text" id="deadline1" readonly placeholder="DD-MMM-YYYY" />
+                                                                            <input type="date" name="deadline[]" class="hide-input" oninput="handleDateInput(this, 'deadline1')" />
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </td>
+                                                            <td><input type="text" name="item_static[]"></td>
+                                                            <td><button type="button" class="removeRowBtn">Remove</button></td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
                                         </div>
                                     </div>
                                     {{-- <div class="col-12">
@@ -926,7 +920,7 @@
                                         </div>
                                     </div>
                                     <div class="col-12 sub-head"></div>
-                                    <div class="col-12 mb-4">
+                                     <div class="col-12 mb-4">
                                         <div class="group-input">
                                             <label for="agenda">
                                                 Failure Mode and Effect Analysis<button type="button" name="agenda"
@@ -957,6 +951,7 @@
                                                             <th>Mitigation proposal (Mention either CAPA reference number, IQ,
                                                                 OQ or
                                                                 PQ)</th>
+                                                            <th>Action</th>   
                                                         </tr>
                                                     </thead>
                                                     <tbody>
@@ -965,6 +960,8 @@
                                             </div>
                                         </div>
                                     </div>
+
+
                                     <div class="col-12 sub-head"></div>
                                     <div class="col-12">
                                         <div class="group-input">
@@ -1212,7 +1209,7 @@
                                     Risk Analysis
                                 </div>
                                 <div class="row">
-                                    <div class="col-lg-6">
+                                   <div class="col-lg-6">
                                         <div class="group-input">
                                             <label for="Severity Rate">Severity Rate</label>
                                             <select name="severity_rate" id="analysisR"
@@ -1278,7 +1275,7 @@
                                             <input type="text" name="residual_risk" id="residual_risk">
                                         </div>
                                     </div>
-                                    <div class="col-lg-6">
+                                   <div class="col-lg-6">
                                         <div class="group-input">
                                             <label for="Residual Risk Impact">Residual Risk Impact</label>
                                             <select name="residual_risk_impact" id="analysisR2"
@@ -1322,6 +1319,7 @@
                                             <input type="text" name="rpn2" id="analysisRPN2" value="" readonly>
                                         </div>
                                     </div>
+
                                     <div class="col-12">
                                         <div class="group-input">
                                             <label for="Comments">Comments</label>
@@ -1340,56 +1338,57 @@
 
                         <div id="CCForm6" class="inner-block cctabcontent">
                             <div class="inner-block-content">
-                                <div class="row">
-                                    <div class="col-12">
-                                        <div class="group-input">
-                                            <label for="mitigation_plan_details">
-                                                Mitigation Plan Details<button type="button" name="ann"
-                                                    id="action_plan2">+</button>
-                                            </label>
-                                            <table class="table table-bordered" id="action_plan_details2">
-                                                <thead>
-                                                    <tr>
-                                                        <th>Row #</th>
-                                                        <th>Mitigation Steps</th>
-                                                        <th>
-                                                            Deadline
-                                                            {{-- Input Type Date --}}
-                                                        </th>
-                                                        <th>
-                                                            Responsible Person
-                                                            {{-- Person type Data Field --}}
-                                                        </th>
-                                                        <th>Status</th>
-                                                        <th>Remarks</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                    <td><input disabled type="text" name="serial_number[]" value="1"></td>
-                                                    <td><input type="text" name="mitigation_steps[]"></td>
-                                                    {{-- <td><input type="date" name="deadline2[]"></td>  --}}
-                                                    <td><div class="group-input new-date-data-field mb-0">
-                                                        <div class="input-date "><div
-                                                        class="calenderauditee">
-                                                        <input type="text" id="deadline2' + serialNumber +'" readonly placeholder="DD-MMM-YYYY" />
-                                                        <input type="date" name="deadline2[]" class="hide-input" 
-                                                        oninput="handleDateInput(this, `deadline2' + serialNumber +'`)" /></div></div></div></td>
-                                                    {{-- <td><input type="text" name="item_static[]"></td> --}}
-                                                    
-
-                                                    <td> <select id="select-state" placeholder="Select..." name="responsible_person[]">
-                                                        <option value="">Select a value</option>
-                                                        @foreach ($users as $data)
-                                                            <option value="{{ $data->id }}">{{ $data->name }}
-                                                            </option>
-                                                        @endforeach
-                                                    </select></td>
-                                                    <td><input type="text" name="status[]"></td>
-                                                    <td><input type="text" name="remark[]"></td>
-                                                </tbody>
-                                            </table>
+<div class="container-fluid">
+        <div class="col-12">
+            <div class="group-input">
+                <label for="mitigation_plan_details">
+                    Mitigation Plan Details <button type="button" name="ann" id="action_plan2" onclick="addMitigationPlan('action_plan_details02')">+</button>
+                </label>
+                <div class="table-responsive">
+                    <table class="table table-bordered" id="action_plan_details02">
+                        <thead>
+                            <tr>
+                                <th>Row #</th>
+                                <th>Mitigation Steps</th>
+                                <th>Deadline</th>
+                                <th>Responsible Person</th>
+                                <th>Status</th>
+                                <th>Remarks</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><input type="text" name="serial_number[]" value="1" disabled></td>
+                                <td><input type="text" name="mitigation_steps[]"></td>
+                                <td>
+                                    <div class="group-input new-date-data-field mb-0">
+                                        <div class="input-date">
+                                            <div class="calenderauditee">
+                                                <input type="text" id="deadline2_1" readonly placeholder="DD-MMM-YYYY" />
+                                                <input type="date" name="deadline2[]" class="hide-input" oninput="handleDateInput(this, 'deadline2_1')" />
+                                            </div>
                                         </div>
                                     </div>
+                                </td>
+                                <td>
+                                    <select id="select-state" placeholder="Select..." name="responsible_person[]">
+                                        <option value="">Select a value</option>
+                                        @foreach ($users as $data)
+                                            <option value="{{ $data->id }}">{{ $data->name }}</option>
+                                        @endforeach
+                                    </select>
+                                </td>
+                                <td><input type="text" name="status[]"></td>
+                                <td><input type="text" name="remark[]"></td>
+                                <td><button type="button" class="removeRowBtn">Remove</button></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
                                     <div class="col-12">
                                         <div class="sub-head">Risk Mitigation</div>
                                     </div>
@@ -1441,9 +1440,9 @@
                                             <label for="mitigation-status">Status of Mitigation</label>
                                             <select name="mitigation_status">
                                                 <option value="0">-- Select --</option>
-                                                <option value="green">Green Status</option>
-                                                <option value="amber">Amber Status</option>
-                                                <option value="red">Red Staus</option>
+                                                <option value="Green Status ">Green Status</option>
+                                                <option value="Amber Status">Amber Status</option>
+                                                <option value="Red Staus">Red Staus</option>
                                             </select>
                                         </div>
                                     </div>
@@ -1647,6 +1646,12 @@
                 ele: '#Facility, #Group, #Audit, #Auditee, #root-cause-methodology,#training_require, #reference_record, #related_record, #Initial_attachment'
             });
 
+
+            $(document).on('click', '.removeBtn', function() {
+                console.log('click ');
+                $(this).closest('tr').remove();
+            })
+
             function openCity(evt, cityName) {
                 var i, cctabcontent, cctablinks;
                 cctabcontent = document.getElementsByClassName("cctabcontent");
@@ -1746,77 +1751,132 @@
 
     <script>
         $(document).ready(function() {
-            $('#action_plan').click(function(e) {
-                function generateTableRow(serialNumber) {
-                    var users = @json($users);
-                    console.log(users);
-                    var html =
-                    '<tr>' +
-                        '<td><input disabled type="text" name="serial_number[]" value="' + serialNumber + '"></td>' +
-                        '<td><input type="text" name="action[]"></td>' +
-                        '<td><select name="responsible[]">' +
-                            '<option value="">Select a value</option>';
-
-                        for (var i = 0; i < users.length; i++) {
-                            html += '<option value="' + users[i].id + '">' + users[i].name + '</option>';
-                        }
-
-                        html += '</select></td>' +
-                        // '<td><input type="date" name="deadline[]"></td>'
-                        '<td><div class="group-input new-date-data-field mb-0"><div class="input-date "><div class="calenderauditee"><input type="text" id="deadline' + serialNumber +'" readonly placeholder="DD-MMM-YYYY" /><input type="date" name="deadline[]" class="hide-input" oninput="handleDateInput(this, `deadline' + serialNumber +'`)" /></div></div></div></td>'
-                        +
-                        '<td><input type="text" name="item_static[]"></td>' +
-                        '</tr>';
-
-
-
-                    return html;
-                }
-
-                var tableBody = $('#action_plan_details tbody');
-                var rowCount = tableBody.children('tr').length;
-                var newRow = generateTableRow(rowCount + 1);
-                tableBody.append(newRow);
-            });
-            $('#action_plan2').click(function(e) {
-                function generateTableRow(serialNumber) {
-                    var users = @json($users);
-                    console.log(users);
-                    var html =
-                    '<tr>' +
-                        '<td><input disabled type="text" name="serial_number[]" value="' + serialNumber + '"></td>' +
-                        '<td><input type="text" name="mitigation_steps[]"></td>' +
-                        // '<td><input type="date" name="deadline2[]"></td>' 
-                         '<td><div class="group-input new-date-data-field mb-0"><div class="input-date "><div class="calenderauditee"><input type="text" id="deadline2' + serialNumber +'" readonly placeholder="DD-MMM-YYYY" /><input type="date" name="deadline2[]" class="hide-input" oninput="handleDateInput(this, `deadline2' + serialNumber +'`)" /></div></div></div></td>'
-                        
-                        
-                        +
-                        '<td><select name="responsible_person[]">' +
-                            '<option value="">Select a value</option>';
-
-                        for (var i = 0; i < users.length; i++) {
-                            html += '<option value="' + users[i].id + '">' + users[i].name + '</option>';
-                        }
-
-                        html += '</select></td>' +
-                        '<td><input type="text" name="status[]"></td>' +
-                        '<td><input type="text" name="remark[]"></td>' +
-                        '</tr>';
-
-                    return html;
-                }
-
-                var tableBody = $('#action_plan_details2 tbody');
-                var rowCount = tableBody.children('tr').length;
-                var newRow = generateTableRow(rowCount + 1);
-                tableBody.append(newRow);
-            });
+           
+           
         });
     </script>
+
+    {{--  <script>
+    $(document).on('click', '.removeRowBtn', function() {
+        $(this).closest('tr').remove();
+    })
+    </script>  --}}
+    
     <script>
         var maxLength = 255;
         $('#docname').keyup(function() {
             var textlen = maxLength - $(this).val().length;
             $('#rchars').text(textlen);});
     </script>
-    @endsection
+
+    <script>
+    document.getElementById('action_plan').addEventListener('click', function() {
+        var table = document.getElementById('action_plan_details').getElementsByTagName('tbody')[0];
+        var rowCount = table.rows.length;
+        var newRow = table.insertRow(rowCount);
+        var serialNumber = rowCount + 1;
+
+        var cell1 = newRow.insertCell(0);
+        var cell2 = newRow.insertCell(1);
+        var cell3 = newRow.insertCell(2);
+        var cell4 = newRow.insertCell(3);
+        var cell5 = newRow.insertCell(4);
+        var cell6 = newRow.insertCell(5);
+
+        cell1.innerHTML = '<input type="text" name="serial_number[]" value="' + serialNumber + '" disabled>';
+        cell2.innerHTML = '<input type="text" name="action[]">';
+        cell3.innerHTML = '<select id="select-state" placeholder="Select..." name="responsible[]"><option value="">Select a value</option>@foreach ($users as $user)<option value="{{ $user->id }}">{{ $user->name }}</option>@endforeach</select>';
+        cell4.innerHTML = '<div class="group-input new-date-data-field mb-0"><div class="input-date"><div class="calenderauditee"><input type="text" id="deadline' + serialNumber + '" readonly placeholder="DD-MMM-YYYY" /><input type="date" name="deadline[]" class="hide-input" oninput="handleDateInput(this, \'deadline' + serialNumber + '\')" /></div></div></div>';
+        cell5.innerHTML = '<input type="text" name="item_static[]">';
+        cell6.innerHTML = '<button type="button" class="removeRowBtn">Remove</button>';
+    });
+
+    document.addEventListener('click', function(e) {
+        if (e.target && e.target.classList.contains('removeRowBtn')) {
+            var row = e.target.closest('tr');
+            row.parentNode.removeChild(row);
+        }
+    });
+
+    function handleDateInput(input, targetId) {
+        var target = document.getElementById(targetId);
+        if (target) {
+            target.value = new Date(input.value).toLocaleDateString('en-GB', {
+                day: '2-digit',
+                month: 'short',
+                year: 'numeric'
+            }).replace(/ /g, '-');
+        }
+    }
+</script>
+
+<script>
+    function addMitigationPlan() {
+        var table = document.getElementById('action_plan_details02').getElementsByTagName('tbody')[0];
+        var rowCount = table.rows.length;
+        var serialNumber = rowCount + 1;
+        var newRow = table.insertRow(rowCount);
+
+        newRow.innerHTML = `
+            <td><input type="text" name="serial_number[]" value="${serialNumber}" disabled></td>
+            <td><input type="text" name="mitigation_steps[]"></td>
+            <td>
+                <div class="group-input new-date-data-field mb-0">
+                    <div class="input-date">
+                        <div class="calenderauditee">
+                            <input type="text" id="deadline2_${serialNumber}" readonly placeholder="DD-MMM-YYYY" />
+                            <input type="date" name="deadline2[]" class="hide-input" oninput="handleDateInput(this, 'deadline2_${serialNumber}')" />
+                        </div>
+                    </div>
+                </div>
+            </td>
+            <td>
+                <select id="select-state" placeholder="Select..." name="responsible_person[]">
+                    <option value="">Select a value</option>
+                    @foreach ($users as $data)
+                        <option value="{{ $data->id }}">{{ $data->name }}</option>
+                    @endforeach
+                </select>
+            </td>
+            <td><input type="text" name="status[]"></td>
+            <td><input type="text" name="remark[]"></td>
+            <td><button type="button" class="removeRowBtn">Remove</button></td>
+        `;
+
+        // Reinitialize event listener for the new row's remove button
+        initializeRemoveButtons();
+    }
+
+    function initializeRemoveButtons() {
+        var removeButtons = document.getElementsByClassName('removeRowBtn');
+        for (var i = 0; i < removeButtons.length; i++) {
+            removeButtons[i].onclick = function () {
+                var row = this.closest('tr');
+                row.parentNode.removeChild(row);
+                updateSerialNumbers();
+            };
+        }
+    }
+
+    function updateSerialNumbers() {
+        var table = document.getElementById('action_plan_details02').getElementsByTagName('tbody')[0];
+        var rows = table.getElementsByTagName('tr');
+        for (var i = 0; i < rows.length; i++) {
+            var serialNumberCell = rows[i].getElementsByTagName('td')[0];
+            serialNumberCell.getElementsByTagName('input')[0].value = i + 1;
+        }
+    }
+
+    function handleDateInput(input, targetId) {
+        var target = document.getElementById(targetId);
+        var date = new Date(input.value);
+        var options = { year: 'numeric', month: 'short', day: 'numeric' };
+        target.value = date.toLocaleDateString(undefined, options);
+    }
+
+    // Initialize remove buttons for the first row
+    initializeRemoveButtons();
+</script>
+
+
+@endsection

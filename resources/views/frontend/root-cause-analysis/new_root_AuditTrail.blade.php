@@ -199,15 +199,15 @@
                         @endif
                         <div class="buttons-new">
                             @if ($document->stage < 7 && !(count($userRoleIds) === 1 && in_array(3, $userRoleIds)))
-                                <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#auditReviewer">
+                                {{--  <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#auditReviewer">
                                     Review
-                                </button>
+                                </button>  --}}
                             @endif
-                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#auditViewers">
+                            {{--  <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#auditViewers">
                                 View
-                            </button>
+                            </button>  --}}
                             <button class="button_theme1"><a class="text-white"
-                                    href="{{ url('rcms/devshow/' . $document->id) }}"> Back
+                                    href="{{ url('rootshow/' . $document->id) }}"> Back
                                 </a>
                             </button>
                             <button class="button_theme1" onclick="window.print();">
@@ -224,7 +224,6 @@
                                         margin-left: 100px
                                     }
                                 </style>
-                                      
 
                                 <!-- Modal Header -->
                                 <div class="modal-header">
@@ -327,7 +326,7 @@
                             <div class="heading-new">
                                 Audit Trail
                             </div>
-                               {{--  {{dd($document)}}  --}}
+                        
                             <div> <strong>Record ID.</strong> {{ str_pad($document->record, 4, '0', STR_PAD_LEFT) }}</div>
                             <div style="margin-bottom: 5px;  font-weight: bold;"> Originator
                                 :{{ $document->record_initiator ? $document->record_initiator->name : '' }}</div>
@@ -366,6 +365,7 @@
                         @endphp
 
                         @foreach ($audit as $audits => $dataDemo)
+                                      {{--  {{ dd($audit) }}  --}}
                             <td>{{ $dataDemo ? ($audit->currentPage() - 1) * $audit->perPage() + $audits + 1 : 'Not Applicable' }}
                             </td>
 
@@ -379,7 +379,7 @@
                             <td>
                                 <div>
                                     <strong> Data Field Name :</strong><a
-                                        href="{{ url('DeviationAuditTrialDetails', $dataDemo->id) }}">{{ $dataDemo->activity_type ? $dataDemo->activity_type : 'Not Applicable' }}</a>
+                                        href="{{ url('auditDetailsRoot', $dataDemo->id) }}">{{ $dataDemo->activity_type ? $dataDemo->activity_type : 'Not Applicable' }}</a>
                                 </div>
                                 <div style="margin-top: 5px;">
                                     @if($dataDemo->activity_type == "Activity Log")
