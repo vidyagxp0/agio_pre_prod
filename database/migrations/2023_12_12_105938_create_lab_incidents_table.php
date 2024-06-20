@@ -22,6 +22,7 @@ return new class extends Migration
             $table->integer('initiator_id')->nullable();
             $table->string('division_code')->nullable();
             $table->string('intiation_date')->nullable();
+            $table->string('ccf_attachments')->nullable();
             $table->string('due_date')->nullable();
             $table->integer('parent_id')->nullable();
             $table->string('parent_type')->nullable();

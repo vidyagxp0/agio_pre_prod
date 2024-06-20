@@ -123,10 +123,10 @@
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="group-input">
-                                        <label for="Initiator Group"><b>Initiator Group</b></label>
-                                        <select name="Initiator_Group" id="initiator_group">
+                                        <label for="Initiator Group"><b>Initiator Group</b><span
+                                            class="text-danger">*</span></label>
+                                        <select name="Initiator_Group" id="initiator_group" required>
                                             <option value="">-- Select --</option>
-                                            <option value="CQA" @if(old('Initiator_Group') =="CQA") selected @endif>Corporate Quality Assurance</option>
                                             <option value="QAB" @if(old('Initiator_Group') =="QAB") selected @endif>Quality Assurance Biopharma</option>
                                             <option value="CQC" @if(old('Initiator_Group') =="CQA") selected @endif>Central Quality Control</option>
                                             <option value="CQC" @if(old('Initiator_Group') =="MANU") selected @endif>Manufacturing</option>
@@ -135,7 +135,6 @@
                                             <option value="ITG" @if(old('Initiator_Group') =="ITG") selected @endif>Information Technology Group</option>
                                             <option value="MM"  @if(old('Initiator_Group') == "MM") selected @endif>Molecular Medicine</option>
                                             <option value="CL"  @if(old('Initiator_Group') == "CL") selected @endif>Central Laboratory</option>
-
                                             <option value="TT"  @if(old('Initiator_Group') == "TT") selected @endif>Tech team</option>
                                             <option value="QA"  @if(old('Initiator_Group') == "QA") selected @endif> Quality Assurance</option>
                                             <option value="QM"  @if(old('Initiator_Group') == "QM") selected @endif>Quality Management</option>
@@ -150,9 +149,10 @@
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Initiator Group Code">Initiator Group Code</label>
-                                        <input type="text" name="initiator_group_code" id="initiator_group_code" value="" readonly>
+                                        <input type="text" name="initiator_group_code" id="initiator_group_code" value="" readonly required>
                                     </div>
                                 </div>
+                                
 
                                 <div class="col-12">
                                     <div class="group-input">
@@ -807,16 +807,16 @@
                                         <textarea name="Supervisor_Review_Comments"></textarea>
                                     </div>
                                 </div>
-                                <div class="col-12">
+                                <div class="col-lg-12">
                                     <div class="group-input">
-                                        <label for="Attachments">Attachments</label>
+                                        <label for="ccf_attachments">File Attachment</label>
                                         <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
-                                        {{-- <input type="file" id="myfile" name="Attachments"> --}}
+                                        {{-- <input type="file" id="myfile" name="Initial_Attachment"> --}}
                                         <div class="file-attachment-field">
                                             <div class="file-attachment-list" id="ccf_attachments"></div>
                                             <div class="add-btn">
                                                 <div>Add</div>
-                                                <input type="file" id="myfile" name="ccf_attachments[]"
+                                                <input type="file" id="ccf_attachments" name="ccf_attachments[]"
                                                     oninput="addMultipleFiles(this, 'ccf_attachments')" multiple>
                                             </div>
                                         </div>

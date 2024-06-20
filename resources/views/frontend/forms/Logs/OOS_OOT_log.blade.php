@@ -76,42 +76,63 @@
                                     <div class="filter-bar d-flex justify-content-between">
                                         <div class="filter-item">
                                             <label for="process">Department</label>
-                                            <select class="custom-select" id="process">
-                                                <option value="all">All Records</option>
-
+                                            <select name="Initiator_Group" id="initiator_group" class="form-control">
+                                                {{-- <option value="all">All Records</option> --}}
+                                                <option value="">Enter Your Selection Here</option>
+                                                <option value="CQA">Corporate Quality Assurance</option>
+                                                <option value="QAB">Quality Assurance Biopharma</option>
+                                                <option value="CQC">Central Quality Control</option>
+                                                <option value="MANU">Manufacturing</option>
+                                                <option value="PSG">Plasma Sourcing Group</option>
+                                                <option value="CS">Central Stores</option>
+                                                <option value="ITG">Information Technology Group</option>
+                                                <option value="MM">Molecular Medicine</option>
+                                                <option value="CL">Central Laboratory</option>
+                                                <option value="TT">Tech team</option>
+                                                <option value="QA">Quality Assurance</option>
+                                                <option value="QM">Quality Management</option>
+                                                <option value="IA">IT Administration</option>
+                                                <option value="ACC">Accounting</option>
+                                                <option value="LOG">Logistics</option>
+                                                <option value="SM">Senior Management</option>
+                                                <option value="BA">Business Administration</option>
                                             </select>
                                         </div>
                                         <div class="filter-item">
                                             <label for="criteria">Division</label>
-                                            <select class="custom-select" id="criteria">
-                                                <option value="all">All Records</option>
+                                            <select class="custom-select" id="division_oot">
+                                                <option value="Null">Select Records</option>
+                                                <option value="1">Corporate</option>
+                                                <option value="2">Plant</option>
 
+                                            
                                             </select>
                                         </div>
                                         <div class="filter-item">
                                             <label for="division">Date From</label>
-                                            <select class="custom-select" id="division">
-                                                <option value="all">All Records</option>
-
-                                            </select>
+                                            <input type="date" class="custom-select" id="datefrom_oot">
+                                        
                                         </div>
                                         <div class="filter-item">
                                             <label for="originator">Date To</label>
-                                            <select class="custom-select" id="originator">
-                                                <option value="all">All Records</option>
-
-                                            </select>
-                                        </div> 
+                                            <input type="date" class="custom-select" id="dateto_oot">
+                                            </div> 
                                         <div class="filter-item">
                                             <label for="originator">Type of Document</label>
-                                            <select class="custom-select" id="originator">
-                                                <option value="all">All Records</option>
-
+                                            <select id="source_document_type_gi">
+                                                <option>Enter Your Selection Here</option>
+                                                <option value="oot">OOT</option>
+                                                <option value="lab-incident">Lab Incident</option>
+                                                <option value="deviation">Deviation</option>
+                                                <option value="product-non-conformance">Product Non-conformance</option>
+                                                <option value="inspectional-observation">Inspectional Observation</option>
+                                                <option value="other">Others</option>
+            
                                             </select>
                                         </div>
                                         <div class="filter-item">
                                             <label for="datewise">Select Period</label>
-                                            <select class="custom-select" id="datewise">
+                                            <select class="custom-select" id="ootdatewise">
                                                 <option value="all">Select</option>
                                                 <option value="all">Yearly</option>
                                                 <option value="all">Quarterly</option>
@@ -147,27 +168,15 @@
                                         </tr>
                                     </thead>
 
-                                    <tbody>
-                                        @foreach ($oots as $ootlog)
-                                            
-                                        <tr>
-                                            
-                                            <td>{{$loop->index+1}}</td>
-                                            <td>{{$ootlog->intiation_date}}</td>
-                                            <td>{{$ootlog->record_number}}</td>
-                                            <td>{{$ootlog->description_of_oot_details}}</td>
-                                            <td></td>
-                                            <td></td>
-                                            <td>{{$ootlog->closure_date}}</td>
-                                            <td>{{$ootlog->due_date}}</td>
-                                            <td>{{$ootlog->Final_Approval_on}}</td>
-                                            <td>{{$ootlog->status}}</td>
-                                            
-                                        </tr>
-                                        @endforeach
-
+                                    <tbody id="tableData">
+                                        @include('frontend.forms.Logs.filterData.OOS_OOT_log_data');
                                     </tbody>
                                 </table>
+                                <div class="d-flex justify-content-center" style="margin-top: 10px;">
+                                    <div class="spinner-border text-primary" role="status" id="spinner">
+                                        <span class="sr-only">Loading...</span>
+                                    </div>
+                                </div>
                             </div>
                         </div>
 
@@ -179,10 +188,86 @@
     </div>
 
     </div>
-
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script>
     <script>
         VirtualSelect.init({
             ele: '#Facility, #Group, #Audit, #Auditee ,#capa_related_record ,#classRoom_training'
         });
+
+        $('#spinner').hide();
+
+const filterData = {
+    department_oot: null,
+    division_id_oot: null,
+    period_oot: null,
+    date_oot_from: null,
+    date_OOT_to: null,
+    source_document_type: null
+
+
+}
+
+$('#initiator_group').change(function() {
+    filterData.department_oot = $(this).val();
+    filterRecords()
+});
+
+ // Division ID change event
+
+  $('#division_oot').change(function() {
+    filterData.division_id_oot = $(this).val();
+    filterRecords();
+ });
+ $('#datefrom_oot, #dateto_oot').change(function() {
+        filterData.date_oot_from = $('#datefrom_oot').val();
+        filterData.date_OOT_to = $('#dateto_oot').val();
+       
+        filterRecords();
+    });
+
+    
+
+
+ $('#ootdatewise').change(function() {
+filterData.period_oot = $(this).val();
+filterRecords();
+});
+
+$('#source_document_type_gi').change(function() {
+        filterData.source_document_type = $(this).val();
+        filterRecords();
+    });
+
+    
+
+
+
+
+
+
+async function filterRecords()
+{
+    $('#tableData').html('');
+    $('#spinner').show();
+    
+    try {
+
+
+        const postUrl = "{{ route('api.oot.filter') }}";
+
+        const res = await axios.post(postUrl, filterData);
+
+        if (res.data.status == 'ok') {
+            $('#tableData').html(res.data.body);
+        }
+
+    } catch (err) {
+        console.log('Error in filterRecords', err.message);
+    }
+    
+    $('#spinner').hide();
+}
+
     </script>
+    
 @endsection

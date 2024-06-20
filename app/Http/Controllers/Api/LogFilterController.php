@@ -7,6 +7,7 @@ use App\Models\CC;
 use App\Models\errata;
 use App\Models\FailureInvestigation;
 use App\Models\MarketComplaint;
+use App\Models\Ootc;
 use App\Models\RiskManagement;
 use App\Models\OutOfCalibration;
 use App\Models\LabIncident;
@@ -792,6 +793,75 @@ class LogFilterController extends Controller
         $res['message'] = $e->getMessage();
         \Log::error("Deviation Filter Error: {$e->getMessage()}");
     }
+
+    return response()->json($res);
+}
+
+
+
+public function OOT_Filter(Request $request)
+{
+    $res = [
+        'status' => 'ok',
+        'message' => 'success',
+        'body' => []
+    ];
+
+    try {
+        $query = Ootc::query();
+
+        if ($request->department_oot) {
+            $query->where('Initiator_Group', $request->department_oot);
+        }
+
+        if ($request->division_id_oot) {
+            $query->where('division_id', $request->division_id_oot);
+        }
+
+        if ($request->source_document_type) {
+            $query->where('source_document_type_gi', $request->source_document_type);
+        }
+
+        if ($request->period_oot) {
+            $currentDate = Carbon::now();
+            switch ($request->period_oot) {
+                case 'Yearly':
+                    $startDate = $currentDate->startOfYear();
+                    break;
+                case 'Quarterly':
+                    $startDate = $currentDate->firstOfQuarter();
+                    break;
+                case 'Monthly':
+                    $startDate = $currentDate->startOfMonth();
+                    break;
+                default:
+                    $startDate = null;
+                    break;
+            }
+            if ($startDate) {
+                $query->whereDate('intiation_date', '>=', $startDate);
+                }
+        }
+
+        if ($request->date_oot_from) {
+            $dateFrom = Carbon::parse($request->date_oot_from)->startOfDay();
+            $query->whereDate('intiation_date', '>=', $dateFrom);
+           }
+
+        if ($request->date_OOT_to) {
+            $dateTo = Carbon::parse($request->date_OOT_to)->endOfDay();
+            $query->whereDate('intiation_date', '<=', $dateTo);
+          }
+
+        $oots = $query->get();
+
+        $htmlData = view('frontend.forms.Logs.filterData.OOS_OOT_log_data', compact('oots'))->render();
+
+        $res['body'] = $htmlData;
+    } catch (\Exception $e) {
+        $res['status'] = 'error';
+        $res['message'] = $e->getMessage();
+       }
 
     return response()->json($res);
 }

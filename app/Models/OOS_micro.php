@@ -60,5 +60,9 @@ class OOS_micro extends Model
 
     ];
 
+    public function oosmicropage(){
+        return $this->hasOne(Ootc::class,'id');
+    }
+
 }
 

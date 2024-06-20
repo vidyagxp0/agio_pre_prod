@@ -16,6 +16,7 @@ use App\Models\MarketComplaint;
 use App\Models\OutOfCalibration;
 use App\Models\RiskManagement;
 use App\Models\InternalAudit;
+use App\Models\OOS_micro;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Models\User;
@@ -93,9 +94,30 @@ class LogController extends Controller
                                               
             case 'oot':
             
-            $oots =  Ootc::get();
+            $oots =  Ootc::with('ProductGridOot')->get();
+            $ootss=[];
+            // foreach($oots as $oo)
+            // {
+                // return $oo;
 
-            return view('frontend.forms.logs.OOS_OOT_log' , compact('oots'));
+            //     $gridata=$oo->ProductGridOot;
+            //     foreach ($gridata['data'] as $data) {
+            //         $ootss=[];
+            //         return[
+            //             'item_product_code'=>$data['item_product_code']
+            //         ];
+            //     }
+            // }
+            
+            // foreach($oots['data'] as $aaaa) {
+            //     return $aaaa;
+            // }
+            
+            
+                
+            $oosmicro = OOS_micro::get();
+
+            return view('frontend.forms.logs.OOS_OOT_log' , compact('oots','oosmicro'));
 
 
             case 'risk-management':
