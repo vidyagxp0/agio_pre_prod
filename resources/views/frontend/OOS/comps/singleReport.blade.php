@@ -161,7 +161,7 @@
         <table>
             <tr>
                 <td class="w-70 head">
-                    OOS Chemical Report
+                    OOS Chemical Single Report
                 </td>
                 <td class="w-30">
                     <div class="logo">
@@ -174,7 +174,7 @@
         <table>
             <tr>
                 <td class="w-30">
-                    <strong> Deviation No.</strong>
+                    <strong> OOS Chemical No.</strong>
                 </td>
                 <td class="w-40">
                     {{ Helpers::divisionNameForQMS($data->division_id) }}/{{ Helpers::year($data->created_at) }}/{{ str_pad($data->record, 4, '0', STR_PAD_LEFT) }}
@@ -603,29 +603,34 @@
                     <tr>  {{ $data->created_at }} added by {{ $data->originator }}
                         <th class="w-20">Summary of Preliminary Investigation</th>
                         <td class="w-30">{{ $data->summary_of_prelim_investiga_plic ? $data->summary_of_prelim_investiga_plic : 'Not Applicable' }}</td>
-                        <th class="w-20">Root Cause Identified</th>
-                        <td class="w-30">{{ $data->root_cause_identified_plic ? $data->root_cause_identified_plic : 'Not Applicable' }}</td>
                     </tr>
                    <tr>
+                        <th class="w-20">Root Cause Identified</th>
+                        <td class="w-30">{{ $data->root_cause_identified_plic ? $data->root_cause_identified_plic : 'Not Applicable' }}</td>
+                    
                         <th class="w-20">OOS Category-Root Cause Ident.</th>
                         <td class="w-80">{{ $data->oos_category_root_cause_ident_plic ? $data->oos_category_root_cause_ident_plic : 'Not Applicable' }}</td>
+                    </tr>
+                    <tr>
                         <th class="w-20">OOS Category (Others)</th>
                         <td class="w-80">{{ $data->oos_category_others_plic ? $data->oos_category_others_plic : 'Not Applicable' }}</td>
-                  </tr>
-                  <tr>
+                    </tr>
+                   <tr>
                         <th class="w-20">Root Cause Details.</th>
                         <td class="w-80">{{ $data->root_cause_details_plic ? $data->root_cause_details_plic : 'Not Applicable' }}</td>
+                    </tr>
+                    <tr>
                         <th class="w-20">OOS Category-Root Cause Ident</th>
                         <td class="w-80">{{ $data->Description_Deviation ? $data->Description_Deviation : 'Not Applicable' }}</td>
-                  </tr>
-                  <tr>
+                    </tr>
+                    <tr>
                         <th class="w-20">CAPA Required.</th>
                         <td class="w-80">{{ $data->capa_required_plic ? $data->capa_required_plic : 'Not Applicable' }}</td>
                         <th class="w-20">Reference CAPA No</th>
                         <td class="w-80">{{ $data->reference_capa_no_plic ? $data->reference_capa_no_plic : 'Not Applicable' }}</td>
                   </tr>
                   <tr>
-                        <th class="w-20"> Delay Justification for Preliminary Investigation.</th>
+                        <th class="w-80"> Delay Justification for Preliminary Investigation.</th>
                         <td class="w-80">{{ $data->delay_justification_for_pi_plic ? $data->delay_justification_for_pi_plic : 'Not Applicable' }}</td>
                   </tr>
                   <div class="block-head">Supporting Attachments</div>
@@ -656,9 +661,11 @@
              <div class="block">
                 <div class="block-head"> Preliminary Lab Invstigation Review </div>
                   <table>
-                    <tr>  {{ $data->created_at }} added by {{ $data->originator }}
+                    <tr>
                         <th class="w-20">Review Comments</th>
                         <td class="w-30">{{ $data->review_comments_plir ? $data->review_comments_plir : 'Not Applicable' }}</td>
+                    </tr>
+                    <tr>  {{ $data->created_at }} added by {{ $data->originator }}
                         <th class="w-20">Phase II Inv. Required?</th>
                         <td class="w-30">{{ $data->phase_ii_inv_required_plir ? $data->phase_ii_inv_required_plir : 'Not Applicable' }}</td>
                     </tr>
@@ -669,9 +676,9 @@
                         <table>
                         <tr class="table_bg">
                             <th style="width: 4%">Row#</th>
-                            <th style="width: 12%">OOS Number</th>
-                            <th style="width: 16%"> OOS Reported Date</th>
-                            <th style="width: 18%">Description of OOS</th>
+                            <th style="width: 15%">OOS Number</th>
+                            <th style="width: 15%"> OOS Reported Date</th>
+                            <th style="width: 26%">Description of OOS</th>
                             <th style="width: 40%">Previous OOS Root Cause</th>
                         </tr>
                         @if(($oos_capas) && is_array($oos_capas->data))
