@@ -1048,7 +1048,7 @@ class DashboardController extends Controller
         $html = '';
         $html = '<div class="block">
         <div class="record_no">
-            Record No. ' . str_pad($data->record, 4, '0', STR_PAD_LEFT) .
+            Record No. ' . str_pad($data->record_number, 4, '0', STR_PAD_LEFT) .
             '</div>
         <div class="division">
         ' . $division_name . '/ ' . $type . '

@@ -135,7 +135,7 @@
         
                                         {{-- <small class="text-primary"> Please mention expected date of completion </small> --}}
                                         <input type="date" name="due_date" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input"
-                                                        oninput="handleDateInput(this, 'due_date')" />
+                                                        oninput="handleDateInput(this, 'due_date')"/>
                                     </div>
                                 </div>
 
@@ -212,8 +212,7 @@
                                     <div class="group-input">
                                         <label for="Short Description">Is Repeat<span class="text-danger"></span></label>
                                         <select id="is_repeat" name="is_repeat">
-                                            <option value="">Select Option </option>
-                                            <option value="yes">Yes </option>
+s                                            <option value="yes">Yes </option>
                                             <option value="no">No </option>
                                         </select>
                                     </div>
@@ -232,7 +231,7 @@
                                         <label for="Short Description">Nature Of Change<span
                                                 class="text-danger"></span></label>
                                         <select multiple id="natureOfChange" name="nature_of_change">
-                                            <option value="">Select Option </option>
+                                        
                                             <option value="temporary">Temporary </option>
                                             <option value="permanent">Permanent </option>
                                         </select>
@@ -1750,6 +1749,7 @@
                                             <option value="">Enter Your Selection Here</option>
                                             <option value="yes">Yes</option>
                                             <option value="no">No</option>
+                                            <option value="n/a">N/A</option>
                                         </select>
                                     </div>
                                 </div>

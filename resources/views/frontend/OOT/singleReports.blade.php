@@ -161,7 +161,7 @@
         <table>
             <tr>
                 <td class="w-70 head">
-                    OOT Report
+                    OOT Single Report
                 </td>
                 <td class="w-30">
                     <div class="logo">
@@ -176,7 +176,7 @@
                     <strong> OOT  No.</strong>
                 </td>
                 <td class="w-40">
-                    {{ Helpers::divisionNameForQMS($data->ootc_id) }}/OOT/{{ Helpers::year($data->created_at) }}/{{ str_pad($data->record_number, 4, '0', STR_PAD_LEFT) }}
+                    {{ Helpers::divisionNameForQMS($data->division_id) }}/OOT/{{ Helpers::year($data->created_at) }}/{{ str_pad($data->record_number, 4, '0', STR_PAD_LEFT) }}
                 </td>
                 <td class="w-30">
                     <strong>Record No.</strong> {{ str_pad($data->record_number, 4, '0', STR_PAD_LEFT) }}
@@ -190,41 +190,39 @@
             <div class="inner-block">
                 <div class="content-table">
                     <div class="block">
-                        <div class="block-head">
-                            General Information
-                        </div>
-                        <table>
-                            {{-- <tr> {{ $data->created_at }} added by {{ $data->originator }}
-                                <th class="w-20">Site/Location Code</th>
-                                <td class="w-30"> {{ Helpers::getDivisionName(session()->get('division')) }}</td>
-                                <th class="w-20">Initiator</th>
-                                <td class="w-30">{{ Helpers::getInitiatorName($data->initiator_id) }}</td>
-                                </td>
-                            </tr> --}}
-                            <tr>
-                                <th class="w-20">Date of Initiation</th>
-                                <td class="w-30">{{ $data->created_at ? $data->created_at->format('d-M-Y') : '' }} </td>
-        
-                                <th class="w-20">Due Date</th>
-                                <td class="w-30">
-                                    @if ($data->due_date)
-                                        {{ Helpers::getdateFormat($data->due_date) }}
-                                    @else
-                                        Not Applicable
-                                    @endif
-                                </td>
-                                <th class="w-20">Severity Level</th>
-                                <td class="w-30">
-                                    @if ($data->severity_level)
-                                        {{ $data->severity_level }}
-                                    @else
-                                        Not Applicable
-                                    @endif
-                                </td>
-                            </tr>
-                        
+                        <div class="block">
+                            <div class="head">
+                                <div class="block-head">
+                                    General Information
+                                </div>
+                                <table>
+                                    <tr>
+                                        <tr> {{ $data->created_at }} added by {{ $data->originator }}
+                                            <th class="w-20">Site/Location Code</th>
+                                            <td class="w-30"> {{ Helpers::getDivisionName(session()->get('division')) }}</td>
+                                            <th class="w-20">Initiator</th>
+                                            <td class="w-30">{{ Helpers::getInitiatorName($data->initiator_id) }}</td>
+                                            </td>
+                                        </tr>
+                                        
+                                    </tr>
 
-                            <tr>
+                                        <tr>
+                                            <th class="w-20">Date of Initiation</th>
+                                            <td class="w-30">{{ $data->created_at ? $data->created_at->format('d-M-Y') : '' }} </td>
+                    
+                                            <th class="w-20">Due Date</th>
+                                            <td class="w-30">
+                                                @if ($data->due_date)
+                                                    {{ Helpers::getdateFormat($data->due_date) }}
+                                                @else
+                                                    Not Applicable
+                                                @endif
+                                            </td>
+                                            
+                                        </tr>
+
+                                        <tr>
                                 <th class="w-20">Initiated Through</th>
                                 <td class="w-30">
                                     @if ($data->initiator_group)
@@ -257,43 +255,17 @@
                                 @endphp
                                 <td class="w-80">{{ $departments[$data->initiator_group] ?? 'Unknown Department' }}</td>
                             </tr>
-                            {{-- <tr>
-                                <th class="w-20">Intiater Group</th>
-                                <td class="w-30">
-                                    @if ($data->initiator_group)
-                                        {{ $data->initiator_group }}
-                                    @else
-                                        Not Applicable
-                                    @endif
-                                </td>
-                                <th class="w-20">Initiator Group Code</th>
-                                <td class="w-30">
-                                    @if ($data->initiator_group_code)
-                                        {{ $data->initiator_group_code }}
-                                    @else
-                                        Not Applicable
-                                    @endif
-                                </td>
-                                <th class="w-20"> Initiated Through</th>
-                                <td class="w-30">
-                                    @if ($data->initiated_through)
-                                        {{ $data->initiated_through }}
-                                    @else
-                                        Not Applicable
-                                    @endif
-                                </td>
-                            </tr> --}}
+                                          
                             <tr>
-
-                                <th class="w-20">Short Description</th>
+                                <th class="w-20">Severity Level</th>
                                 <td class="w-30">
-                                    @if ($data->short_description)
-                                        {{ strip_tags($data->short_description) }}
+                                    @if ($data->severity_level)
+                                        {{ $data->severity_level }}
                                     @else
                                         Not Applicable
                                     @endif
                                 </td>
-                                
+
                                 <th class="w-20">If Others</th>
                                 <td class="w-30">
                                     @if ($data->if_others)
@@ -302,9 +274,19 @@
                                         Not Applicable
                                     @endif
                                 </td>
-        
                             </tr>
-                           
+
+                            <tr>
+                                <th class="w-20">Short Description</th>
+                                <td class="w-30">
+                                    @if ($data->short_description)
+                                        {{ strip_tags($data->short_description) }}
+                                    @else
+                                        Not Applicable
+                                    @endif
+                                </td>        
+                            </tr>
+
                             <tr>
                                 <th class="w-20">Is Repeat </th>
                                 <td class="w-30">
@@ -321,7 +303,9 @@
                                     @else
                                         Not Applicable
                                     @endif
-                                </td>
+                                </td>  
+                            </tr>
+                            <tr>
                                 <th class="w-20">Nature Of Change</th>
                                 <td class="w-30">
                                     @if ($data->nature_of_change)
@@ -331,8 +315,8 @@
                                     @endif
                                 </td>
                             </tr>
+
                             <tr>
-        
                                 <th class="w-20">Occured On</th>
                                 <td class="w-30">
                                     @if ($data->oot_occured_on)
@@ -370,13 +354,7 @@
                                     @endif
                                 </td>
                             </tr>
-        
-        
-                            {{-- <tr> --}}
-                            {{-- <th class="w-20">Name of Product & Batch No</th> --}}
-                            {{-- <td class="w-30">@if ($data->Product_Batch){{ ($data->Product_Batch) }} @else Not Applicable @endif</td> --}}
-                            {{-- </tr> --}}
-        
+
                             <tr>
                                 <th class="w-20">Investigation Detail</th>
                                 <td class="w-30">
@@ -395,6 +373,10 @@
                                     @endif
                                 </td>
 
+                               
+                            </tr>
+
+                            <tr>
                                 <th class="w-20">Refrence Record</th>
                                 <td class="w-30">
                                     @if ($data->refrence_record)
@@ -404,132 +386,140 @@
                                     @endif
                                 </td>
                             </tr>
-        
-                        </table>
-                        <div class="block">
-                            <div class="block">
-                                <div class="head">
-                                    <div class="block-head">
-                                        OOT Information
-                                    </div>
-                                    <table>
-                                        <tr>
-                                            <th class="w-20">Product Material NAme   </th>
-                                            <td class="w-30">
-                                                <div>
-                                                    @if ($data->productmaterialname)
-                                                        {{ $data->productmaterialname }}
-                                                    @else
-                                                        Not Applicable
-                                                    @endif
-                                                </div>
-                                            </td>
-                                            <th class="w-20">Grade Type Of Water</th>
-                                            <td class="w-30">
-                                                <div>
-                                                    @if ($data->grade_typeofwater)
-                                                        {{ $data->grade_typeofwater }}
-                                                    @else
-                                                        Not Applicable
-                                                    @endif
-                                                </div>
-                                            </td>
-                                        </tr>
-        
-                                        <tr>
-        
-                                            <th class="w-20"> Sample Location Point </th>
-                                            <td class="w-30">
-                                                <div>
-                                                    @if ($data->sampleLocation_Point)
-                                                        {{ $data->sampleLocation_Point }}
-                                                    @else
-                                                        Not Applicable
-                                                    @endif
-                                                </div>
-                                            </td>
-                                            <th class="w-20">Market</th>
-                                            <td class="w-30">
-                                                <div>
-                                                    @if ($data->market)
-                                                        {{ $data->market }}
-                                                    @else
-                                                        Not Applicable
-                                                    @endif
-                                                </div>
-                                            </td>
 
-                                            <th class="w-20">Customer</th>
-                                            <td class="w-30">
-                                                <div>
-                                                    @if ($data->customer)
-                                                        {{ $data->customer }}
-                                                    @else
-                                                        Not Applicable
-                                                    @endif
-                                                </div>
-                                            </td>
-                                        </tr>
-                                      
-                                    </table>                                    
-                                </div> 
-                            </div>
-                            
-                            <div class="block-head"> Product/Material  </div>
-                            <div class="border-table">
-                                <table>
-                                    <tr class="table_bg">
-                                        <th class="w-10">Sr. No.</th>
-                                        <th class="w-25">Item/Product Code</th>
-                                        <th class="w-25">Lot/Batch No</th>
-                                        <th class="w-25">A.R.Number</th>
-                                        <th class="w-25">MFG Date</th>
-                                        <th class="w-25">Expiry Date</th>
-                                        <th class="w-25">Lable Claim</th>
-        
-                                    </tr>
-                                    @if ($grid_product_mat && is_array($grid_product_mat->data))
-                                                @php
-                                                    $serialNumber = 1;
-                                                @endphp
-                                                    @foreach ($grid_product_mat->data as $gridData)
-                                                 
-                                            <tr>
-                                                <td class="w-15">{{ $serialNumber++ }}</td>
-                                                <td class="w-15">{{ isset($gridData['item_product_code']) ? $gridData['item_product_code'] : 'Not Applicable' }}</td>
-                                                <td class="w-15">{{ isset($gridData['low_batch_no']) ? $gridData['low_batch_no'] : 'Not Applicable' }}</td>
-                                                <td class="w-15">{{ isset($gridData['a_r_number']) ? $gridData['a_r_number'] : 'Not Applicable' }}</td>
-                                                <td class="w-15">{{ isset($gridData['m_f_g_date']) ? $gridData['m_f_g_date'] : 'Not Applicable' }}</td>  
-                                                 <td class="w-15">{{ isset($gridData['expiry_date']) ? $gridData['expiry_date'] : 'Not Applicable' }}</td>
-                                                <td class="w-15">{{ isset($gridData['label_claim']) ? $gridData['label_claim'] : 'Not Applicable' }}</td>        
-                                            </tr>
-                                        @endforeach
-                                    @else
-                                        <tr>
-                                            <td>1</td>
-                                            <td>Not Applicable</td>
-                                            <td>Not Applicable</td>
-                                            <td>Not Applicable</td>
-                                            <td>Not Applicable</td>
-                                            <td>Not Applicable</td>
-                                            <td>Not Applicable</td>
-                                            <td>Not Applicable</td>
-                                            
-                                        </tr>
-                                    @endif
-                                </table>
-
-                            </div>
-                           
+                                  
+                         </table>                                    
+                            </div> 
                         </div>
-     
+                        
+                        
+                       
                     </div>
 
                     <div class="block">
-                        <div class="head">
-                            
-                            <table>
+                        <div class="block">
+                            <div class="head">
+                                <div class="block-head">
+                                    OOT Information
+                                </div>
+                                <table>
+                                    <tr>
+                                        <th class="w-20">Product Material NAme   </th>
+                                        <td class="w-30">
+                                            <div>
+                                                @if ($data->productmaterialname)
+                                                    {{ $data->productmaterialname }}
+                                                @else
+                                                    Not Applicable
+                                                @endif
+                                            </div>
+                                        </td>
+                                        <th class="w-20">Grade Type Of Water</th>
+                                        <td class="w-30">
+                                            <div>
+                                                @if ($data->grade_typeofwater)
+                                                    {{ $data->grade_typeofwater }}
+                                                @else
+                                                    Not Applicable
+                                                @endif
+                                            </div>
+                                        </td>
+                                    </tr>
+    
+                                    <tr>
+    
+                                        <th class="w-20"> Sample Location Point </th>
+                                        <td class="w-30">
+                                            <div>
+                                                @if ($data->sampleLocation_Point)
+                                                    {{ $data->sampleLocation_Point }}
+                                                @else
+                                                    Not Applicable
+                                                @endif
+                                            </div>
+                                        </td>
+                                        <th class="w-20">Market</th>
+                                        <td class="w-30">
+                                            <div>
+                                                @if ($data->market)
+                                                    {{ $data->market }}
+                                                @else
+                                                    Not Applicable
+                                                @endif
+                                            </div>
+                                        </td>
 
+                                       
+                                    </tr>
+
+                                    <tr>
+                                        <th class="w-20">Customer</th>
+                                        <td class="w-30">
+                                            <div>
+                                                @if ($data->customer)
+                                                    {{ $data->customer }}
+                                                @else
+                                                    Not Applicable
+                                                @endif
+                                            </div>
+                                        </td>
+                                    </tr>
+                                  
+                                </table>                                    
+                            </div> 
+                        </div>
+                        
+                        <div class="block-head"> Product/Material  </div>
+                        <div class="border-table">
+                            <table>
+                                <tr class="table_bg">
+                                    <th class="w-10">Sr. No.</th>
+                                    <th class="w-25">Item/Product Code</th>
+                                    <th class="w-25">Lot/Batch No</th>
+                                    <th class="w-25">A.R.Number</th>
+                                    <th class="w-25">MFG Date</th>
+                                    <th class="w-25">Expiry Date</th>
+                                    <th class="w-25">Lable Claim</th>
+    
+                                </tr>
+                                @if ($grid_product_mat && is_array($grid_product_mat->data))
+                                            @php
+                                                $serialNumber = 1;
+                                            @endphp
+                                                @foreach ($grid_product_mat->data as $gridData)
+                                             
+                                        <tr>
+                                            <td class="w-15">{{ $serialNumber++ }}</td>
+                                            <td class="w-15">{{ isset($gridData['item_product_code']) ? $gridData['item_product_code'] : 'Not Applicable' }}</td>
+                                            <td class="w-15">{{ isset($gridData['low_batch_no']) ? $gridData['low_batch_no'] : 'Not Applicable' }}</td>
+                                            <td class="w-15">{{ isset($gridData['a_r_number']) ? $gridData['a_r_number'] : 'Not Applicable' }}</td>
+                                            <td class="w-15">{{ isset($gridData['m_f_g_date']) ? $gridData['m_f_g_date'] : 'Not Applicable' }}</td>  
+                                             <td class="w-15">{{ isset($gridData['expiry_date']) ? $gridData['expiry_date'] : 'Not Applicable' }}</td>
+                                            <td class="w-15">{{ isset($gridData['label_claim']) ? $gridData['label_claim'] : 'Not Applicable' }}</td>        
+                                        </tr>
+                                    @endforeach
+                                @else
+                                    <tr>
+                                        <td>1</td>
+                                        <td>Not Applicable</td>
+                                        <td>Not Applicable</td>
+                                        <td>Not Applicable</td>
+                                        <td>Not Applicable</td>
+                                        <td>Not Applicable</td>
+                                        <td>Not Applicable</td>
+                                        <td>Not Applicable</td>
+                                        
+                                    </tr>
+                                @endif
+                            </table>
+
+                        </div>
+                       
+                    </div>
+
+                    <div class="block">
+                        <div class="head"> 
+                            <table>
                                 <tr>        
                                     <th class="w-20">Analyst Name
                                     </th>
@@ -554,10 +544,7 @@
                                     </td>
                                 </tr>
 
-                                
-
                                 <tr>
-
                                     <th class="w-20"> Ohers </th>
                                     <td class="w-30">
                                         <div>
@@ -793,6 +780,10 @@
                                                     @endif
                                                 </div>
                                             </td>
+                                            
+                                        </tr>
+
+                                        <tr>
                                             <th class="w-20">Preventive Action</th>
                                             <td class="w-30">
                                                 <div>
@@ -806,7 +797,6 @@
                                         </tr>
         
                                         <tr>
-        
                                             <th class="w-20"> Comments </th>
                                             <td class="w-30">
                                                 <div>
@@ -817,9 +807,6 @@
                                                     @endif
                                                 </div>
                                             </td>
-
-                                            
-                                            
                                         </tr>
                                         <tr>
                                             <th class="w-20">Head QA/Designee</th>
@@ -1787,6 +1774,10 @@
                                                     @endif
                                                 </div>
                                             </td>
+                                           
+                                        </tr>
+
+                                        <tr>
                                             <th class="w-20">QC Head/Designee</th>
                                             <td class="w-30">
                                                 <div>
@@ -1834,6 +1825,10 @@
                                                 </div>
                                             </td>
 
+                                            
+                                        </tr>
+        
+                                        <tr>
                                             <th class="w-20">Remarks </th>
                                             <td class="w-30">
                                                 <div>
@@ -1844,9 +1839,7 @@
                                                     @endif
                                                 </div>
                                             </td>
-                                        </tr>
-        
-                                        <tr>
+
                                             <th class="w-20">Correct the Error and Repeat the analysis on same sample</th>
                                             <td class="w-30">
                                                 <div>
@@ -1857,6 +1850,9 @@
                                                     @endif
                                                 </div>
                                             </td>
+                                        </tr>
+                                        <tr>
+                                            
                                             <th class="w-20">Any Other Action Required ?</th>
                                             <td class="w-30">
                                                 <div>
@@ -1901,8 +1897,9 @@
                                                         Not Applicable
                                                     @endif
                                                 </div>
-                                            </td>
-
+                                            </td> 
+                                        </tr>
+                                        <tr>
                                             <th class="w-20">Comments</th>
                                             <td class="w-30">
                                                 <div>
@@ -1913,7 +1910,6 @@
                                                     @endif
                                                 </div>
                                             </td>
-                                           
                                         </tr>
                                     </table>
                                 </div>  
@@ -1951,9 +1947,7 @@
                                         CheckList Part D: Communication of confirmed of Oot With Technical Commitee
                                     </div>
                                     <table>
-        
                                         <tr>
-        
                                             <th class="w-20">R&D (F) Comments </th>
                                             <td class="w-30">
                                                 <div>
@@ -1974,6 +1968,9 @@
                                                     @endif
                                                 </div>
                                             </td>
+                                           
+                                        </tr>
+                                        <tr>
                                             <th class="w-20">Regulatory Comments</th>
                                             <td class="w-30">
                                                 <div>
@@ -2067,16 +2064,7 @@
                                                     @endif
                                                 </div>
                                             </td>
-                                            <th class="w-20">Tentative Clousure Date</th>
-                                            <td class="w-30">
-                                                <div>
-                                                    @if ($data->tentative_clousure_date)
-                                                        {{ $data->tentative_clousure_date }}
-                                                    @else
-                                                        Not Applicable
-                                                    @endif
-                                                </div>
-                                            </td>
+                                            
                                         </tr>
         
                                         <tr>
@@ -2086,6 +2074,17 @@
                                                 <div>
                                                     @if ($data->remarks_by_qa_department)
                                                         {{ strip_tags($data->remarks_by_qa_department) }}
+                                                    @else
+                                                        Not Applicable
+                                                    @endif
+                                                </div>
+                                            </td>
+
+                                            <th class="w-20">Tentative Clousure Date</th>
+                                            <td class="w-30">
+                                                <div>
+                                                    @if ($data->tentative_clousure_date)
+                                                        {{ $data->tentative_clousure_date }}
                                                     @else
                                                         Not Applicable
                                                     @endif
@@ -2180,7 +2179,222 @@
                                         </tr>
                                     @endif
                                 </table>
-                            </div>                       
+                            </div> 
+                            
+                            <div class="block">
+                                <div class="head">
+                                    <div class="block-head">
+                                    Activity Log 
+                                    </div>
+                                    <table>
+                                        <tr>
+                                            <th class="w-20">Submited By</th>
+                                            <td class="w-30">
+                                                <div>
+                                                    @if ($data->submited_by)
+                                                        {{ $data->submited_by }}
+                                                    @else
+                                                        Not Applicable
+                                                    @endif
+                                                </div>
+                                            </td>
+                                            <th class="w-20">Submited On</th>
+                                            <td class="w-30">
+                                                <div>
+                                                    @if ($data->submited_on)
+                                                        {{ strip_tags($data->submited_on) }}
+                                                    @else
+                                                        Not Applicable
+                                                    @endif
+                                                </div>
+                                            </td>
+                                            <th class="w-20">Comments</th>
+                                            <td class="w-30">
+                                                <div>
+                                                    @if ($data->a_l_comments)
+                                                        {{ $data->a_l_comments }}
+                                                    @else
+                                                        Not Applicable
+                                                    @endif
+                                                </div>
+                                            </td>
+                                        </tr>
+        
+                                        <tr>
+        
+                                            <th class="w-20">Preliminary Lab Investigati By</th>
+                                            <td class="w-30">
+                                                <div>
+                                                    @if ($data->pls_submited_by)
+                                                        {{ strip_tags($data->pls_submited_by) }}
+                                                    @else
+                                                        Not Applicable
+                                                    @endif
+                                                </div>
+                                            </td>
+
+                                            <th class="w-20">Preliminary Lab Investigati On</th>
+                                            <td class="w-30">
+                                                <div>
+                                                    @if ($data->pls_submited_by)
+                                                        {{ strip_tags($data->pls_submited_on) }}
+                                                    @else
+                                                        Not Applicable
+                                                    @endif
+                                                </div>
+                                            </td>
+
+                                            <th class="w-20">Comments</th>
+                                            <td class="w-30">
+                                                <div>
+                                                    @if ($data->pls_comments)
+                                                        {{ strip_tags($data->pls_comments) }}
+                                                    @else
+                                                        Not Applicable
+                                                    @endif
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <th class="w-20">Pending Preliminary Lab Investigation Submited  By</th>
+                                            <td class="w-30">
+                                                <div>
+                                                    @if ($data->ppli_submited_by)
+                                                        {{ strip_tags($data->ppli_submited_by) }}
+                                                    @else
+                                                        Not Applicable
+                                                    @endif
+                                                </div>
+                                            </td> 
+
+                                            <th class="w-20">Pending Preliminary Lab Investigation Submitted On</th>
+                                            <td class="w-30">
+                                                <div>
+                                                    @if ($data->ppli_submited_on)
+                                                        {{ strip_tags($data->ppli_submited_on) }}
+                                                    @else
+                                                        Not Applicable
+                                                    @endif
+                                                </div>
+                                            </td>
+
+                                            <th class="w-20">Pending Preliminary Lab Investigation Comments</th>
+                                            <td class="w-30">
+                                                <div>
+                                                    @if ($data->ppli_comments)
+                                                        {{ strip_tags($data->ppli_comments) }}
+                                                    @else
+                                                        Not Applicable
+                                                    @endif
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <th class="w-20">Correction Competed By</th>
+                                            <td class="w-30">
+                                                <div>
+                                                    @if ($data->p_capa_submited_by)
+                                                        {{ strip_tags($data->p_capa_submited_by) }}
+                                                    @else
+                                                        Not Applicable
+                                                    @endif
+                                                </div>
+                                            </td>  
+
+                                            <th class="w-20">Correction Completed On</th>
+                                            <td class="w-30">
+                                                <div>
+                                                    @if ($data->p_capa_submited_on)
+                                                        {{ strip_tags($data->p_capa_submited_on) }}
+                                                    @else
+                                                        Not Applicable
+                                                    @endif
+                                                </div>
+                                            </td> 
+
+                                            <th class="w-20">Correction Completed Comments</th>
+                                            <td class="w-30">
+                                                <div>
+                                                    @if ($data->p_capa_comments)
+                                                        {{ strip_tags($data->p_capa_comments) }}
+                                                    @else
+                                                        Not Applicable
+                                                    @endif
+                                                </div>
+                                            </td> 
+                                        </tr>
+                                        <tr>
+                                            <th class="w-20">Correction Submited By</th>
+                                            <td class="w-30">
+                                                <div>
+                                                    @if ($data->pei_submited_by)
+                                                        {{ strip_tags($data->pei_submited_by) }}
+                                                    @else
+                                                        Not Applicable
+                                                    @endif
+                                                </div>
+                                            </td> 
+
+                                            <th class="w-20">Correction Submitted On</th>
+                                            <td class="w-30">
+                                                <div>
+                                                    @if ($data->pei_submited_on)
+                                                        {{ strip_tags($data->pei_submited_on) }}
+                                                    @else
+                                                        Not Applicable
+                                                    @endif
+                                                </div>
+                                            </td>
+
+                                            <th class="w-20">Pending Extended Investigation Comments</th>
+                                            <td class="w-30">
+                                                <div>
+                                                    @if ($data->pei_comments)
+                                                        {{ strip_tags($data->pei_comments) }}
+                                                    @else
+                                                        Not Applicable
+                                                    @endif
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+
+                                            <th class="w-20">Approval Completed By</th>
+                                            <td class="w-30">
+                                                <div>
+                                                    @if ($data->final_appruv_submited_by)
+                                                        {{ strip_tags($data->final_appruv_submited_by) }}
+                                                    @else
+                                                        Not Applicable
+                                                    @endif
+                                                </div>
+                                            </td>
+
+                                            <th class="w-20">Approval Submitted On</th>
+                                            <td class="w-30">
+                                                <div>
+                                                    @if ($data->final_approve_submited_on)
+                                                        {{ strip_tags($data->final_approve_submited_on) }}
+                                                    @else
+                                                        Not Applicable
+                                                    @endif
+                                                </div>
+                                            </td>
+
+                                            <th class="w-20">Commens</th>
+                                            <td class="w-30">
+                                                <div>
+                                                    @if ($data->final_capa_comments)
+                                                        {{ strip_tags($data->final_capa_comments) }}
+                                                    @else
+                                                        Not Applicable
+                                                    @endif
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </div>  
+                            </div>
                         </div>
                     </div>
                   </div>

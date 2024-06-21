@@ -193,6 +193,7 @@
                     General Information
                 </div>
                 <table>
+                    
                     <tr>
                         <th class="w-20">Site/Location Code</th>
                         <td class="w-30"> {{ Helpers::getDivisionName(session()->get('division')) }}</td>
@@ -2757,7 +2758,7 @@
                                         <th class="w-20">Problem Statement</th>
                                         <td class="w-30">
                                             <div>
-                                                @if ($why_data && $why_data->data['problem_statement'])
+                                                @if ($why_data && (is_array($why_data->data) || is_object($why_data->data)) && isset($why_data->data['problem_statement']))
                                                     {{ $why_data->data['problem_statement'] }}
                                                 @else
                                                     Not Applicable
@@ -2767,7 +2768,7 @@
                                         <th class="w-20">Root Cause</th>
                                         <td class="w-30">
                                             <div>
-                                                @if ($why_data && $why_data->data['root-cause'])
+                                                @if ($why_data && (is_array($why_data->data) || is_object($why_data->data)) && isset($why_data->data['root-cause']))
                                                     {{ $why_data->data['root-cause'] }}
                                                 @else
                                                     Not Applicable
@@ -2782,7 +2783,7 @@
                                         <th class="w-60">Description</th>
                                     </tr>
                                     <tbody>
-                                        @if($why_data && is_array($why_data->data['why_1']))
+                                        @if ($why_data && (is_array($why_data->data) || is_object($why_data->data)) && isset($why_data->data['why_1']))
                                         @php
                                             $serialNumber = 1;
                                         @endphp
@@ -2812,7 +2813,7 @@
                                         <th class="w-60">Description</th>
                                     </tr>
                                     <tbody>
-                                        @if($why_data && is_array($why_data->data['why_2']))
+                                        @if($why_data && (is_array($why_data->data) || is_object($why_data->data)) && isset($why_data->data['why_2']))
                                         @php
                                             $serialNumber = 1;
                                         @endphp
@@ -2842,7 +2843,8 @@
                                         <th class="w-60">Description</th>
                                     </tr>
                                     <tbody>
-                                        @if($why_data && is_array($why_data->data['why_3']))
+                                        @if($why_data && (is_array($why_data->data) || is_object($why_data->data)) && isset($why_data->data['why_3']))
+                                      
                                         @php
                                             $serialNumber = 1;
                                         @endphp
@@ -2872,7 +2874,8 @@
                                         <th class="w-60">Description</th>
                                     </tr>
                                     <tbody>
-                                        @if($why_data && is_array($why_data->data['why_4']))
+                                        @if ($why_data && (is_array($why_data->data) || is_object($why_data->data)) && isset($why_data->data['why_4']))
+
                                         @php
                                             $serialNumber = 1;
                                         @endphp
@@ -2902,7 +2905,9 @@
                                         <th class="w-60">Description</th>
                                     </tr>
                                     <tbody>
-                                        @if($why_data && is_array($why_data->data['why_5']))
+                                        @if ($why_data && (is_array($why_data->data) || is_object($why_data->data)) && isset($why_data->data['why_5']))
+                                    
+                                        ($why_data && is_array($why_data->data['why_5']))
                                         @php
                                             $serialNumber = 1;
                                         @endphp

@@ -202,7 +202,7 @@
             <button class="cctablinks" onclick="openCity(event, 'CCForm16')">Under Addendum Verification</button> --}}
             <button class="cctablinks" onclick="openCity(event, 'CCForm22')">Activity Log</button>
          </div>
- 
+
          <form action="{{ route('update', $data->id) }}" method="POST" enctype="multipart/form-data">
             @csrf
 
@@ -309,7 +309,7 @@
                                     {{-- <select name="initiator_group">
                                         <option selected disabled>---select---</option>
                                         @foreach (Helpers::getInitiatorGroups() as $code => $initiator_group)
-                                           
+
                                             <option value="initiator_group"
                                                 @if ($data->initiator_group == 'initiator_group') selected @endif>
                                                 {{ $data->$initiator_group }}</option>
@@ -465,7 +465,7 @@
                                     <label for="Short Description">Nature Of Change<span
                                             class="text-danger"></span></label>
                                     <select multiple id="natureOfChange" name="nature_of_change">
-                                        
+
                                         <option value="temporary" @if ($data->nature_of_change == 'temporary') selected @endif>
                                             Temporary</option>
 
@@ -622,12 +622,12 @@
                                                             <input type="date" class="numberDetail"
                                                                 name="product_materiel[{{ $loop->index }}][m_f_g_date]" value="{{ isset($gridData['m_f_g_date']) ?  $gridData['m_f_g_date'] : '' }}">
                                                         </td>
-                                                        
+
                                                         <td>
                                                             <input type="date" class="numberDetail"
                                                                 name="product_materiel[{{ $loop->index }}][expiry_date]"
                                                                 value="{{ isset($gridData['expiry_date']) ? $gridData['expiry_date'] : '' }}" min="{{ \Carbon\Carbon::now()->format('d-M-Y') }}" class="hide-input"
-                                                                oninput="handleDateInput(this, 'expiry_date')">                                                            
+                                                                oninput="handleDateInput(this, 'expiry_date')">
                                                         </td>
 
                                                         <td>
@@ -710,10 +710,21 @@
                                     <label for="Reference Recores">Stability For </label>
                                     <select multiple id="stability_for" name="stability_for[]">
 
-                                        <option value="submission" @if ($data->stability_for == 'submission') selected @endif>Submission     </option>
-                                        <option value="commercial" @if ($data->stability_for == 'commercial') selected @endif>Commercial    </option>
-                                        <option value="pack_evalution" @if ($data->stability_for == 'pack_evalution') selected @endif>Pack  evalution </option>
-                                        <option value="n_a"           @if ($data->stability_for == 'n_a') selected @endif>Not Applicable    </option>
+                                        <option  value="submission"
+                                                    {{ strpos($data->stability_for, 'submission') !== false ? 'selected' : '' }}>
+                                                    Submission</option>
+
+                                        <option  value="commercial"
+                                                        {{ strpos($data->stability_for, 'commercial') !== false ? 'selected' : '' }}>
+                                                        Commercial</option>
+
+                                         <option  value="pack_evalution"
+                                                            {{ strpos($data->stability_for, 'pack_evalution') !== false ? 'selected' : '' }}>
+                                                            Pack Evalution</option>
+
+                                         <option  value="n_a"
+                                                                {{ strpos($data->stability_for, 'n_a') !== false ? 'selected' : '' }}>
+                                                                Not Applicable</option>
                                     </select>
                                 </div>
                             </div>
@@ -1022,7 +1033,7 @@
                             <div class="col-lg-6">
                                 <div class="group-input">
                                     <label for="search"> Head QA/Designee <span class="text-danger"></span>  </label>
-                                
+
                                     <select id="select-state" placeholder="Select..." name="inv_head_designee">
                                         {{-- <option value="">Select a value</option> --}}
                                         @foreach ($users as $key => $value)
@@ -1172,7 +1183,7 @@
                                     <label for="search">
                                         Analyst Name <span class="text-danger"></span>
                                     </label>
-                                   
+
                                     <select id="select-state" placeholder="Select..." name="sta_bat_analyst_name">
                                         <option value="">Select a value</option>
                                         @foreach ($users as $key => $value)
@@ -1187,7 +1198,7 @@
                                     <label for="search">
                                         QC/QA Head/Designee <span class="text-danger"></span>
                                     </label>
-                                    
+
                                     <select id="select-state" placeholder="Select..." name="qa_head_designee">
                                         <option value="">Select a value</option>
                                         @foreach ($users as $key => $value)
@@ -2052,7 +2063,7 @@
                                                                 style="border-radius: 7px; border: 1.5px solid black;">{{ $checkList->remark_twenty_five }}</textarea>
                                                         </div>
                                                     </td>
-                                                    
+
 
                                                 </tr>
                                                 <tr>
@@ -2352,7 +2363,7 @@
                                                     @foreach ($checkList->data as $gridData)
                                                         <tr>
 
-                                                            <td class="flex text-center">{{ $loop->index + 35 }}</td>
+                                                            <td class="flex text-center">{{ $loop->index + 34 }}</td>
                                                             <td>
                                                                 <input type="text" class="numberDetail"
                                                                     name="data[{{ $loop->index }}][questions]"
@@ -2397,12 +2408,6 @@
                                                             </td>
                                                         </tr>
                                                     @endforeach
-                                                @else
-                                                    {{-- <td>{{ $loop->index + 34 }}</td> --}}
-                                                    <td><input type="text" name="data[0][questions]"></td>
-                                                    <td><input type="text" name="data[0][response]"></td>
-                                                    <td><input type="text" name="data[0][remarks]"></td>
-                                                    <td><input type="text" class="Action" name=""></td>
                                                 @endif
 
 
@@ -2417,10 +2422,9 @@
                                         Result(s)<span class="text-danger"></span></label>
                                     <select name="l_e_i_oot">
                                         <option>Enter Your Selection Here</option>
-                                        <option value="no"@if ($checkList->l_e_i_oot == 'no') selected @endif>No
-                                        </option>
-                                        <option value="n/a"@if ($checkList->l_e_i_oot == 'n/a') selected @endif>N/A
-                                        </option>
+                                        <option value="yes"@if ($checkList->l_e_i_oot == 'yes') selected @endif>Yes   </option>
+                                        <option value="no"@if ($checkList->l_e_i_oot == 'no') selected @endif>No    </option>
+                                        <option value="n/a"@if ($checkList->l_e_i_oot == 'n/a') selected @endif>N/A    </option>
                                     </select>
                                 </div>
                             </div>
@@ -2434,12 +2438,10 @@
                             <div class="col-lg-6">
                                 <div class="group-input">
                                     <label for="search"> LabIn-Charge <span class="text-danger"></span> </label>
-
-
-                                    <select id="select-state" placeholder="Select..." name="in_charge">
-                                        <option value="">Select a value</option>
+                                    <select id="select-state" placeholder="" name="in_charge">
+                                        {{-- <option value="">Select a value</option> --}}
                                         @foreach ($users as $key => $value)
-                                            <option @if ($data->in_charge == $value->id) selected @endif   value="{{ $value->id }}">{{ $value->name }}</option>
+                                            <option @if ($data->in_charge == $value->id) selected @endif value="{{ $value->id }}">{{ $value->name }}</option>
                                         @endforeach
                                     </select>
                                 </div>
@@ -2456,7 +2458,7 @@
                                         </option>
                                     </select> --}}
                                     <select id="select-state" placeholder="Select..." name="pli_head_designee">
-                                        <option value="">Select a value</option>
+                                        {{-- <option value="">Select a value</option> --}}
                                         @foreach ($users as $key => $value)
                                             <option @if ($data->pli_head_designee == $value->id) selected @endif
                                                 value="{{ $value->id }}">{{ $value->name }}</option>
@@ -2517,7 +2519,7 @@
                                     <label>Correct the Error and Repeat the analysis on same sample<span
                                             class="text-danger"></span></label>
                                     <select name="analysis_on_same_sample">
-                                        <option>---select---</option>
+                                        <option value="0">---select---</option>
                                         <option value="yes" @if ($data->analysis_on_same_sample == 'yes') selected @endif>Yes
                                         </option>
                                         <option value="no" @if ($data->analysis_on_same_sample == 'no') selected @endif>No
@@ -2542,7 +2544,7 @@
                                 <div class="group-input">
                                     <label>Is the Reanalysis results OOT <span class="text-danger"></span></label>
                                     <select name="reanalysis_result_oot">
-                                        <option>---select---</option>
+                                        <option value="0">---select---</option>
                                         <option value="yes" @if ($data->reanalysis_result_oot == 'yes') selected @endif>Yes
                                         </option>
                                         <option value="no" @if ($data->reanalysis_result_oot == 'no') selected @endif>No
@@ -2695,7 +2697,10 @@
                             <div class="col-md-6 ">
                                 <div class="group-input ">
                                     <label for="Last_due-date">Last Due Date <span class="text-danger"></span></label>
-                                    <input type="date" name="last_due_date" value="{{ $data->last_due_date }}">
+                                <input type="date" id="date" name="last_due_date" value="{{ $data->last_due_date ?? '' }}">
+
+                                    {{-- <input type="date" name="last_due_date" value="{{ $data->last_due_date }}"> --}}
+                                    {{-- <input type="date" name="due_date" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input" hidden oninput="handleDateInput(this, 'due_date')" /> --}}
                                 </div>
                             </div>
                             <div class="col-12">
@@ -2836,8 +2841,7 @@
 
                             <div class="col-lg-3">
                                 <div class="group-input">
-                                    <label for="Plan Proposed By">Pending Preliminary Lab Investigation Submited
-                                        By</label>
+                                    <label for="Plan Proposed By">Pending Preliminary Lab Investigation Submited  By</label>
                                     <input type="hidden"
                                         name="ppli_completed_by"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>
                                     <div class="static">{{ $data->ppli_submited_by }}</div>
@@ -2846,8 +2850,7 @@
 
                             <div class="col-lg-3">
                                 <div class="group-input">
-                                    <label for="Plan Proposed On">Pending Preliminary Lab Investigation Submitted
-                                        On</label>
+                                    <label for="Plan Proposed On">Pending Preliminary Lab Investigation Submitted On</label>
                                     <input type="hidden"
                                         name="ppli_submited_on"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>
                                     <div class="static">{{ $data->ppli_submited_on }}</div>
@@ -3030,7 +3033,7 @@
                         <div class="col-lg-12">
                             <div class="group-input">
                                 <label for="closure attachment">Closure Attachment </label>
-                                
+
                                 <div class="file-attachment-field">
                                     <div class="file-attachment-list" id="doc_closure">
                                         @if ($data->doc_closure)
@@ -3067,7 +3070,7 @@
                 </div>
                 </di>
                 {{-- </div>
-                    
+
                 <!-- ==============Tab-4 start=============== -->
                 <div id="CCForm4" class="inner-block cctabcontent">
                     <div class="inner-block-content">
@@ -3294,7 +3297,7 @@
                             </div>
 
 
-                            
+
 
 
                         </div>
@@ -3441,7 +3444,7 @@
                                 </div>
                             </div>
 
-                        
+
 
                         </div>
                         <div class="button-block">
@@ -3525,7 +3528,7 @@
                                 </div>
                             </div>
 
-                           
+
 
 
                         </div>
@@ -3709,7 +3712,7 @@
                                 </div>
                             </div>
 
-                          
+
 
 
 
@@ -3896,7 +3899,7 @@
                                 </div>
                             </div>
 
-                            
+
 
 
 
@@ -3993,7 +3996,7 @@
                             </div>
 
 
-                       
+
 
                         </div>
                         <div class="button-block">
@@ -4086,14 +4089,14 @@
                             </div>
 
 
-                            
+
 
 
                         </div>
                         <div class="button-block">
                         <button type="submit" class="saveButton">Save</button>
                             <button type="button" class="backButton" onclick="previousStep()">Back</button>
-                            <button type="button" class="nextButton" onclick="nextStep()">Next</button>                       
+                            <button type="button" class="nextButton" onclick="nextStep()">Next</button>
                             <button type="button"> <a class="text-white" href="{{ url('rcms/qms-dashboard') }}">Exit
                                 </a> </button>
                         </div>
@@ -4171,7 +4174,7 @@
                         <div class="button-block">
                         <button type="submit" class="saveButton">Save</button>
                             <button type="button" class="backButton" onclick="previousStep()">Back</button>
-                            <button type="button" class="nextButton" onclick="nextStep()">Next</button>  
+                            <button type="button" class="nextButton" onclick="nextStep()">Next</button>
                             <button type="button"> <a class="text-white" href="{{ url('rcms/qms-dashboard') }}">Exit
                                 </a> </button>
                         </div>
@@ -4345,14 +4348,14 @@
                             </div>
 
 
-                          
+
 
 
                         </div>
                         <div class="button-block">
                         <button type="submit" class="saveButton">Save</button>
                             <button type="button" class="backButton" onclick="previousStep()">Back</button>
-                            <button type="button" class="nextButton" onclick="nextStep()">Next</button>   
+                            <button type="button" class="nextButton" onclick="nextStep()">Next</button>
                             <button type="button"> <a class="text-white" href="{{ url('rcms/qms-dashboard') }}">Exit
                                 </a> </button>
                         </div>
@@ -4391,7 +4394,7 @@
                             </div>
 
 
-                           
+
 
 
                         </div>

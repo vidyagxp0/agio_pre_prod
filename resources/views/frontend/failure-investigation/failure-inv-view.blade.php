@@ -1236,9 +1236,7 @@
                                         <div class="group-input">
                                             <label for="audit type">Failure Investigation Related To <span
                                                     class="text-danger">*</span></label>
-                                            <select multiple
-                                                name="audit_type[]"{{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
-                                                id="audit_type">
+                                            <select multiple name="audit_type[]"{{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}  id="audit_type">
                                                 <option
                                                     value="Facility"{{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
                                                     {{ strpos($data->audit_type, 'Facility') !== false ? 'selected' : '' }}>

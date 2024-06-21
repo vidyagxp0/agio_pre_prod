@@ -335,8 +335,7 @@
                                                         @foreach ($cft as $data1)
                                                             @if (Helpers::checkUserRolesMicrobiology_Person($data1))
                                                                 @if (in_array($data1->id, $cft_aff))
-                                                                    <option value="{{ $data1->id }}" selected>
-                                                                        {{ $data1->name }}</option>
+                                                                    <option value="{{ $data1->id }}" selected>   {{ $data1->name }}</option>
                                                                 @else
                                                                     <option value="{{ $data1->id }}">
                                                                         {{ $data1->name }}</option>
