@@ -25,7 +25,7 @@
             flex: 1 1 auto;
             border: 1px solid grey;
             padding: 5px;
-            border-radius: 20px;
+            /* border-radius: 20px; */
             text-align: center;
             position: relative;
             /* border-right: none; */
@@ -92,7 +92,7 @@
                             </button>
                         @elseif($showdata->stage == 3 && (in_array(3, $userRoleIds) || in_array(18, $userRoleIds)))
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#more-info-required-modal">
-                                More Info Required
+                                Request More Info.
                             </button>
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#correction-modal">
                                 Correction Completed
@@ -103,7 +103,7 @@
                         @elseif($showdata->stage == 4 && (in_array([4, 14], $userRoleIds) || in_array(18, $userRoleIds)))
                             <button class="button_theme1" data-bs-toggle="modal"
                                 data-bs-target="#more-inform-required-modal">
-                                More Info Required
+                                Request More Info.
                             </button>
 
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#hod-rewieve-modal">
@@ -128,7 +128,7 @@
                     <div class="head">Current Status</div>
                     @if ($showdata->stage == 0)
                         <div class="progress-bars ">
-                            <div class="bg-danger">Closed-Cancelled</div>
+                            <div class="bg-danger" style="border-radius: 20px;">Closed-Cancelled</div>
                         </div>
                     @else
                         <div class="progress-bars d-flex" style="font-size: 15px;">
@@ -158,9 +158,9 @@
                                 <div class="">Pending QA Head Approval</div>
                             @endif
                             @if ($showdata->stage >= 6)
-                                <div class="bg-danger">Closed Done</div>
+                                <div class="bg-danger">Closed-Done</div>
                             @else
-                                <div class="">Closed Done</div>
+                                <div class="">Closed-Done</div>
                             @endif
                         </div>
                     @endif
@@ -259,53 +259,53 @@
                                             {{ $showdata->stage == 0 || $showdata->stage == 6 ? 'disabled' : '' }}
                                             id="selectedOptions" {{ Helpers::disabledErrataFields($showdata->stage) }}>
                                             <option value="">--Select--</option>
-                                            <option value="CQA" @if ($showdata->Department == 'CQA') selected @endif>
+                                            <option value="CQA" @if ($showdata->Department == 'Corporate Quality Assurance') selected @endif>
                                                 Corporate
                                                 Quality Assurance</option>
-                                            <option value="QAB" @if ($showdata->Department == 'QAB') selected @endif>
+                                            <option value="QAB" @if ($showdata->Department == 'Quality Assurance Biopharma') selected @endif>
                                                 Quality
                                                 Assurance Biopharma</option>
-                                            <option value="CQC" @if ($showdata->Department == 'CQC') selected @endif>
+                                            <option value="CQC" @if ($showdata->Department == 'Central Quality Control') selected @endif>
                                                 Central
                                                 Quality Control</option>
-                                            <option value="CQC" @if ($showdata->Department == 'CQC') selected @endif>
+                                            <option value="CQC" @if ($showdata->Department == 'Manufacturing') selected @endif>
                                                 Manufacturing
                                             </option>
-                                            <option value="PSG" @if ($showdata->Department == 'PSG') selected @endif>
+                                            <option value="PSG" @if ($showdata->Department == ' Plasma Sourcing Group') selected @endif>
                                                 Plasma
                                                 Sourcing Group</option>
-                                            <option value="CS" @if ($showdata->Department == 'CS') selected @endif>
+                                            <option value="CS" @if ($showdata->Department == 'Central Stores') selected @endif>
                                                 Central
                                                 Stores</option>
-                                            <option value="ITG" @if ($showdata->Department == 'ITG') selected @endif>
+                                            <option value="ITG" @if ($showdata->Department == 'Information Technology Group') selected @endif>
                                                 Information
                                                 Technology Group</option>
-                                            <option value="MM" @if ($showdata->Department == 'MM') selected @endif>
+                                            <option value="MM" @if ($showdata->Department == 'Molecular Medicine') selected @endif>
                                                 Molecular
                                                 Medicine</option>
-                                            <option value="CL" @if ($showdata->Department == 'CL') selected @endif>
+                                            <option value="CL" @if ($showdata->Department == 'Central Laboratory') selected @endif>
                                                 Central
                                                 Laboratory</option>
-                                            <option value="TT" @if ($showdata->Department == 'TT') selected @endif>Tech
+                                            <option value="TT" @if ($showdata->Department == 'Tech Team') selected @endif>Tech
                                                 Team</option>
-                                            <option value="QA" @if ($showdata->Department == 'QA') selected @endif>
+                                            <option value="QA" @if ($showdata->Department == 'Quality Assurance') selected @endif>
                                                 Quality
                                                 Assurance</option>
-                                            <option value="QM" @if ($showdata->Department == 'QM') selected @endif>
+                                            <option value="QM" @if ($showdata->Department == 'Quality Management') selected @endif>
                                                 Quality
                                                 Management</option>
-                                            <option value="IA" @if ($showdata->Department == 'IA') selected @endif>IT
+                                            <option value="IA" @if ($showdata->Department == 'IT Administration') selected @endif>IT
                                                 Administration</option>
-                                            <option value="ACC" @if ($showdata->Department == 'ACC') selected @endif>
+                                            <option value="ACC" @if ($showdata->Department == 'Accounting') selected @endif>
                                                 Accounting
                                             </option>
-                                            <option value="LOG" @if ($showdata->Department == 'LOG') selected @endif>
+                                            <option value="LOG" @if ($showdata->Department == 'Logistics') selected @endif>
                                                 Logistics
                                             </option>
-                                            <option value="SM" @if ($showdata->Department == 'SM') selected @endif>
+                                            <option value="SM" @if ($showdata->Department == 'Senior Management') selected @endif>
                                                 Senior
                                                 Management</option>
-                                            <option value="BA" @if ($showdata->Department == 'BA') selected @endif>
+                                            <option value="BA" @if ($showdata->Department == 'Business Administration') selected @endif>
                                                 Business
                                                 Administration</option>
 
@@ -383,30 +383,23 @@
                                     </div>
                                 </div>
                                 @php
-                                    // Assume $showdata is the object containing reference_document array
-                                    // $showdata->reference_document = is_array($showdata->reference_document)
-                                    //     ? $showdata->reference_document
-                                    //     : explode(',', $showdata->reference_document);
-                                    // $divisionName = Helpers::getDivisionName(Auth::user()->id);
-                                    // $recordFormat = Helpers::recordFormat(Auth::user()->name);
-                                    // $referenceValue = "{$divisionName}/Errata/" . date('Y') . "/{$recordFormat}";
-
                                     $old_record = DB::table('erratas')->get();
                                     $reference_documents = is_array($showdata->reference_document)
                                         ? $showdata->reference_document
                                         : explode(',', $showdata->reference_document);
                                 @endphp
-
                                 <div class="">
                                     <div class="group-input">
                                         <label for="reference_record">Reference Documents</label>
                                         <select multiple id="reference_record" name="reference_document[]"
                                             {{ Helpers::disabledErrataFields($showdata->stage) }}>
                                             @foreach ($old_record as $new)
-                                                <option value="{{ $new->id }}"
-                                                    {{ in_array($new->id, $reference_documents) ? 'selected' : '' }}>
-                                                    {{ Helpers::getDivisionName($new->division_id) }}/ERRATA/{{ date('Y') }}/{{ str_pad($new->id, 4, '0', STR_PAD_LEFT) }}
-                                                    {{-- to add record number{{ Helpers::recordFormat($new->record) }}/ --}}
+                                                @php
+                                                    $value = Helpers::getDivisionName($new->division_id) . '/ERRATA/' . date('Y') . '/' . str_pad($new->id, 4, '0', STR_PAD_LEFT);
+                                                    $selected = in_array($value, $reference_documents) ? 'selected' : '';
+                                                @endphp
+                                                <option value="{{ $value }}" {{ $selected }}>
+                                                    {{ $value }}
                                                 </option>
                                             @endforeach
 
@@ -2353,8 +2346,8 @@
                             <input type="password" name="password" required>
                         </div>
                         <div class="group-input">
-                            <label for="comment">Comment<span class="text-danger">*</span></label>
-                            <input type="comment" name="comment" required>
+                            <label for="comment">Comment</label>
+                            <input type="comment" name="comment" >
                         </div>
                     </div>
 
@@ -2394,8 +2387,8 @@
                             <input class="input_width" type="password" name="password" required>
                         </div>
                         <div class="group-input">
-                            <label for="comment">Comment<span class="text-danger">*</span></label>
-                            <input class="input_width" type="comment" name="comment" required>
+                            <label for="comment">Comment</label>
+                            <input class="input_width" type="comment" name="comment">
                         </div>
                     </div>
 
@@ -2435,8 +2428,8 @@
                             <input class="input_width" type="password" name="password" required>
                         </div>
                         <div class="group-input">
-                            <label for="comment">Comment<span class="text-danger">*</span></label>
-                            <input class="input_width" type="comment" name="comment" required>
+                            <label for="comment">Comment</label>
+                            <input class="input_width" type="comment" name="comment">
                         </div>
                     </div>
 
@@ -2476,8 +2469,8 @@
                             <input class="input_width" type="password" name="password" required>
                         </div>
                         <div class="group-input">
-                            <label for="comment">Comment<span class="text-danger">*</span></label>
-                            <input class="input_width" type="comment" name="comment" required>
+                            <label for="comment">Comment</label>
+                            <input class="input_width" type="comment" name="comment">
                         </div>
                     </div>
 
@@ -2517,8 +2510,8 @@
                             <input class="input_width" type="password" name="password" required>
                         </div>
                         <div class="group-input">
-                            <label for="comment">Comment<span class="text-danger">*</span></label>
-                            <input class="input_width" type="comment" name="comment" required>
+                            <label for="comment">Comment</label>
+                            <input class="input_width" type="comment" name="comment">
                         </div>
                     </div>
 
