@@ -379,7 +379,7 @@
                                         characters remaining
                                         <input id="docname" type="text" name="short_description" maxlength="255"
                                             value="{{ $showdata->short_description }}"
-                                            {{ Helpers::disabledErrataFields($showdata->stage) }}>
+                                            {{ Helpers::disabledErrataFields($showdata->stage) }} required>
                                     </div>
                                 </div>
                                 @php
