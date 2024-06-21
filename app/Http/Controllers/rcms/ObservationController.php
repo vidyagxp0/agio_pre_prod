@@ -36,14 +36,12 @@ class ObservationController extends Controller
 
     public function observationstore(Request $request)
     {
-
-
-
         if (!$request->short_description) {
             toastr()->error("Short description is required");
             //return redirect()->back();
         }
         $data = new Observation();
+        // dd($data);
 
         $data->record = ((RecordNumber::first()->value('counter')) + 1);
         $data->initiator_id = Auth::user()->id;
@@ -58,26 +56,29 @@ class ObservationController extends Controller
         $data->category_observation = $request->category_observation;
         $data->reference_guideline = $request->reference_guideline;
         $data->description = $request->description;
-        // if ($request->hasfile('attach_files1')) {
-        //     $image = $request->file('attach_files1');
-        //     $ext = $image->getClientOriginalExtension();
-        //     $image_name = date('y-m-d') . '-' . rand() . '.' . $ext;
-        //     $image->move('upload/document/', $image_name);
-        //     $data->attach_files1 = $image_name;
-        // }
 
-
-        $files = [];
-        if ($request->hasFile('attach_files1')) {
-            foreach ($request->file('attach_files1') as $file) {
-                $name = $request->name . 'attach_files1' . uniqid() . '.' . $file->getClientOriginalExtension();
-                $file->move(public_path('upload/'), $name);
-                $files[] = $name;
+        if(!empty($request->attach_files_gi)){
+            $files = [];
+            if ($request->hasFile('attach_files_gi')) {
+                foreach ($request->file('attach_files_gi') as $file) {
+                    $name = $request->name . 'attach_files_gi' . uniqid() . '.' . $file->getClientOriginalExtension();
+                    $file->move(public_path('upload/'), $name);
+                    $files[] = $name;
+                }
             }
+            $data->attach_files_gi = json_encode($files);
         }
-        $data->attach_files1 = json_encode($files);
 
-        $data->HOD_Remarks = $request->HOD_Remarks;
+        // $files = [];
+        // if ($request->hasFile('attach_files_gi')) {
+        //     foreach ($request->file('attach_files_gi') as $file) {
+        //         $name = $request->name . 'attach_files_gi' . uniqid() . '.' . $file->getClientOriginalExtension();
+        //         $file->move(public_path('upload/'), $name);
+        //         $files[] = $name;
+        //     }
+        // }
+        // $data->attach_files_gi = json_encode($files);
+
         $data->recomendation_capa_date_due = $request->recomendation_capa_date_due;
         $data->non_compliance = $request->non_compliance;
         $data->recommend_action = $request->recommend_action;
@@ -88,9 +89,56 @@ class ObservationController extends Controller
         $data->comments = $request->comments;
         $data->impact = $request->impact;
         $data->impact_analysis = $request->impact_analysis;
-        $data->severity_rate = $request->severity_rate;
-        $data->occurrence = $request->occurrence;
-        $data->detection = $request->detection;
+
+        $severity = [
+            '1' => 'Negligible',
+            '2' => 'Moderate',
+            '3' => 'Major',
+            '4' => 'Fatal',
+        ];
+        if (isset($data->severity_rate) && array_key_exists($data->severity_rate, $severity)) {
+            $data->severity_rate = $severity[$data->severity_rate];
+        } else {
+            $data->severity_rate = '';
+        }
+        if ($request->has('severity_rate') && array_key_exists($request->severity_rate, $severity)) {
+            $data->severity_rate = $severity[$request->severity_rate];
+        }
+
+
+        // $data->occurrence = $request->occurrence;
+        $Occurance = [
+            '5' => 'Extremely Unlikely',
+            '4' => 'Rare',
+            '3' => 'Unlikely',
+            '2' => 'Likely',
+            '1' => 'Very Likely',
+        ];
+        if (isset($data->occurrence) && array_key_exists($data->occurrence, $Occurance)) {
+            $data->occurrence = $Occurance[$data->occurrence];
+        } else {
+            $data->occurrence = '';
+        }
+        if ($request->has('occurrence') && array_key_exists($request->occurrence, $Occurance)) {
+            $data->occurrence = $Occurance[$request->occurrence];
+        }
+
+        // $data->detection = $request->detection;
+        $Detection = [
+            '5' => 'Impossible',
+            '4' => 'Rare',
+            '3' => 'Unlikely',
+            '2' => 'Likely',
+            '1' => 'Very Likely',
+        ];
+        if (isset($data->detection) && array_key_exists($data->detection, $Detection)) {
+            $data->detection = $Detection[$data->detection];
+        } else {
+            $data->detection = '';
+        }
+        if ($request->has('detection') && array_key_exists($request->detection, $Detection)) {
+            $data->detection = $Detection[$request->detection];
+        }
         $data->analysisRPN = $request->analysisRPN;
         $data->actual_start_date = $request->actual_start_date;
         $data->actual_end_date = $request->actual_end_date;
@@ -109,32 +157,55 @@ class ObservationController extends Controller
         //     $image->move('upload/document/', $image_name);
         //     $data->related_observations = $image_name;
         // }
-        if (!empty($request->related_observations)) {
-            $files = [];
-            if ($request->hasfile('related_observations')) {
-                foreach ($request->file('related_observations') as $file) {
-                    $name = $request->name . 'related_observations' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
-                    $file->move('upload/', $name);
-                    $files[] = $name;
-                }
-            }
+        // if (!empty($request->related_observations)) {
+        //     $files = [];
+        //     if ($request->hasfile('related_observations')) {
+        //         foreach ($request->file('related_observations') as $file) {
+        //             $name = $request->name . 'related_observations' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+        //             $file->move('upload/', $name);
+        //             $files[] = $name;
+        //         }
+        //     }
 
-            $data->related_observations = json_encode($files);
+        //     $data->related_observations = json_encode($files);
+        // }
+        if(!empty($request->related_observations)){
+        $files = [];
+        if ($request->hasFile('related_observations')) {
+            foreach ($request->file('related_observations') as $file) {
+                $name = $request->name . 'related_observations' . uniqid() . '.' . $file->getClientOriginalExtension();
+                $file->move(public_path('upload/'), $name);
+                $files[] = $name;
+            }
+        }
+        $data->related_observations = json_encode($files);
+    }
+
+        // if (!empty($request->attach_files2)) {
+        //     $files = [];
+        //     if ($request->hasfile('attach_files2')) {
+        //         foreach ($request->file('attach_files2') as $file) {
+        //             $name = $request->name . 'attach_files2' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+        //             $file->move('upload/', $name);
+        //             $files[] = $name;
+        //         }
+        //     }
+
+        //     $data->attach_files2 = json_encode($files);
+        // }
+if(!empty($request->attach_files2)){
+        $files = [];
+        if ($request->hasFile('attach_files2')) {
+            foreach ($request->file('attach_files2') as $file) {
+                $name = $request->name . 'attach_files2' . uniqid() . '.' . $file->getClientOriginalExtension();
+                $file->move(public_path('upload/'), $name);
+                $files[] = $name;
+            }
         }
 
+        $data->attach_files2 = json_encode($files);
 
-        if (!empty($request->attach_files2)) {
-            $files = [];
-            if ($request->hasfile('attach_files2')) {
-                foreach ($request->file('attach_files2') as $file) {
-                    $name = $request->name . 'attach_files2' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
-                    $file->move('upload/', $name);
-                    $files[] = $name;
-                }
-            }
-
-            $data->attach_files2 = json_encode($files);
-        }
+    }
         $data->status = 'Opened';
         $data->stage = 1;
         $data->save();
@@ -159,85 +230,85 @@ class ObservationController extends Controller
         $record->counter = ((RecordNumber::first()->value('counter')) + 1);
         $record->update();
 
-        if (!empty($data->parent_id)) {
-        $history = new AuditTrialObservation();
-        $history->Observation_id = $data->id;
-        $history->activity_type = 'Parent Id';
-        $history->previous = "Null";
-        $history->current = $data->parent_id;
-        $history->comment = "NA";
-        $history->user_id = Auth::user()->id;
-        $history->user_name = Auth::user()->name;
-        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-        $history->origin_state = $data->status;
-        $history->change_to =   "Opened";
-        $history->change_from = "Initiator";
-        $history->action_name = 'Create';
-        $history->save();
-        }
-        if (!empty($data->parent_type)) {
-        $history = new AuditTrialObservation();
-        $history->Observation_id = $data->id;
-        $history->activity_type = 'Parent Type';
-        $history->previous = "Null";
-        $history->current = $data->parent_type;
-        $history->comment = "NA";
-        $history->user_id = Auth::user()->id;
-        $history->user_name = Auth::user()->name;
-        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-        $history->origin_state = $data->status;
-        $history->change_to =   "Opened";
-        $history->change_from = "Initiator";
-        $history->action_name = 'Create';
-        $history->save();
-    }
-    if (!empty($data->division_code)) {
-        $history = new AuditTrialObservation();
-        $history->Observation_id = $data->id;
-        $history->activity_type = 'Division Code';
-        $history->previous = "Null";
-        $history->current = $data->division_code;
-        $history->comment = "NA";
-        $history->user_id = Auth::user()->id;
-        $history->user_name = Auth::user()->name;
-        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-        $history->origin_state = $data->status;
-        $history->change_to =   "Opened";
-        $history->change_from = "Initiator";
-        $history->action_name = 'Create';
-        $history->save();
-    }
-    if (!empty($data->intiation_date)) {
-        $history = new AuditTrialObservation();
-        $history->Observation_id = $data->id;
-        $history->activity_type = 'Date of Initiation';
-        $history->previous ="Null";
-        $history->current = $data->intiation_date;
-        $history->comment = "NA";
-        $history->user_id = Auth::user()->id;
-        $history->user_name = Auth::user()->name;
-        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-        $history->origin_state = $data->status;
-        $history->change_to =   "Opened";
-        $history->change_from = "Initiator";
-        $history->action_name = 'Create';
-        $history->save();
-    }
-    if (!empty($data->due_date)) {
-        $history = new AuditTrialObservation();
-        $history->Observation_id = $data->id;
-        $history->activity_type = 'Date Due';
-        $history->previous ="Null";
-        $history->current = $data->due_date;
-        $history->comment = "NA";
-        $history->user_id = Auth::user()->id;
-        $history->user_name = Auth::user()->name;
-        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-        $history->origin_state = $data->status;
-        $history->change_to =   "Opened";
-        $history->change_from = "Initiator";
-        $history->action_name = 'Create';
-        $history->save();
+        // if (!empty($data->parent_id)) {
+        // $history = new AuditTrialObservation();
+        // $history->Observation_id = $data->id;
+        // $history->activity_type = 'Parent Id';
+        // $history->previous = "Null";
+        // $history->current = $data->parent_id;
+        // $history->comment = "NA";
+        // $history->user_id = Auth::user()->id;
+        // $history->user_name = Auth::user()->name;
+        // $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        // $history->origin_state = $data->status;
+        // $history->change_to =   "Opened";
+        // $history->change_from = "Initiator";
+        // $history->action_name = 'Create';
+        // $history->save();
+        // }
+    //     if (!empty($data->parent_type)) {
+    //     $history = new AuditTrialObservation();
+    //     $history->Observation_id = $data->id;
+    //     $history->activity_type = 'Parent Type';
+    //     $history->previous = "Null";
+    //     $history->current = $data->parent_type;
+    //     $history->comment = "NA";
+    //     $history->user_id = Auth::user()->id;
+    //     $history->user_name = Auth::user()->name;
+    //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+    //     $history->origin_state = $data->status;
+    //     $history->change_to =   "Opened";
+    //     $history->change_from = "Initiator";
+    //     $history->action_name = 'Create';
+    //     $history->save();
+    // }
+    // if (!empty($data->division_code)) {
+    //     $history = new AuditTrialObservation();
+    //     $history->Observation_id = $data->id;
+    //     $history->activity_type = 'Division Code';
+    //     $history->previous = "Null";
+    //     $history->current = $data->division_code;
+    //     $history->comment = "NA";
+    //     $history->user_id = Auth::user()->id;
+    //     $history->user_name = Auth::user()->name;
+    //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+    //     $history->origin_state = $data->status;
+    //     $history->change_to =   "Opened";
+    //     $history->change_from = "Initiator";
+    //     $history->action_name = 'Create';
+    //     $history->save();
+    // }
+    // if (!empty($data->intiation_date)) {
+    //     $history = new AuditTrialObservation();
+    //     $history->Observation_id = $data->id;
+    //     $history->activity_type = 'Date of Initiation';
+    //     $history->previous ="Null";
+    //     $history->current = $data->intiation_date;
+    //     $history->comment = "NA";
+    //     $history->user_id = Auth::user()->id;
+    //     $history->user_name = Auth::user()->name;
+    //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+    //     $history->origin_state = $data->status;
+    //     $history->change_to =   "Opened";
+    //     $history->change_from = "Initiator";
+    //     $history->action_name = 'Create';
+    //     $history->save();
+    // }
+    // if (!empty($data->due_date)) {
+    //     $history = new AuditTrialObservation();
+    //     $history->Observation_id = $data->id;
+    //     $history->activity_type = 'Date Due';
+    //     $history->previous ="Null";
+    //     $history->current = $data->due_date;
+    //     $history->comment = "NA";
+    //     $history->user_id = Auth::user()->id;
+    //     $history->user_name = Auth::user()->name;
+    //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+    //     $history->origin_state = $data->status;
+    //     $history->change_to =   "Opened";
+    //     $history->change_from = "Initiator";
+    //     $history->action_name = 'Create';
+    //     $history->save();
 
         // $history = new AuditTrialObservation();
         // $history->Observation_id = $data->id;
@@ -250,7 +321,7 @@ class ObservationController extends Controller
         // $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
         // $history->origin_state = $data->status;
         // $history->save();
-    }
+    // }
     if (!empty($data->short_description)) {
         $history = new AuditTrialObservation();
         $history->Observation_id = $data->id;
@@ -347,12 +418,12 @@ class ObservationController extends Controller
         $history->action_name = 'Create';
         $history->save();
     }
-    if (!empty($data->attach_files1)) {
+    if (!empty($data->attach_files_gi)) {
         $history = new AuditTrialObservation();
         $history->Observation_id = $data->id;
         $history->activity_type = 'Attached Files';
         $history->previous = "Null";
-        $history->current = $data->attach_files1;
+        $history->current = $data->attach_files_gi;
         $history->comment = "NA";
         $history->user_id = Auth::user()->id;
         $history->user_name = Auth::user()->name;
@@ -768,36 +839,40 @@ class ObservationController extends Controller
         $data->category_observation = $request->category_observation;
         $data->reference_guideline = $request->reference_guideline;
         $data->description = $request->description;
-        // if ($request->hasfile('attach_files1')) {
-        //     $image = $request->file('attach_files1');
-        //     $ext = $image->getClientOriginalExtension();
-        //     $image_name = date('y-m-d') . '-' . rand() . '.' . $ext;
-        //     $image->move('upload/document/', $image_name);
-        //     $data->attach_files1 = $image_name;
-        // }
 
-        $files = [];
-        if ($request->hasFile('attach_files1')) {
-            foreach ($request->file('attach_files1') as $file) {
-                $name = $request->name . 'attach_files1' . uniqid() . '.' . $file->getClientOriginalExtension();
-                $file->move(public_path('upload/'), $name);
-                $files[] = $name;
-            }
-        }
-        $data->attach_files1 = json_encode($files);
 
         // $files = [];
-        // if ($request->attach_files1) {
-        //     if ($request->hasfile('attach_files1')) {
-        //         foreach ($request->file('attach_files1') as $file) {
-        //             $name = $request->name . 'attach_files1' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
-        //             $file->move('upload/', $name);
-        //             $files[] = $name;
-        //         }
+        // if ($request->hasFile('attach_files_gi')) {
+        //     foreach ($request->file('attach_files_gi') as $file) {
+        //         $name = $request->name . 'attach_files_gi' . uniqid() . '.' . $file->getClientOriginalExtension();
+        //         $file->move(public_path('upload/'), $name);
+        //         $files[] = $name;
         //     }
-
-        //     $data->attach_files1 = json_encode($files);
+        //     $data->attach_files_gi = json_encode($files);
+        // } else {
+        //     if (isset($data->attach_files_gi)) {
+        //         $files = json_decode($data->attach_files_gi, true);
+        //     }
         // }
+
+        if(!empty($request->attach_files_gi)) {
+            $files = [];
+            if ($request->hasFile('attach_files_gi')) {
+                foreach ($request->file('attach_files_gi') as $file) {
+                    $name = $request->name . 'attach_files_gi' . uniqid() . '.' . $file->getClientOriginalExtension();
+                    $file->move(public_path('upload/'), $name);
+                    $files[] = $name;
+                }
+            }
+            $data->attach_files_gi = json_encode($files);
+        } else {
+            // Handle case when no new files are added, but some might have been removed
+            if ($request->input('current_files')) {
+                $data->attach_files_gi = json_encode($request->input('current_files'));
+            }
+        }
+
+
         $data->recomendation_capa_date_due = $request->recomendation_capa_date_due;
         $data->non_compliance = $request->non_compliance;
         $data->recommend_action = $request->recommend_action;
@@ -808,9 +883,55 @@ class ObservationController extends Controller
         $data->comments = $request->comments;
         $data->impact = $request->impact;
         $data->impact_analysis = $request->impact_analysis;
-        $data->severity_rate = $request->severity_rate;
-        $data->occurrence = $request->occurrence;
-        $data->detection = $request->detection;
+        // $data->severity_rate = $request->severity_rate;
+        $severity = [
+            '1' => 'Negligible',
+            '2' => 'Moderate',
+            '3' => 'Major',
+            '4' => 'Fatal',
+        ];
+        if (isset($data->severity_rate) && array_key_exists($data->severity_rate, $severity)) {
+            $data->severity_rate = $severity[$data->severity_rate];
+        } else {
+            $data->severity_rate = '';
+        }
+        if ($request->has('severity_rate') && array_key_exists($request->severity_rate, $severity)) {
+            $data->severity_rate = $severity[$request->severity_rate];
+        }
+
+        // $data->occurrence = $request->occurrence;
+        $Occurance = [
+            '5' => 'Extremely Unlikely',
+            '4' => 'Rare',
+            '3' => 'Unlikely',
+            '2' => 'Likely',
+            '1' => 'Very Likely',
+        ];
+        if (isset($data->occurrence) && array_key_exists($data->occurrence, $Occurance)) {
+            $data->occurrence = $Occurance[$data->occurrence];
+        } else {
+            $data->occurrence = '';
+        }
+        if ($request->has('occurrence') && array_key_exists($request->occurrence, $Occurance)) {
+            $data->occurrence = $Occurance[$request->occurrence];
+        }
+
+        // $data->detection = $request->detection;
+        $Detection = [
+            '5' => 'Impossible',
+            '4' => 'Rare',
+            '3' => 'Unlikely',
+            '2' => 'Likely',
+            '1' => 'Very Likely',
+        ];
+        if (isset($data->detection) && array_key_exists($data->detection, $Detection)) {
+            $data->detection = $Detection[$data->detection];
+        } else {
+            $data->detection = '';
+        }
+        if ($request->has('detection') && array_key_exists($request->detection, $Detection)) {
+            $data->detection = $Detection[$request->detection];
+        }
         $data->analysisRPN = $request->analysisRPN;
         $data->actual_start_date = $request->actual_start_date;
         $data->actual_end_date = $request->actual_end_date;
@@ -830,17 +951,17 @@ class ObservationController extends Controller
         //     $image->move('upload/document/', $image_name);
         //     $data->related_observations = $image_name;
         // }
-
-
+        if (!empty($request->related_observations)) {
         $files = [];
-            if ($request->hasFile('related_observations')) {
-                foreach ($request->file('related_observations') as $file) {
-                    $name = $request->name . 'related_observations' . uniqid() . '.' . $file->getClientOriginalExtension();
-                    $file->move(public_path('upload/'), $name);
-                    $files[] = $name;
-                }
+        if ($request->hasFile('related_observations')) {
+            foreach ($request->file('related_observations') as $file) {
+                $name = $request->name . 'related_observations' . uniqid() . '.' . $file->getClientOriginalExtension();
+                $file->move(public_path('upload/'), $name);
+                $files[] = $name;
             }
-            $data->related_observations = json_encode($files);
+        }
+        $data->related_observations = json_encode($files);
+    }
         // if (!empty($request->related_observations)) {
         //     $files = [];
         //     if ($request->hasfile('related_observations')) {
@@ -861,18 +982,17 @@ class ObservationController extends Controller
         //     $data->attach_files2 = $image_name;
         // }
 
-
-
+        if (!empty($request->attach_files2)) {
         $files = [];
-            if ($request->hasFile('attach_files2')) {
-                foreach ($request->file('attach_files2') as $file) {
-                    $name = $request->name . 'attach_files2' . uniqid() . '.' . $file->getClientOriginalExtension();
-                    $file->move(public_path('upload/'), $name);
-                    $files[] = $name;
-                }
+        if ($request->hasFile('attach_files2')) {
+            foreach ($request->file('attach_files2') as $file) {
+                $name = $request->name . 'attach_files2' . uniqid() . '.' . $file->getClientOriginalExtension();
+                $file->move(public_path('upload/'), $name);
+                $files[] = $name;
             }
-            $data->attach_files2 = json_encode($files);
-
+        }
+        $data->attach_files2 = json_encode($files);
+    }
         // if (!empty($request->attach_files2)) {
         //     $files = [];
         //     if ($request->hasfile('attach_files2')) {
@@ -906,73 +1026,73 @@ class ObservationController extends Controller
         }
         $data1->update();
 
-        if ($lastDocument->parent_id != $data->parent_id || !empty($request->parent_id_comment)) {
+        // if ($lastDocument->parent_id != $data->parent_id || !empty($request->parent_id_comment)) {
 
-            $history = new AuditTrialObservation();
-            $history->Observation_id = $id;
-            $history->activity_type = 'Parent Id';
-            $history->previous = $lastDocument->parent_id;
-            $history->current = $data->parent_id;
-            $history->comment = $request->parent_id_comment;
-            $history->user_id = Auth::user()->id;
-            $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state = $lastDocument->status;
-            $history->change_to =   "Not Applicable";
-            $history->change_from = $lastDocument->status;
-            $history->action_name = 'Update';
-            $history->save();
-        }
-        if ($lastDocument->parent_type != $data->parent_type || !empty($request->parent_type_comment)) {
+        //     $history = new AuditTrialObservation();
+        //     $history->Observation_id = $id;
+        //     $history->activity_type = 'Parent Id';
+        //     $history->previous = $lastDocument->parent_id;
+        //     $history->current = $data->parent_id;
+        //     $history->comment = $request->parent_id_comment;
+        //     $history->user_id = Auth::user()->id;
+        //     $history->user_name = Auth::user()->name;
+        //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        //     $history->origin_state = $lastDocument->status;
+        //     $history->change_to =   "Not Applicable";
+        //     $history->change_from = $lastDocument->status;
+        //     $history->action_name = 'Update';
+        //     $history->save();
+        // }
+        // if ($lastDocument->parent_type != $data->parent_type || !empty($request->parent_type_comment)) {
 
-            $history = new AuditTrialObservation();
-            $history->Observation_id = $id;
-            $history->activity_type = 'Parent Type';
-            $history->previous = $lastDocument->parent_type;
-            $history->current = $data->parent_type;
-            $history->comment = $request->parent_type_comment;
-            $history->user_id = Auth::user()->id;
-            $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state = $lastDocument->status;
-            $history->change_to =   "Not Applicable";
-            $history->change_from = $lastDocument->status;
-            $history->action_name = 'Update';
-            $history->save();
-        }
-        if ($lastDocument->division_code != $data->division_code || !empty($request->division_code_comment)) {
+        //     $history = new AuditTrialObservation();
+        //     $history->Observation_id = $id;
+        //     $history->activity_type = 'Parent Type';
+        //     $history->previous = $lastDocument->parent_type;
+        //     $history->current = $data->parent_type;
+        //     $history->comment = $request->parent_type_comment;
+        //     $history->user_id = Auth::user()->id;
+        //     $history->user_name = Auth::user()->name;
+        //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        //     $history->origin_state = $lastDocument->status;
+        //     $history->change_to =   "Not Applicable";
+        //     $history->change_from = $lastDocument->status;
+        //     $history->action_name = 'Update';
+        //     $history->save();
+        // }
+        // if ($lastDocument->division_code != $data->division_code || !empty($request->division_code_comment)) {
 
-            $history = new AuditTrialObservation();
-            $history->Observation_id = $id;
-            $history->activity_type = 'Division Code';
-            $history->previous = $lastDocument->division_code;
-            $history->current = $data->division_code;
-            $history->comment = $request->division_code_comment;
-            $history->user_id = Auth::user()->id;
-            $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state = $lastDocument->status;
-            $history->change_to =   "Not Applicable";
-            $history->change_from = $lastDocument->status;
-            $history->action_name = 'Update';
-            $history->save();
-        }
-        if (!empty($lastDocument->short_description)) {
-            $history = new AuditTrialObservation();
-            $history->Observation_id = $lastDocument->id;
-            $history->activity_type = 'Short Description';
-            $history->previous = "Null";
-            $history->current = $lastDocument->short_description;
-            $history->comment = "NA";
-            $history->user_id = Auth::user()->id;
-            $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state = $lastDocument->status;
-            $history->change_to =   "Not Applicable";
-            $history->change_from = $lastDocument->status;
-            $history->action_name = 'Update';
-            $history->save();
-        }
+        //     $history = new AuditTrialObservation();
+        //     $history->Observation_id = $id;
+        //     $history->activity_type = 'Division Code';
+        //     $history->previous = $lastDocument->division_code;
+        //     $history->current = $data->division_code;
+        //     $history->comment = $request->division_code_comment;
+        //     $history->user_id = Auth::user()->id;
+        //     $history->user_name = Auth::user()->name;
+        //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        //     $history->origin_state = $lastDocument->status;
+        //     $history->change_to =   "Not Applicable";
+        //     $history->change_from = $lastDocument->status;
+        //     $history->action_name = 'Update';
+        //     $history->save();
+        // }
+        // if (!empty($lastDocument->short_description)) {
+        //     $history = new AuditTrialObservation();
+        //     $history->Observation_id = $lastDocument->id;
+        //     $history->activity_type = 'Short Description';
+        //     $history->previous = "Null";
+        //     $history->current = $lastDocument->short_description;
+        //     $history->comment = "NA";
+        //     $history->user_id = Auth::user()->id;
+        //     $history->user_name = Auth::user()->name;
+        //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        //     $history->origin_state = $lastDocument->status;
+        //     $history->change_to =   "Not Applicable";
+        //     $history->change_from = $lastDocument->status;
+        //     $history->action_name = 'Update';
+        //     $history->save();
+        // }
         if ($lastDocument->intiation_date != $data->intiation_date || !empty($request->intiation_date_comment)) {
 
             $history = new AuditTrialObservation();
@@ -1109,14 +1229,14 @@ class ObservationController extends Controller
             $history->action_name = 'Update';
             $history->save();
         }
-        if ($lastDocument->attach_files1 != $data->attach_files1 || !empty($request->attach_files1_comment)) {
+        if ($lastDocument->attach_files_gi != $data->attach_files_gi || !empty($request->attach_files_gi_comment)) {
 
             $history = new AuditTrialObservation();
             $history->Observation_id = $id;
             $history->activity_type = 'Attach Files1';
-            $history->previous = $lastDocument->attach_files1;
-            $history->current = $data->attach_files1;
-            $history->comment = $request->attach_files1_comment;
+            $history->previous = $lastDocument->attach_files_gi;
+            $history->current = $data->attach_files_gi;
+            $history->comment = $request->attach_files_gi_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -1351,7 +1471,7 @@ class ObservationController extends Controller
 
             $history = new AuditTrialObservation();
             $history->Observation_id = $id;
-            $history->activity_type = 'AnalysisRPN ';
+            $history->activity_type = 'RPN ';
             $history->previous = $lastDocument->analysisRPN;
             $history->current = $data->analysisRPN;
             $history->comment = $request->analysisRPN_comment;
@@ -1547,8 +1667,10 @@ class ObservationController extends Controller
         $data->initiator_name = User::where('id', $data->initiator_id)->value('name');
         $grid_data = InternalAuditGrid::where('audit_id', $id)->where('type', "external_audit")->first();
         $griddata = ObservationGrid::where('observation_id',$data->id)->first();
-
-        return view('frontend.observation.view', compact('data','griddata','grid_data'));
+        $currentDate = Carbon::now();
+        $formattedDate = $currentDate->addDays(30);
+        $due_date = $formattedDate->format('Y-m-d');
+        return view('frontend.observation.view', compact('data','griddata','grid_data','due_date'));
     }
     public function observation_send_stage(Request $request, $id)
     {

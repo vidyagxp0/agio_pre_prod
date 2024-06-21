@@ -28,7 +28,7 @@ return new class extends Migration
             $table->text('category_observation')->nullable();
             $table->string('reference_guideline')->nullable();
             $table->text('description')->nullable();
-            $table->text('attach_files1')->nullable();
+            $table->text('attach_files_gi')->nullable();
             $table->string('recomendation_capa_date_due')->nullable();
             $table->text('non_compliance')->nullable();
             $table->text('recommend_action')->nullable();
