@@ -129,7 +129,7 @@
                 <button class="cctablinks active" onclick="openCity(event, 'CCForm1')">General Information</button>
                 <button class="cctablinks" onclick="openCity(event, 'CCForm8')" style="display: none" id="riskAssessmentButton">Risk Assessment</button>
                 <button class="cctablinks" onclick="openCity(event, 'CCForm2')">Change Details</button>
-                <button class="cctablinks" onclick="openCity(event, 'CCForm3')">Impact Assessment</button>
+                <!-- <button class="cctablinks" onclick="openCity(event, 'CCForm3')">Impact Assessment</button> -->
                 <button class="cctablinks" onclick="openCity(event, 'CCForm4')">QA Review</button>
                 <button class="cctablinks " onclick="openCity(event, 'CCForm12')">CFT</button>
                 <button class="cctablinks" onclick="openCity(event, 'CCForm5')">Evaluation</button>
@@ -276,46 +276,29 @@
                                     <div class="group-input">
                                         <label for="initiator-group">Initiation Department <span
                                                 class="text-danger">*</span></label>
-                                        <select name="Initiator_Group" id="initiator_group" required>
-                                            <option value="">-- Select --</option>
-                                            <option value="CQA" @if (old('Initiator_Group') == 'CQA') selected @endif>
-                                                Corporate Quality Assurance</option>
-                                            <option value="QAB" @if (old('Initiator_Group') == 'QAB') selected @endif>
-                                                Quality
-                                                Assurance Biopharma</option>
-                                            <option value="CQC" @if (old('Initiator_Group') == 'CQA') selected @endif>
-                                                Central
-                                                Quality Control</option>
-                                            <option value="MANU" @if (old('Initiator_Group') == 'MANU') selected @endif>
-                                                Manufacturing</option>
-                                            <option value="PSG" @if (old('Initiator_Group') == 'PSG') selected @endif>Plasma
-                                                Sourcing Group</option>
-                                            <option value="CS" @if (old('Initiator_Group') == 'CS') selected @endif>
-                                                Central
-                                                Stores</option>
-                                            <option value="ITG" @if (old('Initiator_Group') == 'ITG') selected @endif>
-                                                Information Technology Group</option>
-                                            <option value="MM" @if (old('Initiator_Group') == 'MM') selected @endif>
-                                                Molecular Medicine</option>
-                                            <option value="CL" @if (old('Initiator_Group') == 'CL') selected @endif>
-                                                Central Laboratory</option>
-                                            <option value="TT" @if (old('Initiator_Group') == 'TT') selected @endif>Tech
-                                                team</option>
-                                            <option value="QA" @if (old('Initiator_Group') == 'QA') selected @endif>
-                                                Quality Assurance</option>
-                                            <option value="QM" @if (old('Initiator_Group') == 'QM') selected @endif>
-                                                Quality Management</option>
-                                            <option value="IA" @if (old('Initiator_Group') == 'IA') selected @endif>IT
-                                                Administration</option>
-                                            <option value="ACC" @if (old('Initiator_Group') == 'ACC') selected @endif>
-                                                Accounting</option>
-                                            <option value="LOG" @if (old('Initiator_Group') == 'LOG') selected @endif>
-                                                Logistics</option>
-                                            <option value="SM" @if (old('Initiator_Group') == 'SM') selected @endif>
-                                                Senior Management</option>
-                                            <option value="BA" @if (old('Initiator_Group') == 'BA') selected @endif>
-                                                Business Administration</option>
-                                        </select>
+                                                <select name="Initiator_Group" id="initiator_group">
+                                                        <option value="CQA" >Corporate Quality Assurance</option>
+                                                        <option value="QA" >Quality Assurance</option>
+                                                        <option value="QC" >Quality Control</option>
+                                                        <option value="QM" >Quality Control (Microbiology department)</option>
+                                                        <option value="PG" >Production General</option>
+                                                        <option value="PL" >Production Liquid Orals</option>
+                                                        <option value="PT" >Production Tablet and Powder</option>
+                                                        <option value="PE" >Production External (Ointment, Gels, Creams and Liquid)</option>
+                                                        <option value="PC" >Production Capsules</option>
+                                                        <option value="PI" >Production Injectable</option>
+                                                        <option value="EN" >Engineering</option>
+                                                        <option value="HR" >Human Resource</option>
+                                                        <option value="ST" >Store</option>
+                                                        <option value="IT" >Electronic Data Processing</option>
+                                                        <option value="FD" >Formulation  Development</option>
+                                                        <option value="AL" >Analytical research and Development Laboratory</option>
+                                                        <option value="PD">Packaging Development</option>
+                                                        <option value="PU">Purchase Department</option>
+                                                        <option value="DC">Document Cell</option>
+                                                        <option value="RA">Regulatory Affairs</option>
+                                                        <option value="PV">Pharmacovigilance</option>
+                                                    </select>
                                         {{-- @error('Initiator_Group')
                                             <p class="text-danger">{{ $message }}</p>
                                         @enderror --}}
@@ -370,23 +353,26 @@
                                             </div>
 
                                             @php
+                                            $division = DB::table('q_m_s_divisions')
+                                                ->where('name', Helpers::getDivisionName(session()->get('division')))
+                                                ->first();
                                                 $userRoles = DB::table('user_roles')
                                                     ->where([
                                                         'q_m_s_roles_id' => 4,
-                                                        'q_m_s_divisions_id' => $data->division_id,
+                                                        'q_m_s_divisions_id' => $division->id,
                                                     ])
                                                     ->get();
                                                 $userRoleIds = $userRoles->pluck('user_id')->toArray();
-                                                $users = DB::table('users')->whereIn('id', $userRoleIds)->get();
+                                                $hodRoles = DB::table('users')->whereIn('id', $userRoleIds)->get();
                                             @endphp
 
                                             <div class="col-lg-6">
                                                 <div class="group-input">
                                                     <label for="hod_person">HOD Person</label>
                                                     <select name="hod_person" id="hod_person" >
-                                                        <option value="">Select HOD Persion</option>
-                                                        @if($users)
-                                                            @foreach($users as $user)
+                                                        <option value="">Select HOD Person</option>
+                                                        @if($hodRoles)
+                                                            @foreach($hodRoles as $user)
                                                                 <option value="{{ $user->id }}" >{{ $user->name }}</option>
                                                             @endforeach
                                                         @endif

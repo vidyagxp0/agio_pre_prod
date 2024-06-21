@@ -410,6 +410,30 @@ class DeviationController extends Controller
 
         $deviation->save();
 
+        $teamInvestigationData = DeviationNewGridData::where(['deviation_id' => $deviation->id, 'identifier' => "TeamInvestigation"])->firstOrCreate();
+        $teamInvestigationData->deviation_id = $deviation->id;
+        $teamInvestigationData->identifier = "TeamInvestigation";
+        $teamInvestigationData->data = $request->investigationTeam;
+        $teamInvestigationData->save();
+
+        $rootCauseData = DeviationNewGridData::where(['deviation_id' => $deviation->id, 'identifier' => "RootCause"])->firstOrCreate();
+        $rootCauseData->deviation_id = $deviation->id;
+        $rootCauseData->identifier = "RootCause";
+        $rootCauseData->data = $request->rootCauseData;
+        $rootCauseData->save();
+
+        $newDataGridWhy = DeviationNewGridData::where(['deviation_id' => $deviation->id, 'identifier' => 'why'])->firstOrCreate();
+        $newDataGridWhy->deviation_id = $deviation->id;
+        $newDataGridWhy->identifier = 'why';
+        $newDataGridWhy->data = $request->why;
+        $newDataGridWhy->save();
+
+        $newDataGridFishbone = DeviationNewGridData::where(['deviation_id' => $deviation->id, 'identifier' => 'fishbone'])->firstOrCreate();
+        $newDataGridFishbone->deviation_id = $deviation->id;
+        $newDataGridFishbone->identifier = 'fishbone';
+        $newDataGridFishbone->data = $request->fishbone;
+        $newDataGridFishbone->save();
+
         $data3 = new DeviationGrid();
         $data3->deviation_grid_id = $deviation->id;
         $data3->type = "Deviation";
@@ -1083,10 +1107,17 @@ class DeviationController extends Controller
         $divisionName = DB::table('q_m_s_divisions')->where('id', $data->division_id)->value('name');
         $deviationNewGrid = DeviationNewGridData::where('deviation_id', $id)->latest()->first();
 
-        $investigation_data = DeviationNewGridData::where(['deviation_id' => $id, 'identifier' => 'investication'])->first();
-        $root_cause_data = DeviationNewGridData::where(['deviation_id' => $id, 'identifier' => 'rootCause'])->first();
-        $why_data = DeviationNewGridData::where(['deviation_id' => $id, 'identifier' => 'why'])->first();
-        $fishbone_data = DeviationNewGridData::where(['deviation_id' => $id, 'identifier' => 'fishbone'])->first();
+        $investigationTeam = DeviationNewGridData::where(['deviation_id' => $id, 'identifier' => 'TeamInvestigation'])->first();
+        $investigationTeamData = json_decode($investigationTeam->data, true);
+
+        $rootCause = DeviationNewGridData::where(['deviation_id' => $id, 'identifier' => 'RootCause'])->first();
+        $rootCauseData = json_decode($rootCause->data, true);
+
+        $whyData = DeviationNewGridData::where(['deviation_id' => $id, 'identifier' => 'why'])->first();
+        $why_data = json_decode($whyData->data, true);
+  
+        $fishbone = DeviationNewGridData::where(['deviation_id' => $id, 'identifier' => 'fishbone'])->first();
+        $fishbone_data = json_decode($fishbone->data, true);
 
         $grid_data_qrms = DeviationGridQrms::where(['deviation_id' => $id, 'identifier' => 'failure_mode_qrms'])->first();
         $grid_data_matrix_qrms = DeviationGridQrms::where(['deviation_id' => $id, 'identifier' => 'matrix_qrms'])->first();
@@ -1096,7 +1127,7 @@ class DeviationController extends Controller
         $investigationExtension = LaunchExtension::where(['deviation_id' => $id, "extension_identifier" => "Investigation"])->first();
         $deviationExtension = LaunchExtension::where(['deviation_id' => $id, "extension_identifier" => "Deviation"])->first();
 
-        return view('frontend.forms.deviation.deviation_view', compact('data','userData', 'grid_data_qrms','grid_data_matrix_qrms', 'capaExtension','qrmExtension','investigationExtension','deviationExtension', 'old_record', 'pre', 'data1', 'divisionName','grid_data','grid_data1', 'deviationNewGrid','grid_data2','investigation_data','root_cause_data', 'why_data', 'fishbone_data'));
+        return view('frontend.forms.deviation.deviation_view', compact('data','userData', 'grid_data_qrms','grid_data_matrix_qrms', 'capaExtension','qrmExtension','investigationExtension','deviationExtension', 'old_record', 'pre', 'data1', 'divisionName','grid_data','grid_data1', 'deviationNewGrid','grid_data2','investigationTeamData','rootCauseData', 'why_data', 'fishbone_data'));
     }
 
 
@@ -2048,18 +2079,17 @@ class DeviationController extends Controller
             $deviation->who_will_not_be = $request->who_will_not_be;
             $deviation->who_rationable = $request->who_rationable;
 
-            // dd($id);
-            $newDataGridInvestication = DeviationNewGridData::where(['deviation_id' => $id, 'identifier' => 'investication'])->firstOrCreate();
-            $newDataGridInvestication->deviation_id = $id;
-            $newDataGridInvestication->identifier = 'investication';
-            $newDataGridInvestication->data = $request->investication;
-            $newDataGridInvestication->save();
+            $teamInvestigationData = DeviationNewGridData::where(['deviation_id' => $id, 'identifier' => "TeamInvestigation"])->firstOrCreate();
+            $teamInvestigationData->deviation_id = $deviation->id;
+            $teamInvestigationData->identifier = "TeamInvestigation";
+            $teamInvestigationData->data = $request->investigationTeam;
+            $teamInvestigationData->update();
 
-            $newDataGridRCA = DeviationNewGridData::where(['deviation_id' => $id, 'identifier' => 'rootCause'])->firstOrCreate();
-            $newDataGridRCA->deviation_id = $id;
-            $newDataGridRCA->identifier = 'rootCause';
-            $newDataGridRCA->data = $request->rootCause;
-            $newDataGridRCA->save();
+            $rootCauseData = DeviationNewGridData::where(['deviation_id' => $id, 'identifier' => "RootCause"])->firstOrCreate();
+            $rootCauseData->deviation_id = $deviation->id;
+            $rootCauseData->identifier = "RootCause";
+            $rootCauseData->data = $request->rootCauseData;
+            $rootCauseData->update();
 
             $newDataGridWhy = DeviationNewGridData::where(['deviation_id' => $id, 'identifier' => 'why'])->firstOrCreate();
             $newDataGridWhy->deviation_id = $id;
@@ -4649,9 +4679,14 @@ class DeviationController extends Controller
             $grid_data = DeviationGrid::where('deviation_grid_id', $id)->where('type', "Deviation")->first();
             $grid_data1 = DeviationGrid::where('deviation_grid_id', $id)->where('type', "Document")->first();
 
-            $investigation_data = DeviationNewGridData::where(['deviation_id' => $id, 'identifier' => 'investication'])->first();
-            $root_cause_data = DeviationNewGridData::where(['deviation_id' => $id, 'identifier' => 'rootCause'])->first();
-            $why_data = DeviationNewGridData::where(['deviation_id' => $id, 'identifier' => 'why'])->first();
+            $investigationTeam = FailureInvestigationGridData::where(['failure_investigation_id' => $id, 'identifier' => 'TeamInvestigation'])->first();
+            $investigation_data = json_decode($investigationTeam->data, true);
+
+            $rootCause = FailureInvestigationGridData::where(['failure_investigation_id' => $id, 'identifier' => 'RootCause'])->first();
+            $root_cause_data = json_decode($rootCause->data, true);
+
+            $whyData = FailureInvestigationGridData::where(['failure_investigation_id' => $id, 'identifier' => 'why'])->first();
+            $why_data = json_decode($whyData->data, true);
 
             $capaExtension = LaunchExtension::where(['deviation_id' => $id, "extension_identifier" => "Capa"])->first();
             $qrmExtension = LaunchExtension::where(['deviation_id' => $id, "extension_identifier" => "QRM"])->first();
