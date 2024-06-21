@@ -151,7 +151,7 @@
         <table>
             <tr>
                 <td class="w-70 head">
-                   OOS Chemical Audit Trial Report
+                   OOS Microbiology Audit Trial Report
                 </td>
                 <td class="w-30">
                     <div class="logo">
@@ -164,7 +164,7 @@
         <table>
             <tr>
                 <td class="w-30">
-                    <strong>OOS Chemical Audit No.</strong>
+                    <strong>OOS Microbiology Audit No.</strong>
                 </td>
                 <td class="w-40">
                    {{ Helpers::divisionNameForQMS($doc->division_id) }}/{{ Helpers::year($doc->created_at) }}/{{ str_pad($doc->record, 4, '0', STR_PAD_LEFT) }}
