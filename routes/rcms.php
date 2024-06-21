@@ -256,6 +256,8 @@ Route::group(['prefix' => 'rcms'], function () {
             Route::post('thirdStage/{id}', [OOSController::class, 'stageChange'])->name('thirdStage');
             Route::post('reject_stage/{id}', [OOSController::class, 'reject_stage'])->name('reject_stage');
             Route::get('capa', [CapaController::class, 'capa'])->name('capa');
+            Route::post('child/{id}', [OOSController::class, 'child'])->name('child');
+
             
             Route::get('AuditTrial/{id}', [OOSController::class, 'AuditTrial'])->name('audit_trial');
             Route::get('auditDetails/{id}', [OOSController::class, 'auditDetails'])->name('audit_details');

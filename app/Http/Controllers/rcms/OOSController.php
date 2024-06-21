@@ -35,7 +35,6 @@ class OOSController extends Controller
         $record_number = ((RecordNumber::first()->value('counter')) + 1);
         $record_number = str_pad($record_number, 4, '0', STR_PAD_LEFT);
         $division = QMSDivision::where('name', Helpers::getDivisionName(session()->get('division')))->first();
-        
         if ($division) {
             $last_oos = OOS::where('division_id', $division->id)->latest()->first();
             if ($last_oos) {
@@ -79,7 +78,6 @@ class OOSController extends Controller
 
         return redirect()->route('qms.dashboard');
     }
-
 
     public static function show($id)
     {
@@ -903,10 +901,52 @@ class OOSController extends Controller
         }
     }
 
-    // public function cancel_record(Request $request, $id)
-    // {
-    //     $oos_record = OOS::find($id);
-    // }
+    public function child(Request $request, $id)
+    {
+        $cft = [];
+        $parent_id = $id;
+        $parent_type = "Audit_Program";
+        $record_number = ((RecordNumber::first()->value('counter')) + 1);
+        $record_number = str_pad($record_number, 4, '0', STR_PAD_LEFT);
+        $currentDate = Carbon::now();
+        $formattedDate = $currentDate->addDays(30);
+        $due_date = $formattedDate->format('d-M-Y');
+        $parent_record = OOS::where('id', $id)->value('record_number');
+        $parent_record = str_pad($parent_record, 4, '0', STR_PAD_LEFT);
+        $parent_division_id = OOS::where('id', $id)->value('division_id');
+        $parent_initiator_id = OOS::where('id', $id)->value('initiator_id');
+        $parent_intiation_date = OOS::where('id', $id)->value('intiation_date');
+        $parent_created_at = OOS::where('id', $id)->value('created_at');
+        $parent_short_description = OOS::where('id', $id)->value('description_gi');
+        $hod = User::where('role', 4)->get();
+        // dd($record_number);
+        $old_record = OOS::select('id', 'division_id', 'record_number')->get();
+
+        if ($request->child_type == "capa") {
+            $parent_name = "CAPA";
+            $Capachild = OOS::find($id);
+            $Capachild->Capachild = $record_number;
+            $Capachild->save();
+
+            return view('frontend.forms.capa', compact('parent_id', 'parent_record','parent_type', 'record_number', 'due_date', 'parent_short_description', 'parent_initiator_id', 'parent_intiation_date', 'parent_name', 'parent_division_id', 'parent_record', 'old_record', 'cft'));
+        } elseif ($request->child_type == "Action_Item")
+         {
+            $parent_name = "CAPA";
+            $actionchild = OOS::find($id);
+            $actionchild->actionchild = $record_number;
+            $parent_id = $id;
+            $actionchild->save();
+
+            return view('frontend.forms.action-item', compact('parent_short_description', 'parent_initiator_id', 'parent_intiation_date', 'parent_name', 'parent_division_id', 'parent_record', 'record_number', 'due_date', 'parent_id', 'parent_type'));
+        }
+        else {
+            $parent_name = "Root";
+            $Rootchild = OOS::find($id);
+            $Rootchild->Rootchild = $record_number;
+            $Rootchild->save();
+            return view('frontend.forms.root-cause-analysis', compact('parent_id', 'parent_record','parent_type', 'record_number', 'due_date', 'parent_short_description', 'parent_initiator_id', 'parent_intiation_date', 'parent_name', 'parent_division_id', 'parent_record', ));
+        }
+    }
 
     public function AuditTrial($id)
     {

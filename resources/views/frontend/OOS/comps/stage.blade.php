@@ -69,7 +69,6 @@
             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal-AssignableCause">Retesting/resampling</button> 
             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">Phase IIB Correction Inconclusive</button> 
             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal">Child</button> 
-            
             @elseif($data->stage == 12 && (in_array(9, $userRoleIds) || in_array(18, $userRoleIds)))
             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal-AssignableCause">Batch Disposition</button>  
             @elseif($data->stage == 13 && (in_array(9, $userRoleIds) || in_array(18, $userRoleIds)))
@@ -156,7 +155,7 @@
             </div>
             <div class="group-input">
                 <label for="comment">Comment</label>
-                <input type="comment" name="comment">
+                <input type="comment" name="comment" required>
             </div>
             </div>
             <div class="modal-footer">
@@ -257,7 +256,7 @@
             <div class="modal-header">
                 <h4 class="modal-title">Child</h4>
             </div>
-            <form action="{{ route('oos.capa') }}" method="GET">
+            <form action="{{ route('oos.child', $data->id) }}" method="POST">
                 @csrf
                 <!-- Modal body -->
                 <div class="modal-body">
