@@ -151,7 +151,7 @@
                             '<div class="group-input input-date">' +
                             '<div class="calenderauditee">' +
                             '<input type="text" readonly id="oos_submit_on' + serialNumber + '" placeholder="DD-MM-YYYY" />' +
-                            '<input type="date" name="oos_details[' + serialNumber + '][oos_submit_on]" value="" class="hide-input" oninput="handleDateInput(this, \'oos_submit_on' + serialNumber + '\')">' +
+                            '<input type="date" name="oos_detail[' + serialNumber + '][oos_submit_on]" value="" class="hide-input" oninput="handleDateInput(this, \'oos_submit_on' + serialNumber + '\')">' +
                             '</div>' +
                             '</div>' +
                             '</div>' +
@@ -317,11 +317,7 @@
                 <button class="cctablinks" onclick="openCity(event, 'CCForm9')">OOS Conclusion Review</button>
                 <button class="cctablinks" onclick="openCity(event, 'CCForm10')">OOS QA Review</button>
                 <button class="cctablinks" onclick="openCity(event, 'CCForm11')">Batch Disposition</button>
-                <!-- <button class="cctablinks" onclick="openCity(event, 'CCForm12')">Re-Open</button> -->
                 <button class="cctablinks" onclick="openCity(event, 'CCForm13')">QA Head/Designee Approval</button>
-                <!-- <button class="cctablinks" onclick="openCity(event, 'CCForm14')">Under Addendum Execution</button> -->
-                <!-- <button class="cctablinks" onclick="openCity(event, 'CCForm15')">Under Addendum Review</button> -->
-                <!-- <button class="cctablinks" onclick="openCity(event, 'CCForm16')">Under Addendum Verification</button> -->
                 <button class="cctablinks" onclick="openCity(event, 'CCForm17')">Signature</button>
 
             </div>
@@ -377,19 +373,19 @@
             @include('frontend.OOS.comps.batch_disposition')
 
             <!-- Re-Open -->
-            @include('frontend.OOS.comps.oos_reopen')    
+           {{--  @include('frontend.OOS.comps.oos_reopen')  --}}  
 
             <!-- Under Addendum Approval -->
-            @include('frontend.OOS.comps.under_approval')    
+            @include('frontend.OOS.comps.under_approval') 
 
             <!--Under Addendum Execution -->
-            @include('frontend.OOS.comps.under_execution')
+            {{-- @include('frontend.OOS.comps.under_execution') --}}
 
             <!-- Under Addendum Review-->
-            @include('frontend.OOS.comps.under_review')
+            {{--  @include('frontend.OOS.comps.under_review') --}}
 
             <!-- Under Addendum Verification -->
-            @include('frontend.OOS.comps.under_verification')    
+            {{-- @include('frontend.OOS.comps.under_verification')  --}}   
 
             <!----- Signature ----->
             @include('frontend.OOS.comps.signature')
@@ -499,7 +495,7 @@
             $(this).closest('tr').remove();
         })
     </script>
-        <!-- --------------------------------------button--------------------- -->
+    <!-- --------------------------------------button--------------------- -->
         <script>
         VirtualSelect.init({
             ele: '#related_records, #hod'

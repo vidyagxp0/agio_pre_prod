@@ -74,8 +74,10 @@
                        <option value="">Enter Your Selection Here</option>
                         <option value="Initial" {{ $data->results_to_be_reported_oosc == 'Initial' ? 'selected' : ''
                             }}>Initial</option>
-                        <option value="Retested_result" {{ $data->results_to_be_reported_oosc == 'Retested_result' ?
-                            'selected' : '' }}>Retested Result</option>
+                            <option value="Intial"{{ $data->results_to_be_reported_oosc == 'Intial' ?
+                                'selected' : '' }}>Initial</option>
+                            <option value="Retested result"{{ $data->results_to_be_reported_oosc == 'Retested result' ?
+                                'selected' : '' }}>Retested Result</option>
                     </select>
                 </div>
             </div>

@@ -36,6 +36,7 @@ class OOSService
             $file_input_names = [
                 'initial_attachment_gi',
                 'file_attachments_pli',
+                'file_attachments_pII',
                 'supporting_attachment_plic',
                 'supporting_attachments_plir',
                 'attachments_piiqcr',
