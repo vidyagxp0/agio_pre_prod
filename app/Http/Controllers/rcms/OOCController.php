@@ -63,7 +63,11 @@ class OOCController extends Controller
         $data->Preliminary_Investigation_ooc = $request->Preliminary_Investigation_ooc;
         $data->qa_comments_ooc = $request->qa_comments_ooc;
         $data->qa_comments_description_ooc = $request->qa_comments_description_ooc;
-        $data->is_repeat_assingable_ooc = $request->is_repeat_assingable_ooc;
+        if($request->has('is_repeat_assingable_ooc')) {
+            
+            $data->is_repeat_assingable_ooc = $request->is_repeat_assingable_ooc;
+        }
+        
         $data->protocol_based_study_hypthesis_study_ooc = $request->protocol_based_study_hypthesis_study_ooc;
         $data->justification_for_protocol_study_hypothesis_study_ooc = $request->justification_for_protocol_study_hypothesis_study_ooc;
         $data->plan_of_protocol_study_hypothesis_study = $request->plan_of_protocol_study_hypothesis_study;
@@ -79,7 +83,6 @@ class OOCController extends Controller
         $data->is_repeat_stageii_ooc = $request->is_repeat_stageii_ooc;
         $data->is_repeat_stage_instrument_ooc = $request->is_repeat_stage_instrument_ooc;
         $data->is_repeat_proposed_stage_ooc = $request->is_repeat_proposed_stage_ooc;
-        // $data->initial_attachment_stageii_ooc = $request->initial_attachment_stageii_ooc;
         $data->is_repeat_compiled_stageii_ooc = $request->is_repeat_compiled_stageii_ooc;
         $data->is_repeat_realease_stageii_ooc = $request->is_repeat_realease_stageii_ooc;
         $data->initiated_throug_stageii_ooc = $request->initiated_throug_stageii_ooc;
@@ -332,7 +335,7 @@ class OOCController extends Controller
         if(!empty($data->description_ooc)) {
             $history = new OOCAuditTrail();
             $history->ooc_id = $data->id;
-            $history->activity_type = 'Description';
+            $history->activity_type = 'Short Description ';
             $history->previous = "Null";
             $history->current = $data->description_ooc;
             $history->comment = "No Applicable";
@@ -538,22 +541,22 @@ if (!empty($data->qa_comments_description_ooc)) {
     $history->save();
 }
 
-if (!empty($data->is_repeat_assingable_ooc)) {
-    $history = new OOCAuditTrail();
-    $history->ooc_id = $data->id;
-    $history->activity_type = 'Assignable Root Cause Found';
-    $history->previous = "Null";
-    $history->current = $data->is_repeat_assingable_ooc;
-    $history->comment = "Not Applicable";
-    $history->user_id = Auth::user()->id;
-    $history->user_name = Auth::user()->name;
-    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-    $history->origin_state = $data->status;
-    $history->change_to = "Opened";
-    $history->change_from = "Initiator";
-    $history->action_name = "Create";
-    $history->save();
-}
+// if (!empty($data->is_repeat_assingable_ooc)) {
+//     $history = new OOCAuditTrail();
+//     $history->ooc_id = $data->id;
+//     $history->activity_type = 'Assignable Root Cause Found';
+//     $history->previous = "Null";
+//     $history->current = $data->is_repeat_assingable_ooc;
+//     $history->comment = "Not Applicable";
+//     $history->user_id = Auth::user()->id;
+//     $history->user_name = Auth::user()->name;
+//     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+//     $history->origin_state = $data->status;
+//     $history->change_to = "Opened";
+//     $history->change_from = "Initiator";
+//     $history->action_name = "Create";
+//     $history->save();
+// }
 
 if (!empty($data->protocol_based_study_hypthesis_study_ooc)) {
     $history = new OOCAuditTrail();
@@ -778,39 +781,39 @@ if (!empty($data->initial_attachment_stageii_ooc)) {
     $history->save();
 }
 
-if (!empty($data->is_repeat_stageii_ooc)) {
-    $history = new OOCAuditTrail();
-    $history->ooc_id = $data->id;
-    $history->activity_type = 'Is Repeat Stage II';
-    $history->previous = "Null";
-    $history->current = $data->is_repeat_stageii_ooc;
-    $history->comment = "Not Applicable";
-    $history->user_id = Auth::user()->id;
-    $history->user_name = Auth::user()->name;
-    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-    $history->origin_state = $data->status;
-    $history->change_to = "Opened";
-    $history->change_from = "Initiator";
-    $history->action_name = "Create";
-    $history->save();
-}
+// if (!empty($data->is_repeat_stageii_ooc)) {
+//     $history = new OOCAuditTrail();
+//     $history->ooc_id = $data->id;
+//     $history->activity_type = 'Rectification by Service Engineer required';
+//     $history->previous = "Null";
+//     $history->current = $data->is_repeat_stageii_ooc;
+//     $history->comment = "Not Applicable";
+//     $history->user_id = Auth::user()->id;
+//     $history->user_name = Auth::user()->name;
+//     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+//     $history->origin_state = $data->status;
+//     $history->change_to = "Opened";
+//     $history->change_from = "Initiator";
+//     $history->action_name = "Create";
+//     $history->save();
+// }
 
-if (!empty($data->is_repeat_stage_instrument_ooc)) {
-    $history = new OOCAuditTrail();
-    $history->ooc_id = $data->id;
-    $history->activity_type = 'Is Repeat Stage Instrument';
-    $history->previous = "Null";
-    $history->current = $data->is_repeat_stage_instrument_ooc;
-    $history->comment = "Not Applicable";
-    $history->user_id = Auth::user()->id;
-    $history->user_name = Auth::user()->name;
-    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-    $history->origin_state = $data->status;
-    $history->change_to = "Opened";
-    $history->change_from = "Initiator";
-    $history->action_name = "Create";
-    $history->save();
-}
+// if (!empty($data->is_repeat_stage_instrument_ooc)) {
+//     $history = new OOCAuditTrail();
+//     $history->ooc_id = $data->id;
+//     $history->activity_type = 'Is Repeat Stage Instrument';
+//     $history->previous = "Null";
+//     $history->current = $data->is_repeat_stage_instrument_ooc;
+//     $history->comment = "Not Applicable";
+//     $history->user_id = Auth::user()->id;
+//     $history->user_name = Auth::user()->name;
+//     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+//     $history->origin_state = $data->status;
+//     $history->change_to = "Opened";
+//     $history->change_from = "Initiator";
+//     $history->action_name = "Create";
+//     $history->save();
+// }
 
 if (!empty($data->is_repeat_proposed_stage_ooc)) {
     $history = new OOCAuditTrail();
@@ -1634,7 +1637,7 @@ if ($lastDocumentOoc->Repeat_Nature != $ooc->Repeat_Nature) {
 if ($lastDocumentOoc->description_ooc != $ooc->description_ooc) {
     $history = new OOCAuditTrail();
     $history->ooc_id = $id;
-    $history->activity_type = 'Description';
+    $history->activity_type = 'Short Description';
     $history->previous = $lastDocumentOoc->description_ooc;
     $history->current = $ooc->description_ooc;
     $history->comment = $request->description_ooc_comment;
@@ -1666,14 +1669,35 @@ if ($lastDocumentOoc->due_date != $ooc->due_date) {
     $history->action_name = "Update";
     $history->save();
 }
+$department = [
+    'CQA' => 'Corporate Quality Assurance',
+    'QAB' => 'Quality Assurance Biopharma',
+    'CQC' => 'Central Quality Control',
+    'PSG' => 'Plasma Sourcing Group',
+    'CS' => 'Central Stores',
+    'ITG' => 'Information Technology Group',
+    'MM' => 'Molecular Medicine',
+    'CL' => 'Central Laboratory',
+    'TT' => 'Tech Team',
+    'QA' => 'Quality Assurance',
+    'QM' => 'Quality Management',
+    'IA' => 'IT Administration',
+    'ACC' => 'Accounting',
+    'LOG' => 'Logistics',
+    'SM' => 'Senior Management',
+    'BA' => 'Business Administration',
+];
+
+$lastInitiatorGroupFullForm = isset($department[$lastDocumentOoc->Initiator_Group]) ? $department[$lastDocumentOoc->Initiator_Group] : $lastDocumentOoc->Initiator_Group;
+$currentInitiatorGroupFullForm = isset($department[$ooc->Initiator_Group]) ? $department[$ooc->Initiator_Group] : $ooc->Initiator_Group;
 
 
 if ($lastDocumentOoc->Initiator_Group != $ooc->Initiator_Group) {
     $history = new OOCAuditTrail();
     $history->ooc_id = $id;
     $history->activity_type = 'Initiator Group';
-    $history->previous = $lastDocumentOoc->Initiator_Group;
-    $history->current = $ooc->Initiator_Group;
+    $history->previous = $lastInitiatorGroupFullForm;
+    $history->current = $currentInitiatorGroupFullForm;
     $history->comment = $request->Initiator_Group_comment;
     $history->user_id = Auth::user()->id;
     $history->user_name = Auth::user()->name;
@@ -1811,14 +1835,14 @@ if ($lastDocumentOoc->qa_comments_description_ooc != $ooc->qa_comments_descripti
     $history->save();
 }
 
-// Check and log changes for Assignable root cause found
+
 if ($lastDocumentOoc->is_repeat_assingable_ooc != $ooc->is_repeat_assingable_ooc) {
     $history = new OOCAuditTrail();
     $history->ooc_id = $id;
     $history->activity_type = 'Assignable Root Cause Found';
     $history->previous = $lastDocumentOoc->is_repeat_assingable_ooc;
     $history->current = $ooc->is_repeat_assingable_ooc;
-    $history->comment = 'Updated Assignable Root Cause Found';
+    $history->comment = $request->is_repeat_assingable_ooc_comment;
     $history->user_id = Auth::user()->id;
     $history->user_name = Auth::user()->name;
     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -1834,7 +1858,7 @@ if ($lastDocumentOoc->protocol_based_study_hypthesis_study_ooc != $ooc->protocol
     $history->activity_type = 'Protocol Based Study/Hypothesis Study ';
     $history->previous = $lastDocumentOoc->protocol_based_study_hypthesis_study_ooc;
     $history->current = $ooc->protocol_based_study_hypthesis_study_ooc;
-    $history->comment = 'Updated Protocol Based Study/Hypothesis Study  ';
+    $history->comment = $request->protocol_based_study_hypthesis_study_ooc_comment;
     $history->user_id = Auth::user()->id;
     $history->user_name = Auth::user()->name;
     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -1852,7 +1876,7 @@ if ($lastDocumentOoc->justification_for_protocol_study_hypothesis_study_ooc != $
     $history->activity_type = 'Justification for Protocol Study/Hypothesis Study';
     $history->previous = $lastDocumentOoc->justification_for_protocol_study_hypothesis_study_ooc;
     $history->current = $ooc->justification_for_protocol_study_hypothesis_study_ooc;
-    $history->comment = 'Updated Justification for Protocol Study/Hypothesis Study';
+    $history->comment = $request->justification_for_protocol_study_hypothesis_study_ooc_comment;
     $history->user_id = Auth::user()->id;
     $history->user_name = Auth::user()->name;
     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -1870,7 +1894,7 @@ if ($lastDocumentOoc->plan_of_protocol_study_hypothesis_study != $ooc->plan_of_p
     $history->activity_type = 'Plan of Protocol Study/Hypothesis Study';
     $history->previous = $lastDocumentOoc->plan_of_protocol_study_hypothesis_study;
     $history->current = $ooc->plan_of_protocol_study_hypothesis_study;
-    $history->comment = 'Updated Plan of Protocol Study/Hypothesis Study';
+    $history->comment = $request->plan_of_protocol_study_hypothesis_study_comment;
     $history->user_id = Auth::user()->id;
     $history->user_name = Auth::user()->name;
     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -1888,7 +1912,7 @@ if ($lastDocumentOoc->conclusion_of_protocol_based_study_hypothesis_study_ooc !=
     $history->activity_type = 'Conclusion of Protocol Based Study/Hypothesis Study';
     $history->previous = $lastDocumentOoc->conclusion_of_protocol_based_study_hypothesis_study_ooc;
     $history->current = $ooc->conclusion_of_protocol_based_study_hypothesis_study_ooc;
-    $history->comment = 'Updated Conclusion of Protocol Based Study/Hypothesis Study';
+    $history->comment = $request->conclusion_of_protocol_based_study_hypothesis_study_ooc_comment;
     $history->user_id = Auth::user()->id;
     $history->user_name = Auth::user()->name;
     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -1908,7 +1932,7 @@ if ($lastDocumentOoc->analysis_remarks_stage_ooc != $ooc->analysis_remarks_stage
     $history->activity_type = 'Analyst Remarks';
     $history->previous = $lastDocumentOoc->analysis_remarks_stage_ooc;
     $history->current = $ooc->analysis_remarks_stage_ooc;
-    $history->comment = 'Updated Analyst Remarks';
+    $history->comment = $request->analysis_remarks_stage_ooc_comment;
     $history->user_id = Auth::user()->id;
     $history->user_name = Auth::user()->name;
     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -1925,7 +1949,7 @@ if ($lastDocumentOoc->calibration_results_stage_ooc != $ooc->calibration_results
     $history->activity_type = 'Calibration Results';
     $history->previous = $lastDocumentOoc->calibration_results_stage_ooc;
     $history->current = $ooc->calibration_results_stage_ooc;
-    $history->comment = 'Updated Calibration Results';
+    $history->comment = $request->calibration_results_stage_ooc_comment;
     $history->user_id = Auth::user()->id;
     $history->user_name = Auth::user()->name;
     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -1942,7 +1966,7 @@ if ($lastDocumentOoc->review_of_calibration_results_of_analyst_ooc != $ooc->revi
     $history->activity_type = 'Review of Calibration Results of Analyst';
     $history->previous = $lastDocumentOoc->review_of_calibration_results_of_analyst_ooc;
     $history->current = $ooc->review_of_calibration_results_of_analyst_ooc;
-    $history->comment = 'Updated Review of Calibration Results of Analyst';
+    $history->comment = $request->review_of_calibration_results_of_analyst_ooc_comment;
     $history->user_id = Auth::user()->id;
     $history->user_name = Auth::user()->name;
     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -2041,7 +2065,7 @@ if ($lastDocumentOoc->is_repeat_stae_ooc != $ooc->is_repeat_stae_ooc) {
     $history->activity_type = 'Invalidated & Validated';
     $history->previous = $lastDocumentOoc->is_repeat_stae_ooc;
     $history->current = $ooc->is_repeat_stae_ooc;
-    $history->comment = 'Updated Invalidated & Validated';
+    $history->comment = $request->is_repeat_stae_ooc_comment;
     $history->user_id = Auth::user()->id;
     $history->user_name = Auth::user()->name;
     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -2052,22 +2076,23 @@ if ($lastDocumentOoc->is_repeat_stae_ooc != $ooc->is_repeat_stae_ooc) {
     $history->save();
 }
 
-if ($lastDocumentOoc->is_repeat_stageii_ooc != $ooc->is_repeat_stageii_ooc) {
-    $history = new OOCAuditTrail();
-    $history->ooc_id = $id;
-    $history->activity_type = 'Rectification by Service Engineer required';
-    $history->previous = $lastDocumentOoc->is_repeat_stageii_ooc;
-    $history->current = $ooc->is_repeat_stageii_ooc;
-    $history->comment = 'Updated Rectification by Service Engineer required';
-    $history->user_id = Auth::user()->id;
-    $history->user_name = Auth::user()->name;
-    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-    $history->origin_state = $lastDocumentOoc->status;
-    $history->change_to = "Not Applicable";
-    $history->change_from = $lastDocumentOoc->status;
-    $history->action_name = "Update";
-    $history->save();
-}
+// if ($lastDocumentOoc->is_repeat_stageii_ooc != $ooc->is_repeat_stageii_ooc) {
+//     $history = new OOCAuditTrail();
+//     $history->ooc_id = $id;
+//     $history->activity_type = 'Rectification by Service Engineer required';
+//     $history->previous = $lastDocumentOoc->is_repeat_stageii_ooc;
+//     $history->current = $ooc->is_repeat_stageii_ooc;
+//     $history->comment = $request->is_repeat_stageii_ooc_comment;
+//     $history->user_id = Auth::user()->id;
+//     $history->user_name = Auth::user()->name;
+//     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+//     $history->origin_state = $lastDocumentOoc->status;
+//     $history->change_to = "Not Applicable";
+//     $history->change_from = $lastDocumentOoc->status;
+//     // $history->action_name = "Update";
+//     $history->save();
+    
+// }
 
 if ($lastDocumentOoc->is_repeat_stage_instrument_ooc != $ooc->is_repeat_stage_instrument_ooc) {
     $history = new OOCAuditTrail();
@@ -2075,16 +2100,17 @@ if ($lastDocumentOoc->is_repeat_stage_instrument_ooc != $ooc->is_repeat_stage_in
     $history->activity_type = 'Instrument is Out of Order';
     $history->previous = $lastDocumentOoc->is_repeat_stage_instrument_ooc;
     $history->current = $ooc->is_repeat_stage_instrument_ooc;
-    $history->comment = 'Updated Instrument is Out of Order';
+    $history->comment = $request->is_repeat_stage_instrument_ooc_comment;
     $history->user_id = Auth::user()->id;
     $history->user_name = Auth::user()->name;
     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
     $history->origin_state = $lastDocumentOoc->status;
     $history->change_to = "Not Applicable";
     $history->change_from = $lastDocumentOoc->status;
-    $history->action_name = "Update";
+    // $history->action_name = "Update";
     $history->save();
 }
+
 
 if ($lastDocumentOoc->is_repeat_proposed_stage_ooc != $ooc->is_repeat_proposed_stage_ooc) {
     $history = new OOCAuditTrail();
@@ -2092,7 +2118,7 @@ if ($lastDocumentOoc->is_repeat_proposed_stage_ooc != $ooc->is_repeat_proposed_s
     $history->activity_type = 'Proposed By';
     $history->previous = $lastDocumentOoc->is_repeat_proposed_stage_ooc;
     $history->current = $ooc->is_repeat_proposed_stage_ooc;
-    $history->comment = 'Updated Proposed By';
+    $history->comment = $request->is_repeat_proposed_stage_ooc_comment;
     $history->user_id = Auth::user()->id;
     $history->user_name = Auth::user()->name;
     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -2109,14 +2135,14 @@ if ($lastDocumentOoc->is_repeat_compiled_stageii_ooc != $ooc->is_repeat_compiled
     $history->activity_type = 'Compiled by';
     $history->previous = $lastDocumentOoc->is_repeat_compiled_stageii_ooc;
     $history->current = $ooc->is_repeat_compiled_stageii_ooc;
-    $history->comment = 'Updated Compiled by';
+    $history->comment = $request->is_repeat_compiled_stageii_ooc_comment;
     $history->user_id = Auth::user()->id;
     $history->user_name = Auth::user()->name;
     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
     $history->origin_state = $lastDocumentOoc->status;
     $history->change_to = "Not Applicable";
     $history->change_from = $lastDocumentOoc->status;
-    $history->action_name = "Update";
+    // $history->action_name = "Update";
     $history->save();
 }
 
@@ -2126,14 +2152,14 @@ if ($lastDocumentOoc->is_repeat_realease_stageii_ooc != $ooc->is_repeat_realease
     $history->activity_type = 'Release of Instrument for usage';
     $history->previous = $lastDocumentOoc->is_repeat_realease_stageii_ooc;
     $history->current = $ooc->is_repeat_realease_stageii_ooc;
-    $history->comment = 'Updated Release of Instrument for usage';
+    $history->comment = $request->is_repeat_realease_stageii_ooc_comment;
     $history->user_id = Auth::user()->id;
     $history->user_name = Auth::user()->name;
     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
     $history->origin_state = $lastDocumentOoc->status;
     $history->change_to = "Not Applicable";
     $history->change_from = $lastDocumentOoc->status;
-    $history->action_name = "Update";
+    // $history->action_name = "Update";
     $history->save();
 }
 
@@ -2143,14 +2169,14 @@ if ($lastDocumentOoc->is_repeat_reanalysis_stageii_ooc != $ooc->is_repeat_reanal
     $history->activity_type = 'Result of Reanalysis';
     $history->previous = $lastDocumentOoc->is_repeat_reanalysis_stageii_ooc;
     $history->current = $ooc->is_repeat_reanalysis_stageii_ooc;
-    $history->comment = 'Updated Result of Reanalysis';
+    $history->comment = $request->is_repeat_reanalysis_stageii_ooc_comment;
     $history->user_id = Auth::user()->id;
     $history->user_name = Auth::user()->name;
     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
     $history->origin_state = $lastDocumentOoc->status;
     $history->change_to = "Not Applicable";
     $history->change_from = $lastDocumentOoc->status;
-    $history->action_name = "Update";
+    // $history->action_name = "Update";
     $history->save();
 }
 
@@ -2160,14 +2186,14 @@ if ($lastDocumentOoc->initiated_throug_stageii_ooc != $ooc->initiated_throug_sta
     $history->activity_type = 'Impact Assessment at Stage II';
     $history->previous = $lastDocumentOoc->initiated_throug_stageii_ooc;
     $history->current = $ooc->initiated_throug_stageii_ooc;
-    $history->comment = 'Updated Impact Assessment at Stage II';
+    $history->comment = $request->initiated_throug_stageii_ooc_comment;
     $history->user_id = Auth::user()->id;
     $history->user_name = Auth::user()->name;
     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
     $history->origin_state = $lastDocumentOoc->status;
     $history->change_to = "Not Applicable";
     $history->change_from = $lastDocumentOoc->status;
-    $history->action_name = "Update";
+    // $history->action_name = "Update";
     $history->save();
 }
 
@@ -2177,14 +2203,14 @@ if ($lastDocumentOoc->initiated_through_stageii_ooc != $ooc->initiated_through_s
     $history->activity_type = 'Details of Impact Evaluation';
     $history->previous = $lastDocumentOoc->initiated_through_stageii_ooc;
     $history->current = $ooc->initiated_through_stageii_ooc;
-    $history->comment = 'Updated Details of Impact Evaluation';
+    $history->comment = $request->initiated_through_stageii_ooc_comment;
     $history->user_id = Auth::user()->id;
     $history->user_name = Auth::user()->name;
     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
     $history->origin_state = $lastDocumentOoc->status;
     $history->change_to = "Not Applicable";
     $history->change_from = $lastDocumentOoc->status;
-    $history->action_name = "Update";
+    // $history->action_name = "Update";
     $history->save();
 }
 if ($lastDocumentOoc->initiated_through_stageii_cause_failure_ooc != $ooc->initiated_through_stageii_cause_failure_ooc) {
@@ -2193,14 +2219,14 @@ if ($lastDocumentOoc->initiated_through_stageii_cause_failure_ooc != $ooc->initi
     $history->activity_type = 'Cause for failure';
     $history->previous = $lastDocumentOoc->initiated_through_stageii_cause_failure_ooc;
     $history->current = $ooc->initiated_through_stageii_cause_failure_ooc;
-    $history->comment = 'Updated Cause for failure';
+    $history->comment = $request->initiated_through_stageii_cause_failure_ooc_comment;
     $history->user_id = Auth::user()->id;
     $history->user_name = Auth::user()->name;
     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
     $history->origin_state = $lastDocumentOoc->status;
     $history->change_to = "Not Applicable";
     $history->change_from = $lastDocumentOoc->status;
-    $history->action_name = "Update";
+    // $history->action_name = "Update";
     $history->save();
 }
 
@@ -2210,14 +2236,14 @@ if ($lastDocumentOoc->initial_attachment_stageii_ooc != $ooc->initial_attachment
     $history->activity_type = 'Details of Equipment Rectification Attachment';
     $history->previous = json_encode($lastDocumentOoc->initial_attachment_stageii_ooc);
     $history->current = json_encode($ooc->initial_attachment_stageii_ooc);
-    $history->comment = 'Updated Details of Equipment Rectification Attachment';
+    $history->comment = $request->initial_attachment_stageii_ooc_comment;
     $history->user_id = Auth::user()->id;
     $history->user_name = Auth::user()->name;
     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
     $history->origin_state = $lastDocumentOoc->status;
     $history->change_to = "Not Applicable";
     $history->change_from = $lastDocumentOoc->status;
-    $history->action_name = "Update";
+    // $history->action_name = "Update";
     $history->save();
 }
 
@@ -2235,7 +2261,7 @@ if ($lastDocumentOoc->short_description_closure_ooc != $ooc->short_description_c
     $history->origin_state = $lastDocumentOoc->status;
     $history->change_to = "Not Applicable";
     $history->change_from = $lastDocumentOoc->status;
-    $history->action_name = "Update";
+    // $history->action_name = "Update";
     $history->save();
 }
 
@@ -2252,7 +2278,7 @@ if ($lastDocumentOoc->initial_attachment_closure_ooc != $ooc->initial_attachment
     $history->origin_state = $lastDocumentOoc->status;
     $history->change_to = "Not Applicable";
     $history->change_from = $lastDocumentOoc->status;
-    $history->action_name = "Update";
+    // $history->action_name = "Update";
     $history->save();
 }
 
@@ -2269,7 +2295,7 @@ if ($lastDocumentOoc->document_code_closure_ooc != $ooc->document_code_closure_o
     $history->origin_state = $lastDocumentOoc->status;
     $history->change_to = "Not Applicable";
     $history->change_from = $lastDocumentOoc->status;
-    $history->action_name = "Update";
+    // $history->action_name = "Update";
     $history->save();
 }
 
@@ -2286,7 +2312,7 @@ if ($lastDocumentOoc->remarks_closure_ooc != $ooc->remarks_closure_ooc) {
     $history->origin_state = $lastDocumentOoc->status;
     $history->change_to = "Not Applicable";
     $history->change_from = $lastDocumentOoc->status;
-    $history->action_name = "Update";
+    // $history->action_name = "Update";
     $history->save();
 }
 
@@ -2303,7 +2329,7 @@ if ($lastDocumentOoc->initiated_through_closure_ooc != $ooc->initiated_through_c
     $history->origin_state = $lastDocumentOoc->status;
     $history->change_to = "Not Applicable";
     $history->change_from = $lastDocumentOoc->status;
-    $history->action_name = "Update";
+    // $history->action_name = "Update";
     $history->save();
 }
 
@@ -2320,7 +2346,7 @@ if ($lastDocumentOoc->initiated_through_hodreview_ooc != $ooc->initiated_through
     $history->origin_state = $lastDocumentOoc->status;
     $history->change_to = "Not Applicable";
     $history->change_from = $lastDocumentOoc->status;
-    $history->action_name = "Update";
+    // $history->action_name = "Update";
     $history->save();
 }
 
@@ -2337,7 +2363,7 @@ if ($lastDocumentOoc->initial_attachment_hodreview_ooc != $ooc->initial_attachme
     $history->origin_state = $lastDocumentOoc->status;
     $history->change_to = "Not Applicable";
     $history->change_from = $lastDocumentOoc->status;
-    $history->action_name = "Update";
+    // $history->action_name = "Update";
     $history->save();
 }
 
@@ -2354,7 +2380,7 @@ if ($lastDocumentOoc->initiated_through_rootcause_ooc != $ooc->initiated_through
     $history->origin_state = $lastDocumentOoc->status;
     $history->change_to = "Not Applicable";
     $history->change_from = $lastDocumentOoc->status;
-    $history->action_name = "Update";
+    // $history->action_name = "Update";
     $history->save();
 }
 
@@ -2364,14 +2390,14 @@ if ($lastDocumentOoc->initiated_through_impact_closure_ooc != $ooc->initiated_th
     $history->activity_type = 'Impact Assessment';
     $history->previous = $lastDocumentOoc->initiated_through_impact_closure_ooc;
     $history->current = $ooc->initiated_through_impact_closure_ooc;
-    $history->comment = $request->initiated_through_impact_closure_ooc_comment;
+    $history->comment = $request->initiated_through_impact_closure_ooc;
     $history->user_id = Auth::user()->id;
     $history->user_name = Auth::user()->name;
     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
     $history->origin_state = $lastDocumentOoc->status;
     $history->change_to = "Not Applicable";
     $history->change_from = $lastDocumentOoc->status;
-    $history->action_name = "Update";
+    // $history->action_name = "Update";
     $history->save();
 }
 
@@ -2424,6 +2450,7 @@ $oocevaluation->save();
 
         toastr()->success('Record is updated Successfully');
         $ooc->update();
+        // dd($ooc);
 
         $oocGrid = $ooc->id;
         $instrumentDetail = OOC_Grid::where(['ooc_id' => $oocGrid, 'identifier' => 'Instrument Details'])->firstOrNew();
@@ -2484,8 +2511,8 @@ $oocevaluation->save();
                 $history->origin_state = $lastDocumentOOC->status;
                 $history->change_to = "Pending Incident Verification";
                 $history->change_from = $lastDocumentOOC->status;
-                $history->action_name = $lastDocumentOOC->status;
-                $history->stage='Submited';
+                $history->action_name = 'Submit';
+                $history->stage='Submit';
                 $history->save();
 
                 $oocchange->update();
@@ -2512,6 +2539,7 @@ $oocevaluation->save();
                 $history->change_to = "Pending Initial Assessment & Lab Investigation";
                 $history->change_from = $lastDocumentOOC->status;
                 $history->stage='Initial Phase I Investigation';
+                $history->action_name = 'Initial Phase I Investigation';
                 $history->save();
 
                 $oocchange->update();
@@ -2539,6 +2567,7 @@ $oocevaluation->save();
                 $history->change_to = "Under Stage I Correction";
                 $history->change_from = $lastDocumentOOC->status;
                 $history->stage='Assignable Cause Found';
+                $history->action_name = 'Assignable Cause Found';
                 $history->save();
 
                 $oocchange->update();
@@ -2566,6 +2595,7 @@ $oocevaluation->save();
                 $history->change_to = "To Pending Final Approval";
                 $history->change_from = $lastDocumentOOC->status;
                 $history->stage='Correction Completed';
+                $history->action_name = 'Correction Completed';
                 $history->save();
 
                 $oocchange->update();
@@ -2591,6 +2621,7 @@ $oocevaluation->save();
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 $history->origin_state = $lastDocumentOOC->status;
                 $history->change_to = "Under Stage II B Investigation";
+                $history->action_name = "Under Stage II B Investigation";
                 $history->change_from = $lastDocumentOOC->status;
                 $history->stage='Obvious Results Not Found';
                 $history->save();
@@ -2617,6 +2648,7 @@ $oocevaluation->save();
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 $history->origin_state = $lastDocumentOOC->status;
                 $history->change_to = "To Pending Final Approval";
+                $history->action_name = "To Pending Final Approval";
                 $history->change_from = $lastDocumentOOC->status;
                 $history->stage='Correction Complete';
                 $history->save();
@@ -2643,6 +2675,7 @@ $oocevaluation->save();
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 $history->origin_state = $lastDocumentOOC->status;
                 $history->change_to = "Under Stage II A Correction";
+                $history->action_name = "Under Stage II A Correction";
                 $history->change_from = $lastDocumentOOC->status;
                 $history->stage='Cause Identification';
                 $history->save();
@@ -2669,6 +2702,7 @@ $oocevaluation->save();
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 $history->origin_state = $lastDocumentOOC->status;
                 $history->change_to = "Peding Final Approval";
+                $history->action_name = "Peding Final Approval";
                 $history->change_from = $lastDocumentOOC->status;
                 $history->stage='Correction Complete';
                 $history->save();
@@ -2695,6 +2729,7 @@ $oocevaluation->save();
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 $history->origin_state = $lastDocumentOOC->status;
                 $history->change_to = "Closed-Done";
+                $history->action_name = "Closed-Done";
                 $history->change_from = $lastDocumentOOC->status;
                 $history->stage='Approved';
                 $history->save();

@@ -1224,6 +1224,7 @@ $users = DB::table('users')->get();
                         <th>Calibration Parameter</th>
                         <th>Acceptance Criteria</th>
                         <th>Results</th>
+                        <th>Action</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -1234,12 +1235,14 @@ $users = DB::table('users')->get();
 
                     <tr>
                     <td disabled >{{ $serialNumber++ }}</td>
-                    <td><input type="text" name="instrumentdetails[0][instrument_name]" value="{{$oogrid['instrument_name']}}"></td>
-                    <td><input type="text" name="instrumentdetails[0][instrument_id]" value="{{$oogrid['instrument_id']}}"></td>
-                    <td><input type="text" name="instrumentdetails[0][remarks]" value="{{$oogrid['remarks']}}"></td>
-                    <td><input type="text" name="instrumentdetails[0][calibration]" value="{{$oogrid['calibration']}}"></td>
-                    <td><input type="text" name="instrumentdetails[0][acceptancecriteria]" value="{{$oogrid['acceptancecriteria']}}"></td>
-                    <td><input type="text" name="instrumentdetails[0][results]" value="{{$oogrid['results']}}"></td>
+                    <td><input type="text" name="instrumentdetails[{{$loop->index}}][instrument_name]" value="{{$oogrid['instrument_name']}}"></td>
+                    <td><input type="text" name="instrumentdetails[{{$loop->index}}][instrument_id]" value="{{$oogrid['instrument_id']}}"></td>
+                    <td><input type="text" name="instrumentdetails[{{$loop->index}}][remarks]" value="{{$oogrid['remarks']}}"></td>
+                    <td><input type="text" name="instrumentdetails[{{$loop->index}}][calibration]" value="{{$oogrid['calibration']}}"></td>
+                    <td><input type="text" name="instrumentdetails[{{$loop->index}}][acceptancecriteria]" value="{{$oogrid['acceptancecriteria']}}"></td>
+                    <td><input type="text" name="instrumentdetails[{{$loop->index}}][results]" value="{{$oogrid['results']}}"></td>
+                    <td><button class="removeRowBtn">Remove</button>
+
                     @endforeach   
                 </tr>
                 </tbody>
@@ -1305,6 +1308,8 @@ $(document).ready(function() {
                 '<td><input type="text" name="instrumentdetails[' + investdetails + '][calibration]" value=""></td>' +
                 '<td><input type="text" name="instrumentdetails[' + investdetails + '][acceptancecriteria]" value=""></td>' +
                 '<td><input type="text" name="instrumentdetails[' + investdetails + '][results]" value=""></td>' +
+                '<td><button class="removeRowBtn">Remove</button>'+
+
                 '</tr>';
             investdetails++; // Increment the row number here
             return html;
@@ -1314,6 +1319,9 @@ $(document).ready(function() {
         var rowCount = tableBody.children('tr').length;
         var newRow = generateTableRow(rowCount + 1);
         tableBody.append(newRow);
+    });
+    $(document).on('click', '.removeRowBtn', function() {
+        $(this).closest('tr').remove();
     });
 });
 
@@ -1516,7 +1524,7 @@ $(document).ready(function() {
                             <div class="group-input">
                                 <label for="Initiator Group">Assignable root cause found?</label>
                                 <select  id="initiator_group" name="is_repeat_assingable_ooc">
-                                    <option value="0" {{ $ooc->is_repeat_assingable_ooc == '0' ? 'selected' : '' }}>-- Select --</option>
+                                    <option value="NA"{{ $ooc->is_repeat_assingable_ooc == 'NA' ? 'selected' : '' }}>-- Select --</option>
                                     <option value="Yes" {{ $ooc->is_repeat_assingable_ooc == 'Yes' ? 'selected' : '' }}>Yes</option>
                                     <option value="No" {{ $ooc->is_repeat_assingable_ooc == 'No' ? 'selected' : '' }}>No</option>
                                     {{-- <option value="NA" {{ $ooc->is_repeat_ooc == 'NA' ? 'selected' : '' }}>NA</option> --}}
@@ -1713,7 +1721,7 @@ $(document).ready(function() {
                             <div class="group-input">
                                 <label for="Initiator Group">Rectification by Service Engineer required</label>
                                 <select name="is_repeat_stageii_ooc" onchange="">
-                                    <option value="0" {{ $ooc->is_repeat_stageii_ooc == '0' ? 'selected' : '' }}>-- Select --</option>
+                                    <option value="NA" {{ $ooc->is_repeat_stageii_ooc == 'NA' ? 'selected' : '' }}>-- Select --</option>
                                     <option value="Yes" {{ $ooc->is_repeat_stageii_ooc == 'Yes' ? 'selected' : '' }}>Yes</option>
                                     <option value="No" {{ $ooc->is_repeat_stageii_ooc == 'No' ? 'selected' : '' }}>No</option>
 
@@ -1724,7 +1732,7 @@ $(document).ready(function() {
                             <div class="group-input">
                                 <label for="Initiator Group">Instrument is Out of Order</label>
                                 <select name="is_repeat_stage_instrument_ooc" onchange="">
-                                    <option value="0" {{ $ooc->is_repeat_stage_instrument_ooc == '0' ? 'selected' : '' }}>-- Select --</option>
+                                    <option value="NA" {{ $ooc->is_repeat_stage_instrument_ooc == 'NA' ? 'selected' : '' }}>-- Select --</option>
                                     <option value="Yes" {{ $ooc->is_repeat_stage_instrument_ooc == 'Yes' ? 'selected' : '' }}>Yes</option>
                                     <option value="No" {{ $ooc->is_repeat_stage_instrument_ooc == 'No' ? 'selected' : '' }}>No</option>
 

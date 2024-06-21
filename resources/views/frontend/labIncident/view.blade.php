@@ -330,7 +330,7 @@
 
                                 <div class="col-lg-6">
                                     <div class="group-input">
-                                        <label for="Initiator Group"><b>Initiator Group</b></label>
+                                        <label for="Initiator Group"><b>Initiator Group</b><span class="text-danger">*</span></label>
                                         <select name="Initiator_Group" {{ $data->stage == 0 || $data->stage == 10 ? "disabled" : "" }}
                                              id="initiator_group">
                                             <option value="Corporate Quality Assurance"
@@ -431,7 +431,7 @@
                                             <th>Name of Product</th>
                                             <th>B No./A.R. No.</th>
                                             <th>Remarks</th>
-                                            {{-- <th>Action</th> --}}
+                                            <th>Action</th>
 
 
                                         </tr>
@@ -446,11 +446,11 @@
                                             {{-- <td style="width: 6%"><input type="text" name="investrecord[0][s_no]" value="{{ $r['s_no']}}"> --}}
                                               <td style="width: 6%"> {{ $serialNumber++ }} </td>
                                            
-                                              <td><input type="text"{{ $data->stage == 0 || $data->stage == 10 ? "disabled" : "" }} name="investrecord[0][name_of_product]" value=" {{$r['name_of_product']}}">
+                                              <td><input type="text"{{ $data->stage == 0 || $data->stage == 10 ? "disabled" : "" }} name="investrecord[{{$loop->index}}][name_of_product]" value=" {{$r['name_of_product']}}">
                                                </td>                                           
-                                            <td><input type="text" {{ $data->stage == 0 || $data->stage == 10 ? "disabled" : "" }} name="investrecord[0][batch_no]" value="{{$r['batch_no']}}"></td>
-                                             <td><input type="text" {{ $data->stage == 0 || $data->stage == 10 ? "disabled" : "" }} name="investrecord[0][remarks]" value="{{$r['remarks']}}" ></td>
-                                             
+                                            <td><input type="text" {{ $data->stage == 0 || $data->stage == 10 ? "disabled" : "" }} name="investrecord[{{$loop->index}}][batch_no]" value="{{$r['batch_no']}}"></td>
+                                             <td><input type="text" {{ $data->stage == 0 || $data->stage == 10 ? "disabled" : "" }} name="investrecord[{{$loop->index}}][remarks]" value="{{$r['remarks']}}" ></td>
+                                             <td><button class="removeRowBtn">Remove</button>
     
                                         </tr>
                                        @endforeach
@@ -517,7 +517,7 @@
                         '<td><input type="text" name="investrecord['+ investdetails +'][name_of_product]" value=""></td/>' +
                         '<td><input type="text" name="investrecord['+ investdetails +'][batch_no]" value=""></td>' +
                         '<td><input type="text" name="investrecord['+ investdetails +'][remarks]" value=""></td>' +
-                        // '<td><button class="removeRowBtn">Remove</button></td>' +
+                        '<td><button class="removeRowBtn">Remove</button></td>' +
     
     
                         '</tr>';
@@ -539,6 +539,9 @@
                 var newRow = generateTableRow(rowCount + 1);
                 tableBody.append(newRow);
             });
+            $(document).on('click', '.removeRowBtn', function() {
+        $(this).closest('tr').remove();
+    });
         });
         </script>
     
@@ -1813,7 +1816,7 @@
                                         <th>Name of Product</th>
                                         <th>B No./A.R. No.</th>
                                         <th>Remarks</th>
-                                        {{-- <th>Action</th> --}}
+                                        <th>Action</th>
 
 
                                     </tr>
@@ -1828,10 +1831,10 @@
                                         {{-- <td><input type="text" name="investigation[0][s_no]" value=" {{ $lab['s_no']}}">
                                            </td> --}}
 
-                                          <td><input type="text" {{ $data->stage == 0 || $data->stage == 10 ? "disabled" : "" }} name="investigation[0][name_of_product_ssfi]" value=" {{isset($lab['name_of_product_ssfi']) ? $lab['name_of_product_ssfi']:''}}"></td>
-                                          <td><input type="text" {{ $data->stage == 0 || $data->stage == 10 ? "disabled" : "" }} name="investigation[0][batch_no_ssfi]" value=" {{isset($lab['batch_no_ssfi']) ? $lab['batch_no_ssfi']:''}}"></td>
-                                          <td><input type="text" {{ $data->stage == 0 || $data->stage == 10 ? "disabled" : "" }} name="investigation[0][remarks_ssfi]" value=" {{isset($lab['remarks_ssfi']) ? $lab['remarks_ssfi' ]:''}}"></td>
-
+                                          <td><input type="text" {{ $data->stage == 0 || $data->stage == 10 ? "disabled" : "" }} name="investigation[{{$loop->index}}][name_of_product_ssfi]" value=" {{isset($lab['name_of_product_ssfi']) ? $lab['name_of_product_ssfi']:''}}"></td>
+                                          <td><input type="text" {{ $data->stage == 0 || $data->stage == 10 ? "disabled" : "" }} name="investigation[{{$loop->index}}][batch_no_ssfi]" value=" {{isset($lab['batch_no_ssfi']) ? $lab['batch_no_ssfi']:''}}"></td>
+                                          <td><input type="text" {{ $data->stage == 0 || $data->stage == 10 ? "disabled" : "" }} name="investigation[{{$loop->index}}][remarks_ssfi]" value=" {{isset($lab['remarks_ssfi']) ? $lab['remarks_ssfi' ]:''}}"></td>
+                                          <td><button class="removeRowBtn">Remove</button></td>
 
                                         {{-- <td><input type="text" name="investigation[0][batch_no_ssfi]" value="{{$lab['batch_no_ssfi']}}"></td> --}}
                                          {{-- <td><input type="text" name="investigation[0][remarks_ssfi]" value="{{$lab['remarks_ssfi']}}" ></td> --}}
@@ -1902,7 +1905,7 @@
                     '<td><input type="text" name="investigation['+ suitaBility +'][name_of_product_ssfi]" value=""></td/>' +
                     '<td><input type="text" name="investigation['+ suitaBility +'][batch_no_ssfi]" value=""></td>' +
                     '<td><input type="text" name="investigation['+ suitaBility +'][remarks_ssfi]" value=""></td>' +
-                    // '<td><button class="removeRowBtn">Remove</button></td>' +
+                    '<td><button class="removeRowBtn">Remove</button></td>' +
 
 
                     '</tr>';
@@ -1923,6 +1926,9 @@
             var newRow = generateTableRow(rowCount + 1);
             tableBody.append(newRow);
         });
+         $(document).on('click', '.removeRowBtn', function() {
+        $(this).closest('tr').remove();
+    });
     });
     </script>
 

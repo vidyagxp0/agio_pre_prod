@@ -127,6 +127,7 @@
                                             class="text-danger">*</span></label>
                                         <select name="Initiator_Group" id="initiator_group" required>
                                             <option value="">-- Select --</option>
+                                            <option value="CQA" @if(old('Initiator_Group') =="CQA") selected @endif>Corporate Quality Assurance</option>
                                             <option value="QAB" @if(old('Initiator_Group') =="QAB") selected @endif>Quality Assurance Biopharma</option>
                                             <option value="CQC" @if(old('Initiator_Group') =="CQA") selected @endif>Central Quality Control</option>
                                             <option value="CQC" @if(old('Initiator_Group') =="MANU") selected @endif>Manufacturing</option>
