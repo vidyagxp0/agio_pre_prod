@@ -22,7 +22,7 @@ return new class extends Migration
             $table->longText('re_analysis_result')->nullable();
             $table->longText('reanalysis_result_oot')->nullable();
             $table->longText('part_b_comments')->nullable();
-            $table->longText('supporting_attechment')->nullable();
+            $table->string('supporting_attechment')->nullable();
         });
     }
 

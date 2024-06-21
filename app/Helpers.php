@@ -374,45 +374,66 @@ class Helpers
             case 'CQA':
                 $full_department_name = "Corporate Quality Assurance";
                 break;
-            case 'QAB':
-                $full_department_name = "Quality Assurance Biopharma";
+            case 'QA':
+                $full_department_name = "Quality Assurance";
                 break;
-            case 'CQC':
-                $full_department_name = "Central Quality Control";
+            case 'QC':
+                $full_department_name = "Quality Control";
                 break;
-            case 'MANU':
-                $full_department_name = "Manufacturing";
+            case 'QM':
+                $full_department_name = "Quality Control (Microbiology department)";
                 break;
-            case 'PSG':
-                $full_department_name = "Plasma Sourcing Group";
+            case 'PG':
+                $full_department_name = "Production General";
                 break;
-            case 'CS':
-                $full_department_name = "Central Stores";
+            case 'PL':
+                $full_department_name = "Production Liquid Orals";
                 break;
-            case 'ITG':
-                $full_department_name = "Information Technology Group";
+            case 'PT':
+                $full_department_name = "Production Tablet and Powder";
                 break;
-            case 'MM':
-                $full_department_name = "Molecular Medicine";
+            case 'PE':
+                $full_department_name = "Production External (Ointment, Gels, Creams and Liquid)";
                 break;
-            case 'CL':
-                $full_department_name = "Central Laboratory";
+            case 'PC':
+                $full_department_name = "Production Capsules";
                 break;
-            case 'TT':
-                $full_department_name = "Tech team";
+            case 'PI':
+                $full_department_name = "Production Injectable";
                 break;
-            case 'ACC':
-                $full_department_name = "Accounting";
+            case 'EN':
+                $full_department_name = "Engineering";
                 break;
-            case 'LOG':
-                $full_department_name = "Logistics";
+            case 'HR':
+                $full_department_name = "Human Resource";
                 break;
-            case 'SM':
-                $full_department_name = "Senior Management";
+            case 'ST':
+                $full_department_name = "Store";
                 break;
-            case 'BA':
-                $full_department_name = "Business Administration";
+            case 'IT':
+                $full_department_name = "Electronic Data Processing";
                 break;
+            case 'FD':
+                $full_department_name = "Formulation  Development";
+                break;
+            case 'AL':
+                $full_department_name = "Analytical research and Development Laboratory";
+                break;
+            case 'PD':
+                $full_department_name = "Packaging Development";
+                break;
+            case 'PU':
+                $full_department_name = "Purchase Department";
+                break;
+            case 'DC':
+                $full_department_name = "Document Cell";
+                break;
+            case 'RA':
+                $full_department_name = "Regulatory Affairs";
+                break; 
+            case 'PV':
+                $full_department_name = "Regulatory Affairs";
+                break;         
 
             default:
                 break;

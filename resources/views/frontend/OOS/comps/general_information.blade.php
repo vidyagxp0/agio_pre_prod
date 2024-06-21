@@ -9,7 +9,7 @@
                     <select id="dynamicSelectType" name="type">
                         <option value="{{ route('oos.index') }}">OOS Chemical</option>
                         <option value="{{ route('oos_micro.index') }}">OOS Micro</option>
-                        <option value="{{ route('oot.index')  }}">OOT</option>
+                        <option value="{{ route('oot.index');  }}">OOT</option>
                     </select>
                 </div>
             </div>
@@ -200,12 +200,20 @@
                 <div class="group-input">
                     <label for="Source Document Type">Source Document Type</label>
                     <select name="source_document_type_gi">
-                        <option value="0">Enter Your Selection Here</option>
-                        <option value="doc" {{ $data->source_document_type_gi == 'doc' ? 'selected' : ''
-                            }}>doc</option>
-                            <option value="pdf" {{ $data->source_document_type_gi == 'pdf' ? 'selected' : ''
-                            }}>pdf</option>
-                       </select>
+                        <option>Enter Your Selection Here</option>
+                        <option value="OOT"{{ $data->source_document_type_gi == 'OOT' ? 'selected' : ''
+                        }}>OOT</option>
+                        <option value="Lab Incident"{{ $data->source_document_type_gi == 'Lab Incident' ? 'selected' : ''
+                        }}>Lab Incident</option>
+                        <option value="Deviation"{{ $data->source_document_type_gi == 'Deviation' ? 'selected' : ''
+                        }}>Deviation</option>
+                        <option value="Product Non-conformance"{{ $data->source_document_type_gi == 'Product Non-conformance' ? 'selected' : ''
+                        }}>Product Non-conformance</option>
+                        <option value="Inspectional Observation"{{ $data->source_document_type_gi == 'Inspectional Observation' ? 'selected' : ''
+                        }}>Inspectional Observation</option>
+                        <option value="Others"{{ $data->source_document_type_gi == 'Others' ? 'selected' : ''
+                        }}>Others</option>
+                    </select>
                 </div>
             </div>
 
@@ -223,19 +231,18 @@
             <div class="col-lg-6">
                 <div class="group-input">
                     <label for="Tnitiaror Grouo">Sample Type</label>
-                    
                     <select name="sample_type_gi">
-                        <option value="0">Enter Your Selection Here</option>
-                        <option value="raw_material" {{ $data->sample_type_gi == 'raw_material' ?
+                        <option>Enter Your Selection Here</option>
+                        <option value="Raw Material"{{ $data->sample_type_gi == 'Raw Materia' ?
                             'selected' : '' }}>Raw Material</option>
-                        <option value="packing_material" {{ $data->sample_type_gi == 'packing_material'
-                            ? 'selected' : '' }}>Packing Material</option>
-                        <option value="finished_product" {{ $data->sample_type_gi == 'finished_product'
-                            ? 'selected' : '' }}>Finished Product</option>
-                        <option value="stability_sample" {{ $data->sample_type_gi == 'stability_sample'
-                            ? 'selected' : '' }}>Stability Sample</option>
-                        <option value="others" {{ $data->sample_type_gi == 'others' ? 'selected' : ''
-                            }}>Others</option>
+                        <option value="Packing Material"{{ $data->sample_type_gi == 'Packing Material' ?
+                            'selected' : '' }}>Packing Material</option>
+                        <option value="Finished Product"{{ $data->sample_type_gi == 'Finished Product' ?
+                            'selected' : '' }}>Finished Product</option>
+                        <option value="Satbility Sample"{{ $data->sample_type_gi == 'Satbility Sample' ?
+                            'selected' : '' }}>Satbility Sample</option>
+                        <option value="Others"{{ $data->sample_type_gi == 'Others' ?
+                            'selected' : '' }}>Others</option>
                     </select>
                 </div>
             </div>

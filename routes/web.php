@@ -494,10 +494,10 @@ Route::post('oos_micro/assignable_send_stage/{id}',[OOSMicroController::class,'a
 Route::post('oos_micro/cancel_stage/{id}', [OOSMicroController::class, 'cancel_stage'])->name('cancel_stage');;
 Route::post('oos_micro/thirdStage/{id}', [OOSMicroController::class, 'stageChange'])->name('thirdStage');
 Route::post('oos_micro/reject_stage/{id}', [OOSMicroController::class, 'reject_stage'])->name('reject_stage');
-// Route::post('capa_child/{id}', [CapaController::class, 'child_change_control'])->name('capa_child_changecontrol');
 
 Route::get('oos_micro/AuditTrial/{id}', [OOSMicroController::class, 'AuditTrial'])->name('audit_trial');
 Route::get('oos_micro/auditDetails/{id}', [OOSMicroController::class, 'auditDetails'])->name('audit_details');
+
 
 //============================================ OOS MICRO ROUTE CLOSE ===================================
 // Route::view('market_complaint_new', 'frontend.market_complaint.market_complaint_new')->name('market_complaint_new');
@@ -587,6 +587,7 @@ Route::post('RejectState_extension/{id}', [ExtensionNewController::class, 'rejec
 // Route::get('RejectState_extension/{id}', [ExtensionNewController::class, 'reject'])->name('RejectState_extension');
 
 
+Route::get('trainer_qualification', [TrainerController::class, 'index'])->name('trainer_qualification');
 
 //=====================================================================
 // >>>>>>> B-backup

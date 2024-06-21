@@ -15,80 +15,6 @@ $users = DB::table('users')
             display: none;
         }
     </style>
-    <!-- --------------------------------------button--------------------- -->
-    <script>
-        VirtualSelect.init({
-            ele: '#related_records, #hod'
-        });
-
-        function openCity(evt, cityName) {
-            var i, cctabcontent, cctablinks;
-            cctabcontent = document.getElementsByClassName("cctabcontent");
-            for (i = 0; i < cctabcontent.length; i++) {
-                cctabcontent[i].style.display = "none";
-            }
-            cctablinks = document.getElementsByClassName("cctablinks");
-            for (i = 0; i < cctablinks.length; i++) {
-                cctablinks[i].className = cctablinks[i].className.replace(" active", "");
-            }
-            document.getElementById(cityName).style.display = "block";
-            evt.currentTarget.className += " active";
-
-            // Find the index of the clicked tab button
-            const index = Array.from(cctablinks).findIndex(button => button === evt.currentTarget);
-
-            // Update the currentStep to the index of the clicked tab
-            currentStep = index;
-        }
-
-        const saveButtons = document.querySelectorAll(".saveButton");
-        const nextButtons = document.querySelectorAll(".nextButton");
-        const form = document.getElementById("step-form");
-        const stepButtons = document.querySelectorAll(".cctablinks");
-        const steps = document.querySelectorAll(".cctabcontent");
-        let currentStep = 0;
-
-        function nextStep() {
-            // Check if there is a next step
-            if (currentStep < steps.length - 1) {
-                // Hide current step
-                steps[currentStep].style.display = "none";
-
-                // Show next step
-                steps[currentStep + 1].style.display = "block";
-
-                // Add active class to next button
-                stepButtons[currentStep + 1].classList.add("active");
-
-                // Remove active class from current button
-                stepButtons[currentStep].classList.remove("active");
-
-                // Update current step
-                currentStep++;
-            }
-        }
-
-        function previousStep() {
-            // Check if there is a previous step
-            if (currentStep > 0) {
-                // Hide current step
-                steps[currentStep].style.display = "none";
-
-                // Show previous step
-                steps[currentStep - 1].style.display = "block";
-
-                // Add active class to previous button
-                stepButtons[currentStep - 1].classList.add("active");
-
-                // Remove active class from current button
-                stepButtons[currentStep].classList.remove("active");
-
-                // Update current step
-                currentStep--;
-            }
-        }
-    </script>
-
     <!-- -----------------------------grid-1----------------------------script -->
     <script>
         $(document).ready(function() {
@@ -200,22 +126,18 @@ $users = DB::table('users')
                             '<td><input type="file" name="oos_detail['+ serialNumber +'][oos_file_attachment]"></td>' +
                             '<td><input type="text" name="oos_detail['+ serialNumber +'][oos_submit_by]"></td>' +
                             '<td>' +
-                            '<div class="col-lg-6 new-date-data-field">' +
-                            '<div class="group-input input-date">' +
-                            '<div class="calenderauditee">' +
-                            '<input type="text" readonly id="oos_submit_on' + serialNumber + '" placeholder="DD-MM-YYYY" />' +
-                            '<input type="date" name="oos_details[' + serialNumber + '][oos_submit_on]" value="" class="hide-input" oninput="handleDateInput(this, \'oos_submit_on' + serialNumber + '\')">' +
-                            '</div>' +
-                            '</div>' +
-                            '</div>' +
+                                '<div class="col-lg-6 new-date-data-field">' +
+                                '<div class="group-input input-date">' +
+                                '<div class="calenderauditee">' +
+                                '<input type="text" readonly id="oos_submit_on' + serialNumber + '" placeholder="DD-MM-YYYY" />' +
+                                '<input type="date" name="oos_detail[' + serialNumber + '][oos_submit_on]" value="" class="hide-input" oninput="handleDateInput(this, \'oos_submit_on' + serialNumber + '\')">' +
+                                '</div>' +
+                                '</div>' +
+                                '</div>' +
                             '</td>' +
+                        
                             '<td><button type="text" class="removeRowBtn">Remove</button></td>'
                          '</tr>';
-                    // for (var i = 0; i < users.length; i++) {
-                    //     html += '<option value="' + users[i].id + '">' + users[i].name + '</option>';
-                    // }
-
-                    // html += '</select></td>' + 
                     return html;
                 }
 
@@ -238,20 +160,34 @@ $users = DB::table('users')
                         '<td><input disabled type="text" name="oos_capa['+ serialNumber +'][serial]" value="' + serialNumber +
                         '"></td>' +
                         '<td><input type="text" name="oos_capa['+ serialNumber +'][info_oos_number]" value=""></td>' +
-                        '<td><input type="date" name="oos_capa['+ serialNumber +'][info_oos_reported_date]" value=""></td>' +
+                        '<td>' +
+                        '<div class="col-lg-6 new-date-data-field">' +
+                        '<div class="group-input input-date">' +
+                        '<div class="calenderauditee">' +
+                        '<input type="text" readonly id="info_oos_reported_date' + serialNumber + '" placeholder="DD-MM-YYYY" />' +
+                        '<input type="date" name="oos_capa[' + serialNumber + '][info_oos_reported_date]" value="" class="hide-input" oninput="handleDateInput(this, \'info_oos_reported_date' + serialNumber + '\')">' +
+                        '</div>' +
+                        '</div>' +
+                        '</div>' +
+                        '</td>' +
                         '<td><input type="text" name="oos_capa['+ serialNumber +'][info_oos_description]" value=""></td>' +
                         '<td><input type="text" name="oos_capa['+ serialNumber +'][info_oos_previous_root_cause]"value=""></td>' +
                         '<td><input type="text" name="oos_capa['+ serialNumber +'][info_oos_capa]" value=""></td>' +
-                        '<td><input type="date" name="oos_capa['+ serialNumber +'][info_oos_closure_date]" value=""></td>' +
-                        '<td><select name="oos_capa['+ serialNumber +'][info_oos_capa_requirement]"><option value="">Select an Option</option><option value="yes">Yes</option><option value="No">No</option></select></td>' +
+                        '<td>' +
+                        '<div class="col-lg-6 new-date-data-field">' +
+                        '<div class="group-input input-date">' +
+                        '<div class="calenderauditee">' +
+                        '<input type="text" readonly id="info_oos_closure_date' + serialNumber + '" placeholder="DD-MM-YYYY" />' +
+                        '<input type="date" name="oos_capa[' + serialNumber + '][info_oos_closure_date]" value="" class="hide-input" oninput="handleDateInput(this, \'info_oos_closure_date' + serialNumber + '\')">' +
+                        '</div>' +
+                        '</div>' +
+                        '</div>' +
+                        '</td>' +
+                        '<td><select name="oos_capa['+ serialNumber +'][info_oos_capa_requirement]"><option value="">Select Option</option><option value="yes">Yes</option><option value="No">No</option></select></td>' +
                         '<td><input type="text" name="oos_capa['+ serialNumber +'][info_oos_capa_reference_number]" value=""></td>' +
                         '<td><button type="text" class="removeRowBtn">Remove</button></td>' +
                         '</tr>';
-                    // for (var i = 0; i < users.length; i++) {
-                    //     html += '<option value="' + users[i].id + '">' + users[i].name + '</option>';
-                    // }
-
-                    // html += '</select></td>' + 
+                   
                     return html;
                 }
 
@@ -367,13 +303,8 @@ $users = DB::table('users')
                 <button class="cctablinks" onclick="openCity(event, 'CCForm9')">OOS Conclusion Review</button>
                 <button class="cctablinks" onclick="openCity(event, 'CCForm10')">OOS QA Review</button>
                 <button class="cctablinks" onclick="openCity(event, 'CCForm11')">Batch Disposition</button>
-                <!-- <button class="cctablinks" onclick="openCity(event, 'CCForm12')">Re-Open</button> -->
                 <button class="cctablinks" onclick="openCity(event, 'CCForm13')">QA Head/Designee Approval</button>
-                <!-- <button class="cctablinks" onclick="openCity(event, 'CCForm14')">Under Addendum Execution</button> -->
-                <!-- <button class="cctablinks" onclick="openCity(event, 'CCForm15')">Under Addendum Review</button> -->
-                <!-- <button class="cctablinks" onclick="openCity(event, 'CCForm16')">Under Addendum Verification</button> -->
                 <button class="cctablinks" onclick="openCity(event, 'CCForm17')">Signature</button>
-
             </div>
           <form action="{{ route('oos.oosstore') }}" method="POST" enctype="multipart/form-data">
             @csrf
@@ -395,7 +326,7 @@ $users = DB::table('users')
                                 <select id="dynamicSelectType" name="type">
                                     <option value="{{ route('oos.index') }}">OOS Chemical</option>
                                     <option value="{{ route('oos_micro.index') }}">OOS Micro</option>
-                                    <option value="{{ route('oot.index')  }}">OOT</option>
+                                    <option value="{{ route('oot.index');  }}">OOT</option>
                                 </select>
                             </div>
                         </div>
@@ -583,12 +514,11 @@ $users = DB::table('users')
                                 <label for="Tnitiaror Grouo">Sample Type</label>
                                 <select name="sample_type_gi">
                                     <option>Enter Your Selection Here</option>
-                                    <option  value="Raw Material">Raw Material</option>
+                                    <option value="Raw Material">Raw Material</option>
                                     <option value="Packing Material">Packing Material</option>
                                     <option value="Finished Product">Finished Product</option>
                                     <option value="Satbility Sample">Satbility Sample</option>
                                     <option value="Others">Others</option>
-
                                 </select>
                             </div>
                         </div>
@@ -910,7 +840,7 @@ $users = DB::table('users')
                                     <div class="file-attachment-list" id="file_attachments_pli"></div>
                                     <div class="add-btn">
                                         <div>Add</div>
-                                        <input type="file" id="file_attachments_pli" name="file_attachments_pli[]"
+                                        <input type="file" id="myfile" name="file_attachments_pli[]"
                                             oninput="addMultipleFiles(this, 'file_attachments_pli')" multiple>
                                     </div>
                                 </div>
@@ -1216,7 +1146,7 @@ $users = DB::table('users')
                                             </div>
                                             </td>
                                             <td><select name="oos_capa[0][info_oos_capa_requirement]">
-                                                   <option value="">Select</option>
+                                                   <option value="">Select Option</option>
                                                     <option value="yes">Yes</option>
                                                     <option value="No">No</option>
                                                 </select></td>
@@ -1339,11 +1269,11 @@ $users = DB::table('users')
                                 Please Attach all relevant or supporting documents
                             </small>
                             <div class="file-attachment-field">
-                                <div class="file-attachment-list" id="file_attachments_pli"></div>
+                                <div class="file-attachment-list" id="file_attachments_pII"></div>
                                 <div class="add-btn">
                                     <div>Add</div>
-                                    <input type="file" id="file_attachments_pli" name="file_attachments_pli[]"
-                                        oninput="addMultipleFiles(this, 'file_attachments_pli')" multiple>
+                                    <input type="file" id="myfile" name="file_attachments_pII[]"
+                                        oninput="addMultipleFiles(this, 'file_attachments_pII')" multiple>
                                 </div>
                             </div>
 
@@ -1683,7 +1613,7 @@ $users = DB::table('users')
                             <select name="results_to_be_reported_oosc">
                                 <option value="">Select an Option</option>
                                 <option value="Intial">Initial</option>
-                                <option value="Retested_result">Retested Result</option>
+                                <option value="Retested result">Retested Result</option>
                             </select>
                         </div>
                     </div>
@@ -1837,6 +1767,7 @@ $users = DB::table('users')
                                         <th style="width: 16%">Batch No.(s) / A.R. No. (s)</th>
                                         <th style="width: 16%">Any Other Information</th>
                                         <th style="width: 16%">Action Taken on Affec.batch</th>
+                                        <th style="width: 5%"> Action </th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -1845,6 +1776,7 @@ $users = DB::table('users')
                                     <td><input type="text" name="oos_conclusion_review[0][conclusion_review_batch_no]"></td>
                                     <td><input type="text" name="oos_conclusion_review[0][conclusion_review_any_other_information]"></td>
                                     <td><input type="text" name="oos_conclusion_review[0][conclusion_review_action_affecte_batch]"></td>
+                                    <td><button type="text" class="removeRowBtn">Remove</button></td>
                                 </tbody>
                             </table>
                         </div>
@@ -2711,9 +2643,7 @@ $users = DB::table('users')
 
                 <div class="button-block">
                     <button type="submit" id="ChangesaveButton" class="saveButton">Save</button>
-                    <button type="button" class="backButton" onclick="previousStep()">Back</button>
-                    <button type="button" id="ChangeNextButton" class="nextButton"
-                        onclick="nextStep()">Next</button>
+                    <!-- <button type="button" class="backButton" onclick="previousStep()">Back</button> -->
                     <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white">
                             Exit </a> </button>
                 </div>
@@ -2815,6 +2745,80 @@ $users = DB::table('users')
             evt.currentTarget.className += " active";
         }
     </script>
+     <!-- --------------------------------------button--------------------- -->
+     <script>
+        VirtualSelect.init({
+            ele: '#related_records, #hod'
+        });
+
+        function openCity(evt, cityName) {
+            var i, cctabcontent, cctablinks;
+            cctabcontent = document.getElementsByClassName("cctabcontent");
+            for (i = 0; i < cctabcontent.length; i++) {
+                cctabcontent[i].style.display = "none";
+            }
+            cctablinks = document.getElementsByClassName("cctablinks");
+            for (i = 0; i < cctablinks.length; i++) {
+                cctablinks[i].className = cctablinks[i].className.replace(" active", "");
+            }
+            document.getElementById(cityName).style.display = "block";
+            evt.currentTarget.className += " active";
+
+            // Find the index of the clicked tab button
+            const index = Array.from(cctablinks).findIndex(button => button === evt.currentTarget);
+
+            // Update the currentStep to the index of the clicked tab
+            currentStep = index;
+        }
+
+        const saveButtons = document.querySelectorAll(".saveButton");
+        const nextButtons = document.querySelectorAll(".nextButton");
+        const form = document.getElementById("step-form");
+        const stepButtons = document.querySelectorAll(".cctablinks");
+        const steps = document.querySelectorAll(".cctabcontent");
+        let currentStep = 0;
+
+        function nextStep() {
+            // Check if there is a next step
+            if (currentStep < steps.length - 1) {
+                // Hide current step
+                steps[currentStep].style.display = "none";
+
+                // Show next step
+                steps[currentStep + 1].style.display = "block";
+
+                // Add active class to next button
+                stepButtons[currentStep + 1].classList.add("active");
+
+                // Remove active class from current button
+                stepButtons[currentStep].classList.remove("active");
+
+                // Update current step
+                currentStep++;
+            }
+        }
+
+        function previousStep() {
+            // Check if there is a previous step
+            if (currentStep > 0) {
+                // Hide current step
+                steps[currentStep].style.display = "none";
+
+                // Show previous step
+                steps[currentStep - 1].style.display = "block";
+
+                // Add active class to previous button
+                stepButtons[currentStep - 1].classList.add("active");
+
+                // Remove active class from current button
+                stepButtons[currentStep].classList.remove("active");
+
+                // Update current step
+                currentStep--;
+            }
+        }
+    </script>
+
     <script>
         var maxLength = 255;
         $('#docname').keyup(function() {

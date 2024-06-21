@@ -21,6 +21,10 @@
                     /* min-width: 100vw; */
                     min-height: 100vh;
                 }
+                .imageContainer p img{
+                    width: 600px !important;
+                    height: 300px;
+                }
 
                 .w-10 {
                     width: 10%;
@@ -368,11 +372,11 @@
                             </td>
 
                             <td>
-                                <div><strong>Changed From :</strong>{!! $dataDemo->change_from !!}</div>
+                                <div><strong>Changed From :</strong>{!! str_replace(',', ', ', $dataDemo->change_from) !!}</div>
                             </td>
 
                             <td>
-                                <div><strong>Changed To :</strong>{!! $dataDemo->change_to !!}</div>
+                                <div><strong>Changed To :</strong>{!! str_replace(',', ', ', $dataDemo->change_to) !!}</div>
                             </td>
                             <td>
                                 <div>
@@ -381,19 +385,29 @@
                                         {{ $dataDemo->activity_type ? $dataDemo->activity_type : 'Not Applicable' }}
                                     {{-- </a> --}}
                                 </div>
-                                <div style="margin-top: 5px;">
+                                <div style="margin-top: 5px;" class="imageContainer">
+                                    {{-- <script src=""></script> --}}
+
+                                    <!-- Assuming $dataDemo->image_url contains the URL of your image -->
                                     @if($dataDemo->activity_type == "Activity Log")
-                                        <strong>Change From :</strong>{!! $dataDemo->change_from ? $dataDemo->change_from : 'Not Applicable' !!}
+                                        <strong>Change From :</strong>
+                                        @if ($dataDemo->change_from)
+                                            {{ str_replace(',', ', ', $dataDemo->change_from) }}
+                                        @elseif($dataDemo->change_from && trim($dataDemo->change_from) == '')
+                                            NULL
+                                        @else
+                                            Not Applicable
+                                        @endif
                                     @else
-                                        <strong>Change From :</strong>{!! $dataDemo->previous ? $dataDemo->previous : 'Not Applicable' !!}
+                                        <strong>Change From :</strong>{!! !empty(strip_tags($dataDemo->previous)) ? $dataDemo->previous : ($dataDemo->previous == null ? 'Null' : 'Not Applicable' )!!}
                                     @endif
                                 </div>
                                 <br>
-                                <div>
+                                <div class="imageContainer">
                                     @if($dataDemo->activity_type == "Activity Log")
-                                        <strong>Change To :</strong>{!! $dataDemo->change_to ? $dataDemo->change_to : 'Not Applicable' !!}
+                                        <strong>Change To :</strong>{!! str_replace(',', ', ', $dataDemo->change_to) ? $dataDemo->change_to : 'Not Applicable' !!}
                                     @else
-                                        <strong>Change To :</strong>{!! $dataDemo->current ? $dataDemo->current : 'Not Applicable' !!}
+                                        <strong>Change To :</strong>{!! !empty(strip_tags($dataDemo->current)) ? $dataDemo->current : 'Not Applicable' !!}
                                     @endif
                                 </div>
                                 <div style="margin-top: 5px;">

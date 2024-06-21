@@ -163,12 +163,13 @@
                 <td class="w-70 head">
                     Incident Report
                 </td>
-                <td class="w-30">
-                    <div class="logo">
-                        <img src="https://navin.mydemosoftware.com/public/user/images/logo.png" alt=""
-                            class="w-100">
-                    </div>
-                </td>
+    
+                    <td class="w-30">
+                        <div class="logo">
+                            <img src="https://navin.mydemosoftware.com/public/user/images/logo.png" alt="" class="w-100">
+                        </div>
+                    </td>
+            
             </tr>
         </table>
         <table>
@@ -213,17 +214,20 @@
                             @endif
                         </td>
                     </tr>
+                    
                     <tr>
                         <th class="w-20">Department</th>
-                        <td class="w-30">
+                        <td class="w-80">
                             @if ($data->Initiator_Group)
                                 {{ Helpers::getFullDepartmentName($data->Initiator_Group) }}
                             @else
                                 Not Applicable
                             @endif
                         </td>
+                    </tr>
+                        <tr>
                         <th class="w-20">Short Description</th>
-                        <td class="w-30">
+                        <td class="w-80">
                             @if ($data->short_description)
                                 {{ $data->short_description }}
                             @else

@@ -3525,7 +3525,7 @@ if ($incident->Initial_attachment) {
                 if ($incident->stage == 1) {
                     if ($incident->form_progress !== 'general-open')
                     {
-                        dd('emnter');
+                        // dd('emnter');
                         Session::flash('swal', [
                             'type' => 'warning',
                             'title' => 'Mandatory Fields!',

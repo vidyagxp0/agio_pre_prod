@@ -44,16 +44,16 @@
                     <label for="Product/Material Name">Phase I Investigation</label>
                     <select name="phase_i_investigation_pli">
                         <option value="0">Enter Your Selection Here</option>
-                        <option value="phase_i_micro" {{ $data->phase_i_investigation_pli ==
-                            'phase_i_micro' ? 'selected' : '' }}>Phase I Micro</option>
-                        <option value="phase_i_chemical" {{ $data->phase_i_investigation_pli ==
-                            'phase_i_chemical' ? 'selected' : '' }}>Phase I Chemical</option>
-                        <option value="hypothesis" {{ $data->phase_i_investigation_pli == 'hypothesis' ?
-                            'selected' : '' }}>Hypothesis</option>
-                        <option value="resampling" {{ $data->phase_i_investigation_pli == 'resampling' ?
-                            'selected' : '' }}>Resampling</option>
-                        <option value="others" {{ $data->phase_i_investigation_pli == 'others' ?
-                            'selected' : '' }}>Others</option>
+                        <option value="Phase I Micro"{{ $data->phase_i_investigation_pli ==
+                            'Phase I Micro' ? 'selected' : '' }}>Phase I Micro</option>
+                        <option value="Phase I Chemical"{{ $data->phase_i_investigation_pli ==
+                            'Phase I Chemical' ? 'selected' : '' }}>Phase I Chemical</option>
+                        <option value="Hypothesis"{{ $data->phase_i_investigation_pli ==
+                            'Hypothesis' ? 'selected' : '' }}>Hypothesis</option>
+                        <option value="Resampling"{{ $data->phase_i_investigation_pli ==
+                            'Resampling' ? 'selected' : '' }}>Resampling</option>
+                        <option value="Others"{{ $data->phase_i_investigation_pli ==
+                            'Others' ? 'selected' : '' }}>Others</option>
                     </select>
                 </div>
             </div>

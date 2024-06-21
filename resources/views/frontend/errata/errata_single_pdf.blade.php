@@ -156,7 +156,7 @@
 
     .Summer {
         font-weight: bold;
-        font-size:14px;
+        font-size: 14px;
     }
 </style>
 
@@ -181,10 +181,10 @@
                     <strong>Errata No.</strong>
                 </td>
                 <td class="w-40">
-                    {{ Helpers::divisionNameForQMS($data->division_id) }}/{{ Helpers::year($data->created_at) }}/{{ $data->record ? str_pad($data->record, 4, '0', STR_PAD_LEFT) : '' }}
+                    {{ Helpers::divisionNameForQMS($data->division_id) }}/ERRATA/{{ Helpers::year($data->created_at) }}/{{ $data->record ? str_pad($data->record, 4, '0', STR_PAD_LEFT) : '' }}
                 </td>
                 <td class="w-30">
-                    <strong>Record No.</strong> {{ str_pad($data->id, 4, '0', STR_PAD_LEFT) }}
+                    <strong>Record No.</strong> {{ str_pad($data->record, 4, '0', STR_PAD_LEFT) }}
                 </td>
             </tr>
         </table>
@@ -218,7 +218,7 @@
                         <th class="w-20">Record Number</th>
                         <td class="w-30">
                             @if ($data->id)
-                                {{ str_pad($data->id, 4, '0', STR_PAD_LEFT) }}
+                                {{ Helpers::divisionNameForQMS($data->division_id) }}/ERRATA/{{ Helpers::year($data->created_at) }}/{{ $data->record ? str_pad($data->record, 4, '0', STR_PAD_LEFT) : '' }}
                             @else
                                 Not Applicable
                             @endif
@@ -271,14 +271,32 @@
                                 'BA' => 'Business Administration',
                             ];
                         @endphp
-                        <td class="w-30">{{ $departments[$data->Department] ?? 'Unknown Department' }}</td>
+                        <td class="w-30">
+                            @if ($data->Department)
+                                {{ $data->Department }}
+                            @else
+                                Not Applicable
+                            @endif
+                        </td>
                     </tr>
                     <tr>
                         <th class="w-20">Department Code</th>
-                        <td class="w-30">{{ $data->department_code }}</td>
+                        <td class="w-30">
+                            @if ($data->department_code)
+                                {{ $data->department_code }}
+                            @else
+                                Not Applicable
+                            @endif
+                        </td>
 
                         <th class="w-20">Document Type</th>
-                        <td class="w-30">{{ $data->document_type }}</td>
+                        <td class="w-30">
+                            @if ($data->document_type)
+                                {{ $data->document_type }}
+                            @else
+                                Not Applicable
+                            @endif
+                        </td>
 
                     </tr>
                     <tr>
@@ -291,22 +309,36 @@
                             @endif
                         </td>
 
-                        <th class="w-20">Reference Documents</th>
-                        <td class="w-30">{{ $data->reference_document }}</td>
+                        <th class="w-20 ">Reference Documents</th>
+                        <td style="break-word:break-all; word-wrap: break-word; width: 50px;">
+                            @if ($data->reference_document)
+                                {{ str_replace(',', ', ', $data->reference_document) }}
+                            @else
+                                Not Applicable
+                            @endif
+                        </td>
 
 
                     </tr>
                 </table>
 
+
+                {{-- <label for="">Reference Documents</label>
+                            <div style="display: block ; overflow:auto; width:200px; height:500px;"> @if ($data->reference_document)
+                                {{ $data->reference_document }}
+                            @else
+                                Not Applicable
+                            @endif</div> --}}
+
                 <label class="Summer" for="">Error Observed on Page No.</label>
                 <div>
                     @if ($data->Observation_on_Page_No)
-                    {!! $data->Observation_on_Page_No !!}
+                        {!! $data->Observation_on_Page_No !!}
                     @else
-                    Not Applicable
+                        Not Applicable
                     @endif
                 </div>
-                    {{-- <tr>
+                {{-- <tr>
                         <th class="w-20">Error Observed on Page No.</th>
                         <td class="w-80" >
                             @if ($data->Observation_on_Page_No)
@@ -316,15 +348,15 @@
                             @endif
                         </td>
                     </tr> --}}
-                    <label  class="Summer" for="">Brief Description</label>
-                    <div>
-                        @if ($data->brief_description)
+                <label class="Summer" for="">Brief Description</label>
+                <div>
+                    @if ($data->brief_description)
                         {!! $data->brief_description !!}
-                        @else
+                    @else
                         Not Applicable
-                        @endif
-                    </div>
-                    {{-- <tr>
+                    @endif
+                </div>
+                {{-- <tr>
                         <th class="w-20">Brief Description</th>
                         <td class="w-80">
                             @if ($data->brief_description)
@@ -357,7 +389,7 @@
                         </td>
                     </tr>
                     {{-- <tr> --}}
-                        {{-- <th class="w-20">Details</th>
+                    {{-- <th class="w-20">Details</th>
                         <td class="w-80">@if ($data->details){{ $data->details }}@else Not Applicable @endif</td> --}}
                     {{-- </tr> --}}
                 </table>
@@ -379,11 +411,15 @@
                             @foreach ($grid_Data->data as $grid_Data)
                                 <tr>
                                     <td class="w-20">{{ $loop->index + 1 }}</td>
-                                    <td class="w-20">{{ isset($grid_Data['ListOfImpactingDocument']) ? $grid_Data['ListOfImpactingDocument'] : '' }}
+                                    <td class="w-20">
+                                        {{ isset($grid_Data['ListOfImpactingDocument']) ? $grid_Data['ListOfImpactingDocument'] : '' }}
                                     </td>
-                                    <td class="w-20">{{ isset($grid_Data['PreparedBy']) ? $grid_Data['PreparedBy'] : '' }}</td>
-                                    <td class="w-20">{{ isset($grid_Data['CheckedBy']) ? $grid_Data['CheckedBy'] : '' }}</td>
-                                    <td class="w-20">{{ isset($grid_Data['ApprovedBy']) ? $grid_Data['ApprovedBy'] : '' }}</td>
+                                    <td class="w-20">
+                                        {{ isset($grid_Data['PreparedBy']) ? $grid_Data['PreparedBy'] : '' }}</td>
+                                    <td class="w-20">
+                                        {{ isset($grid_Data['CheckedBy']) ? $grid_Data['CheckedBy'] : '' }}</td>
+                                    <td class="w-20">
+                                        {{ isset($grid_Data['ApprovedBy']) ? $grid_Data['ApprovedBy'] : '' }}</td>
                                 </tr>
                             @endforeach
                         @else
@@ -405,12 +441,12 @@
                 <div class="block-head">
                     HOD Review
                 </div>
-                <label  class="Summer" for="">HOD Remarks</label>
+                <label class="Summer" for="">HOD Remarks</label>
                 <div>
                     @if ($data->HOD_Remarks)
-                    {!! $data->HOD_Remarks !!}
+                        {!! $data->HOD_Remarks !!}
                     @else
-                    Not Applicable
+                        Not Applicable
                     @endif
                 </div>
                 {{-- <table>
@@ -424,13 +460,13 @@
                             @endif
                         </td>
                     </tr> --}}
-                    <table>
+                <table>
                     <tr>
                         <th class="w-20">HOD Attachments
                         </th>
                         <td class="w-80">
                             @if ($data->HOD_Attachments)
-                                {!! $data->HOD_Attachments !!}
+                                {!! str_replace(',', ', ', $data->HOD_Attachments) !!}
                             @else
                                 Not Applicable
                             @endif
@@ -444,12 +480,12 @@
                 <div class="block-head">
                     QA Review
                 </div>
-                <label  class="Summer" for="">QA Fedbacks</label>
+                <label class="Summer" for="">QA Fedbacks</label>
                 <div>
                     @if ($data->QA_Feedbacks)
-                    {!! $data->QA_Feedbacks !!}
+                        {!! $data->QA_Feedbacks !!}
                     @else
-                    Not Applicable
+                        Not Applicable
                     @endif
                 </div>
                 {{-- <table>
@@ -463,13 +499,13 @@
                             @endif
                         </td>
                     </tr> --}}
-                    <table>
+                <table>
                     <tr>
                         <th class="w-20">QA Attachments
                         </th>
                         <td class="w-80">
                             @if ($data->QA_Attachments)
-                                {{ $data->QA_Attachments }}
+                                {{ str_replace(',', ', ', $data->QA_Attachments) }}
                             @else
                                 Not Applicable
                             @endif
@@ -484,12 +520,12 @@
                     QA Head Designee Approval
                 </div>
 
-                <label  class="Summer" for="">Closure Comments</label>
+                <label class="Summer" for="">Closure Comments</label>
                 <div>
                     @if ($data->Closure_Comments)
-                    {!! $data->Closure_Comments !!}
+                        {!! $data->Closure_Comments !!}
                     @else
-                    Not Applicable
+                        Not Applicable
                     @endif
                 </div>
 
@@ -505,24 +541,24 @@
                         </td>
                     </tr> --}}
                     <table>
-                    <tr>
-                        <th class="w-20">All Impacting Documents Corrected</th>
-                        <td class="w-80">
-                            @if ($data->All_Impacting_Documents_Corrected)
-                                {{ $data->All_Impacting_Documents_Corrected }}
-                            @else
-                                Not Applicable
-                            @endif
-                        </td>
-                    </tr>
+                        <tr>
+                            <th class="w-20">All Impacting Documents Corrected</th>
+                            <td class="w-80">
+                                @if ($data->All_Impacting_Documents_Corrected)
+                                    {{ $data->All_Impacting_Documents_Corrected }}
+                                @else
+                                    Not Applicable
+                                @endif
+                            </td>
+                        </tr>
                     </table>
 
-                    <label  class="Summer" for="">Remarks (If Any)</label>
+                    <label class="Summer" for="">Remarks (If Any)</label>
                     <div>
                         @if ($data->Remarks)
-                        {!! $data->Remarks !!}
+                            {!! $data->Remarks !!}
                         @else
-                        Not Applicable
+                            Not Applicable
                         @endif
                     </div>
                     {{-- <tr>
@@ -536,18 +572,18 @@
                         </td>
                     </tr> --}}
                     <table>
-                    <tr>
-                        <th class="w-20">Closure Attachments</th>
-                        <td class="w-80">
-                            @if ($data->Closure_Attachments)
-                                {{ $data->Closure_Attachments }}
-                            @else
-                                Not Applicable
-                            @endif
-                        </td>
-                    </tr>
+                        <tr>
+                            <th class="w-20">Closure Attachments</th>
+                            <td class="w-80">
+                                @if ($data->Closure_Attachments)
+                                    {{ str_replace(',', ', ', $data->Closure_Attachments) }}
+                                @else
+                                    Not Applicable
+                                @endif
+                            </td>
+                        </tr>
 
-                </table>
+                    </table>
             </div>
 
 

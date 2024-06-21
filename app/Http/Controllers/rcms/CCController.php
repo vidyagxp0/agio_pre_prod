@@ -233,6 +233,22 @@ class CCController extends Controller
         $Cft->RA_by = $request->RA_by;
         $Cft->RA_on = $request->RA_on;
 
+        $Cft->Production_Table_Review = $request->Production_Table_Review;
+        $Cft->Production_Table_Person = $request->Production_Table_Person;
+        $Cft->Production_Table_Assessment = $request->Production_Table_Assessment;
+        $Cft->Production_Table_Feedback = $request->Production_Table_Feedback;
+        $Cft->Production_Table_Attachment = $request->Production_Table_Attachment;
+        $Cft->Production_Table_By = $request->Production_Table_By;
+        $Cft->Production_Table_On = $request->Production_Table_On;
+
+        $Cft->Production_Injection_Review = $request->Production_Injection_Review;
+        $Cft->Production_Injection_Person = $request->Production_Injection_Person;
+        $Cft->Production_Injection_Assessment = $request->Production_Injection_Assessment;
+        $Cft->Production_Injection_Feedback = $request->Production_Injection_Feedback;
+        $Cft->Production_Injection_Attachment = $request->Production_Injection_Attachment;
+        $Cft->Production_Injection_By = $request->Production_Injection_By;
+        $Cft->Production_Injection_On = $request->Production_Injection_On;
+
         $Cft->Warehouse_review = $request->Warehouse_review;
         $Cft->Warehouse_notification = $request->Warehouse_notification;
         $Cft->Warehouse_assessment = $request->Warehouse_assessment;
@@ -1052,22 +1068,22 @@ class CCController extends Controller
             $history->save();
         }
 
-        if(!empty($request->supervisor_comment)){    
-            $history = new RcmDocHistory;
-            $history->cc_id = $openState->id;
-            $history->activity_type = 'Supervisor Comments';
-            $history->previous = "Null";
-            $history->current = $openState->supervisor_comment;
-            $history->comment = "Not Applicable";
-            $history->user_id = Auth::user()->id;
-            $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state = $openState->status;
-            $history->change_to =   "Opened";
-                $history->change_from = "Initiator";
-                $history->action_name = 'Create';
-            $history->save();
-        }
+        // if(!empty($request->supervisor_comment)){    
+        //     $history = new RcmDocHistory;
+        //     $history->cc_id = $openState->id;
+        //     $history->activity_type = 'Supervisor Comments';
+        //     $history->previous = "Null";
+        //     $history->current = $openState->supervisor_comment;
+        //     $history->comment = "Not Applicable";
+        //     $history->user_id = Auth::user()->id;
+        //     $history->user_name = Auth::user()->name;
+        //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        //     $history->origin_state = $openState->status;
+        //     $history->change_to =   "Opened";
+        //         $history->change_from = "Initiator";
+        //         $history->action_name = 'Create';
+        //     $history->save();
+        // }
 
         if(!empty($request->type_chnage)){    
             $history = new RcmDocHistory;
@@ -1853,7 +1869,10 @@ class CCController extends Controller
         $openState->risk_assessment_required = $request->risk_assessment_required;
         $openState->short_description = $request->short_description;
         $openState->assign_to = $request->assign_to;
-        $openState->due_date = $request->due_date;
+        // if($openState->stage == 3){
+            $openState->due_date = $request->due_date;
+        //     dd($request->due_date);
+        // }
         $openState->doc_change = $request->naturechange;
         $openState->hod_person = $request->hod_person;
         $openState->If_Others = $request->others;
@@ -1948,6 +1967,19 @@ class CCController extends Controller
             }
             $openState->HOD_attachment = json_encode($files);
         }
+
+        if (!empty($request->risk_assessment_atch)) {
+            $files = [];
+            if ($request->hasfile('risk_assessment_atch')) {
+                foreach ($request->file('risk_assessment_atch') as $file) {
+                    $name = "CC" . '-risk_assessment_atch' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $file->move('upload/', $name);
+                    $files[] = $name;
+                }
+            }
+            $openState->risk_assessment_atch = json_encode($files);
+        }
+
         $openState->update();
 
         if ($request->risk_assessment_related_record) {
@@ -1982,6 +2014,12 @@ class CCController extends Controller
                 $Cft->RA_Review = $request->RA_Review == null ? $Cft->RA_Review : $request->RA_Review;
                 $Cft->RA_person = $request->RA_person == null ? $Cft->RA_person : $request->RA_person;
 
+                $Cft->Production_Injection_Person = $request->Production_Injection_Person == null ? $Cft->RA_Review : $request->Production_Injection_Person;
+                $Cft->Production_Injection_Review = $request->Production_Injection_Review == null ? $Cft->RA_person : $request->Production_Injection_Review;
+
+                $Cft->Production_Table_Person = $request->Production_Table_Person == null ? $Cft->RA_Review : $request->Production_Table_Person;
+                $Cft->Production_Table_Review = $request->Production_Table_Review == null ? $Cft->RA_person : $request->Production_Table_Review;
+
                 $Cft->Warehouse_review = $request->Warehouse_review == null ? $Cft->Warehouse_review : $request->Warehouse_review;
                 $Cft->Warehouse_notification = $request->Warehouse_notification == null ? $Cft->Warehouse_notification : $request->Warehouse_notification;
                 $Cft->Quality_review = $request->Quality_review == null ? $Cft->Quality_review : $request->Quality_review;;
@@ -2028,6 +2066,12 @@ class CCController extends Controller
                 $Cft->RA_Review = $request->RA_Review;
                 $Cft->RA_person = $request->RA_person;
 
+                $Cft->Production_Table_Review = $request->Production_Table_Review;
+                $Cft->Production_Table_Person = $request->Production_Table_Person;
+
+                $Cft->Production_Injection_Review = $request->Production_Injection_Review;
+                $Cft->Production_Injection_Person = $request->Production_Injection_Person;
+
                 $Cft->Warehouse_review = $request->Warehouse_review;
                 $Cft->Warehouse_notification = $request->Warehouse_notification;
                 $Cft->Quality_review = $request->Quality_review;
@@ -2071,6 +2115,12 @@ class CCController extends Controller
 
             $Cft->RA_assessment = $request->RA_assessment;
             $Cft->RA_feedback = $request->RA_feedback;
+
+            $Cft->Production_Injection_Assessment = $request->Production_Injection_Assessment;
+            $Cft->Production_Injection_Feedback = $request->Production_Injection_Feedback;
+
+            $Cft->Production_Table_Assessment = $request->Production_Table_Assessment;
+            $Cft->Production_Table_Feedback = $request->Production_Table_Feedback;
 
             $Cft->Warehouse_assessment = $request->Warehouse_assessment;
             $Cft->Warehouse_feedback = $request->Warehouse_feedback;
@@ -2339,6 +2389,12 @@ class CCController extends Controller
                 $Cft->RA_Review = $request->RA_Review == null ? $Cft->RA_Review : $request->RA_Review;
                 $Cft->RA_Review = $request->RA_Review == null ? $Cft->RA_Review : $request->RA_Review;
 
+                $Cft->Production_Injection_Person = $request->Production_Injection_Person == null ? $Cft->RA_Review : $request->Production_Injection_Person;
+                $Cft->Production_Injection_Review = $request->Production_Injection_Review == null ? $Cft->RA_person : $request->Production_Injection_Review;
+
+                $Cft->Production_Table_Person = $request->Production_Table_Person == null ? $Cft->RA_Review : $request->Production_Table_Person;
+                $Cft->Production_Table_Review = $request->Production_Table_Review == null ? $Cft->RA_person : $request->Production_Table_Review;
+
                 $Cft->Warehouse_review = $request->Warehouse_review == null ? $Cft->Warehouse_review : $request->Warehouse_review;
                 $Cft->Warehouse_notification = $request->Warehouse_notification == null ? $Cft->Warehouse_notification : $request->Warehouse_notification;
                 $Cft->Quality_review = $request->Quality_review == null ? $Cft->Quality_review : $request->Quality_review;;
@@ -2383,6 +2439,13 @@ class CCController extends Controller
                 $Cft->Production_person = $request->Production_person;
                 $Cft->RA_Review = $request->RA_Review;
                 $Cft->RA_person = $request->RA_person;
+
+                $Cft->Production_Table_Review = $request->Production_Table_Review;
+                $Cft->Production_Table_Person = $request->Production_Table_Person;
+
+                $Cft->Production_Injection_Review = $request->Production_Injection_Review;
+                $Cft->Production_Injection_Person = $request->Production_Injection_Person;
+
                 $Cft->Warehouse_review = $request->Warehouse_review;
                 $Cft->Warehouse_notification = $request->Warehouse_notification;
                 $Cft->Quality_review = $request->Quality_review;
@@ -2425,6 +2488,12 @@ class CCController extends Controller
             $Cft->Production_feedback = $request->Production_feedback;
             $Cft->RA_assessment = $request->RA_assessment;
             $Cft->RA_feedback = $request->RA_feedback;
+
+            $Cft->Production_Injection_Assessment = $request->Production_Injection_Assessment;
+            $Cft->Production_Injection_Feedback = $request->Production_Injection_Feedback;
+
+            $Cft->Production_Table_Assessment = $request->Production_Table_Assessment;
+            $Cft->Production_Table_Feedback = $request->Production_Table_Feedback;
 
             $Cft->Warehouse_assessment = $request->Warehouse_assessment;
             $Cft->Warehouse_feedback = $request->Warehouse_feedback;
@@ -2691,6 +2760,13 @@ class CCController extends Controller
                 $Cft->Production_person = $request->Production_person == null ? $Cft->Production_person : $request->Production_Review;
                 $Cft->RA_Review = $request->RA_Review == null ? $Cft->RA_Review : $request->RA_Review;
                 $Cft->RA_Review = $request->RA_Review == null ? $Cft->RA_Review : $request->RA_Review;
+
+                $Cft->Production_Injection_Person = $request->Production_Injection_Person == null ? $Cft->RA_Review : $request->Production_Injection_Person;
+                $Cft->Production_Injection_Review = $request->Production_Injection_Review == null ? $Cft->RA_person : $request->Production_Injection_Review;
+
+                $Cft->Production_Table_Person = $request->Production_Table_Person == null ? $Cft->RA_Review : $request->Production_Table_Person;
+                $Cft->Production_Table_Review = $request->Production_Table_Review == null ? $Cft->RA_person : $request->Production_Table_Review;
+
                 $Cft->Warehouse_review = $request->Warehouse_review == null ? $Cft->Warehouse_review : $request->Warehouse_review;
                 $Cft->Warehouse_notification = $request->Warehouse_notification == null ? $Cft->Warehouse_notification : $request->Warehouse_notification;
                 $Cft->Quality_review = $request->Quality_review == null ? $Cft->Quality_review : $request->Quality_review;;
@@ -2735,6 +2811,12 @@ class CCController extends Controller
                 $Cft->Production_person = $request->Production_person;
                 $Cft->Production_Review = $request->Production_Review;
                 $Cft->Production_person = $request->Production_person;
+                $Cft->Production_Table_Review = $request->Production_Table_Review;
+                $Cft->Production_Table_Person = $request->Production_Table_Person;
+
+                $Cft->Production_Injection_Review = $request->Production_Injection_Review;
+                $Cft->Production_Injection_Person = $request->Production_Injection_Person;
+
                 $Cft->Warehouse_review = $request->Warehouse_review;
                 $Cft->Warehouse_notification = $request->Warehouse_notification;
                 $Cft->Quality_review = $request->Quality_review;
@@ -2777,6 +2859,13 @@ class CCController extends Controller
             $Cft->Production_feedback = $request->Production_feedback;
             $Cft->RA_assessment = $request->RA_assessment;
             $Cft->RA_feedback = $request->RA_feedback;
+
+            $Cft->Production_Injection_Assessment = $request->Production_Injection_Assessment;
+            $Cft->Production_Injection_Feedback = $request->Production_Injection_Feedback;
+
+            $Cft->Production_Table_Assessment = $request->Production_Table_Assessment;
+            $Cft->Production_Table_Feedback = $request->Production_Table_Feedback;
+
             $Cft->Warehouse_assessment = $request->Warehouse_assessment;
             $Cft->Warehouse_feedback = $request->Warehouse_feedback;
             $Cft->Quality_Control_assessment = $request->Quality_Control_assessment;
@@ -3201,6 +3290,18 @@ class CCController extends Controller
         $assessment->RPN = $request->RPN;
         $assessment->risk_evaluation = $request->risk_evaluation;
         $assessment->migration_action = $request->migration_action;
+
+        if (!empty($request->risk_assessment_atch)) {
+            $files = [];
+            if ($request->hasfile('risk_assessment_atch')) {
+                foreach ($request->file('risk_assessment_atch') as $file) {
+                    $name = "CC" . '-risk_assessment_atch' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $file->move('upload/', $name);
+                    $files[] = $name;
+                }
+            }
+            $assessment->risk_assessment_atch = json_encode($files);
+        }
         $assessment->update();
 
         $lastapprocomments = QaApprovalComments::where('cc_id', $id)->first();
@@ -3495,22 +3596,22 @@ class CCController extends Controller
             $history->save();
         }
 
-        if ($lastDocument->supervisor_comment != $openState->other_comment ) {
-            $history = new RcmDocHistory;
-            $history->cc_id = $id;
-            $history->activity_type = 'Supervisor Comments';
-            $history->previous = $lastDocument->supervisor_comment;
-            $history->current = $openState->supervisor_comment;
-            $history->comment = $request->supervisor_comment_comment;
-            $history->user_id = Auth::user()->id;
-            $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state = $lastDocument->status;
-            $history->change_to =   "Not Applicable";
-            $history->change_from = $lastDocument->status;
-            $history->action_name = 'Update';
-            $history->save();
-        }
+        // if ($lastDocument->supervisor_comment != $openState->other_comment ) {
+        //     $history = new RcmDocHistory;
+        //     $history->cc_id = $id;
+        //     $history->activity_type = 'Supervisor Comments';
+        //     $history->previous = $lastDocument->supervisor_comment;
+        //     $history->current = $openState->supervisor_comment;
+        //     $history->comment = $request->supervisor_comment_comment;
+        //     $history->user_id = Auth::user()->id;
+        //     $history->user_name = Auth::user()->name;
+        //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        //     $history->origin_state = $lastDocument->status;
+        //     $history->change_to =   "Not Applicable";
+        //     $history->change_from = $lastDocument->status;
+        //     $history->action_name = 'Update';
+        //     $history->save();
+        // }
         if ($lastDocument->type_chnage != $openState->type_chnag) {
             $history = new RcmDocHistory;
             $history->cc_id = $id;
@@ -4266,7 +4367,7 @@ class CCController extends Controller
                     $history->cc_id = $id;
                     $history->activity_type = 'Activity Log';
                     $history->previous = "";
-                    $history->action='Submit';
+                    $history->action='HOD Review Complete';
                     $history->current = $changeControl->submit_by;
                     $history->comment = $request->comments;
                     $history->user_id = Auth::user()->id;
@@ -4328,7 +4429,7 @@ class CCController extends Controller
                     $history->cc_id = $id;
                     $history->activity_type = 'Activity Log';
                     $history->previous = "";
-                    $history->action='Submit';
+                    $history->action=' QA Initial Review Complete';
                     $history->current = $changeControl->submit_by;
                     $history->comment = $request->comments;
                     $history->user_id = Auth::user()->id;
@@ -4389,7 +4490,7 @@ class CCController extends Controller
                     $history->cc_id = $id;
                     $history->activity_type = 'Activity Log';
                     $history->previous = "";
-                    $history->action='Submit';
+                    $history->action='RA Review Complete';
                     $history->current = $changeControl->submit_by;
                     $history->comment = $request->comments;
                     $history->user_id = Auth::user()->id;
@@ -4451,7 +4552,7 @@ class CCController extends Controller
                     $history->cc_id = $id;
                     $history->activity_type = 'Activity Log';
                     $history->previous = "";
-                    $history->action='Submit';
+                    $history->action='CFT Review Complete';
                     $history->current = $changeControl->submit_by;
                     $history->comment = $request->comments;
                     $history->user_id = Auth::user()->id;
@@ -4504,7 +4605,7 @@ class CCController extends Controller
             }
             if ($changeControl->stage == 6) {
                 $changeControl->stage = "7";
-                $changeControl->status = "QA Head/Manager Designee Pre-Approval";
+                $changeControl->status = "QA Final Review Complete";
                 $changeControl->QA_final_review_by = Auth::user()->name;
                 $changeControl->QA_final_review_on = Carbon::now()->format('d-M-Y');
                 $changeControl->QA_final_review_comment = $request->comments;

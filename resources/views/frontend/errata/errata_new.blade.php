@@ -237,9 +237,8 @@
                                             id="">
                                             {{-- <option value="">--Select---</option> --}}
                                             @foreach ($old_record as $new)
-                                                <option value="{{ $new->id }}">
+                                                <option value=" {{ Helpers::getDivisionName($new->division_id) }}/ERRATA/{{ date('Y') }}/{{ str_pad($new->id, 4, '0', STR_PAD_LEFT) }} ">
                                                     {{ Helpers::getDivisionName($new->division_id) }}/ERRATA/{{ date('Y') }}/{{ str_pad($new->id, 4, '0', STR_PAD_LEFT) }}
-                                                    {{-- {{ Helpers::recordFormat($new->record) }} --}}
                                                 </option>
                                             @endforeach
                                             {{-- <option

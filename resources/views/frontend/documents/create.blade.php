@@ -172,7 +172,7 @@
                                     <p id="short_descError" style="color:red">**Short description is required</p>
 
                                 </div>
-                                <div class="col-md-12">
+                                {{-- <div class="col-md-12">
                                     <div class="group-input">
                                         <label for="sop_type">SOP Type<span class="text-danger">*</span></label>
                                         <select name="sop_type">
@@ -182,13 +182,11 @@
                                             <option>Analytical SOP</option>
                                             <option> Microbiology SOP</option>
                                             <option>Quality Policies</option>
-                                            {{-- <option>Wet Chemistry</option> --}}
                                             <option>Others</option>
                                         </select>
-                                        {{-- <p id="sop_typeError" style="color:red">**SOP type is required</p> --}}
                                     </div>
 
-                                </div>
+                                </div> --}}
 
                                 <div class="col-md-4 new-date-data-field">
                                     <div class="group-input input-date">
@@ -543,11 +541,10 @@
                             </div>
                             <div class="row">
 
-                                <div class="col-md-6">
+                                {{-- <div class="col-md-6">
 
                                     <div class="group-input">
                                         <label for="reviewers-group">Reviewers Group</label>
-                                        {{--  <select class="form-control"  name="reviewers_group" required/>  --}}
                                         <select id="choices-multiple-remove-button" name="reviewers_group[]"
                                             placeholder="Select Reviewers" class="is-hidden" aria-hidden="true" multiple>
 
@@ -560,11 +557,10 @@
                                             @endif
                                         </select>
                                     </div>
-                                </div>
-                                <div class="col-md-6">
+                                </div> --}}
+                                {{-- <div class="col-md-6">
                                     <div class="group-input">
                                         <label for="approvers-group">Approvers Group</label>
-                                        {{--  <select class="form-control"   name="approver_group"/>  --}}
 
                                         <select id="choices-multiple-remove-button" name="approver_group[]"
                                             placeholder="Select Approvers" multiple>
@@ -577,7 +573,7 @@
                                             @endif
                                         </select>
                                     </div>
-                                </div>
+                                </div> --}}
                                 <div class="col-12">
                                     <div class="group-input">
                                         <label  for="revision-type">Revision Type</label>

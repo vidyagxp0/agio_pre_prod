@@ -257,7 +257,7 @@
             <div class="modal-header">
                 <h4 class="modal-title">Child</h4>
             </div>
-            <form action="{{ route('oos.capa_child_changecontrol', $data->id) }}" method="POST">
+            <form action="{{ route('oos.capa') }}" method="GET">
                 @csrf
                 <!-- Modal body -->
                 <div class="modal-body">

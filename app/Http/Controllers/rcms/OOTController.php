@@ -98,11 +98,13 @@ class OOTController extends Controller
         $data->others                 = $request->others;
         $data->reference_record       = $request->reference_record;
 
-        if (is_array($request->stability_for)) {
+        // if (is_array($request->stability_for)) {
+        //     $data->stability_for = implode(',', $request->stability_for);
+        // }
+
+        if ($request->stability_for) {
             $data->stability_for = implode(',', $request->stability_for);
-        }
-    
-        
+        } 
     
         $data-> specification_procedure_number    = $request->specification_procedure_number;
         $data-> specification_limit               = $request->specification_limit;
@@ -794,9 +796,12 @@ class OOTController extends Controller
         $data->others                = $request->others;
         $data->reference_record      = $request->reference_record;
         
-        if (is_array($request->stability_for )) {
+        // if (is_array($request->stability_for )) {
+        //     $data->stability_for = implode(',', $request->stability_for);
+        // }
+        if ($request->stability_for) {
             $data->stability_for = implode(',', $request->stability_for);
-        }
+        } 
         $data->specification_procedure_number = $request->specification_procedure_number;
         $data->specification_limit = $request->specification_limit;
         if (!empty($request->Attachment) && $request->file('Attachment')) {
@@ -833,9 +838,9 @@ class OOTController extends Controller
         $data->sta_bat_analyst_name                  = $request->sta_bat_analyst_name;
         $data->qa_head_designee                      = $request->qa_head_designee;
         
-        $data->action_taken_result                = $request->action_taken_result;
-        $data->retraining_to_analyst_required     = $request->retraining_to_analyst_required;
-        $data->cheklist_part_b_remarks            = $request->cheklist_part_b_remarks;
+        $data->action_taken_result                   = $request->action_taken_result;
+        $data->retraining_to_analyst_required        = $request->retraining_to_analyst_required;
+        $data->cheklist_part_b_remarks               = $request->cheklist_part_b_remarks;
         $data->analysis_on_same_sample	          = $request->analysis_on_same_sample;
         $data->any_other_action                   = $request->any_other_action;
         $data->re_analysis_result                 = $request->re_analysis_result;
@@ -1004,6 +1009,7 @@ class OOTController extends Controller
          $checkList->l_e_i_oot              = $request->l_e_i_oot;
          $checkList->elaborate_the_reson    = $request->elaborate_the_reson;
          $checkList->in_charge              = $request->in_charge;
+         
          $checkList->pli_head_designee      = $request->pli_head_designee;
          
          $checkList->data                        = $request->data;
@@ -1434,7 +1440,7 @@ class OOTController extends Controller
 
     public function singleReport(Request $request, $id){
         $data = Ootc::find($id);
-       $grid_product_mat = ProductGridOot::where(['ootcs_id' => $id, 'identifier' => 'product_materiel'])->first();
+        $grid_product_mat = ProductGridOot::where(['ootcs_id' => $id, 'identifier' => 'product_materiel'])->first();
     //    dd($grid_product_mat);
        $gridStability = ProductGridOot::where(['ootcs_id' => $id, 'identifier' => 'details_of_stability'])->first();
        $GridOotRes = ProductGridOot::where(['ootcs_id' => $id, 'identifier' => 'oot_result'])->first();
@@ -1529,7 +1535,7 @@ class OOTController extends Controller
                             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                             $history->origin_state = $lastDocument->status;
                             $history->stage = "Preliminary Lab Investigation";
-                            $history->action = "Submit";
+                            $history->action = "Preliminary Lab Investigation";
                             $history->change_to = "Pending preliminary lab investigation";
                              $history->change_from = $lastDocument->status;
                              $history->action_name = $lastDocument->status;
@@ -1572,7 +1578,7 @@ class OOTController extends Controller
                             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                             $history->origin_state = $lastDocument->status;
                             $history->stage = "Lab Error Identified";
-                            $history->action = "Submit";
+                            $history->action = "Lab Error Identified ";
                                 $history->change_to = "Pending Capa";
                                 $history->change_from = $lastDocument->status;
                                 $history->action_name = $lastDocument->status;
@@ -1616,7 +1622,7 @@ class OOTController extends Controller
                             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                             $history->origin_state = $lastDocument->status;
                             $history->stage = "Correction Complete";
-                            $history->action = "Submit";
+                            $history->action = "Correction Complete";
                                 $history->change_to = "Pending Final Approval";
                                 $history->change_from = $lastDocument->status;
                                 $history->action_name = $lastDocument->status;
@@ -1827,6 +1833,7 @@ class OOTController extends Controller
                                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                                 $history->origin_state = $lastDocument->status;
                                 $history->stage = "Lab Error Not Idenfied";
+                                $history->action = "Lab Error Not  Identified ";
                                 $history->save();
                             //     $list = Helpers::getLeadAuditeeUserList();
                             //     foreach ($list as $u) {

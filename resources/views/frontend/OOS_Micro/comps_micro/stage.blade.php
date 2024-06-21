@@ -20,7 +20,7 @@
             @php
             $userRoles = DB::table('user_roles')->where(['user_id' => Auth::user()->id, 'q_m_s_divisions_id' => $micro_data->division_id])->get();
             $userRoleIds = $userRoles->pluck('q_m_s_roles_id')->toArray();
-            // dd($userRoleIds);
+             // dd($userRoleIds);
             @endphp
             <button class="button_theme1"> <a class="text-white" href="{{ route('audit_trial', $micro_data->id) }}"> Audit Trail </a> </button>
 

@@ -632,7 +632,7 @@
                         @elseif(
                             $data->stage == 4 &&
                                 (in_array(5, $userRoleIds) || in_array(18, $userRoleIds) || in_array(Auth::user()->id, $valuesArray)))
-                            @if (!$cftCompleteUser)
+                            <!-- @if (!$cftCompleteUser) -->
                                 <button class="button_theme1" data-bs-toggle="modal"
                                     data-bs-target="#more-info-required-modal">
                                     More Info Required
@@ -640,7 +640,7 @@
                                 <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                     CFT Review Complete
                                 </button>
-                            @endif
+                            <!-- @endif -->
                         @elseif($data->stage == 5 && (in_array(7, $userRoleIds) || in_array(18, $userRoleIds)))
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#sendToInitiator">
                                 Send to Initiator

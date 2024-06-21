@@ -29,9 +29,6 @@ return new class extends Migration
             $table->text('Preventive_action_Taken')->nullable();
             $table->text('CAPA_Closure_Comments')->nullable();
             $table->text('CAPA_Closure_attachment')->nullable();
-
-
-            
         });
     }
 

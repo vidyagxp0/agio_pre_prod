@@ -71,7 +71,6 @@
         <div class="container-fluid">
             <div class="dashboard-container">
 
-
                 <div class="inner-block main-block">
                     <div class="top">
                         <div class="d-flex align-items-center">
@@ -311,7 +310,8 @@
                             <thead>
                                 <tr>
                                     <th>Name</th>
-                                    <th>Department & Location</th>
+                                    <th>Department</th>
+                                    <th>Location</th>
                                     <th>Start Date of Training</th>
                                     <th>End Date of Training</th>
 
@@ -319,15 +319,16 @@
                                 </tr>
                             </thead>
                             <tbody>
-
-
-
                                 @foreach ($jobTrainings as $job_training)
                                 <tr>
-                                    <td>{{ $job_training->name }}</td>
-                                    <td>{{ $job_training->department_location }}</td>
-                                    <td>{{ Helpers::getdateFormat($job_training->startdate) }}</td>
-                                    <td>{{ Helpers::getdateFormat($job_training->enddate )}}</td>
+                                    <td>{{ DB::table('employees')->where('id', $job_training->name)->value('employee_name') }}</td>
+                                    <td>{{ DB::table('departments')->where('id', $job_training->department)->value('name') }}</td>
+                                    <td>{{ $job_training->location}}</td>
+                                    @for ($i = 1; $i <= 1; $i++)
+                                        <td>{{ ($job_training->{"startdate_$i"}) }}</td>
+                                        <td>{{ ($job_training->{"enddate_$i"}) }}</td>
+                                    @endfor
+                                    
                                     <td>
                                         <a href="{{ route('job_training_view', $job_training->id) }}">
                                         <i class="fa-solid fa-pencil"></i>

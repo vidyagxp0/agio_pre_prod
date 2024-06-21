@@ -176,7 +176,7 @@
                     <strong>Observation No.</strong>
                 </td>
                 <td class="w-40">
-                    {{ Helpers::divisionNameForQMS($data->division_code) }}/{{ Helpers::year($data->created_at) }}/{{ $data->record ? str_pad($data->record, 4, '0', STR_PAD_LEFT) : '' }}
+                    {{ Helpers::getDivisionName(session()->get('division')) }}/OBS/{{ Helpers::year($data->created_at) }}/{{ $data->record ? str_pad($data->record, 4, '0', STR_PAD_LEFT) : '' }}
                 </td>
                 <td class="w-30">
                     <strong>Record No.</strong> {{ str_pad($data->record, 4, '0', STR_PAD_LEFT) }}
@@ -213,7 +213,7 @@
                         <th class="w-20">Record Number</th>
                         <td class="w-30">
                             @if ($data->record)
-                                {{ str_pad($data->record, 4, '0', STR_PAD_LEFT) }}
+                            {{ Helpers::getDivisionName(session()->get('division')) }}/OBS/{{ Helpers::year($data->created_at) }}/{{ $data->record ? str_pad($data->record, 4, '0', STR_PAD_LEFT) : '' }}
                             @else
                                 Not Applicable
                             @endif
@@ -262,7 +262,7 @@
                     <td class="w-80">{{ $data->short_description }}</td>
 
                     <th class="w-20">Attached Files</th>
-                    <td class="w-80">{{ $data->attach_files1 }}</td>
+                    <td class="w-80">{{ str_replace(',', ', ', $data->attach_files_gi) }}</td>
 
                 </tr>
                 <tr>
@@ -288,7 +288,7 @@
 
                 <h5>Recommended Action</h5>
                 <div style="font-size: 12px;">
-                    {{ $data->recommend_action }}
+                    {{ str_replace(',', ', ', $data->recommend_action) }}
                 </div>
 
                     {{-- <th class="w-20">Recommended Action</th>
@@ -579,7 +579,7 @@
                 <th class="w-20">Attached Files</th>
                 <td class="w-80">
                     @if ($data->attach_files2)
-                        {{ $data->attach_files2 }}
+                        {{ str_replace(',', ', ', $data->attach_files2) }}
                     @else
                         Not Applicable
                     @endif

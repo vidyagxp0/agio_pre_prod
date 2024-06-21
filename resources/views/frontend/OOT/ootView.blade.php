@@ -710,10 +710,21 @@
                                     <label for="Reference Recores">Stability For </label>
                                     <select multiple id="stability_for" name="stability_for[]">
 
-                                        <option value="submission" @if ($data->stability_for == 'submission') selected @endif>Submission     </option>
-                                        <option value="commercial" @if ($data->stability_for == 'commercial') selected @endif>Commercial    </option>
-                                        <option value="pack_evalution" @if ($data->stability_for == 'pack_evalution') selected @endif>Pack  evalution </option>
-                                        <option value="n_a"           @if ($data->stability_for == 'n_a') selected @endif>Not Applicable    </option>
+                                        <option  value="submission"
+                                                    {{ strpos($data->stability_for, 'submission') !== false ? 'selected' : '' }}>
+                                                    Submission</option>
+
+                                        <option  value="commercial"
+                                                        {{ strpos($data->stability_for, 'commercial') !== false ? 'selected' : '' }}>
+                                                        Commercial</option>
+
+                                         <option  value="pack_evalution"
+                                                            {{ strpos($data->stability_for, 'pack_evalution') !== false ? 'selected' : '' }}>
+                                                            Pack Evalution</option>
+
+                                         <option  value="n_a"
+                                                                {{ strpos($data->stability_for, 'n_a') !== false ? 'selected' : '' }}>
+                                                                Not Applicable</option>
                                     </select>
                                 </div>
                             </div>
@@ -2352,7 +2363,7 @@
                                                     @foreach ($checkList->data as $gridData)
                                                         <tr>
 
-                                                            <td class="flex text-center">{{ $loop->index + 35 }}</td>
+                                                            <td class="flex text-center">{{ $loop->index + 34 }}</td>
                                                             <td>
                                                                 <input type="text" class="numberDetail"
                                                                     name="data[{{ $loop->index }}][questions]"
@@ -2397,12 +2408,6 @@
                                                             </td>
                                                         </tr>
                                                     @endforeach
-                                                @else
-                                                    {{-- <td>{{ $loop->index + 34 }}</td> --}}
-                                                    <td><input type="text" name="data[0][questions]"></td>
-                                                    <td><input type="text" name="data[0][response]"></td>
-                                                    <td><input type="text" name="data[0][remarks]"></td>
-                                                    <td><input type="text" class="Action" name=""></td>
                                                 @endif
 
 
@@ -2417,10 +2422,9 @@
                                         Result(s)<span class="text-danger"></span></label>
                                     <select name="l_e_i_oot">
                                         <option>Enter Your Selection Here</option>
-                                        <option value="no"@if ($checkList->l_e_i_oot == 'no') selected @endif>No
-                                        </option>
-                                        <option value="n/a"@if ($checkList->l_e_i_oot == 'n/a') selected @endif>N/A
-                                        </option>
+                                        <option value="yes"@if ($checkList->l_e_i_oot == 'yes') selected @endif>Yes   </option>
+                                        <option value="no"@if ($checkList->l_e_i_oot == 'no') selected @endif>No    </option>
+                                        <option value="n/a"@if ($checkList->l_e_i_oot == 'n/a') selected @endif>N/A    </option>
                                     </select>
                                 </div>
                             </div>
@@ -2434,12 +2438,10 @@
                             <div class="col-lg-6">
                                 <div class="group-input">
                                     <label for="search"> LabIn-Charge <span class="text-danger"></span> </label>
-
-
-                                    <select id="select-state" placeholder="Select..." name="in_charge">
-                                        <option value="">Select a value</option>
+                                    <select id="select-state" placeholder="" name="in_charge">
+                                        {{-- <option value="">Select a value</option> --}}
                                         @foreach ($users as $key => $value)
-                                            <option @if ($data->in_charge == $value->id) selected @endif   value="{{ $value->id }}">{{ $value->name }}</option>
+                                            <option @if ($data->in_charge == $value->id) selected @endif value="{{ $value->id }}">{{ $value->name }}</option>
                                         @endforeach
                                     </select>
                                 </div>
@@ -2456,7 +2458,7 @@
                                         </option>
                                     </select> --}}
                                     <select id="select-state" placeholder="Select..." name="pli_head_designee">
-                                        <option value="">Select a value</option>
+                                        {{-- <option value="">Select a value</option> --}}
                                         @foreach ($users as $key => $value)
                                             <option @if ($data->pli_head_designee == $value->id) selected @endif
                                                 value="{{ $value->id }}">{{ $value->name }}</option>
@@ -2517,7 +2519,7 @@
                                     <label>Correct the Error and Repeat the analysis on same sample<span
                                             class="text-danger"></span></label>
                                     <select name="analysis_on_same_sample">
-                                        <option>---select---</option>
+                                        <option value="0">---select---</option>
                                         <option value="yes" @if ($data->analysis_on_same_sample == 'yes') selected @endif>Yes
                                         </option>
                                         <option value="no" @if ($data->analysis_on_same_sample == 'no') selected @endif>No
@@ -2542,7 +2544,7 @@
                                 <div class="group-input">
                                     <label>Is the Reanalysis results OOT <span class="text-danger"></span></label>
                                     <select name="reanalysis_result_oot">
-                                        <option>---select---</option>
+                                        <option value="0">---select---</option>
                                         <option value="yes" @if ($data->reanalysis_result_oot == 'yes') selected @endif>Yes
                                         </option>
                                         <option value="no" @if ($data->reanalysis_result_oot == 'no') selected @endif>No
@@ -2695,7 +2697,10 @@
                             <div class="col-md-6 ">
                                 <div class="group-input ">
                                     <label for="Last_due-date">Last Due Date <span class="text-danger"></span></label>
-                                    <input type="date" name="last_due_date" value="{{ $data->last_due_date }}">
+                                <input type="date" id="date" name="last_due_date" value="{{ $data->last_due_date ?? '' }}">
+                                    
+                                    {{-- <input type="date" name="last_due_date" value="{{ $data->last_due_date }}"> --}}
+                                    {{-- <input type="date" name="due_date" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input" hidden oninput="handleDateInput(this, 'due_date')" /> --}}
                                 </div>
                             </div>
                             <div class="col-12">
@@ -2836,8 +2841,7 @@
 
                             <div class="col-lg-3">
                                 <div class="group-input">
-                                    <label for="Plan Proposed By">Pending Preliminary Lab Investigation Submited
-                                        By</label>
+                                    <label for="Plan Proposed By">Pending Preliminary Lab Investigation Submited  By</label>
                                     <input type="hidden"
                                         name="ppli_completed_by"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>
                                     <div class="static">{{ $data->ppli_submited_by }}</div>
@@ -2846,8 +2850,7 @@
 
                             <div class="col-lg-3">
                                 <div class="group-input">
-                                    <label for="Plan Proposed On">Pending Preliminary Lab Investigation Submitted
-                                        On</label>
+                                    <label for="Plan Proposed On">Pending Preliminary Lab Investigation Submitted On</label>
                                     <input type="hidden"
                                         name="ppli_submited_on"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>
                                     <div class="static">{{ $data->ppli_submited_on }}</div>
@@ -2969,8 +2972,6 @@
             <div id="CCForm4" class="inner-block cctabcontent">
                 <div class="inner-block-content">
                     <div class="row">
-
-
                         <div class="col-lg-6">
                             <div class="group-input">
                                 <label>Finaly Validity Check <span class="text-danger"></span></label>
@@ -3032,13 +3033,11 @@
                         <div class="col-lg-12">
                             <div class="group-input">
                                 <label for="closure attachment">Closure Attachment </label>
-                                <div><small class="text-primary">
-                                    </small>
-                                </div>
+                                
                                 <div class="file-attachment-field">
-                                    <div class="file-attachment-list" id="supporting_attechment">
-                                        @if ($data->supporting_attechment)
-                                            @foreach (json_decode($data->supporting_attechment) as $file)
+                                    <div class="file-attachment-list" id="doc_closure">
+                                        @if ($data->doc_closure)
+                                            @foreach (json_decode($data->doc_closure) as $file)
                                                 <h6 class="file-container text-dark"
                                                     style="background-color: rgb(243, 242, 240);">
                                                     <b>{{ $file }}</b>
@@ -3054,8 +3053,8 @@
                                     </div>
                                     <div class="add-btn">
                                         <div>Add</div>
-                                        <input type="file" id="myfile" name="supporting_attechment[]"
-                                            oninput="addMultipleFiles(this, 'supporting_attechment')" multiple>
+                                        <input type="file" id="myfile" name="doc_closure[]"
+                                            oninput="addMultipleFiles(this, 'doc_closure')" multiple>
                                     </div>
                                 </div>
                             </div>
@@ -3115,15 +3114,12 @@
                                         </thead>
                                         <tbody>
                                             <td><input disabled type="text" name="serial[]" value="1"></td>
-
                                             <td><input type="text" name="OOTNo[]"></td>
                                             <td><input type="text" name="OOTReportedDate[]"></td>
                                             <td><input type="text" name="DescriptionOfOOT[]"></td>
                                             <td><input type="text" name="previousIntervalDetails[]"></td>
                                             <td><input type="text" name="CAPA[]"></td>
                                             <td><input type="text" name="ClosureDateOfCAPA[]"></td>
-
-
                                         </tbody>
                                     </table>
                                 </div>
@@ -3177,10 +3173,6 @@
                                     </div>
                                 </div>
                             </div>
-
-
-                            
-
 
 
                         </div>

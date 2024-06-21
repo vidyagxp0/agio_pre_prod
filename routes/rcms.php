@@ -28,8 +28,10 @@ use App\Http\Controllers\RiskManagementController;
 use App\Http\Controllers\rcms\DeviationController;
 use App\Http\Controllers\rcms\LogController;
 use App\Http\Controllers\rcms\OOCController;
+use App\Http\Controllers\tms\TrainerController;
 use App\Models\EffectivenessCheck;
 use Illuminate\Support\Facades\Route;
+
 
 // ============================================
 //                   RCMS
@@ -48,6 +50,10 @@ Route::group(['prefix' => 'rcms'], function () {
 
     Route::middleware(['rcms'])->group(
         function () {
+
+            Route::get('traineraudittrail/{id}', [TrainerController::class, 'AuditTrial'])->name('audittrail');
+            Route::get('auditDetailsTrainer/{id}', [TrainerController::class, 'auditDetailstrainer'])->name('trainerauditDetails');
+
             Route::resource('CC', CCController::class);
 
             Route::post('send-initiator/{id}', [CCController::class, 'sendToInitiator']);
@@ -323,14 +329,14 @@ Route::group(['prefix' => 'rcms'], function () {
                 Route::post('/oosstore', [OOSController::class, 'store'])->name('oosstore');
                 Route::get('oos_view/{id}', [OOSController::class, 'show'])->name('oos_view');
                 Route::post('oosupdate/{id}', [OOSController::class, 'update'])->name('oosupdate');
-    
+
                 Route::post('sendstage/{id}',[OOSController::class,'send_stage'])->name('send_stage');
                 Route::post('requestmoreinfo_back_stage/{id}',[OOSController::class,'requestmoreinfo_back_stage'])->name('requestmoreinfo_back_stage');
                 Route::post('assignable_send_stage/{id}',[OOSController::class,'assignable_send_stage'])->name('assignable_send_stage');
                 Route::post('cancel_stage/{id}', [OOSController::class, 'cancel_stage'])->name('cancel_stage');;
                 Route::post('thirdStage/{id}', [OOSController::class, 'stageChange'])->name('thirdStage');
                 Route::post('reject_stage/{id}', [OOSController::class, 'reject_stage'])->name('reject_stage');
-                Route::post('capa_child/{id}', [CapaController::class, 'child_change_control'])->name('capa_child_changecontrol');
+                Route::get('capa', [CapaController::class, 'capa'])->name('capa');
                 
                 Route::get('AuditTrial/{id}', [OOSController::class, 'AuditTrial'])->name('audit_trial');
                 Route::get('auditDetails/{id}', [OOSController::class, 'auditDetails'])->name('audit_details');

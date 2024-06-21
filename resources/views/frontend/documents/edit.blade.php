@@ -227,7 +227,7 @@
                             @endif
 
                             <div class="col-12">
-                                <div class="group-input">
+                                {{-- <div class="group-input">
                                     <label for="sop_type">SOP Type</label>
                                     <select name="sop_type" {{Helpers::isRevised($document->stage)}} >
                                         <option  value="0">-- Select --</option>
@@ -266,7 +266,7 @@
                                 </div>
                                 @if (Auth::user()->role != 3 && $document->stage < 8)
 
-                                {{-- Add Comment  --}}
+                                <-- Add Comment  -->
                                 <div class="comment">
                                     <div>
                                         <p class="timestamp" style="color: blue">Modify by {{ Auth::user()->name }}
@@ -276,7 +276,7 @@
                                     </div>
                                     <div class="button">Add Comment</div>
                                 </div>
-                            @endif   
+                            @endif    --}}
                             </div>
                             <div class="col-md-4 new-date-data-field">
                                 <div class="group-input input-date">
@@ -1420,7 +1420,7 @@
 
                             </div>
 
-                            <div class="col-md-6">
+                            {{-- <div class="col-md-6">
                                 <div class="group-input">
                                     <label for="reviewers-group">Reviewers Group</label>
                                     <select id="choices-multiple-remove-button" name="reviewers_group[]" {{Helpers::isRevised($document->stage)}} 
@@ -1465,7 +1465,7 @@
                                 </div>
 
                                 @if (Auth::user()->role != 3 && $document->stage < 8)
-                                    {{-- Add Comment  --}}
+                                    <!-- Add Comment  -->
                                     <div class="comment">
                                         <div>
                                             <p class="timestamp" style="color: blue">Modify by {{ Auth::user()->name }}
@@ -1477,9 +1477,9 @@
                                     </div>
                                 @endif
 
-                            </div>
+                            </div> --}}
 
-                            <div class="col-md-6">
+                            {{-- <div class="col-md-6">
                                 <div class="group-input">
                                     <label for="approvers-group">Approvers Group</label>
                                     <select id="choices-multiple-remove-button" name="approver_group[]" {{Helpers::isRevised($document->stage)}} 
@@ -1525,7 +1525,7 @@
 
 
                                 @if (Auth::user()->role != 3 && $document->stage < 8)
-                                    {{-- Add Comment  --}}
+                                    <!-- Add Comment  -->
                                     <div class="comment">
                                         <div>
                                             <p class="timestamp" style="color: blue">Modify by {{ Auth::user()->name }}
@@ -1537,7 +1537,8 @@
                                     </div>
                                 @endif
 
-                            </div>
+                            </div> --}}
+                            
                             <div class="col-12">
                                 <div class="group-input">
                                     <label for="revision-type">Revision Type</label>
