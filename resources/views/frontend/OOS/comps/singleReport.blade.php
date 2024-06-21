@@ -1,10 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Vidyagxp - Software</title>
+    <title>VidyaGxP - Software</title>
     <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
 </head>
 
@@ -155,16 +156,17 @@
 </style>
 
 <body>
-    <div>
-      <header>
+
+    <header>
         <table>
             <tr>
                 <td class="w-70 head">
-                   OOS Cemical Single Report
+                    OOS Chemical Report
                 </td>
                 <td class="w-30">
                     <div class="logo">
-                        <img src="https://navin.mydemosoftware.com/public/user/images/logo.png" alt="" class="w-100">
+                        <img src="https://navin.mydemosoftware.com/public/user/images/logo.png" alt=""
+                            class="w-100">
                     </div>
                 </td>
             </tr>
@@ -172,15 +174,17 @@
         <table>
             <tr>
                 <td class="w-30">
-                    <strong>OOS No.</strong>{{ Helpers::divisionNameForQMS($data->division_id) }}/{{ Helpers::year($data->created_at) }}/{{ $data->record_number ? str_pad($data->record_number, 4, '0', STR_PAD_LEFT) : '' }}
+                    <strong> Deviation No.</strong>
+                </td>
+                <td class="w-40">
+                    {{ Helpers::divisionNameForQMS($data->division_id) }}/{{ Helpers::year($data->created_at) }}/{{ str_pad($data->record, 4, '0', STR_PAD_LEFT) }}
                 </td>
                 <td class="w-30">
-                    <strong>Record No.</strong> {{ str_pad($data->record_number, 4, '0', STR_PAD_LEFT) }}
+                    <strong>Record No.</strong> {{ str_pad($data->record, 4, '0', STR_PAD_LEFT) }}
                 </td>
             </tr>
         </table>
-        </header>
-    </div>
+    </header>
     @php
     $lab_inv_questions = array(
             "Aliquot and standard solutions preserved",
@@ -237,6 +241,7 @@
 @endphp
     <div class="inner-block">
         <div class="content-table">
+            <!-- start block -->
             <div class="block">
                 <div class="block-head"> General Information </div>
                 <table>
@@ -259,27 +264,26 @@
                         <td class="w-30">@if($data->severity_level_gi){{ $data->severity_level_gi }} @else Not Applicable @endif</td>
                     </tr>
                     <tr>
+                        <th class="w-20">Short Description</th>
+                        <td class="w-80">@if($data->description_gi){{ $data->description_gi }}@else Not Applicable @endif</td>
+                    </tr>
+                    <tr>
                         <th class="w-20">Initiator Group</th>
                         <td class="w-30">@if($data->initiator_group){{ $data->initiator_group }} @else Not Applicable @endif</td>
                         <th class="w-20">Initiator Group Code</th>
                         <td class="w-80">{{ $data->initiator_group_code }}</td>
                     </tr>
                     <tr>
-                        <th class="w-20">Short Description</th>
-                        <td class="w-80">@if($data->description_gi){{ $data->description_gi }}@else Not Applicable @endif</td>
-                        <th class="w-20">Assigned To</th>
-                        <td class="w-30">@if($data->assign_to){{ Helpers::getInitiatorName($data->assign_to) }} @else Not Applicable @endif</td>
-                    </tr>
-                   
-                    <tr>
                        <th class="w-20">If Others</th>
                         <td class="w-80">@if($data->if_others_gi){{ $data->if_others_gi }}@else Not Applicable @endif</td>
-                        <th class="w-20">Is Repeat </th>
-                        <td class="w-80">@if($data->is_repeat_gi){{ $data->is_repeat_gi }}@else Not Applicable @endif</td>
                     </tr>
                     <tr>
                         <th class="w-20">Repeat Nature</th>
                         <td class="w-80">@if($data->repeat_nature_gi){{ $data->repeat_nature_gi }}@else Not Applicable @endif</td>
+                    </tr>
+                    <tr>
+                        <th class="w-20">Is Repeat </th>
+                        <td class="w-80">@if($data->is_repeat_gi){{ $data->is_repeat_gi }}@else Not Applicable @endif</td>
                         <th class="w-20">Nature of Change</th>
                         <td class="w-80">@if($data->nature_of_change_gi){{ $data->nature_of_change_gi }}@else Not Applicable @endif</td>
                     </tr>
@@ -331,7 +335,7 @@
                 </table>
             </div>
             <!-- Allgrid -->
-           <!-- Info. On Product/ Material -->
+            <!-- Info. On Product/ Material -->
             <div class="block">
                 <div class="block-head"> Info. On Product/ Material</div>
                 <div class="border-table">
@@ -408,7 +412,7 @@
             </div>
             </div>
             </div>
-        <!--  Details of Stability Study -->
+            <!--  Details of Stability Study -->
             <div class="block">
                 <div class="block-head"> Details of Stability Study</div>
                 <div class="border-table">
@@ -475,8 +479,8 @@
                     </table>
                 </div>
             </div>
-        <!-- OOS Details  -->
-          <div class="block">
+             <!-- OOS Details  -->
+            <div class="block">
                 <div class="block-head"> OOS Details</div>
                 <div class="border-table">
                     <table>
@@ -502,7 +506,7 @@
                             <td class="w-15">{{ $datagridIII['oos_details_obvious_error'] ?  $datagridIII['oos_details_obvious_error']: "Not Applicable"}}</td>
                             <td class="w-15">{{ $datagridIII['oos_submit_by'] ?  $datagridIII['oos_submit_by']: "Not Applicable"}}</td>
                             <td class="w-15">{{ $datagridIII['oos_submit_on'] ?  $datagridIII['oos_submit_on']: "Not Applicable"}}</td>
-                             </tr>
+                        </tr>
                         @endforeach
                         @else
                         <tr>
@@ -522,22 +526,22 @@
 
            <!-- grid close -->
            <!-- Preliminary Lab. Investigation TapII -->
-        </div>
-    </div>
-    <div class="inner-block">
-        <div class="content-table">
-            <div class="block">
+           <div class="block">
                 <div class="block-head"> Preliminary Lab. Investigation TapII </div>
                 <table>
                     <tr>  {{ $data->created_at }} added by {{ $data->originator }}
-                        <th class="w-20">Comments</th>
-                        <td class="w-30">{{ $data->Comments_plidata ? $data->Comments_plidata : 'Not Applicable' }}</td>
-                        <th class="w-20">Justify if no Field Alert</th>
-                        <td class="w-30">{{ $data->justify_if_no_field_alert_pli ? $data->justify_if_no_field_alert_pli : 'Not Applicable' }}</td>
+                        <th class="w-10">Comments</th>
+                        <td class="w-90">{{ $data->Comments_plidata ? $data->Comments_plidata : 'Not Applicable' }}</td>
                     </tr>
-                   <tr>
+                    <tr>  {{ $data->created_at }} added by {{ $data->originator }}
+                        <th class="w-10">Justify if no Field Alert</th>
+                        <td class="w-90">{{ $data->justify_if_no_field_alert_pli ? $data->justify_if_no_field_alert_pli : 'Not Applicable' }}</td>
+                    </tr>
+                    <tr>  
                         <th class="w-20">Justify if no Analyst Int.</th>
                         <td class="w-80">{{ $data->justify_if_no_analyst_int_pli ? $data->justify_if_no_analyst_int_pli : 'Not Applicable' }}</td>
+                    </tr>
+                    <tr>
                         <th class="w-20">Phase I Investigation Required</th>
                         <td class="w-80">{{ $data->phase_i_investigation_required_pli ? $data->phase_i_investigation_required_pli : 'Not Applicable' }}</td>
                   </tr>
@@ -551,8 +555,8 @@
                             @if ($data->file_attachments_pli)
                             @foreach ($data->file_attachments_pli as $key => $file)
                                  <tr>
-                                    <td class="w-20">{{ $key + 1 }}</td>
-                                    <td class="w-80"><a href="{{ asset('upload/' . $file) }}" target="_blank"><b>{{ $file }}</b></a> </td>
+                                    <td>{{ $key + 1 }}</td>
+                                    <td><a href="{{ asset('upload/' . $file) }}" target="_blank"><b>{{ $file }}</b></a> </td>
                                 </tr>
                             @endforeach
                             @else
@@ -564,54 +568,36 @@
                         </table>
                       </div>
                 </table>
-            </div>
-    </div>
-    <div class="inner-block">
-        <div class="content-table">
+           
+   
             <div class="block">
-                <div class="block-head"> CheckList - Preliminary Lab. Investigation </div>
-                <table>
-                 <div class="block-head">PHASE- I B INVESTIGATION REPORT</div>
-                      <div class="border-table">
-                        <table>
-                            <tr class="table_bg">
-                                <th class="w-20">S.N.</th>
-                                <th class="w-20">Question</th>	
-                                <th class="w-80">Response </th>
-                                <th class="w-80">Remarks </th>
-                            </tr>
-                            @if ($checklist_lab_invs)
-                                    @foreach ($lab_inv_questions as $index => $lab_inv_question)
-                                        <tr>
-                                            <td class="flex text-center">{{ $loop->index + 1 }}</td>
-                                            <td><input type="text" readonly name="question[]" value="{{ $lab_inv_question }}">
-                                            </td>
-                                            <td>
-                                                <div style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                    <select name="checklist_lab_inv[{{ $loop->index }}][response]" id="response" style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                        <option value="Yes">Select an Option</option>
-                                                        <option value="Yes" {{ Helpers::getArrayKey($checklist_lab_invs->data[$loop->index], 'response') == 'Yes' ? 'selected' : '' }}>Yes</option>
-                                                        <option value="No" {{ Helpers::getArrayKey($checklist_lab_invs->data[$loop->index], 'response') == 'No' ? 'selected' : '' }}>No</option>
-                                                        <option value="N/A" {{ Helpers::getArrayKey($checklist_lab_invs->data[$loop->index], 'response') == 'N/A' ? 'selected' : '' }}>N/A</option>
-                                                    </select>
-                                                </div>
-                                            </td>
-                                            <td style="vertical-align: middle;">
-                                                <div style="margin: auto; display: flex; justify-content: center;">
-                                                    <textarea name="checklist_lab_inv[{{ $loop->index }}][remark]" style="border-radius: 7px; border: 1.5px solid black;">{{ Helpers::getArrayKey($checklist_lab_invs->data[$loop->index], 'remark') }}</textarea>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                    @endforeach
-                                @endif
-                        </table>
-                      </div>
-                </table>
+                <div class="block-head">  CheckList - Preliminary Lab. Investigation </div>
+                <div class="border-table">
+                <div class="block-head">PHASE- I B INVESTIGATION REPORT</div>
+
+                    <table>
+                        <tr class="table_bg">
+                            <th class="w-10">S.N.</th>
+                            <th class="w-40">Question</th>	
+                            <th class="w-15">Response </th>
+                            <th class="w-35">Remarks </th>
+                        </tr>
+                        @if ($checklist_lab_invs)
+                        @foreach ($lab_inv_questions as $index => $lab_inv_question)
+                        <tr>
+                            <td class="w-10">{{ $loop->index + 1 }}</td>
+                            <td class="w-40">{{ $lab_inv_question }}</td>
+                            <td class="w-15">{{ Helpers::getArrayKey($checklist_lab_invs->data[$loop->index], 'response') }} </td>
+                            <td class="w-35">{{ Helpers::getArrayKey($checklist_lab_invs->data[$loop->index], 'remark') }} </td>
+                        </tr>
+                        @endforeach
+                        @endif
+                    </table>
+                </div>
             </div>
-    </div>
-    <div class="inner-block">
-        <div class="content-table">
-            <div class="block">
+           <!-- Preliminary Lab. Investigation TapII -->
+        
+           <div class="block">
                 <div class="block-head"> Investigation Conclusion </div>
                 <table>
                     <tr>  {{ $data->created_at }} added by {{ $data->originator }}
@@ -666,12 +652,10 @@
                       </div>
                 </table>
             </div>
-    </div>
-    <div class="inner-block">
-        <div class="content-table">
-            <div class="block">
+    
+             <div class="block">
                 <div class="block-head"> Preliminary Lab Invstigation Review </div>
-                <table>
+                  <table>
                     <tr>  {{ $data->created_at }} added by {{ $data->originator }}
                         <th class="w-20">Review Comments</th>
                         <td class="w-30">{{ $data->review_comments_plir ? $data->review_comments_plir : 'Not Applicable' }}</td>
@@ -774,9 +758,6 @@
                       </div>
                 </table>
             </div>
-    </div>
-    <div class="inner-block">
-        <div class="content-table">
             <div class="block">
                 <div class="block-head"> Phase II Investigation </div>
                 <table>
@@ -822,10 +803,6 @@
                       </div>
                 </table>
             </div>
-    </div>
-    
-    <div class="inner-block">
-        <div class="content-table">
             <div class="block">
                 <div class="block-head"> CheckList - Phase II Investigation</div>
                   <div class="border-table">
@@ -838,20 +815,10 @@
                         </tr>
                         @if ($phase_two_invs)
                         @foreach ($phase_two_inv_questions as $phase_two_inv_question)
-                                       
                         <tr>
                             <td class="w-15">{{ $loop->index+1 }}</td>
                             <td class="w-15">{{ $phase_two_inv_question }}</td>
-                            <td>
-                                <div style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                    <select name="phase_two_inv[{{ $loop->index }}][response]" id="response" style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                        <option value="Yes">Select an Option</option>
-                                        <option value="Yes" {{ Helpers::getArrayKey($phase_two_invs->data[$loop->index], 'response') == 'Yes' ? 'selected' : '' }}>Yes</option>
-                                        <option value="No" {{ Helpers::getArrayKey($phase_two_invs->data[$loop->index], 'response') == 'No' ? 'selected' : '' }}>No</option>
-                                        <option value="N/A" {{ Helpers::getArrayKey($phase_two_invs->data[$loop->index], 'response') == 'N/A' ? 'selected' : '' }}>N/A</option>
-                                    </select>
-                                </div>
-                            </td>
+                            <td>{{ Helpers::getArrayKey($phase_two_invs->data[$loop->index], 'response') }} </td>
                             <td class="w-15">{{ Helpers::getArrayKey($phase_two_invs->data[$loop->index], 'remarks') }}</td>
                         </tr>
                         @endforeach
@@ -861,19 +828,11 @@
                             <td>Not Applicable</td>
                             <td>Not Applicable</td>
                             <td>Not Applicable</td>
-                            <td>Not Applicable</td>
-                            <td>Not Applicable</td>
-                            <td>Not Applicable</td>
-                            <td>Not Applicable</td>
                         </tr>
                         @endif
                     </table>
                 </div>
             </div>
-        </div>
-    </div>
-    <div class="inner-block">
-        <div class="content-table">
             <div class="block">
                 <div class="block-head"> Summary of Phase II Testing </div>
                 <table>
@@ -924,10 +883,6 @@
                       </div>
                 </table>
             </div>
-        </div>
-    </div>
-    <div class="inner-block">
-        <div class="content-table">
             <div class="block">
                 <div class="block-head"> Additional Testing Proposal by QA </div>
                 <table>
@@ -968,10 +923,6 @@
                       </div>
                 </table>
             </div>
-        </div>
-    </div>
-    <div class="inner-block">
-        <div class="content-table">
             <div class="block">
                 <div class="block-head"> OOS Conclusion </div>
                 <table>
@@ -1071,10 +1022,6 @@
                       </div>
                 </table>
             </div>
-        </div>
-    </div>
-    <div class="inner-block">
-        <div class="content-table">
             <div class="block">
                 <div class="block-head"> Conclusion Review Comments </div>
                 <table>
@@ -1154,10 +1101,6 @@
                       </div>
                 </table>
             </div>
-        </div>
-    </div>
-    <div class="inner-block">
-        <div class="content-table">
             <div class="block">
                 <div class="block-head"> OOS QA Review </div>
                 <table>
@@ -1190,11 +1133,6 @@
                       </div>
                 </table>
             </div>
-        </div>
-    </div>
-    
-    <div class="inner-block">
-        <div class="content-table">
             <div class="block">
                 <div class="block-head">Batch Disposition</div>
                 <table>
@@ -1265,11 +1203,6 @@
                       </div>
                 </table>
             </div>
-        </div>
-    </div>
-    
-    <div class="inner-block">
-        <div class="content-table">
             <div class="block">
                 <div class="block-head">  QA Head/designee Approval </div>
                 <table>
@@ -1302,8 +1235,13 @@
                       </div>
                 </table>
             </div>
+    <!-- close block -->
         </div>
     </div>
+    
+               
+          
+
     <footer>
         <table>
             <tr>
@@ -1313,11 +1251,12 @@
                 <td class="w-40">
                     <strong>Printed By :</strong> {{ Auth::user()->name }}
                 </td>
-
+                {{-- <td class="w-30">
+                    <strong>Page :</strong> 1 of 1
+                </td> --}}
             </tr>
         </table>
     </footer>
-
 </body>
 
 </html>
