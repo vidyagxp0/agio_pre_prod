@@ -267,7 +267,7 @@
                                     <div class="group-input">
                                         <label for="RLS Record Number"><b>Record Number</b></label>
                                         <input disabled type="text" name="record_number" id="record_number"
-                                            value="{{$data->initiator_group_code}}/LI/{{ Helpers::year($data->created_at) }}/{{ $data->record }}">
+                                            value="{{ Helpers::getDivisionName(session()->get('division')) }}/LI/{{ Helpers::year($data->created_at) }}/{{ $data->record }}">
                                          {{-- <div class="static">QMS-EMEA/CAPA/{{ date('y') }}/{{ $record_number }}</div> --}}
                                     </div>
 
@@ -1726,14 +1726,11 @@
                                         <label for="Incident Type">Incident Type</label>
                                         <select name="Incident_Type" {{ $data->stage == 0 || $data->stage == 10 ? "disabled" : "" }}>
                                             <option value="">Enter Your Selection Here</option>
-                                            <option value="1" @if ($data->Incident_Type == '1') selected @endif>Type
-                                                A
+                                            <option value="Type A" @if ($data->Incident_Type == 'Type A') selected @endif>Type A
                                             </option>
-                                            <option value="2" @if ($data->Incident_Type == '2') selected @endif>Type
-                                                B
+                                            <option value="Type B" @if ($data->Incident_Type == 'Type B') selected @endif>Type B
                                             </option>
-                                            <option value="3" @if ($data->Incident_Type == '3') selected @endif>Type
-                                                c
+                                            <option value="Type C" @if ($data->Incident_Type == 'Type C') selected @endif>Type c
                                             </option>
                                         </select>
                                     </div>
