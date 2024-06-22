@@ -176,7 +176,7 @@
                     <strong>Lab Incident No.</strong>
                 </td>
                 <td class="w-40">
-                   {{ $data->initiator_group_code. }}/LI/{{ str_pad($data->record, 4, '0', STR_PAD_LEFT) }}
+                   {{ $data->initiator_group_code }}/LI/{{ str_pad($data->record, 4, '0', STR_PAD_LEFT) }}
                 </td>
                 <td class="w-30">
                     <strong>Record No.</strong> {{ str_pad($data->record, 4, '0', STR_PAD_LEFT) }}
@@ -256,14 +256,16 @@
                         <th class="w-20">Due Date</th>
                         <td class="w-30">@if($data->due_date){{ $data->due_date }} @else Not Applicable @endif</td>
                         <th class="w-20">Section Date</th>
-                        <td class="w-30">@if($data->section_sign_date_gi){{ $data->section_sign_date_gi }}@else Not Applicable @endif</td>
+                         <td class="w-30">@isset($data->section_sign_date_gi) {{ Helpers::getInitiatorName($data->section_sign_date_gi) }} @else Not Applicable @endisset</td>
+
                     </tr>
                     <tr>
                         <th class="w-20">Invocation Type</th>
                         <td class="w-30">@if($data->Invocation_Type){{ $data->Invocation_Type }}@else Not Applicable @endif</td>
                         <th class="w-20">Analyst Date</th>
-                        <td class="w-30">@if($data->analyst_sign_date_gi){{ $data->analyst_sign_date_gi }}@else Not Applicable @endif</td>
-                    </tr>
+                        <td class="w-30">@isset($data->analyst_sign_date_gi) {{ Helpers::getInitiatorName($data->analyst_sign_date_gi) }} @else Not Applicable @endisset</td>
+                        
+                        </tr>
                     <tr>
                         <th class="w-20">Other Ref.Doc.No</th>
                         <td class="w-30">@if($data->Other_Ref){{ $data->Other_Ref }}@else Not Applicable @endif</td>
@@ -273,7 +275,7 @@
                     <tr>
                         <th class="w-20">Others</th>
                         <td class="w-30">@if($data->Incident_Category_others){{ $data->Incident_Category_others }}@else Not Applicable @endif</td>
-                        <th class="w-20">Incident Investigation Attachment</th>
+                        <th class="w-20">Initial Attachment</th>
                         <td class="w-30">@if($data->attachments_gi)<a href="{{ asset('upload/document/',$data->attachments_gi) }}">{{ $data->attachments_gi }}</a>@else Not Applicable @endif</td>
                     </tr>
                 </table>
@@ -304,9 +306,11 @@
                     </tr>
                     <tr>
                         <th class="w-20">Investigator</th>
-                        <td class="w-30">@if($data->assign_to){{ $data->assign_to }}@else Not Applicable @endif</td>
-                        <th class="w-20">QC Review</th>
-                        <td class="w-30">@if($data->assign_to){{ $data->assign_to }}@else Not Applicable @endif</td>
+                        <td class="w-30">@isset($data->investigator_qc) {{ Helpers::getInitiatorName($data->investigator_qc) }} @else Not Applicable @endisset</td>
+                         <th class="w-20">QC Review</th>
+                       {{-- <td class="w-30">@if($data->qc_review_to){{ $data->qc_review_to }}@else Not Applicable @endif</td> --}}
+                       <td class="w-30">@isset($data->qc_review_to) {{ Helpers::getInitiatorName($data->qc_review_to) }} @else Not Applicable @endisset</td>
+
                     </tr>
                     <tr>
                         <th class="w-20">Result Of Repeat Analysis</th>
@@ -323,11 +327,12 @@
                     <tr>
                         <th class="w-20">Type Of Incidence</th>
                         <td class="w-30">@if($data->type_incidence_ia){{ $data->type_incidence_ia }}@else Not Applicable @endif</td>
-                        <th class="w-20">Incident Investigation Attachment</th>
+                        <th class="w-20">Attachments</th>
                         <td class="w-30">@if($data->attachments_ia)<a href="{{ asset('upload/document/',$data->attachments_ia) }}">{{ $data->attachments_ia }}</a>@else Not Applicable @endif</td>
                     </tr>
                 </table>
             </div>
+
 
             @foreach ($labtab as $singlereport)
             <div class="block">
@@ -367,7 +372,8 @@
                     </tr>
                     <tr>
                         <th class="w-20">QC Reviewer</th>
-                        <td class="w-30">@if($singlereport->assign_to){{ $singlereport->assign_to }}@else Not Applicable @endif</td>
+                        <td class="w-30">@isset($data->suit_qc_review_to) {{ Helpers::getInitiatorName($data->suit_qc_review_to) }} @else Not Applicable @endisset</td>
+                        
                         <th class="w-20">Detail Investigation</th>
                         <td class="w-30">@if($singlereport->Detail_investigation_ssfi){{ $singlereport->Detail_investigation_ssfi }}@else Not Applicable @endif</td>
                     </tr>
@@ -380,12 +386,10 @@
                     <tr>
                         <th class="w-20">Incident Summary</th>
                         <td class="w-30">@if($singlereport->incident_summary_ssfi){{ $singlereport->incident_summary_ssfi }}@else Not Applicable @endif</td>
-                        <th class="w-20">Investigator(QC)</th>
-                        <td class="w-30">@if($data->assign_to){{ $data->assign_to }}@else Not Applicable @endif</td>
+                        
+                         
                     </tr>
                     <tr>
-                        <th class="w-20">Reviewed By(QC)</th>
-                        <td class="w-30">@if($data->assign_to){{ $data->assign_to }}@else Not Applicable @endif</td>
                         <th class="w-20">System Suitability Attachment</th>
                         <td class="w-30">@if($singlereport->system_suitable_attachments)<a href="{{ asset('upload/document/',$singlereport->system_suitable_attachments) }}">{{ $singlereport->system_suitable_attachments }}</a>@else Not Applicable @endif</td>
                     </tr>
@@ -397,29 +401,27 @@
             </div>
             <table>
                 <tr>
-                    <th class="w-20">Affected Documents Closed</th>
-                    <td class="w-30">@if($singlereport->affected_document_closure){{ $singlereport->affected_document_closure }}@else Not Applicable @endif</td>
+                    <th class="w-20">Closure Of Incident</th>
+                    <td class="w-30">@if($singlereport->closure_incident_c){{ $singlereport->closure_incident_c }}@else Not Applicable @endif</td>
                     <th class="w-20">QC Head Remark</th>
                     <td class="w-30">@if($singlereport->qc_hear_remark_c){{ $singlereport->qc_hear_remark_c }}@else Not Applicable @endif</td>
                 </tr>
                 <tr>
-                    <th class="w-20">QC Head</th>
-                    <td class="w-30">@if($data->assign_to){{ $data->assign_to }}@else Not Applicable @endif</td>
+                    <th class="w-20">QC Head Closure</th>
+                    {{-- <td class="w-30">@if($data->assign_to){{ $data->assign_to }}@else Not Applicable @endif</td> --}}
+                    <td class="w-30">@isset($data->qc_head_closure) {{ Helpers::getInitiatorName($data->qc_head_closure) }} @else Not Applicable @endisset</td>
+
                     <th class="w-20">QA Head Remark</th>
-                    <td class="w-30">@if($singlereport->qc_hear_remark_c){{ $singlereport->qc_hear_remark_c }}@else Not Applicable @endif</td>
+                    <td class="w-30">@if($singlereport->qa_hear_remark_c){{ $singlereport->qa_hear_remark_c }}@else Not Applicable @endif</td>
                 </tr>
                 <tr>
                     <th class="w-20">System Suitability Attachment</th>
                     <td class="w-30">@if($singlereport->closure_attachment_c)<a href="{{ asset('upload/document/',$singlereport->closure_attachment_c) }}">{{ $singlereport->closure_attachment_c }}</a>@else Not Applicable @endif</td>
-                </tr>
-                <tr>
-                    <th class="w-20">Conclusion</th>
-                    <td class="w-30" colspan="3">@if($data->Conclusion){{ $data->Conclusion }}@else Not Applicable @endif</td>
-                </tr>
-                <tr>
-                    <th class="w-20">Conclusion</th>
+                    <th class="w-20">Conclusion QA Head/Designee</th>
                     <td class="w-30" colspan="3">@if($data->due_date_extension){{ $data->due_date_extension }}@else Not Applicable @endif</td>
                 </tr>
+               
+                
             </table>
             @endforeach
 
@@ -431,18 +433,18 @@
                     <tr>
                         <th class="w-20">Initial Attachment</th>
                         <td class="w-80">@if($data->Initial_Attachment)<a href="{{ asset('upload/document/',$data->Initial_Attachment) }}">{{ $data->Initial_Attachment }}</a>@else Not Applicable @endif</td>
-                    </tr>
-                    <tr>
                         <th class="w-20">Attachment</th>
                         <td class="w-80">@if($data->Attachments)<a href="{{ asset('upload/document/',$data->Attachments) }}">{{ $data->Attachments }}</a>@else Not Applicable @endif</td>
                     </tr>
                     <tr>
-                        <th class="w-20">Inv Attachment</th>
-                        <td class="w-80">@if($data->Inv_Attachment)<a href="{{ asset('upload/document/',$data->Inv_Attachment) }}">{{ $data->Inv_Attachment }}</a>@else Not Applicable @endif</td>
                     </tr>
                     <tr>
+                        <th class="w-20">Inv Attachment</th>
+                        <td class="w-80">@if($data->Inv_Attachment)<a href="{{ asset('upload/document/',$data->Inv_Attachment) }}">{{ $data->Inv_Attachment }}</a>@else Not Applicable @endif</td>
                         <th class="w-20">CAPA Attachment</th>
                         <td class="w-80">@if($data->CAPA_Attachment)<a href="{{ asset('upload/document/',$data->CAPA_Attachment) }}">{{ $data->CAPA_Attachment }}</a>@else Not Applicable @endif</td>
+                    </tr>
+                    <tr>
                     </tr>
                 </table>
             </div>
@@ -547,6 +549,129 @@
                     </table>
                 </div>
             </div>
+
+            <div class="block">
+               <div class="block-head">
+                    Incident Details
+                </div>
+                <table>
+                <tr>
+                    
+                            <th class="w-20">Incident Details</th>
+                            <td class="w-30">@if($data->Incident_Details){{ $data->Incident_Details }}@else Not Applicable @endif</td>
+                            <th class="w-20">Analyst Date</th>
+                            <td class="w-30">@if($data->Document_Details){{ $data->Document_Details }}@else Not Applicable @endif</td>
+
+                        
+        
+        
+        
+                    
+                 </tr>
+                 <tr>
+                    
+
+                    <th class="w-20">Instrument Details</th>
+                    <td class="w-30">@if($data->Instrument_Details){{ $data->Instrument_Details }}@else Not Applicable @endif</td>
+                    <th class="w-20">Involved Personnel</th>
+                    <td class="w-30">@if($data->Involved_Personnel){{ $data->Involved_Personnel }}@else Not Applicable @endif</td>
+                         
+         </tr>
+         <tr>
+                    
+
+            <th class="w-20">Product Details,If Any</th>
+            <td class="w-30">@if($data->Product_Details){{ $data->Product_Details }}@else Not Applicable @endif</td>
+            <th class="w-20">Supervisor Review Comments</th>
+            <td class="w-30">@if($data->Supervisor_Review_Comments){{ $data->Supervisor_Review_Comments }}@else Not Applicable @endif</td>
+                 
+ </tr>
+ <tr>
+                        <th>Incident Details Attachment</th>
+                        <td class="w-80">@if($data->ccf_attachments)<a href="{{ asset('upload/document/',$data->ccf_attachments) }}">{{ $data->ccf_attachments }}</a>@else Not Applicable @endif</td>
+
+ </tr>
+                </table>
+
+                <div class="block">
+
+                    <div class="block-head">
+                        Investigation Details
+                    </div>
+                    <table>
+                        <tr>
+                            <th class="w-20">Investigation Details</th>
+                            <td class="w-30">@if($data->Investigation_Details){{ $data->Investigation_Details }}@else Not Applicable @endif</td>
+                            <th class="w-20">Action Taken</th>
+                             <td class="w-30">@if($data->Action_Taken){{ $data->Action_Taken }}@else Not Applicable @endif</td>
+                        </tr>
+                        <tr>
+                            <th class="w-20">Root Cause</th>
+                            <td class="w-30">@if($data->Root_Cause){{ $data->Root_Cause }}@else Not Applicable @endif</td>
+                        </tr>
+                    </table>
+                </div>
+
+                <div class="block">
+
+                    <div class="block-head">
+                        Capa
+                    </div>
+                    <table>
+                        <tr>
+                            <th class="w-20">Capa</th>
+                            <td class="w-30">@if($data->capa_capa){{ $data->capa_capa }}@else Not Applicable @endif</td>
+                            <th class="w-20">Currective Action</th>
+                             <td class="w-30">@if($data->Currective_Action){{ $data->Currective_Action }}@else Not Applicable @endif</td>
+                        </tr>
+                        <tr>
+                            <th class="w-20">Preventive Action</th>
+                            <td class="w-30">@if($data->Preventive_Action){{ $data->Preventive_Action }}@else Not Applicable @endif</td>
+
+                            <th class="w-20">Corrective & Preventive Action</th>
+                            <td class="w-30">@if($data->Corrective_Preventive_Action){{ $data->Corrective_Preventive_Action }}@else Not Applicable @endif</td>
+                        </tr>
+                    </table>
+                </div>
+
+                <div class="block">
+
+                    <div class="block-head">
+                        QA Review
+                    </div>
+                    <table>
+                        <tr>
+                            <th class="w-20">QA Review Comments</th>
+                            <td class="w-30">@if($data->QA_Review_Comments){{ $data->QA_Review_Comments }}@else Not Applicable @endif</td>
+                            <th class="w-20">QA Review Attachment</th>
+                        <td class="w-80">@if($data->QA_Head_Attachment)<a href="{{ asset('upload/document/',$data->QA_Head_Attachment) }}">{{ $data->QA_Head_Attachment }}</a>@else Not Applicable @endif</td>
+
+                             </tr>
+                        
+                    </table>
+                </div>
+
+                <div class="block">
+
+                    <div class="block-head">
+                        QA Head/Designee Approval
+                    </div>
+                    <table>
+                        <tr>
+                            <th class="w-20">QA Head/Designee Comments</th>
+                            <td class="w-30">@if($data->QA_Head){{ $data->QA_Head }}@else Not Applicable @endif</td>
+                            <th class="w-20">Incident Type</th>
+                            <td class="w-30">@if($data->Incident_Type)<a href="{{ asset('upload/document/',$data->Incident_Type) }}">{{ $data->Incident_Type }}</a>@else Not Applicable @endif</td>
+                            <th class="w-20">Conclusion</th>
+                            <td class="w-30">@if($data->Conclusion){{ $data->Conclusion }}@else Not Applicable @endif</td>
+                             </tr>
+                             
+                        
+                    </table>
+                </div>
+
+
+            </div>
         </div>
     </div>
 
@@ -555,7 +680,7 @@
             <tr>
                 <td class="w-30"><strong>Printed On :</strong> {{ date('d-M-Y') }}</td>
                 <td class="w-40"><strong>Printed By :</strong> {{ Auth::user()->name }}</td>
-                <td class="w-30"><strong>Page :</strong> 1 of 1</td>
+                {{-- <td class="w-30"><strong>Page :</strong> 1 of 1</td> --}}
             </tr>
         </table>
     </footer>
