@@ -954,7 +954,7 @@ class OOSController extends Controller
         $today = Carbon::now()->format('d-m-y');
         $document = OOS::where('id', $id)->first();
         $document->initiator = User::where('id', $document->initiator_id)->value('name');
-        // dd($document);
+        // dd($document->initiator);
         return view('frontend.OOS.comps.audit-trial', compact('audit', 'document', 'today'));
     }
 
