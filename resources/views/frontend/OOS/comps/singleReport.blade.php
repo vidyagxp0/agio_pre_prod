@@ -657,8 +657,7 @@
                       </div>
                 </table>
             </div>
-    
-             <div class="block">
+            <div class="block">
                 <div class="block-head"> Preliminary Lab Invstigation Review </div>
                   <table>
                     <tr>
@@ -669,67 +668,39 @@
                         <th class="w-20">Phase II Inv. Required?</th>
                         <td class="w-30">{{ $data->phase_ii_inv_required_plir ? $data->phase_ii_inv_required_plir : 'Not Applicable' }}</td>
                     </tr>
-                    <div class="block">
-                        <h2>OOS Review for Similar Nature</h2>
-                        <div class="block-head"> Info. On Product/ Material</div>
-                        <div class="border-table">
-                        <table>
+                </div>        
+            </div>
+            <div class="block">
+                <h2>OOS Review for Similar Nature</h2>
+                <div class="block-head"> Info. On Product/ Material</div>
+                <div class="border-table">
+                    <table>
                         <tr class="table_bg">
                             <th style="width: 4%">Row#</th>
-                            <th style="width: 15%">OOS Number</th>
-                            <th style="width: 15%"> OOS Reported Date</th>
-                            <th style="width: 26%">Description of OOS</th>
-                            <th style="width: 40%">Previous OOS Root Cause</th>
-                        </tr>
-                        @if(($oos_capas) && is_array($oos_capas->data))
-                        @foreach ($oos_capas->data as $key => $datagridIV)
-                        <tr>
-                            <td class="w-2">{{ $datagridIV ? $key + 1  : "Not Applicable" }}</td>
-                            <td class="w-8">{{ $datagridIV['info_oos_number'] ?  $datagridIV['info_oos_number']: "Not Applicable"}}</td>
-                            <td class="w-10">{{ $datagridIV['info_oos_reported_date'] ?  $datagridIV['info_oos_reported_date']: "Not Applicable"}}
-                            </td>
-                            <td class="w-8">{{ $datagridIV['info_oos_description'] ?  $datagridIV['info_oos_description']: "Not Applicable"}}</td>
-                            <td class="w-8">{{ $datagridIV['info_oos_previous_root_cause'] ?  $datagridIV['info_oos_previous_root_cause']: "Not Applicable"}}</td>
-                        </tr>
-                        @endforeach
-                        @else
-                        <tr>
-                            <td>Not Applicable</td>
-                            <td>Not Applicable</td>
-                            <td>Not Applicable</td>
-                            <td>Not Applicable</td>
-                            <td>Not Applicable</td>
-                            <td>Not Applicable</td>
-                            <td>Not Applicable</td>
-                            <td>Not Applicable</td>
-                        </tr>
-                        @endif
-                    </table>
-                    <div class="block">
-                        <div class="block-head"> Info. On Product/ Material</div>
-                        <div class="border-table">
-                        <table>
-                        <tr class="table_bg">
-                            <th style="width: 4%">Row#</th>
-                            <th style="width: 12%"> CAPA</th>
-                            <th style="width: 16% pt-3">Closure Date of CAPA</th>
-                            <th style="width: 14%">CAPA Requirement</th>
+                            <th style="width: 30%">OOS Number</th>
+                            <th style="width: 30%"> OOS Reported Date</th>
+                            <th style="width: 40%">Description of OOS</th>
+                            <th style="width: 20%">Previous OOS Root Cause</th>
+                            <th style="width: 20%"> CAPA</th>
+                            <th style="width: 20% pt-3">Closure Date of CAPA</th>
                             <th style="width: 16%">Reference CAPA Number</th>
                         </tr>
-                        @if ($oos_capas)
-                        @foreach ($oos_capas->data as $key => $datagridV)
-                        <tr>
-                            <td class="w-2">{{ $datagridIV ? $key + 1  : "Not Applicable" }}</td>
-                            <td class="w-8">{{ $datagridV['info_oos_capa'] ?  $datagridV['info_oos_capa']: "Not Applicable"}}</td>
-                            <td class="w-10">{{ $datagridV['info_oos_closure_date'] ?  $datagridV['info_oos_closure_date']: "Not Applicable"}}
-                            </td>
-                            <td class="w-8">{{ $datagridV['info_oos_capa_requirement'] ?  $datagridV['info_oos_capa_requirement']: "Not Applicable"}}</td>
-                            <td class="w-8">{{ $datagridV['info_oos_capa_reference_number'] ?  $datagridV['info_oos_capa_reference_number']: "Not Applicable"}}</td>
-                        </tr>
-                        @endforeach
+                        @if(($oos_capas) && is_array($oos_capas->data))
+                            @foreach ($oos_capas->data as $key => $datagridIV)
+                            <tr>
+                                <td class="w-10">{{ $datagridIV ? $key + 1  : "Not Applicable" }}</td>
+                                <td class="w-10">{{ $datagridIV['info_oos_number'] ?  $datagridIV['info_oos_number']: "Not Applicable"}}</td>
+                                <td class="w-30">{{ $datagridIV['info_oos_reported_date'] ?  $datagridIV['info_oos_reported_date']: "Not Applicable"}}</td>
+                                <td class="w-40">{{ $datagridIV['info_oos_description'] ?  $datagridIV['info_oos_description']: "Not Applicable"}}</td>
+                                <td class="w-0">{{ $datagridIV['info_oos_previous_root_cause'] ?  $datagridIV['info_oos_previous_root_cause']: "Not Applicable"}}</td>
+                                <td class="w-8">{{ $datagridIV['info_oos_capa'] ?  $datagridIV['info_oos_capa']: "Not Applicable"}}</td>
+                                <td class="w-10">{{ $datagridIV['info_oos_closure_date'] ?  $datagridIV['info_oos_closure_date']: "Not Applicable"}}</td>
+                                <td class="w-8">{{ $datagridIV['info_oos_capa_reference_number'] ?  $datagridIV['info_oos_capa_reference_number']: "Not Applicable"}}</td>
+                           
+                            </tr>
+                            @endforeach
                         @else
                         <tr>
-                            <td>Not Applicable</td>
                             <td>Not Applicable</td>
                             <td>Not Applicable</td>
                             <td>Not Applicable</td>
@@ -740,8 +711,30 @@
                         </tr>
                         @endif
                     </table>
-           
-                  <div class="block-head">Supporting Attachments</div>
+                </div>
+                <div class="block-head"> Info. On Product/ Material</div>
+                 <div class="border-table">
+                    <table>
+                        <tr class="table_bg">
+                            <th style="width: 4%">Row#</th>
+                            <th style="width: 14%">CAPA Requirement</th>
+                        </tr>
+                        @if ($oos_capas)
+                           @foreach ($oos_capas->data as $key => $datagridV)
+                            <tr>
+                                <td class="w-2">{{ $datagridIV ? $key + 1  : "Not Applicable" }}</td>
+                                <td class="w-8">{{ $datagridV['info_oos_capa_requirement'] ?  $datagridV['info_oos_capa_requirement']: "Not Applicable"}}</td>
+                            </tr>
+                            @endforeach
+                        @else
+                        <tr>
+                            <td>Not Applicable</td>
+                            <td>Not Applicable</td>
+                        </tr>
+                        @endif
+                    </table>
+                </div>
+                <div class="block-head">Supporting Attachments</div>
                       <div class="border-table">
                         <table>
                             <tr class="table_bg">
@@ -763,6 +756,9 @@
                             @endif
                         </table>
                       </div>
+            </div>
+            <!-- grid -->
+                    
                 </table>
             </div>
             <div class="block">
@@ -771,15 +767,17 @@
                     <tr>  {{ $data->created_at }} added by {{ $data->originator }}
                         <th class="w-20">QA Approver Comments</th>
                         <td class="w-30">{{ $data->qa_approver_comments_piii ? $data->qa_approver_comments_piii : 'Not Applicable' }}</td>
-                        <th class="w-20">Manufact. Invest. Required?</th>
-                        <td class="w-30">{{ $data->manufact_invest_required_piii ? $data->manufact_invest_required_piii : 'Not Applicable' }}</td>
                     </tr>
                    <tr>
+                        <th class="w-20">Manufact. Invest. Required?</th>
+                        <td class="w-30">{{ $data->manufact_invest_required_piii ? $data->manufact_invest_required_piii : 'Not Applicable' }}</td>
                         <th class="w-20">Manufacturing Invest. Type</th>
                         <td class="w-80">{{ $data->manufacturing_invest_type_piii ? $data->manufacturing_invest_type_piii : 'Not Applicable' }}</td>
-                        <th class="w-20">Audit Comments</th>
-                        <td class="w-80">{{ $data->audit_comments_piii ? $data->audit_comments_piii : 'Not Applicable' }}</td>
-                  </tr>
+                 </tr>
+                 <tr>
+                    <th class="w-20">Audit Comments</th>
+                    <td class="w-80">{{ $data->audit_comments_piii ? $data->audit_comments_piii : 'Not Applicable' }}</td>
+                </tr>
                   <tr>
                         <th class="w-20">Hypo/Exp. Required.</th>
                         <td class="w-80">{{ $data->hypo_exp_required_piii ? $data->hypo_exp_required_piii : 'Not Applicable' }}</td>
@@ -846,6 +844,8 @@
                     <tr>  {{ $data->created_at }} added by {{ $data->originator }}
                         <th class="w-20">Summary of Exp./Hyp.</th>
                         <td class="w-30">{{ $data->summary_of_exp_hyp_piiqcr ? $data->summary_of_exp_hyp_piiqcr : 'Not Applicable' }}</td>
+                    </tr>
+                    <tr>
                         <th class="w-20">Summary Mfg. Investigation</th>
                         <td class="w-30">{{ $data->summary_mfg_investigation_piiqcr ? $data->summary_mfg_investigation_piiqcr : 'Not Applicable' }}</td>
                     </tr>
@@ -858,10 +858,12 @@
                     <tr>
                         <th class="w-20">Others (OOS category).</th>
                         <td class="w-80">{{ $data->others_oos_category_piiqcr ? $data->others_oos_category_piiqcr : 'Not Applicable' }}</td>
+                    </tr>
+                    <tr>
                         <th class="w-20">Details of Root Cause</th>
                         <td class="w-80">{{ $data->details_of_root_cause_piiqcr ? $data->details_of_root_cause_piiqcr : 'Not Applicable' }}</td>
-                  </tr>
-                  <tr>
+                    </tr>
+                    <tr>
                         <th class="w-20">Impact Assessment.</th>
                         <td class="w-80">{{ $data->hypo_exp_required_piii ? $data->hypo_exp_required_piii : 'Not Applicable' }}</td>
                   </tr>
@@ -902,6 +904,8 @@
                     <tr>
                         <th class="w-20">Additional Test Comment.</th>
                         <td class="w-80">{{ $data->additional_test_reference_atp ? $data->additional_test_reference_atp : 'Not Applicable' }}</td>
+                    </tr>
+                    <tr>
                         <th class="w-20">Any Other Actions Required </th>
                         <td class="w-80">{{ $data->any_other_actions_required_atp ? $data->any_other_actions_required_atp : 'Not Applicable' }}</td>
                     </tr>
@@ -936,10 +940,11 @@
                     <tr>  {{ $data->created_at }} added by {{ $data->originator }}
                         <th class="w-20">Conclusion Comments.</th>
                         <td class="w-30">{{ $data->conclusion_comments_oosc ? $data->conclusion_comments_oosc : 'Not Applicable' }}</td>
+                    </tr>
+                    <tr>
                         <th class="w-20">Specification Limit</th>
                         <td class="w-30">{{ $data->specification_limit_oosc ? $data->specification_limit_oosc : 'Not Applicable' }}</td>
                     </tr>
-
                     <tr>
                         <th class="w-20">Results to be Reported</th>
                         <td class="w-80">{{ $data->results_to_be_reported_oosc ? $data->results_to_be_reported_oosc : 'Not Applicable' }}</td>
@@ -949,6 +954,8 @@
                     <tr>
                         <th class="w-20">Justifi. for Averaging Results</th>
                         <td class="w-80">{{ $data->justifi_for_averaging_results_oosc ? $data->justifi_for_averaging_results_oosc : 'Not Applicable' }}</td>
+                    </tr>
+                    <tr>  
                         <th class="w-20">OOS Stands</th>
                         <td class="w-80">{{ $data->oos_stands_oosc ? $data->oos_stands_oosc : 'Not Applicable' }}</td>
                     </tr>
@@ -961,11 +968,16 @@
                     <tr>
                         <th class="w-20"> Justify if CAPA not required.</th>
                         <td class="w-80">{{ $data->justify_if_capa_not_required_oosc ? $data->justify_if_capa_not_required_oosc : 'Not Applicable' }}</td>
+                    </tr>
+                    <tr>  
                         <th class="w-20"> Action Item Req..</th>
                         <td class="w-80">{{ $data->action_plan_req_oosc ? $data->action_plan_req_oosc : 'Not Applicable' }}</td>
                     </tr>
                     <tr>
                         <th class="w-20"> Action Item Ref..</th>
+                        <td class="w-80"></td>
+                    </tr>
+                    <tr>
                         <th class="w-20">Justification for Delay.</th>
                         <td class="w-80">{{ $data->justification_for_delay_oosc ? $data->justification_for_delay_oosc : 'Not Applicable' }}</td>
                     </tr>
@@ -1035,10 +1047,11 @@
                     <tr>  {{ $data->created_at }} added by {{ $data->originator }}
                         <th class="w-20">Conclusion Review Comments</th>
                         <td class="w-30">{{ $data->conclusion_review_comments_ocr ? $data->conclusion_review_comments_ocr : 'Not Applicable' }}</td>
+                    </tr>
+                    <tr>
                         <th class="w-20">Action Taken on Affec.batch</th>
                         <td class="w-30">{{ $data->action_taken_on_affec_batch_ocr ? $data->action_taken_on_affec_batch_ocr : 'Not Applicable' }}</td>
                     </tr>
-
                     <tr>
                         <th class="w-20">CAPA Req</th>
                         <td class="w-80">{{ $data->capa_req_ocr ? $data->capa_req_ocr : 'Not Applicable' }}</td>
@@ -1048,6 +1061,8 @@
                     <tr>
                         <th class="w-20">Justify if No Risk Assessment</th>
                         <td class="w-80">{{ $data->justify_if_no_risk_assessment_ocr ? $data->justify_if_no_risk_assessment_ocr : 'Not Applicable' }}</td>
+                    </tr>
+                    <tr>
                         <th class="w-20">CQ Approver</th>
                         <td class="w-80">{{ $data->cq_approver ? $data->cq_approver : 'Not Applicable' }}</td>
                     </tr>
@@ -1152,30 +1167,40 @@
                     <tr>  {{ $data->created_at }} added by {{ $data->originator }}
                         <th class="w-20">Material/Batch Release</th>
                         <td class="w-30">{{ $data->material_batch_release_bd ? $data->material_batch_release_bd : 'Not Applicable' }}</td>
+                    </tr>
+                    <tr>   
                         <th class="w-20">Other Action (Specify)</th>
                         <td class="w-30">{{ $data->other_action_bd ? $data->other_action_bd : 'Not Applicable' }}</td>
                     </tr>
                     <tr>  {{ $data->created_at }} added by {{ $data->originator }}
                         <th class="w-20"> Other Parameters Results</th>
                         <td class="w-30">{{ $data->other_parameters_results_bd ? $data->other_parameters_results_bd : 'Not Applicable' }}</td>
-                        <th class="w-20">Trend of Previous Batches</th>
+                    </tr>
+                    <tr>
+                         <th class="w-20">Trend of Previous Batches</th>
                         <td class="w-30">{{ $data->trend_of_previous_batches_bd ? $data->trend_of_previous_batches_bd : 'Not Applicable' }}</td>
                     </tr>
                     <tr>  {{ $data->created_at }} added by {{ $data->originator }}
                         <th class="w-20"> Stability Data</th>
                         <td class="w-30">{{ $data->stability_data_bd ? $data->stability_data_bd : 'Not Applicable' }}</td>
+                    </tr>
+                    <tr>
                         <th class="w-20">Process Validation Data</th>
                         <td class="w-30">{{ $data->process_validation_data_bd ? $data->process_validation_data_bd : 'Not Applicable' }}</td>
                     </tr>
                     <tr>  {{ $data->created_at }} added by {{ $data->originator }}
                         <th class="w-20"> Method Validation </th>
                         <td class="w-30">{{ $data->method_validation_bd ? $data->method_validation_bd : 'Not Applicable' }}</td>
+                    </tr>
+                    <tr>
                         <th class="w-20">Any Market Complaints</th>
                         <td class="w-30">{{ $data->any_market_complaints_bd ? $data->any_market_complaints_bd : 'Not Applicable' }}</td>
                     </tr>
                     <tr>  {{ $data->created_at }} added by {{ $data->originator }}
                         <th class="w-20"> Statistical Evaluation </th>
                         <td class="w-30">{{ $data->statistical_evaluation_bd ? $data->statistical_evaluation_bd : 'Not Applicable' }}</td>
+                    </tr>
+                    <tr>
                         <th class="w-20">Risk Analysis for Disposition</th>
                         <td class="w-30">{{ $data->risk_analysis_disposition_bd ? $data->risk_analysis_disposition_bd : 'Not Applicable' }}</td>
                     </tr>
@@ -1183,6 +1208,8 @@
                     <tr>  {{ $data->created_at }} added by {{ $data->originator }}
                         <th class="w-20"> Conclusion </th>
                         <td class="w-30">{{ $data->conclusion_bd ? $data->conclusion_bd : 'Not Applicable' }}</td>
+                    </tr>
+                    <tr> 
                         <th class="w-20">Justify for Delay in Activity</th>
                         <td class="w-30">{{ $data->justify_for_delay_in_activity_bd ? $data->justify_for_delay_in_activity_bd : 'Not Applicable' }}</td>
                     </tr>
