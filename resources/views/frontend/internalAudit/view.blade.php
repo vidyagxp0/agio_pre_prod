@@ -502,61 +502,61 @@ function addMultipleFiles(input, block_id) {
                                             <div class="group-input">
                                                 <label for="Initiator Group"><b>Initiator Group</b></label>
                                                 <select name="initiator_Group"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : ''}}
-                                                     id="initiator_group">
+                                                    id="initiator_group">
 
-                                                    <option value="CQA"
-                                                        @if ($data->Initiator_Group== 'CQA') selected @endif>Corporate
-                                                        Quality Assurance</option>
-                                                    <option value="QAB"
-                                                        @if ($data->Initiator_Group== 'QAB') selected @endif>Quality
-                                                        Assurance Biopharma</option>
-                                                    <option value="CQC"
-                                                        @if ($data->Initiator_Group== 'CQC') selected @endif>Central
-                                                        Quality Control</option>
-                                                    <option value="MANU"
-                                                        @if ($data->Initiator_Group== 'MANU') selected @endif>Manufacturing
-                                                    </option>
-                                                    <option value="PSG"
-                                                        @if ($data->Initiator_Group== 'PSG') selected @endif>Plasma
-                                                        Sourcing Group</option>
-                                                    <option value="CS"
-                                                        @if ($data->Initiator_Group== 'CS') selected @endif>Central
-                                                        Stores</option>
-                                                    <option value="ITG"
-                                                        @if ($data->Initiator_Group== 'ITG') selected @endif>Information
-                                                        Technology Group</option>
-                                                    <option value="MM"
-                                                        @if ($data->Initiator_Group== 'MM') selected @endif>Molecular
-                                                        Medicine</option>
-                                                    <option value="CL"
-                                                        @if ($data->Initiator_Group== 'CL') selected @endif>Central
-                                                        Laboratory</option>
-                                                    <option value="TT"
-                                                        @if ($data->Initiator_Group== 'TT') selected @endif>Tech
-                                                        team</option>
-                                                    <option value="QA"
-                                                        @if ($data->Initiator_Group== 'QA') selected @endif>Quality
-                                                        Assurance</option>
-                                                    <option value="QM"
-                                                        @if ($data->Initiator_Group== 'QM') selected @endif>Quality
-                                                        Management</option>
-                                                    <option value="IA"
-                                                        @if ($data->Initiator_Group== 'IA') selected @endif>IT
-                                                        Administration</option>
-                                                    <option value="ACC"
-                                                        @if ($data->Initiator_Group== 'ACC') selected @endif>Accounting
-                                                    </option>
-                                                    <option value="LOG"
-                                                        @if ($data->Initiator_Group== 'LOG') selected @endif>Logistics
-                                                    </option>
-                                                    <option value="SM"
-                                                        @if ($data->Initiator_Group== 'SM') selected @endif>Senior
-                                                        Management</option>
-                                                    <option value="BA"
-                                                        @if ($data->Initiator_Group== 'BA') selected @endif>Business
-                                                        Administration</option>
+                                                   <option value="CQA"
+                                                       @if ($data->Initiator_Group== 'CQA') selected @endif>Corporate
+                                                       Quality Assurance</option>
+                                                   <option value="QAB"
+                                                       @if ($data->Initiator_Group== 'QAB') selected @endif>Quality
+                                                       Assurance Biopharma</option>
+                                                   <option value="CQC"
+                                                       @if ($data->Initiator_Group== 'CQC') selected @endif>Central
+                                                       Quality Control</option>
+                                                   <option value="MANU"
+                                                       @if ($data->Initiator_Group== 'MANU') selected @endif>Manufacturing
+                                                   </option>
+                                                   <option value="PSG"
+                                                       @if ($data->Initiator_Group== 'PSG') selected @endif>Plasma
+                                                       Sourcing Group</option>
+                                                   <option value="CS"
+                                                       @if ($data->Initiator_Group== 'CS') selected @endif>Central
+                                                       Stores</option>
+                                                   <option value="ITG"
+                                                       @if ($data->Initiator_Group== 'ITG') selected @endif>Information
+                                                       Technology Group</option>
+                                                   <option value="MM"
+                                                       @if ($data->Initiator_Group== 'MM') selected @endif>Molecular
+                                                       Medicine</option>
+                                                   <option value="CL"
+                                                       @if ($data->Initiator_Group== 'CL') selected @endif>Central
+                                                       Laboratory</option>
+                                                   <option value="TT"
+                                                       @if ($data->Initiator_Group== 'TT') selected @endif>Tech
+                                                       team</option>
+                                                   <option value="QA"
+                                                       @if ($data->Initiator_Group== 'QA') selected @endif>Quality
+                                                       Assurance</option>
+                                                   <option value="QM"
+                                                       @if ($data->Initiator_Group== 'QM') selected @endif>Quality
+                                                       Management</option>
+                                                   <option value="IA"
+                                                       @if ($data->Initiator_Group== 'IA') selected @endif>IT
+                                                       Administration</option>
+                                                   <option value="ACC"
+                                                       @if ($data->Initiator_Group== 'ACC') selected @endif>Accounting
+                                                   </option>
+                                                   <option value="LOG"
+                                                       @if ($data->Initiator_Group== 'LOG') selected @endif>Logistics
+                                                   </option>
+                                                   <option value="SM"
+                                                       @if ($data->Initiator_Group== 'SM') selected @endif>Senior
+                                                       Management</option>
+                                                   <option value="BA"
+                                                       @if ($data->Initiator_Group== 'BA') selected @endif>Business
+                                                       Administration</option>
 
-                                                </select>
+                                               </select>
                                             </div>
                                         </div>
                                         <div class="col-lg-6">
@@ -7692,7 +7692,7 @@ function addMultipleFiles(input, block_id) {
         "Are any unplanned process changes (process excursions) documented in the batch record?",
     ];
         // "Check for area activity record 59."
-    
+
 
     $documentationQuestions = [
         "Do records have doer & checker signatures? Check the timings, date and yield etc in the batch production record.",
@@ -9398,7 +9398,7 @@ function addMultipleFiles(input, block_id) {
 
 </div>
 
-<div id="CCForm15" class="inner-block cctabcontent">    
+<div id="CCForm15" class="inner-block cctabcontent">
 @php
 $checklistEngineering = [
     "Is there a master list of all equipment that specifies those requiring maintenance and/or calibration?",
@@ -9442,7 +9442,7 @@ $checklistHVAC = [
     "Check area cleanness and HEPA grills."
 ];
 @endphp
-   
+
 <div class="inner-block-content">
     <div class="row">
         <div class="sub-head">Checklist for Engineering</div>
@@ -9476,7 +9476,7 @@ $checklistHVAC = [
                                                 <option value="Yes" @if($checklist9 && $checklist9->$engineeringresponce == "Yes") selected @endif>Yes</option>
                                                 <option value="No" @if($checklist9 && $checklist9->$engineeringresponce == "No") selected @endif>No</option>
                                                 <option value="N/A" @if($checklist9 && $checklist9->$engineeringresponce == "N/A") selected @endif>N/A</option>
-                                           
+
                                             </select>
                                         </div>
                                     </td>
@@ -9524,7 +9524,7 @@ $checklistHVAC = [
                                                 <option value="Yes" @if($checklist9 && $checklist9->$engineeringresponce == "Yes") selected @endif>Yes</option>
                                                 <option value="No" @if($checklist9 && $checklist9->$engineeringresponce == "No") selected @endif>No</option>
                                                 <option value="N/A" @if($checklist9 && $checklist9->$engineeringresponce == "N/A") selected @endif>N/A</option>
-                                           
+
                                             </select>
                                         </div>
                                     </td>
@@ -9574,7 +9574,7 @@ $checklistHVAC = [
                                                 <option value="Yes" @if($checklist9 && $checklist9->$engineeringresponce == "Yes") selected @endif>Yes</option>
                                                 <option value="No" @if($checklist9 && $checklist9->$engineeringresponce == "No") selected @endif>No</option>
                                                 <option value="N/A" @if($checklist9 && $checklist9->$engineeringresponce == "N/A") selected @endif>N/A</option>
-                                           
+
                                             </select>
                                         </div>
                                     </td>
@@ -9764,7 +9764,7 @@ $checklistqualitycontrol = [
                                                     <option value="Yes" @if($checklist10 && $checklist10->$qualitycontrol == "Yes") selected @endif>Yes</option>
                                                     <option value="No" @if($checklist10 && $checklist10->$qualitycontrol == "No") selected @endif>No</option>
                                                     <option value="N/A" @if($checklist10 && $checklist10->$qualitycontrol == "N/A") selected @endif>N/A</option>
-                                               
+
                                                 </select>
                                             </div>
                                         </td>
@@ -9885,7 +9885,7 @@ $checklistqualitycontrol = [
                                                 <option value="Yes" @if($checklist11 && $checklist11->$checkliststores == "Yes") selected @endif>Yes</option>
                                                 <option value="No" @if($checklist11 && $checklist11->$checkliststores == "No") selected @endif>No</option>
                                                 <option value="N/A" @if($checklist11 && $checklist11->$checkliststores == "N/A") selected @endif>N/A</option>
-                                           
+
                                             </select>
                                         </div>
                                     </td>
@@ -10210,7 +10210,7 @@ $checklistqualitycontrol = [
                                                 <option value="Yes" @if($checklist13 && $checklist13->$response_injection_name == "Yes") selected @endif>Yes</option>
                                                 <option value="No" @if($checklist13 && $checklist13->$response_injection_name == "No") selected @endif>No</option>
                                                 <option value="N/A" @if($checklist13 && $checklist13->$response_injection_name == "N/A") selected @endif>N/A</option>
-                                           
+
                                             </select>
                                         </div>
                                     </td>
@@ -10259,7 +10259,7 @@ $checklistqualitycontrol = [
                                                 <option value="Yes" @if($checklist13 && $checklist13->$response_documentation_name == "Yes") selected @endif>Yes</option>
                                                 <option value="No" @if($checklist13 && $checklist13->$response_documentation_name == "No") selected @endif>No</option>
                                                 <option value="N/A" @if($checklist13 && $checklist13->$response_documentation_name == "N/A") selected @endif>N/A</option>
-                                           
+
                                             </select>
                                         </div>
                                     </td>
@@ -10353,7 +10353,7 @@ $checklistqualitycontrol = [
             "Have you any standard procedure for removal of scrap?",
             "Is there any procedure to cross verify the dispensed packaging material before starting the packaging."
         ];
-    
+
         $questions_documentation = [
             "Do records have doer & checker signatures? Check the timings, date and yield etc in the batch production record.",
             "Is each batch assigned a distinctive code, so that material can be traced through manufacturing and distribution? Check for In process analytical reports",
@@ -10363,13 +10363,13 @@ $checklistqualitycontrol = [
             "Current version of SOP’s is available in respective areas?"
         ];
     @endphp
-    
+
     <div class="inner-block-content">
         <div class="row">
             <div class="sub-head">
                 Checklist for Injection Packing
             </div>
-    
+
             <div class="col-12">
                 <div class="group-input">
                     <div class="why-why-chart">
@@ -10398,7 +10398,7 @@ $checklistqualitycontrol = [
                                                     <option value="Yes" @if($checklist14 && $checklist14->$response_injection_name == "Yes") selected @endif>Yes</option>
                                                     <option value="No" @if($checklist14 && $checklist14->$response_injection_name == "No") selected @endif>No</option>
                                                     <option value="N/A" @if($checklist14 && $checklist14->$response_injection_name == "N/A") selected @endif>N/A</option>
-                                               
+
                                                 </select>
                                             </div>
                                         </td>
@@ -10414,11 +10414,11 @@ $checklistqualitycontrol = [
                     </div>
                 </div>
             </div>
-    
+
             <div class="sub-head">
                 Checklist for Documentation
             </div>
-    
+
             <div class="col-12">
                 <div class="group-input">
                     <div class="why-why-chart">
@@ -10447,7 +10447,7 @@ $checklistqualitycontrol = [
                                                     <option value="Yes" @if($checklist14 && $checklist14->$response_production == "Yes") selected @endif>Yes</option>
                                                     <option value="No" @if($checklist14 && $checklist14->$response_production == "No") selected @endif>No</option>
                                                     <option value="N/A" @if($checklist14 && $checklist14->$response_production == "N/A") selected @endif>N/A</option>
-                                               
+
                                                 </select>
                                             </div>
                                         </td>
@@ -10463,14 +10463,14 @@ $checklistqualitycontrol = [
                     </div>
                 </div>
             </div>
-    
+
             <div class="col-md-12 mb-4">
                 <div class="group-input">
                     <label for="Description Deviation">Final Comments</label>
                     <textarea class="summernote" name="response_injection_packing_comment" id="summernote-1">@if($checklist14 && $checklist14->{"response_injection_packing_comment"}){{ $checklist14->{"response_injection_packing_comment"} }}@endif</textarea>
                 </div>
             </div>
-    
+
             <div class="col-12">
                 <div class="group-input">
                     <label for="Audit Attachments">Supporting Attachment</label>
@@ -10484,7 +10484,7 @@ $checklistqualitycontrol = [
                     </div>
                 </div>
             </div>
-    
+
             <div class="button-block">
                 <button type="submit" class="saveButton">Save</button>
                 <button type="button" class="backButton" onclick="previousStep()">Back</button>
@@ -10493,9 +10493,9 @@ $checklistqualitycontrol = [
             </div>
         </div>
     </div>
-    
 
-   
+
+
  </div>
 
 
@@ -10588,7 +10588,7 @@ $checklistqualitycontrol = [
                                                 <option value="Yes" @if($checklist15 && $checklist15->$response_name_manufacturingnew == "Yes") selected @endif>Yes</option>
                                                 <option value="No" @if($checklist15 && $checklist15->$response_name_manufacturingnew == "No") selected @endif>No</option>
                                                 <option value="N/A" @if($checklist15 && $checklist15->$response_name_manufacturingnew == "N/A") selected @endif>N/A</option>
-                                           
+
                                             </select>
                                         </div>
                                     </td>
@@ -10637,7 +10637,7 @@ $checklistqualitycontrol = [
                                                 <option value="Yes" @if($checklist15 && $checklist15->$response_name_manufacturing == "Yes") selected @endif>Yes</option>
                                                 <option value="No" @if($checklist15 && $checklist15->$response_name_manufacturing == "No") selected @endif>No</option>
                                                 <option value="N/A" @if($checklist15 && $checklist15->$response_name_manufacturing == "N/A") selected @endif>N/A</option>
-                                           
+
                                             </select>
                                         </div>
                                     </td>
@@ -10755,7 +10755,7 @@ $checklistqualitycontrol = [
                                                 <option value="Yes" @if($checklist16 && $checklist16->$response_name_analytical_research == "Yes") selected @endif>Yes</option>
                                                 <option value="No" @if($checklist16 && $checklist16->$response_name_analytical_research == "No") selected @endif>No</option>
                                                 <option value="N/A" @if($checklist16 && $checklist16->$response_name_analytical_research == "N/A") selected @endif>N/A</option>
-                                           
+
                                             </select>
                                         </div>
                                     </td>
@@ -10866,7 +10866,7 @@ $checklistqualitycontrol = [
                                                 <option value="Yes" @if($checklist17 && $checklist17->$response_name_formulation == "Yes") selected @endif>Yes</option>
                                                 <option value="No" @if($checklist17 && $checklist17->$response_name_formulation == "No") selected @endif>No</option>
                                                 <option value="N/A" @if($checklist17 && $checklist17->$response_name_formulation == "N/A") selected @endif>N/A</option>
-                                           
+
                                             </select>
                                         </div>
                                     </td>
@@ -10966,7 +10966,7 @@ $checklistqualitycontrol = [
                                         </div>
                                     </td>
                                 </tr>
-                                   
+
                                 <tr>
                                     <td class="flex text-center">1.3</td>
                                     <td> Have the inspectional issues been resolved?</td>
@@ -11029,7 +11029,7 @@ $checklistqualitycontrol = [
                                                 <option value="Yes" @if($auditAssessmentChecklist->data[4]['response'] == "Yes") selected @endif>Yes</option>
                                                 <option value="No" @if($auditAssessmentChecklist->data[4]['response'] == "No") selected @endif>No</option>
                                                 <option value="N/A" @if($auditAssessmentChecklist->data[4]['response'] == "N/A") selected @endif>N/A</option>
-                                            
+
                                             </select>
                                         </div>
                                     </td>
@@ -11040,7 +11040,7 @@ $checklistqualitycontrol = [
                                         </div>
                                     </td>
 
-                                    
+
                                 </tr>
 
                                 <tr>
@@ -11078,7 +11078,7 @@ $checklistqualitycontrol = [
                                             <textarea name="auditAssessmentChecklist[5][remarks]" style="border-radius: 7px; border: 1.5px solid black;">{{ array_key_exists('remarks', $auditAssessmentChecklist->data[5]) ? $auditAssessmentChecklist->data[5]['remarks'] : '' }}</textarea>
                                         </div>
                                     </td>
-                                </tr> 
+                                </tr>
                                 <tr>
                                     <td class="flex text-center">1.6.2</td>
                                     <td>
@@ -11129,7 +11129,7 @@ $checklistqualitycontrol = [
                                         </div>
                                     </td>
 
-                                    
+
                                 </tr>
 
 
@@ -11145,7 +11145,7 @@ $checklistqualitycontrol = [
                                                 <option value="Permanent" @if($auditAssessmentChecklist->data[8]['response'] == "Permanent") selected @endif>Yes</option>
                                                 <option value="Temporary" @if($auditAssessmentChecklist->data[8]['response'] == "Temporary") selected @endif>No</option>
                                                 <option value="Casual" @if($auditAssessmentChecklist->data[8]['response'] == "Casual") selected @endif>N/A</option>
-                                            
+
                                             </select>
                                         </div>
                                     </td>
@@ -11156,7 +11156,7 @@ $checklistqualitycontrol = [
                                         </div>
                                     </td>
 
-                                   
+
                                 </tr>
                                 <tr>
                                     <td class="flex text-center">1.8</td>
@@ -11170,7 +11170,7 @@ $checklistqualitycontrol = [
                                                 <option value="Yes" @if($auditAssessmentChecklist->data[9]['response'] == "Yes") selected @endif>Yes</option>
                                                 <option value="No" @if($auditAssessmentChecklist->data[9]['response'] == "No") selected @endif>No</option>
                                                 <option value="N/A" @if($auditAssessmentChecklist->data[9]['response'] == "N/A") selected @endif>N/A</option>
-                                            
+
                                             </select>
                                         </div>
                                     </td>
@@ -11206,7 +11206,7 @@ $checklistqualitycontrol = [
                                         </div>
                                     </td>
 
-                                    
+
                                 </tr>
                                 <tr>
                                     <td class="flex text-center">1.10</td>
@@ -11281,7 +11281,7 @@ $checklistqualitycontrol = [
                                         </div>
                                     </td>
 
-                                  
+
                                 </tr>
                                   <tr>
                                     <td class="flex text-center">1.10.3</td>
@@ -11324,7 +11324,7 @@ $checklistqualitycontrol = [
                                                 <option value="Yes" @if($auditAssessmentChecklist->data[15]['response'] == "Yes") selected @endif>Yes</option>
                                                 <option value="No" @if($auditAssessmentChecklist->data[15]['response'] == "No") selected @endif>No</option>
                                                 <option value="N/A" @if($auditAssessmentChecklist->data[15]['response'] == "N/A") selected @endif>N/A</option>
-                                            
+
                                             </select>
                                         </div>
                                     </td>
@@ -11352,7 +11352,7 @@ $checklistqualitycontrol = [
                                                 <option value="Yes" @if($auditAssessmentChecklist->data[16]['response'] == "Yes") selected @endif>Yes</option>
                                                 <option value="No" @if($auditAssessmentChecklist->data[16]['response'] == "No") selected @endif>No</option>
                                                 <option value="N/A" @if($auditAssessmentChecklist->data[16]['response'] == "N/A") selected @endif>N/A</option>
-                                            
+
                                             </select>
                                         </div>
                                     </td>
@@ -11380,7 +11380,7 @@ $checklistqualitycontrol = [
                                                 <option value="Yes" @if($auditAssessmentChecklist->data[17]['response'] == "Yes") selected @endif>Yes</option>
                                                 <option value="No" @if($auditAssessmentChecklist->data[17]['response'] == "No") selected @endif>No</option>
                                                 <option value="N/A" @if($auditAssessmentChecklist->data[17]['response'] == "N/A") selected @endif>N/A</option>
-                                            
+
                                             </select>
                                         </div>
                                     </td>
@@ -11423,13 +11423,13 @@ $checklistqualitycontrol = [
 
                                         <div
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                            <select name="auditPersonnelChecklist[0][response]" 
+                                            <select name="auditPersonnelChecklist[0][response]"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                 <option value="">Select an Option</option>
                                                 <option value="Yes" @if($auditPersonnelChecklist->data[0]['response'] == "Yes") selected @endif>Yes</option>
                                                 <option value="No" @if($auditPersonnelChecklist->data[0]['response'] == "No") selected @endif>No</option>
                                                 <option value="N/A" @if($auditPersonnelChecklist->data[0]['response'] == "N/A") selected @endif>N/A</option>
-                                            
+
                                             </select>
                                         </div>
 
@@ -11459,14 +11459,14 @@ $checklistqualitycontrol = [
                                                 <option value="Yes" @if($auditPersonnelChecklist->data[1]['response'] == "Yes") selected @endif>Yes</option>
                                                 <option value="No" @if($auditPersonnelChecklist->data[1]['response'] == "No") selected @endif>No</option>
                                                 <option value="N/A" @if($auditPersonnelChecklist->data[1]['response'] == "N/A") selected @endif>N/A</option>
-                                            
+
                                             </select>
                                         </div>
                                     </td>
 
                                     <td style="vertical-align: middle;">
                                         <div
-                                            style="margin: auto; display: flex; justify-content: center;">  
+                                            style="margin: auto; display: flex; justify-content: center;">
                                             <textarea name="auditPersonnelChecklist[1][remarks]" style="border-radius: 7px; border: 1.5px solid black;">{{ array_key_exists('remarks', $auditPersonnelChecklist->data[1]) ? $auditPersonnelChecklist->data[1]['remarks'] : '' }}</textarea>
                                         </div>
                                     </td>
@@ -11486,7 +11486,7 @@ $checklistqualitycontrol = [
                                                 <option value="Yes" @if($auditPersonnelChecklist->data[2]['response'] == "Yes") selected @endif>Yes</option>
                                                 <option value="No" @if($auditPersonnelChecklist->data[2]['response'] == "No") selected @endif>No</option>
                                                 <option value="N/A" @if($auditPersonnelChecklist->data[2]['response'] == "N/A") selected @endif>N/A</option>
-                                            
+
                                             </select>
                                         </div>
                                     </td>
@@ -11525,7 +11525,7 @@ $checklistqualitycontrol = [
                                                 <option value="Yes" @if($auditPersonnelChecklist->data[3]['response'] == "Yes") selected @endif>Yes</option>
                                                 <option value="No" @if($auditPersonnelChecklist->data[3]['response'] == "No") selected @endif>No</option>
                                                 <option value="N/A" @if($auditPersonnelChecklist->data[3]['response'] == "N/A") selected @endif>N/A</option>
-                                            
+
                                             </select>
                                         </div>
                                     </td>
@@ -11553,7 +11553,7 @@ $checklistqualitycontrol = [
                                                 <option value="Yes" @if($auditPersonnelChecklist->data[4]['response'] == "Yes") selected @endif>Yes</option>
                                                 <option value="No" @if($auditPersonnelChecklist->data[4]['response'] == "No") selected @endif>No</option>
                                                 <option value="N/A" @if($auditPersonnelChecklist->data[4]['response'] == "N/A") selected @endif>N/A</option>
-                                            
+
                                             </select>
                                         </div>
                                     </td>
@@ -11581,7 +11581,7 @@ $checklistqualitycontrol = [
                                                 <option value="Yes" @if($auditPersonnelChecklist->data[5]['response'] == "Yes") selected @endif>Yes</option>
                                                 <option value="No" @if($auditPersonnelChecklist->data[5]['response'] == "No") selected @endif>No</option>
                                                 <option value="N/A" @if($auditPersonnelChecklist->data[5]['response'] == "N/A") selected @endif>N/A</option>
-                                            
+
                                             </select>
                                         </div>
                                     </td>
@@ -11609,7 +11609,7 @@ $checklistqualitycontrol = [
                                                 <option value="Yes" @if($auditPersonnelChecklist->data[6]['response'] == "Yes") selected @endif>Yes</option>
                                                 <option value="No" @if($auditPersonnelChecklist->data[6]['response'] == "No") selected @endif>No</option>
                                                 <option value="N/A" @if($auditPersonnelChecklist->data[6]['response'] == "N/A") selected @endif>N/A</option>
-                                            
+
                                             </select>
                                         </div>
                                     </td>
@@ -11637,7 +11637,7 @@ $checklistqualitycontrol = [
                                                 <option value="Yes" @if($auditPersonnelChecklist->data[7]['response'] == "Yes") selected @endif>Yes</option>
                                                 <option value="No" @if($auditPersonnelChecklist->data[7]['response'] == "No") selected @endif>No</option>
                                                 <option value="N/A" @if($auditPersonnelChecklist->data[7]['response'] == "N/A") selected @endif>N/A</option>
-                                            
+
                                             </select>
                                         </div>
                                     </td>
@@ -11663,7 +11663,7 @@ $checklistqualitycontrol = [
                                                 <option value="Yes" @if($auditPersonnelChecklist->data[8]['response'] == "Yes") selected @endif>Yes</option>
                                                 <option value="No" @if($auditPersonnelChecklist->data[8]['response'] == "No") selected @endif>No</option>
                                                 <option value="N/A" @if($auditPersonnelChecklist->data[8]['response'] == "N/A") selected @endif>N/A</option>
-                                            
+
                                             </select>
                                         </div>
                                     </td>
@@ -11713,7 +11713,7 @@ $checklistqualitycontrol = [
                                                     <option value="Yes" @if($auditfacilityChecklist->data[0]['response'] == "Yes") selected @endif>Designed</option>
                                                     <option value="No" @if($auditfacilityChecklist->data[0]['response'] == "No") selected @endif>Adapted</option>
                                                     {{-- <option value="N/A" @if($auditfacilityChecklist->data[8]['response'] == "N/A") selected @endif>N/A</option> --}}
-                                                
+
 
                                                 </select>
                                             </div>
@@ -11764,7 +11764,7 @@ $checklistqualitycontrol = [
                                                 <option value="Yes" @if($auditfacilityChecklist->data[1]['response'] == "Yes") selected @endif>Yes</option>
                                                 <option value="No" @if($auditfacilityChecklist->data[1]['response'] == "No") selected @endif>No</option>
                                                 <option value="N/A" @if($auditfacilityChecklist->data[1]['response'] == "N/A") selected @endif>N/A</option>
-                                            
+
                                                 </select>
                                             </div>
                                         </td>
@@ -11795,7 +11795,7 @@ $checklistqualitycontrol = [
                                                     <option value="Yes" @if($auditfacilityChecklist->data[2]['response'] == "Yes") selected @endif>Yes</option>
                                                     <option value="No" @if($auditfacilityChecklist->data[2]['response'] == "No") selected @endif>No</option>
                                                     <option value="N/A" @if($auditfacilityChecklist->data[2]['response'] == "N/A") selected @endif>N/A</option>
-                                                
+
                                                 </select>
                                             </div>
                                         </td>
@@ -11826,7 +11826,7 @@ $checklistqualitycontrol = [
                                                     <option value="Yes" @if($auditfacilityChecklist->data[3]['response'] == "Yes") selected @endif>Yes</option>
                                                     <option value="No" @if($auditfacilityChecklist->data[3]['response'] == "No") selected @endif>No</option>
                                                     <option value="N/A" @if($auditfacilityChecklist->data[3]['response'] == "N/A") selected @endif>N/A</option>
-                                                
+
                                                 </select>
                                             </div>
                                         </td>
@@ -11857,7 +11857,7 @@ $checklistqualitycontrol = [
                                                     <option value="Yes" @if($auditfacilityChecklist->data[4]['response'] == "Yes") selected @endif>Yes</option>
                                                     <option value="No" @if($auditfacilityChecklist->data[4]['response'] == "No") selected @endif>No</option>
                                                     <option value="N/A" @if($auditfacilityChecklist->data[4]['response'] == "N/A") selected @endif>N/A</option>
-                                                
+
                                                 </select>
                                             </div>
                                         </td>
@@ -11888,7 +11888,7 @@ $checklistqualitycontrol = [
                                                     <option value="Yes" @if($auditfacilityChecklist->data[5]['response'] == "Yes") selected @endif>Yes</option>
                                                     <option value="No" @if($auditfacilityChecklist->data[5]['response'] == "No") selected @endif>No</option>
                                                     <option value="N/A" @if($auditfacilityChecklist->data[5]['response'] == "N/A") selected @endif>N/A</option>
-                                                
+
                                                 </select>
                                             </div>
                                         </td>
@@ -11918,7 +11918,7 @@ $checklistqualitycontrol = [
                                                     <option value="Yes" @if($auditfacilityChecklist->data[6]['response'] == "Yes") selected @endif>Yes</option>
                                                     <option value="No" @if($auditfacilityChecklist->data[6]['response'] == "No") selected @endif>No</option>
                                                     <option value="N/A" @if($auditfacilityChecklist->data[6]['response'] == "N/A") selected @endif>N/A</option>
-                                                
+
                                                 </select>
                                             </div>
                                         </td>
@@ -11967,7 +11967,7 @@ $checklistqualitycontrol = [
                                                     <option value="Yes" @if($auditfacilityChecklist->data[7]['response'] == "Yes") selected @endif>Yes</option>
                                                     <option value="No" @if($auditfacilityChecklist->data[7]['response'] == "No") selected @endif>No</option>
                                                     <option value="N/A" @if($auditfacilityChecklist->data[7]['response'] == "N/A") selected @endif>N/A</option>
-                                                
+
                                                 </select>
                                             </div>
                                         </td>
@@ -11994,7 +11994,7 @@ $checklistqualitycontrol = [
                                                     <option value="Yes" @if($auditfacilityChecklist->data[8]['response'] == "Yes") selected @endif>Yes</option>
                                                     <option value="No" @if($auditfacilityChecklist->data[8]['response'] == "No") selected @endif>No</option>
                                                     <option value="N/A" @if($auditfacilityChecklist->data[8]['response'] == "N/A") selected @endif>N/A</option>
-                                                
+
                                                 </select>
                                             </div>
                                         </td>
@@ -12021,7 +12021,7 @@ $checklistqualitycontrol = [
                                                     <option value="Yes" @if($auditfacilityChecklist->data[9]['response'] == "Yes") selected @endif>Yes</option>
                                                     <option value="No" @if($auditfacilityChecklist->data[9]['response'] == "No") selected @endif>No</option>
                                                     <option value="N/A" @if($auditfacilityChecklist->data[9]['response'] == "N/A") selected @endif>N/A</option>
-                                                
+
                                                 </select>
                                             </div>
                                         </td>
@@ -12065,7 +12065,7 @@ $checklistqualitycontrol = [
                                                     <option value="Yes" @if($auditfacilityChecklist->data[10]['response'] == "Yes") selected @endif>Yes</option>
                                                     <option value="No" @if($auditfacilityChecklist->data[10]['response'] == "No") selected @endif>No</option>
                                                     <option value="N/A" @if($auditfacilityChecklist->data[10]['response'] == "N/A") selected @endif>N/A</option>
-                                                
+
                                                 </select>
                                             </div>
                                         </td>
@@ -12092,7 +12092,7 @@ $checklistqualitycontrol = [
                                                     <option value="Yes" @if($auditfacilityChecklist->data[11]['response'] == "Yes") selected @endif>Yes</option>
                                                     <option value="No" @if($auditfacilityChecklist->data[11]['response'] == "No") selected @endif>No</option>
                                                     <option value="N/A" @if($auditfacilityChecklist->data[11]['response'] == "N/A") selected @endif>N/A</option>
-                                                
+
                                                 </select>
                                             </div>
                                         </td>
@@ -12118,7 +12118,7 @@ $checklistqualitycontrol = [
                                                     <option value="Yes" @if($auditfacilityChecklist->data[12]['response'] == "Yes") selected @endif>Yes</option>
                                                     <option value="No" @if($auditfacilityChecklist->data[12]['response'] == "No") selected @endif>No</option>
                                                     <option value="N/A" @if($auditfacilityChecklist->data[12]['response'] == "N/A") selected @endif>N/A</option>
-                                                
+
                                                 </select>
                                             </div>
                                         </td>
@@ -12145,7 +12145,7 @@ $checklistqualitycontrol = [
                                                     <option value="Yes" @if($auditfacilityChecklist->data[13]['response'] == "Yes") selected @endif>Yes</option>
                                                     <option value="No" @if($auditfacilityChecklist->data[13]['response'] == "No") selected @endif>No</option>
                                                     <option value="N/A" @if($auditfacilityChecklist->data[13]['response'] == "N/A") selected @endif>N/A</option>
-                                                
+
                                                 </select>
                                             </div>
                                         </td>
@@ -12171,7 +12171,7 @@ $checklistqualitycontrol = [
                                                     <option value="Yes" @if($auditfacilityChecklist->data[14]['response'] == "Yes") selected @endif>Yes</option>
                                                     <option value="No" @if($auditfacilityChecklist->data[14]['response'] == "No") selected @endif>No</option>
                                                     <option value="N/A" @if($auditfacilityChecklist->data[14]['response'] == "N/A") selected @endif>N/A</option>
-                                                
+
                                                 </select>
                                             </div>
                                         </td>
@@ -12198,7 +12198,7 @@ $checklistqualitycontrol = [
                                                     <option value="Yes" @if($auditfacilityChecklist->data[15]['response'] == "Yes") selected @endif>Yes</option>
                                                     <option value="No" @if($auditfacilityChecklist->data[15]['response'] == "No") selected @endif>No</option>
                                                     <option value="N/A" @if($auditfacilityChecklist->data[15]['response'] == "N/A") selected @endif>N/A</option>
-                                                
+
                                                 </select>
                                             </div>
                                         </td>
@@ -12225,7 +12225,7 @@ $checklistqualitycontrol = [
                                                     <option value="Yes" @if($auditfacilityChecklist->data[16]['response'] == "Yes") selected @endif>Yes</option>
                                                     <option value="No" @if($auditfacilityChecklist->data[16]['response'] == "No") selected @endif>No</option>
                                                     <option value="N/A" @if($auditfacilityChecklist->data[16]['response'] == "N/A") selected @endif>N/A</option>
-                                                
+
                                                 </select>
                                             </div>
                                         </td>
@@ -12252,7 +12252,7 @@ $checklistqualitycontrol = [
                                                     <option value="Yes" @if($auditfacilityChecklist->data[17]['response'] == "Yes") selected @endif>Yes</option>
                                                     <option value="No" @if($auditfacilityChecklist->data[17]['response'] == "No") selected @endif>No</option>
                                                     <option value="N/A" @if($auditfacilityChecklist->data[17]['response'] == "N/A") selected @endif>N/A</option>
-                                                
+
                                                 </select>
                                             </div>
                                         </td>
@@ -12279,7 +12279,7 @@ $checklistqualitycontrol = [
                                                     <option value="Yes" @if($auditfacilityChecklist->data[18]['response'] == "Yes") selected @endif>Yes</option>
                                                     <option value="No" @if($auditfacilityChecklist->data[18]['response'] == "No") selected @endif>No</option>
                                                     <option value="N/A" @if($auditfacilityChecklist->data[18]['response'] == "N/A") selected @endif>N/A</option>
-                                                
+
                                                 </select>
                                             </div>
                                         </td>
@@ -12306,7 +12306,7 @@ $checklistqualitycontrol = [
                                                     <option value="Yes" @if($auditfacilityChecklist->data[19]['response'] == "Yes") selected @endif>Yes</option>
                                                     <option value="No" @if($auditfacilityChecklist->data[19]['response'] == "No") selected @endif>No</option>
                                                     <option value="N/A" @if($auditfacilityChecklist->data[19]['response'] == "N/A") selected @endif>N/A</option>
-                                                
+
                                                 </select>
                                             </div>
                                         </td>
@@ -12333,7 +12333,7 @@ $checklistqualitycontrol = [
                                                     <option value="Yes" @if($auditfacilityChecklist->data[20]['response'] == "Yes") selected @endif>Yes</option>
                                                     <option value="No" @if($auditfacilityChecklist->data[20]['response'] == "No") selected @endif>No</option>
                                                     <option value="N/A" @if($auditfacilityChecklist->data[20]['response'] == "N/A") selected @endif>N/A</option>
-                                                
+
                                                 </select>
                                             </div>
                                         </td>
@@ -12360,7 +12360,7 @@ $checklistqualitycontrol = [
                                                     <option value="Yes" @if($auditfacilityChecklist->data[21]['response'] == "Yes") selected @endif>Yes</option>
                                                     <option value="No" @if($auditfacilityChecklist->data[21]['response'] == "No") selected @endif>No</option>
                                                     <option value="N/A" @if($auditfacilityChecklist->data[21]['response'] == "N/A") selected @endif>N/A</option>
-                                                
+
                                                 </select>
                                             </div>
                                         </td>
@@ -12387,7 +12387,7 @@ $checklistqualitycontrol = [
                                                     <option value="Yes" @if($auditfacilityChecklist->data[22]['response'] == "Yes") selected @endif>Yes</option>
                                                     <option value="No" @if($auditfacilityChecklist->data[22]['response'] == "No") selected @endif>No</option>
                                                     <option value="N/A" @if($auditfacilityChecklist->data[22]['response'] == "N/A") selected @endif>N/A</option>
-                                                
+
                                                 </select>
                                             </div>
                                         </td>
@@ -12414,7 +12414,7 @@ $checklistqualitycontrol = [
                                                     <option value="Yes" @if($auditfacilityChecklist->data[23]['response'] == "Yes") selected @endif>Yes</option>
                                                     <option value="No" @if($auditfacilityChecklist->data[23]['response'] == "No") selected @endif>No</option>
                                                     <option value="N/A" @if($auditfacilityChecklist->data[23]['response'] == "N/A") selected @endif>N/A</option>
-                                                
+
                                                 </select>
                                             </div>
                                         </td>
@@ -12441,7 +12441,7 @@ $checklistqualitycontrol = [
                                                     <option value="Yes" @if($auditfacilityChecklist->data[24]['response'] == "Yes") selected @endif>Yes</option>
                                                     <option value="No" @if($auditfacilityChecklist->data[24]['response'] == "No") selected @endif>No</option>
                                                     <option value="N/A" @if($auditfacilityChecklist->data[24]['response'] == "N/A") selected @endif>N/A</option>
-                                                
+
                                                 </select>
                                             </div>
                                         </td>
@@ -12468,7 +12468,7 @@ $checklistqualitycontrol = [
                                                     <option value="Yes" @if($auditfacilityChecklist->data[25]['response'] == "Yes") selected @endif>Yes</option>
                                                     <option value="No" @if($auditfacilityChecklist->data[25]['response'] == "No") selected @endif>No</option>
                                                     <option value="N/A" @if($auditfacilityChecklist->data[25]['response'] == "N/A") selected @endif>N/A</option>
-                                                
+
                                                 </select>
                                             </div>
                                         </td>
@@ -12495,7 +12495,7 @@ $checklistqualitycontrol = [
                                                     <option value="Yes" @if($auditfacilityChecklist->data[26]['response'] == "Yes") selected @endif>Yes</option>
                                                     <option value="No" @if($auditfacilityChecklist->data[26]['response'] == "No") selected @endif>No</option>
                                                     <option value="N/A" @if($auditfacilityChecklist->data[26]['response'] == "N/A") selected @endif>N/A</option>
-                                                
+
                                                 </select>
                                             </div>
                                         </td>
@@ -12522,7 +12522,7 @@ $checklistqualitycontrol = [
                                                     <option value="Yes" @if($auditfacilityChecklist->data[27]['response'] == "Yes") selected @endif>Yes</option>
                                                     <option value="No" @if($auditfacilityChecklist->data[27]['response'] == "No") selected @endif>No</option>
                                                     <option value="N/A" @if($auditfacilityChecklist->data[27]['response'] == "N/A") selected @endif>N/A</option>
-                                                
+
                                                 </select>
                                             </div>
                                         </td>
@@ -12549,7 +12549,7 @@ $checklistqualitycontrol = [
                                                     <option value="Yes" @if($auditfacilityChecklist->data[28]['response'] == "Yes") selected @endif>Yes</option>
                                                     <option value="No" @if($auditfacilityChecklist->data[28]['response'] == "No") selected @endif>No</option>
                                                     <option value="N/A" @if($auditfacilityChecklist->data[28]['response'] == "N/A") selected @endif>N/A</option>
-                                                
+
                                                 </select>
                                             </div>
                                         </td>
@@ -12603,7 +12603,7 @@ $checklistqualitycontrol = [
                                                         <option value="Yes" @if($auditMachinesChecklist->data[0]['response'] == "Yes") selected @endif>Multi</option>
                                                     <option value="No" @if($auditMachinesChecklist->data[0]['response'] == "No") selected @endif>Single</option>
                                                     {{-- <option value="N/A" @if($auditMachinesChecklist->data[28]['response'] == "N/A") selected @endif>N/A</option> --}}
-                                                
+
                                                     </select>
                                                 </div>
 
@@ -12636,7 +12636,7 @@ $checklistqualitycontrol = [
                                                         <option value="Yes" @if($auditMachinesChecklist->data[1]['response'] == "Yes") selected @endif>Yes</option>
                                                         <option value="No" @if($auditMachinesChecklist->data[1]['response'] == "No") selected @endif>No</option>
                                                         <option value="N/A" @if($auditMachinesChecklist->data[1]['response'] == "N/A") selected @endif>N/A</option>
-                                                    
+
                                                     </select>
                                                 </div>
                                             </td>
@@ -12666,7 +12666,7 @@ $checklistqualitycontrol = [
                                                         <option value="Yes" @if($auditMachinesChecklist->data[2]['response'] == "Yes") selected @endif>Yes</option>
                                                         <option value="No" @if($auditMachinesChecklist->data[2]['response'] == "No") selected @endif>No</option>
                                                         <option value="N/A" @if($auditMachinesChecklist->data[2]['response'] == "N/A") selected @endif>N/A</option>
-                                                    
+
                                                     </select>
                                                 </div>
                                             </td>
@@ -12693,7 +12693,7 @@ $checklistqualitycontrol = [
                                                         <option value="Yes" @if($auditMachinesChecklist->data[3]['response'] == "Yes") selected @endif>Yes</option>
                                                         <option value="No" @if($auditMachinesChecklist->data[3]['response'] == "No") selected @endif>No</option>
                                                         <option value="N/A" @if($auditMachinesChecklist->data[3]['response'] == "N/A") selected @endif>N/A</option>
-                                                    
+
                                                     </select>
                                                 </div>
                                             </td>
@@ -12720,7 +12720,7 @@ $checklistqualitycontrol = [
                                                         <option value="Yes" @if($auditMachinesChecklist->data[4]['response'] == "Yes") selected @endif>Yes</option>
                                                         <option value="No" @if($auditMachinesChecklist->data[4]['response'] == "No") selected @endif>No</option>
                                                         <option value="N/A" @if($auditMachinesChecklist->data[4]['response'] == "N/A") selected @endif>N/A</option>
-                                                    
+
                                                     </select>
                                                 </div>
                                             </td>
@@ -12747,7 +12747,7 @@ $checklistqualitycontrol = [
                                                         <option value="Yes" @if($auditMachinesChecklist->data[5]['response'] == "Yes") selected @endif>Yes</option>
                                                         <option value="No" @if($auditMachinesChecklist->data[5]['response'] == "No") selected @endif>No</option>
                                                         <option value="N/A" @if($auditMachinesChecklist->data[5]['response'] == "N/A") selected @endif>N/A</option>
-                                                    
+
                                                     </select>
                                                 </div>
                                             </td>
@@ -12774,7 +12774,7 @@ $checklistqualitycontrol = [
                                                         <option value="Yes" @if($auditMachinesChecklist->data[6]['response'] == "Yes") selected @endif>Yes</option>
                                                         <option value="No" @if($auditMachinesChecklist->data[6]['response'] == "No") selected @endif>No</option>
                                                         <option value="N/A" @if($auditMachinesChecklist->data[6]['response'] == "N/A") selected @endif>N/A</option>
-                                                    
+
                                                     </select>
                                                 </div>
                                             </td>
@@ -12801,7 +12801,7 @@ $checklistqualitycontrol = [
                                                         <option value="Yes" @if($auditMachinesChecklist->data[7]['response'] == "Yes") selected @endif>Yes</option>
                                                         <option value="No" @if($auditMachinesChecklist->data[7]['response'] == "No") selected @endif>No</option>
                                                         <option value="N/A" @if($auditMachinesChecklist->data[7]['response'] == "N/A") selected @endif>N/A</option>
-                                                    
+
                                                     </select>
                                                 </div>
                                             </td>
@@ -12828,7 +12828,7 @@ $checklistqualitycontrol = [
                                                         <option value="Yes" @if($auditMachinesChecklist->data[8]['response'] == "Yes") selected @endif>Yes</option>
                                                         <option value="No" @if($auditMachinesChecklist->data[8]['response'] == "No") selected @endif>No</option>
                                                         <option value="N/A" @if($auditMachinesChecklist->data[8]['response'] == "N/A") selected @endif>N/A</option>
-                                                    
+
                                                     </select>
                                                 </div>
                                             </td>
@@ -12855,7 +12855,7 @@ $checklistqualitycontrol = [
                                                         <option value="Yes" @if($auditMachinesChecklist->data[9]['response'] == "Yes") selected @endif>Yes</option>
                                                         <option value="No" @if($auditMachinesChecklist->data[9]['response'] == "No") selected @endif>No</option>
                                                         <option value="N/A" @if($auditMachinesChecklist->data[9]['response'] == "N/A") selected @endif>N/A</option>
-                                                    
+
                                                     </select>
                                                 </div>
                                             </td>
@@ -12882,7 +12882,7 @@ $checklistqualitycontrol = [
                                                         <option value="Yes" @if($auditMachinesChecklist->data[10]['response'] == "Yes") selected @endif>Yes</option>
                                                         <option value="No" @if($auditMachinesChecklist->data[10]['response'] == "No") selected @endif>No</option>
                                                         <option value="N/A" @if($auditMachinesChecklist->data[10]['response'] == "N/A") selected @endif>N/A</option>
-                                                    
+
                                                     </select>
                                                 </div>
                                             </td>
@@ -12909,7 +12909,7 @@ $checklistqualitycontrol = [
                                                         <option value="Yes" @if($auditMachinesChecklist->data[11]['response'] == "Yes") selected @endif>Yes</option>
                                                         <option value="No" @if($auditMachinesChecklist->data[11]['response'] == "No") selected @endif>No</option>
                                                         <option value="N/A" @if($auditMachinesChecklist->data[11]['response'] == "N/A") selected @endif>N/A</option>
-                                                    
+
                                                     </select>
                                                 </div>
                                             </td>
@@ -12954,7 +12954,7 @@ $checklistqualitycontrol = [
                                                         <option value="Yes" @if($auditMachinesChecklist->data[12]['response'] == "Yes") selected @endif>Yes</option>
                                                         <option value="No" @if($auditMachinesChecklist->data[12]['response'] == "No") selected @endif>No</option>
                                                         <option value="N/A" @if($auditMachinesChecklist->data[12]['response'] == "N/A") selected @endif>N/A</option>
-                                                    
+
                                                     </select>
                                                 </div>
                                             </td>
@@ -12981,7 +12981,7 @@ $checklistqualitycontrol = [
                                                         <option value="Yes" @if($auditMachinesChecklist->data[13]['response'] == "Yes") selected @endif>Yes</option>
                                                         <option value="No" @if($auditMachinesChecklist->data[13]['response'] == "No") selected @endif>No</option>
                                                         <option value="N/A" @if($auditMachinesChecklist->data[13]['response'] == "N/A") selected @endif>N/A</option>
-                                                    
+
                                                     </select>
                                                 </div>
                                             </td>
@@ -13009,7 +13009,7 @@ $checklistqualitycontrol = [
                                                         <option value="Yes" @if($auditMachinesChecklist->data[14]['response'] == "Yes") selected @endif>Yes</option>
                                                         <option value="No" @if($auditMachinesChecklist->data[14]['response'] == "No") selected @endif>No</option>
                                                         <option value="N/A" @if($auditMachinesChecklist->data[14]['response'] == "N/A") selected @endif>N/A</option>
-                                                    
+
                                                     </select>
                                                 </div>
                                             </td>
@@ -13036,7 +13036,7 @@ $checklistqualitycontrol = [
                                                         <option value="Yes" @if($auditMachinesChecklist->data[15]['response'] == "Yes") selected @endif>Yes</option>
                                                         <option value="No" @if($auditMachinesChecklist->data[15]['response'] == "No") selected @endif>No</option>
                                                         <option value="N/A" @if($auditMachinesChecklist->data[15]['response'] == "N/A") selected @endif>N/A</option>
-                                                    
+
                                                     </select>
                                                 </div>
                                             </td>
@@ -13081,7 +13081,7 @@ $checklistqualitycontrol = [
                                                         <option value="Yes" @if($auditMachinesChecklist->data[16]['response'] == "Yes") selected @endif>Yes</option>
                                                         <option value="No" @if($auditMachinesChecklist->data[16]['response'] == "No") selected @endif>No</option>
                                                         <option value="N/A" @if($auditMachinesChecklist->data[16]['response'] == "N/A") selected @endif>N/A</option>
-                                                    
+
                                                     </select>
                                                 </div>
                                             </td>
@@ -13108,7 +13108,7 @@ $checklistqualitycontrol = [
                                                         <option value="Yes" @if($auditMachinesChecklist->data[17]['response'] == "Yes") selected @endif>Yes</option>
                                                         <option value="No" @if($auditMachinesChecklist->data[17]['response'] == "No") selected @endif>No</option>
                                                         <option value="N/A" @if($auditMachinesChecklist->data[17]['response'] == "N/A") selected @endif>N/A</option>
-                                                    
+
                                                     </select>
                                                 </div>
                                             </td>
@@ -13135,7 +13135,7 @@ $checklistqualitycontrol = [
                                                         <option value="Yes" @if($auditMachinesChecklist->data[18]['response'] == "Yes") selected @endif>Yes</option>
                                                         <option value="No" @if($auditMachinesChecklist->data[18]['response'] == "No") selected @endif>No</option>
                                                         <option value="N/A" @if($auditMachinesChecklist->data[18]['response'] == "N/A") selected @endif>N/A</option>
-                                                    
+
                                                     </select>
                                                 </div>
                                             </td>
@@ -13230,7 +13230,7 @@ $checklistqualitycontrol = [
                                                                 <option value="Yes" {{ ($auditProductionChecklist->data[$index]['response'] ?? '') == "Yes" ? 'selected' : '' }}>Yes</option>
                                                                 <option value="No" {{ ($auditProductionChecklist->data[$index]['response'] ?? '') == "No" ? 'selected' : '' }}>No</option>
                                                                 <option value="N/A" {{ ($auditProductionChecklist->data[$index]['response'] ?? '') == "N/A" ? 'selected' : '' }}>N/A</option>
-                                                        
+
                                                             </select>
                                                             @endif
                                                         </div>
@@ -13281,7 +13281,7 @@ $checklistqualitycontrol = [
                                 ['sr_no' => '6.21', 'question' => 'Are printed/ coded packing materials (if used) stored in secured area or with restricted access?', 'input_type' => 'select'],
                             ];
                             @endphp
-                            
+
                  <div class="sub-head">
                 Checklist for Materials Control
                 </div>
@@ -13334,7 +13334,7 @@ $checklistqualitycontrol = [
                         </div>
                     </div>
                 </div>
-              
+
                     @php
                 $questions = [
                     ['sr_no' => '7.1', 'question' => 'Is Quality Control (QC) independent of Production?', 'input_type' => 'select'],
@@ -13445,7 +13445,7 @@ $checklistqualitycontrol = [
                         ['sr_no' => '8.16', 'question' => 'Are TSE/BSE certificates are available? If Yes provide the copy of certificate.', 'input_type' => 'select'],
                     ];
                     @endphp
-                    
+
                     <div class="sub-head">
                 Checklist for Quality Assurance
                 </div>
@@ -13521,7 +13521,7 @@ $checklistqualitycontrol = [
                     ['sr_no' => '9.10', 'question' => 'What details do your place on your dispatch labels? Give details.', 'input_type' => 'text'],
                 ];
                 @endphp
-                
+
                 <div class="sub-head">
                     Checklist for Packaging, Labelling and Shipping
                 </div>
@@ -13578,7 +13578,7 @@ $checklistqualitycontrol = [
                         </div>
                     </div>
                 </div>
-                
+
                 @php
                 $questions = [
                     ['sr_no' => '10.1', 'question' => 'Do you have an operational management system(s) for Safety, Health and Environment (SHE)?', 'input_type' => 'select'],
@@ -13602,7 +13602,7 @@ $checklistqualitycontrol = [
                     ['sr_no' => '10.11', 'question' => 'Are all extinguishers fully charged and operable?', 'input_type' => 'select'],
                 ];
                 @endphp
-                
+
                 <div class="sub-head">
                     Checklist for Safety, Health and Environment (SHE)
                 </div>
@@ -13659,7 +13659,7 @@ $checklistqualitycontrol = [
                         </div>
                     </div>
                 </div>
-                
+
                             </div>
                                 <div class="col-md-12 mb-4">
                                 <div class="group-input">

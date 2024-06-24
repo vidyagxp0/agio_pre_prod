@@ -341,7 +341,7 @@
             });
         });
     </script>
-    
+
     <script>
         $(document).ready(function() {
             $('#ObservationAdd').click(function(e) {
@@ -667,8 +667,7 @@
                                                 reason in "Due Date Extension Justification" data field.</small></div>
                                         <div class="calenderauditee">
                                             <input type="text" id="due_date" readonly placeholder="DD-MM-YYYY" />
-                                            <input type="date" name="due_date"
-                                                min="{{ \Carbon\Carbon::now()->format('d-M-Y') }}" class="hide-input"
+                                            <input type="date" name="due_date" min="{{ \Carbon\Carbon::now()->format('d-M-Y') }}" class="hide-input"
                                                 oninput="handleDateInput(this, 'due_date')" />
                                         </div>
                                     </div>
@@ -3999,7 +3998,7 @@
                                                 </thead>
                                                 <tbody>
                                                     <td><input disabled type="text" name="investigationTeam[]" value="1"></td>
-                                                    <td> 
+                                                    <td>
                                                         <select name="investigationTeam[0][teamMember]" id="">
                                                             <option value="">-- Select --</option>
                                                             @if(!empty($users))
@@ -4090,7 +4089,7 @@
                                                             <option value="">S-Systems</option>
                                                         </select>
                                                     </td>
-                                                    <td> 
+                                                    <td>
                                                         <select name="rootCauseData[0][rooCauseSubCategory]" id="Root_Cause_Sub_Category_Select">
                                                             <option value="">-- Select --</option>
 

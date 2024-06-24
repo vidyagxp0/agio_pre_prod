@@ -202,7 +202,7 @@
             <button class="cctablinks" onclick="openCity(event, 'CCForm16')">Under Addendum Verification</button> --}}
             <button class="cctablinks" onclick="openCity(event, 'CCForm22')">Activity Log</button>
          </div>
- 
+
          <form action="{{ route('update', $data->id) }}" method="POST" enctype="multipart/form-data">
             @csrf
 
@@ -234,7 +234,7 @@
                                 <div class="group-input">
                                     <label for="record_number"><b>Record Number</b></label>
                                     <input disabled type="text" name="record_number" id="record_number"
-                                        value="{{ $data->initiator_group_code }}/OOT/{{ date('y') }}/{{ $record_number }}">
+                                        value="{{ Helpers::getDivisionName($data->division_id) }}/OOT/{{ date('Y') }}/{{ str_pad($data->record_number, 4, '0', STR_PAD_LEFT) }}">
 
                                 </div>
                             </div>
@@ -276,9 +276,9 @@
                                     {{-- <p class="text-primary"> last date this record should be closed by</p> --}}
 
                                     <div class="calenderauditee">
-                                        <input type="text" id="due_date"  value="{{ Helpers::getdateFormat($data->due_date) }}" disabled />
-                                        <input type="date" name="due_date" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input" disabled
-                                            oninput="handleDateInput(this, 'due_date')" />
+                                        <input type="text" id="due_date"  value="{{ Helpers::getdateFormat($data->due_date) }}" readonly/>
+                                        <input type="date" name="due_date" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input"
+                                            oninput="handleDateInput(this, 'due_date')" readonly/>
                                     </div>
 
                                 </div>
@@ -290,7 +290,7 @@
                                             class="text-danger"></span></label>
 
                                     <select name="severity_level" id="severity_level">
-                                        <option>---select---</option>
+                                        <option value="0"> select</option>
                                         <option value="major" @if ($data->severity_level == 'major') selected @endif>Major
                                         </option>
                                         <option value="minor" @if ($data->severity_level == 'minor') selected @endif>Minor
@@ -306,81 +306,61 @@
                                 <div class="group-input">
                                     <label for="Short Description">Initiator Group <span
                                             class="text-danger"></span></label>
-                                    {{-- <select name="initiator_group">
-                                        <option selected disabled>---select---</option>
-                                        @foreach (Helpers::getInitiatorGroups() as $code => $initiator_group)
-                                           
-                                            <option value="initiator_group"
-                                                @if ($data->initiator_group == 'initiator_group') selected @endif>
-                                                {{ $data->$initiator_group }}</option>
-                                        @endforeach
-                                    </select> --}}
 
-                                    <select name="initiator_group"
-                                        {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}
-                                        id="selectedOptions" {{ Helpers::disabledErrataFields($data->stage) }}>
-                                        <option value="CQA" @if ($data->Department == 'CQA') selected @endif>
-                                            Corporate
-                                            Quality Assurance</option>
-                                        <option value="QAB" @if ($data->Department == 'QAB') selected @endif>
-                                            Quality
-                                            Assurance Biopharma</option>
-                                        <option value="CQC" @if ($data->Department == 'CQC') selected @endif>
-                                            Central
-                                            Quality Control</option>
-                                        <option value="CQC" @if ($data->Department == 'CQC') selected @endif>
-                                            Manufacturing
+                                    <select name="initiator_group" id="initiator_group">
+                                        <option value="CQA"
+                                            @if ($data->initiator_group == 'CQA') selected @endif>Corporate Quality Assurance</option>
+                                        <option value="QA"
+                                            @if ($data->initiator_group == 'QA') selected @endif>Quality Assurance</option>
+                                        <option value="QC"
+                                            @if ($data->initiator_group == 'QC') selected @endif>Quality Control</option>
+                                        <option value="QM"
+                                            @if ($data->initiator_group == 'QM') selected @endif>Quality Control (Microbiology department)
                                         </option>
-                                        <option value="PSG" @if ($data->Department == 'PSG') selected @endif>
-                                            Plasma
-                                            Sourcing Group</option>
-                                        <option value="CS" @if ($data->Department == 'CS') selected @endif>
-                                            Central
-                                            Stores</option>
-                                        <option value="ITG" @if ($data->Department == 'ITG') selected @endif>
-                                            Information
-                                            Technology Group</option>
-                                        <option value="MM" @if ($data->Department == 'MM') selected @endif>
-                                            Molecular
-                                            Medicine</option>
-                                        <option value="CL" @if ($data->Department == 'CL') selected @endif>
-                                            Central
-                                            Laboratory</option>
-                                        <option value="TT" @if ($data->Department == 'TT') selected @endif>Tech
-                                            Team</option>
-                                        <option value="QA" @if ($data->Department == 'QA') selected @endif>
-                                            Quality
-                                            Assurance</option>
-                                        <option value="QM" @if ($data->Department == 'QM') selected @endif>
-                                            Quality
-                                            Management</option>
-                                        <option value="IA" @if ($data->Department == 'IA') selected @endif>IT
-                                            Administration</option>
-                                        <option value="ACC" @if ($data->Department == 'ACC') selected @endif>
-                                            Accounting
+                                        <option value="PG"
+                                            @if ($data->initiator_group == 'PG') selected @endif>Production General</option>
+                                        <option value="PL"
+                                            @if ($data->initiator_group == 'PL') selected @endif>Production Liquid Orals</option>
+                                        <option value="PT"
+                                            @if ($data->initiator_group == 'PT') selected @endif>Production Tablet and Powder</option>
+                                        <option value="PE"
+                                            @if ($data->initiator_group == 'PE') selected @endif>Production External (Ointment, Gels, Creams and Liquid)</option>
+                                        <option value="PC"  @if ($data->initiator_group == 'PC') selected @endif>Production Capsules</option>
+                                        <option value="PI"  @if ($data->initiator_group == 'PI') selected @endif>Production Injectable</option>
+                                        <option value="EN"  @if ($data->initiator_group == 'EN') selected @endif>Engineering</option>
+                                        <option value="HR"  @if ($data->initiator_group == 'HR') selected @endif>Human Resource</option>
+                                        <option value="ST"  @if ($data->initiator_group == 'ST') selected @endif>Store</option>
+                                        <option value="IT" @if ($data->initiator_group == 'IT') selected @endif>Electronic Data Processing
                                         </option>
-                                        <option value="LOG" @if ($data->Department == 'LOG') selected @endif>
-                                            Logistics
+                                        <option value="FD" @if ($data->initiator_group == 'FD') selected @endif>Formulation  Development
                                         </option>
-                                        <option value="SM" @if ($data->Department == 'SM') selected @endif>
-                                            Senior
-                                            Management</option>
-                                        <option value="BA" @if ($data->Department == 'BA') selected @endif>
-                                            Business
-                                            Administration</option>
+                                        <option value="AL"  @if ($data->initiator_group == 'AL') selected @endif>Analytical research and Development Laboratory
+                                        </option>
+                                        <option value="PD"   @if ($data->initiator_group == 'PD') selected @endif>Packaging Development
+                                        </option>
 
+                                        <option value="PU"  @if ($data->initiator_group == 'PU') selected @endif>Purchase Department
+                                        </option>
+                                        <option value="DC"   @if ($data->initiator_group == 'DC') selected @endif>Document Cell
+                                        </option>
+                                        <option value="RA"    @if ($data->initiator_group == 'RA') selected @endif>Regulatory Affairs
+                                        </option>
+                                        <option value="PV"    @if ($data->initiator_group == 'PV') selected @endif>Pharmacovigilance
+                                        </option>
                                     </select>
                                 </div>
                             </div>
 
+
+
                             <div class="col-lg-6">
                                 <div class="group-input">
-                                    <label for="Short Description">Initiator Group Code <span
-                                            class="text-danger"></span></label>
-                                    {{-- <input type="text" name="initiator_group_code" value="{{ $data->initiator_group_code }}" readonly> --}}
-                                    <input type="text"
-                                        name="initiator_group_code"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}
-                                        value="{{ $data->initiator_group_code }}" id="initiator_group_code">
+                                    <label for="Initiation Group Code">Initiation Department Code</label>
+                                    <input type="text" name="initiator_group_code"
+                                        value="{{ $data->initiator_group_code }}" id="initiator_group_code"
+                                        readonly>
+                                    {{-- <div class="default-name"> <span
+                                    id="initiator_group_code">{{ $data->Initiator_Group }}</span></div> --}}
                                 </div>
                             </div>
 
@@ -465,7 +445,7 @@
                                     <label for="Short Description">Nature Of Change<span
                                             class="text-danger"></span></label>
                                     <select multiple id="natureOfChange" name="nature_of_change">
-                                        
+
                                         <option value="temporary" @if ($data->nature_of_change == 'temporary') selected @endif>
                                             Temporary</option>
 
@@ -622,12 +602,12 @@
                                                             <input type="date" class="numberDetail"
                                                                 name="product_materiel[{{ $loop->index }}][m_f_g_date]" value="{{ isset($gridData['m_f_g_date']) ?  $gridData['m_f_g_date'] : '' }}">
                                                         </td>
-                                                        
+
                                                         <td>
                                                             <input type="date" class="numberDetail"
                                                                 name="product_materiel[{{ $loop->index }}][expiry_date]"
                                                                 value="{{ isset($gridData['expiry_date']) ? $gridData['expiry_date'] : '' }}" min="{{ \Carbon\Carbon::now()->format('d-M-Y') }}" class="hide-input"
-                                                                oninput="handleDateInput(this, 'expiry_date')">                                                            
+                                                                oninput="handleDateInput(this, 'expiry_date')">
                                                         </td>
 
                                                         <td>
@@ -1033,7 +1013,7 @@
                             <div class="col-lg-6">
                                 <div class="group-input">
                                     <label for="search"> Head QA/Designee <span class="text-danger"></span>  </label>
-                                
+
                                     <select id="select-state" placeholder="Select..." name="inv_head_designee">
                                         {{-- <option value="">Select a value</option> --}}
                                         @foreach ($users as $key => $value)
@@ -1183,7 +1163,7 @@
                                     <label for="search">
                                         Analyst Name <span class="text-danger"></span>
                                     </label>
-                                   
+
                                     <select id="select-state" placeholder="Select..." name="sta_bat_analyst_name">
                                         <option value="">Select a value</option>
                                         @foreach ($users as $key => $value)
@@ -1198,7 +1178,7 @@
                                     <label for="search">
                                         QC/QA Head/Designee <span class="text-danger"></span>
                                     </label>
-                                    
+
                                     <select id="select-state" placeholder="Select..." name="qa_head_designee">
                                         <option value="">Select a value</option>
                                         @foreach ($users as $key => $value)
@@ -2063,7 +2043,7 @@
                                                                 style="border-radius: 7px; border: 1.5px solid black;">{{ $checkList->remark_twenty_five }}</textarea>
                                                         </div>
                                                     </td>
-                                                    
+
 
                                                 </tr>
                                                 <tr>
@@ -2698,7 +2678,7 @@
                                 <div class="group-input ">
                                     <label for="Last_due-date">Last Due Date <span class="text-danger"></span></label>
                                 <input type="date" id="date" name="last_due_date" value="{{ $data->last_due_date ?? '' }}">
-                                    
+
                                     {{-- <input type="date" name="last_due_date" value="{{ $data->last_due_date }}"> --}}
                                     {{-- <input type="date" name="due_date" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input" hidden oninput="handleDateInput(this, 'due_date')" /> --}}
                                 </div>
@@ -3033,7 +3013,7 @@
                         <div class="col-lg-12">
                             <div class="group-input">
                                 <label for="closure attachment">Closure Attachment </label>
-                                
+
                                 <div class="file-attachment-field">
                                     <div class="file-attachment-list" id="doc_closure">
                                         @if ($data->doc_closure)
@@ -3070,7 +3050,7 @@
                 </div>
                 </di>
                 {{-- </div>
-                    
+
                 <!-- ==============Tab-4 start=============== -->
                 <div id="CCForm4" class="inner-block cctabcontent">
                     <div class="inner-block-content">
@@ -3297,7 +3277,7 @@
                             </div>
 
 
-                            
+
 
 
                         </div>
@@ -3444,7 +3424,7 @@
                                 </div>
                             </div>
 
-                        
+
 
                         </div>
                         <div class="button-block">
@@ -3528,7 +3508,7 @@
                                 </div>
                             </div>
 
-                           
+
 
 
                         </div>
@@ -3712,7 +3692,7 @@
                                 </div>
                             </div>
 
-                          
+
 
 
 
@@ -3899,7 +3879,7 @@
                                 </div>
                             </div>
 
-                            
+
 
 
 
@@ -3996,7 +3976,7 @@
                             </div>
 
 
-                       
+
 
                         </div>
                         <div class="button-block">
@@ -4089,14 +4069,14 @@
                             </div>
 
 
-                            
+
 
 
                         </div>
                         <div class="button-block">
                         <button type="submit" class="saveButton">Save</button>
                             <button type="button" class="backButton" onclick="previousStep()">Back</button>
-                            <button type="button" class="nextButton" onclick="nextStep()">Next</button>                       
+                            <button type="button" class="nextButton" onclick="nextStep()">Next</button>
                             <button type="button"> <a class="text-white" href="{{ url('rcms/qms-dashboard') }}">Exit
                                 </a> </button>
                         </div>
@@ -4174,7 +4154,7 @@
                         <div class="button-block">
                         <button type="submit" class="saveButton">Save</button>
                             <button type="button" class="backButton" onclick="previousStep()">Back</button>
-                            <button type="button" class="nextButton" onclick="nextStep()">Next</button>  
+                            <button type="button" class="nextButton" onclick="nextStep()">Next</button>
                             <button type="button"> <a class="text-white" href="{{ url('rcms/qms-dashboard') }}">Exit
                                 </a> </button>
                         </div>
@@ -4348,14 +4328,14 @@
                             </div>
 
 
-                          
+
 
 
                         </div>
                         <div class="button-block">
                         <button type="submit" class="saveButton">Save</button>
                             <button type="button" class="backButton" onclick="previousStep()">Back</button>
-                            <button type="button" class="nextButton" onclick="nextStep()">Next</button>   
+                            <button type="button" class="nextButton" onclick="nextStep()">Next</button>
                             <button type="button"> <a class="text-white" href="{{ url('rcms/qms-dashboard') }}">Exit
                                 </a> </button>
                         </div>
@@ -4394,7 +4374,7 @@
                             </div>
 
 
-                           
+
 
 
                         </div>

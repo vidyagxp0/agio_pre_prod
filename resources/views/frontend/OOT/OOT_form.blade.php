@@ -92,7 +92,7 @@
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="RLS Record Number"><b>Record Number</b></label>
-                                        <input disabled type="text" name="record_number" id="record_number" value="---/OOT/{{ date('y') }}/{{ $data }}">
+                                        <input disabled type="text" name="record_number" id="record_number" value="{{ Helpers::getDivisionName(session()->get('division')) }}/OOT/{{date('y')}}/{{$data}}">
 
                                     </div>
                                 </div>
@@ -114,6 +114,12 @@
                                     </div>
                                 </div>
 
+                                @php
+                                // Calculate the due date (30 days from the initiation date)
+                                $initiationDate = date('Y-m-d'); // Current date as initiation date
+                                $dueDate = date('Y-m-d', strtotime($initiationDate . '+30 days')); // Due date
+                            @endphp
+
                                 <div class="col-md-6 ">
                                     <div class="group-input ">
                                         <label for="due-date"> Date Of Initiation<span class="text-danger"></span></label>
@@ -122,24 +128,46 @@
                                     </div>
                                 </div>
 
-                                {{-- <div class="col-md-6 ">
-                                    <div class="group-input ">
-                                        <label for="due-date">Due Date <span class="text-danger"></span></label>
-                                        <input type="date" name="due_date">
-                                    </div>
-                                </div> --}}
-
-                                   <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="Initiator"> Due Date </label>
-        
-                                        {{-- <small class="text-primary"> Please mention expected date of completion </small> --}}
-                                        <input type="date" name="due_date" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input"
-                                                        oninput="handleDateInput(this, 'due_date')"/>
+                                <div class="col-lg-6 new-date-data-field">
+                                    <div class="group-input input-date">
+                                        <label for="Due Date">Due Date</label>
+                                        <div><small class="text-primary">If revising Due Date, kindly mention revision
+                                                reason in "Due Date Extension Justification" data field.</small></div>
+                                        <div class="calenderauditee">
+                                            <input type="text" id="due_date" readonly placeholder="DD-MM-YYYY" />
+                                            <input type="date" name="due_date" min="{{ \Carbon\Carbon::now()->format('d-M-Y') }}" class="hide-input"
+                                                oninput="handleDateInput(this, 'due_date')" />
+                                        </div>
                                     </div>
                                 </div>
 
-                        
+                                <script>
+                                    // Format the due date to DD-MM-YYYY
+                                    // Your input date
+                                    var dueDate = "{{ $dueDate }}"; // Replace {{ $dueDate }} with your actual date variable
+
+                                    // Create a Date object
+                                    var date = new Date(dueDate);
+
+                                    // Array of month names
+                                    var monthNames = [
+                                        "Jan", "Feb", "Mar", "Apr", "May", "Jun",
+                                        "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"
+                                    ];
+
+                                    // Extracting day, month, and year from the date
+                                    var day = date.getDate().toString().padStart(2, '0'); // Ensuring two digits
+                                    var monthIndex = date.getMonth();
+                                    var year = date.getFullYear();
+
+                                    // Formatting the date in "dd-MMM-yyyy" format
+                                    var dueDateFormatted = `${day}-${monthNames[monthIndex]}-${year}`;
+
+                                    // Set the formatted due date value to the input field
+                                    document.getElementById('due_date').value = dueDateFormatted;
+                                </script>
+
+
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Short Description">Initiator Group <span
@@ -154,8 +182,6 @@
                                         </select>
                                     </div>
                                 </div>
-
-                                
 
                                 <div class="col-lg-6">
                                     <div class="group-input">
@@ -196,7 +222,7 @@
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Short Description">Short Description<span class="text-danger">*</span></label>
-                                        
+
                                         <textarea name="short_description" value="" required></textarea>
                                     </div>
                                 </div>
@@ -231,7 +257,7 @@ s                                            <option value="yes">Yes </option>
                                         <label for="Short Description">Nature Of Change<span
                                                 class="text-danger"></span></label>
                                         <select multiple id="natureOfChange" name="nature_of_change">
-                                        
+
                                             <option value="temporary">Temporary </option>
                                             <option value="permanent">Permanent </option>
                                         </select>
@@ -363,7 +389,7 @@ s                                            <option value="yes">Yes </option>
                                                 <td><input type="text" name="product_materiel[0][lot_batch_no]"></td>
                                                 <td><input type="text" name="product_materiel[0][a_r_number]">
 
-                                            
+
                                                 <td><input type="date" name="product_materiel[0][m_f_g_date]"></td>
                                                 <td><input type="date" name="product_materiel[0][expiry_date]"></td>
                                                 <td><input type="text" name="product_materiel[0][label_claim]"></td>
@@ -448,8 +474,7 @@ s                                            <option value="yes">Yes </option>
                                                 <td><input type="text" name="details_of_stability[0][a_r_number]"></td>
                                                 <td><input type="text" name="details_of_stability[0][temprature]"></td>
                                                 <td><input type="text" name="details_of_stability[0][interval]"></td>
-                                                <td><input type="text" name="details_of_stability[0][orientation]">
-                                                </td>
+                                                <td><input type="text" name="details_of_stability[0][orientation]"></td>
                                                 <td><input type="text" name="details_of_stability[0][pack_details]">
                                                 </td>
                                             </tbody>
@@ -2095,7 +2120,7 @@ s                                            <option value="yes">Yes </option>
                         </di>
 
                         {{-- </div>
-                    
+
                 <!-- ==============Tab-4 start=============== -->
                 <div id="CCForm4" class="inner-block cctabcontent">
                     <div class="inner-block-content">
@@ -2323,7 +2348,7 @@ s                                            <option value="yes">Yes </option>
                             </div>
 
 
-                            
+
 
 
                         </div>
@@ -2470,7 +2495,7 @@ s                                            <option value="yes">Yes </option>
                                 </div>
                             </div>
 
-                        
+
 
                         </div>
                         <div class="button-block">
@@ -2554,7 +2579,7 @@ s                                            <option value="yes">Yes </option>
                                 </div>
                             </div>
 
-                           
+
 
 
                         </div>
@@ -2738,7 +2763,7 @@ s                                            <option value="yes">Yes </option>
                                 </div>
                             </div>
 
-                          
+
 
 
 
@@ -2927,7 +2952,7 @@ s                                            <option value="yes">Yes </option>
                                 </div>
                             </div>
 
-                            
+
 
 
 
@@ -3110,14 +3135,14 @@ s                                            <option value="yes">Yes </option>
                             </div>
 
 
-                            
+
 
 
                         </div>
                         <div class="button-block">
                         <button type="submit" class="saveButton">Save</button>
                             <button type="button" class="backButton" onclick="previousStep()">Back</button>
-                            <button type="button" class="nextButton" onclick="nextStep()">Next</button>                       
+                            <button type="button" class="nextButton" onclick="nextStep()">Next</button>
                             <button type="button"> <a class="text-white" href="{{ url('rcms/qms-dashboard') }}">Exit
                                 </a> </button>
                         </div>
@@ -3154,10 +3179,10 @@ s                                            <option value="yes">Yes </option>
                             </div>
 
 
-                            
 
 
-                            
+
+
 
 
                         </div>
@@ -3200,14 +3225,14 @@ s                                            <option value="yes">Yes </option>
                             </div>
 
 
-                           
+
 
 
                         </div>
                         <div class="button-block">
                         <button type="submit" class="saveButton">Save</button>
                             <button type="button" class="backButton" onclick="previousStep()">Back</button>
-                            <button type="button" class="nextButton" onclick="nextStep()">Next</button>  
+                            <button type="button" class="nextButton" onclick="nextStep()">Next</button>
                             <button type="button"> <a class="text-white" href="{{ url('rcms/qms-dashboard') }}">Exit
                                 </a> </button>
                         </div>
@@ -3341,7 +3366,7 @@ s                                            <option value="yes">Yes </option>
                             </div>
 
 
-                           
+
 
 
                         </div>
@@ -3389,14 +3414,14 @@ s                                            <option value="yes">Yes </option>
                             </div>
 
 
-                          
+
 
 
                         </div>
                         <div class="button-block">
                         <button type="submit" class="saveButton">Save</button>
                             <button type="button" class="backButton" onclick="previousStep()">Back</button>
-                            <button type="button" class="nextButton" onclick="nextStep()">Next</button>   
+                            <button type="button" class="nextButton" onclick="nextStep()">Next</button>
                             <button type="button"> <a class="text-white" href="{{ url('rcms/qms-dashboard') }}">Exit
                                 </a> </button>
                         </div>
@@ -3435,7 +3460,7 @@ s                                            <option value="yes">Yes </option>
                             </div>
 
 
-                           
+
 
 
                         </div>
@@ -3892,20 +3917,13 @@ s                                            <option value="yes">Yes </option>
 
                     var html =
                         '<tr>' +
-                        '<td><input disabled type="text" name="serial[]" value="' + serialNumber +
-                        '"></td>' +
-                        '<td><input type="text" name="details_of_stability[' + detailsIndex +
-                        '][a_r_number]"></td>' +
-                        '<td><input type="text" name="details_of_stability[' + detailsIndex +
-                        '][temprature]"></td>' +
-                        '<td><input type="text" name="details_of_stability[' + detailsIndex +
-                        '][interval]"></td>' +
-                        '<td><input type="text" name="details_of_stability[' + detailsIndex +
-                        '][orientation]"></td>' +
-                        '<td><input type="text" name="details_of_stability[' + detailsIndex +
-                        '][pack_details]"></td>' +
-                        '<td><button type="text" class="removeRowBtn">Remove</button></td>' +
-                        '</tr>';
+                        '<td><input disabled type="text" name="serial[]" value="' + serialNumber +   '"></td>' +
+                        '<td><input type="text" name="details_of_stability[' + detailsIndex + '][a_r_number]"></td>' +
+                        '<td><input type="text" name="details_of_stability[' + detailsIndex + '][temprature]"></td>' +
+                        '<td><input type="text" name="details_of_stability[' + detailsIndex + '][interval]"></td>' +
+                        '<td><input type="text" name="details_of_stability[' + detailsIndex + '][orientation]"></td>' +
+                        '<td><input type="text" name="details_of_stability[' + detailsIndex + '][pack_details]"></td>' +
+                        '<td><button type="text" class="removeRowBtn">Remove</button></td>' +  '</tr>';
                     '</tr>';
 
                     detailsIndex++;

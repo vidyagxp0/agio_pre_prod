@@ -659,7 +659,7 @@
 
                     <div id="CCForm1" class="inner-block cctabcontent">
                         <div class="inner-block-content">
-                            <div class="row"> 
+                            <div class="row">
 
                                 @if (!empty($parent_id))
                                     <input type="hidden" name="parent_id" value="{{ $parent_id }}">
@@ -670,7 +670,7 @@
                                     <div class="group-input">
                                         <label for="RLS Record Number"><b>Record Number</b></label>
                                         {{-- <input disabled type="text" name="record_number"> --}}
-                                        <input disabled type="text" name="record" id="record" value="---/NoC/{{ date('y') }}/{{ $data }}">
+                                        <input disabled type="text" name="record" id="record" value="{{ Helpers::getDivisionName(session()->get('division')) }}/NOC/{{date('y')}}/{{$data}}">
 
                                         {{-- value="{{ Helpers::getDivisionName(session()->get('division')) }}/DEV/{{ date('Y') }}/{{ $record_number }}"> --}}
                                         {{-- <div class="static">QMS-EMEA/CAPA/{{ date('Y') }}/{{ $record_number }}</div> --}}
@@ -4063,7 +4063,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                
+
 
                                 <div class="col-lg-12">
                                     <div class="group-input">
@@ -4085,7 +4085,7 @@
 
 
 
-                             
+
                                 <div class="col-lg-12">
                                     <div class="group-input" id="documentsRowname">
                                         <label for="audit-agenda-grid">
@@ -4135,7 +4135,7 @@
                                                     <td>
                                                         <select name="rootCauseData[0][rooCauseSubCategory]" id="Root_Cause_Sub_Category_Select">
                                                             <option value="">-- Select --</option>
-                                
+
                                                             <option value="Poor_Maintenance_or_Design">Infrequent Audits
                                                             </option>
                                                             <option value="No_Preventive_Maintenance">No Preventive
@@ -4151,7 +4151,7 @@
                                                             <option value="">Technical Error </option>
                                                             <option value="">Tolerable Failure </option>
                                                             <option value="">Calibration Issues </option>
-                                
+
                                                             <option value="Infrequent_Audits">Infrequent Audits</option>
                                                             <option value="No_Preventive_Maintenance">No Preventive
                                                                 Maintenance </option>
@@ -4162,8 +4162,8 @@
                                                             <option value="">System Deficiency </option>
                                                             <option value="">Technical Error </option>
                                                             <option value="">Tolerable Failure </option>
-                                
-                                
+
+
                                                             <option value="Failure_to_Follow_SOP">Failure to Follow SOP
                                                             </option>
                                                             <option value="Human_Machine_Interface">Human-Machine
@@ -4180,7 +4180,7 @@
                                                             <option value="">Procedural</option>
                                                             <option value="">Behavioral</option>
                                                             <option value="">Skill</option>
-                                
+
                                                             <option value="">Inattention to task</option>
                                                             <option value="">Lack of Process</option>
                                                             <option value="">Methods</option>
@@ -4343,7 +4343,7 @@
         </div>
     </div>
 </div>
-                               
+
                                 <div class="sub-head"></div>
                                 <script>
                                     $(document).ready(function() {

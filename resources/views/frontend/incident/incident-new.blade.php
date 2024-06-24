@@ -587,7 +587,7 @@
     });
 </script>
 
-e
+
 <script>
     $(document).ready(function() {
         let investigationTeamIndex = 1;
@@ -683,7 +683,7 @@ e
                                         <label for="RLS Record Number"><b>Record Number</b></label>
                                         {{-- <input disabled type="text" name="record_number"> --}}
                                         <input disabled type="text" name="record" id="record"
-                                            value="---/INC/{{ date('y') }}/{{ $data }}">
+                                            value="{{ Helpers::getDivisionName(session()->get('division')) }}/OOT/{{date('y')}}/{{$data}}">
                                         {{-- <div class="static">QMS-EMEA/CAPA/{{ date('Y') }}/{{ $record_number }}</div> --}}
                                     </div>
                                 </div>
