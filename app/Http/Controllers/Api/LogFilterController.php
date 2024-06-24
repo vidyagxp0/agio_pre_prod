@@ -8,6 +8,7 @@ use App\Models\errata;
 use App\Models\FailureInvestigation;
 use App\Models\MarketComplaint;
 use App\Models\Ootc;
+use App\Models\OOS_micro;
 use App\Models\RiskManagement;
 use App\Models\OutOfCalibration;
 use App\Models\LabIncident;
@@ -30,9 +31,9 @@ class LogFilterController extends Controller
 
         try {
 
-            
+
             $query = Capa::query();
-            
+
             if ($request->departmentCapa)
             {
                 $query->where('Initiator_Group', $request->departmentCapa);
@@ -48,20 +49,20 @@ class LogFilterController extends Controller
             }
 
             if ($request->date_fromCapa) {
-               
+
                 $dateFrom = Carbon::parse($request->date_fromCapa)->startOfDay();
-               
+
                 $query->whereDate('intiation_date', '>=', $dateFrom);
             }
-    
+
             if ($request->date_toCapa) {
-              
+
                 $dateTo = Carbon::parse($request->date_toCapa)->endOfDay();
-              
+
                 $query->whereDate('intiation_date', '<=', $dateTo);
             }
 
-           
+
             $capa = $query->get();
 
             $htmlData = view('frontend.forms.Logs.filterData.capa_data', compact('capa'))->render();
@@ -88,7 +89,7 @@ class LogFilterController extends Controller
 
     try {
         $query = CC::query();
-        
+
         if ($request->department_changecontrol) {
             $query->where('Initiator_Group', $request->department_changecontrol);
         }
@@ -127,9 +128,9 @@ class LogFilterController extends Controller
 
 
 
-    
 
-    
+
+
     public function failureInv_filter(Request $request)
         {
             $res = [
@@ -137,29 +138,29 @@ class LogFilterController extends Controller
                 'message' => 'success',
                 'body' => []
             ];
-    
+
             try {
-    
-                
+
+
                 $query = FailureInvestigation::query();
-                
+
                 if ($request->department_failureLog)
                 {
                     $query->where('Initiator_Group', $request->department_failureLog);
                 }
-    
+
                 if($request->div_id_failure)
                 {
                     $query->where('division_id',$request->div_id_failure);
                 }
-    
-                
-    
+
+
+
                 // if($request->nchange)
                 // {
                 //     $query->where('doc_change',$request->nchange);
                 // }
-    
+
                 if ($request->period_failure) {
                     $currentDate = Carbon::now();
                     switch ($request->period_failure) {
@@ -180,44 +181,44 @@ class LogFilterController extends Controller
                         $query->whereDate('intiation_date', '>=', $startDate);
                     }
                 }
-    
-                
+
+
                 if ($request->dateFailureFrom) {
-               
+
                     $datefrom = Carbon::parse($request->dateFailureFrom)->startOfDay();
-                   
+
                     $query->whereDate('intiation_date', '>=', $datefrom);
                 }
-                
+
                 if ($request->dateFailureTo) {
                     $dateTo = Carbon::parse($request->dateFailureTo)->startOfDay();
                     $query->whereDate('intiation_date', '>=', $dateTo);
 
                 }
-                
-                
-    
-    
+
+
+
+
                 $failure = $query->get();
-    
+
                 $htmlData = view('frontend.forms.Logs.filterData.failureinvestigation_data', compact('failure'))->render();
-                
-    
+
+
                 $res['body'] = $htmlData;
-    
-    
+
+
             } catch (\Exception $e) {
                 $res['status'] = 'error';
                 $res['message'] = $e->getMessage();
             }
-    
-    
+
+
             return response()->json($res);
-            
+
         }
-    
-    
-    
+
+
+
         public function internal_audit_filter(Request $request)
         {
             $res = [
@@ -225,29 +226,29 @@ class LogFilterController extends Controller
                 'message' => 'success',
                 'body' => []
             ];
-    
+
             try {
-    
-                
+
+
                 $query = InternalAudit::query();
-                
+
                 if ($request->department)
                 {
                     $query->where('Initiator_Group', $request->department);
                 }
-    
+
                 if($request->division_id)
                 {
                     $query->where('division_id',$request->division_id);
                 }
-    
-                
-    
+
+
+
                 if($request->taudit)
                 {
                     $query->where('audit_type',$request->taudit);
                 }
-    
+
                 if ($request->period) {
                     $currentDate = Carbon::now();
                     switch ($request->period) {
@@ -269,38 +270,38 @@ class LogFilterController extends Controller
                     }
                 }
                 if ($request->date_from) {
-                   
+
                     $dateFrom = Carbon::parse($request->date_from)->startOfDay();
-                   
+
                     $query->whereDate('intiation_date', '>=', $dateFrom);
                 }
-        
+
                 if ($request->date_to) {
-                  
+
                     $dateTo = Carbon::parse($request->date_to)->endOfDay();
-                  
+
                     $query->whereDate('intiation_date', '<=', $dateTo);
                 }
-                
-    
-    
+
+
+
                 $internal_audi = $query->get();
-    
+
                 $htmlData = view('frontend.forms.Logs.filterData.internal_audit_data', compact('internal_audi'))->render();
-                
-    
+
+
                 $res['body'] = $htmlData;
-    
-    
+
+
             } catch (\Exception $e) {
                 $res['status'] = 'error';
                 $res['message'] = $e->getMessage();
-    
+
             }
-    
-    
+
+
             return response()->json($res);
-            
+
         }
 
 
@@ -318,9 +319,9 @@ class LogFilterController extends Controller
 
         try {
 
-            
+
             $query = LabIncident::query();
-            
+
             if ($request->department_Lab)
             {
                 $query->where('Initiator_Group', $request->department_Lab);
@@ -352,16 +353,16 @@ class LogFilterController extends Controller
             }
 
             if ($request->dateFrom) {
-               
+
                 $datefrom = Carbon::parse($request->dateFrom)->startOfDay();
-               
+
                 $query->whereDate('intiation_date', '>=', $datefrom);
             }
-    
+
             if ($request->dateTo) {
-              
+
                 $dateo = Carbon::parse($request->dateTo)->endOfDay();
-              
+
                 $query->whereDate('intiation_date', '<=', $dateo);
             }
             if($request->TypeOFIncidence)
@@ -373,7 +374,7 @@ class LogFilterController extends Controller
             $labincident = $query->get();
 
             $htmlData = view('frontend.forms.Logs.filterData.labincident_data', compact('labincident'))->render();
-            
+
 
             $res['body'] = $htmlData;
 
@@ -386,7 +387,7 @@ class LogFilterController extends Controller
 
 
         return response()->json($res);
-        
+
     }
 
 
@@ -400,9 +401,9 @@ class LogFilterController extends Controller
 
         try {
 
-            
+
             $query = MarketComplaint::query();
-            
+
             if ($request->market_department)
             {
                 $query->where('Initiator_Group', $request->market_department);
@@ -439,23 +440,23 @@ class LogFilterController extends Controller
             }
 
             if ($request->dateMarketFrom) {
-               
+
                 $datefrom = Carbon::parse($request->dateMarketFrom)->startOfDay();
-               
+
                 $query->whereDate('intiation_date', '>=', $datefrom);
             }
-    
+
             if ($request->dateMarketTo) {
-              
+
                 $dateo = Carbon::parse($request->dateMarketTo)->endOfDay();
-              
+
                 $query->whereDate('intiation_date', '<=', $dateo);
             }
 
             $marketcomplaint = $query->get();
 
             $htmlData = view('frontend.forms.Logs.filterData.marketcomplaint_data', compact('marketcomplaint'))->render();
-            
+
 
             $res['body'] = $htmlData;
 
@@ -468,7 +469,7 @@ class LogFilterController extends Controller
 
 
         return response()->json($res);
-        
+
     }
 
 
@@ -483,9 +484,9 @@ class LogFilterController extends Controller
 
         try {
 
-            
+
             $query = OutOfCalibration::query();
-            
+
             if ($request->department_outofcalibration)
             {
                 $query->where('Initiator_Group', $request->department_outofcalibration);
@@ -503,7 +504,7 @@ class LogFilterController extends Controller
                     $query->where('instrument_id', $request->instrument_value);
                 }
             }
-    
+
             // if($request->categoryofcomplaints)
             // {
             //     $query->where('categorization_of_complaint_gi',$request->categoryofcomplaints);
@@ -531,23 +532,23 @@ class LogFilterController extends Controller
             }
 
             if ($request->date_OOC_from) {
-               
+
                 $datefrom = Carbon::parse($request->date_OOC_from)->startOfDay();
-               
+
                 $query->whereDate('intiation_date', '>=', $datefrom);
             }
-    
+
             if ($request->date_OOC_to) {
-              
+
                 $dateo = Carbon::parse($request->date_OOC_to)->endOfDay();
-              
+
                 $query->whereDate('intiation_date', '<=', $dateo);
             }
 
             $oocs = $query->get();
 
             $htmlData = view('frontend.forms.Logs.filterData.outofcalibration_data', compact('oocs'))->render();
-            
+
 
             $res['body'] = $htmlData;
 
@@ -560,10 +561,10 @@ class LogFilterController extends Controller
 
 
         return response()->json($res);
-        
+
     }
 
-    
+
     public function errata_filter(Request $request)
     {
         $res = [
@@ -574,9 +575,9 @@ class LogFilterController extends Controller
 
         try {
 
-            
+
             $query = errata::query();
-            
+
             if ($request->department_e)
             {
                 $query->where('department_code', $request->department_e);
@@ -616,7 +617,7 @@ class LogFilterController extends Controller
             if ($request->date_from) {
                 $query->whereDate('intiation_date', '>=', Carbon::parse($request->date_from));
             }
-            
+
             if ($request->date_to) {
                 $query->whereDate('intiation_date', '<=', Carbon::parse($request->date_to));
             }
@@ -625,13 +626,13 @@ class LogFilterController extends Controller
             {
                 $query->where('type_of_error',$request->error_er);
             }
-            
+
 
 
             $erratalog = $query->get();
 
             $htmlData = view('frontend.forms.Logs.filterData.errata_data', compact('erratalog'))->render();
-            
+
 
             $res['body'] = $htmlData;
 
@@ -655,9 +656,9 @@ class LogFilterController extends Controller
 
         try {
 
-            
+
             $query = RiskManagement::query();
-            
+
             if ($request->department_risk)
             {
                 $query->where('Initiator_Group', $request->department_risk);
@@ -697,7 +698,7 @@ class LogFilterController extends Controller
             if ($request->date_from_risk) {
                 $query->whereDate('intiation_date', '>=', Carbon::parse($request->date_from_risk));
             }
-            
+
             if ($request->date_to_risk) {
                 $query->whereDate('intiation_date', '<=', Carbon::parse($request->date_to_risk));
             }
@@ -706,13 +707,13 @@ class LogFilterController extends Controller
             {
                 $query->where('type_of_error',$request->error_er);
             }
-            
+
 
 
             $riskmlog = $query->get();
 
             $htmlData = view('frontend.forms.Logs.filterData.riskmanagement_data', compact('riskmlog'))->render();
-            
+
 
             $res['body'] = $htmlData;
 
@@ -767,21 +768,18 @@ class LogFilterController extends Controller
             }
             if ($startDate) {
                 $query->whereDate('intiation_date', '>=', $startDate);
-                \Log::info("Filtering from period: {$request->period}, Start Date: {$startDate}");
-            }
+                }
         }
 
         if ($request->date_fromDeviation) {
             $dateFrom = Carbon::parse($request->date_fromDeviation)->startOfDay();
             $query->whereDate('intiation_date', '>=', $dateFrom);
-            \Log::info("Filtering from Date From: {$dateFrom}");
-        }
+            }
 
         if ($request->date_toDeviation) {
             $dateTo = Carbon::parse($request->date_toDeviation)->endOfDay();
             $query->whereDate('intiation_date', '<=', $dateTo);
-            \Log::info("Filtering to Date To: {$dateTo}");
-        }
+         }
 
         $deviation = $query->get();
 
@@ -791,8 +789,7 @@ class LogFilterController extends Controller
     } catch (\Exception $e) {
         $res['status'] = 'error';
         $res['message'] = $e->getMessage();
-        \Log::error("Deviation Filter Error: {$e->getMessage()}");
-    }
+      }
 
     return response()->json($res);
 }
@@ -810,20 +807,22 @@ public function OOT_Filter(Request $request)
     try {
         $query = Ootc::query();
 
-        if ($request->department_oot) {
+        if ($request->filled('department_oot')) {
             $query->where('Initiator_Group', $request->department_oot);
         }
 
-        if ($request->division_id_oot) {
+        if ($request->filled('division_id_oot')) {
             $query->where('division_id', $request->division_id_oot);
         }
 
-        if ($request->source_document_type) {
-            $query->where('source_document_type_gi', $request->source_document_type);
-        }
+        // if ($request->filled('source_document_type')) {
+        //     $query->where('source_document_type_gi', $request->source_document_type); // Corrected column name
+        // }
 
-        if ($request->period_oot) {
+        if ($request->filled('period_oot')) {
             $currentDate = Carbon::now();
+            $startDate = null;
+
             switch ($request->period_oot) {
                 case 'Yearly':
                     $startDate = $currentDate->startOfYear();
@@ -834,44 +833,52 @@ public function OOT_Filter(Request $request)
                 case 'Monthly':
                     $startDate = $currentDate->startOfMonth();
                     break;
-                default:
-                    $startDate = null;
-                    break;
             }
+
             if ($startDate) {
                 $query->whereDate('intiation_date', '>=', $startDate);
-                }
+            }
         }
 
-        if ($request->date_oot_from) {
+        if ($request->filled('date_oot_from')) {
             $dateFrom = Carbon::parse($request->date_oot_from)->startOfDay();
             $query->whereDate('intiation_date', '>=', $dateFrom);
-           }
+        }
 
-        if ($request->date_OOT_to) {
-            $dateTo = Carbon::parse($request->date_OOT_to)->endOfDay();
+        if ($request->filled('date_oot_to')) {
+            $dateTo = Carbon::parse($request->date_oot_to)->endOfDay();
             $query->whereDate('intiation_date', '<=', $dateTo);
-          }
+        }
 
-        $oots = $query->get();
+        $oots = $query->with('ProductGridOot')->get();
 
-        $htmlData = view('frontend.forms.Logs.filterData.OOS_OOT_log_data', compact('oots'))->render();
+        $oosMicroQuery = OOS_micro::query();
+
+        if ($request->filled('source_document_type')) {
+            $oosMicroQuery->where('source_document_type_gi', $request->source_document_type);
+        }
+
+        $oosmicro = $oosMicroQuery->get();
+        // $oosmicro =OOS_micro::get();
+
+        $htmlData = view('frontend.forms.Logs.filterData.OOS_OOT_log_data', compact('oots','oosmicro'))->render();
 
         $res['body'] = $htmlData;
     } catch (\Exception $e) {
         $res['status'] = 'error';
         $res['message'] = $e->getMessage();
-       }
+    }
 
     return response()->json($res);
 }
 
-    
 
 
 
-    
 
-    
-}    
+
+
+
+
+}
 
