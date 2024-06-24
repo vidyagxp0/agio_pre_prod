@@ -25,8 +25,6 @@
         </div>
     </div>
 
-
-
     {{-- ! ========================================= --}}
     {{-- !               DATA FIELDS                 --}}
     {{-- ! ========================================= --}}
@@ -81,6 +79,13 @@
                             <div class="row">
                                 <div class="col-lg-6">
                                     <div class="group-input">
+                                        <label for="RLS Record Number"><b>Record Number</b></label>
+                                        <input disabled type="text" name="record_number" id="record_number" value="{{ Helpers::getDivisionName(session()->get('division')) }}/OOT/{{ date('Y') }}/{{ $data }}">
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-6">
+                                    <div class="group-input">
                                         <label for="Initiator Group">Type </label>
                                         <select id="dynamicSelectType" name="type">
                                             <option value="{{ route('oot.index') }}">OOT</option>
@@ -89,14 +94,6 @@
                                         </select>
                                     </div>
                                 </div>
-                                <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="RLS Record Number"><b>Record Number</b></label>
-                                        <input disabled type="text" name="record_number" id="record_number" value="---/OOT/{{ date('y') }}/{{ $data }}">
-
-                                    </div>
-                                </div>
-
 
                                 <div class="col-lg-6">
                                     <div class="group-input">
@@ -132,14 +129,14 @@
                                    <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Initiator"> Due Date </label>
-        
+
                                         {{-- <small class="text-primary"> Please mention expected date of completion </small> --}}
                                         <input type="date" name="due_date" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input"
                                                         oninput="handleDateInput(this, 'due_date')"/>
                                     </div>
                                 </div>
 
-                        
+
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Short Description">Initiator Group <span
@@ -155,7 +152,7 @@
                                     </div>
                                 </div>
 
-                                
+
 
                                 <div class="col-lg-6">
                                     <div class="group-input">
@@ -196,7 +193,7 @@
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Short Description">Short Description<span class="text-danger">*</span></label>
-                                        
+
                                         <textarea name="short_description" value="" required></textarea>
                                     </div>
                                 </div>
@@ -231,7 +228,7 @@ s                                            <option value="yes">Yes </option>
                                         <label for="Short Description">Nature Of Change<span
                                                 class="text-danger"></span></label>
                                         <select multiple id="natureOfChange" name="nature_of_change">
-                                        
+
                                             <option value="temporary">Temporary </option>
                                             <option value="permanent">Permanent </option>
                                         </select>
@@ -363,7 +360,7 @@ s                                            <option value="yes">Yes </option>
                                                 <td><input type="text" name="product_materiel[0][lot_batch_no]"></td>
                                                 <td><input type="text" name="product_materiel[0][a_r_number]">
 
-                                            
+
                                                 <td><input type="date" name="product_materiel[0][m_f_g_date]"></td>
                                                 <td><input type="date" name="product_materiel[0][expiry_date]"></td>
                                                 <td><input type="text" name="product_materiel[0][label_claim]"></td>
@@ -2095,7 +2092,7 @@ s                                            <option value="yes">Yes </option>
                         </di>
 
                         {{-- </div>
-                    
+
                 <!-- ==============Tab-4 start=============== -->
                 <div id="CCForm4" class="inner-block cctabcontent">
                     <div class="inner-block-content">
@@ -2323,7 +2320,7 @@ s                                            <option value="yes">Yes </option>
                             </div>
 
 
-                            
+
 
 
                         </div>
@@ -2470,7 +2467,7 @@ s                                            <option value="yes">Yes </option>
                                 </div>
                             </div>
 
-                        
+
 
                         </div>
                         <div class="button-block">
@@ -2554,7 +2551,7 @@ s                                            <option value="yes">Yes </option>
                                 </div>
                             </div>
 
-                           
+
 
 
                         </div>
@@ -2738,7 +2735,7 @@ s                                            <option value="yes">Yes </option>
                                 </div>
                             </div>
 
-                          
+
 
 
 
@@ -2927,7 +2924,7 @@ s                                            <option value="yes">Yes </option>
                                 </div>
                             </div>
 
-                            
+
 
 
 
@@ -3110,14 +3107,14 @@ s                                            <option value="yes">Yes </option>
                             </div>
 
 
-                            
+
 
 
                         </div>
                         <div class="button-block">
                         <button type="submit" class="saveButton">Save</button>
                             <button type="button" class="backButton" onclick="previousStep()">Back</button>
-                            <button type="button" class="nextButton" onclick="nextStep()">Next</button>                       
+                            <button type="button" class="nextButton" onclick="nextStep()">Next</button>
                             <button type="button"> <a class="text-white" href="{{ url('rcms/qms-dashboard') }}">Exit
                                 </a> </button>
                         </div>
@@ -3154,10 +3151,10 @@ s                                            <option value="yes">Yes </option>
                             </div>
 
 
-                            
 
 
-                            
+
+
 
 
                         </div>
@@ -3200,14 +3197,14 @@ s                                            <option value="yes">Yes </option>
                             </div>
 
 
-                           
+
 
 
                         </div>
                         <div class="button-block">
                         <button type="submit" class="saveButton">Save</button>
                             <button type="button" class="backButton" onclick="previousStep()">Back</button>
-                            <button type="button" class="nextButton" onclick="nextStep()">Next</button>  
+                            <button type="button" class="nextButton" onclick="nextStep()">Next</button>
                             <button type="button"> <a class="text-white" href="{{ url('rcms/qms-dashboard') }}">Exit
                                 </a> </button>
                         </div>
@@ -3341,7 +3338,7 @@ s                                            <option value="yes">Yes </option>
                             </div>
 
 
-                           
+
 
 
                         </div>
@@ -3389,14 +3386,14 @@ s                                            <option value="yes">Yes </option>
                             </div>
 
 
-                          
+
 
 
                         </div>
                         <div class="button-block">
                         <button type="submit" class="saveButton">Save</button>
                             <button type="button" class="backButton" onclick="previousStep()">Back</button>
-                            <button type="button" class="nextButton" onclick="nextStep()">Next</button>   
+                            <button type="button" class="nextButton" onclick="nextStep()">Next</button>
                             <button type="button"> <a class="text-white" href="{{ url('rcms/qms-dashboard') }}">Exit
                                 </a> </button>
                         </div>
@@ -3435,7 +3432,7 @@ s                                            <option value="yes">Yes </option>
                             </div>
 
 
-                           
+
 
 
                         </div>

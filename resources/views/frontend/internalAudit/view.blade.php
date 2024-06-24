@@ -7693,7 +7693,7 @@ function addMultipleFiles(input, block_id) {
         "Are any unplanned process changes (process excursions) documented in the batch record?",
     ];
         // "Check for area activity record 59."
-    
+
 
     $documentationQuestions = [
         "Do records have doer & checker signatures? Check the timings, date and yield etc in the batch production record.",
@@ -9399,7 +9399,7 @@ function addMultipleFiles(input, block_id) {
 
 </div>
 
-<div id="CCForm15" class="inner-block cctabcontent">    
+<div id="CCForm15" class="inner-block cctabcontent">
 @php
 $checklistEngineering = [
     "Is there a master list of all equipment that specifies those requiring maintenance and/or calibration?",
@@ -9443,7 +9443,7 @@ $checklistHVAC = [
     "Check area cleanness and HEPA grills."
 ];
 @endphp
-   
+
 <div class="inner-block-content">
     <div class="row">
         <div class="sub-head">Checklist for Engineering</div>
@@ -9477,7 +9477,7 @@ $checklistHVAC = [
                                                 <option value="Yes" @if($checklist9 && $checklist9->$engineeringresponce == "Yes") selected @endif>Yes</option>
                                                 <option value="No" @if($checklist9 && $checklist9->$engineeringresponce == "No") selected @endif>No</option>
                                                 <option value="N/A" @if($checklist9 && $checklist9->$engineeringresponce == "N/A") selected @endif>N/A</option>
-                                           
+
                                             </select>
                                         </div>
                                     </td>
@@ -9525,7 +9525,7 @@ $checklistHVAC = [
                                                 <option value="Yes" @if($checklist9 && $checklist9->$engineeringresponce == "Yes") selected @endif>Yes</option>
                                                 <option value="No" @if($checklist9 && $checklist9->$engineeringresponce == "No") selected @endif>No</option>
                                                 <option value="N/A" @if($checklist9 && $checklist9->$engineeringresponce == "N/A") selected @endif>N/A</option>
-                                           
+
                                             </select>
                                         </div>
                                     </td>
@@ -9575,7 +9575,7 @@ $checklistHVAC = [
                                                 <option value="Yes" @if($checklist9 && $checklist9->$engineeringresponce == "Yes") selected @endif>Yes</option>
                                                 <option value="No" @if($checklist9 && $checklist9->$engineeringresponce == "No") selected @endif>No</option>
                                                 <option value="N/A" @if($checklist9 && $checklist9->$engineeringresponce == "N/A") selected @endif>N/A</option>
-                                           
+
                                             </select>
                                         </div>
                                     </td>
@@ -9765,7 +9765,7 @@ $checklistqualitycontrol = [
                                                     <option value="Yes" @if($checklist10 && $checklist10->$qualitycontrol == "Yes") selected @endif>Yes</option>
                                                     <option value="No" @if($checklist10 && $checklist10->$qualitycontrol == "No") selected @endif>No</option>
                                                     <option value="N/A" @if($checklist10 && $checklist10->$qualitycontrol == "N/A") selected @endif>N/A</option>
-                                               
+
                                                 </select>
                                             </div>
                                         </td>
@@ -9886,7 +9886,7 @@ $checklistqualitycontrol = [
                                                 <option value="Yes" @if($checklist11 && $checklist11->$checkliststores == "Yes") selected @endif>Yes</option>
                                                 <option value="No" @if($checklist11 && $checklist11->$checkliststores == "No") selected @endif>No</option>
                                                 <option value="N/A" @if($checklist11 && $checklist11->$checkliststores == "N/A") selected @endif>N/A</option>
-                                           
+
                                             </select>
                                         </div>
                                     </td>
@@ -10211,7 +10211,7 @@ $checklistqualitycontrol = [
                                                 <option value="Yes" @if($checklist13 && $checklist13->$response_injection_name == "Yes") selected @endif>Yes</option>
                                                 <option value="No" @if($checklist13 && $checklist13->$response_injection_name == "No") selected @endif>No</option>
                                                 <option value="N/A" @if($checklist13 && $checklist13->$response_injection_name == "N/A") selected @endif>N/A</option>
-                                           
+
                                             </select>
                                         </div>
                                     </td>
@@ -10260,7 +10260,7 @@ $checklistqualitycontrol = [
                                                 <option value="Yes" @if($checklist13 && $checklist13->$response_documentation_name == "Yes") selected @endif>Yes</option>
                                                 <option value="No" @if($checklist13 && $checklist13->$response_documentation_name == "No") selected @endif>No</option>
                                                 <option value="N/A" @if($checklist13 && $checklist13->$response_documentation_name == "N/A") selected @endif>N/A</option>
-                                           
+
                                             </select>
                                         </div>
                                     </td>
@@ -10354,7 +10354,7 @@ $checklistqualitycontrol = [
             "Have you any standard procedure for removal of scrap?",
             "Is there any procedure to cross verify the dispensed packaging material before starting the packaging."
         ];
-    
+
         $questions_documentation = [
             "Do records have doer & checker signatures? Check the timings, date and yield etc in the batch production record.",
             "Is each batch assigned a distinctive code, so that material can be traced through manufacturing and distribution? Check for In process analytical reports",
@@ -10364,13 +10364,13 @@ $checklistqualitycontrol = [
             "Current version of SOP’s is available in respective areas?"
         ];
     @endphp
-    
+
     <div class="inner-block-content">
         <div class="row">
             <div class="sub-head">
                 Checklist for Injection Packing
             </div>
-    
+
             <div class="col-12">
                 <div class="group-input">
                     <div class="why-why-chart">
@@ -10399,7 +10399,7 @@ $checklistqualitycontrol = [
                                                     <option value="Yes" @if($checklist14 && $checklist14->$response_injection_name == "Yes") selected @endif>Yes</option>
                                                     <option value="No" @if($checklist14 && $checklist14->$response_injection_name == "No") selected @endif>No</option>
                                                     <option value="N/A" @if($checklist14 && $checklist14->$response_injection_name == "N/A") selected @endif>N/A</option>
-                                               
+
                                                 </select>
                                             </div>
                                         </td>
@@ -10415,11 +10415,11 @@ $checklistqualitycontrol = [
                     </div>
                 </div>
             </div>
-    
+
             <div class="sub-head">
                 Checklist for Documentation
             </div>
-    
+
             <div class="col-12">
                 <div class="group-input">
                     <div class="why-why-chart">
@@ -10448,7 +10448,7 @@ $checklistqualitycontrol = [
                                                     <option value="Yes" @if($checklist14 && $checklist14->$response_production == "Yes") selected @endif>Yes</option>
                                                     <option value="No" @if($checklist14 && $checklist14->$response_production == "No") selected @endif>No</option>
                                                     <option value="N/A" @if($checklist14 && $checklist14->$response_production == "N/A") selected @endif>N/A</option>
-                                               
+
                                                 </select>
                                             </div>
                                         </td>
@@ -10464,14 +10464,14 @@ $checklistqualitycontrol = [
                     </div>
                 </div>
             </div>
-    
+
             <div class="col-md-12 mb-4">
                 <div class="group-input">
                     <label for="Description Deviation">Final Comments</label>
                     <textarea class="summernote" name="response_injection_packing_comment" id="summernote-1">@if($checklist14 && $checklist14->{"response_injection_packing_comment"}){{ $checklist14->{"response_injection_packing_comment"} }}@endif</textarea>
                 </div>
             </div>
-    
+
             <div class="col-12">
                 <div class="group-input">
                     <label for="Audit Attachments">Supporting Attachment</label>
@@ -10485,7 +10485,7 @@ $checklistqualitycontrol = [
                     </div>
                 </div>
             </div>
-    
+
             <div class="button-block">
                 <button type="submit" class="saveButton">Save</button>
                 <button type="button" class="backButton" onclick="previousStep()">Back</button>
@@ -10494,9 +10494,9 @@ $checklistqualitycontrol = [
             </div>
         </div>
     </div>
-    
 
-   
+
+
  </div>
 
 
@@ -10589,7 +10589,7 @@ $checklistqualitycontrol = [
                                                 <option value="Yes" @if($checklist15 && $checklist15->$response_name_manufacturingnew == "Yes") selected @endif>Yes</option>
                                                 <option value="No" @if($checklist15 && $checklist15->$response_name_manufacturingnew == "No") selected @endif>No</option>
                                                 <option value="N/A" @if($checklist15 && $checklist15->$response_name_manufacturingnew == "N/A") selected @endif>N/A</option>
-                                           
+
                                             </select>
                                         </div>
                                     </td>
@@ -10638,7 +10638,7 @@ $checklistqualitycontrol = [
                                                 <option value="Yes" @if($checklist15 && $checklist15->$response_name_manufacturing == "Yes") selected @endif>Yes</option>
                                                 <option value="No" @if($checklist15 && $checklist15->$response_name_manufacturing == "No") selected @endif>No</option>
                                                 <option value="N/A" @if($checklist15 && $checklist15->$response_name_manufacturing == "N/A") selected @endif>N/A</option>
-                                           
+
                                             </select>
                                         </div>
                                     </td>
@@ -10756,7 +10756,7 @@ $checklistqualitycontrol = [
                                                 <option value="Yes" @if($checklist16 && $checklist16->$response_name_analytical_research == "Yes") selected @endif>Yes</option>
                                                 <option value="No" @if($checklist16 && $checklist16->$response_name_analytical_research == "No") selected @endif>No</option>
                                                 <option value="N/A" @if($checklist16 && $checklist16->$response_name_analytical_research == "N/A") selected @endif>N/A</option>
-                                           
+
                                             </select>
                                         </div>
                                     </td>
@@ -10867,7 +10867,7 @@ $checklistqualitycontrol = [
                                                 <option value="Yes" @if($checklist17 && $checklist17->$response_name_formulation == "Yes") selected @endif>Yes</option>
                                                 <option value="No" @if($checklist17 && $checklist17->$response_name_formulation == "No") selected @endif>No</option>
                                                 <option value="N/A" @if($checklist17 && $checklist17->$response_name_formulation == "N/A") selected @endif>N/A</option>
-                                           
+
                                             </select>
                                         </div>
                                     </td>

@@ -64,7 +64,7 @@
 
 
                 <div class="slogan">
-                    @php 
+                    @php
                         $name = DB::table('q_m_s_divisions')->where('id', $data->id)->value('name');
                     @endphp
                     <strong>Site Division / Project </strong>:
@@ -1367,7 +1367,7 @@
 
             <div id="CCForm11" class="inner-block cctabcontent">
                         <div class="inner-block-content">
-                            <div class="row">  
+                            <div class="row">
                                 <div class="sub-head">
                                     Production
                                 </div>
@@ -7160,7 +7160,7 @@
                                             });
                                         });
                                     </script>
-                                    
+
     <script>
 
         document.addEventListener('DOMContentLoaded', function() {

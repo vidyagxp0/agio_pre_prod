@@ -995,7 +995,7 @@
                                             <label for="record_number"><b>Record Number</b></label>
                                             @if ($data->stage >= 3)
                                                 <input disabled type="text" name="record" id="record"
-                                                    value="{{ $data->initiator_group_code }}/NoC/{{ date('y') }}/{{ $data->record }}">
+                                                    value="{{ Helpers::getDivisionName($data->division_id) }}/NOC/{{ Helpers::year($data->created_at) }}/{{ $data->record_number }}">
                                                 {{-- <input disabled type="text" value="{{ Helpers::getDivisionName($data->division_id) }}/Non Conformance/{{ date('Y') }}/{{ str_pad($data->record, 4, '0', STR_PAD_LEFT) }}"> --}}
                                             @else
                                                 <input disabled type="text" name="record">
@@ -9127,7 +9127,7 @@
                                                             value="{{ $machine }}"></div>
                                                 @endforeach
                                             </div>
-                                        </div> 
+                                        </div>
                                         <div class="grid-field field-name">
                                             <div>Environment</div>
                                             <div>Manpower</div>

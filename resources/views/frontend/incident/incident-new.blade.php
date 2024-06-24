@@ -587,7 +587,7 @@
     });
 </script>
 
-e
+
 <script>
     $(document).ready(function() {
         let investigationTeamIndex = 1;
@@ -681,10 +681,7 @@ e
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="RLS Record Number"><b>Record Number</b></label>
-                                        {{-- <input disabled type="text" name="record_number"> --}}
-                                        <input disabled type="text" name="record" id="record"
-                                            value="---/INC/{{ date('y') }}/{{ $data }}">
-                                        {{-- <div class="static">QMS-EMEA/CAPA/{{ date('Y') }}/{{ $record_number }}</div> --}}
+                                        <input disabled type="text" name="record" id="record"  value="{{ Helpers::getDivisionName(session()->get('division')) }}/INC/{{ date('Y') }}/{{ $data }}">
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
@@ -944,7 +941,7 @@ e
                                     <div class="group-input">
                                         <label for="facility">Incident Observed By</label>
                                         <input type="text" name="Facility" id="incident_observed_by"
-                                            placeholder="Enter Facility Name">
+                                            placeholder="">
                                     </div>
                                 </div>
                                 <div class="col-lg-6 new-date-data-field">
@@ -1004,8 +1001,7 @@ e
                                             <option value="STP/ADS_instruction">STP/ADS instruction </option>
                                             <option value="Packaging&Labelling">Packaging & Labelling </option>
                                             <option value="Material_System">Material System </option>
-                                            <option value="Laboratory_Instrument/System"> Laboratory Instrument /System
-                                            </option>
+                                            <option value="Laboratory_Instrument/System"> Laboratory Instrument /System </option>
                                             <option value="Utility_System"> Utility System</option>
                                             <option value="Computer_System"> Computer System</option>
                                             {{-- <option value="Document">Document</option> --}}
@@ -1305,9 +1301,6 @@ e
                                                         <th style="width: 16%"> Stage</th>
                                                         <th style="width: 16%">Batch No</th>
                                                         <th style="width: 8%">Action</th>
-
-
-
                                                     </tr>
                                                 </thead>
                                                 <tbody>
@@ -1336,8 +1329,6 @@ e
                                                     </td>
                                                     <td><input type="text" class="Removebtn" name="Action[]" readonly>
                                                     </td>
-
-
                                                 </tbody>
                                             </table>
                                         </div>
@@ -1538,8 +1529,6 @@ e
                     <div id="CCForm8" class="inner-block cctabcontent">
                         <div class="inner-block-content">
                             <div class="row">
-
-
                                 <div class="col-md-12 mb-3">
                                     <div class="group-input">
                                         <label for="HOD Remarks">HOD Remarks</label>
@@ -1564,8 +1553,6 @@ e
                                         </div>
                                     </div>
                                 </div>
-
-
                             </div>
                             <div class="button-block">
                                 <button type="submit" style=" justify-content: center; width: 4rem; margin-left: 1px;"
@@ -1597,13 +1584,8 @@ e
                     <div id="CCForm2" class="inner-block cctabcontent">
                         <div class="inner-block-content">
                             <div class="row">
-
-
-
-
                                 <script>
                                     handleInvestigationRequiredChange();
-
 
                                     function handleInvestigationRequiredChange() {
                                         var investigationSelect = document.getElementById("Investigation_required");

@@ -964,8 +964,7 @@
                                         <div class="group-input">
                                             <label for="record_number"><b>Record Number</b></label>
                                             @if ($data->stage >= 3)
-                                                <input disabled type="text"
-                                                    value="{{ Helpers::getDivisionName($data->division_id) }}/INC/{{ date('Y') }}/{{ str_pad($data->record, 4, '0', STR_PAD_LEFT) }}">
+                                                <input disabled type="text" value="{{ Helpers::getDivisionName($data->division_id) }}/INC/{{ date('Y') }}/{{ str_pad($data->record, 4, '0', STR_PAD_LEFT) }}">
                                             @else
                                                 <input disabled type="text" name="record">
                                             @endif
@@ -1241,7 +1240,7 @@
 
                                             <label for="If Other">Incident Observed By<span
                                                     class="text-danger">*</span></label>
-                                            <input type="text" name="Facility" placeholder="Select Facility Name"
+                                            <input type="text" name="Facility" placeholder="Incident Observed By"
                                                 value="{{ $data->Facility }}">
                                             @error('Facility')
                                                 <div class="text-danger">{{ $message }}</div>
@@ -1848,7 +1847,7 @@
                                         </script>
                                     </div>
 
-                                   
+
                                     <div class="col-md-12">
                                         <div class="group-input">
                                             <label for="Description Incident">Description of Incident <span
@@ -1862,7 +1861,7 @@
                                             <div class="text-danger">{{ $message }}</div>
                                         @enderror
                                     </div>
-                                    
+
                                     <div class="col-md-12">
                                         <div class="group-input">
                                             <label for="Immediate Action">Immediate Action (if any) <span
@@ -1924,7 +1923,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                    
+
                                 </div>
                                 <div class="button-block">
                                     <button  type="submit"{{ $data->stage == 0 || $data->stage == 7 || $data->stage == 9 ? 'disabled' : '' }}
@@ -1994,7 +1993,7 @@
                                                             @endforeach
                                                         @endif
                                                     </div>
-                                                   
+
                                                     <div class="add-btn">
                                                         <div>Add</div>
                                                         <input
@@ -2661,7 +2660,7 @@
                                         </script>
                                     </div>
                                 </div>
-                                
+
                                 <div class="col-md-12">
                                     <div class="group-input">
                                         <label for="QAInitialRemark">QA Initial Remarks</label>
@@ -2774,7 +2773,7 @@
                         <div class="inner-block-content">
                             <div class="row">
                                 <div class="sub-head">
-                                    Production 
+                                    Production
                                 </div>
                                 <script>
                                     $(document).ready(function() {
@@ -3719,7 +3718,7 @@
                                             value="{{ $data1->QualityAssurance_on }}">
                                     </div>
                                 </div>
-                                
+
                                 <script>
                                     $(document).ready(function() {
                                         @if($data1->Engineering_review !== 'yes')
@@ -5040,7 +5039,7 @@
                                                 No</option>
                                             <option @if ($data1->Quality_review == 'na') selected @endif value="na">
                                                 NA</option>
-                                        </select>                                        
+                                        </select>
                                     </div>
                                 </div>
                                 @php
@@ -7901,7 +7900,7 @@
 
         <!-- investigation -->
         <div id="CCForm9" class="inner-block cctabcontent">
-            <div class="inner-block-content"> 
+            <div class="inner-block-content">
                 <div class="row">
                     @if($investigationExtension && $investigationExtension->investigation_proposed_due_date)
                         <div class="col-lg-6">
@@ -7975,7 +7974,7 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                    
+
                                         @if ($investigationTeamData && is_array($investigationTeamData))
                                             @foreach ($investigationTeamData as $investigation_data)
                                                 <tr>
@@ -8042,8 +8041,6 @@
                                 </div>
                             </div>
 
-
-
                             <div class="col-lg-12">
                                 <div class="group-input" id="documentsRowname">
                                     <label for="audit-agenda-grid">
@@ -8062,16 +8059,15 @@
                                                     <th style="width: 12%"> Root Cause Category</th>
                                                     <th style="width: 16%">Root Cause Sub-Category</th>
                                                     <th style="width: 16%">If Others</th>
-                            
+
                                                     <th style="width: 16%"> Probability</th>
                                                     <th style="width: 16%"> Remarks</th>
-                            
+
                                                     <th style="width: 8%">Action</th>
-                            
-                            
+
                                                 </tr>
                                             </thead>
-                            
+
                                             <tbody>
                                                 @if ($rootCauseData && is_array($rootCauseData))
                                                     @foreach ($rootCauseData as $index => $root_cause_dat)
@@ -8084,7 +8080,7 @@
                                                                 <select name="rootCauseData[{{ $loop->index }}][rootCauseCategory]"
                                                                     id="Root_Cause_Category_Select" class="Root_Cause_Category_Select">
                                                                     <option value="">-- Select --</option>
-                            
+
                                                                     <option value="M-Machine(Equipment)"
                                                                         {{ array_key_exists('rootCauseCategory', $root_cause_dat) && $root_cause_dat['rootCauseCategory'] == 'M-Machine(Equipment)' ? 'selected' : '' }}>
                                                                         M-Machine(Equipment)</option>
@@ -8133,14 +8129,14 @@
                                                                     <option value="S-Systems"
                                                                         {{ array_key_exists('rootCauseCategory', $root_cause_dat) && $root_cause_dat['rootCauseCategory'] == 'S-Systems' ? 'selected' : '' }}>
                                                                         S-Systems</option>
-                            
+
                                                                 </select>
                                                             </td>
                                                             <td>
                                                                 <select name="rootCauseData[{{ $loop->index }}][rootCauseSubCategory]"
                                                                     id="Root_Cause_Sub_Category_Select" class="Root_Cause_Sub_Category_Select">
                                                                     <option value="">-- Select --</option>
-                            
+
                                                                     <option value="Infrequent_Audits"
                                                                         {{ array_key_exists('rootCauseSubCategory', $root_cause_dat) && $root_cause_dat['rootCauseSubCategory'] == 'Infrequent_Audits' ? 'selected' : '' }}>
                                                                         Infrequent Audits </option>
@@ -8171,7 +8167,7 @@
                                                                     <option value="Calibration Issues"
                                                                         {{ array_key_exists('rootCauseSubCategory', $root_cause_dat) && $root_cause_dat['rootCauseSubCategory'] == 'Calibration Issues' ? 'selected' : '' }}>
                                                                         Calibration Issues </option>
-                            
+
                                                                     <option value="Infrequent_Audits"
                                                                         {{ array_key_exists('rootCauseSubCategory', $root_cause_dat) && $root_cause_dat['rootCauseSubCategory'] == 'Infrequent_Audits' ? 'selected' : '' }}>
                                                                         Infrequent Audits </option>
@@ -8196,8 +8192,8 @@
                                                                     <option value="Tolerable Failure"
                                                                         {{ array_key_exists('rootCauseSubCategory', $root_cause_dat) && $root_cause_dat['rootCauseSubCategory'] == 'Tolerable Failure' ? 'selected' : '' }}>
                                                                         Tolerable Failure </option>
-                            
-                            
+
+
                                                                     <option value="Failure_to_Follow_SOP"
                                                                         {{ array_key_exists('rootCauseSubCategory', $root_cause_dat) && $root_cause_dat['rootCauseSubCategory'] == 'Failure_to_Follow_SOP' ? 'selected' : '' }}>
                                                                         Failure to Follow SOP</option>
@@ -8237,7 +8233,7 @@
                                                                     <option value="Skill"
                                                                         {{ array_key_exists('rootCauseSubCategory', $root_cause_dat) && $root_cause_dat['rootCauseSubCategory'] == 'Skill' ? 'selected' : '' }}>
                                                                         Skill</option>
-                            
+
                                                                     <option value="Inattention to task"
                                                                         {{ array_key_exists('rootCauseSubCategory', $root_cause_dat) && $root_cause_dat['rootCauseSubCategory'] == 'Inattention to task' ? 'selected' : '' }}>
                                                                         Inattention to task</option>
@@ -8274,7 +8270,7 @@
                                                                     <option value="Training or education lacking"
                                                                         {{ array_key_exists('rootCauseSubCategory', $root_cause_dat) && $root_cause_dat['rootCauseSubCategory'] == 'Training or education lacking' ? 'selected' : '' }}>
                                                                         Training or education lacking</option>
-                            
+
                                                                     <option value="Defective equipment or tool"
                                                                         {{ array_key_exists('rootCauseSubCategory', $root_cause_dat) && $root_cause_dat['rootCauseSubCategory'] == 'Defective equipment or tool' ? 'selected' : '' }}>
                                                                         Defective equipment or tool</option>
@@ -8302,7 +8298,7 @@
                                                                     <option value="Wrong type for job"
                                                                         {{ array_key_exists('rootCauseSubCategory', $root_cause_dat) && $root_cause_dat['rootCauseSubCategory'] == 'Wrong type for job' ? 'selected' : '' }}>
                                                                         Wrong type for job</option>
-                            
+
                                                                     <option value="Instruction Needs Improvement"
                                                                         {{ array_key_exists('rootCauseSubCategory', $root_cause_dat) && $root_cause_dat['rootCauseSubCategory'] == 'Instruction Needs Improvement' ? 'selected' : '' }}>
                                                                         Instruction Needs Improvement</option>
@@ -8330,7 +8326,7 @@
                                                                     <option value="Wrong Sequence"
                                                                         {{ array_key_exists('rootCauseSubCategory', $root_cause_dat) && $root_cause_dat['rootCauseSubCategory'] == 'Wrong Sequence' ? 'selected' : '' }}>
                                                                         Wrong Sequence</option>
-                            
+
                                                                     <option value="Forces of nature"
                                                                         {{ array_key_exists('rootCauseSubCategory', $root_cause_dat) && $root_cause_dat['rootCauseSubCategory'] == 'Forces of nature' ? 'selected' : '' }}>
                                                                         Forces of nature</option>
@@ -8349,7 +8345,7 @@
                                                                     <option value="Surfaces poorly maintained"
                                                                         {{ array_key_exists('rootCauseSubCategory', $root_cause_dat) && $root_cause_dat['rootCauseSubCategory'] == 'Surfaces poorly maintained' ? 'selected' : '' }}>
                                                                         Surfaces poorly maintained</option>
-                            
+
                                                                     <option value="Forces of nature"
                                                                         {{ array_key_exists('rootCauseSubCategory', $root_cause_dat) && $root_cause_dat['rootCauseSubCategory'] == 'Forces of nature' ? 'selected' : '' }}>
                                                                         Forces of nature</option>
@@ -8368,7 +8364,7 @@
                                                                     <option value="Surfaces poorly maintained"
                                                                         {{ array_key_exists('rootCauseSubCategory', $root_cause_dat) && $root_cause_dat['rootCauseSubCategory'] == 'Surfaces poorly maintained' ? 'selected' : '' }}>
                                                                         Surfaces poorly maintained</option>
-                            
+
                                                                     <option value="Instruction Needs Improvement"
                                                                         {{ array_key_exists('rootCauseSubCategory', $root_cause_dat) && $root_cause_dat['rootCauseSubCategory'] == 'Instruction Needs Improvement' ? 'selected' : '' }}>
                                                                         Instruction Needs Improvement</option>
@@ -8384,7 +8380,7 @@
                                                                     <option value="Wrong Revision Used"
                                                                         {{ array_key_exists('rootCauseSubCategory', $root_cause_dat) && $root_cause_dat['rootCauseSubCategory'] == 'Wrong Revision Used' ? 'selected' : '' }}>
                                                                         Wrong Revision Used</option>
-                            
+
                                                                     <option value="No Budget"
                                                                         {{ array_key_exists('rootCauseSubCategory', $root_cause_dat) && $root_cause_dat['rootCauseSubCategory'] == 'No Budget' ? 'selected' : '' }}>
                                                                         No Budget</option>
@@ -8400,7 +8396,7 @@
                                                                     <option value="Wrong Estimation"
                                                                         {{ array_key_exists('rootCauseSubCategory', $root_cause_dat) && $root_cause_dat['rootCauseSubCategory'] == 'Wrong Estimation' ? 'selected' : '' }}>
                                                                         Wrong Estimation</option>
-                            
+
                                                                     <option value="Learning Objective Needs Improvement"
                                                                         {{ array_key_exists('rootCauseSubCategory', $root_cause_dat) && $root_cause_dat['rootCauseSubCategory'] == 'Learning Objective Needs Improvement' ? 'selected' : '' }}>
                                                                         Learning Objective Needs Improvement</option>
@@ -8434,7 +8430,7 @@
                                                                     <option value="Wrong Revision Used"
                                                                         {{ array_key_exists('rootCauseSubCategory', $root_cause_dat) && $root_cause_dat['rootCauseSubCategory'] == 'Wrong Revision Used' ? 'selected' : '' }}>
                                                                         Wrong Revision Used</option>
-                            
+
                                                                     <option value="Instruction Needs Improvement"
                                                                         {{ array_key_exists('rootCauseSubCategory', $root_cause_dat) && $root_cause_dat['rootCauseSubCategory'] == 'Instruction Needs Improvement' ? 'selected' : '' }}>
                                                                         Instruction Needs Improvement</option>
@@ -8462,7 +8458,7 @@
                                                                     <option value="Wrong Sequence"
                                                                         {{ array_key_exists('rootCauseSubCategory', $root_cause_dat) && $root_cause_dat['rootCauseSubCategory'] == 'Wrong Sequence' ? 'selected' : '' }}>
                                                                         Wrong Sequence</option>
-                            
+
                                                                     <option value="Defective equipment or tool"
                                                                         {{ array_key_exists('rootCauseSubCategory', $root_cause_dat) && $root_cause_dat['rootCauseSubCategory'] == 'Defective equipment or tool' ? 'selected' : '' }}>
                                                                         Defective equipment or tool</option>
@@ -8487,7 +8483,7 @@
                                                                     <option value="Wrong type for job"
                                                                         {{ array_key_exists('rootCauseSubCategory', $root_cause_dat) && $root_cause_dat['rootCauseSubCategory'] == 'Wrong type for job' ? 'selected' : '' }}>
                                                                         Wrong type for job</option>
-                            
+
                                                                     <option value="Infrequent Audits"
                                                                         {{ array_key_exists('rootCauseSubCategory', $root_cause_dat) && $root_cause_dat['rootCauseSubCategory'] == 'Infrequent Audits' ? 'selected' : '' }}>
                                                                         Infrequent Audits</option>
@@ -8506,7 +8502,7 @@
                                                                     <option value="Task Not Analyzed"
                                                                         {{ array_key_exists('rootCauseSubCategory', $root_cause_dat) && $root_cause_dat['rootCauseSubCategory'] == 'Task Not Analyzed' ? 'selected' : '' }}>
                                                                         Task Not Analyzed</option>
-                            
+
                                                                     <option value="Forces of nature"
                                                                         {{ array_key_exists('rootCauseSubCategory', $root_cause_dat) && $root_cause_dat['rootCauseSubCategory'] == 'Forces of nature' ? 'selected' : '' }}>
                                                                         Forces of nature</option>
@@ -8525,7 +8521,7 @@
                                                                     <option value="Surfaces poorly maintained"
                                                                         {{ array_key_exists('rootCauseSubCategory', $root_cause_dat) && $root_cause_dat['rootCauseSubCategory'] == 'Surfaces poorly maintained' ? 'selected' : '' }}>
                                                                         Surfaces poorly maintained</option>
-                            
+
                                                                     <option value="Infrequent Audits"
                                                                         {{ array_key_exists('rootCauseSubCategory', $root_cause_dat) && $root_cause_dat['rootCauseSubCategory'] == 'Infrequent Audits' ? 'selected' : '' }}>
                                                                         Infrequent Audits</option>
@@ -8578,7 +8574,7 @@
                                                     <td><select name="rootCauseData[0][rootCauseCategory]" id="Root_Cause_Category_Select"
                                                             class="Root_Cause_Category_Select">
                                                             <option value="">-- Select --</option>
-                            
+
                                                             <option value="M-Machine(Equipment)">M-Machine(Equipment)</option>
                                                             <option value="M-Maintenance">M-Maintenance</option>
                                                             <option value="M-Man Power (physical work)">M-Man Power (physical work)</option>
@@ -8596,12 +8592,12 @@
                                                             <option value="S-Suppliers">S-Suppliers</option>
                                                             <option value="S-Surroundings">S-Surroundings</option>
                                                             <option value="S-Systems">S-Systems</option>
-                            
+
                                                         </select></td>
                                                     <td><select name="rootCauseData[0][rootCauseSubCategory]" id="Root_Cause_Sub_Category_Select"
                                                             class="Root_Cause_Sub_Category_Select">
                                                             <option value="">-- Select --</option>
-                            
+
                                                             <option value="infrequent_audits">Infrequent Audits </option>
                                                             <option value="No_Preventive_Maintenance">No Preventive Maintenance </option>
                                                             <option value="Other">Other</option>
@@ -8612,7 +8608,7 @@
                                                             <option value="technical_error">Technical Error </option>
                                                             <option value="tolerable_failure">Tolerable Failure </option>
                                                             <option value="calibration_issues">Calibration Issues </option>
-                            
+
                                                             <option value="Infrequent_Audits">Infrequent Audits</option>
                                                             <option value="No_Preventive_Maintenance">No Preventive Maintenance </option>
                                                             <option value="Other">Other</option>
@@ -8621,8 +8617,8 @@
                                                             <option value="System_Deficiency">System Deficiency </option>
                                                             <option value="Technical_Error ">Technical Error </option>
                                                             <option value="Tolerable_Failure">Tolerable Failure </option>
-                            
-                            
+
+
                                                             <option value="Failure_to_Follow_SOP">Failure to Follow SOP</option>
                                                             <option value="Human_Machine_Interface">Human-Machine Interface</option>
                                                             <option value="Misunderstood_Verbal_Communication">Misunderstood Verbal Communication
@@ -8637,7 +8633,7 @@
                                                             <option value="Procedural">Procedural</option>
                                                             <option value="Behavioral">Behavioral</option>
                                                             <option value="Skill">Skill</option>
-                            
+
                                                             <option value="Inattention to task">Inattention to task</option>
                                                             <option value="Lack of Process">Lack of Process</option>
                                                             <option value="Methods">Methods</option>
@@ -8653,16 +8649,16 @@
                                                             <option value="Task hazards not guarded properly">Task hazards not guarded properly
                                                             </option>
                                                             <option value="Personnel not Qualified">Personnel not Qualified</option>
-                            
+
                                                         </select></td>
                                                     <td><input type="text" class="Document_Remarks" name="rootCauseData[0][ifOthers]"></td>
                                                     <td><input type="text" class="Document_Remarks" name="rootCauseData[0][probability]"></td>
                                                     <td><input type="text" class="Document_Remarks" name="rootCauseData[0][remarks]"></td>
                                                     <td><input type="text" class="Removebtn" name="Action[]" readonly></td>
-                            
+
                                                 @endif
                                             </tbody>
-                            
+
                                         </table>
                                     </div>
                                 </div>
@@ -8677,10 +8673,10 @@
                                     var selectedCategory = $(this).val();
                                     var subCategorySelect = $(this).closest('td').next().find('.Root_Cause_Sub_Category_Select')
                                     console.log('subCategorySelect', subCategorySelect)
-                            
+
                                     // Clear existing options
                                     subCategorySelect.empty();
-                            
+
                                     // Populate options based on selected category
                                     if (selectedCategory === 'M-Machine(Equipment)') {
                                         subCategorySelect.append('<option value="Infrequent_Audits">Infrequent Audits</option>');
@@ -8696,9 +8692,9 @@
                                         subCategorySelect.append('<option value="Technical Error">Technical Error</option>');
                                         subCategorySelect.append('<option value="Tolerable Failure">Tolerable Failure</option>');
                                         subCategorySelect.append('<option value="Calibration Issues">Calibration Issues</option>');
-                            
-                            
-                            
+
+
+
                                     } else if (selectedCategory === 'M-Maintenance') {
                                         subCategorySelect.append('<option value="Infrequent_Audits">Infrequent Audits</option>');
                                         subCategorySelect.append(
@@ -8710,9 +8706,9 @@
                                         subCategorySelect.append('<option value="System Deficiency">System Deficiency</option>');
                                         subCategorySelect.append('<option value="Technical Error">Technical Error</option>');
                                         subCategorySelect.append('<option value="Tolerable Failure">Tolerable Failure</option>');
-                            
-                            
-                            
+
+
+
                                     } else if (selectedCategory === 'M-Man Power (physical work)') {
                                         subCategorySelect.append('<option value="Failure_to_Follow_SOP">Failure to Follow SOP</option>');
                                         subCategorySelect.append(
@@ -8732,7 +8728,7 @@
                                         subCategorySelect.append('<option value="Procedural ">Procedural </option>');
                                         subCategorySelect.append('<option value="Behavioral">Behavioral</option>');
                                         subCategorySelect.append('<option value="Skill">Skill</option>');
-                            
+
                                     } else if (selectedCategory === 'M-Management') {
                                         subCategorySelect.append('<option value="Inattention to task">Inattention to task</option>');
                                         subCategorySelect.append('<option value="Lack of Process">Lack of Process</option>');
@@ -8771,7 +8767,7 @@
                                         subCategorySelect.append(
                                             '<option value="Poor maintenance or design">Poor maintenance or design</option>');
                                         subCategorySelect.append('<option value="Wrong type for job">Wrong type for job</option>');
-                            
+
                                     } else if (selectedCategory === 'M-Method (Process/Inspection)') {
                                         subCategorySelect.append(
                                             '<option value="Instruction Needs Improvement">Instruction Needs Improvement</option>');
@@ -8810,7 +8806,7 @@
                                             '<option value="Physical demands of the task">Physical demands of the task</option>');
                                         subCategorySelect.append(
                                             '<option value="Surfaces poorly maintained">Surfaces poorly maintained</option>');
-                            
+
                                     } else if (selectedCategory === 'P-Policies') {
                                         subCategorySelect.append(
                                             '<option value="Instruction Needs Improvement">Instruction Needs Improvement</option>');
@@ -8820,16 +8816,16 @@
                                         subCategorySelect.append('<option value="No Standard / Policy">No Standard / Policy</option>');
                                         subCategorySelect.append('<option value="Other">Other</option>');
                                         subCategorySelect.append('<option value="Wrong Revision Used">Wrong Revision Used</option>');
-                            
-                            
+
+
                                     } else if (selectedCategory === 'P-Price') {
                                         subCategorySelect.append('<option value="No Budget">No Budget</option>');
                                         subCategorySelect.append('<option value="No Preparation">No Preparation</option>');
                                         subCategorySelect.append('<option value="No Standard / Policy">No Standard / Policy</option>');
                                         subCategorySelect.append('<option value="Other">Other</option>');
                                         subCategorySelect.append('<option value="Wrong Estimation">Wrong Estimation</option>');
-                            
-                            
+
+
                                     } else if (selectedCategory === 'P-Procedures') {
                                         subCategorySelect.append(
                                             '<option value="Learning Objective Needs Improvement">Learning Objective Needs Improvement</option>'
@@ -8851,7 +8847,7 @@
                                         subCategorySelect.append(
                                             '<option value="Training or education lacking">Training or education lacking</option>');
                                         subCategorySelect.append('<option value="Wrong Revision Used">Wrong Revision Used</option>');
-                            
+
                                     } else if (selectedCategory === 'P-Process') {
                                         subCategorySelect.append(
                                             '<option value="Instruction Needs Improvement">Instruction Needs Improvement</option>');
@@ -8870,8 +8866,8 @@
                                         subCategorySelect.append(
                                             '<option value="Training or education lacking">Training or education lacking</option>');
                                         subCategorySelect.append('<option value="Wrong Sequence">Wrong Sequence</option>');
-                            
-                            
+
+
                                     } else if (selectedCategory === 'P-Product') {
                                         subCategorySelect.append(
                                             '<option value="Defective equipment or tool">Defective equipment or tool</option>');
@@ -8886,8 +8882,8 @@
                                         subCategorySelect.append(
                                             '<option value="Poor maintenance or design">Poor maintenance or design</option>');
                                         subCategorySelect.append('<option value="Wrong type for job">Wrong type for job</option>');
-                            
-                            
+
+
                                     } else if (selectedCategory === 'S-Suppliers') {
                                         subCategorySelect.append('<option value="Infrequent Audits">Infrequent Audits</option>');
                                         subCategorySelect.append(
@@ -8909,8 +8905,8 @@
                                             '<option value="Physical demands of the task">Physical demands of the task</option>');
                                         subCategorySelect.append(
                                             '<option value="Surfaces poorly maintained">Surfaces poorly maintained</option>');
-                            
-                            
+
+
                                     } else if (selectedCategory === 'S-Systems') {
                                         subCategorySelect.append('<option value="Infrequent Audits">Infrequent Audits</option>');
                                         subCategorySelect.append(
@@ -8924,7 +8920,7 @@
                                         subCategorySelect.append('<option value="System Deficiency">System Deficiency</option>');
                                         subCategorySelect.append('<option value="Technical Error">Technical Error</option>');
                                         subCategorySelect.append('<option value="Tolerable Failure">Tolerable Failure</option>');
-                            
+
                                     }
                                 });
                                 // });
@@ -10965,7 +10961,7 @@
                                 <div class="group-input">
                                     <label for=" capa_extension_completed_by"> CAPA Extension Completed By </label>
                                     <select name="capa_extension_completed_by" id="capa_extension_completed_by" disabled>
-                                       
+
                                         @foreach ($users as $user)
                                             <option value="{{ $user->id }}" @if($user->id == $capaExtension->capa_extension_completed_by) selected @endif  >{{ $user->name }}</option>
                                         @endforeach
@@ -10977,7 +10973,7 @@
                                 <div class="group-input">
                                     <label for=" capa_extension_completed_by"> CAPA Extension Completed By </label>
                                     <select name="capa_extension_completed_by" id="capa_extension_completed_by" disbaled>
-                                        
+
                                         @foreach ($users as $user)
                                             <option value="{{ $user->id }}">{{ $user->name }}</option>
                                         @endforeach
@@ -11060,7 +11056,7 @@
                                 <div class="group-input">
                                     <label for="qrm_extension_completed_by"> Quality Risk Management Extension Completed By </label>
                                     <select name="qrm_extension_completed_by" id="qrm_extension_completed_by" disabled>
-                                        
+
                                         @foreach ($users as $user)
                                             <option value="{{ $user->id }}" @if($user->id == $qrmExtension->qrm_extension_completed_by) selected @endif >{{ $user->name }}</option>
                                         @endforeach
@@ -11072,7 +11068,7 @@
                                 <div class="group-input">
                                     <label for="qrm_extension_completed_by"> Quality Risk Management Extension Completed By </label>
                                     <select name="qrm_extension_completed_by" id="qrm_extension_completed_by" disabled>
-                                    
+
                                         @foreach ($users as $user)
                                             <option value="{{ $user->id }}">{{ $user->name }}</option>
                                         @endforeach
@@ -11727,7 +11723,7 @@
                             <label for="QA Final Review Comments">QA Head/Manager Designee Approval Comments :-</label>
                             <div class="">{{ $data->QA_head_approved_comment }}</div>
                         </div>
-                    </div>                    
+                    </div>
 
                     <div class="sub-head">Initiator Update</div>
                     <div class="col-lg-3">
@@ -12140,7 +12136,7 @@
                     <div class="group-input">
                         <label for="password">CAPA Extension Completed By </label>
                         <select class="extension_modal_signature" name="capa_extension_completed_by" id="capa_extension_completed_by">
-                           
+
                             @foreach($users as $user)
                                     <option value="{{$user->id}}">{{$user->name}}</option>
                                 @endforeach
@@ -12203,7 +12199,7 @@
                     <div class="group-input">
                         <label for="password">Incident Extension Completed By </label>
                         <select class="extension_modal_signature" name="dev_extension_completed_by" id="dev_extension_completed_by">
-                        
+
                                 @foreach($users as $user)
                                     <option value="{{$user->id}}">{{$user->name}}</option>
                                 @endforeach
@@ -12997,15 +12993,15 @@
                         </div>
                         <div class="group-input">
                             <label for="username">Username <span class="text-danger">*</span></label>
-                            <input type="text" name="username" required>
+                            <input type="text" class="form-control" name="username" required>
                         </div>
                         <div class="group-input">
                             <label for="password">Password <span class="text-danger">*</span></label>
-                            <input type="password" name="password" required>
+                            <input type="password" class="form-control" name="password" required>
                         </div>
                         <div class="group-input">
                             <label for="comment">Comment <span class="text-danger">*</span></label>
-                            <input type="comment" name="comment" required>
+                            <input type="comment" class="form-control" name="comment" required>
                         </div>
                     </div>
 
@@ -13043,15 +13039,15 @@
                         </div>
                         <div class="group-input">
                             <label for="username">Username <span class="text-danger">*</span></label>
-                            <input type="text" name="username" required>
+                            <input type="text" class="form-control" name="username" required>
                         </div>
                         <div class="group-input">
                             <label for="password">Password <span class="text-danger">*</span></label>
-                            <input type="password" name="password" required>
+                            <input type="password" class="form-control" name="password" required>
                         </div>
                         <div class="group-input">
                             <label for="comment">Comment <span class="text-danger">*</span></label>
-                            <input type="comment" name="comment" required>
+                            <input type="comment" class="form-control" name="comment" required>
                         </div>
                     </div>
 
@@ -13089,15 +13085,15 @@
                         </div>
                         <div class="group-input">
                             <label for="username">Username <span class="text-danger">*</span></label>
-                            <input type="text" name="username" required>
+                            <input type="text" class="form-control" name="username" required>
                         </div>
                         <div class="group-input">
                             <label for="password">Password <span class="text-danger">*</span></label>
-                            <input type="password" name="password" required>
+                            <input type="password" class="form-control" name="password" required>
                         </div>
                         <div class="group-input">
                             <label for="comment">Comment <span class="text-danger">*</span></label>
-                            <input type="comment" name="comment" required>
+                            <input type="comment" class="form-control" name="comment" required>
                         </div>
                     </div>
 
