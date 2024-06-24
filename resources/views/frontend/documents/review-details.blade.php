@@ -91,7 +91,7 @@
                                 </div>
                                 <div>
                                     <div class="head">Working Status</div>
-                                    <div>{{ $document->status }}</div>
+                                    <div>{{ Helpers::getDocStatusByStage($document->stage) }}</div>
                                 </div>
                                 <div>
                                     <div class="head">Last Modified By</div>
