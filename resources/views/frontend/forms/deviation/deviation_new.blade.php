@@ -527,6 +527,44 @@
             });
         });
     </script>
+    <script>
+        function calculateDueDate() {
+            const initiationDateInput = document.getElementById('intiation_date');
+            const deviationCategorySelect = document.getElementById('Deviation_category');
+            const dueDateInput = document.getElementById('due_date');
+
+            if (initiationDateInput.value && deviationCategorySelect.value) {
+                const initiationDate = new Date(initiationDateInput.value);
+                let dueDate = new Date(initiationDate);
+
+                switch (deviationCategorySelect.value) {
+                    case 'minor':
+                        dueDate.setDate(dueDate.getDate() + 15);
+                        break;
+                    case 'major':
+                        dueDate.setDate(dueDate.getDate() + 30);
+                        break;
+                    case 'critical':
+                        dueDate.setDate(dueDate.getDate() + 45);
+                        break;
+                    default:
+                        dueDate = null;
+                        break;
+                }
+
+                if (dueDate) {
+                    const day = String(dueDate.getDate()).padStart(2, '0');
+                    const month = String(dueDate.getMonth() + 1).padStart(2, '0');
+                    const year = dueDate.getFullYear();
+                    dueDateInput.value = `${day}-${month}-${year}`;
+                }
+            }
+        }
+
+        document.getElementById('intiation_date').addEventListener('change', calculateDueDate);
+        document.getElementById('Deviation_category').addEventListener('change', calculateDueDate);
+    </script>
+
 
     <div class="form-field-head">
 
@@ -623,104 +661,118 @@
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Date of Initiation"><b>Date of Initiation</b></label>
-                                        <input readonly type="text" value="{{ date('d-M-Y') }}" name="initiation_date"
-                                            id="initiation_date"
-                                            style="background-color: light-dark(rgba(239, 239, 239, 0.3), rgba(59, 59, 59, 0.3))">
-                                        <input type="hidden" value="{{ date('Y-m-d') }}" name="initiation_date_hidden">
+                                        <input type="date" id="intiation_date" name="intiation_date" required />
+                                         <input type="hidden" value="{{ date('Y-m-d') }}" name="intiation_date">
                                     </div>
                                 </div>
 
                                 <div class="col-lg-12 new-date-data-field">
-                                    <div class="group-input input-date">
-                                        <label for="Due Date">Due Date</label>
-                                        <div><small class="text-primary">If revising Due Date, kindly mention revision
-                                                reason in "Due Date Extension Justification" data field.</small></div>
-                                        <div class="calenderauditee">
-                                            <input type="text" id="due_date" readonly placeholder="DD-MM-YYYY" />
-                                            <input type="date" name="due_date"
-                                                min="{{ \Carbon\Carbon::now()->format('d-M-Y') }}" class="hide-input"
-                                                oninput="handleDateInput(this, 'due_date')" />
-                                        </div>
-                                    </div>
-                                </div>
+    <div class="group-input input-date">
+        <label for="due_date">Due Date</label>
+        <div><small class="text-primary">If revising Due Date, kindly mention revision reason in "Due Date Extension Justification" data field.</small></div>
+        <div class="calenderauditee">
+            <input type="text" id="due_date" name="due_date" readonly placeholder="DD-MM-YYYY" />
+        </div>
+    </div>
+</div>
+<script>
+    function calculateDueDate() {
+        const initiationDateInput = document.getElementById('intiation_date');
+        const deviationCategorySelect = document.getElementById('Deviation_category');
+        const dueDateInput = document.getElementById('due_date');
 
-                                <script>
-                                    // Format the due date to DD-MM-YYYY
-                                    // Your input date
-                                    var dueDate = "{{ $dueDate }}"; // Replace {{ $dueDate }} with your actual date variable
+        if (initiationDateInput.value && deviationCategorySelect.value !== "NA") {
+            const initiationDate = new Date(initiationDateInput.value);
+            let dueDate = new Date(initiationDate);
 
-                                    // Create a Date object
-                                    var date = new Date(dueDate);
+            let daysToAdd = 0;
+            switch (deviationCategorySelect.value) {
+                case 'minor':
+                    daysToAdd = 15;
+                    break;
+                case 'major':
+                    daysToAdd = 30;
+                    break;
+                case 'critical':
+                    daysToAdd = 45;
+                    break;
+            }
 
-                                    // Array of month names
-                                    var monthNames = [
-                                        "Jan", "Feb", "Mar", "Apr", "May", "Jun",
-                                        "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"
-                                    ];
+            dueDate.setDate(dueDate.getDate() + daysToAdd);
 
-                                    // Extracting day, month, and year from the date
-                                    var day = date.getDate().toString().padStart(2, '0'); // Ensuring two digits
-                                    var monthIndex = date.getMonth();
-                                    var year = date.getFullYear();
+            const day = String(dueDate.getDate()).padStart(2, '0');
+            const month = String(dueDate.getMonth() + 1).padStart(2, '0');
+            const year = dueDate.getFullYear();
+            dueDateInput.value = `${day}-${month}-${year}`;
+        }
+    }
 
-                                    // Formatting the date in "dd-MMM-yyyy" format
-                                    var dueDateFormatted = `${day}-${monthNames[monthIndex]}-${year}`;
+    document.getElementById('intiation_date').addEventListener('change', calculateDueDate);
+    document.getElementById('Deviation_category').addEventListener('change', calculateDueDate);
+</script>
 
-                                    // Set the formatted due date value to the input field
-                                    document.getElementById('due_date').value = dueDateFormatted;
-                                </script>
 
-                                <div class="col-lg-12">
-                                    <div class="group-input">
-                                        <label for="Initiator Group"><b>Department</b><span
-                                                class="text-danger">*</span></label>
-                                        <select name="Initiator_Group" id="initiator_group" required>
-                                            <option value="">-- Select --</option>
-                                            <option value="CQA" @if (old('Initiator_Group') == 'CQA') selected @endif>
-                                                Corporate Quality Assurance</option>
-                                            <option value="QAB" @if (old('Initiator_Group') == 'QAB') selected @endif>
-                                                Quality
-                                                Assurance Biopharma</option>
-                                            <option value="CQC" @if (old('Initiator_Group') == 'CQC') selected @endif>
-                                                Central
-                                                Quality Control</option>
-                                            <option value="MANU" @if (old('Initiator_Group') == 'MANU') selected @endif>
-                                                Manufacturing</option>
-                                            <option value="PSG" @if (old('Initiator_Group') == 'PSG') selected @endif>Plasma
-                                                Sourcing Group</option>
-                                            <option value="CS" @if (old('Initiator_Group') == 'CS') selected @endif>
-                                                Central
-                                                Stores</option>
-                                            <option value="ITG" @if (old('Initiator_Group') == 'ITG') selected @endif>
-                                                Information Technology Group</option>
-                                            <option value="MM" @if (old('Initiator_Group') == 'MM') selected @endif>
-                                                Molecular Medicine</option>
-                                            <option value="CL" @if (old('Initiator_Group') == 'CL') selected @endif>
-                                                Central
-                                                Laboratory</option>
 
-                                            <option value="TT" @if (old('Initiator_Group') == 'TT') selected @endif>Tech
-                                                team</option>
-                                            <option value="QA" @if (old('Initiator_Group') == 'QA') selected @endif>
-                                                Quality Assurance</option>
-                                            <option value="QM" @if (old('Initiator_Group') == 'QM') selected @endif>
-                                                Quality Management</option>
-                                            <option value="IA" @if (old('Initiator_Group') == 'IA') selected @endif>IT
-                                                Administration</option>
-                                            <option value="ACC" @if (old('Initiator_Group') == 'ACC') selected @endif>
-                                                Accounting</option>
-                                            <option value="LOG" @if (old('Initiator_Group') == 'LOG') selected @endif>
-                                                Logistics</option>
-                                            <option value="SM" @if (old('Initiator_Group') == 'SM') selected @endif>
-                                                Senior Management</option>
-                                            <option value="BA" @if (old('Initiator_Group') == 'BA') selected @endif>
-                                                Business Administration</option>
-                                        </select>
-                                        @error('Initiator_Group')
-                                            <div class="text-danger">{{ $message }}</div>
-                                        @enderror
-                                    </div>
-                                </div>
+
+                                                <div class="col-lg-6">
+                                                <div class="group-input">
+                                                    <label for="initiator-group">Initiation Department</label>
+                                                    <select name="Initiator_Group" id="initiator_group">
+                                                        <option value="CQA"
+                                                            @if ($data->Initiator_Group == 'CQA') selected @endif>Corporate Quality Assurance</option>
+                                                        <option value="QA"
+                                                            @if ($data->Initiator_Group == 'QA') selected @endif>Quality Assurance</option>
+                                                        <option value="QC"
+                                                            @if ($data->Initiator_Group == 'QC') selected @endif>Quality Control</option>
+                                                        <option value="QM"
+                                                            @if ($data->Initiator_Group == 'QM') selected @endif>Quality Control (Microbiology department)
+                                                        </option>
+                                                        <option value="PG"
+                                                            @if ($data->Initiator_Group == 'PG') selected @endif>Production General</option>
+                                                        <option value="PL"
+                                                            @if ($data->Initiator_Group == 'PL') selected @endif>Production Liquid Orals</option>
+                                                        <option value="PT"
+                                                            @if ($data->Initiator_Group == 'PT') selected @endif>Production Tablet and Powder</option>
+                                                        <option value="PE"
+                                                            @if ($data->Initiator_Group == 'PE') selected @endif>Production External (Ointment, Gels, Creams and Liquid)</option>
+                                                        <option value="PC"
+                                                            @if ($data->Initiator_Group == 'PC') selected @endif>Production Capsules</option>
+                                                        <option value="PI"
+                                                            @if ($data->Initiator_Group == 'PI') selected @endif>Production Injectable</option>
+                                                        <option value="EN"
+                                                            @if ($data->Initiator_Group == 'EN') selected @endif>Engineering</option>
+                                                        <option value="HR"
+                                                            @if ($data->Initiator_Group == 'HR') selected @endif>Human Resource</option>
+                                                        <option value="ST"
+                                                            @if ($data->Initiator_Group == 'ST') selected @endif>Store</option>
+                                                        <option value="IT"
+                                                            @if ($data->Initiator_Group == 'IT') selected @endif>Electronic Data Processing
+                                                        </option>
+                                                        <option value="FD"
+                                                            @if ($data->Initiator_Group == 'FD') selected @endif>Formulation  Development
+                                                        </option>
+                                                        <option value="AL"
+                                                            @if ($data->Initiator_Group == 'AL') selected @endif>Analytical research and Development Laboratory
+                                                        </option>
+                                                        <option value="PD"
+                                                            @if ($data->Initiator_Group == 'PD') selected @endif>Packaging Development
+                                                        </option>
+
+                                                        <option value="PU"
+                                                            @if ($data->Initiator_Group == 'PU') selected @endif>Purchase Department
+                                                        </option>
+                                                        <option value="DC"
+                                                            @if ($data->Initiator_Group == 'DC') selected @endif>Document Cell
+                                                        </option>
+                                                        <option value="RA"
+                                                            @if ($data->Initiator_Group == 'RA') selected @endif>Regulatory Affairs
+                                                        </option>
+                                                        <option value="PV"
+                                                            @if ($data->Initiator_Group == 'PV') selected @endif>Pharmacovigilance
+                                                        </option>
+                                                    </select>
+                                                </div>
+                                            </div>
                                 {{-- <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Initiator Group Code">Department Code</label>
@@ -1586,19 +1638,18 @@
 
 
 
+<div style="margin-bottom: 0px;" class="col-lg-12 new-date-data-field">
+    <div class="group-input input-date">
+        <label for="Deviation_category">Initial Deviation Category</label>
+        <select name="Deviation_category" id="Deviation_category" onchange="calculateDueDate()" required>
+            <option value="NA">-- Select -- </option>
+            <option value="minor">Minor</option>
+            <option value="major">Major</option>
+            <option value="critical">Critical</option>
+        </select>
+    </div>
+</div>
 
-                                <div style="margin-bottom: 0px;" class="col-lg-12 new-date-data-field ">
-                                    <div class="group-input input-date">
-                                        <label for="Deviation_category">Initial Deviation Category</label>
-                                        <select name="Deviation_category" id="Deviation_category" disabled
-                                            onchange="handleDeviationCategoryChange()">
-                                            <option value="0">-- Select -- </option>
-                                            <option value="minor">Minor </option>
-                                            <option value="major">Major </option>
-                                            <option value="critical">Critical </option>
-                                        </select>
-                                    </div>
-                                </div>
 
                                 <div class="col-lg-6">
                                     <div class="group-input">
@@ -3969,7 +4020,7 @@
                                                 </thead>
                                                 <tbody>
                                                     <td><input disabled type="text" name="investigationTeam[]" value="1"></td>
-                                                    <td> 
+                                                    <td>
                                                         <select name="investigationTeam[0][teamMember]" id="">
                                                             <option value="">-- Select --</option>
                                                             @if(!empty($users))
@@ -4060,7 +4111,7 @@
                                                             <option value="">S-Systems</option>
                                                         </select>
                                                     </td>
-                                                    <td> 
+                                                    <td>
                                                         <select name="rootCauseData[0][rooCauseSubCategory]" id="Root_Cause_Sub_Category_Select">
                                                             <option value="">-- Select --</option>
 

@@ -78,6 +78,24 @@ class DeviationController extends Controller
             toastr()->error("Short description is required");
             return response()->redirect()->back()->withInput();
         }
+        $initiationDate = Carbon::createFromFormat('Y-m-d', $request->intiation_date);
+        $deviationCategory = $request->Deviation_category;
+          // Determine the number of days based on deviation category
+    $days = 0;
+    switch ($deviationCategory) {
+        case 'minor':
+            $days = 15;
+            break;
+        case 'major':
+            $days = 30;
+            break;
+        case 'critical':
+            $days = 30;
+            break;
+    }
+
+
+      
 
         $deviation = new Deviation();
         $deviation->form_type = "Deviation";
@@ -93,9 +111,17 @@ class DeviationController extends Controller
         $deviation->assign_to = $request->assign_to;
         $deviation->Facility = $request->Facility;
         $deviation->due_date = $request->due_date;
-        $deviation->intiation_date = $request->intiation_date;
+        // $deviation->intiation_date = $request->intiation_date;
+        $deviation->intiation_date = $initiationDate;
+        $deviation->deviation_category = $deviationCategory;
+        $deviation->days = $days;
+
+        // dd($deviation->deviation_category);
+
         $deviation->Initiator_Group = $request->Initiator_Group;
-        $deviation->due_date = Carbon::now()->addDays(30)->format('d-M-Y');
+        // $deviation->days = $days;
+        // $deviation->due_date = Carbon::now()->addDays(30)->format('d-M-Y');
+        // $deviation->due_date = $dueDate ? $dueDate->format('Y-m-d') : null;
         $deviation->initiator_group_code = $request->initiator_group_code;
         $deviation->short_description = $request->short_description;
         $deviation->Deviation_date = $request->Deviation_date;
@@ -116,8 +142,9 @@ class DeviationController extends Controller
         $deviation->Product_Details_Required = $request->Product_Details_Required;
 
         $deviation->HOD_Remarks = $request->HOD_Remarks;
-        $deviation->Deviation_category = $request->Deviation_category;
-        if($request->Deviation_category=='')
+        // $deviation->Deviation_category = $deviationCategory;
+        // $deviation->days = $days;
+        // // if($request->Deviation_category=='')
         $deviation->Justification_for_categorization = $request->Justification_for_categorization;
         $deviation->Investigation_required = $request->Investigation_required;
         $deviation->capa_required = $request->capa_required;
@@ -1115,7 +1142,7 @@ class DeviationController extends Controller
 
         $whyData = DeviationNewGridData::where(['deviation_id' => $id, 'identifier' => 'why'])->first();
         $why_data = json_decode($whyData->data, true);
-  
+
         $fishbone = DeviationNewGridData::where(['deviation_id' => $id, 'identifier' => 'fishbone'])->first();
         $fishbone_data = json_decode($fishbone->data, true);
 
