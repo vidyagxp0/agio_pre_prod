@@ -25,6 +25,7 @@ return new class extends Migration
             $table->string('origin_state')->nullable();
             $table->string('change_to')->nullable();
             $table->string('change_from')->nullable();
+            $table->string('action')->nullable();
             $table->string('action_name')->nullable();
             $table->string('user_role')->nullable();
             $table->string('stage')->nullable();

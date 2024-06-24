@@ -372,7 +372,7 @@
                             </td>
 
                             <td>
-                                <div><strong>Changed To :</strong>{{ $dataDemo->change_to }}</div>
+                                <div><strong>Changed To :</strong> {{ $dataDemo->change_to }}</div>
                             </td>
                             <td>
                                 <div>

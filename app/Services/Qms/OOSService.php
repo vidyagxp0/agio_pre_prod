@@ -639,7 +639,7 @@ class OOSService
                     $history->change_to =   "Opened";
                     $history->change_from = "Initiator";
                     $history->action_name = 'Create';
-                    $history->activity_type = ' Manufacturing Invest. Type';
+                    $history->activity_type = 'Manufacturing Invest. Type';
                     $history->current = $request->manufact_invest_required_piii;
                     $history->save();
                 }
