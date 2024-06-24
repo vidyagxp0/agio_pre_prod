@@ -224,14 +224,14 @@
                             <div>
                                 <div><strong>Changed From :</strong></div>
                                 @if(!empty($datas->previous))
-                                <div>{{ $datas->previous }}</div>
+                                <div>{!! $datas->previous !!}</div>
                                 @else
                                 <div>Null</div>
                                 @endif
                             </div>
                             <div>
                                 <div><strong>Changed To :</strong></div>
-                                <div>{{ $datas->current }}</div>
+                                <div>{!! $datas->current !!}</div>
                             </div>
                         </td>
                         <td>{{ Helpers::getDateFormat($datas->created_at) }}</td>

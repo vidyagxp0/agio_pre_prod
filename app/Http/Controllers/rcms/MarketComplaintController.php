@@ -949,7 +949,7 @@ class MarketComplaintController extends Controller
 
 
 // ====================================================audit show end creatre ========================================
-                // -----------------------------------------------------grid string data
+                // -----------------------------------------------------grid storing data
 
 
             // For "Product Details"
@@ -1082,7 +1082,7 @@ public function update(Request $request,$id)
     }
     $marketComplaint->if_other_gi = $request->input('if_other_gi');
     $marketComplaint->initiator_group_code_gi = $request->initiator_group_code_gi;
-    $marketComplaint->record =((RecordNumber::first()->value('counter')) + 1);
+    // $marketComplaint->record =((RecordNumber::first()->value('counter')) + 1);
     $marketComplaint->initiated_through_gi = $request->initiated_through_gi;
     $marketComplaint->due_date_gi = $request->due_date_gi;
 
