@@ -25,7 +25,7 @@ class ExtensionNewController extends Controller
         $data = "test";
         $record_numbers = (RecordNumber::first()->value('counter')) + 1;
         $record_number = str_pad($record_numbers, 4, '0', STR_PAD_LEFT);
-        $reviewer = DB::table('user_roles')
+        $reviewers = DB::table('user_roles')
                 ->join('users', 'user_roles.user_id', '=', 'users.id')
                 ->select('user_roles.q_m_s_processes_id', 'users.id','users.role','users.name') // Include all selected columns in the select statement
                 ->where('user_roles.q_m_s_processes_id', 89)
@@ -41,7 +41,7 @@ class ExtensionNewController extends Controller
                 ->get();
 
 
-        return View('frontend.extension.extension_new', compact('data', 'reviewer', 'approvers', 'record_number'));
+        return View('frontend.extension.extension_new', compact('data', 'reviewers', 'approvers', 'record_number'));
     }
     public function store(Request $request)
     {
@@ -275,7 +275,21 @@ class ExtensionNewController extends Controller
 
     public function show(Request $request,$id){
         $extensionNew = extension_new::find($id);
-        return view('frontend.extension.extension_view', compact('extensionNew'));
+        $reviewers = DB::table('user_roles')
+                ->join('users', 'user_roles.user_id', '=', 'users.id')
+                ->select('user_roles.q_m_s_processes_id', 'users.id','users.role','users.name') // Include all selected columns in the select statement
+                ->where('user_roles.q_m_s_processes_id', 89)
+                ->where('user_roles.q_m_s_roles_id', 2)
+                ->groupBy('user_roles.q_m_s_processes_id', 'users.id','users.role','users.name') // Include all selected columns in the group by clause
+                ->get();
+        $approvers = DB::table('user_roles')
+                ->join('users', 'user_roles.user_id', '=', 'users.id')
+                ->select('user_roles.q_m_s_processes_id', 'users.id','users.role','users.name') // Include all selected columns in the select statement
+                ->where('user_roles.q_m_s_processes_id', 89)
+                ->where('user_roles.q_m_s_roles_id', 1)
+                ->groupBy('user_roles.q_m_s_processes_id', 'users.id','users.role','users.name') // Include all selected columns in the group by clause
+                ->get();
+        return view('frontend.extension.extension_view', compact('extensionNew','reviewers','approvers'));
 
     }
 

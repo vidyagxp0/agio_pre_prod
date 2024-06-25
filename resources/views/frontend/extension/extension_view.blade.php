@@ -218,7 +218,7 @@
                             <div class="group-input">
                                 <label for="RLS Record Number"><b>Record Number</b></label>
                                 <input disabled type="text" name="record_number"
-                                value="{{ Helpers::getDivisionName(session()->get('division')) }}/Ext/{{ Helpers::year($extensionNew->created_at) }}/{{ $extensionNew->record_number }}">
+                                value="{{ Helpers::getDivisionName(session()->get('division')) }}/Ext/{{ Helpers::year($extensionNew->created_at) }}/{{ str_pad($extensionNew->record_number, 4, '0', STR_PAD_LEFT) }}">
                             </div>
                         </div>
                         <div class="col-lg-6">
@@ -235,8 +235,6 @@
                                 <label for="Initiator"><b>Initiator</b></label>
                                 {{-- <input type="hidden" value="{{ Auth::user()->name }}" name="initiator" id="initiator"> --}}
                                 <input disabled type="text" name="initiator" id="initiator" value="{{ Auth::user()->name }}">
-
-
                             </div>
                         </div>
 
@@ -279,13 +277,13 @@
                                 <div class="group-input">
                                     <label for="Assigned To">Reviewer </label>
                                     <select id="choices-multiple-remove" class="choices-multiple-reviewe"
-                                        name="reviewers" placeholder="Select Reviewers"  >
+                                        name="reviewers" placeholder="Select Reviewers" >
                                         <option value="">-- Select --</option>
-                                        @if (!empty($reviewer))
+                                        @if (!empty($reviewers))
                                         
-                                            @foreach ($reviewer as $lan)
+                                            @foreach ($reviewers as $lan)
                                                 @if(Helpers::checkUserRolesreviewer($lan))
-                                                    <option value="{{ $lan->id }}">
+                                                    <option value="{{ $lan->id }}" @if ($lan->id == $extensionNew->reviewers) selected @endif>
                                                         {{ $lan->name }}
                                                     </option>
                                                 @endif
@@ -294,7 +292,6 @@
                                     </select>
                                 </div>
                             </div>
-                            
                             <div class="col-lg-6">
                                 <div class="group-input">
                                     <label for="Assigned To">Approver </label>
@@ -305,7 +302,7 @@
                                         @if (!empty($approvers))
                                             @foreach ($approvers as $lan)
                                                 @if(Helpers::checkUserRolesApprovers($lan))
-                                                    <option value="{{ $lan->id }}">
+                                                    <option value="{{ $lan->id }}" @if ($lan->id == $extensionNew->approvers) selected @endif>
                                                         {{ $lan->name }}
                                                     </option>
                                                 @endif
@@ -319,10 +316,11 @@
                                 <div class="group-input input-date">
                                     <label for="Actual Start Date">Current Due Date (Parent)</label>
                                     <div class="calenderauditee">
-                                        <input type="text" id="current_due_date" value="{{$extensionNew->current_due_date}}" readonly placeholder="DD-MMM-YYYY" />
-                                        <input type="date" name="current_due_date" value="{{$extensionNew->current_due_date}}"
-                                            min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" value=""
-                                            class="hide-input" oninput="handleDateInput(this, 'current_due_date')" />
+
+                                        <input type="text"  id="current_due_date"  value="{{  Helpers::getdateFormat($extensionNew->current_due_date) }}" readonly placeholder="DD-MMM-YYYY" />
+                                        <input type="date" name="current_due_date"    min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" value="{{ $extensionNew->current_due_date }}"
+                                        class="hide-input"
+                                        oninput="handleDateInput(this, 'current_due_date')"/>
                                     </div>
                                 </div>
                             </div>
@@ -331,10 +329,10 @@
                                 <div class="group-input input-date">
                                     <label for="Actual Start Date">Proposed Due Date</label>
                                     <div class="calenderauditee">
-                                        <input type="text" id="proposed_due_date" value="{{$extensionNew->proposed_due_date}}" readonly placeholder="DD-MMM-YYYY" />
-                                        <input type="date" name="proposed_due_date"
-                                            min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"value="{{$extensionNew->proposed_due_date}}"
-                                            class="hide-input" oninput="handleDateInput(this, 'proposed_due_date')" />
+                                        <input type="text"  id="proposed_due_date"  value="{{  Helpers::getdateFormat($extensionNew->proposed_due_date) }}" readonly placeholder="DD-MMM-YYYY" />
+                                    <input type="date" name="proposed_due_date"    min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" value="{{ $extensionNew->proposed_due_date }}"
+                                    class="hide-input"
+                                    oninput="handleDateInput(this, 'proposed_due_date')"/> 
                                     </div>
                                 </div>
                             </div>
