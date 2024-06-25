@@ -9,4 +9,11 @@ class OotChecklist extends Model
 {
     use HasFactory;
     protected $table = 'oot_checklists';
+
+    protected $fillable = ['data'];
+
+    protected $casts = [
+        'data' => 'array', // This will cast the 'data' attribute to an array
+    ];
+
 }

@@ -616,7 +616,7 @@
                                                                 value="{{ isset($gridData['label_claim']) ? $gridData['label_claim'] : '' }}">
                                                         </td>
 
-                                                        <td><button type="text" class="removeRowBtn">Remove</button>
+                                                        <td><button type="button" class="removeRowBtn" name="Action[]">Remove</button>
                                                         </td>
                                                     </tr>
                                                 @endforeach
@@ -635,7 +635,7 @@
                                                         name="product_materiel[0][expiry_date]"></td>
                                                 <td><input type="text" class="Document_Remarks"
                                                         name="product_materiel[0][label_claim]"></td>
-                                                <td><button type="text" class="removeRowBtn">Remove</button></td>
+                                                {{-- <td><button type="text" class="removeRowBtn">Remove</button></td> --}}
                                             @endif
 
                                         </tbody>
@@ -1776,7 +1776,7 @@
                                                         </div>
                                                     </td>
                                                     {{-- <td>
-                                                                                     <textarea class="Remarks" name="who_will_not_be"></textarea>
+                                                             <textarea class="Remarks" name="who_will_not_be"></textarea>
                                                                                  </td> --}} <td style="vertical-align: middle;">
                                                         <div
                                                             style="margin: auto; display: flex; justify-content: center;">
@@ -1807,9 +1807,7 @@
                                                             </select>
                                                         </div>
                                                     </td>
-                                                    {{-- <td>
-                                                                                     <textarea class="Remarks" name="who_will_not_be"></textarea>
-                                                                                 </td> --}} <td style="vertical-align: middle;">
+                                                     <td style="vertical-align: middle;">
                                                         <div
                                                             style="margin: auto; display: flex; justify-content: center;">
                                                             <textarea name="remark_eighteen" value="{{ $checkList->remark_eighteen }}"
@@ -1840,9 +1838,7 @@
                                                             </select>
                                                         </div>
                                                     </td>
-                                                    {{-- <td>
-                                                                                     <textarea class="Remarks" name="who_will_not_be"></textarea>
-                                                                                 </td> --}} <td style="vertical-align: middle;">
+                                                     <td style="vertical-align: middle;">
                                                         <div
                                                             style="margin: auto; display: flex; justify-content: center;">
                                                             <textarea name="remark_ninteen" value="{{ $checkList->remark_ninteen }}"
@@ -1873,9 +1869,7 @@
                                                             </select>
                                                         </div>
                                                     </td>
-                                                    {{-- <td>
-                                                                                     <textarea class="Remarks" name="who_will_not_be"></textarea>
-                                                                                 </td> --}} <td style="vertical-align: middle;">
+                                                     <td style="vertical-align: middle;">
                                                         <div
                                                             style="margin: auto; display: flex; justify-content: center;">
                                                             <textarea name="remark_twenty" value="{{ $checkList->remark_twenty }}"
@@ -1906,9 +1900,7 @@
                                                             </select>
                                                         </div>
                                                     </td>
-                                                    {{-- <td>
-                                                                                     <textarea class="Remarks" name="who_will_not_be"></textarea>
-                                                                                 </td> --}} <td style="vertical-align: middle;">
+                                                     <td style="vertical-align: middle;">
                                                         <div
                                                             style="margin: auto; display: flex; justify-content: center;">
                                                             <textarea name="remark_twenty_one" value="{{ $checkList->remark_twenty_one }}"
@@ -1939,9 +1931,7 @@
                                                             </select>
                                                         </div>
                                                     </td>
-                                                    {{-- <td>
-                                                                                     <textarea class="Remarks" name="who_will_not_be"></textarea>
-                                                                                 </td> --}} <td style="vertical-align: middle;">
+                                                     <td style="vertical-align: middle;">
                                                         <div
                                                             style="margin: auto; display: flex; justify-content: center;">
                                                             <textarea name="remark_twenty_two" value="{{ $checkList->remark_twenty_two }}"
@@ -1971,9 +1961,7 @@
                                                             </select>
                                                         </div>
                                                     </td>
-                                                    {{-- <td>
-                                                                                     <textarea class="Remarks" name="who_will_not_be"></textarea>
-                                                                                 </td> --}} <td style="vertical-align: middle;">
+                                                     <td style="vertical-align: middle;">
                                                         <div
                                                             style="margin: auto; display: flex; justify-content: center;">
                                                             <textarea name="remark_twenty_three" value="{{ $checkList->remark_twenty_three }}"
@@ -2003,9 +1991,7 @@
                                                             </select>
                                                         </div>
                                                     </td>
-                                                    {{-- <td>
-                                                                                     <textarea class="Remarks" name="who_will_not_be"></textarea>
-                                                                                 </td> --}} <td style="vertical-align: middle;">
+                                                     <td style="vertical-align: middle;">
                                                         <div
                                                             style="margin: auto; display: flex; justify-content: center;">
                                                             <textarea name="remark_twenty_four" value="{{ $checkList->remark_twenty_four }}"
@@ -2068,9 +2054,7 @@
                                                             </select>
                                                         </div>
                                                     </td>
-                                                    {{-- <td>
-                                                                                     <textarea class="Remarks" name="who_will_not_be"></textarea>
-                                                                                 </td> --}} <td style="vertical-align: middle;">
+                                                    <td style="vertical-align: middle;">
                                                         <div
                                                             style="margin: auto; display: flex; justify-content: center;">
                                                             <textarea name="remark_twenty_six" value="{{ $checkList->remark_twenty_six }}"
@@ -2100,9 +2084,7 @@
                                                             </select>
                                                         </div>
                                                     </td>
-                                                    {{-- <td>
-                                                                                     <textarea class="Remarks" name="who_will_not_be"></textarea>
-                                                                                 </td> --}} <td style="vertical-align: middle;">
+                                                     <td style="vertical-align: middle;">
                                                         <div
                                                             style="margin: auto; display: flex; justify-content: center;">
                                                             <textarea name="remark_twenty_seven" value="{{ $checkList->remark_twenty_seven }}"
@@ -2134,9 +2116,7 @@
                                                             </select>
                                                         </div>
                                                     </td>
-                                                    {{-- <td>
-                                                                                     <textarea class="Remarks" name="who_will_not_be"></textarea>
-                                                                                 </td> --}} <td style="vertical-align: middle;">
+                                                     <td style="vertical-align: middle;">
                                                         <div
                                                             style="margin: auto; display: flex; justify-content: center;">
                                                             <textarea name="remark_twenty_eight" value="{{ $checkList->remark_twenty_eight }}"
@@ -2166,9 +2146,7 @@
                                                             </select>
                                                         </div>
                                                     </td>
-                                                    {{-- <td>
-                                                                                     <textarea class="Remarks" name="who_will_not_be"></textarea>
-                                                                                 </td> --}} <td style="vertical-align: middle;">
+                                                     <td style="vertical-align: middle;">
                                                         <div
                                                             style="margin: auto; display: flex; justify-content: center;">
                                                             <textarea name="remark_twenty_nine" value="{{ $checkList->remark_twenty_nine }}"
@@ -2198,9 +2176,8 @@
                                                             </select>
                                                         </div>
                                                     </td>
-                                                    {{-- <td>
-                                                                                     <textarea class="Remarks" name="who_will_not_be"></textarea>
-                                                                                 </td> --}} <td style="vertical-align: middle;">
+
+                                                    <td style="vertical-align: middle;">
                                                         <div
                                                             style="margin: auto; display: flex; justify-content: center;">
                                                             <textarea name="remark_thirty" value="{{ $checkList->remark_thirty }}"
@@ -2231,9 +2208,7 @@
                                                             </select>
                                                         </div>
                                                     </td>
-                                                    {{-- <td>
-                                                                                     <textarea class="Remarks" name="who_will_not_be"></textarea>
-                                                                                 </td> --}} <td style="vertical-align: middle;">
+                                                    <td style="vertical-align: middle;">
                                                         <div
                                                             style="margin: auto; display: flex; justify-content: center;">
                                                             <textarea name="remark_thirty_one" value="{{ $checkList->remark_thirty_one }}"
@@ -2263,9 +2238,7 @@
                                                             </select>
                                                         </div>
                                                     </td>
-                                                    {{-- <td>
-                                                                                     <textarea class="Remarks" name="who_will_not_be"></textarea>
-                                                                                 </td> --}} <td style="vertical-align: middle;">
+                                                     <td style="vertical-align: middle;">
                                                         <div
                                                             style="margin: auto; display: flex; justify-content: center;">
                                                             <textarea name="remark_thirty_one" value="{{ $checkList->remark_thirty_one }}"
@@ -2295,9 +2268,7 @@
                                                             </select>
                                                         </div>
                                                     </td>
-                                                    {{-- <td>
-                                                                                     <textarea class="Remarks" name="who_will_not_be"></textarea>
-                                                                                 </td> --}} <td style="vertical-align: middle;">
+                                                    <td style="vertical-align: middle;">
                                                         <div
                                                             style="margin: auto; display: flex; justify-content: center;">
                                                             <textarea name="remark_thirty_three" value="{{ $checkList->remark_thirty_three }}"
@@ -2327,9 +2298,7 @@
                                                             </select>
                                                         </div>
                                                     </td>
-                                                    {{-- <td>
-                                                                                     <textarea class="Remarks" name="who_will_not_be"></textarea>
-                                                                                 </td> --}} <td style="vertical-align: middle;">
+                                                   <td style="vertical-align: middle;">
                                                         <div
                                                             style="margin: auto; display: flex; justify-content: center;">
                                                             <textarea name="remark_thirty_four" value="{{ $checkList->remark_thirty_four }}"
@@ -2339,58 +2308,36 @@
 
                                                 </tr>
 
+
                                                 @if ($checkList && is_array($checkList->data))
-                                                    @foreach ($checkList->data as $gridData)
-                                                        <tr>
-
-                                                            <td class="flex text-center">{{ $loop->index + 34 }}</td>
-                                                            <td>
-                                                                <input type="text" class="numberDetail"
-                                                                    name="data[{{ $loop->index }}][questions]"
-                                                                    value="{{ isset($gridData['questions']) ? $gridData['questions'] : '' }}">
-                                                            </td>
-                                                            {{-- <td>
-                                                                <input type="text" class="numberDetail"
-                                                                    name="data[{{ $loop->index }}][response]"
-                                                                    value="{{ isset($gridData['response']) ? $gridData['response'] : '' }}">
-                                                            </td> --}}
-                                                            <td>
-
-                                                                <div
-                                                                    style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                                    <select name="data[{{ $loop->index }}][response]"
-                                                                        id="response"
-                                                                        style="padding: 2px; width:90%; border: 1px solid rgb(125, 125, 125);  background-color: #f0f0f0;">
-                                                                        <option value="">Select an Option</option>
-                                                                        <option value="yes"
-                                                                            @if (isset($gridData['response']) && $gridData['response'] == 'yes') selected @endif>
-                                                                            Yes
-                                                                        </option>
-                                                                        <option value="no"
-                                                                            @if (isset($gridData['response']) && $gridData['response'] == 'no') selected @endif>
-                                                                            No
-                                                                        </option>
-                                                                        <option value="n/a"
-                                                                            @if (isset($gridData['response']) && $gridData['response'] == 'n/a') selected @endif>
-                                                                            N/A
-                                                                        </option>
-                                                                    </select>
-                                                                </div>
-
-                                                            </td>
-
-                                                            <td>
-                                                                <textarea name="data[{{ $loop->index }}][remarks]" style="border-radius: 7px; border: 1.5px solid black;"> {{ isset($gridData['remarks']) ? $gridData['remarks'] : '' }}</textarea>
-                                                            </td>
-
-
-                                                            <td><input type="text" class="Action" name="">
-                                                            </td>
-                                                        </tr>
-                                                    @endforeach
-                                                @endif
-
-
+                                                @foreach ($checkList->data as $gridData)
+                                                    <tr>
+                                                        <td class="flex text-center">{{ $loop->index + 35 }}</td>
+                                                        <td>
+                                                            <input type="text" class="numberDetail" name="data[{{ $loop->index }}][questions]"
+                                                                   value="{{ isset($gridData['questions']) ? $gridData['questions'] : '' }}">
+                                                        </td>
+                                                        <td>
+                                                            <div style="display: flex; justify-content: space-around; align-items: center; margin: 5%; gap:5px">
+                                                                <select name="data[{{ $loop->index }}][response]" id="response"
+                                                                        style="padding: 2px; width:90%; border: 1px solid rgb(125, 125, 125); background-color: #f0f0f0;">
+                                                                    <option value="">Select an Option</option>
+                                                                    <option value="yes" @if (isset($gridData['response']) && $gridData['response'] == 'yes') selected @endif>Yes</option>
+                                                                    <option value="no" @if (isset($gridData['response']) && $gridData['response'] == 'no') selected @endif>No</option>
+                                                                    <option value="n/a" @if (isset($gridData['response']) && $gridData['response'] == 'n/a') selected @endif>N/A</option>
+                                                                </select>
+                                                            </div>
+                                                        </td>
+                                                        <td>
+                                                            <textarea name="data[{{ $loop->index }}][remarks]"
+                                                                      style="border-radius: 7px; border: 1.5px solid black;">{{ isset($gridData['remarks']) ? $gridData['remarks'] : '' }}</textarea>
+                                                        </td>
+                                                        <td><button type="button" class="removeRowBtn" name="">Remove</button></td>
+                                                    </tr>
+                                                @endforeach
+                                            @else
+                                                <p>No data available.</p>
+                                            @endif
                                             </tbody>
                                         </table>
                                     </div>
@@ -2539,7 +2486,6 @@
                                     <textarea class="summernote" name="part_b_comments" value="{{ $data->part_b_comments }}" id="summernote-16">{{ $data->part_b_comments }}</textarea>
                                 </div>
                             </div>
-
 
 
                             <div class="col-lg-6">
@@ -4982,11 +4928,11 @@
                         '"></td>' +
                         '<td><input type="text" name="product_materiel[' + indexDetail + '][item_product_code]"></td>' +
                         '<td><input type="text" name="product_materiel[' + indexDetail + '][lot_batch_no]"></td>' +
-                        ' <td><input type="text" name="product_materiel[' + indexDetail +'][a_r_number]"></td>' +
+                        '<td><input type="text" name="product_materiel[' + indexDetail +'][a_r_number]"></td>' +
                         '<td><input type="date" name="product_materiel[' + indexDetail + '][m_f_g_date]"></td>' +
                         '<td><input type="date" name="product_materiel[' + indexDetail + '][expiry_date]"></td>' +
                         '<td><input type="text" name="product_materiel[' + indexDetail + '][label_claim]"></td>' +
-                        '<td><button type="text" class="removeRowBtn">Remove</button></td>' +
+                        '<td><button type="button" class="removeRowBtn">Remove</button></td>' +
                         '</tr>';
                     '</tr>';
                     indexDetail++;
@@ -5023,7 +4969,7 @@
                         '][oriention]"></td>' +
                         '<td><input type="text" name="details_of_stability[' + detailsIndex +
                         '][pack_details]"></td>' +
-                        '<td><button type="text" class="removeRowBtn">Remove</button></td>' +
+                        '<td><button type="button" class="removeRowBtn">Remove</button></td>' +
 
                         '</tr>';
                     '</tr>';
@@ -5057,7 +5003,7 @@
                         '<td><input type="text" name="oot_result[' + ootIndex +
                         '][difference_of_result]"></td>' +
                         '<td><input type="text" name="oot_result[' + ootIndex + '][trend_limit]"></td>' +
-                        '<td><button type="text" class="removeRowBtn">Remove</button></td>' +
+                        '<td><button type="button" class="removeRowBtn">Remove</button></td>' +
 
                         '</tr>';
                     '</tr>';
@@ -5091,10 +5037,9 @@
                         '][pack_style]"></td>' +
                         '<td><input type="text" name="info_product[' + infoProduct + '][frequency]"></td>' +
                         '<td><input type="text" name="info_product[' + infoProduct + '][condition]"></td>' +
-                        '<td><button type="text" class="removeRowBtn">Remove</button></td>' +
+                        '<td><button type="button" class="removeRowBtn">Remove</button></td>' +
                         '</tr>';
                     '</tr>';
-
                     infoProduct++;
                     return html;
                 }
@@ -5170,8 +5115,6 @@
         $(document).ready(function() {
             $('#impactedAdd').click(function(e) {
                 function generateTableRow(serialNumber) {
-
-
                     var html =
                         '<tr>' +
                         '<td><input disabled type="text" name="serial[]" value="' + serialNumber +
@@ -5182,7 +5125,6 @@
                         '<td><input type="text" name="ActionTakenOnAffectedBatch[]"></td>' +
                         '</tr>';
                     '</tr>';
-
                     return html;
                 }
 
@@ -5201,17 +5143,13 @@
                 function generateTableRow(serialNumber) {
                     var html =
                         '<tr>' +
-                        '<td style=""><input style="margin-left: 25px;" disabled type="text" name="serial[]" value="' +
-                        serialNumber +
-                        '"></td>' +
-                        '<td><input type="text" name="data[' + checkList + '][questions]"></td>' +
-                        '<td><select name="data[' + checkList +
-                        '][response]" id="" style="margin-top: 10px;margin-left: 28px; padding: 3px; width: 81%; border: 1px solid rgb(125, 125, 125);  background-color: #f0f0f0;"> <option value="">Select an Option</option> <option value="yes">Yes</option> <option value="no">No</option><option value="n/a">N/A</option></select></td>' +
-                        ' <td> <textarea name="data[' + checkList +
-                        '][remarks]" style="border-radius: 7px; border: 1.5px solid black;"></textarea></td>' +
-                        '<td><button type="text" class="removeRowBtn">Remove</button></td>' +
+                        '<td style=""><input style="margin-left: 25px;" disabled type="text" name="serial[]" value="' + serialNumber +'"></td>' +
+                        '<td><input type="text" name="data[' + checkList + '][questions]"></td>'+
+                        '<td><select name="data[' + checkList +'][response]" id="" style="margin-top: 10px;margin-left: 28px; padding: 3px; width: 81%; border: 1px solid rgb(125, 125, 125);  background-color: #f0f0f0;"> <option value="">Select an Option</option> <option value="yes">Yes</option> <option value="no">No</option><option value="n/a">N/A</option></select></td>'+
+                        '<td> <textarea name="data[' + checkList +'][remarks]" style="border-radius: 7px; border: 1.5px solid black;"></textarea></td>'+
+                        '<td><button type="text" class="removeRowBtn">Remove</button></td>'+
                         '</tr>';
-                    '</tr>';
+
                     checkList++;
                     return html;
                 }

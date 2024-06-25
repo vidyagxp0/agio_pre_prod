@@ -221,7 +221,9 @@
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="group-input">
-                                        <label for="Short Description">Short Description<span class="text-danger">*</span></label>
+
+                                    <label for="Short Description">Short Description<span class="text-danger">
+                                        *</span></label><span id="rchars">255</span>characters remaining
 
                                         <textarea name="short_description" value="" required></textarea>
                                     </div>

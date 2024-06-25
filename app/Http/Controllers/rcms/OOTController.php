@@ -755,7 +755,7 @@ class OOTController extends Controller
        $InfoProductMat = ProductGridOot::where(['ootcs_id' => $id, 'identifier' => 'info_product'])->first();
 
 
-       $checkList = OotChecklist::where(['ootcs_id' => $id ])->first();
+       $checkList = OotChecklist::where(['ootcs_id' => $id,  ])->first();
 
        $record_number = ((RecordNumber::first()->value('counter')) + 1);
        $record_number = str_pad($record_number, 4, '0', STR_PAD_LEFT);
