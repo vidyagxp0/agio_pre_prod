@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\RecordNumber;
 use Illuminate\Http\Request;
 use App\Models\InternalAudit;
-use App\Models\{InternalAuditTrial,IA_checklist_tablet_compression,IA_checklist_tablet_coating,Checklist_Capsule, IA_checklist__formulation_research, IA_checklist_analytical_research, IA_checklist_dispensing, IA_checklist_engineering, IA_checklist_hr, IA_checklist_manufacturing_filling, IA_checklist_production_injection, IA_checklist_stores, IA_dispencing_manufacturing, IA_ointment_paking, IA_quality_control, InternalAuditChecklistGrid};
+use App\Models\{InternalAuditTrial,IA_checklist_tablet_compression,IA_checklist_tablet_coating,Checklist_Capsule, IA_checklist__formulation_research, IA_checklist_analytical_research, IA_checklist_dispensing, IA_checklist_engineering, IA_checklist_hr, IA_checklist_manufacturing_filling, IA_checklist_production_injection, IA_checklist_stores, IA_dispencing_manufacturing, IA_liquid_ointment, IA_ointment_paking, IA_quality_control, InternalAuditChecklistGrid};
 use App\Models\{IA_checklist_capsule_paking};
 use App\Models\RoleGroup;
 use App\Models\InternalAuditGrid;
@@ -1200,6 +1200,27 @@ class InternalauditController extends Controller
         $checklistTabletCoating->tablet_coating_remark_comment = $request->tablet_coating_remark_comment;
         $checklistTabletCoating->save();
 
+
+        //==================== onitnment controller==================================================================
+$liquid_ointments = IA_liquid_ointment::where(['ia_id' => $id])->firstOrCreate();
+$liquid_ointments->ia_id = $id;
+
+
+ for ($i = 1; $i <= 48; $i++)
+ {
+     $string = 'liquid_ointments_response_'. $i;
+    $liquid_ointments->$string = $request->$string;
+ }
+
+ for ($i = 1; $i <= 48; $i++)
+ {
+    $string = 'liquid_ointments_remark_'. $i;
+     $liquid_ointments->$string = $request->$string;
+ }
+ // dd($checklistTabletCompression->tablet_compress_remark_1)
+ $liquid_ointments->Description_oinments_comment = $request->Description_oinments_comment;
+$liquid_ointments->save();
+
 //======================================  Checklist_Capsule==========================================================================================================================================================
 
 $Checklist_Capsule = Checklist_Capsule::where(['ia_id' => $id])->firstOrCreate();
@@ -2247,7 +2268,9 @@ $Checklist_Capsule->save();
         $checklist2 = IA_checklist_tablet_coating::where('ia_id', $id)->first();
         $checklist4 = Checklist_Capsule::where('ia_id', $id)->first();
         $checklist3 = IA_checklist_capsule_paking::where('ia_id', $id)->first();
+        $checklist5 = IA_liquid_ointment::where('ia_id', $id)->first();
         $checklist6 = IA_dispencing_manufacturing::where('ia_id', $id)->first();
+
         $checklist7 = IA_ointment_paking::where('ia_id', $id)->first();
         $checklist9 = IA_checklist_engineering::where('ia_id', $id)->first();
         $checklist10 = IA_quality_control::where('ia_id', $id)->first();
@@ -2258,14 +2281,6 @@ $Checklist_Capsule->save();
         $checklist15 = IA_checklist_manufacturing_filling::where('ia_id', $id)->first();
         $checklist16 = IA_checklist_analytical_research::where('ia_id', $id)->first();
         $checklist17 = IA_checklist__formulation_research::where('ia_id', $id)->first();
-
-
-
-
-
-
-
-
 
         // dd($checklist1);
         $data->record = str_pad($data->record, 4, '0', STR_PAD_LEFT);
@@ -2289,10 +2304,7 @@ $Checklist_Capsule->save();
         $gridcomment = InternalAuditChecklistGrid::where(['ia_id' => $id])->first();
             // dd($gridcomment);
 
-
-
-
-        return view('frontend.internalAudit.view', compact('data','checklist1','checklist2','checklist3', 'checklist4','checklist6','checklist7','checklist9','checklist10','checklist11','checklist12','checklist13','checklist14','checklist15','checklist16','checklist17','old_record','grid_data','grid_data1', 'auditAssessmentChecklist','auditPersonnelChecklist','auditfacilityChecklist','auditMachinesChecklist','auditProductionChecklist','auditMaterialsChecklist','auditQualityControlChecklist','auditQualityAssuranceChecklist','auditPackagingChecklist','auditSheChecklist','gridcomment'));
+        return view('frontend.internalAudit.view', compact('data','checklist1','checklist2','checklist3', 'checklist4','checklist5','checklist6','checklist7','checklist9','checklist10','checklist11','checklist12','checklist13','checklist14','checklist15','checklist16','checklist17','old_record','grid_data','grid_data1', 'auditAssessmentChecklist','auditPersonnelChecklist','auditfacilityChecklist','auditMachinesChecklist','auditProductionChecklist','auditMaterialsChecklist','auditQualityControlChecklist','auditQualityAssuranceChecklist','auditPackagingChecklist','auditSheChecklist','gridcomment'));
     }
 
     public function InternalAuditStateChange(Request $request, $id)
