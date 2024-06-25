@@ -609,7 +609,6 @@ class Helpers
                 if($grid && is_array($grid->data)){
 
                     $res = $grid->data;
-
                     if ($getKey && !$byIndex) {
                         $res = array_key_exists($keyName, $grid->data) ? $grid->data[$keyName] : '';
                     }

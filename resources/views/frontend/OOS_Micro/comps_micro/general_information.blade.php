@@ -222,7 +222,6 @@
                         <option value="product-non-conformance" @if ($micro_data->source_document_type_gi == 'product-non-conformance') selected @endif>Product Non-conformance</option>
                         <option value="inspectional-observation" @if ($micro_data->source_document_type_gi == 'inspectional-observation') selected @endif>Inspectional Observation</option>
                         <option value="other" @if ($micro_data->source_document_type_gi == 'other') selected @endif>Others</option>
-
                     </select>
                 </div>
             </div>

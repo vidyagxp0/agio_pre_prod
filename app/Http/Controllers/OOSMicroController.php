@@ -103,7 +103,6 @@ class OOSMicroController extends Controller
             'oos_capa',
             'oos_conclusion',
             'oos_conclusion_review',
-            "phase_I_investigation",
             "phase_IB_investigation",
             "analyst_training_proce",
             "sample_receiving_verification_lab",
@@ -893,19 +892,19 @@ class OOSMicroController extends Controller
         $history->origin_state = $lastDocument->status;
         $history->save();
     }
-    if($lastDocument->reference_document_gi != $request->reference_document_gi){
-        $history =  new OOSmicroAuditTrail();
-        $history->OOS_micro_id = $id;
-        $history->activity_type = 'Reference Document';
-        $history->previous = $lastDocument->reference_document_gi;
-        $history->current= $request->reference_document_gi;
-        $history->comment= $request->comment;
-        $history->user_id = Auth::user()->id;
-        $history->user_name = Auth::user()->name;
-        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-        $history->origin_state = $lastDocument->status;
-        $history->save();
-    }
+    // if($lastDocument->reference_document_gi != $request->reference_document_gi){
+    //     $history =  new OOSmicroAuditTrail();
+    //     $history->OOS_micro_id = $id;
+    //     $history->activity_type = 'Reference Document';
+    //     $history->previous = $lastDocument->reference_document_gi;
+    //     $history->current= $request->reference_document_gi;
+    //     $history->comment= $request->comment;
+    //     $history->user_id = Auth::user()->id;
+    //     $history->user_name = Auth::user()->name;
+    //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+    //     $history->origin_state = $lastDocument->status;
+    //     $history->save();
+    // }
 
     if($lastDocument->sample_type_gi != $request->sample_type_gi){
         $history =  new OOSmicroAuditTrail();
@@ -964,16 +963,12 @@ class OOSMicroController extends Controller
 $Preliminary_Lab_Investigation = [
 'comments_pli' => 'Comments',
 'field_alert_required_pli' => 'Field Alert Required',
-'field_alert_ref_no_pli' => 'Field Alert Ref.No.',
 'justify_if_no_field_alert_pli' => 'Justify if no Field Alert',
 'verification_analysis_required_pli' => 'Verification Analysis Required',
-'verification_analysis_ref_pli' => 'Verification Analysis Ref.',
 'analyst_interview_req_pli' => 'Analyst Interview Req.',
-'analyst_interview_ref_pli' => 'Analyst Interview Ref.',
 'justify_if_no_analyst_int_pli' => 'Justify if no Analyst Int.',
 'phase_i_investigation_required_pli' => 'Phase I Investigation Required',
 'phase_i_investigation_pli' => 'Phase I Investigation ',
-'phase_i_investigation_ref_pli' => 'Phase I Investigation Ref.',
 ];
 foreach ($Preliminary_Lab_Investigation as $key => $value){
 
@@ -991,7 +986,6 @@ foreach ($Preliminary_Lab_Investigation as $key => $value){
         $history->save();
     }
 }
-
 //Preliminary lab investigation conclusion
 $Preliminary_Lab_Investigation_Conclusion = [
 'summary_of_prelim_investiga_plic' => 'Summary of Prelim.Investigation',
@@ -1001,9 +995,7 @@ $Preliminary_Lab_Investigation_Conclusion = [
 'root_cause_details_plic' => 'Root Cause Details',
 'oos_category_root_cause_plic' => 'OOS Category-Root Cause Ident.',
 'recommended_actions_required_plic' => 'Recommended Actions Required?',
-'recommended_actions_reference_plic' => 'Recommended Actions Reference',
 'capa_required_plic' => 'CAPA Required',
-'reference_capa_no_plic' => 'Reference CAPA No.',
 'delay_justification_for_pi_plic' => 'Delay Justification for P.I.',
 ];
 foreach($Preliminary_Lab_Investigation_Conclusion as $key => $value){
@@ -1049,13 +1041,13 @@ if($lastDocument->$key != $request->$key){
 $Phase_II_Investigation = [
 'qa_approver_comments_piii' => 'QA Approver Comments',
 'manufact_invest_required_piii' => 'Manufact. Invest. Required?',
-'manufacturing_invest_type_piii' => 'Manufacturing Invest. Type',
-'manufacturing_invst_ref_piii' => 'Manufacturing Invst. Ref.',
+// 'manufacturing_invest_type_piii' => 'Manufacturing Invest. Type',
+// 'manufacturing_invst_ref_piii' => 'Manufacturing Invst. Ref.',
 're_sampling_required_piii' => 'Re-sampling Required?',
 'audit_comments_piii' => 'Audit Comments',
-'re_sampling_ref_no_piii' => 'Re-sampling Ref. No.',
+// 're_sampling_ref_no_piii' => 'Re-sampling Ref. No.',
 'hypo_exp_required_piii' => 'Hypo/Exp.Required',
-'hypo_exp_reference_piii' => 'Hypo/Exp. Reference',
+// 'hypo_exp_reference_piii' => 'Hypo/Exp. Reference',
 ];
 
 foreach($Phase_II_Investigation as $key => $value ){
@@ -1271,7 +1263,8 @@ if($lastDocument->$key != $request->$key){
                     'oos_capa',
                     'oos_conclusion',
                     'oos_conclusion_review',
-                    "phase_I_investigation",
+                    // "phase_I_investigation",
+                    'phase_IB_investigation',
                     "analyst_training_proce",
                     "sample_receiving_verification_lab",
                     "method_procedure_used_during_analysis",

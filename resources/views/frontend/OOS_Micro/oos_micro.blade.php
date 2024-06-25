@@ -521,7 +521,6 @@ $users = DB::table('users')
                                     value="">
                             </div>
                         </div>
-
                         <div class="col-lg-6">
                             <div class="group-input">
                                 <label for="Initiator Group">Initiated Through ?</label>
@@ -1115,7 +1114,7 @@ $users = DB::table('users')
                     <div class="row">
                         <div class="col-md-12 mb-4">
                             <div class="group-input">
-                                <label for="Description Deviation">Summary of Prelim.Investiga.</label>
+                                <label for="Description Deviation">Summary of Prelim.Investigation.</label>
                                 <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
                                 <textarea class="summernote" name="summary_of_prelim_investiga_plic" id="summernote-1">
                                     </textarea>
@@ -1530,14 +1529,12 @@ $users = DB::table('users')
                                                         style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                                         <select name="phase_II_OOS_investigation[{{$loop->index}}][response]" id="response"
                                                             style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                            <option value="Yes">Select an Option</option>
+                                                            <option value="">Select an Option</option>
                                                             <option value="Yes">Yes</option>
                                                             <option value="No">No</option>
                                                             <option value="N/A">N/A</option>
                                                         </select>
                                                     </div>
-
-
                                                 </td>
                                                 <td>
                                                     {{-- <textarea name="who_will_not_be"></textarea> --}} <div
@@ -4945,15 +4942,9 @@ $users = DB::table('users')
                                                                         id="response"
                                                                         style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
                                                                     <option value="">Select an Option</option>
-                                                                    <option value="Yes"
-                                                                    {{-- {{ Helpers::getMicroGridData($micro_, 'analyst_training_proce', true, 'response', true, $loop->index) == 'Yes' ? 'selected' : '' }} --}}
-                                                                    >Yes</option>
-                                                                    <option value="No"
-                                                                    {{-- {{ Helpers::getMicroGridData($micro_data, 'analyst_training_proce', true, 'response', true, $loop->index) == 'No' ? 'selected' : '' }} --}}
-                                                                    >No</option>
-                                                                    <option value="N/A"
-                                                                    {{-- {{ Helpers::getMicroGridData($micro_data, 'analyst_training_proce', true, 'response', true, $loop->index) == 'N/A' ? 'selected' : '' }} --}}
-                                                                    >N/A</option>
+                                                                    <option value="Yes">Yes</option>
+                                                                    <option value="No" >No</option>
+                                                                    <option value="N/A">N/A</option>
                                                                 </select>
                                                             @endif
 
