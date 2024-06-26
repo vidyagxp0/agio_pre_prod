@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\DeviationNewGridData;
 use App\Models\DeviationCftsResponse;
 use App\Models\RootCauseAnalysis;
+use App\Models\FailureInvestigationGridData;
 use App\Models\{EffectivenessCheck,LaunchExtension,DeviationGridQrms};
 use App\Models\CC;
 use App\Models\ActionItem;
@@ -74,27 +75,25 @@ class DeviationController extends Controller
             }
         }
 
-        if (!$request->short_description) {
-            toastr()->error("Short description is required");
-            return response()->redirect()->back()->withInput();
-        }
-        $initiationDate = Carbon::createFromFormat('Y-m-d', $request->intiation_date);
+        // if (!$request->short_description) {
+        //     toastr()->error("Short description is required");
+        //     return response()->redirect()->back()->withInput();
+        // }
+        $initiationDate = $request->intiation_date;
         $deviationCategory = $request->Deviation_category;
           // Determine the number of days based on deviation category
-    $days = 0;
-    switch ($deviationCategory) {
-        case 'minor':
-            $days = 15;
-            break;
-        case 'major':
-            $days = 30;
-            break;
-        case 'critical':
-            $days = 30;
-            break;
-    }
-
-
+            $days = 0;
+            switch ($deviationCategory) {
+                case 'minor':
+                    $days = 15;
+                    break;
+                case 'major':
+                    $days = 30;
+                    break;
+                case 'critical':
+                    $days = 30;
+                    break;
+            }
       
 
         $deviation = new Deviation();
@@ -111,21 +110,17 @@ class DeviationController extends Controller
         $deviation->assign_to = $request->assign_to;
         $deviation->Facility = $request->Facility;
         $deviation->due_date = $request->due_date;
-        // $deviation->intiation_date = $request->intiation_date;
         $deviation->intiation_date = $initiationDate;
-        $deviation->deviation_category = $deviationCategory;
+        $deviation->Deviation_category = $deviationCategory;
         $deviation->days = $days;
-
-        // dd($deviation->deviation_category);
-
         $deviation->Initiator_Group = $request->Initiator_Group;
-        // $deviation->days = $days;
-        // $deviation->due_date = Carbon::now()->addDays(30)->format('d-M-Y');
-        // $deviation->due_date = $dueDate ? $dueDate->format('Y-m-d') : null;
         $deviation->initiator_group_code = $request->initiator_group_code;
         $deviation->short_description = $request->short_description;
         $deviation->Deviation_date = $request->Deviation_date;
         $deviation->deviation_time = $request->deviation_time;
+        $deviation->Hod_person_to = $request->Hod_person_to;
+        $deviation->Reviewer_to = $request->Reviewer_to;
+        $deviation->Approver_to = $request->Approver_to;
         $deviation->Deviation_reported_date = $request->Deviation_reported_date;
         if (is_array($request->audit_type)) {
             $deviation->audit_type = implode(',', $request->audit_type);
@@ -136,7 +131,7 @@ class DeviationController extends Controller
 
         $deviation->Product_Batch = $request->Product_Batch;
 
-        $deviation->Description_Deviation = implode(',', $request->Description_Deviation);
+        // $deviation->Description_Deviation = implode(',', $request->Description_Deviation);
         $deviation->Immediate_Action = implode(',', $request->Immediate_Action);
         $deviation->Preliminary_Impact = implode(',', $request->Preliminary_Impact);
         $deviation->Product_Details_Required = $request->Product_Details_Required;
@@ -168,6 +163,22 @@ class DeviationController extends Controller
         $deviation->Disposition_Batch = $request->Disposition_Batch;
         $deviation->Facility_Equipment = $request->Facility_Equipment;
         $deviation->Document_Details_Required = $request->Document_Details_Required;
+        // New Added Line
+        $deviation->what=$request->what;
+        $deviation->why_why=$request->why_why;
+        $deviation->where_where=$request->where_where;
+        $deviation->when_when=$request->when_when;
+        $deviation->who=$request->who;
+        $deviation->how=$request->how;
+        $deviation->how_much=$request->how_much;
+        // $deviation->what = $validatedData['what'];
+        // $deviation->why_why = $validatedData['why_why'];
+        // $deviation->where_where = $validatedData['where_where'];
+        // $deviation->when_when = $validatedData['when_when'];
+        // $deviation->who = $validatedData['who'];
+        // $deviation->how = $validatedData['how'];
+        // $deviation->how_much = $validatedData['how_much'];
+        $deviation->Detail_Of_Root_Cause=$request->Detail_Of_Root_Cause;
 
         if ($request->Deviation_category == 'major' || $request->Deviation_category == 'minor' || $request->Deviation_category == 'critical') {
             $list = Helpers::getHeadoperationsUserList();
@@ -1063,7 +1074,7 @@ class DeviationController extends Controller
             $history->action_name = 'Create';
             $history->save();
         }
-        if ($request->Description_Deviation[0] !== null){
+        if ($request->Description_Deviation !== null){
             $history = new DeviationAuditTrail();
             $history->deviation_id = $deviation->id;
             $history->activity_type = 'Description of Deviation';
@@ -1168,12 +1179,23 @@ class DeviationController extends Controller
         $deviation = deviation::find($id);
         $deviation->Delay_Justification = $request->Delay_Justification;
 
+        $deviation->what = $request->what;
+        $deviation->why_why = $request->why_why;
+        $deviation->where_where = $request->where_where;
+        $deviation->when_when = $request->when_when;
+        $deviation->who = $request->who;
+        $deviation->how = $request->how;
+        $deviation->how_much = $request->how_much;
+        $deviation->Detail_Of_Root_Cause=$request->Detail_Of_Root_Cause;
+
+
         if ($request->Deviation_category == 'major' || $request->Deviation_category == 'critical')
         {
             $deviation->Investigation_required = "yes";
             $deviation->capa_required = "yes";
             $deviation->qrm_required = "yes";
         }
+        
 
         if ($request->Deviation_category == 'minor')
         {
@@ -1296,12 +1318,13 @@ class DeviationController extends Controller
             $validator = Validator::make($request->all(), [
                 'Deviation_category' => 'required|not_in:0',
                 'Justification_for_categorization' => 'required',
+                'QAInitialRemark' => 'required',
 
                 // 'Investigation_required' => 'required|in:yes,no|not_in:0',
                 // 'capa_required' => 'required|in:yes,no|not_in:0',
                 // 'qrm_required' => 'required|in:yes,no|not_in:0',
-                'Investigation_Details' => 'required_if:Investigation_required,yes',
-                'QAInitialRemark' => 'required'
+                // 'QAInitialRemark' => 'required'
+                'Investigation_Details' => 'required_if:Investigation_required,yes'
             ]);
 
             if ($validator->fails()) {
@@ -4706,13 +4729,13 @@ class DeviationController extends Controller
             $grid_data = DeviationGrid::where('deviation_grid_id', $id)->where('type', "Deviation")->first();
             $grid_data1 = DeviationGrid::where('deviation_grid_id', $id)->where('type', "Document")->first();
 
-            $investigationTeam = FailureInvestigationGridData::where(['failure_investigation_id' => $id, 'identifier' => 'TeamInvestigation'])->first();
+            $investigationTeam = DeviationNewGridData::where(['deviation_id' => $id, 'identifier' => 'TeamInvestigation'])->first();
             $investigation_data = json_decode($investigationTeam->data, true);
 
-            $rootCause = FailureInvestigationGridData::where(['failure_investigation_id' => $id, 'identifier' => 'RootCause'])->first();
+            $rootCause = DeviationNewGridData::where(['deviation_id' => $id, 'identifier' => 'RootCause'])->first();
             $root_cause_data = json_decode($rootCause->data, true);
 
-            $whyData = FailureInvestigationGridData::where(['failure_investigation_id' => $id, 'identifier' => 'why'])->first();
+            $whyData = DeviationNewGridData::where(['deviation_id' => $id, 'identifier' => 'why'])->first();
             $why_data = json_decode($whyData->data, true);
 
             $capaExtension = LaunchExtension::where(['deviation_id' => $id, "extension_identifier" => "Capa"])->first();
@@ -4724,6 +4747,13 @@ class DeviationController extends Controller
 
             $pdf = App::make('dompdf.wrapper');
             $time = Carbon::now();
+            // dd($investigation_data);
+            // foreach($investigation_data as $invest)
+            // {
+            //     return $invest;
+            // }
+
+
             $pdf = PDF::loadview('frontend.forms.deviation.SingleReportdeviation', compact('data','grid_data_qrms','grid_data_matrix_qrms','capaExtension','qrmExtension','investigationExtension','root_cause_data','why_data','investigation_data','grid_data','grid_data1', 'data1'))
                 ->setOptions([
                 'defaultFont' => 'sans-serif',
