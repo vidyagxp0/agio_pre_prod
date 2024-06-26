@@ -84,7 +84,10 @@ Route::get('data-fields', function () {
 });
 Route::middleware(['auth', 'prevent-back-history', 'user-activity'])->group(function () {
     Route::resource('change-control', OpenStageController::class);
-    Route::get('change-control-audit/{id}', [OpenStageController::class, 'auditTrial']);
+    Route::get('change-control-audit/{id}', [OpenStageController::class, 'auditTrial']);  
+
+    Route::post('CC-effectiveness-check/{id}', [CCController::class, 'changeControlEffectivenessCheck'])->name('CC-effectiveness-check');
+    
     Route::get('change-control-audit-detail/{id}', [OpenStageController::class, 'auditDetails']);
     Route::post('division/change/{id}', [OpenStageController::class, 'division'])->name('division_change');
     Route::get('send-notification/{id}', [OpenStageController::class, 'notification']);

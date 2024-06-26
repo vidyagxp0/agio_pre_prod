@@ -99,6 +99,8 @@ return new class extends Migration
 
             $table->string('status')->nullable();
             $table->integer('stage')->nullable();
+            $table->text('record_number')->nullable();
+            $table->longText('cft_reviewer')->nullable();
             $table->softDeletes();
             $table->timestamps();
         });

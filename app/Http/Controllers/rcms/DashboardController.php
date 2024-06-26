@@ -161,7 +161,7 @@ class DashboardController extends Controller
                 "parent" => $data->parent_record ? $data->parent_record : "-",
                 "record" => $data->record,
                 "type" => "Effectiveness-Check",
-                "parent_id" => $data->parent_record,
+                "parent_id" => $data->parent_id,
                 "parent_type" => $data->parent_type,
                 "division_id" => $data->division_id,
                 "short_description" => $data->short_description ? $data->short_description : "-",
