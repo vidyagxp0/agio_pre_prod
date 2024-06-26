@@ -3,56 +3,56 @@
                 <div class="sub-head">
                     Checklist for Analyst Training and Procedure
                 </div>
-@php
-    $check_analyst_training_procedures = [
-    [
-        'question' => "Is the analyst trained/qualified BET test procedure?",
-        'is_sub_question' => false,
-        'input_type' => 'text'
-    ],
-    [
-        'question' => "Reference procedure number :-",
-        'is_sub_question' => true,
-        'input_type' => 'number'
-    ],
-    [
-        'question' => "Effective date",
-        'is_sub_question' => true,
-        'input_type' => 'date'
-    ],
-    [
-        'question' => "Date of qualification:",
-        'is_sub_question' => true,
-        'input_type' => 'date'
-    ],
-    [
-        'question' => "Were appropriate precaution taken by the analyst throughout the test?",
-        'is_sub_question' => false,
-        'input_type' => 'text'
-    ],
-    [
-        'question' => "Analyst interview record",
-        'is_sub_question' => true,
-        'input_type' => 'number'
-    ],
-    [
-        'question' => "Was an analyst/sampling persons suffering from any ailment such as cough/cold or open wound or skin infections?",
-        'is_sub_question' => false,
-        'input_type' => 'text'
-    ],
-    [
-        'question' => "Analyst interview record",
-        'is_sub_question' => true,
-        'input_type' => 'number'
-    ],
-    [
-        'question' => "Was the correct procedure for the transfer of samples and accessories to sampling testing areas followed?",
-        'is_sub_question' => false,
-        'input_type' => 'text'
-    ]
-];
+               @php
+                $check_analyst_training_procedures = [
+                [
+                    'question' => "Is the analyst trained/qualified BET test procedure?",
+                    'is_sub_question' => false,
+                    'input_type' => 'text'
+                ],
+                [
+                    'question' => "Reference procedure number :-",
+                    'is_sub_question' => true,
+                    'input_type' => 'number'
+                ],
+                [
+                    'question' => "Effective date",
+                    'is_sub_question' => true,
+                    'input_type' => 'date'
+                ],
+                [
+                    'question' => "Date of qualification:",
+                    'is_sub_question' => true,
+                    'input_type' => 'date'
+                ],
+                [
+                    'question' => "Were appropriate precaution taken by the analyst throughout the test?",
+                    'is_sub_question' => false,
+                    'input_type' => 'text'
+                ],
+                [
+                    'question' => "Analyst interview record",
+                    'is_sub_question' => true,
+                    'input_type' => 'number'
+                ],
+                [
+                    'question' => "Was an analyst/sampling persons suffering from any ailment such as cough/cold or open wound or skin infections?",
+                    'is_sub_question' => false,
+                    'input_type' => 'text'
+                ],
+                [
+                    'question' => "Analyst interview record",
+                    'is_sub_question' => true,
+                    'input_type' => 'number'
+                ],
+                [
+                    'question' => "Was the correct procedure for the transfer of samples and accessories to sampling testing areas followed?",
+                    'is_sub_question' => false,
+                    'input_type' => 'text'
+                ]
+            ];
 
-@endphp
+            @endphp
                 <div class="row">
                     <div class="col-12">
                         <div class="group-input">
@@ -128,34 +128,32 @@
                     Checklist for Sample receiving & verification in lab : </div>
                         @php
                            $sample_receiving_verifications = [
-    [
-        'question' => "Was the sample container (Physical integrity) verified at the time of sample receipt?",
-        'is_sub_question' => false,
-        'input_type' => 'text'
-    ],
-    [
-        'question' => "Were clean and dehydrogenated sampling accessories and glassware used for sampling?",
-        'is_sub_question' => false,
-        'input_type' => 'text'
-    ],
-    [
-        'question' => "Was the correct quantity of the sample withdrawn?",
-        'is_sub_question' => false,
-        'input_type' => 'text'
-    ],
-    [
-        'question' => "Was there any discrepancy observed during sampling?",
-        'is_sub_question' => false,
-        'input_type' => 'text'
-    ],
-    [
-        'question' => "Was the sample container (Physical integrity) checked before testing?",
-        'is_sub_question' => false,
-        'input_type' => 'text'
-    ]
-];
-
-
+                                [
+                                    'question' => "Was the sample container (Physical integrity) verified at the time of sample receipt?",
+                                    'is_sub_question' => false,
+                                    'input_type' => 'text'
+                                ],
+                                [
+                                    'question' => "Were clean and dehydrogenated sampling accessories and glassware used for sampling?",
+                                    'is_sub_question' => false,
+                                    'input_type' => 'text'
+                                ],
+                                [
+                                    'question' => "Was the correct quantity of the sample withdrawn?",
+                                    'is_sub_question' => false,
+                                    'input_type' => 'text'
+                                ],
+                                [
+                                    'question' => "Was there any discrepancy observed during sampling?",
+                                    'is_sub_question' => false,
+                                    'input_type' => 'text'
+                                ],
+                                [
+                                    'question' => "Was the sample container (Physical integrity) checked before testing?",
+                                    'is_sub_question' => false,
+                                    'input_type' => 'text'
+                                ]
+                            ];
                         @endphp
                 <div class="row">
                     <div class="col-12">
@@ -174,7 +172,6 @@
                                             $main_question_index = 2.0;
                                             $sub_question_index = 0;
                                         @endphp
-
                                         @foreach ($sample_receiving_verifications as $index => $review_item)
                                         @php
                                             if ($review_item['is_sub_question']) {
@@ -424,7 +421,7 @@
                                             <td>
                                                 <div style="margin: auto; display: flex; justify-content: center;">
                                                     <textarea name="method_procedure_used_during_analysis[{{ $index }}][remark]"
-                                                              style="border-radius: 7px; border: 1.5px solid black;">{{ Helpers::getMicroGridData($micro_data, 'method_procedure_used_during_analysis', true, 'remark', true, $index) ?? '' }}</textarea>
+                                                        style="border-radius: 7px; border: 1.5px solid black;">{{ Helpers::getMicroGridData($micro_data, 'method_procedure_used_during_analysis', true, 'remark', true, $index) ?? '' }}</textarea>
                                                 </div>
                                             </td>
                                         </tr>
@@ -442,96 +439,96 @@
             <div class="inner-block-content">
                 <div class="sub-head">
                     Checklist for Instrument/Equipment Details:</div>
-                            @php
+                        @php
                            $Instrument_Equipment_Details = [
-    [
-        'question' => "Was the equipment used, calibrated/qualified and within the specified range?",
-        'is_sub_question' => false,
-        'input_type' => 'text'
-    ],
-    [
-        'question' => "Dry block /Heating block equipment ID:",
-        'is_sub_question' => true,
-        'input_type' => 'number'
-    ],
-    [
-        'question' => "Calibration date & Next due date:",
-        'is_sub_question' => true,
-        'input_type' => 'date'
-    ],
-    [
-        'question' => "Pipettes ID:",
-        'is_sub_question' => false,
-        'input_type' => 'number'
-    ],
-    [
-        'question' => "Calibration date and Next due date:",
-        'is_sub_question' => true,
-        'input_type' => 'date'
-    ],
-    [
-        'question' => "Refrigerator (2-8̊ C) ID:",
-        'is_sub_question' => false,
-        'input_type' => ' number'
-    ],
-    [
-        'question' => "Validation date and next due date:",
-        'is_sub_question' => true,
-        'input_type' => 'date'
-    ],
-    [
-        'question' => "Dehydrogenation over ID:",
-        'is_sub_question' => false,
-        'input_type' => 'date'
-    ],
-    [
-        'question' => "Validation date and next due date:",
-        'is_sub_question' => true,
-        'input_type' => 'date'
-    ],
-    [
-        'question' => "Did the dehydrogenation cycle challenge with endotoxin and found satisfactory during validation?",
-        'is_sub_question' => true,
-        'input_type' => 'text'
-    ],
-    [
-        'question' => "Was the depyrogenation done as per the validated load pattern?",
-        'is_sub_question' => true,
-        'input_type' => 'text'
-    ],
-    [
-        'question' => "Was there any power failure noticed during the incubation of samples in the heating block?",
-        'is_sub_question' => false,
-        'input_type' => 'text'
-    ],
-    [
-        'question' => "Was assay tubes incubated in the dry block (time and temp) as specified in the procedure?",
-        'is_sub_question' => false,
-        'input_type' => 'text'
-    ],
-    [
-        'question' => "Were any other samples tested along with this sample?",
-        'is_sub_question' => false,
-        'input_type' => 'text'
-    ],
-    [
-        'question' => "If yes, were those sample’s results found satisfactory?",
-        'is_sub_question' => true,
-        'input_type' => 'text'
-    ],
-    [
-        'question' => "Were any other samples analyzed at the same time on the same instruments?",
-        'is_sub_question' => false,
-        'input_type' => 'text'
-    ],
-    [
-        'question' => "If yes, what were the results of other Batches?",
-        'is_sub_question' => true,
-        'input_type' => 'text'
-    ]
-];
+                            [
+                                'question' => "Was the equipment used, calibrated/qualified and within the specified range?",
+                                'is_sub_question' => false,
+                                'input_type' => 'text'
+                            ],
+                            [
+                                'question' => "Dry block /Heating block equipment ID:",
+                                'is_sub_question' => true,
+                                'input_type' => 'number'
+                            ],
+                            [
+                                'question' => "Calibration date & Next due date:",
+                                'is_sub_question' => true,
+                                'input_type' => 'date'
+                            ],
+                            [
+                                'question' => "Pipettes ID:",
+                                'is_sub_question' => false,
+                                'input_type' => 'number'
+                            ],
+                            [
+                                'question' => "Calibration date and Next due date:",
+                                'is_sub_question' => true,
+                                'input_type' => 'date'
+                            ],
+                            [
+                                'question' => "Refrigerator (2-8̊ C) ID:",
+                                'is_sub_question' => false,
+                                'input_type' => ' number'
+                            ],
+                            [
+                                'question' => "Validation date and next due date:",
+                                'is_sub_question' => true,
+                                'input_type' => 'date'
+                            ],
+                            [
+                                'question' => "Dehydrogenation over ID:",
+                                'is_sub_question' => false,
+                                'input_type' => 'date'
+                            ],
+                            [
+                                'question' => "Validation date and next due date:",
+                                'is_sub_question' => true,
+                                'input_type' => 'date'
+                            ],
+                            [
+                                'question' => "Did the dehydrogenation cycle challenge with endotoxin and found satisfactory during validation?",
+                                'is_sub_question' => true,
+                                'input_type' => 'text'
+                            ],
+                            [
+                                'question' => "Was the depyrogenation done as per the validated load pattern?",
+                                'is_sub_question' => true,
+                                'input_type' => 'text'
+                            ],
+                            [
+                                'question' => "Was there any power failure noticed during the incubation of samples in the heating block?",
+                                'is_sub_question' => false,
+                                'input_type' => 'text'
+                            ],
+                            [
+                                'question' => "Was assay tubes incubated in the dry block (time and temp) as specified in the procedure?",
+                                'is_sub_question' => false,
+                                'input_type' => 'text'
+                            ],
+                            [
+                                'question' => "Were any other samples tested along with this sample?",
+                                'is_sub_question' => false,
+                                'input_type' => 'text'
+                            ],
+                            [
+                                'question' => "If yes, were those sample’s results found satisfactory?",
+                                'is_sub_question' => true,
+                                'input_type' => 'text'
+                            ],
+                            [
+                                'question' => "Were any other samples analyzed at the same time on the same instruments?",
+                                'is_sub_question' => false,
+                                'input_type' => 'text'
+                            ],
+                            [
+                                'question' => "If yes, what were the results of other Batches?",
+                                'is_sub_question' => true,
+                                'input_type' => 'text'
+                            ]
+                        ];
 
-                            @endphp
+                    @endphp
                 <div class="row">
                     <div class="col-12">
                         <div class="group-input">
@@ -604,26 +601,26 @@
             <div class="inner-block-content">
                 <div class="sub-head">
                     Checklist for Results and Calculation : </div>
-@php
-    $Results_and_Calculations = [
-    [
-        'question' => "Were results taken properly?",
-        'is_sub_question' => false,
-        'input_type' => 'text'
-    ],
-    [
-        'question' => "Raw data checked By:",
-        'is_sub_question' => false,
-        'input_type' => 'number'
-    ],
-    [
-        'question' => "Was formula dilution factor used for calculating the results correct?",
-        'is_sub_question' => false,
-        'input_type' => 'text'
-    ]
-];
+            @php
+                $Results_and_Calculations = [
+                [
+                    'question' => "Were results taken properly?",
+                    'is_sub_question' => false,
+                    'input_type' => 'text'
+                ],
+                [
+                    'question' => "Raw data checked By:",
+                    'is_sub_question' => false,
+                    'input_type' => 'number'
+                ],
+                [
+                    'question' => "Was formula dilution factor used for calculating the results correct?",
+                    'is_sub_question' => false,
+                    'input_type' => 'text'
+                ]
+            ];
 
-@endphp
+            @endphp
                 <div class="row">
                     <div class="col-12">
                         <div class="group-input">
@@ -738,8 +735,6 @@
                             Exit </a> </button>
                 </div>
             </div>
-
-
         </div>
 
         <div id="CCForm19" class="inner-block cctabcontent">
@@ -747,41 +742,40 @@
                 <div class="sub-head">
                     Checklist for Review of Training records Analyst Involved in Testing
                 </div>
-                            @php
-                               $Training_records_Analyst_Involveds = [
-    [
-        'question' => "Was analyst trained on testing procedure?",
-        'is_sub_question' => false,
-        'input_type' => 'text'
-    ],
-    [
-        'question' => "Date of training:",
-        'is_sub_question' => true,
-        'input_type' => 'date'
-    ],
-    [
-        'question' => "Was the analyst qualified for testing?",
-        'is_sub_question' => false,
-        'input_type' => 'text'
-    ],
-    [
-        'question' => "Date of qualification:",
-        'is_sub_question' => true,
-        'input_type' => 'date'
-    ],
-    [
-        'question' => "Were the personnel in perfect health without any open injury or infection?",
-        'is_sub_question' => false,
-        'input_type' => 'text'
-    ],
-    [
-        'question' => "Were the entry and exit procedures to the respective production area followed as per SOP?",
-        'is_sub_question' => false,
-        'input_type' => 'text'
-    ]
-];
-
-                            @endphp
+                        @php
+                        $Training_records_Analyst_Involveds = [
+                        [
+                            'question' => "Was analyst trained on testing procedure?",
+                            'is_sub_question' => false,
+                            'input_type' => 'text'
+                        ],
+                        [
+                            'question' => "Date of training:",
+                            'is_sub_question' => true,
+                            'input_type' => 'date'
+                        ],
+                        [
+                            'question' => "Was the analyst qualified for testing?",
+                            'is_sub_question' => false,
+                            'input_type' => 'text'
+                        ],
+                        [
+                            'question' => "Date of qualification:",
+                            'is_sub_question' => true,
+                            'input_type' => 'date'
+                        ],
+                        [
+                            'question' => "Were the personnel in perfect health without any open injury or infection?",
+                            'is_sub_question' => false,
+                            'input_type' => 'text'
+                        ],
+                        [
+                            'question' => "Were the entry and exit procedures to the respective production area followed as per SOP?",
+                            'is_sub_question' => false,
+                            'input_type' => 'text'
+                        ]
+                    ];
+                    @endphp
                 <div class="row">
                     <div class="col-12">
                         <div class="group-input">
@@ -800,7 +794,6 @@
                                             $main_question_index = 1.0;
                                             $sub_question_index = 0;
                                         @endphp
-
                                         @foreach ($Training_records_Analyst_Involveds as $index => $review_item)
                                         @php
                                             if ($review_item['is_sub_question']) {
@@ -857,39 +850,38 @@
                     Checklist for Review of sample intactness before analysis ? </div>
                     @php
                       $sample_intactness_before_analysis = [
-    [
-        'question' => "Was intact samples/sample container received in lab?",
-        'is_sub_question' => false,
-        'input_type' => 'text'
-    ],
-    [
-        'question' => "Was it verified by sample receipt persons at the time of receipt in lab?",
-        'is_sub_question' => false,
-        'input_type' => 'text'
-    ],
-    [
-        'question' => "Was the sample collected in desired container and transported as per approved procedure?",
-        'is_sub_question' => false,
-        'input_type' => 'text'
-    ],
-    [
-        'question' => "Was there any discrepancy observed during sampling?",
-        'is_sub_question' => false,
-        'input_type' => 'text'
-    ],
-    [
-        'question' => "Any remark notified in sample request form?",
-        'is_sub_question' => true,
-        'input_type' => 'text'
-    ],
-    [
-        'question' => "Were samples stored as per storage requirements specified in specification/SOP?",
-        'is_sub_question' => false,
-        'input_type' => 'text'
-    ]
-];
-
-                    @endphp
+                    [
+                        'question' => "Was intact samples/sample container received in lab?",
+                        'is_sub_question' => false,
+                        'input_type' => 'text'
+                    ],
+                    [
+                        'question' => "Was it verified by sample receipt persons at the time of receipt in lab?",
+                        'is_sub_question' => false,
+                        'input_type' => 'text'
+                    ],
+                    [
+                        'question' => "Was the sample collected in desired container and transported as per approved procedure?",
+                        'is_sub_question' => false,
+                        'input_type' => 'text'
+                    ],
+                    [
+                        'question' => "Was there any discrepancy observed during sampling?",
+                        'is_sub_question' => false,
+                        'input_type' => 'text'
+                    ],
+                    [
+                        'question' => "Any remark notified in sample request form?",
+                        'is_sub_question' => true,
+                        'input_type' => 'text'
+                    ],
+                    [
+                        'question' => "Were samples stored as per storage requirements specified in specification/SOP?",
+                        'is_sub_question' => false,
+                        'input_type' => 'text'
+                    ]
+                ];
+                @endphp
                 <div class="row">
                     <div class="col-12">
                         <div class="group-input">
@@ -963,36 +955,35 @@
             <div class="inner-block-content">
                 <div class="sub-head">
                     Review of test methods & Procedures </div>
-                                @php
-                                   $test_methods_Procedures = [
-    [
-        'question' => "Was correct applicable specification and method of analysis used for analysis?",
-        'is_sub_question' => false,
-        'input_type' => 'text'
-    ],
-    [
-        'question' => "MOA & specification number?",
-        'is_sub_question' => false,
-        'input_type' => 'number'
-    ],
-    [
-        'question' => "Were the results of the other samples analyzed on the same day/time satisfactory?",
-        'is_sub_question' => false,
-        'input_type' => 'text'
-    ],
-    [
-        'question' => "Were the samples tested transferred and incubated at desired temperature as per approved procedure?",
-        'is_sub_question' => false,
-        'input_type' => 'text'
-    ],
-    [
-        'question' => "Were the tested samples results observed within the valid time?",
-        'is_sub_question' => false,
-        'input_type' => 'text'
-    ]
-];
-
-                                @endphp
+                        @php
+                        $test_methods_Procedures = [
+                        [
+                            'question' => "Was correct applicable specification and method of analysis used for analysis?",
+                            'is_sub_question' => false,
+                            'input_type' => 'text'
+                        ],
+                        [
+                            'question' => "MOA & specification number?",
+                            'is_sub_question' => false,
+                            'input_type' => 'number'
+                        ],
+                        [
+                            'question' => "Were the results of the other samples analyzed on the same day/time satisfactory?",
+                            'is_sub_question' => false,
+                            'input_type' => 'text'
+                        ],
+                        [
+                            'question' => "Were the samples tested transferred and incubated at desired temperature as per approved procedure?",
+                            'is_sub_question' => false,
+                            'input_type' => 'text'
+                        ],
+                        [
+                            'question' => "Were the tested samples results observed within the valid time?",
+                            'is_sub_question' => false,
+                            'input_type' => 'text'
+                        ]
+                    ];
+                    @endphp
                 <div class="row">
                     <div class="col-12">
                         <div class="group-input">
@@ -1066,66 +1057,65 @@
             <div class="inner-block-content">
                 <div class="sub-head">
                     Review of Media, Buffer, Standards preparation & test accessories </div>
-                            @php
-                               $Review_of_Media_Buffer_Standards_prepar = [
-    [
-        'question' => "Name of the media used in the analysis:",
-        'is_sub_question' => false,
-        'input_type' => 'number'
-    ],
-    [
-        'question' => "Did the COA of the media review and found satisfactory?",
-        'is_sub_question' => true,
-        'input_type' => 'number'
-    ],
-    [
-        'question' => "Date of media preparation:",
-        'is_sub_question' => true,
-        'input_type' => 'date'
-    ],
-    [
-        'question' => "Lot No.",
-        'is_sub_question' => true,
-        'input_type' => 'number'
-    ],
-    [
-        'question' => "Use before date:",
-        'is_sub_question' => true,
-        'input_type' => 'date'
-    ],
-    [
-        'question' => "Was the media sterilization and sanitization cycle found satisfactory?",
-        'is_sub_question' => true,
-        'input_type' => 'text'
-    ],
-    [
-        'question' => "Validated load pattern references documents No.",
-        'is_sub_question' => true,
-        'input_type' => 'number'
-    ],
-    [
-        'question' => "Was any contamination observed in test media/diluents?",
-        'is_sub_question' => true,
-        'input_type' => 'text'
-    ],
-    [
-        'question' => "Was appropriate and cleaned and sterilized glassware used for testing?",
-        'is_sub_question' => true,
-        'input_type' => 'text'
-    ],
-    [
-        'question' => "Are the negative controls still confirming?",
-        'is_sub_question' => true,
-        'input_type' => 'text'
-    ],
-    [
-        'question' => "Is the growth promotion test for the media confirming?",
-        'is_sub_question' => false,
-        'input_type' => 'text'
-    ]
-];
-
-                            @endphp
+                    @php
+                        $Review_of_Media_Buffer_Standards_prepar = [
+                        [
+                            'question' => "Name of the media used in the analysis:",
+                            'is_sub_question' => false,
+                            'input_type' => 'number'
+                        ],
+                        [
+                            'question' => "Did the COA of the media review and found satisfactory?",
+                            'is_sub_question' => true,
+                            'input_type' => 'number'
+                        ],
+                        [
+                            'question' => "Date of media preparation:",
+                            'is_sub_question' => true,
+                            'input_type' => 'date'
+                        ],
+                        [
+                            'question' => "Lot No.",
+                            'is_sub_question' => true,
+                            'input_type' => 'number'
+                        ],
+                        [
+                            'question' => "Use before date:",
+                            'is_sub_question' => true,
+                            'input_type' => 'date'
+                        ],
+                        [
+                            'question' => "Was the media sterilization and sanitization cycle found satisfactory?",
+                            'is_sub_question' => true,
+                            'input_type' => 'text'
+                        ],
+                        [
+                            'question' => "Validated load pattern references documents No.",
+                            'is_sub_question' => true,
+                            'input_type' => 'number'
+                        ],
+                        [
+                            'question' => "Was any contamination observed in test media/diluents?",
+                            'is_sub_question' => true,
+                            'input_type' => 'text'
+                        ],
+                        [
+                            'question' => "Was appropriate and cleaned and sterilized glassware used for testing?",
+                            'is_sub_question' => true,
+                            'input_type' => 'text'
+                        ],
+                        [
+                            'question' => "Are the negative controls still confirming?",
+                            'is_sub_question' => true,
+                            'input_type' => 'text'
+                        ],
+                        [
+                            'question' => "Is the growth promotion test for the media confirming?",
+                            'is_sub_question' => false,
+                            'input_type' => 'text'
+                        ]
+                    ];
+                    @endphp
                 <div class="row">
                     <div class="col-12">
                         <div class="group-input">
@@ -1197,46 +1187,46 @@
             <div class="inner-block-content">
                 <div class="sub-head">
                     Checklist for Review of Media, Buffer, Standards preparation & test accessories </div>
-                                @php
-                                   $Checklist_for_Revi_of_Media_Buffer_Stand_preps = [
-    [
-        'question' => "Were the environmental conditions during testing as per the conditions specified?",
-        'is_sub_question' => false,
-        'input_type' => 'text'
-    ],
-    [
-        'question' => "Was the Temperature of the area within the limit?",
-        'is_sub_question' => true,
-        'input_type' => 'text'
-    ],
-    [
-        'question' => "Pressure differentials of the area within the limit?",
-        'is_sub_question' => true,
-        'input_type' => 'text'
-    ],
-    [
-        'question' => "Were the other types of monitoring results confirming?",
-        'is_sub_question' => true,
-        'input_type' => 'text'
-    ],
-    [
-        'question' => "Are the under test environmental monitoring samples confirming?",
-        'is_sub_question' => true,
-        'input_type' => 'text'
-    ],
-    [
-        'question' => "Were the entry and exit procedures to the clean room / controlled rooms followed as per SOP? (by all personnel)",
-        'is_sub_question' => true,
-        'input_type' => 'text'
-    ],
-    [
-        'question' => "Was the HEPA filter integrity of the area found satisfactory?",
-        'is_sub_question' => true,
-        'input_type' => 'text'
-    ]
-];
+                    @php
+                    $Checklist_for_Revi_of_Media_Buffer_Stand_preps = [
+                    [
+                        'question' => "Were the environmental conditions during testing as per the conditions specified?",
+                        'is_sub_question' => false,
+                        'input_type' => 'text'
+                    ],
+                    [
+                        'question' => "Was the Temperature of the area within the limit?",
+                        'is_sub_question' => true,
+                        'input_type' => 'text'
+                    ],
+                    [
+                        'question' => "Pressure differentials of the area within the limit?",
+                        'is_sub_question' => true,
+                        'input_type' => 'text'
+                    ],
+                    [
+                        'question' => "Were the other types of monitoring results confirming?",
+                        'is_sub_question' => true,
+                        'input_type' => 'text'
+                    ],
+                    [
+                        'question' => "Are the under test environmental monitoring samples confirming?",
+                        'is_sub_question' => true,
+                        'input_type' => 'text'
+                    ],
+                    [
+                        'question' => "Were the entry and exit procedures to the clean room / controlled rooms followed as per SOP? (by all personnel)",
+                        'is_sub_question' => true,
+                        'input_type' => 'text'
+                    ],
+                    [
+                        'question' => "Was the HEPA filter integrity of the area found satisfactory?",
+                        'is_sub_question' => true,
+                        'input_type' => 'text'
+                    ]
+                ];
 
-                                @endphp
+                @endphp
                  <div class="row">
                     <div class="col-12">
                         <div class="group-input">
@@ -1298,8 +1288,6 @@
                                         </tr>
                                         @endforeach
                                     </tbody>
-
-
                                 </table>
                             </div>
                         </div>
@@ -1310,56 +1298,56 @@
             <div class="inner-block-content">
                 <div class="sub-head">
                     Checklist for Disinfectant Details: </div>
-@php
-    $check_for_disinfectant_details = [
-    [
-        'question' => "Was the area disinfection done as per schedule?",
-        'is_sub_question' => false,
-        'input_type' => 'text'
-    ],
-    [
-        'question' => "Is the disinfectant used approved?",
-        'is_sub_question' => true,
-        'input_type' => 'number'
-    ],
-    [
-        'question' => "Is the concentration in which disinfectant used certified for efficacy?",
-        'is_sub_question' => true,
-        'input_type' => 'text'
-    ],
-    [
-        'question' => "Name of the disinfectant used?",
-        'is_sub_question' => true,
-        'input_type' => 'text'
-    ],
-    [
-        'question' => "Was the disinfectant prepared correctly?",
-        'is_sub_question' => true,
-        'input_type' => 'text'
-    ],
-    [
-        'question' => "Was cleaning done during operations?",
-        'is_sub_question' => true,
-        'input_type' => 'text'
-    ],
-    [
-        'question' => "Was area fumigation done as per schedule?",
-        'is_sub_question' => true,
-        'input_type' => 'text'
-    ],
-    [
-        'question' => "Was the concentration in which fumigant used correct?",
-        'is_sub_question' => true,
-        'input_type' => 'text'
-    ],
-    [
-        'question' => "Were there any spillages in the area?",
-        'is_sub_question' => true,
-        'input_type' => 'text'
-    ]
-];
+                    @php
+                        $check_for_disinfectant_details = [
+                        [
+                            'question' => "Was the area disinfection done as per schedule?",
+                            'is_sub_question' => false,
+                            'input_type' => 'text'
+                        ],
+                        [
+                            'question' => "Is the disinfectant used approved?",
+                            'is_sub_question' => true,
+                            'input_type' => 'number'
+                        ],
+                        [
+                            'question' => "Is the concentration in which disinfectant used certified for efficacy?",
+                            'is_sub_question' => true,
+                            'input_type' => 'text'
+                        ],
+                        [
+                            'question' => "Name of the disinfectant used?",
+                            'is_sub_question' => true,
+                            'input_type' => 'text'
+                        ],
+                        [
+                            'question' => "Was the disinfectant prepared correctly?",
+                            'is_sub_question' => true,
+                            'input_type' => 'text'
+                        ],
+                        [
+                            'question' => "Was cleaning done during operations?",
+                            'is_sub_question' => true,
+                            'input_type' => 'text'
+                        ],
+                        [
+                            'question' => "Was area fumigation done as per schedule?",
+                            'is_sub_question' => true,
+                            'input_type' => 'text'
+                        ],
+                        [
+                            'question' => "Was the concentration in which fumigant used correct?",
+                            'is_sub_question' => true,
+                            'input_type' => 'text'
+                        ],
+                        [
+                            'question' => "Were there any spillages in the area?",
+                            'is_sub_question' => true,
+                            'input_type' => 'text'
+                        ]
+                    ];
 
-@endphp
+                    @endphp
                 <div class="row">
                     <div class="col-12">
                         <div class="group-input">
@@ -1427,62 +1415,55 @@
                         </div>
                     </div>
                 </div>
-
-
-
-
-
-
-
             </div>
             <div class="inner-block-content">
                 <div class="sub-head">
                     Checklist for Review of instrument/equipment </div>
-@php
-    $Checklist_for_Review_of_instrument_equips = [
-    [
-        'question' => "Was there any malfunctioning of autoclave observed? Verify the qualification and requalification of steam sterilizer?",
-        'is_sub_question' => false,
-        'input_type' => 'text'
-    ],
-    [
-        'question' => "Autoclave ID No:",
-        'is_sub_question' => true,
-        'input_type' => 'number'
-    ],
-    [
-        'question' => "Qualification date and Next due date:",
-        'is_sub_question' => true,
-        'input_type' => 'date'
-    ],
-    [
-        'question' => "Was there any power supply failure noted during analysis?",
-        'is_sub_question' => false,
-        'input_type' => 'text'
-    ],
-    [
-        'question' => "Was incubators used is qualified Incubators ID:",
-        'is_sub_question' => false,
-        'input_type' => 'text'
-    ],
-    [
-        'question' => "Qualification date and Next due date:",
-        'is_sub_question' => true,
-        'input_type' => 'date'
-    ],
-    [
-        'question' => "Any events associated with incubators, when the samples under incubation.",
-        'is_sub_question' => true,
-        'input_type' => 'text'
-    ],
-    [
-        'question' => "Was any breakdown/maintenance observed in any instrument/equipment/system, which may cause this failure?",
-        'is_sub_question' => true,
-        'input_type' => 'text'
-    ]
-];
+                @php
+                $Checklist_for_Review_of_instrument_equips = [
+                [
+                'question' => "Was there any malfunctioning of autoclave observed? Verify the qualification and requalification of steam sterilizer?",
+                'is_sub_question' => false,
+                'input_type' => 'text'
+                ],
+                [
+                'question' => "Autoclave ID No:",
+                'is_sub_question' => true,
+                'input_type' => 'number'
+                ],
+                [
+                'question' => "Qualification date and Next due date:",
+                'is_sub_question' => true,
+                'input_type' => 'date'
+                ],
+                [
+                'question' => "Was there any power supply failure noted during analysis?",
+                'is_sub_question' => false,
+                'input_type' => 'text'
+                ],
+                [
+                'question' => "Was incubators used is qualified Incubators ID:",
+                'is_sub_question' => false,
+                'input_type' => 'text'
+                ],
+                [
+                'question' => "Qualification date and Next due date:",
+                'is_sub_question' => true,
+                'input_type' => 'date'
+                ],
+                [
+                'question' => "Any events associated with incubators, when the samples under incubation.",
+                'is_sub_question' => true,
+                'input_type' => 'text'
+                ],
+                [
+                'question' => "Was any breakdown/maintenance observed in any instrument/equipment/system, which may cause this failure?",
+                'is_sub_question' => true,
+                'input_type' => 'text'
+                ]
+                ];
 
-@endphp
+                @endphp
                 <div class="row">
                     <div class="col-12">
                         <div class="group-input">
@@ -1545,21 +1526,14 @@
                                         </tr>
                                         @endforeach
                                     </tbody>
-
                                 </table>
                             </div>
                         </div>
                     </div>
                 </div>
-
-
-
                 <div class="col-lg-12">
                     <div class="group-input">
                         <label for="Audit Attachments">If Yes, Provide attachment details</label>
-                        {{-- <small class="text-primary">
-                                    If Yes, attach details
-                                </small> --}}
                         <div class="file-attachment-field">
                             <div class="file-attachment-list" id="file_attach">
                                 @if ($micro_data->attachment_details_cis)
@@ -1588,8 +1562,6 @@
 
                     </div>
                 </div>
-
-
                 <div class="button-block">
                     <button type="submit" id="ChangesaveButton" class="saveButton">Save</button>
                     <button type="button" class="backButton" onclick="previousStep()">Back</button>
@@ -1599,11 +1571,7 @@
                             Exit </a> </button>
                 </div>
             </div>
-
-
         </div>
-
-
         <div id="CCForm20" class="inner-block cctabcontent">
             <div class="inner-block-content">
                 <div class="sub-head">
@@ -2823,10 +2791,6 @@
                 </div>
             </div>
         </div>      
-
-
-
-
 
 <div id="CCForm21" class="inner-block cctabcontent">
 

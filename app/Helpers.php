@@ -607,12 +607,10 @@ class Helpers
                 $grid = $micro->grids()->where('identifier', $identifier)->first();
 
                 if($grid && is_array($grid->data)){
-
                     $res = $grid->data;
                     if ($getKey && !$byIndex) {
                         $res = array_key_exists($keyName, $grid->data) ? $grid->data[$keyName] : '';
                     }
-
                     if ($getKey && $byIndex && is_array($grid->data[$index])) {
                         $res = array_key_exists($keyName, $grid->data[$index]) ? $grid->data[$index][$keyName] : '';
                     }

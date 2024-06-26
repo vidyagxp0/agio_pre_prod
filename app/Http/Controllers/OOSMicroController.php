@@ -1101,155 +1101,155 @@ if($lastDocument->$key != $request->$key){
 
 // Additional testing Proposal
 
-$Additional_Testing_Proposal = [
-'review_comment_atp' => 'Review Comment',
-'additional_test_proposal_atp' => 'Additional Test Proposal',
-'additional_test_reference_atp' => 'Additional Test Reference',
-'any_other_actions_required_atp' => 'Any Other Actions Required',
-'action_task_reference_atp' => 'Action Task Reference',
-];
-foreach($Additional_Testing_Proposal as $key => $value){
+// $Additional_Testing_Proposal = [
+// 'review_comment_atp' => 'Review Comment',
+// 'additional_test_proposal_atp' => 'Additional Test Proposal',
+// 'additional_test_reference_atp' => 'Additional Test Reference',
+// 'any_other_actions_required_atp' => 'Any Other Actions Required',
+// 'action_task_reference_atp' => 'Action Task Reference',
+// ];
+// foreach($Additional_Testing_Proposal as $key => $value){
 
-if($lastDocument->$key != $request->$key){
-    $history =  new OOSmicroAuditTrail();
-    $history->OOS_micro_id = $id;
-    $history->activity_type = $value;
-    $history->previous = $lastDocument->$key;
-    $history->current= $request->$key;
-    $history->comment= $request->comment;
-    $history->user_id = Auth::user()->id;
-    $history->user_name = Auth::user()->name;
-    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-    $history->origin_state = $lastDocument->status;
-    $history->save();
-}
-}
+// if($lastDocument->$key != $request->$key){
+//     $history =  new OOSmicroAuditTrail();
+//     $history->OOS_micro_id = $id;
+//     $history->activity_type = $value;
+//     $history->previous = $lastDocument->$key;
+//     $history->current= $request->$key;
+//     $history->comment= $request->comment;
+//     $history->user_id = Auth::user()->id;
+//     $history->user_name = Auth::user()->name;
+//     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+//     $history->origin_state = $lastDocument->status;
+//     $history->save();
+// }
+// }
 
-$OOS_Conclusion = [
-"conclusion_comments_oosc" => 'Conclusion Comments',
-"specification_limit_oosc" => 'Specification Limit',
-"results_to_be_reported_oosc" => 'Results to be Reported',
-"final_reportable_results_oosc" => 'Final Reportable Results',
-"justifi_for_averaging_results_oosc" => 'Justifi. for Averaging Results',
-"oos_stands_oosc" => 'OOS Stands',
-"capa_req_oosc" => 'CAPA Req.',
-"capa_ref_no_oosc" => 'CAPA Ref No.',
-"justify_if_capa_not_required_oosc" => 'Justify if CAPA not required',
-"action_plan_req_oosc" => 'Action Plan Req.',
-"action_plan_ref_oosc" => 'Action Plan Ref.',
-"justification_for_delay_oosc" => 'Justification for Delay',
-];
+// $OOS_Conclusion = [
+// "conclusion_comments_oosc" => 'Conclusion Comments',
+// "specification_limit_oosc" => 'Specification Limit',
+// "results_to_be_reported_oosc" => 'Results to be Reported',
+// "final_reportable_results_oosc" => 'Final Reportable Results',
+// "justifi_for_averaging_results_oosc" => 'Justifi. for Averaging Results',
+// "oos_stands_oosc" => 'OOS Stands',
+// "capa_req_oosc" => 'CAPA Req.',
+// "capa_ref_no_oosc" => 'CAPA Ref No.',
+// "justify_if_capa_not_required_oosc" => 'Justify if CAPA not required',
+// "action_plan_req_oosc" => 'Action Plan Req.',
+// "action_plan_ref_oosc" => 'Action Plan Ref.',
+// "justification_for_delay_oosc" => 'Justification for Delay',
+// ];
 
-foreach($OOS_Conclusion as $key => $value){
-if($lastDocument->$key != $request->$key){
-    $history =  new OOSmicroAuditTrail();
-    $history->OOS_micro_id = $id;
-    $history->activity_type = $value;
-    $history->previous = $lastDocument->$key;
-    $history->current= $request->$key;
-    $history->comment= $request->comment;
-    $history->user_id = Auth::user()->id;
-    $history->user_name = Auth::user()->name;
-    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-    $history->origin_state = $lastDocument->status;
-    $history->save();
-}
-}
+// foreach($OOS_Conclusion as $key => $value){
+// if($lastDocument->$key != $request->$key){
+//     $history =  new OOSmicroAuditTrail();
+//     $history->OOS_micro_id = $id;
+//     $history->activity_type = $value;
+//     $history->previous = $lastDocument->$key;
+//     $history->current= $request->$key;
+//     $history->comment= $request->comment;
+//     $history->user_id = Auth::user()->id;
+//     $history->user_name = Auth::user()->name;
+//     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+//     $history->origin_state = $lastDocument->status;
+//     $history->save();
+// }
+// }
 
-//OOS_Conclusion_Review
+// //OOS_Conclusion_Review
 
-$OOS_Conclusion_Review = [
-"conclusion_review_comments_ocr" => 'Conclusion Review Comments',
-"action_taken_on_affec_batch_ocr" => 'Action Taken on Affec.batch',
-"capa_req_ocr" => 'CAPA Req.?',
-"capa_refer_ocr" => 'CAPA Refer.',
-"required_action_plan_ocr" => 'Required Action Plan?',
-"required_action_task_ocr" => 'Required Action Task?',
-"action_task_reference_ocr" => 'Action Task Reference',
-"risk_assessment_req_ocr" => 'Risk Assessment Req?',
-"risk_assessment_ref_ocr" => 'Risk Assessment Ref.',
-"justify_if_no_risk_assessment_ocr" => 'Justify if no risk Assessment',
-"qa_approver_ocr" => 'CQ Approver',
-];
-foreach($OOS_Conclusion_Review as $key => $value){
+// $OOS_Conclusion_Review = [
+// "conclusion_review_comments_ocr" => 'Conclusion Review Comments',
+// "action_taken_on_affec_batch_ocr" => 'Action Taken on Affec.batch',
+// "capa_req_ocr" => 'CAPA Req.?',
+// "capa_refer_ocr" => 'CAPA Refer.',
+// "required_action_plan_ocr" => 'Required Action Plan?',
+// "required_action_task_ocr" => 'Required Action Task?',
+// "action_task_reference_ocr" => 'Action Task Reference',
+// "risk_assessment_req_ocr" => 'Risk Assessment Req?',
+// "risk_assessment_ref_ocr" => 'Risk Assessment Ref.',
+// "justify_if_no_risk_assessment_ocr" => 'Justify if no risk Assessment',
+// "qa_approver_ocr" => 'CQ Approver',
+// ];
+// foreach($OOS_Conclusion_Review as $key => $value){
 
-if($lastDocument->$key != $request->$key){
-    $history =  new OOSmicroAuditTrail();
-    $history->OOS_micro_id = $id;
-    $history->activity_type = $value;
-    $history->previous = $lastDocument->$key;
-    $history->current= $request->$key;
-    $history->comment= $request->comment;
-    $history->user_id = Auth::user()->id;
-    $history->user_name = Auth::user()->name;
-    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-    $history->origin_state = $lastDocument->status;
-    $history->save();
-}
-}
+// if($lastDocument->$key != $request->$key){
+//     $history =  new OOSmicroAuditTrail();
+//     $history->OOS_micro_id = $id;
+//     $history->activity_type = $value;
+//     $history->previous = $lastDocument->$key;
+//     $history->current= $request->$key;
+//     $history->comment= $request->comment;
+//     $history->user_id = Auth::user()->id;
+//     $history->user_name = Auth::user()->name;
+//     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+//     $history->origin_state = $lastDocument->status;
+//     $history->save();
+// }
+// }
 //OOS CQ Review
 
-$OOS_CQ_Review = [
-"capa_required_OOS_CQ" => 'CAPA required?',
-"ref_action_plan_OOS_CQ" => 'Ref Action Plan',
-"reference_of_capa_OOS_CQ" => 'Reference of CAPA',
-"cq_review_comments_OOS_CQ" => 'CQ Review Comments',
-"action_plan_requirement_OOS_CQ" => 'Action plan requirement?',
-];
-foreach($OOS_CQ_Review as $key => $value){
+// $OOS_CQ_Review = [
+// "capa_required_OOS_CQ" => 'CAPA required?',
+// "ref_action_plan_OOS_CQ" => 'Ref Action Plan',
+// "reference_of_capa_OOS_CQ" => 'Reference of CAPA',
+// "cq_review_comments_OOS_CQ" => 'CQ Review Comments',
+// "action_plan_requirement_OOS_CQ" => 'Action plan requirement?',
+// ];
+// foreach($OOS_CQ_Review as $key => $value){
 
-if($lastDocument->$key != $request->$key){
-    $history =  new OOSmicroAuditTrail();
-    $history->OOS_micro_id = $id;
-    $history->activity_type = $value;
-    $history->previous = $lastDocument->$key;
-    $history->current= $request->$key;
-    $history->comment= $request->comment;
-    $history->user_id = Auth::user()->id;
-    $history->user_name = Auth::user()->name;
-    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-    $history->origin_state = $lastDocument->status;
-    $history->save();
-}
-}
+// if($lastDocument->$key != $request->$key){
+//     $history =  new OOSmicroAuditTrail();
+//     $history->OOS_micro_id = $id;
+//     $history->activity_type = $value;
+//     $history->previous = $lastDocument->$key;
+//     $history->current= $request->$key;
+//     $history->comment= $request->comment;
+//     $history->user_id = Auth::user()->id;
+//     $history->user_name = Auth::user()->name;
+//     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+//     $history->origin_state = $lastDocument->status;
+//     $history->save();
+// }
+// }
 //  Batch Disposition
-    $batchDisposition = [
-        'others_BI' => 'Others',
-        'oos_category_BI' => 'OOS Category',
-        'material_batch_release_BI' => 'Material/Batch Release',
-        'other_action_BI' => 'Other Action (Specify)',
-        'field_alert_reference_BI' => 'Field Alert Reference',
-        'other_parameter_result_BI' => 'Other Parameters Results',
-        'trend_of_previous_batches_BI' => 'Trend of Previous Batches',
-        'stability_data_BI' => 'Stability Data',
-        'process_validation_data_BI' => 'Process Validation Data',
-        'method_validation_BI' => 'Method Validation',
-        'any_market_complaints_BI' => 'Any Market Complaints',
-        'statistical_evaluation_BI' => 'Statistical Evaluation',
-        'risk_analysis_for_disposition_BI' => 'Risk Analysis for Disposition',
-        'conclusion_BI' => 'Conclusion',
-        'phase_III_inves_required_BI' => 'Phase-III Inves.Required?',
-        'phase_III_inves_reference_BI' => 'Phase-III Inves.Reference',
-        'justify_for_delay_BI' => 'Justify for Delay in Activity',
-        'reopen_request'=> 'Other Action (Specify)',
-    ];
+    // $batchDisposition = [
+    //     'others_BI' => 'Others',
+    //     'oos_category_BI' => 'OOS Category',
+    //     'material_batch_release_BI' => 'Material/Batch Release',
+    //     'other_action_BI' => 'Other Action (Specify)',
+    //     'field_alert_reference_BI' => 'Field Alert Reference',
+    //     'other_parameter_result_BI' => 'Other Parameters Results',
+    //     'trend_of_previous_batches_BI' => 'Trend of Previous Batches',
+    //     'stability_data_BI' => 'Stability Data',
+    //     'process_validation_data_BI' => 'Process Validation Data',
+    //     'method_validation_BI' => 'Method Validation',
+    //     'any_market_complaints_BI' => 'Any Market Complaints',
+    //     'statistical_evaluation_BI' => 'Statistical Evaluation',
+    //     'risk_analysis_for_disposition_BI' => 'Risk Analysis for Disposition',
+    //     'conclusion_BI' => 'Conclusion',
+    //     'phase_III_inves_required_BI' => 'Phase-III Inves.Required?',
+    //     'phase_III_inves_reference_BI' => 'Phase-III Inves.Reference',
+    //     'justify_for_delay_BI' => 'Justify for Delay in Activity',
+    //     'reopen_request'=> 'Other Action (Specify)',
+    // ];
 
-    foreach ($batchDisposition as $key => $value) {
+    // foreach ($batchDisposition as $key => $value) {
 
-        if($lastDocument->$key != $request->$key){
-            $history =  new OOSmicroAuditTrail();
-            $history->OOS_micro_id = $id;
-            $history->activity_type = $value;
-            $history->previous = $lastDocument->$key;
-            $history->current= $request->$key;
-            $history->comment= $request->comment;
-            $history->user_id = Auth::user()->id;
-            $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state = $lastDocument->status;
-            $history->save();
-        }
-    }
+    //     if($lastDocument->$key != $request->$key){
+    //         $history =  new OOSmicroAuditTrail();
+    //         $history->OOS_micro_id = $id;
+    //         $history->activity_type = $value;
+    //         $history->previous = $lastDocument->$key;
+    //         $history->current= $request->$key;
+    //         $history->comment= $request->comment;
+    //         $history->user_id = Auth::user()->id;
+    //         $history->user_name = Auth::user()->name;
+    //         $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+    //         $history->origin_state = $lastDocument->status;
+    //         $history->save();
+    //     }
+    // }
 
 
     // =========================== Audit Trail Update ===============================// 
