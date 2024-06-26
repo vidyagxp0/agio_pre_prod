@@ -71,6 +71,7 @@ class OOTController extends Controller
         $data->record_number         = ((RecordNumber::first()->value('counter')) + 1);
         $data->intiation_date        = $request->intiation_date;
         $data->due_date              = $request->due_date;
+        $data->due_date              = Carbon::now()->addDays(30)->format('d-M-Y');
         $data->division_id           = $request->division_id;
         $data->severity_level        = $request->severity_level;
         $data->initiator_group       = $request->initiator_group;
@@ -1441,6 +1442,7 @@ class OOTController extends Controller
 
     public function singleReport(Request $request, $id){
         $data = Ootc::find($id);
+        dd($data);
         $grid_product_mat = ProductGridOot::where(['ootcs_id' => $id, 'identifier' => 'product_materiel'])->first();
     //    dd($grid_product_mat);
        $gridStability = ProductGridOot::where(['ootcs_id' => $id, 'identifier' => 'details_of_stability'])->first();

@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
-
+    @php
+    $users = DB::table('users')->get();
+@endphp
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -165,7 +167,8 @@
                 </td>
                 <td class="w-30">
                     <div class="logo">
-                        <img src="https://navin.mydemosoftware.com/public/user/images/logo.png" alt="" class="w-100">
+                        <img src="https://navin.mydemosoftware.com/public/user/images/logo.png" alt=""
+                            class="w-100">
                     </div>
                 </td>
             </tr>
@@ -173,7 +176,7 @@
         <table>
             <tr>
                 <td class="w-30">
-                    <strong> OOT  No.</strong>
+                    <strong> OOT No.</strong>
                 </td>
                 <td class="w-40">
                     {{ Helpers::divisionNameForQMS($data->division_id) }}/OOT/{{ Helpers::year($data->created_at) }}/{{ str_pad($data->record_number, 4, '0', STR_PAD_LEFT) }}
@@ -197,203 +200,215 @@
                                 </div>
                                 <table>
                                     <tr>
-                                        <tr> {{ $data->created_at }} added by {{ $data->originator }}
-                                            <th class="w-20">Site/Location Code</th>
-                                            <td class="w-30"> {{ Helpers::getDivisionName(session()->get('division')) }}</td>
-                                            <th class="w-20">Initiator</th>
-                                            <td class="w-30">{{ Helpers::getInitiatorName($data->initiator_id) }}</td>
-                                            </td>
-                                        </tr>
-                                        
+                                    <tr> {{ $data->created_at }} added by {{ $data->originator }}
+                                        <th class="w-20">Site/Location Code</th>
+                                        <td class="w-30"> {{ Helpers::getDivisionName(session()->get('division')) }}
+                                        </td>
+                                        <th class="w-20">Initiator</th>
+                                        <td class="w-30">{{ Helpers::getInitiatorName($data->initiator_id) }}</td>
+                                        </td>
                                     </tr>
 
-                                        <tr>
-                                            <th class="w-20">Date of Initiation</th>
-                                            <td class="w-30">{{ $data->created_at ? $data->created_at->format('d-M-Y') : '' }} </td>
-                    
-                                            <th class="w-20">Due Date</th>
-                                            <td class="w-30">
-                                                @if ($data->due_date)
-                                                    {{ Helpers::getdateFormat($data->due_date) }}
-                                                @else
-                                                    Not Applicable
-                                                @endif
-                                            </td>
-                                            
-                                        </tr>
+                                    </tr>
 
-                                        <tr>
-                                <th class="w-20">Initiated Through</th>
-                                <td class="w-30">
-                                    @if ($data->initiator_group)
-                                        {{ $data->initiator_group }}
-                                    @else
-                                        Not Applicable
-                                    @endif
-                                </td>
-        
-                                <th class="w-20">Department</th>
-                                @php
-                                    $departments = [
-                                        'CQA' => 'Corporate Quality Assurance',
-                                        'QAB' => 'Quality Assurance Biopharma',
-                                        'CQC' => 'Central Quality Control',
-                                        'PSG' => 'Plasma Sourcing Group',
-                                        'CS' => 'Central Stores',
-                                        'ITG' => 'Information Technology Group',
-                                        'MM' => 'Molecular Medicine',
-                                        'CL' => 'Central Laboratory',
-                                        'TT' => 'Tech Team',
-                                        'QA' => 'Quality Assurance',
-                                        'QM' => 'Quality Management',
-                                        'IA' => 'IT Administration',
-                                        'ACC' => 'Accounting',
-                                        'LOG' => 'Logistics',
-                                        'SM' => 'Senior Management',
-                                        'BA' => 'Business Administration',
-                                    ];
-                                @endphp
-                                <td class="w-80">{{ $departments[$data->initiator_group] ?? 'Unknown Department' }}</td>
-                            </tr>
-                                          
-                            <tr>
-                                <th class="w-20">Severity Level</th>
-                                <td class="w-30">
-                                    @if ($data->severity_level)
-                                        {{ $data->severity_level }}
-                                    @else
-                                        Not Applicable
-                                    @endif
-                                </td>
+                                    <tr>
+                                        <th class="w-20">Date of Initiation</th>
+                                        <td class="w-30">
+                                            {{ $data->created_at ? $data->created_at->format('d-M-Y') : '' }} </td>
 
-                                <th class="w-20">If Others</th>
-                                <td class="w-30">
-                                    @if ($data->if_others)
-                                        {{ strip_tags($data->if_others) }}
-                                    @else
-                                        Not Applicable
-                                    @endif
-                                </td>
-                            </tr>
+                                        <th class="w-20">Due Date</th>
+                                        <td class="w-30">
+                                            @if ($data->due_date)
+                                                {{ Helpers::getdateFormat($data->due_date) }}
+                                            @else
+                                                Not Applicable
+                                            @endif
+                                        </td>
 
-                            <tr>
-                                <th class="w-20">Short Description</th>
-                                <td class="w-30">
-                                    @if ($data->short_description)
-                                        {{ strip_tags($data->short_description) }}
-                                    @else
-                                        Not Applicable
-                                    @endif
-                                </td>        
-                            </tr>
+                                    </tr>
 
-                            <tr>
-                                <th class="w-20">Is Repeat </th>
-                                <td class="w-30">
-                                    @if ($data->is_repeat)
-                                        {{ $data->is_repeat }}
-                                    @else
-                                        Not Applicable
-                                    @endif
-                                </td>
-                                <th class="w-20"> Repeat Nature</th>
-                                <td class="w-30">
-                                    @if ($data->nature_of_repeat)
-                                        {{ $data->nature_of_repeat }}
-                                    @else
-                                        Not Applicable
-                                    @endif
-                                </td>  
-                            </tr>
-                            <tr>
-                                <th class="w-20">Nature Of Change</th>
-                                <td class="w-30">
-                                    @if ($data->nature_of_change)
-                                        {{ $data->nature_of_change }}
-                                    @else
-                                        Not Applicable
-                                    @endif
-                                </td>
-                            </tr>
+                                    <tr>
+                                        <th class="w-20">Initiated Through</th>
+                                        <td class="w-30">
+                                            @if ($data->initiator_group)
+                                                {{ $data->initiator_group }}
+                                            @else
+                                                Not Applicable
+                                            @endif
+                                        </td>
 
-                            <tr>
-                                <th class="w-20">Occured On</th>
-                                <td class="w-30">
-                                    @if ($data->oot_occured_on)
-                                        {{ Helpers::getdateFormat($data->oot_occured_on) }}
-                                    @else
-                                        Not Applicable
-                                    @endif
-                                </td>
-                                <th class="w-10">Oot Details</th>
-                                <td class="w-30">
-                                    @if ($data->oot_details)
-                                        {{ strip_tags($data->oot_details) }}
-                                    @else
-                                        Not Applicable
-                                    @endif
-                                </td>
-        
-                            </tr>
-                            <tr>
-        
-                                <th class="w-20">Product History</th>
-                                <td class="w-30">
-                                    @if ($data->producct_history)
-                                        {{ strip_tags($data->producct_history) }}
-                                    @else
-                                        Not Applicable
-                                    @endif
-                                </td>
-                                <th class="w-20">Probable Cause</th>
-                                <td class="w-30">
-                                    @if ($data->probble_cause)
-                                        {{ strip_tags($data->probble_cause) }}
-                                    @else
-                                        Not Applicable
-                                    @endif
-                                </td>
-                            </tr>
+                                        <th class="w-20">Department</th>
+                                        @php
+                                            $departments = [
+                                                'CQA' => 'Corporate Quality Assurance',
+                                                'QAB' => 'Quality Assurance Biopharma',
+                                                'CQC' => 'Central Quality Control',
+                                                'PSG' => 'Plasma Sourcing Group',
+                                                'CS' => 'Central Stores',
+                                                'ITG' => 'Information Technology Group',
+                                                'MM' => 'Molecular Medicine',
+                                                'CL' => 'Central Laboratory',
+                                                'TT' => 'Tech Team',
+                                                'QA' => 'Quality Assurance',
+                                                'QM' => 'Quality Management',
+                                                'IA' => 'IT Administration',
+                                                'ACC' => 'Accounting',
+                                                'LOG' => 'Logistics',
+                                                'SM' => 'Senior Management',
+                                                'BA' => 'Business Administration',
+                                            ];
+                                        @endphp
+                                        <td class="w-80">
+                                            {{ $departments[$data->initiator_group] ?? 'Unknown Department' }}</td>
+                                    </tr>
 
-                            <tr>
-                                <th class="w-20">Investigation Detail</th>
-                                <td class="w-30">
-                                    @if ($data->investigation_details)
-                                        {{strip_tags( $data->investigation_details) }}
-                                    @else
-                                        Not Applicable
-                                    @endif
-                                </td>
-                                <th class="w-20">Comments</th>
-                                <td class="w-30">
-                                    @if ($data->comments)
-                                        {{ strip_tags($data->comments) }}
-                                    @else
-                                        Not Applicable
-                                    @endif
-                                </td>
+                                    <tr>
+                                        <th class="w-20">Severity Level</th>
+                                        <td class="w-80">
+                                            @if ($data->severity_level)
+                                                {{ $data->severity_level }}
+                                            @else
+                                                Not Applicable
+                                            @endif
+                                        </td>
 
-                               
-                            </tr>
 
-                            <tr>
-                                <th class="w-20">Refrence Record</th>
-                                <td class="w-30">
-                                    @if ($data->refrence_record)
-                                        {{ strip_tags($data->refrence_record) }}
-                                    @else
-                                        Not Applicable
-                                    @endif
-                                </td>
-                            </tr>
+                                    </tr>
+                                </table>
+                                <table>
+                                    <tr>
+                                        <th class="w-20">If Others</th>
+                                        <td class="w-80">
+                                            @if ($data->if_others)
+                                                {{ strip_tags($data->if_others) }}
+                                            @else
+                                                Not Applicable
+                                            @endif
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th class="w-20">Short Description</th>
+                                        <td class="w-80">
+                                            @if ($data->short_description)
+                                                {{ strip_tags($data->short_description) }}
+                                            @else
+                                                Not Applicable
+                                            @endif
+                                        </td>
 
-                                  
-                         </table>                                    
-                            </div> 
+                                    </tr>
+                                </table>
+                                <table>
+                                    <tr>
+                                        <th class="w-20">Is Repeat </th>
+                                        <td class="w-30">
+                                            @if ($data->is_repeat)
+                                                {{ $data->is_repeat }}
+                                            @else
+                                                Not Applicable
+                                            @endif
+                                        </td>
+                                        <th class="w-20"> Repeat Nature</th>
+                                        <td class="w-30">
+                                            @if ($data->nature_of_repeat)
+                                                {{ $data->nature_of_repeat }}
+                                            @else
+                                                Not Applicable
+                                            @endif
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th class="w-20">Nature Of Change</th>
+                                        <td class="w-30">
+                                            @if ($data->nature_of_change)
+                                                {{ $data->nature_of_change }}
+                                            @else
+                                                Not Applicable
+                                            @endif
+                                        </td>
+                                        <th class="w-20">Occured On</th>
+                                        <td class="w-30">
+                                            @if ($data->oot_occured_on)
+                                                {{ Helpers::getdateFormat($data->oot_occured_on) }}
+                                            @else
+                                                Not Applicable
+                                            @endif
+                                        </td>
+                                    </tr>
+
+                                </table>
+                                <table>
+                                    <tr>
+                                        <th class="w-20">Oot Details</th>
+                                        <td class="w-80">
+                                            @if ($data->oot_details)
+                                                {{ strip_tags($data->oot_details) }}
+                                            @else
+                                                Not Applicable
+                                            @endif
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th class="w-20">Product History</th>
+                                        <td class="w-80">
+                                            @if ($data->producct_history)
+                                                {{ strip_tags($data->producct_history) }}
+                                            @else
+                                                Not Applicable
+                                            @endif
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th class="w-20">Probable Cause</th>
+                                        <td class="w-80">
+                                            @if ($data->probble_cause)
+                                                {{ strip_tags($data->probble_cause) }}
+                                            @else
+                                                Not Applicable
+                                            @endif
+                                        </td>
+                                    </tr>
+
+                                    <tr>
+                                        <th class="w-20">Investigation Detail</th>
+                                        <td class="w-80">
+                                            @if ($data->investigation_details)
+                                                {{ strip_tags($data->investigation_details) }}
+                                            @else
+                                                Not Applicable
+                                            @endif
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th class="w-20">Comments</th>
+                                        <td class="w-80">
+                                            @if ($data->comments)
+                                                {{ strip_tags($data->comments) }}
+                                            @else
+                                                Not Applicable
+                                            @endif
+                                        </td>
+
+
+                                    </tr>
+
+                                    <tr>
+                                        <th class="w-20">Refrence Record</th>
+                                        <td class="w-80">
+                                            @if ($data->refrence_record)
+                                                {{ strip_tags($data->refrence_record) }}
+                                            @else
+                                                Not Applicable
+                                            @endif
+                                        </td>
+                                    </tr>
+
+                                </table>
+                            </div>
                         </div>
-                        
-                        
-                       
+
+
+
                     </div>
 
                     <div class="block">
@@ -404,8 +419,8 @@
                                 </div>
                                 <table>
                                     <tr>
-                                        <th class="w-20">Product Material NAme   </th>
-                                        <td class="w-30">
+                                        <th class="w-20">Product Material NAme </th>
+                                        <td class="w-80">
                                             <div>
                                                 @if ($data->productmaterialname)
                                                     {{ $data->productmaterialname }}
@@ -414,8 +429,10 @@
                                                 @endif
                                             </div>
                                         </td>
+                                    </tr>
+                                    <tr>
                                         <th class="w-20">Grade Type Of Water</th>
-                                        <td class="w-30">
+                                        <td class="w-80">
                                             <div>
                                                 @if ($data->grade_typeofwater)
                                                     {{ $data->grade_typeofwater }}
@@ -425,11 +442,14 @@
                                             </div>
                                         </td>
                                     </tr>
-    
+
+                                </table>
+                                <table>
+
                                     <tr>
-    
+
                                         <th class="w-20"> Sample Location Point </th>
-                                        <td class="w-30">
+                                        <td class="w-80">
                                             <div>
                                                 @if ($data->sampleLocation_Point)
                                                     {{ $data->sampleLocation_Point }}
@@ -438,8 +458,11 @@
                                                 @endif
                                             </div>
                                         </td>
+                                    </tr>
+
+                                    <tr>
                                         <th class="w-20">Market</th>
-                                        <td class="w-30">
+                                        <td class="w-80">
                                             <div>
                                                 @if ($data->market)
                                                     {{ $data->market }}
@@ -448,8 +471,6 @@
                                                 @endif
                                             </div>
                                         </td>
-
-                                       
                                     </tr>
 
                                     <tr>
@@ -464,12 +485,12 @@
                                             </div>
                                         </td>
                                     </tr>
-                                  
-                                </table>                                    
-                            </div> 
+
+                                </table>
+                            </div>
                         </div>
-                        
-                        <div class="block-head"> Product/Material  </div>
+
+                        <div class="block-head"> Product/Material </div>
                         <div class="border-table">
                             <table>
                                 <tr class="table_bg">
@@ -480,22 +501,33 @@
                                     <th class="w-25">MFG Date</th>
                                     <th class="w-25">Expiry Date</th>
                                     <th class="w-25">Lable Claim</th>
-    
+
                                 </tr>
                                 @if ($grid_product_mat && is_array($grid_product_mat->data))
-                                            @php
-                                                $serialNumber = 1;
-                                            @endphp
-                                                @foreach ($grid_product_mat->data as $gridData)
-                                             
+                                    @php
+                                        $serialNumber = 1;
+                                    @endphp
+                                    @foreach ($grid_product_mat->data as $gridData)
                                         <tr>
                                             <td class="w-15">{{ $serialNumber++ }}</td>
-                                            <td class="w-15">{{ isset($gridData['item_product_code']) ? $gridData['item_product_code'] : 'Not Applicable' }}</td>
-                                            <td class="w-15">{{ isset($gridData['low_batch_no']) ? $gridData['low_batch_no'] : 'Not Applicable' }}</td>
-                                            <td class="w-15">{{ isset($gridData['a_r_number']) ? $gridData['a_r_number'] : 'Not Applicable' }}</td>
-                                            <td class="w-15">{{ isset($gridData['m_f_g_date']) ? $gridData['m_f_g_date'] : 'Not Applicable' }}</td>  
-                                             <td class="w-15">{{ isset($gridData['expiry_date']) ? $gridData['expiry_date'] : 'Not Applicable' }}</td>
-                                            <td class="w-15">{{ isset($gridData['label_claim']) ? $gridData['label_claim'] : 'Not Applicable' }}</td>        
+                                            <td class="w-15">
+                                                {{ isset($gridData['item_product_code']) ? $gridData['item_product_code'] : 'Not Applicable' }}
+                                            </td>
+                                            <td class="w-15">
+                                                {{ isset($gridData['low_batch_no']) ? $gridData['low_batch_no'] : 'Not Applicable' }}
+                                            </td>
+                                            <td class="w-15">
+                                                {{ isset($gridData['a_r_number']) ? $gridData['a_r_number'] : 'Not Applicable' }}
+                                            </td>
+                                            <td class="w-15">
+                                                {{ isset($gridData['m_f_g_date']) ? $gridData['m_f_g_date'] : 'Not Applicable' }}
+                                            </td>
+                                            <td class="w-15">
+                                                {{ isset($gridData['expiry_date']) ? $gridData['expiry_date'] : 'Not Applicable' }}
+                                            </td>
+                                            <td class="w-15">
+                                                {{ isset($gridData['label_claim']) ? $gridData['label_claim'] : 'Not Applicable' }}
+                                            </td>
                                         </tr>
                                     @endforeach
                                 @else
@@ -508,21 +540,20 @@
                                         <td>Not Applicable</td>
                                         <td>Not Applicable</td>
                                         <td>Not Applicable</td>
-                                        
+
                                     </tr>
                                 @endif
                             </table>
 
                         </div>
-                       
+
                     </div>
 
                     <div class="block">
-                        <div class="head"> 
+                        <div class="head">
                             <table>
-                                <tr>        
-                                    <th class="w-20">Analyst Name
-                                    </th>
+                                <tr>
+                                    <th class="w-20">Analyst Name </th>
                                     <td class="w-30">
                                         <div>
                                             @if ($data->analyst_name)
@@ -532,8 +563,11 @@
                                             @endif
                                         </div>
                                     </td>
+                                </tr>
+
+                                <tr>
                                     <th class="w-20">Sample Type</th>
-                                    <td class="w-30">
+                                    <td class="w-80">
                                         <div>
                                             @if ($data->reference_record)
                                                 {{ $data->reference_record }}
@@ -546,7 +580,7 @@
 
                                 <tr>
                                     <th class="w-20"> Ohers </th>
-                                    <td class="w-30">
+                                    <td class="w-80">
                                         <div>
                                             @if ($data->others)
                                                 {{ $data->others }}
@@ -555,8 +589,11 @@
                                             @endif
                                         </div>
                                     </td>
+                                </tr>
+
+                                <tr>
                                     <th class="w-20"> Stability For </th>
-                                    <td class="w-30">
+                                    <td class="w-80">
                                         <div>
                                             @if ($data->stability_for)
                                                 {{ $data->stability_for }}
@@ -565,14 +602,14 @@
                                             @endif
                                         </div>
                                     </td>
-                                </tr>                              
+                                </tr>
                             </table>
                         </div>
-                        
+
                     </div>
 
                     <div class="block">
-                        <div class="head">         
+                        <div class="head">
                             <div class="block">
                                 <div class="head">
                                     <div class="block-head">
@@ -587,23 +624,32 @@
                                                 <th class="w-25">Interval</th>
                                                 <th class="w-25">Orientation</th>
                                                 <th class="w-25">Pack Details</th>
-            
+
                                             </tr>
-                                             @if ($gridStability && is_array($gridStability->data))
-                                            @php
-                                                $serialNumber = 1;
-                                            @endphp
+                                            @if ($gridStability && is_array($gridStability->data))
+                                                @php
+                                                    $serialNumber = 1;
+                                                @endphp
                                                 @foreach ($gridStability->data as $gridData)
                                                     <tr>
                                                         <td class="w-15">{{ $serialNumber++ }}</td>
-                                                        <td class="w-15">{{ isset($gridData['a_r_number']) ? $gridData['a_r_number'] : 'Not Applicable' }} </td>
-                                                        <td class="w-15">{{ isset($gridData['temprature']) ? $gridData['temprature'] : 'Not Applicable' }} </td>
-                                                        <td class="w-15">{{ isset($gridData['interval']) ? $gridData['interval'] : 'Not Applicable' }} </td>
-                                                        <td class="w-15">{{ isset($gridData['orientation']) ? $gridData['orientation'] : 'Not Applicable' }} </td> 
-                                                         <td class="w-15">{{ isset($gridData['orientation']) ? $gridData['orientation'] : 'Not Applicable' }}
+                                                        <td class="w-15">
+                                                            {{ isset($gridData['a_r_number']) ? $gridData['a_r_number'] : 'Not Applicable' }}
                                                         </td>
-                                                       
-                
+                                                        <td class="w-15">
+                                                            {{ isset($gridData['temprature']) ? $gridData['temprature'] : 'Not Applicable' }}
+                                                        </td>
+                                                        <td class="w-15">
+                                                            {{ isset($gridData['interval']) ? $gridData['interval'] : 'Not Applicable' }}
+                                                        </td>
+                                                        <td class="w-15">
+                                                            {{ isset($gridData['orientation']) ? $gridData['orientation'] : 'Not Applicable' }}
+                                                        </td>
+                                                        <td class="w-15">
+                                                            {{ isset($gridData['orientation']) ? $gridData['orientation'] : 'Not Applicable' }}
+                                                        </td>
+
+
                                                     </tr>
                                                 @endforeach
                                             @else
@@ -615,23 +661,23 @@
                                                     <td>Not Applicable</td>
                                                     <td>Not Applicable</td>
                                                     <td>Not Applicable</td>
-                                                    
+
                                                 </tr>
                                             @endif
                                         </table>
                                     </div>
-                                   
+
                                 </div>
-                                
+
                             </div>
-        
+
                             <div class="block">
                                 <div class="head">
-                                
+
                                     <table>
-        
+
                                         <tr>
-        
+
                                             <th class="w-20">Specification Procedure Number </th>
                                             <td class="w-30">
                                                 <div>
@@ -664,17 +710,17 @@
                                                 </div>
                                             </td> --}}
                                         </tr>
-        
-                                       
-                                      
+
+
+
                                     </table>
                                 </div>
                                 <div class="border-table">
                                     <div class="block-">
-                                       File Attechment
+                                        File Attechment
                                     </div>
                                     <table>
-        
+
                                         <tr class="table_bg">
                                             <th class="w-20">S.N.</th>
                                             <th class="w-60">Attachment</th>
@@ -693,7 +739,7 @@
                                                 <td class="w-20">Not Applicable</td>
                                             </tr>
                                         @endif
-        
+
                                     </table>
                                 </div>
 
@@ -712,24 +758,38 @@
                                                 <th class="w-25">Previous interval Details </th>
                                                 <th class="w-25">Difference Of Results</th>
                                                 <th class="w-25">Trend Limit</th>
-                
+
                                             </tr>
-                                           
+
                                             @if ($GridOotRes && is_array($GridOotRes->data))
-                                            @php
-                                                $serialNumber = 1;
-                                            @endphp
+                                                @php
+                                                    $serialNumber = 1;
+                                                @endphp
                                                 @foreach ($GridOotRes->data as $gridData)
                                                     <tr>
                                                         <td class="w-15">{{ $serialNumber++ }}</td>
-                                                        <td class="w-15">{{ isset($gridData['a_r_number']) ? $gridData['a_r_number'] : 'Not Applicable' }} </td>                                                        
+                                                        <td class="w-15">
+                                                            {{ isset($gridData['a_r_number']) ? $gridData['a_r_number'] : 'Not Applicable' }}
+                                                        </td>
 
-                                                        <td class="w-15">{{ isset($gridData['test_name_of_oot']) ? $gridData['test_name_of_oot'] : 'Not Applicable' }} </td>                                                        
-                                                        <td class="w-15">{{ isset($gridData['result_obtained']) ? $gridData['result_obtained'] : 'Not Applicable' }} </td>
-                                                        <td class="w-15">{{ isset($gridData['i_i_details']) ? $gridData['i_i_details'] : 'Not Applicable' }} </td>
-                                                        <td class="w-15">{{ isset($gridData['p_i_details']) ? $gridData['p_i_details'] : 'Not Applicable' }} </td>
-                                                        <td class="w-15">{{ isset($gridData['difference_of_result']) ? $gridData['difference_of_result'] : 'Not Applicable' }} </td>
-                                                        <td class="w-15">{{ isset($gridData['trend_limit']) ? $gridData['trend_limit'] : 'Not Applicable' }} </td>               
+                                                        <td class="w-15">
+                                                            {{ isset($gridData['test_name_of_oot']) ? $gridData['test_name_of_oot'] : 'Not Applicable' }}
+                                                        </td>
+                                                        <td class="w-15">
+                                                            {{ isset($gridData['result_obtained']) ? $gridData['result_obtained'] : 'Not Applicable' }}
+                                                        </td>
+                                                        <td class="w-15">
+                                                            {{ isset($gridData['i_i_details']) ? $gridData['i_i_details'] : 'Not Applicable' }}
+                                                        </td>
+                                                        <td class="w-15">
+                                                            {{ isset($gridData['p_i_details']) ? $gridData['p_i_details'] : 'Not Applicable' }}
+                                                        </td>
+                                                        <td class="w-15">
+                                                            {{ isset($gridData['difference_of_result']) ? $gridData['difference_of_result'] : 'Not Applicable' }}
+                                                        </td>
+                                                        <td class="w-15">
+                                                            {{ isset($gridData['trend_limit']) ? $gridData['trend_limit'] : 'Not Applicable' }}
+                                                        </td>
                                                     </tr>
                                                 @endforeach
                                             @else
@@ -743,24 +803,24 @@
                                                     <td>Not Applicable</td>
                                                     <td>Not Applicable</td>
                                                     <td>Not Applicable</td>
-                                                    
+
                                                 </tr>
                                             @endif
                                         </table>
                                     </div>
                                 </div>
                             </div>
-        
+
                             <div class="block">
                                 <div class="head">
                                     <div class="block-head">
                                         Preliminary Lab Investigation
                                     </div>
                                     <table>
-        
+
                                         <tr>
                                             <th class="w-20">Preliminary Laboratory Investigation Required </th>
-                                            <td class="w-30">
+                                            <td class="w-80">
                                                 <div>
                                                     @if ($data->pli_finaly_validity_check)
                                                         {{ strip_tags($data->pli_finaly_validity_check) }}
@@ -769,9 +829,10 @@
                                                     @endif
                                                 </div>
                                             </td>
-        
+                                        </tr>
+                                        <tr>
                                             <th class="w-20">Corrective Action </th>
-                                            <td class="w-30">
+                                            <td class="w-80">
                                                 <div>
                                                     @if ($data->corrective_action)
                                                         {{ strip_tags($data->corrective_action) }}
@@ -780,7 +841,7 @@
                                                     @endif
                                                 </div>
                                             </td>
-                                            
+
                                         </tr>
 
                                         <tr>
@@ -795,13 +856,13 @@
                                                 </div>
                                             </td>
                                         </tr>
-        
+
                                         <tr>
                                             <th class="w-20"> Comments </th>
                                             <td class="w-30">
                                                 <div>
                                                     @if ($data->inv_comments)
-                                                        {{ strip_tags($data->inv_comments)}}
+                                                        {{ strip_tags($data->inv_comments) }}
                                                     @else
                                                         Not Applicable
                                                     @endif
@@ -810,26 +871,19 @@
                                         </tr>
                                         <tr>
                                             <th class="w-20">Head QA/Designee</th>
-                                            <td class="w-30">
-                                                <div>
-                                                    @if ($data->inv_head_designee)
-                                                        {{ $data->inv_head_designee }}
-                                                    @else
-                                                        Not Applicable
-                                                    @endif
-                                                </div>
-                                            </td>
+
+                                            <td class="w-30">@if($data->inv_head_designee) {{ Helpers::getInitiatorName($data->inv_head_designee) }} @else Not Applicable @endif</td>
+
                                         </tr>
-                                    
                                     </table>
                                 </div>
                             </div>
                             <div class="border-table">
                                 <div class="block-">
-                                   File Attechment
+                                    File Attechment
                                 </div>
                                 <table>
-    
+
                                     <tr class="table_bg">
                                         <th class="w-20">S.N.</th>
                                         <th class="w-60">Attachment</th>
@@ -848,20 +902,20 @@
                                             <td class="w-20">Not Applicable</td>
                                         </tr>
                                     @endif
-    
+
                                 </table>
                             </div>
                             <div class="block">
                                 <div class="head">
                                     <div class="block-head">
-                                    Other Then Stability Batches
+                                        Other Then Stability Batches
                                     </div>
                                     <table>
-        
+
                                         <tr>
-        
+
                                             <th class="w-20">Reason For Stability </th>
-                                            <td class="w-30">
+                                            <td class="w-80">
                                                 <div>
                                                     @if ($data->reason_for_stability)
                                                         {{ $data->reason_for_stability }}
@@ -870,8 +924,11 @@
                                                     @endif
                                                 </div>
                                             </td>
+                                        </tr>
+
+                                        <tr>
                                             <th class="w-20">Description Of OOT Details</th>
-                                            <td class="w-30">
+                                            <td class="w-80">
                                                 <div>
                                                     @if ($data->description_of_oot_details)
                                                         {{ strip_tags($data->description_of_oot_details) }}
@@ -881,11 +938,13 @@
                                                 </div>
                                             </td>
                                         </tr>
-        
+
+                                    </table>
+                                    <table>
                                         <tr>
-        
+
                                             <th class="w-20">Product History </th>
-                                            <td class="w-30">
+                                            <td class="w-80">
                                                 <div>
                                                     @if ($data->sta_bat_product_history)
                                                         {{ strip_tags($data->sta_bat_product_history) }}
@@ -894,8 +953,11 @@
                                                     @endif
                                                 </div>
                                             </td>
+                                        </tr>
+
+                                        <tr>
                                             <th class="w-20">Probable cause</th>
-                                            <td class="w-30">
+                                            <td class="w-80">
                                                 <div>
                                                     @if ($data->sta_bat_probable_cause)
                                                         {{ strip_tags($data->sta_bat_probable_cause) }}
@@ -905,8 +967,11 @@
                                                 </div>
                                             </td>
                                         </tr>
+                                    </table>
+
+                                    <table>
                                         <tr>
-        
+
                                             <th class="w-20">Analyst Name</th>
                                             <td class="w-30">
                                                 <div>
@@ -945,24 +1010,38 @@
                                                 <th class="w-25">Pack Style </th>
                                                 <th class="w-25">Frequency</th>
                                                 <th class="w-25">Condition</th>
-                
+
                                             </tr>
-                                             @if ($InfoProductMat && is_array($InfoProductMat->data))
-                                            @php
-                                                $serialNumber = 1;
-                                            @endphp
+                                            @if ($InfoProductMat && is_array($InfoProductMat->data))
+                                                @php
+                                                    $serialNumber = 1;
+                                                @endphp
                                                 @foreach ($InfoProductMat->data as $gridData)
                                                     <tr>
                                                         <td class="w-15">{{ $loop->index + 1 }}</td>
-                                                        
-                                                        <td class="w-15">{{ isset($gridData['batch_no']) ? $gridData['batch_no'] : 'Not Applicable' }} </td>                                                        
-                                                        <td class="w-15">{{ isset($gridData['mfg_date']) ? $gridData['mfg_date'] : 'Not Applicable' }} </td>
-                                                        <td class="w-15">{{ isset($gridData['exp_date']) ? $gridData['exp_date'] : 'Not Applicable' }} </td>
-                                                        <td class="w-15">{{ isset($gridData['ar_number']) ? $gridData['ar_number'] : 'Not Applicable' }} </td>
-                                                        <td class="w-15">{{ isset($gridData['pack_style']) ? $gridData['pack_style'] : 'Not Applicable' }} </td>
-                                                        <td class="w-15">{{ isset($gridData['frequency']) ? $gridData['frequency'] : 'Not Applicable' }} </td>
-                                                        <td class="w-15">{{ isset($gridData['condition']) ? $gridData['condition'] : 'Not Applicable' }} </td>                                                   
-                
+
+                                                        <td class="w-15">
+                                                            {{ isset($gridData['batch_no']) ? $gridData['batch_no'] : 'Not Applicable' }}
+                                                        </td>
+                                                        <td class="w-15">
+                                                            {{ isset($gridData['mfg_date']) ? $gridData['mfg_date'] : 'Not Applicable' }}
+                                                        </td>
+                                                        <td class="w-15">
+                                                            {{ isset($gridData['exp_date']) ? $gridData['exp_date'] : 'Not Applicable' }}
+                                                        </td>
+                                                        <td class="w-15">
+                                                            {{ isset($gridData['ar_number']) ? $gridData['ar_number'] : 'Not Applicable' }}
+                                                        </td>
+                                                        <td class="w-15">
+                                                            {{ isset($gridData['pack_style']) ? $gridData['pack_style'] : 'Not Applicable' }}
+                                                        </td>
+                                                        <td class="w-15">
+                                                            {{ isset($gridData['frequency']) ? $gridData['frequency'] : 'Not Applicable' }}
+                                                        </td>
+                                                        <td class="w-15">
+                                                            {{ isset($gridData['condition']) ? $gridData['condition'] : 'Not Applicable' }}
+                                                        </td>
+
                                                     </tr>
                                                 @endforeach
                                             @else
@@ -975,19 +1054,19 @@
                                                     <td>Not Applicable</td>
                                                     <td>Not Applicable</td>
                                                     <td>Not Applicable</td>
-                                                    
+
                                                 </tr>
                                             @endif
                                         </table>
                                     </div>
                                 </div>
                             </div>
-                            
+
                             <div class="block">
                                 <div class="head">
                                     <div class="block-head">
                                         CheckList Preliminary Laboratory Investigation
-        
+
                                     </div>
                                     <table>
                                         <tr>
@@ -1000,22 +1079,37 @@
                                                         Not Applicable
                                                     @endif
                                                 </div>
-                                            </td> 
+                                            </td>
                                         </tr>
+                                    </table>
+
+
+
+                                    <table>
 
                                         <tr>
-                                            <th>Were the equipment instrument used for analysis was in calibrated state?</th>
-                                            <th>Remark</th>
+                                            <th class="w-100">1. Were the equipment instrument used for analysis was
+                                                in calibrated state? </th>
                                         </tr>
+                                    </table>
+                                    <table>
+
                                         <tr>
-                                            <td> Responce : 
+                                            <th class="w-20">Responce</th>
+                                            <td class="w-80">
                                                 @if ($checkList->responce_one)
                                                     {{ $checkList->responce_one }}
                                                 @else
                                                     Not Applicable
                                                 @endif
                                             </td>
-                                            <td>
+                                        </tr>
+
+                                        <tr>
+                                            <th class="w-20">Remark</th>
+
+                                            <td class="w-80">
+
                                                 @if ($checkList->remark_one)
                                                     {{ $checkList->responce_one }}
                                                 @else
@@ -1024,21 +1118,20 @@
                                             </td>
                                         </tr>
 
-                                        <tr>
-                                            <th>Did all components/parts of equipment instrument function properly?</th>
-                                            <th>Remark</th>
+                                    </table>
+                                    <table>
+
+                                        <tr >
+                                            <th class="w-100"> 2.Did all components/parts of equipment instrument function properly?</th>
                                         </tr>
+                                    </table>
+                                    <table>
                                         <tr>
-                                            <td> Responce  : 
+                                            <th class="w-20">Responce:</th>
+                                            <td class="w-80">
+
                                                 @if ($checkList->responce_two)
                                                     {{ $checkList->responce_two }}
-                                                @else
-                                                    Not Applicable
-                                                @endif
-                                            </td>
-                                            <td>
-                                                @if ($checkList->remark_two)
-                                                    {{ $checkList->remark_two }}
                                                 @else
                                                     Not Applicable
                                                 @endif
@@ -1046,18 +1139,42 @@
                                         </tr>
 
                                         <tr>
-                                            <th>Was there any evidence that the sample is contaminated?</th>
-                                            <th>Remark</th>
+                                            <th class="w-20">Remark:</th>
+                                            <td class="w-80">
+
+                                                @if ($checkList->remark_two)
+                                                    {{ $checkList->remark_two }}
+                                                @else
+                                                    Not Applicable
+                                                @endif
+                                            </td>
                                         </tr>
+                                    </table>
+
+                                    <table>
+
                                         <tr>
-                                            <td> Responce : 
+
+                                            <th >3.Was there any evidence that the sample is contaminated?</th>
+
+                                        </tr>
+                                    </table>
+                                    <table>
+                                        <tr>
+                                            <th class="w-20"> Responce: </th>
+                                            <td class="w-20">
+
                                                 @if ($checkList->responce_three)
                                                     {{ $checkList->responce_three }}
                                                 @else
                                                     Not Applicable
                                                 @endif
                                             </td>
-                                            <td>
+                                        </tr>
+                                        <tr>
+                                            <th class="w20">Remark</th>
+                                            <td class="w-80">
+
                                                 @if ($checkList->remark_three)
                                                     {{ $checkList->remark_three }}
                                                 @else
@@ -1066,19 +1183,27 @@
                                             </td>
                                         </tr>
 
+                                    </table>
+                                    <table>
+
                                         <tr>
-                                            <th>Is the SOP adequate and operation performed as per sop?</th>
-                                            <th>Remark</th>
+                                            <th> 4.Is the SOP adequate and operation performed as per sop?</th>
                                         </tr>
+                                    </table>
+                                    <table>
                                         <tr>
-                                            <td> Responce : 
+                                            <th class="w-20">Responce:</th>
+                                            <td class="w-20">
                                                 @if ($checkList->responce_four)
                                                     {{ $checkList->responce_four }}
                                                 @else
                                                     Not Applicable
                                                 @endif
                                             </td>
-                                            <td>
+                                        </tr>
+                                        <tr>
+                                            <th class="w-20"></th>
+                                            <td class="w-80">
                                                 @if ($checkList->remark_four)
                                                     {{ $checkList->remark_four }}
                                                 @else
@@ -1086,20 +1211,29 @@
                                                 @endif
                                             </td>
                                         </tr>
+                                    </table>
+                                    <table>
 
                                         <tr>
-                                            <th>Was the glassware used of Class A?</th>
-                                            <th>Remark</th>
+                                            <th> 5. Was the glassware used of Class A?</th>
+
                                         </tr>
+                                    </table>
+                                    <table>
                                         <tr>
-                                            <td> Responce : 
+                                            <th class="w-20">Responce :</th>
+                                            <td class="w-20">
                                                 @if ($checkList->responce_five)
                                                     {{ $checkList->responce_five }}
                                                 @else
                                                     Not Applicable
                                                 @endif
                                             </td>
-                                            <td>
+                                        </tr>
+
+                                        <tr>
+                                            <th class="w-20">Remark :</th>
+                                            <td class="w-80">
                                                 @if ($checkList->remark_five)
                                                     {{ $checkList->remark_five }}
                                                 @else
@@ -1107,20 +1241,30 @@
                                                 @endif
                                             </td>
                                         </tr>
+                                    </table>
+
+                                    <table>
 
                                         <tr>
-                                            <th>Was there any evidence that the glassware used .may be contaminated?</th>
-                                            <th>Remark</th>
+                                            <th>6. Was there any evidence that the glassware used .may be contaminated? </th>
                                         </tr>
+                                    </table>
+                                    <table>
                                         <tr>
-                                            <td> Responce : 
+                                            <th class="w-20">Responce :</th>
+                                            <td class="w-20">
                                                 @if ($checkList->responce_six)
-                                                    {{ $checkList->responce_six}}
+                                                    {{ $checkList->responce_six }}
                                                 @else
                                                     Not Applicable
                                                 @endif
                                             </td>
-                                            <td>
+                                        </tr>
+
+                                        <tr>
+                                            <th class="w-20">Remark :</th>
+                                            <td class="w-80">
+
                                                 @if ($checkList->remark_six)
                                                     {{ $checkList->remark_six }}
                                                 @else
@@ -1128,598 +1272,35 @@
                                                 @endif
                                             </td>
                                         </tr>
+                                    </table>
+                                    <table>
 
-                                        
                                         <tr>
-                                            <th>Were the instrument problems such as noisy baseline, poor peak resolution, poor injection reproducibility, unidentified peak or contamination that affected peak integration, etc. noticed?</th>
-                                            <th>Remark</th>
+                                            <th>7. Were the instrument problems such as noisy baseline, poor peak
+                                                resolution, poor injection reproducibility, unidentified peak or
+                                                contamination that affected peak integration, etc. noticed?</th>
+
                                         </tr>
+                                    </table>
+                                    <table>
                                         <tr>
-                                            <td> Responce : 
+                                            <th class="w-20">Responce :</th>
+                                            <td class="w-20">
+
                                                 @if ($checkList->responce_seven)
-                                                    {{ $checkList->responce_seven}}
+                                                    {{ $checkList->responce_seven }}
                                                 @else
                                                     Not Applicable
                                                 @endif
                                             </td>
-                                            <td>
+                                        </tr>
+
+                                        <tr>
+                                            <th class="w-20">Remark :</th>
+                                            <td class="w-80">
+
                                                 @if ($checkList->remark_seven)
                                                     {{ $checkList->remark_seven }}
-                                                @else
-                                                    Not Applicable
-                                                @endif
-                                            </td>
-                                        </tr>
-
-                                        <tr>
-                                            <th>Any critical parts of equipment/instrument like detector, lamp etc. and needed replacement?</th>
-                                            <th>Remark</th>
-                                        </tr>
-                                        <tr>
-                                            <td> Responce : 
-                                                @if ($checkList->responce_eight)
-                                                    {{ $checkList->responce_eight}}
-                                                @else
-                                                    Not Applicable
-                                                @endif
-                                            </td>
-                                            <td>
-                                                @if ($checkList->remark_eight)
-                                                    {{ $checkList->remark_eight }}
-                                                @else
-                                                    Not Applicable
-                                                @endif
-                                            </td>
-                                        </tr>
-
-                                        <tr>
-                                            <th>Was the correct testing procedure followed?</th>
-                                            <th>Remark</th>
-                                        </tr>
-                                        <tr>
-                                            <td> Responce : 
-                                                @if ($checkList->responce_nine)
-                                                    {{ $checkList->responce_nine}}
-                                                @else
-                                                    Not Applicable
-                                                @endif
-                                            </td>
-                                            <td>
-                                                @if ($checkList->remark_nine)
-                                                    {{ $checkList->remark_nine }}
-                                                @else
-                                                    Not Applicable
-                                                @endif
-                                            </td>
-                                        </tr>
-
-                                        
-                                        <tr>
-                                            <th>Was there change in instrument, column, method, integration technique or standard?</th>
-                                            <th>Remark</th>
-                                        </tr>
-                                        <tr>
-                                            <td> Responce : 
-                                                @if ($checkList->responce_ten)
-                                                    {{ $checkList->responce_ten}}
-                                                @else
-                                                    Not Applicable
-                                                @endif
-                                            </td>
-                                            <td>
-                                                @if ($checkList->remark_ten)
-                                                    {{ $checkList->remark_ten }}
-                                                @else
-                                                    Not Applicable
-                                                @endif
-                                            </td>
-                                        </tr>
-
-                                        
-                                        <tr>
-                                            <th>Were the standards & reagents properly stored?</th>
-                                            <th>Remark</th>
-                                        </tr>
-                                        <tr>
-                                            <td> Responce : 
-                                                @if ($checkList->responce_eleven)
-                                                    {{ $checkList->responce_eleven}}
-                                                @else
-                                                    Not Applicable
-                                                @endif
-                                            </td>
-                                            <td>
-                                                @if ($checkList->remark_eleven)
-                                                    {{ $checkList->remark_eleven }}
-                                                @else
-                                                    Not Applicable
-                                                @endif
-                                            </td>
-                                        </tr>
-
-                                        <tr>
-                                            <th>Were standards, reagents properly labelled?</th>
-                                            <th>Remark</th>
-                                        </tr>
-                                        <tr>
-                                            <td> Responce : 
-                                                @if ($checkList->responce_twele)
-                                                    {{ $checkList->responce_twele}}
-                                                @else
-                                                    Not Applicable
-                                                @endif
-                                            </td>
-                                            <td>
-                                                @if ($checkList->remark_twele)
-                                                    {{ $checkList->remark_twele }}
-                                                @else
-                                                    Not Applicable
-                                                @endif
-                                            </td>
-                                        </tr>
-
-                                        
-                                        <tr>
-                                            <th>Was there any evidence that the standards, reagents have degraded?</th>
-                                            <th>Remark</th>
-                                        </tr>
-                                        <tr>
-                                            <td> Responce : 
-                                                @if ($checkList->responce_thrteen)
-                                                    {{ $checkList->responce_thrteen}}
-                                                @else
-                                                    Not Applicable
-                                                @endif
-                                            </td>
-                                            <td>
-                                                @if ($checkList->remark_thrteen)
-                                                    {{ $checkList->remark_thrteen }}
-                                                @else
-                                                    Not Applicable
-                                                @endif
-                                            </td>
-                                        </tr>
-
-                                        
-                                        <tr>
-                                            <th>Were the reagents/chemicals used of recommended grade?</th>
-                                            <th>Remark</th>
-                                        </tr>
-                                        <tr>
-                                            <td> Responce : 
-                                                @if ($checkList->responce_fourteen)
-                                                    {{ $checkList->responce_fourteen}}
-                                                @else
-                                                    Not Applicable
-                                                @endif
-                                            </td>
-                                            <td>
-                                                @if ($checkList->remark_fourteen)
-                                                    {{ $checkList->remark_fourteen }}
-                                                @else
-                                                    Not Applicable
-                                                @endif
-                                            </td>
-                                        </tr>
-                                       
-                                        <tr>
-                                            <th>Was the evidence that the reagents, standards or other materials used for test were contaminated.?</th>
-                                            <th>Remark</th>
-                                        </tr>
-                                        <tr>
-                                            <td> Responce : 
-                                                @if ($checkList->responce_fifteen)
-                                                    {{ $checkList->responce_fifteen	}}
-                                                @else
-                                                    Not Applicable
-                                                @endif
-                                            </td>
-                                            <td>
-                                                @if ($checkList->remark_fifteen)
-                                                    {{ $checkList->remark_fifteen }}
-                                                @else
-                                                    Not Applicable
-                                                @endif
-                                            </td>
-                                        </tr>
-
-                                        <tr>
-                                            <th>Whether correct working /reference standard were used?</th>
-                                            <th>Remark</th>
-                                        </tr>
-                                        <tr>
-                                            <td> Responce : 
-                                                @if ($checkList->responce_sixteen)
-                                                    {{ $checkList->responce_sixteen	}}
-                                                @else
-                                                    Not Applicable
-                                                @endif
-                                            </td>
-                                            <td>
-                                                @if ($checkList->remark_sixteen)
-                                                    {{ $checkList->remark_sixteen}}
-                                                @else
-                                                    Not Applicable
-                                                @endif
-                                            </td>
-                                        </tr>
-
-                                        <tr>
-                                            <th>Was the testing procedure adequate and followed properly?</th>
-                                            <th>Remark</th>
-                                        </tr>
-                                        <tr>
-                                            <td> Response: 
-                                                @if ($checkList->responce_seventeen)
-                                                    {{ $checkList->responce_seventeen	}}
-                                                @else
-                                                    Not Applicable
-                                                @endif
-                                            </td>
-                                            <td>
-                                                @if ($checkList->remark_seventeen)
-                                                    {{ $checkList->remark_seventeen}}
-                                                @else
-                                                    Not Applicable
-                                                @endif
-                                            </td>
-                                        </tr>
-
-                                        <tr>
-                                            <th>Was the glassware used properly washed?</th>
-                                            <th>Remark</th>
-                                        </tr>
-                                        <tr>
-                                            <td> Response: 
-                                                @if ($checkList->responce_eighteen)
-                                                    {{ $checkList->responce_eighteen}}
-                                                @else
-                                                    Not Applicable
-                                                @endif
-                                            </td>
-                                            <td>
-                                                @if ($checkList->remark_eighteen)
-                                                    {{ $checkList->remark_eighteen}}
-                                                @else
-                                                    Not Applicable
-                                                @endif
-                                            </td>
-                                        </tr>
-
-                                        <tr>
-                                            <th>Were standards, reagents used within their expiration dates?</th>
-                                            <th>Remark</th>
-                                        </tr>
-                                        <tr>
-                                            <td> Response: 
-                                                @if ($checkList->responce_ninteen)
-                                                    {{ $checkList->responce_ninteen}}
-                                                @else
-                                                    Not Applicable
-                                                @endif
-                                            </td>
-                                            <td>
-                                                @if ($checkList->remark_ninteen)
-                                                    {{ $checkList->remark_ninteen}}
-                                                @else
-                                                    Not Applicable
-                                                @endif
-                                            </td>
-                                        </tr>
-
-                                        <tr>
-                                            <th>	Were volumetric solutions standardized as per testing procedure?</th>
-                                            <th>Remark</th>
-                                        </tr>
-                                        <tr>
-                                            <td> Response: 
-                                                @if ($checkList->responce_twenty)
-                                                    {{ $checkList->responce_twenty}}
-                                                @else
-                                                    Not Applicable
-                                                @endif
-                                            </td>
-                                            <td>
-                                                @if ($checkList->remark_ninteen)
-                                                    {{ $checkList->remark_ninteen}}
-                                                @else
-                                                    Not Applicable
-                                                @endif
-                                            </td>
-                                        </tr>
-
-                                        
-                                        <tr>
-                                            <th>Were Working standards standardized as per testing procedure?</th>
-                                            <th>Remark</th>
-                                        </tr>
-                                        <tr>
-                                            <td> Response: 
-                                                @if ($checkList->responce_twenty_one)
-                                                    {{ $checkList->responce_twenty_one}}
-                                                @else
-                                                    Not Applicable
-                                                @endif
-                                            </td>
-                                            <td>
-                                                @if ($checkList->remark_twenty_one)
-                                                    {{ $checkList->remark_twenty_one}}
-                                                @else
-                                                    Not Applicable
-                                                @endif
-                                            </td>
-                                        </tr>
-
-                                        <tr>
-                                            <th>Were the dilutions made in sample /standard preparation as per testing procedure?</th>
-                                            <th>Remark</th>
-                                        </tr>
-                                        <tr>
-                                            <td> Response: 
-                                                @if ($checkList->responce_twenty_two)
-                                                    {{ $checkList->responce_twenty_two}}
-                                                @else
-                                                    Not Applicable
-                                                @endif
-                                            </td>
-                                            <td>
-                                                @if ($checkList->remark_twenty_two)
-                                                    {{ $checkList->remark_twenty_two}}
-                                                @else
-                                                    Not Applicable
-                                                @endif
-                                            </td>
-                                        </tr>
-
-                                        
-                                        <tr>
-                                            <th>Was the analyst trained / certified?</th>
-                                            <th>Remark</th>
-                                        </tr>
-                                        <tr>
-                                            <td> Response: 
-                                                @if ($checkList->responce_twenty_three)
-                                                    {{ $checkList->responce_twenty_three}}
-                                                @else
-                                                    Not Applicable
-                                                @endif
-                                            </td>
-                                            <td>
-                                                @if ($checkList->remark_twenty_three)
-                                                    {{ $checkList->remark_twenty_three}}
-                                                @else
-                                                    Not Applicable
-                                                @endif
-                                            </td>
-                                        </tr>
-
-                                        <tr>
-                                            <th>Analyst understood the testing procedure?</th>
-                                            <th>Remark</th>
-                                        </tr>
-                                        <tr>
-                                            <td> Response: 
-                                                @if ($checkList->responce_twenty_four)
-                                                    {{ $checkList->responce_twenty_four}}
-                                                @else
-                                                    Not Applicable
-                                                @endif
-                                            </td>
-                                            <td>
-                                                @if ($checkList->remark_twenty_four)
-                                                    {{ $checkList->remark_twenty_four}}
-                                                @else
-                                                    Not Applicable
-                                                @endif
-                                            </td>
-                                        </tr>
-
-                                        <tr>
-                                            <th>Analyst calculated the results correctly as mentioned in testing procedure?</th>
-                                            <th>Remark</th>
-                                        </tr>
-                                        <tr>
-                                            <td> Response: 
-                                                @if ($checkList->responce_twenty_five)
-                                                    {{ $checkList->responce_twenty_five}}
-                                                @else
-                                                    Not Applicable
-                                                @endif
-                                            </td>
-                                            <td>
-                                                @if ($checkList->remark_twenty_five)
-                                                    {{ $checkList->remark_twenty_five}}
-                                                @else
-                                                    Not Applicable
-                                                @endif
-                                            </td>
-                                        </tr>
-
-                                        <tr>
-                                            <th>Was there any similar occurrence with the same analyst earlier?</th>
-                                            <th>Remark</th>
-                                        </tr>
-                                        <tr>
-                                            <td> Response: 
-                                                @if ($checkList->responce_twenty_six)
-                                                    {{ $checkList->responce_twenty_six}}
-                                                @else
-                                                    Not Applicable
-                                                @endif
-                                            </td>
-                                            <td>
-                                                @if ($checkList->remark_twenty_six)
-                                                    {{ $checkList->remark_twenty_six}}
-                                                @else
-                                                    Not Applicable
-                                                @endif
-                                            </td>
-                                        </tr>
-
-                                        
-                                        <tr>
-                                            <th>Was there any similar history with the product / material?</th>
-                                            <th>Remark</th>
-                                        </tr>
-                                        <tr>
-                                            <td> Response: 
-                                                @if ($checkList->responce_twenty_seven)
-                                                    {{ $checkList->responce_twenty_seven}}
-                                                @else
-                                                    Not Applicable
-                                                @endif
-                                            </td>
-                                            <td>
-                                                @if ($checkList->remark_twenty_seven)
-                                                    {{ $checkList->remark_twenty_seven}}
-                                                @else
-                                                    Not Applicable
-                                                @endif
-                                            </td>
-                                        </tr>
-
-                                        
-                                        <tr>
-                                            <th>Retention time of concerned peak is comparable with respect to previous station (ln case of OOT in any individual and total impurity)?</th>
-                                            <th>Remark</th>
-                                        </tr>
-                                        <tr>
-                                            <td> Response: 
-                                                @if ($checkList->responce_twenty_eight)
-                                                    {{ $checkList->responce_twenty_eight}}
-                                                @else
-                                                    Not Applicable
-                                                @endif
-                                            </td>
-                                            <td>
-                                                @if ($checkList->remark_twenty_eight)
-                                                    {{ $checkList->remark_twenty_eight}}
-                                                @else
-                                                    Not Applicable
-                                                @endif
-                                            </td>
-                                        </tr>
-
-                                        <tr>
-                                            <th>Was the sample quantity is sufficient?</th>
-                                            <th>Remark</th>
-                                        </tr>
-                                        <tr>
-                                            <td> Response: 
-                                                @if ($checkList->responce_twenty_nine)
-                                                    {{ $checkList->responce_twenty_nine}}
-                                                @else
-                                                    Not Applicable
-                                                @endif
-                                            </td>
-                                            <td>
-                                                @if ($checkList->remark_twenty_nine)
-                                                    {{ $checkList->remark_twenty_nine}}
-                                                @else
-                                                    Not Applicable
-                                                @endif
-                                            </td>
-                                        </tr>
-
-                                        <tr>
-                                            <th>Was Error in labelling details on the sample container?</th>
-                                            <th>Remark</th>
-                                        </tr>
-                                        <tr>
-                                            <td> Response: 
-                                                @if ($checkList->responce_thirty)
-                                                    {{ $checkList->responce_thirty}}
-                                                @else
-                                                    Not Applicable
-                                                @endif
-                                            </td>
-                                            <td>
-                                                @if ($checkList->remark_thirty)
-                                                    {{ $checkList->remark_thirty}}
-                                                @else
-                                                    Not Applicable
-                                                @endif
-                                            </td>
-                                        </tr>
-
-                                        <tr>
-                                            <th>Was the Specified storage condition of product sample maintained?</th>
-                                            <th>Remark</th>
-                                        </tr>
-                                        <tr>
-                                            <td> Response: 
-                                                @if ($checkList->responce_thirty_one)
-                                                    {{ $checkList->responce_thirty_one}}
-                                                @else
-                                                    Not Applicable
-                                                @endif
-                                            </td>
-                                            <td>
-                                                @if ($checkList->remark_thirty_one)
-                                                    {{ $checkList->remark_thirty_one}}
-                                                @else
-                                                    Not Applicable
-                                                @endif
-                                            </td>
-                                        </tr>
-
-                                        <tr>
-                                            <th>Transient equipment /Instrument malfunction is suspected?</th>
-                                            <th>Remark</th>
-                                        </tr>
-                                        <tr>
-                                            <td> Response: 
-                                                @if ($checkList->responce_thirty_two)
-                                                    {{ $checkList->responce_thirty_two}}
-                                                @else
-                                                    Not Applicable
-                                                @endif
-                                            </td>
-                                            <td>
-                                                @if ($checkList->remark_thirty_two)
-                                                    {{ $checkList->remark_thirty_two}}
-                                                @else
-                                                    Not Applicable
-                                                @endif
-                                            </td>
-                                        </tr>
-
-                                        <tr>
-                                            <th>Where any change in the character of the sample observed?</th>
-                                            <th>Remark</th>
-                                        </tr>
-                                        <tr>
-                                            <td> Response: 
-                                                @if ($checkList->responce_thirty_three)
-                                                    {{ $checkList->responce_thirty_three}}
-                                                @else
-                                                    Not Applicable
-                                                @endif
-                                            </td>
-                                            <td>
-                                                @if ($checkList->remark_thirty_three)
-                                                    {{ $checkList->remark_thirty_three}}
-                                                @else
-                                                    Not Applicable
-                                                @endif
-                                            </td>
-                                        </tr>
-
-                                        <tr>
-                                            <th>Any other specific reason?</th>
-                                            <th>Remark</th>
-                                        </tr>
-                                        <tr>
-                                            <td> Response: 
-                                                @if ($checkList->responce_thirty_four)
-                                                    {{ $checkList->responce_thirty_four}}
-                                                @else
-                                                    Not Applicable
-                                                @endif
-                                            </td>
-                                            <td>
-                                                @if ($checkList->remark_thirty_four)
-                                                    {{ $checkList->remark_thirty_four}}
                                                 @else
                                                     Not Applicable
                                                 @endif
@@ -1729,7 +1310,782 @@
                                     </table>
                                     <table>
                                         <tr>
-                                            <th class="w-20">Information Technology Feedback</th>
+                                            <th>8. Any critical parts of equipment/instrument like detector, lamp etc.
+                                                and
+                                                needed replacement?</th>
+
+                                        </tr>
+                                    </table>
+                                    <table>
+                                        <tr>
+                                            <th class="w-20">Responce :</th>
+                                            <td class="w-20">
+
+                                                @if ($checkList->responce_eight)
+                                                    {{ $checkList->responce_eight }}
+                                                @else
+                                                    Not Applicable
+                                                @endif
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <th class="w-20">Remark :</th>
+                                            <td class="w-80">
+                                                @if ($checkList->remark_eight)
+                                                    {{ $checkList->remark_eight }}
+                                                @else
+                                                    Not Applicable
+                                                @endif
+                                            </td>
+                                        </tr>
+
+                                    </table>
+
+                                    <table>
+                                        <tr>
+                                            <th>9. Was the correct testing procedure followed?</th>
+                                        </tr>
+                                    </table>
+                                    <table>
+                                        <tr>
+                                            <th class="w-20">Responce :</th>
+                                            <td class="w-20">
+
+                                                @if ($checkList->responce_nine)
+                                                    {{ $checkList->responce_nine }}
+                                                @else
+                                                    Not Applicable
+                                                @endif
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <th class="w-20">Remark:</th>
+                                            <td class="w-80">
+
+                                                @if ($checkList->remark_nine)
+                                                    {{ $checkList->remark_nine }}
+                                                @else
+                                                    Not Applicable
+                                                @endif
+                                            </td>
+                                        </tr>
+                                    </table>
+
+                                    <table>
+                                        <tr>
+                                            <th>10. Was there change in instrument, column, method, integration
+                                                technique
+                                                or standard?</th>
+
+                                        </tr>
+                                    </table>
+                                    <table>
+                                        <tr class="w-20">
+                                            <th class="w-20">Responce :</th>
+                                            <td>
+
+                                                @if ($checkList->responce_ten)
+                                                    {{ $checkList->responce_ten }}
+                                                @else
+                                                    Not Applicable
+                                                @endif
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <th class="w-20">Remark:</th>
+                                            <td class="w-80">
+                                                @if ($checkList->remark_ten)
+                                                    {{ $checkList->remark_ten }}
+                                                @else
+                                                    Not Applicable
+                                                @endif
+                                            </td>
+                                        </tr>
+
+                                    </table>
+                                    <table>
+                                        <tr>
+                                            <th>11. Were the standards & reagents properly stored?</th>
+                                        </tr>
+                                    </table>
+                                    <table>
+                                        <tr>
+                                            <th class="w-20">Responce:</th>
+                                            <td class="w-20">
+                                                @if ($checkList->responce_eleven)
+                                                    {{ $checkList->responce_eleven }}
+                                                @else
+                                                    Not Applicable
+                                                @endif
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <th class="w-20">Remark :</th>
+                                            <td class="w-80">
+
+                                                @if ($checkList->remark_eleven)
+                                                    {{ $checkList->remark_eleven }}
+                                                @else
+                                                    Not Applicable
+                                                @endif
+                                            </td>
+                                        </tr>
+                                    </table>
+                                    <table>
+                                        <tr>
+                                            <th>12. Were standards, reagents properly labelled?</th>
+
+                                        </tr>
+                                    </table>
+                                    <table>
+                                        <tr>
+                                            <th class="w-20">Responce :</th>
+                                            <td class="w-20">
+                                                @if ($checkList->responce_twele)
+                                                    {{ $checkList->responce_twele }}
+                                                @else
+                                                    Not Applicable
+                                                @endif
+                                            </td>
+
+                                        </tr>
+                                        <tr>
+                                            <th class="w-20">Remark:</th>
+                                            <td class="w-80">
+                                                @if ($checkList->remark_twele)
+                                                    {{ $checkList->remark_twele }}
+                                                @else
+                                                    Not Applicable
+                                                @endif
+                                            </td>
+                                        </tr>
+                                    </table>
+                                    <table>
+                                        <tr>
+                                            <th>13. Was there any evidence that the standards, reagents have degraded?</th>
+
+                                        </tr>
+                                    </table>
+                                    <table>
+                                        <tr>
+                                            <th class="w-20">Responce :</th>
+                                            <td>
+                                                @if ($checkList->responce_thrteen)
+                                                    {{ $checkList->responce_thrteen }}
+                                                @else
+                                                    Not Applicable
+                                                @endif
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <th class="w-20">Remark :</th>
+                                            <td class="w-80">
+                                                @if ($checkList->remark_thrteen)
+                                                    {{ $checkList->remark_thrteen }}
+                                                @else
+                                                    Not Applicable
+                                                @endif
+                                            </td>
+                                        </tr>
+                                    </table>
+                                    <table>
+
+                                        <tr>
+                                            <th>14. Were the reagents/chemicals used of recommended grade?</th>
+
+                                        </tr>
+                                    </table>
+                                    <table>
+                                        <tr>
+                                            <th class="w-20">Responce :</th>
+                                            <td>
+                                                @if ($checkList->responce_fourteen)
+                                                    {{ $checkList->responce_fourteen }}
+                                                @else
+                                                    Not Applicable
+                                                @endif
+                                            </td>
+                                        </tr>
+
+                                        <tr>
+                                            <th class="w-20">Remark :</th>
+                                            <td class="w-80">
+                                                @if ($checkList->remark_fourteen)
+                                                    {{ $checkList->remark_fourteen }}
+                                                @else
+                                                    Not Applicable
+                                                @endif
+                                            </td>
+                                        </tr>
+                                    </table>
+                                    <table>
+                                        <tr>
+                                            <th>15. Was the evidence that the reagents, standards or other materials used
+                                                for test were contaminated.?</th>
+
+                                        </tr>
+                                    </table>
+                                    <table>
+                                        <tr>
+                                            <th class="w-20">Responce:</th>
+                                            <td>
+                                                @if ($checkList->responce_fifteen)
+                                                    {{ $checkList->responce_fifteen }}
+                                                @else
+                                                    Not Applicable
+                                                @endif
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <th class="w-20">Remark : </th>
+                                            <td class="w-80">
+                                                @if ($checkList->remark_fifteen)
+                                                    {{ $checkList->remark_fifteen }}
+                                                @else
+                                                    Not Applicable
+                                                @endif
+                                            </td>
+                                        </tr>
+                                    </table>
+                                    <table>
+                                        <tr>
+                                            <th>16. Whether correct working /reference standard were used?</th>
+
+                                        </tr>
+                                    </table>
+                                    <table>
+                                        <tr><th class="w-20">Responce:</th>
+                                            <td>
+                                                @if ($checkList->responce_sixteen)
+                                                    {{ $checkList->responce_sixteen }}
+                                                @else
+                                                    Not Applicable
+                                                @endif
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <th class="w-20">Remark:</th>
+                                            <td class="w-80">
+                                                @if ($checkList->remark_sixteen)
+                                                    {{ $checkList->remark_sixteen }}
+                                                @else
+                                                    Not Applicable
+                                                @endif
+                                            </td>
+                                        </tr>
+                                    </table>
+                                    <table>
+                                        <tr>
+                                            <th>17. Was the testing procedure adequate and followed properly?</th>
+
+                                        </tr>
+                                    </table>
+                                    <table>
+                                        <tr>
+                                            <th class="w-20">Responce:</th>
+                                            <td>
+                                                @if ($checkList->responce_seventeen)
+                                                    {{ $checkList->responce_seventeen }}
+                                                @else
+                                                    Not Applicable
+                                                @endif
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <th class="w-20">Remark:</th>
+                                            <td class="w-80">
+                                                @if ($checkList->remark_seventeen)
+                                                    {{ $checkList->remark_seventeen }}
+                                                @else
+                                                    Not Applicable
+                                                @endif
+                                            </td>
+                                        </tr>
+                                    </table>
+                                    <table>
+                                        <tr>
+                                            <th>18. Was the glassware used properly washed?</th>
+
+                                        </tr>
+                                    </table>
+                                    <table>
+                                        <tr>
+                                            <th class="w-20">Responce :</th>
+                                            <td>
+                                                @if ($checkList->responce_eighteen)
+                                                    {{ $checkList->responce_eighteen }}
+                                                @else
+                                                    Not Applicable
+                                                @endif
+                                            </td>
+                                            </tr>
+                                            <tr>
+                                            <th class="w-20">Remark :</th>
+                                            <td class="w-80">
+                                                @if ($checkList->remark_eighteen)
+                                                    {{ $checkList->remark_eighteen }}
+                                                @else
+                                                    Not Applicable
+                                                @endif
+                                            </td>
+                                        </tr>
+                                    </table>
+                                    <table>
+
+                                        <tr>
+                                            <th>19. Were standards, reagents used within their expiration dates?</th>
+
+                                        </tr>
+                                    </table>
+                                    <table>
+                                        <tr>
+                                            <th class="w-20">Responce :</th>
+                                            <td>
+                                                @if ($checkList->responce_ninteen)
+                                                    {{ $checkList->responce_ninteen }}
+                                                @else
+                                                    Not Applicable
+                                                @endif
+                                            </td>
+                                        </tr>
+
+                                        <tr>
+                                            <th class="w-20">Remark :</th>
+                                            <td class="w-80">
+                                                @if ($checkList->remark_ninteen)
+                                                    {{ $checkList->remark_ninteen }}
+                                                @else
+                                                    Not Applicable
+                                                @endif
+                                            </td>
+                                        </tr>
+                                    </table>
+                                    <table>
+                                        <tr>
+                                            <th>20. Were volumetric solutions standardized as per testing procedure?</th>
+                                        </tr>
+                                    </table>
+                                    <table>
+                                        <tr>
+                                            <th class="w-20">Responce :</th>
+                                            <td>
+                                                @if ($checkList->responce_twenty)
+                                                    {{ $checkList->responce_twenty }}
+                                                @else
+                                                    Not Applicable
+                                                @endif
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <th class="w-20">Remark:</th>
+                                            <td class="w-80">
+                                                @if ($checkList->remark_ninteen)
+                                                    {{ $checkList->remark_ninteen }}
+                                                @else
+                                                    Not Applicable
+                                                @endif
+                                            </td>
+                                        </tr>
+
+                                    </table>
+                                    <table>
+                                        <tr>
+                                            <th> 21. Were Working standards standardized as per testing procedure?</th>
+
+                                        </tr>
+                                    </table>
+                                    <table>
+                                        <tr>
+                                            <th class="w-20">Responce</th>
+                                            <td class="w-20">
+                                                @if ($checkList->responce_twenty_one)
+                                                    {{ $checkList->responce_twenty_one }}
+                                                @else
+                                                    Not Applicable
+                                                @endif
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <th class="w-20">Remark</th>
+                                            <td class="w-80">
+                                                @if ($checkList->remark_twenty_one)
+                                                    {{ $checkList->remark_twenty_one }}
+                                                @else
+                                                    Not Applicable
+                                                @endif
+                                            </td>
+                                        </tr>
+
+                                    </table>
+                                    <table>
+                                        <tr>
+                                            <th> 22. Were the dilutions made in sample /standard preparation as per testing
+                                                procedure?</th>
+
+                                        </tr>
+                                    </table>
+                                    <table>
+                                        <tr>
+                                            <th class="w-20">Responce :</th>
+                                            <td>
+                                                @if ($checkList->responce_twenty_two)
+                                                    {{ $checkList->responce_twenty_two }}
+                                                @else
+                                                    Not Applicable
+                                                @endif
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <th class="w-20">Remark : </th>
+                                            <td class="w-80">
+                                                @if ($checkList->remark_twenty_two)
+                                                    {{ $checkList->remark_twenty_two }}
+                                                @else
+                                                    Not Applicable
+                                                @endif
+                                            </td>
+                                        </tr>
+                                    </table>
+                                    <table>
+                                        <tr>
+                                            <th>23. Was the analyst trained / certified?</th>
+
+                                        </tr>
+                                    </table>
+                                    <table>
+                                        <tr>
+                                            <th class="w-20">Responce</th>
+                                            <td class="w-20">
+                                                @if ($checkList->responce_twenty_three)
+                                                    {{ $checkList->responce_twenty_three }}
+                                                @else
+                                                    Not Applicable
+                                                @endif
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <th class="w-20">Remark : </th>
+                                            <td class="w-80">
+                                                @if ($checkList->remark_twenty_three)
+                                                    {{ $checkList->remark_twenty_three }}
+                                                @else
+                                                    Not Applicable
+                                                @endif
+                                            </td>
+                                        </tr>
+                                    </table>
+                                    <table>
+                                        <tr>
+                                            <th>24. Analyst understood the testing procedure?</th>
+                                            <th>Remark</th>
+                                        </tr>
+                                    </table>
+                                    <table>
+                                        <tr>
+                                            <th class="w-20">Responce: </th>
+                                            <td class="w-20">
+                                                @if ($checkList->responce_twenty_four)
+                                                    {{ $checkList->responce_twenty_four }}
+                                                @else
+                                                    Not Applicable
+                                                @endif
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <th class="w-20">Remark: </th>
+                                            <td class="w-80">
+                                                @if ($checkList->remark_twenty_four)
+                                                    {{ $checkList->remark_twenty_four }}
+                                                @else
+                                                    Not Applicable
+                                                @endif
+                                            </td>
+                                        </tr>
+                                    </table>
+                                    <table>
+                                        <tr>
+                                            <th>25. Analyst calculated the results correctly as mentioned in testing
+                                                procedure?</th>
+
+                                        </tr>
+                                    </table>
+                                    <table>
+                                        <tr>
+                                            <th class="w-20">Responce:</th>
+                                            <td>
+                                                @if ($checkList->responce_twenty_five)
+                                                    {{ $checkList->responce_twenty_five }}
+                                                @else
+                                                    Not Applicable
+                                                @endif
+                                            </td>
+                                         </tr>
+                                        <tr>
+                                            <th class="w-20">Remark:</th>
+                                            <td class="w-80">
+                                                @if ($checkList->remark_twenty_five)
+                                                    {{ $checkList->remark_twenty_five }}
+                                                @else
+                                                    Not Applicable
+                                                @endif
+                                            </td>
+                                        </tr>
+                                    </table>
+                                    <table>
+                                        <tr>
+                                            <th>26. Was there any similar occurrence with the same analyst earlier?</th>
+
+                                        </tr>
+                                    </table>
+                                    <table>
+                                        <tr>
+                                            <th class="w-20">Responce:</th>
+                                            <td>
+                                                @if ($checkList->responce_twenty_six)
+                                                    {{ $checkList->responce_twenty_six }}
+                                                @else
+                                                    Not Applicable
+                                                @endif
+                                            </td>
+                                            </tr>
+                                            <tr>
+                                                <th class="w-20">Remark:</th>
+                                            <td class="w-80">
+                                                @if ($checkList->remark_twenty_six)
+                                                    {{ $checkList->remark_twenty_six }}
+                                                @else
+                                                    Not Applicable
+                                                @endif
+                                            </td>
+                                        </tr>
+                                    </table>
+                                    <table>
+                                        <tr>
+                                            <th>27. Was there any similar history with the product / material?</th>
+
+                                        </tr>
+                                    </table>
+                                    <table>
+                                        <tr> <th class="w-20">Responce:</th>
+                                            <td>
+                                                @if ($checkList->responce_twenty_seven)
+                                                    {{ $checkList->responce_twenty_seven }}
+                                                @else
+                                                    Not Applicable
+                                                @endif
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <th class="w-20">Remark:</th>
+                                            <td class="w-80">
+                                                @if ($checkList->remark_twenty_seven)
+                                                    {{ $checkList->remark_twenty_seven }}
+                                                @else
+                                                    Not Applicable
+                                                @endif
+                                            </td>
+                                        </tr>
+                                    </table>
+                                    <table>
+                                        <tr>
+                                            <th>28. Retention time of concerned peak is comparable with respect to previous
+                                                station (ln case of OOT in any individual and total impurity)?</th>
+
+                                        </tr>
+                                    </table>
+                                    <table>
+                                        <tr>
+                                            <th class="w-20">Responce:</th>
+                                            <td>
+                                                @if ($checkList->responce_twenty_eight)
+                                                    {{ $checkList->responce_twenty_eight }}
+                                                @else
+                                                    Not Applicable
+                                                @endif
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <th class="w-20">Remark:</th>
+                                            <td class="w-80">
+                                                @if ($checkList->remark_twenty_eight)
+                                                    {{ $checkList->remark_twenty_eight }}
+                                                @else
+                                                    Not Applicable
+                                                @endif
+                                            </td>
+                                        </tr>
+                                    </table>
+                                    <table>
+                                        <tr>
+                                            <th>29. Was the sample quantity is sufficient?</th>
+
+                                        </tr>
+                                    </table>
+                                    <table>
+                                        <tr>
+                                            <th class="w-20">Responce:</th>
+                                            <td>
+                                                @if ($checkList->responce_twenty_nine)
+                                                    {{ $checkList->responce_twenty_nine }}
+                                                @else
+                                                    Not Applicable
+                                                @endif
+                                            </td>
+                                            </tr>
+                                            <tr>
+                                                <th class="w-20">Remark: </th>
+                                            <td class="w-80">
+                                                @if ($checkList->remark_twenty_nine)
+                                                    {{ $checkList->remark_twenty_nine }}
+                                                @else
+                                                    Not Applicable
+                                                @endif
+                                            </td>
+                                        </tr>
+                                    </table>
+                                    <table>
+                                        <tr>
+                                            <th>30. Was Error in labelling details on the sample container?</th>
+
+                                        </tr>
+                                    </table>
+                                    <table>
+                                        <tr>
+                                            <th class="w-20">Responce:</th>
+                                            <td>
+                                                @if ($checkList->responce_thirty)
+                                                    {{ $checkList->responce_thirty }}
+                                                @else
+                                                    Not Applicable
+                                                @endif
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <th class="w-20">Remark:</th>
+                                            <td class="w-80">
+                                                @if ($checkList->remark_thirty)
+                                                    {{ $checkList->remark_thirty }}
+                                                @else
+                                                    Not Applicable
+                                                @endif
+                                            </td>
+                                        </tr>
+                                    </table>
+                                    <table>
+                                        <tr>
+                                            <th>31. Was the Specified storage condition of product sample maintained?</th>
+
+                                        </tr>
+                                    </table>
+                                    <table>
+                                        <tr>
+                                            <th class="w-20">Responce:</th>
+                                            <td class="w-20">
+                                                @if ($checkList->responce_thirty_one)
+                                                    {{ $checkList->responce_thirty_one }}
+                                                @else
+                                                    Not Applicable
+                                                @endif
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <th class="w-20">Remark:</th>
+                                            <td class="w-80">
+                                                @if ($checkList->remark_thirty_one)
+                                                    {{ $checkList->remark_thirty_one }}
+                                                @else
+                                                    Not Applicable
+                                                @endif
+                                            </td>
+                                        </tr>
+                                    </table>
+                                    <table>
+                                        <tr>
+                                            <th>32. Transient equipment /Instrument malfunction is suspected?</th>
+
+                                        </tr>
+                                    </table>
+                                    <table>
+                                        <th class="w-20">Responce:</th>
+                                        <tr>
+                                            <td>
+                                                @if ($checkList->responce_thirty_two)
+                                                    {{ $checkList->responce_thirty_two }}
+                                                @else
+                                                    Not Applicable
+                                                @endif
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <th class="w-20">Remark:</th>
+                                            <td class="w-80">
+                                                @if ($checkList->remark_thirty_two)
+                                                    {{ $checkList->remark_thirty_two }}
+                                                @else
+                                                    Not Applicable
+                                                @endif
+                                            </td>
+                                        </tr>
+                                    </table>
+                                    <table>
+                                        <tr>
+                                            <th>33. Where any change in the character of the sample observed?</th>
+                                        </tr>
+                                    </table>
+                                    <table>
+                                        <tr>
+                                            <th class="w-20">Responce:</th>
+                                            <td class="w-20">
+                                                @if ($checkList->responce_thirty_three)
+                                                    {{ $checkList->responce_thirty_three }}
+                                                @else
+                                                    Not Applicable
+                                                @endif
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <th class="w-20">Remark:</th>
+                                            <td class="w-80">
+                                                @if ($checkList->remark_thirty_three)
+                                                    {{ $checkList->remark_thirty_three }}
+                                                @else
+                                                    Not Applicable
+                                                @endif
+                                            </td>
+                                        </tr>
+                                    </table>
+                                    <table>
+                                        <tr>
+                                            <th> 34. Any other specific reason?</th>
+
+                                        </tr>
+                                    </table>
+                                    <table>
+                                        <tr>
+                                            <th class="w-20">Responce:</th>
+                                            <td>
+                                                @if ($checkList->responce_thirty_four)
+                                                    {{ $checkList->responce_thirty_four }}
+                                                @else
+                                                    Not Applicable
+                                                @endif
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <th class="w-20">Remark:</th>
+                                            <td class="w-80">
+                                                @if ($checkList->remark_thirty_four)
+                                                    {{ $checkList->remark_thirty_four }}
+                                                @else
+                                                    Not Applicable
+                                                @endif
+                                            </td>
+                                        </tr>
+
+                                    </table>
+                                    <table>
+                                        <tr>
+                                            {{-- <th class="w-20">Information Technology Feedback</th>
                                             <td class="w-30">
                                                 <div>
                                                     @if ($data->Information_Technology_feedback)
@@ -1738,7 +2094,7 @@
                                                         Not Applicable
                                                     @endif
                                                 </div>
-                                            </td>
+                                            </td> --}}
 
                                             <th class="w-20">Laboratory error Identified for OOT - Result(s)</th>
                                             <td class="w-30">
@@ -1753,9 +2109,9 @@
                                         </tr>
 
                                         <tr>
-                                            
+
                                             <th class="w-20">Elaborate The Reason(s) If Yes</th>
-                                            <td class="w-30">
+                                            <td class="w-80">
                                                 <div>
                                                     @if ($data->elaborate_the_reson)
                                                         {{ strip_tags($data->elaborate_the_reson) }}
@@ -1764,8 +2120,10 @@
                                                     @endif
                                                 </div>
                                             </td>
+                                            </tr>
+                                            <tr>
                                             <th class="w-20"> LabIn Charge</th>
-                                            <td class="w-30">
+                                            {{-- <td class="w-30">
                                                 <div>
                                                     @if ($data->in_charge)
                                                         {{ strip_tags($data->in_charge) }}
@@ -1773,37 +2131,41 @@
                                                         Not Applicable
                                                     @endif
                                                 </div>
-                                            </td>
-                                           
+                                            </td> --}}
+                                            <td class="w-30">@if($data->in_charge) {{ Helpers::getInitiatorName($data->in_charge) }} @else Not Applicable @endif</td>
+
+
+
                                         </tr>
 
                                         <tr>
                                             <th class="w-20">QC Head/Designee</th>
-                                            <td class="w-30">
+                                            {{-- <td class="w-30">
                                                 <div>
                                                     @if ($data->pli_head_designee)
-                                                        {{ ($data->pli_head_designee) }}
+                                                        {{ $data->pli_head_designee }}
                                                     @else
                                                         Not Applicable
                                                     @endif
                                                 </div>
-                                            </td>
+                                            </td> --}}
+                                            <td class="w-30">@if($data->pli_head_designee) {{ Helpers::getInitiatorName($data->pli_head_designee) }} @else Not Applicable @endif</td>
+
                                         </tr>
-                                        
+
                                     </table>
                                 </div>
-                                
+
                             </div>
-        
+
                             <div class="block">
                                 <div class="head">
                                     <div class="block-head">
                                         ChecList- Part B Applicable If Laboratory Error
                                     </div>
                                     <table>
-        
                                         <tr>
-        
+
                                             <th class="w-20">Action Taken On OOt </th>
                                             <td class="w-30">
                                                 <div>
@@ -1824,13 +2186,12 @@
                                                     @endif
                                                 </div>
                                             </td>
-
-                                            
                                         </tr>
-        
+                                    </table>
+                                    <table>
                                         <tr>
                                             <th class="w-20">Remarks </th>
-                                            <td class="w-30">
+                                            <td class="w-80">
                                                 <div>
                                                     @if ($data->cheklist_part_b_remarks)
                                                         {{ strip_tags($data->cheklist_part_b_remarks) }}
@@ -1839,8 +2200,11 @@
                                                     @endif
                                                 </div>
                                             </td>
+                                        </tr>
+                                        <tr>
 
-                                            <th class="w-20">Correct the Error and Repeat the analysis on same sample</th>
+                                            <th class="w-20">Correct the Error and Repeat the analysis on same sample
+                                            </th>
                                             <td class="w-30">
                                                 <div>
                                                     @if ($data->analysis_on_same_sample)
@@ -1851,10 +2215,12 @@
                                                 </div>
                                             </td>
                                         </tr>
+                                    </table>
+                                    <table>
                                         <tr>
-                                            
+
                                             <th class="w-20">Any Other Action Required ?</th>
-                                            <td class="w-30">
+                                            <td class="w-80">
                                                 <div>
                                                     @if ($data->any_other_action)
                                                         {{ strip_tags($data->any_other_action) }}
@@ -1863,8 +2229,10 @@
                                                     @endif
                                                 </div>
                                             </td>
+                                        </tr>
+                                        <tr>
                                             <th class="w-20"> Reanalisis Result OOT</th>
-                                            <td class="w-30">
+                                            <td class="w-80">
                                                 <div>
                                                     @if ($data->reanalysis_result_oot)
                                                         {{ strip_tags($data->reanalysis_result_oot) }}
@@ -1874,11 +2242,13 @@
                                                 </div>
                                             </td>
                                         </tr>
+                                    </table>
+                                    <table>
 
                                         <tr>
-        
+
                                             <th class="w-20"> Reanalysis Result</th>
-                                            <td class="w-30">
+                                            <td class="w-80">
                                                 <div>
                                                     @if ($data->re_analysis_result)
                                                         {{ $data->re_analysis_result }}
@@ -1887,6 +2257,8 @@
                                                     @endif
                                                 </div>
                                             </td>
+                                        </tr>
+                                        <tr>
 
                                             <th class="w-20"> Reanalysis Result OOT</th>
                                             <td class="w-30">
@@ -1897,11 +2269,13 @@
                                                         Not Applicable
                                                     @endif
                                                 </div>
-                                            </td> 
+                                            </td>
                                         </tr>
+                                    </table>
+                                    <table>
                                         <tr>
                                             <th class="w-20">Comments</th>
-                                            <td class="w-30">
+                                            <td class="w-80">
                                                 <div>
                                                     @if ($data->part_b_comments)
                                                         {{ strip_tags($data->part_b_comments) }}
@@ -1912,14 +2286,14 @@
                                             </td>
                                         </tr>
                                     </table>
-                                </div>  
+                                </div>
                             </div>
                             <div class="border-table">
                                 <div class="block-">
-                                   Supporting Attechment
+                                    Supporting Attechment
                                 </div>
                                 <table>
-    
+
                                     <tr class="table_bg">
                                         <th class="w-20">S.N.</th>
                                         <th class="w-60">Attachment</th>
@@ -1938,7 +2312,7 @@
                                             <td class="w-20">Not Applicable</td>
                                         </tr>
                                     @endif
-    
+
                                 </table>
                             </div>
                             <div class="block">
@@ -1949,7 +2323,7 @@
                                     <table>
                                         <tr>
                                             <th class="w-20">R&D (F) Comments </th>
-                                            <td class="w-30">
+                                            <td class="w-80">
                                                 <div>
                                                     @if ($data->r_d_comments_part_b)
                                                         {{ strip_tags($data->r_d_comments_part_b) }}
@@ -1958,8 +2332,10 @@
                                                     @endif
                                                 </div>
                                             </td>
+                                        </tr>
+                                        <tr>
                                             <th class="w-20">ADL Comments</th>
-                                            <td class="w-30">
+                                            <td class="w-80">
                                                 <div>
                                                     @if ($data->a_d_l_comments)
                                                         {{ strip_tags($data->a_d_l_comments) }}
@@ -1968,11 +2344,13 @@
                                                     @endif
                                                 </div>
                                             </td>
-                                           
+
                                         </tr>
+                                    </table>
+                                    <table>
                                         <tr>
                                             <th class="w-20">Regulatory Comments</th>
-                                            <td class="w-30">
+                                            <td class="w-80">
                                                 <div>
                                                     @if ($data->regulatory_comments)
                                                         {{ strip_tags($data->regulatory_comments) }}
@@ -1982,11 +2360,12 @@
                                                 </div>
                                             </td>
                                         </tr>
-        
+                                    </table>
+                                    <table>
                                         <tr>
-        
+
                                             <th class="w-20">Manufacturing Comments </th>
-                                            <td class="w-30">
+                                            <td class="w-80">
                                                 <div>
                                                     @if ($data->manufacturing_comments)
                                                         {{ strip_tags($data->manufacturing_comments) }}
@@ -1995,8 +2374,10 @@
                                                     @endif
                                                 </div>
                                             </td>
+                                        </tr>
+                                        <tr>
                                             <th class="w-20">Comments</th>
-                                            <td class="w-30">
+                                            <td class="w-80">
                                                 <div>
                                                     @if ($data->technical_commitee_comments)
                                                         {{ strip_tags($data->technical_commitee_comments) }}
@@ -2005,14 +2386,14 @@
                                                     @endif
                                                 </div>
                                             </td>
-                                            
+
                                         </tr>
                                     </table>
-                                </div> 
+                                </div>
                             </div>
                             <div class="border-table">
                                 <div class="block-">
-                                   Conclusion  Attechment
+                                    Conclusion Attechment
                                 </div>
                                 <table>
                                     <tr class="table_bg">
@@ -2033,7 +2414,7 @@
                                             <td class="w-20">Not Applicable</td>
                                         </tr>
                                     @endif
-    
+
                                 </table>
                             </div>
 
@@ -2045,7 +2426,7 @@
                                     <table>
                                         <tr>
                                             <th class="w-20">Last Due Date</th>
-                                            <td class="w-30">
+                                            <td class="w-80">
                                                 <div>
                                                     @if ($data->last_due_date)
                                                         {{ $data->last_due_date }}
@@ -2054,8 +2435,10 @@
                                                     @endif
                                                 </div>
                                             </td>
+                                            </tr>
+                                            <tr>
                                             <th class="w-20">Progress/ Justification For Delay</th>
-                                            <td class="w-30">
+                                            <td class="w-80">
                                                 <div>
                                                     @if ($data->progress_justification_delay)
                                                         {{ strip_tags($data->progress_justification_delay) }}
@@ -2064,13 +2447,15 @@
                                                     @endif
                                                 </div>
                                             </td>
-                                            
+
                                         </tr>
-        
+                                    </table>
+                                    <table>
+
                                         <tr>
-        
+
                                             <th class="w-20">Remarks By QA Department </th>
-                                            <td class="w-30">
+                                            <td class="w-80">
                                                 <div>
                                                     @if ($data->remarks_by_qa_department)
                                                         {{ strip_tags($data->remarks_by_qa_department) }}
@@ -2079,9 +2464,10 @@
                                                     @endif
                                                 </div>
                                             </td>
-
+                                       </tr>
+                                       <tr>
                                             <th class="w-20">Tentative Clousure Date</th>
-                                            <td class="w-30">
+                                            <td class="w-80">
                                                 <div>
                                                     @if ($data->tentative_clousure_date)
                                                         {{ $data->tentative_clousure_date }}
@@ -2092,11 +2478,11 @@
                                             </td>
                                         </tr>
                                     </table>
-                                </div>  
+                                </div>
                             </div>
                             <div class="border-table">
                                 <div class="block-">
-                                   Conclusion Attechment
+                                    Conclusion Attechment
                                 </div>
                                 <table>
                                     <tr class="table_bg">
@@ -2126,22 +2512,22 @@
                                     </div>
                                     <table>
                                         <tr>
-       
+
                                             <th class="w-20">Finaly Validity Check</th>
-                                             <td class="w-30">
-                                                 <div>
-                                                     @if ($data->finaly_validity_check)
-                                                         {{ strip_tags($data->finaly_validity_check) }}
-                                                     @else
-                                                         Not Applicable
-                                                     @endif
-                                                 </div>
-                                             </td>
-                                         </tr>
-                                        <tr>
-       
-                                           <th class="w-20"> Closure Comments</th>
                                             <td class="w-30">
+                                                <div>
+                                                    @if ($data->finaly_validity_check)
+                                                        {{ strip_tags($data->finaly_validity_check) }}
+                                                    @else
+                                                        Not Applicable
+                                                    @endif
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+
+                                            <th class="w-20"> Closure Comments</th>
+                                            <td class="w-80">
                                                 <div>
                                                     @if ($data->closure_comments)
                                                         {{ strip_tags($data->closure_comments) }}
@@ -2157,7 +2543,7 @@
 
                             <div class="border-table">
                                 <div class="block-">
-                                   Closure Attechment
+                                    Closure Attechment
                                 </div>
                                 <table>
                                     <tr class="table_bg">
@@ -2179,12 +2565,12 @@
                                         </tr>
                                     @endif
                                 </table>
-                            </div> 
-                            
+                            </div>
+
                             <div class="block">
                                 <div class="head">
                                     <div class="block-head">
-                                    Activity Log 
+                                        Activity Log
                                     </div>
                                     <table>
                                         <tr>
@@ -2219,9 +2605,9 @@
                                                 </div>
                                             </td>
                                         </tr>
-        
+
                                         <tr>
-        
+
                                             <th class="w-20">Preliminary Lab Investigati By</th>
                                             <td class="w-30">
                                                 <div>
@@ -2256,7 +2642,7 @@
                                             </td>
                                         </tr>
                                         <tr>
-                                            <th class="w-20">Pending Preliminary Lab Investigation Submited  By</th>
+                                            <th class="w-20">Pending Preliminary Lab Investigation Submited By</th>
                                             <td class="w-30">
                                                 <div>
                                                     @if ($data->ppli_submited_by)
@@ -2265,7 +2651,7 @@
                                                         Not Applicable
                                                     @endif
                                                 </div>
-                                            </td> 
+                                            </td>
 
                                             <th class="w-20">Pending Preliminary Lab Investigation Submitted On</th>
                                             <td class="w-30">
@@ -2299,7 +2685,7 @@
                                                         Not Applicable
                                                     @endif
                                                 </div>
-                                            </td>  
+                                            </td>
 
                                             <th class="w-20">Correction Completed On</th>
                                             <td class="w-30">
@@ -2310,7 +2696,7 @@
                                                         Not Applicable
                                                     @endif
                                                 </div>
-                                            </td> 
+                                            </td>
 
                                             <th class="w-20">Correction Completed Comments</th>
                                             <td class="w-30">
@@ -2321,7 +2707,7 @@
                                                         Not Applicable
                                                     @endif
                                                 </div>
-                                            </td> 
+                                            </td>
                                         </tr>
                                         <tr>
                                             <th class="w-20">Correction Submited By</th>
@@ -2333,7 +2719,7 @@
                                                         Not Applicable
                                                     @endif
                                                 </div>
-                                            </td> 
+                                            </td>
 
                                             <th class="w-20">Correction Submitted On</th>
                                             <td class="w-30">
@@ -2393,12 +2779,12 @@
                                             </td>
                                         </tr>
                                     </table>
-                                </div>  
+                                </div>
                             </div>
                         </div>
                     </div>
-                  </div>
-           </div>
+                </div>
+            </div>
         </div>
 
     </div>
