@@ -400,11 +400,15 @@ class RiskManagementController extends Controller
             $history->activity_type = 'Short Description';
             $history->previous = "Null";
             $history->current = $data->short_description;
-            $history->comment = "NA";
+            $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $data->status;
+            $history->change_to =   "Opened";
+            $history->change_from = "Initiator";
+            $history->action_name = 'Create';
+         
             $history->save();
         }
 
@@ -419,6 +423,10 @@ class RiskManagementController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $data->status;
+            $history->change_to =   "Opened";
+            $history->change_from = "Initiator";
+            $history->action_name = 'Create';
+         
             $history->save();
         }
 
@@ -433,6 +441,10 @@ class RiskManagementController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $data->status;
+            $history->change_to =   "Opened";
+            $history->change_from = "Initiator";
+            $history->action_name = 'Create';
+         
             $history->save();
         }
 
@@ -447,6 +459,10 @@ class RiskManagementController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $data->status;
+            $history->change_to =   "Opened";
+            $history->change_from = "Initiator";
+            $history->action_name = 'Create';
+         
             $history->save();
         }
 
@@ -475,6 +491,10 @@ class RiskManagementController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $data->status;
+            $history->change_to =   "Opened";
+            $history->change_from = "Initiator";
+            $history->action_name = 'Create';
+         
             $history->save();
         }
 
@@ -489,6 +509,10 @@ class RiskManagementController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $data->status;
+            $history->change_to =   "Opened";
+            $history->change_from = "Initiator";
+            $history->action_name = 'Create';
+         
             $history->save();
         }
 
@@ -503,6 +527,10 @@ class RiskManagementController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $data->status;
+            $history->change_to =   "Opened";
+            $history->change_from = "Initiator";
+            $history->action_name = 'Create';
+         
             $history->save();
         }
 
@@ -517,6 +545,10 @@ class RiskManagementController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $data->status;
+            $history->change_to =   "Opened";
+            $history->change_from = "Initiator";
+            $history->action_name = 'Create';
+         
             $history->save();
         }
 
@@ -531,6 +563,10 @@ class RiskManagementController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $data->status;
+            $history->change_to =   "Opened";
+            $history->change_from = "Initiator";
+            $history->action_name = 'Create';
+         
             $history->save();
         }
 
@@ -545,6 +581,10 @@ class RiskManagementController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $data->status;
+            $history->change_to =   "Opened";
+            $history->change_from = "Initiator";
+            $history->action_name = 'Create';
+         
             $history->save();
         }
 
@@ -559,6 +599,10 @@ class RiskManagementController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $data->status;
+            $history->change_to =   "Opened";
+            $history->change_from = "Initiator";
+            $history->action_name = 'Create';
+         
             $history->save();
         }
 
@@ -573,6 +617,10 @@ class RiskManagementController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $data->status;
+            $history->change_to =   "Opened";
+            $history->change_from = "Initiator";
+            $history->action_name = 'Create';
+         
             $history->save();
         }
 
@@ -587,6 +635,10 @@ class RiskManagementController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $data->status;
+            $history->change_to =   "Opened";
+            $history->change_from = "Initiator";
+            $history->action_name = 'Create';
+         
             $history->save();
         }
 
@@ -601,6 +653,10 @@ class RiskManagementController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $data->status;
+            $history->change_to =   "Opened";
+            $history->change_from = "Initiator";
+            $history->action_name = 'Create';
+         
             $history->save();
         }
 
@@ -615,6 +671,10 @@ class RiskManagementController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $data->status;
+            $history->change_to =   "Opened";
+            $history->change_from = "Initiator";
+            $history->action_name = 'Create';
+         
             $history->save();
         }
 
@@ -629,6 +689,10 @@ class RiskManagementController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $data->status;
+            $history->change_to =   "Opened";
+            $history->change_from = "Initiator";
+            $history->action_name = 'Create';
+         
             $history->save();
         }
 
@@ -643,6 +707,10 @@ class RiskManagementController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $data->status;
+            $history->change_to =   "Opened";
+            $history->change_from = "Initiator";
+            $history->action_name = 'Create';
+         
             $history->save();
         }
 
@@ -657,6 +725,10 @@ class RiskManagementController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $data->status;
+            $history->change_to =   "Opened";
+            $history->change_from = "Initiator";
+            $history->action_name = 'Create';
+         
             $history->save();
         }
 
@@ -671,6 +743,10 @@ class RiskManagementController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $data->status;
+            $history->change_to =   "Opened";
+            $history->change_from = "Initiator";
+            $history->action_name = 'Create';
+         
             $history->save();
         }
 
@@ -685,6 +761,10 @@ class RiskManagementController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $data->status;
+            $history->change_to =   "Opened";
+            $history->change_from = "Initiator";
+            $history->action_name = 'Create';
+         
             $history->save();
         }
 
@@ -699,6 +779,10 @@ class RiskManagementController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $data->status;
+            $history->change_to =   "Opened";
+            $history->change_from = "Initiator";
+            $history->action_name = 'Create';
+         
             $history->save();
         }
 
@@ -713,6 +797,10 @@ class RiskManagementController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $data->status;
+            $history->change_to =   "Opened";
+            $history->change_from = "Initiator";
+            $history->action_name = 'Create';
+         
             $history->save();
         }
 
@@ -727,6 +815,10 @@ class RiskManagementController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $data->status;
+            $history->change_to =   "Opened";
+            $history->change_from = "Initiator";
+            $history->action_name = 'Create';
+         
             $history->save();
         }
 
@@ -755,6 +847,10 @@ class RiskManagementController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $data->status;
+            $history->change_to =   "Opened";
+            $history->change_from = "Initiator";
+            $history->action_name = 'Create';
+         
             $history->save();
         }
 
@@ -769,6 +865,10 @@ class RiskManagementController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $data->status;
+            $history->change_to =   "Opened";
+            $history->change_from = "Initiator";
+            $history->action_name = 'Create';
+         
             $history->save();
         }
 
@@ -783,6 +883,10 @@ class RiskManagementController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $data->status;
+            $history->change_to =   "Opened";
+            $history->change_from = "Initiator";
+            $history->action_name = 'Create';
+         
             $history->save();
         }
 
@@ -797,6 +901,10 @@ class RiskManagementController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $data->status;
+            $history->change_to =   "Opened";
+            $history->change_from = "Initiator";
+            $history->action_name = 'Create';
+         
             $history->save();
         }
 
@@ -811,6 +919,10 @@ class RiskManagementController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $data->status;
+            $history->change_to =   "Opened";
+            $history->change_from = "Initiator";
+            $history->action_name = 'Create';
+         
             $history->save();
         }
 
@@ -825,6 +937,10 @@ class RiskManagementController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $data->status;
+            $history->change_to =   "Opened";
+            $history->change_from = "Initiator";
+            $history->action_name = 'Create';
+         
             $history->save();
         }
 
@@ -839,6 +955,10 @@ class RiskManagementController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $data->status;
+            $history->change_to =   "Opened";
+            $history->change_from = "Initiator";
+            $history->action_name = 'Create';
+         
             $history->save();
         }
 
@@ -853,6 +973,10 @@ class RiskManagementController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $data->status;
+            $history->change_to =   "Opened";
+            $history->change_from = "Initiator";
+            $history->action_name = 'Create';
+         
             $history->save();
         }
 
@@ -867,6 +991,10 @@ class RiskManagementController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $data->status;
+            $history->change_to =   "Opened";
+            $history->change_from = "Initiator";
+            $history->action_name = 'Create';
+         
             $history->save();
         }
 
@@ -881,6 +1009,10 @@ class RiskManagementController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $data->status;
+            $history->change_to =   "Opened";
+            $history->change_from = "Initiator";
+            $history->action_name = 'Create';
+         
             $history->save();
         }
 
@@ -895,6 +1027,10 @@ class RiskManagementController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $data->status;
+            $history->change_to =   "Opened";
+            $history->change_from = "Initiator";
+            $history->action_name = 'Create';
+         
             $history->save();
         }
 
@@ -909,6 +1045,10 @@ class RiskManagementController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $data->status;
+            $history->change_to =   "Opened";
+            $history->change_from = "Initiator";
+            $history->action_name = 'Create';
+         
             $history->save();
         }
 
@@ -923,6 +1063,10 @@ class RiskManagementController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $data->status;
+            $history->change_to =   "Opened";
+            $history->change_from = "Initiator";
+            $history->action_name = 'Create';
+         
             $history->save();
         }
 
@@ -937,6 +1081,10 @@ class RiskManagementController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $data->status;
+            $history->change_to =   "Opened";
+            $history->change_from = "Initiator";
+            $history->action_name = 'Create';
+         
             $history->save();
         }
 
@@ -951,6 +1099,10 @@ class RiskManagementController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $data->status;
+            $history->change_to =   "Opened";
+            $history->change_from = "Initiator";
+            $history->action_name = 'Create';
+         
             $history->save();
         }
 
@@ -965,6 +1117,10 @@ class RiskManagementController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $data->status;
+            $history->change_to =   "Opened";
+            $history->change_from = "Initiator";
+            $history->action_name = 'Create';
+         
             $history->save();
         }
 
@@ -979,6 +1135,10 @@ class RiskManagementController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $data->status;
+            $history->change_to =   "Opened";
+            $history->change_from = "Initiator";
+            $history->action_name = 'Create';
+         
             $history->save();
         }
 
@@ -993,6 +1153,10 @@ class RiskManagementController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $data->status;
+            $history->change_to =   "Opened";
+            $history->change_from = "Initiator";
+            $history->action_name = 'Create';
+         
             $history->save();
         }
 
@@ -1007,6 +1171,10 @@ class RiskManagementController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $data->status;
+            $history->change_to =   "Opened";
+            $history->change_from = "Initiator";
+            $history->action_name = 'Create';
+         
             $history->save();
         }
 
@@ -1021,6 +1189,10 @@ class RiskManagementController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $data->status;
+            $history->change_to =   "Opened";
+            $history->change_from = "Initiator";
+            $history->action_name = 'Create';
+         
             $history->save();
         }
 
@@ -1295,7 +1467,7 @@ class RiskManagementController extends Controller
              }
              $data4->save();
      
-      $data5 = RiskAssesmentGrid::where('risk_id',$data->id)->where('type','Action_Plan')->first();
+            $data5 = RiskAssesmentGrid::where('risk_id',$data->id)->where('type','Action_Plan')->first();
             //  $data5 = new RiskAssesmentGrid();
             //  $data5->risk_id = $data->id;
             //  $data5->type = "Action_Plan";
@@ -1350,6 +1522,12 @@ class RiskManagementController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+            $history->action_name = 'Update';
+           
+
+           
             $history->save();
         }
 
@@ -1365,6 +1543,10 @@ class RiskManagementController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+            $history->action_name = 'Update';
+           
             $history->save();
         }
 
@@ -1380,6 +1562,10 @@ class RiskManagementController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+            $history->action_name = 'Update';
+           
             $history->save();
         }
 
@@ -1395,6 +1581,10 @@ class RiskManagementController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+            $history->action_name = 'Update';
+           
             $history->save();
         }
 
@@ -1425,6 +1615,10 @@ class RiskManagementController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+            $history->action_name = 'Update';
+           
             $history->save();
         }
 
@@ -1440,6 +1634,10 @@ class RiskManagementController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+            $history->action_name = 'Update';
+           
             $history->save();
         }
 
@@ -1455,6 +1653,10 @@ class RiskManagementController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+            $history->action_name = 'Update';
+           
             $history->save();
         }
 
@@ -1470,6 +1672,10 @@ class RiskManagementController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+            $history->action_name = 'Update';
+           
             $history->save();
         }
 
@@ -1485,6 +1691,10 @@ class RiskManagementController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+            $history->action_name = 'Update';
+           
             $history->save();
         }
 
@@ -1500,6 +1710,10 @@ class RiskManagementController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+            $history->action_name = 'Update';
+           
             $history->save();
         }
         if ($lastDocument->city != $data->city || !empty($request->city_comment)) {
@@ -1514,6 +1728,10 @@ class RiskManagementController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+            $history->action_name = 'Update';
+           
             $history->save();
         }
 
@@ -1529,6 +1747,11 @@ class RiskManagementController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+            $history->action_name = 'Update';
+           
+
             $history->save();
         }
 
@@ -1544,6 +1767,10 @@ class RiskManagementController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+            $history->action_name = 'Update';
+           
             $history->save();
         }
         if ($lastDocument->departments2 != $data->departments2 || !empty($request->departments2_comment)) {
@@ -1558,6 +1785,10 @@ class RiskManagementController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+            $history->action_name = 'Update';
+           
             $history->save();
         }
         if ($lastDocument->site_name != $data->site_name || !empty($request->site_name_comment)) {
@@ -1572,6 +1803,10 @@ class RiskManagementController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+            $history->action_name = 'Update';
+           
             $history->save();
         }
         if ($lastDocument->building != $data->building || !empty($request->building_comment)) {
@@ -1586,6 +1821,10 @@ class RiskManagementController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+            $history->action_name = 'Update';
+           
             $history->save();
         }
         if ($lastDocument->floor != $data->floor || !empty($request->floor_comment)) {
@@ -1600,6 +1839,10 @@ class RiskManagementController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+            $history->action_name = 'Update';
+           
             $history->save();
         }
         if ($lastDocument->room != $data->room || !empty($request->room_comment)) {
@@ -1614,6 +1857,10 @@ class RiskManagementController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+            $history->action_name = 'Update';
+           
             $history->save();
         }
         if ($lastDocument->duration != $data->duration || !empty($request->duration_comment)) {
@@ -1628,6 +1875,10 @@ class RiskManagementController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+            $history->action_name = 'Update';
+           
             $history->save();
         }
         if ($lastDocument->hazard != $data->hazard || !empty($request->hazard_comment)) {
@@ -1642,6 +1893,10 @@ class RiskManagementController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+            $history->action_name = 'Update';
+           
             $history->save();
         }
         if ($lastDocument->room2 != $data->room2 || !empty($request->room2_comment)) {
@@ -1656,6 +1911,10 @@ class RiskManagementController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+            $history->action_name = 'Update';
+           
             $history->save();
         }
         if ($lastDocument->regulatory_climate != $data->regulatory_climate || !empty($request->regulatory_climate_comment)) {
@@ -1670,6 +1929,10 @@ class RiskManagementController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+            $history->action_name = 'Update';
+           
             $history->save();
         }
         if ($lastDocument->Number_of_employees != $data->Number_of_employees || !empty($request->Number_of_employees_comment)) {
@@ -1684,6 +1947,10 @@ class RiskManagementController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+            $history->action_name = 'Update';
+           
             $history->save();
         }
         // if ($lastDocument->refrence_record != $data->refrence_record || !empty($request->refrence_record_comment)) {
@@ -1713,6 +1980,10 @@ class RiskManagementController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+            $history->action_name = 'Update';
+           
             $history->save();
         }
         if ($lastDocument->estimated_man_hours != $data->estimated_man_hours || !empty($request->estimated_man_hours_comment)) {
@@ -1727,6 +1998,10 @@ class RiskManagementController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+            $history->action_name = 'Update';
+           
             $history->save();
         }
         if ($lastDocument->estimated_cost != $data->estimated_cost || !empty($request->estimated_cost_comment)) {
@@ -1741,6 +2016,10 @@ class RiskManagementController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+            $history->action_name = 'Update';
+           
             $history->save();
         }
         if ($lastDocument->currency != $data->currency || !empty($request->currency_comment)) {
@@ -1755,6 +2034,10 @@ class RiskManagementController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+            $history->action_name = 'Update';
+           
             $history->save();
         }
         if ($lastDocument->training_require != $data->training_require || !empty($request->training_require_comment)) {
@@ -1769,6 +2052,10 @@ class RiskManagementController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+            $history->action_name = 'Update';
+           
             $history->save();
         }
         if ($lastDocument->justification != $data->justification || !empty($request->justification_comment)) {
@@ -1783,6 +2070,10 @@ class RiskManagementController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+            $history->action_name = 'Update';
+           
             $history->save();
         }
         if ($lastDocument->reference != $data->reference || !empty($request->reference_comment)) {
@@ -1797,6 +2088,10 @@ class RiskManagementController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+            $history->action_name = 'Update';
+           
             $history->save();
         }
         if ($lastDocument->cost_of_risk != $data->cost_of_risk || !empty($request->cost_of_risk_comment)) {
@@ -1811,6 +2106,10 @@ class RiskManagementController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+            $history->action_name = 'Update';
+           
             $history->save();
         }
         if ($lastDocument->environmental_impact != $data->environmental_impact || !empty($request->environmental_impact_comment)) {
@@ -1825,6 +2124,10 @@ class RiskManagementController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+            $history->action_name = 'Update';
+           
             $history->save();
         }
         if ($lastDocument->public_perception_impact != $data->public_perception_impact || !empty($request->public_perception_impact_comment)) {
@@ -1839,6 +2142,10 @@ class RiskManagementController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+            $history->action_name = 'Update';
+           
             $history->save();
         }
         if ($lastDocument->calculated_risk != $data->calculated_risk || !empty($request->calculated_risk_comment)) {
@@ -1853,6 +2160,10 @@ class RiskManagementController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+            $history->action_name = 'Update';
+           
             $history->save();
         }
         if ($lastDocument->impacted_objects != $data->impacted_objects || !empty($request->impacted_objects_comment)) {
@@ -1867,6 +2178,10 @@ class RiskManagementController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+            $history->action_name = 'Update';
+           
             $history->save();
         }
         if ($lastDocument->severity_rate != $data->severity_rate || !empty($request->severity_rate_comment)) {
@@ -1881,6 +2196,10 @@ class RiskManagementController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+            $history->action_name = 'Update';
+           
             $history->save();
         }
         if ($lastDocument->occurrence != $data->occurrence || !empty($request->occurrence_comment)) {
@@ -1895,6 +2214,10 @@ class RiskManagementController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+            $history->action_name = 'Update';
+           
             $history->save();
         }
         if ($lastDocument->detection != $data->detection || !empty($request->detection_comment)) {
@@ -1909,6 +2232,10 @@ class RiskManagementController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+            $history->action_name = 'Update';
+           
             $history->save();
         }
         if ($lastDocument->rpn != $data->rpn || !empty($request->rpn_comment)) {
@@ -1923,6 +2250,10 @@ class RiskManagementController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+            $history->action_name = 'Update';
+           
             $history->save();
         }
         if ($lastDocument->residual_risk != $data->residual_risk || !empty($request->residual_risk_comment)) {
@@ -1937,6 +2268,10 @@ class RiskManagementController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+            $history->action_name = 'Update';
+           
             $history->save();
         }
         if ($lastDocument->residual_risk_impact != $data->residual_risk_impact || !empty($request->residual_risk_impact_comment)) {
@@ -1951,6 +2286,10 @@ class RiskManagementController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+            $history->action_name = 'Update';
+           
             $history->save();
         }
         if ($lastDocument->residual_risk_probability != $data->residual_risk_probability || !empty($request->residual_risk_probability_comment)) {
@@ -1965,6 +2304,10 @@ class RiskManagementController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+            $history->action_name = 'Update';
+           
             $history->save();
         }
         if ($lastDocument->comments2 != $data->comments2 || !empty($request->comments2_comment)) {
@@ -1979,6 +2322,10 @@ class RiskManagementController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+            $history->action_name = 'Update';
+           
             $history->save();
         }
 
@@ -2018,36 +2365,24 @@ class RiskManagementController extends Controller
                 $changeControl->status = 'Risk Analysis & Work Group Assignment';
                 $changeControl->submitted_by = Auth::user()->name;
                 $changeControl->submitted_on = Carbon::now()->format('d-M-Y');
+
                 $history = new RiskAuditTrail();
                 $history->risk_id = $id;
                 $history->activity_type = 'Activity Log';
-                // $history->previous = $lastDocument->submitted_by;
+                $history->previous = "";
                 $history->current = $changeControl->submitted_by;
                 $history->comment = $request->comment;
+                $history->action = 'Submit';
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 $history->origin_state = $lastDocument->status;
-                // $history->status = $lastDocument->status;
-                $history->stage='Submitted';
+                $history->change_to =   "Risk Analysis & Work Group Assignment";
+                $history->change_from = $lastDocument->status;
+                $history->action_name = 'Submit';
+                $history->stage = 'Risk Analysis & Work Group Assignment';
                 $history->save();
-            //     $list = Helpers::getHodUserList();
-               
-            //     foreach ($list as $u) {
-            //         if($u->q_m_s_divisions_id == $changeControl->division_id){
-            //             $email = Helpers::getInitiatorEmail($u->user_id);
-            //              if ($email !== null) {
-            //               Mail::send(
-            //                   'mail.view-mail',
-            //                    ['data' => $changeControl],
-            //                 function ($message) use ($email) {
-            //                     $message->to($email)
-            //                         ->subject("Document is Send By".Auth::user()->name);
-            //                 }
-            //               );
-            //             }
-            //      } 
-            //   }
+
                 $changeControl->update();
                 toastr()->success('Document Sent');
                 return back();
@@ -2057,17 +2392,25 @@ class RiskManagementController extends Controller
                 $changeControl->status = 'Risk Processing & Action Plan';
                 $changeControl->evaluated_by = Auth::user()->name;
                 $changeControl->evaluated_on = Carbon::now()->format('d-M-Y');
+                
+                
                 $history = new RiskAuditTrail();
+                
                 $history->risk_id = $id;
                 $history->activity_type = 'Activity Log';
-                // $history->previous = $lastDocument->evaluated_by;
-                $history->current = $changeControl->evaluated_by;
+                $history->previous = "";
+                $history->current = $changeControl->submitted_by;
                 $history->comment = $request->comment;
+                $history->action = 'Evaluation Complete';
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 $history->origin_state = $lastDocument->status;
-                $history->stage='Evaluated';
+                $history->change_to =   "Risk Processing & Action Plan";
+                $history->change_from = $lastDocument->status;
+                $history->action_name = 'Update';
+                $history->stage = 'Risk Processing & Action Plan';
+               
                 $history->save();
             //     $list = Helpers::getWorkGroupUserList();
             //     foreach ($list as $u) {
@@ -2093,6 +2436,30 @@ class RiskManagementController extends Controller
             if ($changeControl->stage == 3) {
                 $changeControl->stage = "4";
                 $changeControl->status = 'Pending HOD Approval';
+
+                $changeControl->evaluated_by = Auth::user()->name;
+                $changeControl->evaluated_on = Carbon::now()->format('d-M-Y');
+                
+                
+                $history = new RiskAuditTrail();
+                
+                $history->risk_id = $id;
+                $history->activity_type = 'Activity Log';
+                $history->previous = "";
+                $history->current = $changeControl->submitted_by;
+                $history->comment = $request->comment;
+                $history->action = 'Action Plan Complete';
+                $history->user_id = Auth::user()->id;
+                $history->user_name = Auth::user()->name;
+                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                $history->origin_state = $lastDocument->status;
+                $history->change_to =   "Pending HOD Approval";
+                $history->change_from = $lastDocument->status;
+                $history->action_name = 'Update';
+                $history->stage = 'Pending HOD Approval';
+               
+                $history->save();
+            // 
             //     $list = Helpers::getHodUserList();
             //     foreach ($list as $u) {
             //         if($u->q_m_s_divisions_id == $changeControl->division_id){
@@ -2119,17 +2486,22 @@ class RiskManagementController extends Controller
                 $changeControl->status = 'Actions Items in Progress';
                 $changeControl->plan_approved_by = Auth::user()->name;
                 $changeControl->plan_approved_on = Carbon::now()->format('d-M-Y');
+
                 $history = new RiskAuditTrail();
                 $history->risk_id = $id;
                 $history->activity_type = 'Activity Log';
-                // $history->previous = $lastDocument->plan_approved_by;
-                $history->current = $changeControl->plan_approved_by;
+                $history->previous = "";
+                $history->current = $changeControl->submitted_by;
                 $history->comment = $request->comment;
+                $history->action = 'Action Plan Approved';
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-                $history->origin_state = $lastDocument->status;       
-               $history->stage='Plan Approved';
+                $history->origin_state = $lastDocument->status;
+                $history->change_to =   "Actions Items in Progress";
+                $history->change_from = $lastDocument->status;
+                $history->action_name = 'Update';
+                $history->stage = 'Actions Items in Progress';
                 $history->save();
             //     $list = Helpers::getQAHeadUserList();
             //     foreach ($list as $u) {
@@ -2156,6 +2528,25 @@ class RiskManagementController extends Controller
             if ($changeControl->stage == 5) {
                 $changeControl->stage = "6";
                 $changeControl->status = 'Residual Risk Evaluation';
+                $changeControl->plan_approved_by = Auth::user()->name;
+                $changeControl->plan_approved_on = Carbon::now()->format('d-M-Y');
+
+                $history = new RiskAuditTrail();
+                $history->risk_id = $id;
+                $history->activity_type = 'Activity Log';
+                $history->previous = "";
+                $history->current = $changeControl->submitted_by;
+                $history->comment = $request->comment;
+                $history->action = 'All Action Completed';
+                $history->user_id = Auth::user()->id;
+                $history->user_name = Auth::user()->name;
+                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                $history->origin_state = $lastDocument->status;
+                $history->change_to =   "Residual Risk Evaluation";
+                $history->change_from = $lastDocument->status;
+                $history->action_name = 'Update';
+                $history->stage = 'Residual Risk Evaluation';
+                $history->save();
             //     $list = Helpers::getHodUserList();
             //     foreach ($list as $u) {
             //         if($u->q_m_s_divisions_id == $changeControl->division_id){
@@ -2186,14 +2577,21 @@ class RiskManagementController extends Controller
                 $history = new RiskAuditTrail();
                 $history->risk_id = $id;
                 $history->activity_type = 'Activity Log';
-                $history->current = $changeControl->risk_analysis_completed_by;
+                $history->previous = "";
+                $history->current = $changeControl->submitted_by;
                 $history->comment = $request->comment;
+                $history->action = 'All Action Completed Completed';
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 $history->origin_state = $lastDocument->status;
-                $history->stage='Risk Analysis Completed';
-                $history->save();
+                $history->change_to =   "Close-Done";
+                $history->change_from = $lastDocument->status;
+                $history->action_name = 'Update';
+                $history->stage = 'Close-Done';
+                 $history->save();
+                
+                
                 $changeControl->update();
 
                 

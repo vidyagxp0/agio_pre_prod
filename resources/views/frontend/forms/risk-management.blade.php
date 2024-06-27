@@ -307,7 +307,7 @@
                                     <div class="col-12">
                                         <div class="group-input">
                                             <label for="Department(s)">Department(s)</label>
-                                            <select name="departments[]" placeholder="Select Departments" data-search="false"
+                                            {{--  <select name="departments[]" placeholder="Select Departments" data-search="false"
                                                 data-silent-initial-value-set="true" id="departments" multiple>
                                                 <option value="">Select Department</option>
                                                 <option value="1">QA</option>
@@ -320,6 +320,22 @@
                                                 <option value="8"> Instrumental Area</option>
                                                 <option value="9"> Administration</option>
                                                 <option value="10"> Financial Department</option>
+                                            </select>  --}}
+
+
+                                            <select name="departments[]" placeholder="Select Departments" data-search="false"
+                                                    data-silent-initial-value-set="true" id="departments" multiple>
+                                                <option value="">Select Department</option>
+                                                <option value="QA">QA</option>
+                                                <option value="QC">QC</option>
+                                                <option value="R&D">R&D</option>
+                                                <option value="Wet Chemistry Area">Wet Chemistry Area</option>
+                                                <option value="Warehouse">Warehouse</option>
+                                                <option value="Molecular Area">Molecular Area</option>
+                                                <option value="Microbiology Area">Microbiology Area</option>
+                                                <option value="Instrumental Area">Instrumental Area</option>
+                                                <option value="Administration">Administration</option>
+                                                <option value="Financial Department">Financial Department</option>
                                             </select>
                                         </div>
                                     </div>
@@ -474,7 +490,7 @@
                                     <div class="col-lg-6">
                                         <div class="group-input">
                                             <label for="Department(s)">Department(s)</label>
-                                            <select multiple name="departments2[]" placeholder="Select Departments"
+                                            {{--  <select multiple name="departments2[]" placeholder="Select Departments"
                                                 data-search="false" data-silent-initial-value-set="true" id="departments">
                                                 <option value="">Select Department</option>
                                                 <option value="1">QA</option>
@@ -487,6 +503,21 @@
                                                 <option value="8"> Instrumental Area</option>
                                                 <option value="9"> Administration</option>
                                                 <option value="10"> Financial Department</option>
+                                            </select>  --}}
+
+                                          <select multiple name="departments2[]" placeholder="Select Departments"
+                                                data-search="false" data-silent-initial-value-set="true" id="departments">
+                                                <option value="">Select Department</option>
+                                                <option value="QA">QA</option>
+                                                <option value="QC">QC</option>
+                                                <option value="R&D">R&D</option>
+                                                <option value="Wet Chemistry Area">Wet Chemistry Area</option>
+                                                <option value="Warehouse">Warehouse</option>
+                                                <option value="Molecular Area">Molecular Area</option>
+                                                <option value="Microbiology Area">Microbiology Area</option>
+                                                <option value="Instrumental Area">Instrumental Area</option>
+                                                <option value="Administration">Administration</option>
+                                                <option value="Financial Department">Financial Department</option>
                                             </select>
                                         </div>
                                     </div>

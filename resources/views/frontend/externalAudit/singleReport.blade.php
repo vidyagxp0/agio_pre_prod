@@ -163,9 +163,9 @@
                 <td class="w-70 head">
                    External Audit Single Report
                 </td>
-                <td class="w-30">
+                 <td class="w-30">
                     <div class="logo">
-                        <img src="https://dms.mydemosoftware.com/user/images/logo1.png" alt="" class="w-30">
+                    <img src="https://navin.mydemosoftware.com/public/user/images/logo.png" alt="" class="w-100">
                     </div>
                 </td>
             </tr>

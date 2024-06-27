@@ -378,8 +378,10 @@
                             </td>
                             <td>
                                 <div>
-                                    <strong> Data Field Name :</strong><a
-                                        href="{{ url('auditDetailsRoot', $dataDemo->id) }}">{{ $dataDemo->activity_type ? $dataDemo->activity_type : 'Not Applicable' }}</a>
+                                    <strong> Data Field Name :</strong>
+                                    
+                                    {{  $dataDemo->activity_type }}
+                                    {{--  <a    href="{{ url('auditDetailsRoot', $dataDemo->id) }}">{{ $dataDemo->activity_type ? $dataDemo->activity_type : 'Not Applicable' }}</a>  --}}
                                 </div>
                                 <div style="margin-top: 5px;">
                                     @if($dataDemo->activity_type == "Activity Log")

@@ -34,6 +34,10 @@ use Illuminate\Support\Facades\Hash;
     }
     public function root_store(Request $request)
     { 
+
+    //  dd($request->all());
+
+
         if (!$request->short_description) {
            toastr()->error("Short description is required");
              return redirect()->back();
@@ -59,7 +63,8 @@ use Illuminate\Support\Facades\Hash;
         // $root->investigators = implode(',', $request->investigators);
         $root->initiated_through = $request->initiated_through;
         $root->initiated_if_other = $request->initiated_if_other;
-        $root->department = $request->department;
+        // $root->department = $request->department;
+        $root->department = implode(',', $request->departments);
         $root->description = ($request->description);
         $root->comments = ($request->comments);
         $root->related_url = ($request->related_url);
@@ -244,18 +249,10 @@ use Illuminate\Support\Facades\Hash;
         $record->counter = ((RecordNumber::first()->value('counter')) + 1);
         $record->update();
         
-        $history = new RootAuditTrial();
-        $history->root_id = $root->id;
-        $history->activity_type = 'Division Code';
-        $history->previous = "Null";
-        $history->current = $root->division_code;
-        $history->comment = "NA";
-        $history->user_id = Auth::user()->id;
-        $history->user_name = Auth::user()->name;
-        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-        $history->origin_state = $root->status;
-        $history->save();
 
+  
+    if(!empty($request->initiator_Group))
+    {
         $history = new RootAuditTrial();
         $history->root_id = $root->id;
         $history->activity_type = 'Initiator Group';
@@ -266,7 +263,15 @@ use Illuminate\Support\Facades\Hash;
         $history->user_name = Auth::user()->name;
         $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
         $history->origin_state = $root->status;
+        $history->change_to =   "Opened";
+        $history->change_from = "Initiator";
+        $history->action_name = 'Create';
+     
         $history->save();
+    }
+    if(!empty($request->short_description))
+    {
+      
 
         $history = new RootAuditTrial();
         $history->root_id = $root->id;
@@ -278,7 +283,34 @@ use Illuminate\Support\Facades\Hash;
         $history->user_name = Auth::user()->name;
         $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
         $history->origin_state = $root->status;
+        $history->change_to =   "Opened";
+        $history->change_from = "Initiator";
+        $history->action_name = 'Create';
+     
         $history->save();
+    }
+    if(!empty($request->severity_level))
+    {
+      
+        $history = new RootAuditTrial();
+        $history->root_id = $root->id;
+        $history->activity_type = 'Sevrity Level';
+        $history->previous = "Null";
+        $history->current =   $root->severity_level;
+        $history->comment = "NA";
+        $history->user_id = Auth::user()->id;
+        $history->user_name = Auth::user()->name;
+        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        $history->origin_state = $root->status;
+        $history->change_to =   "Opened";
+        $history->change_from = "Initiator";
+        $history->action_name = 'Create';
+     
+        $history->save();
+    }
+    if(!empty($request->assign_to))
+    {
+      
 
         $history = new RootAuditTrial();
         $history->root_id = $root->id;
@@ -290,119 +322,375 @@ use Illuminate\Support\Facades\Hash;
         $history->user_name = Auth::user()->name;
         $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
         $history->origin_state = $root->status;
+        $history->change_to =   "Opened";
+        $history->change_from = "Initiator";
+        $history->action_name = 'Create';
+     
         $history->save();
-
-        $history = new RootAuditTrial();
+    }
+    if(!empty($request->due_date))
+    {
+      $history = new RootAuditTrial();
         $history->root_id = $root->id;
-        $history->activity_type = 'Sample Types';
+        $history->activity_type = 'Due Date';
         $history->previous = "Null";
-        $history->current = $root->Sample_Types;
+        $history->current =  $root->due_date;
         $history->comment = "NA";
         $history->user_id = Auth::user()->id;
         $history->user_name = Auth::user()->name;
         $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
         $history->origin_state = $root->status;
+        $history->change_to =   "Opened";
+        $history->change_from = "Initiator";
+        $history->action_name = 'Create';
+     
         $history->save();
- 
-
+    }
+     if(!empty($request->initiated_through))
+    {
         $history = new RootAuditTrial();
         $history->root_id = $root->id;
-        $history->activity_type = 'Investigators';
+        $history->activity_type = 'Initiated Through';
         $history->previous = "Null";
-        $history->current = $root->investigators;
+        $history->current =  $root->initiated_through;
         $history->comment = "NA";
         $history->user_id = Auth::user()->id;
         $history->user_name = Auth::user()->name;
         $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
         $history->origin_state = $root->status;
+        $history->change_to =   "Opened";
+        $history->change_from = "Initiator";
+        $history->action_name = 'Create';
+     
         $history->save();
-
-        $history = new RootAuditTrial();
+    }
+    if(!empty($request->initiated_if_other))
+    {
+      $history = new RootAuditTrial();
         $history->root_id = $root->id;
-        $history->activity_type = 'Attachments';
+        $history->activity_type = 'Others';
         $history->previous = "Null";
-        $history->current = empty($root->cft_attchament_new) ? null : $root->cft_attchament_new;
+        $history->current =  $root->initiated_if_other;
         $history->comment = "NA";
         $history->user_id = Auth::user()->id;
         $history->user_name = Auth::user()->name;
         $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
         $history->origin_state = $root->status;
+        $history->change_to =   "Opened";
+        $history->change_from = "Initiator";
+        $history->action_name = 'Create';
+     
         $history->save();
+    }
+    if(!empty($request->Type))
+    {
+        $history = new RootAuditTrial();
+        $history->root_id = $root->id;
+        $history->activity_type = 'Type';
+        $history->previous = "Null";
+        $history->current =  $root->Type;
+        $history->comment = "NA";
+        $history->user_id = Auth::user()->id;
+        $history->user_name = Auth::user()->name;
+        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        $history->origin_state = $root->status;
+        $history->change_to =   "Opened";
+        $history->change_from = "Initiator";
+        $history->action_name = 'Create';
+     
+        $history->save();
+    }
+    if(!empty($request->priority_level))
+    {
+        $history = new RootAuditTrial();
+        $history->root_id = $root->id;
+        $history->activity_type = 'Priority-Level';
+        $history->previous = "Null";
+        $history->current =  $root->priority_level;
+        $history->comment = "NA";
+        $history->user_id = Auth::user()->id;
+        $history->user_name = Auth::user()->name;
+        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        $history->origin_state = $root->status;
+        $history->change_to =   "Opened";
+        $history->change_from = "Initiator";
+        $history->action_name = 'Create';
+     
+        $history->save();
+    }
+    if(!empty($request->department))
+    {
+      
+
+        $history = new RootAuditTrial();
+        $history->root_id = $root->id;
+        $history->activity_type = 'Department';
+        $history->previous = "Null";
+        $history->current =   $root->department;
+        $history->comment = "NA";
+        $history->user_id = Auth::user()->id;
+        $history->user_name = Auth::user()->name;
+        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        $history->origin_state = $root->status;
+        $history->change_to =   "Opened";
+        $history->change_from = "Initiator";
+        $history->action_name = 'Create';
+     
+        $history->save();
+    }
+    if(!empty($request->root_cause_description))
+    {
+
+
+        $history = new RootAuditTrial();
+        $history->root_id = $root->id;
+        $history->activity_type = 'Description';
+        $history->previous = "Null";
+        $history->current =  $root->root_cause_description;
+        $history->comment = "NA";
+        $history->user_id = Auth::user()->id;
+        $history->user_name = Auth::user()->name;
+        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        $history->origin_state = $root->status;
+        $history->change_to =   "Opened";
+        $history->change_from = "Initiator";
+        $history->action_name = 'Create';
+     
+        $history->save();
+    }
+    if(!empty($request->comments))
+    {
 
         $history = new RootAuditTrial();
         $history->root_id = $root->id;
         $history->activity_type = 'Comments';
         $history->previous = "Null";
-        $history->current = $root->comments;
+        $history->current =  $root->comments;
         $history->comment = "NA";
         $history->user_id = Auth::user()->id;
         $history->user_name = Auth::user()->name;
         $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
         $history->origin_state = $root->status;
+        $history->change_to =   "Opened";
+        $history->change_from = "Initiator";
+        $history->action_name = 'Create';
+     
         $history->save();
+    }
+    if(!empty($request->root_cause_initial_attachment))
+    {
+    
+
 
         $history = new RootAuditTrial();
         $history->root_id = $root->id;
-        $history->activity_type = 'Lab Inv Concl';
+        $history->activity_type = 'Initial Attachment';
         $history->previous = "Null";
-        $history->current = $root->lab_inv_concl;
+        $history->current =  empty($root->root_cause_initial_attachment) ? null:$root->root_cause_initial_attachment;
+  
         $history->comment = "NA";
         $history->user_id = Auth::user()->id;
         $history->user_name = Auth::user()->name;
         $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
         $history->origin_state = $root->status;
+        $history->change_to =   "Opened";
+        $history->change_from = "Initiator";
+        $history->action_name = 'Create';
+     
         $history->save();
+    }
+    if(!empty($request->related_url))
+    {
+
 
         $history = new RootAuditTrial();
         $history->root_id = $root->id;
-        $history->activity_type = 'lab Inv Attach';
+        $history->activity_type = 'Related URL';
         $history->previous = "Null";
-        $history->current = $root->lab_inv_attach;
+        $history->current =  $root->related_url;
         $history->comment = "NA";
         $history->user_id = Auth::user()->id;
         $history->user_name = Auth::user()->name;
         $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
         $history->origin_state = $root->status;
+        $history->change_to =   "Opened";
+        $history->change_from = "Initiator";
+        $history->action_name = 'Create';
+     
         $history->save();
+    }
+    if(!empty($request->root_cause_methodology))
+    {
 
         $history = new RootAuditTrial();
         $history->root_id = $root->id;
-        $history->activity_type = 'Qc Head Comments';
+        $history->activity_type = 'Root Cause Methodology';
         $history->previous = "Null";
-        $history->current = $root->qc_head_comments;
+        $history->current =  $root->root_cause_methodology;
         $history->comment = "NA";
         $history->user_id = Auth::user()->id;
         $history->user_name = Auth::user()->name;
         $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
         $history->origin_state = $root->status;
+        $history->change_to =   "Opened";
+        $history->change_from = "Initiator";
+        $history->action_name = 'Create';
+     
         $history->save();
 
-        $history = new RootAuditTrial();
-        $history->root_id = $root->id;
-        $history->activity_type = 'Inv Attach';
-        $history->previous = "Null";
-        $history->current = $root->inv_attach;
-        $history->comment = "NA";
-        $history->user_id = Auth::user()->id;
-        $history->user_name = Auth::user()->name;
-        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-        $history->origin_state = $root->status;
-        $history->save();
+    }
 
-        if (!empty($root->due_date)) {
-        $history = new RootAuditTrial();
-        $history->root_id = $root->id;
-        $history->activity_type = 'Due Date';
-        $history->previous = "Null";
-        $history->current = $root->due_date;
-        $history->comment = "NA";
-        $history->user_id = Auth::user()->id;
-        $history->user_name = Auth::user()->name;
-        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-        $history->origin_state = $root->status;
-        $history->save();
 
-        }
+
+
+
+        // $history = new RootAuditTrial();
+        // $history->root_id = $root->id;
+        // $history->activity_type = 'Sample Types';
+        // $history->previous = "Null";
+        // $history->current = $root->Sample_Types;
+        // $history->comment = "NA";
+        // $history->user_id = Auth::user()->id;
+        // $history->user_name = Auth::user()->name;
+        // $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        // $history->origin_state = $root->status;
+        // $history->change_to =   "Opened";
+        // $history->change_from = "Initiator";
+        // $history->action_name = 'Create';
+     
+        // $history->save();
+ 
+
+        // $history = new RootAuditTrial();
+        // $history->root_id = $root->id;
+        // $history->activity_type = 'Investigators';
+        // $history->previous = "Null";
+        // $history->current = $root->investigators;
+        // $history->comment = "NA";
+        // $history->user_id = Auth::user()->id;
+        // $history->user_name = Auth::user()->name;
+        // $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        // $history->origin_state = $root->status;
+        // $history->change_to =   "Opened";
+        // $history->change_from = "Initiator";
+        // $history->action_name = 'Create';
+     
+        // $history->save();
+
+        // $history = new RootAuditTrial();
+        // $history->root_id = $root->id;
+        // $history->activity_type = 'Attachments';
+        // $history->previous = "Null";
+        // $history->current = empty($root->cft_attchament_new) ? null : $root->cft_attchament_new;
+        // $history->comment = "NA";
+        // $history->user_id = Auth::user()->id;
+        // $history->user_name = Auth::user()->name;
+        // $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        // $history->origin_state = $root->status;
+        // $history->change_to =   "Opened";
+        // $history->change_from = "Initiator";
+        // $history->action_name = 'Create';
+     
+        // $history->save();
+
+        // $history = new RootAuditTrial();
+        // $history->root_id = $root->id;
+        // $history->activity_type = 'Comments';
+        // $history->previous = "Null";
+        // $history->current = $root->comments;
+        // $history->comment = "NA";
+        // $history->user_id = Auth::user()->id;
+        // $history->user_name = Auth::user()->name;
+        // $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        // $history->origin_state = $root->status;
+        // $history->change_to =   "Opened";
+        // $history->change_from = "Initiator";
+        // $history->action_name = 'Create';
+     
+        // $history->save();
+
+        // $history = new RootAuditTrial();
+        // $history->root_id = $root->id;
+        // $history->activity_type = 'Lab Inv Concl';
+        // $history->previous = "Null";
+        // $history->current = $root->lab_inv_concl;
+        // $history->comment = "NA";
+        // $history->user_id = Auth::user()->id;
+        // $history->user_name = Auth::user()->name;
+        // $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        // $history->origin_state = $root->status;
+        // $history->change_to =   "Opened";
+        // $history->change_from = "Initiator";
+        // $history->action_name = 'Create';
+     
+        // $history->save();
+
+        // $history = new RootAuditTrial();
+        // $history->root_id = $root->id;
+        // $history->activity_type = 'lab Inv Attach';
+        // $history->previous = "Null";
+        // $history->current = $root->lab_inv_attach;
+        // $history->comment = "NA";
+        // $history->user_id = Auth::user()->id;
+        // $history->user_name = Auth::user()->name;
+        // $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        // $history->origin_state = $root->status;
+        // $history->change_to =   "Opened";
+        // $history->change_from = "Initiator";
+        // $history->action_name = 'Create';
+     
+        // $history->save();
+
+        // $history = new RootAuditTrial();
+        // $history->root_id = $root->id;
+        // $history->activity_type = 'Qc Head Comments';
+        // $history->previous = "Null";
+        // $history->current = $root->qc_head_comments;
+        // $history->comment = "NA";
+        // $history->user_id = Auth::user()->id;
+        // $history->user_name = Auth::user()->name;
+        // $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        // $history->origin_state = $root->status;
+        // $history->change_to =   "Opened";
+        // $history->change_from = "Initiator";
+        // $history->action_name = 'Create';
+     
+        // $history->save();
+
+        // $history = new RootAuditTrial();
+        // $history->root_id = $root->id;
+        // $history->activity_type = 'Inv Attach';
+        // $history->previous = "Null";
+        // $history->current = $root->inv_attach;
+        // $history->comment = "NA";
+        // $history->user_id = Auth::user()->id;
+        // $history->user_name = Auth::user()->name;
+        // $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        // $history->origin_state = $root->status;
+        // $history->change_to =   "Opened";
+        // $history->change_from = "Initiator";
+        // $history->action_name = 'Create';
+     
+        // $history->save();
+
+        // if (!empty($root->due_date)) {
+        // $history = new RootAuditTrial();
+        // $history->root_id = $root->id;
+        // $history->activity_type = 'Due Date';
+        // $history->previous = "Null";
+        // $history->current = $root->due_date;
+        // $history->comment = "NA";
+        // $history->user_id = Auth::user()->id;
+        // $history->user_name = Auth::user()->name;
+        // $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        // $history->origin_state = $root->status;
+        // $history->change_to =   "Opened";
+        // $history->change_from = "Initiator";
+        // $history->action_name = 'Create';
+     
+        // $history->save();
+
+        // }
         toastr()->success("Record is created Successfully");
         return redirect(url('rcms/qms-dashboard'));
     }
@@ -411,7 +699,7 @@ use Illuminate\Support\Facades\Hash;
 
 
     {
-
+       //       dd($request->all());
 
         
         if (!$request->short_description) {
@@ -428,7 +716,8 @@ use Illuminate\Support\Facades\Hash;
         $root->severity_level= $request->severity_level;
         $root->Type= ($request->Type);
         $root->priority_level = ($request->priority_level);
-        $root->department = ($request->department);
+        // $root->department = ($request->department);
+        $root->department = implode(',', $request->departments);
         $root->description = ($request->description);
         $root->investigation_summary = ($request->investigation_summary);
         $root->root_cause_description = ($request->root_cause_description);
@@ -604,202 +893,469 @@ use Illuminate\Support\Facades\Hash;
         }
         $root->update(); 
 
-        if ($lastDocument->division_code != $root->division_code || !empty($request->division_code_comment)) {
+        
 
-            $history = new RootAuditTrial();
-            $history->root_id = $id;
-            $history->activity_type = 'Division Code';
-            $history->previous = $lastDocument->division_code;
-            $history->current = $root->division_code;
-            $history->comment = $request->division_code_comment;
-            $history->user_id = Auth::user()->id;
-            $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state = $lastDocument->status;
-            $history->save();
-        }
-        if ($lastDocument->initiator_Group != $root->initiator_Group || !empty($request->initiator_Group_comment)) {
+
+    
+        if ($lastDocument->initiator_Group != $root->initiator_Group || !empty($request->comment)) {
 
             $history = new RootAuditTrial();
             $history->root_id = $id;
             $history->activity_type = 'Initiator Group';
             $history->previous = $lastDocument->initiator_Group;
             $history->current = $root->initiator_Group;
-            $history->comment = $request->initiator_Group_comment;
+            $history->comment = $request->comment;  
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+            $history->action_name = 'Update';
+         
             $history->save();
         }
-        if ($lastDocument->short_description != $root->short_description || !empty($request->short_description_comment)) {
+        if ($lastDocument->short_description != $root->short_description || !empty($request->comment)) {
 
             $history = new RootAuditTrial();
             $history->root_id = $id;
             $history->activity_type = 'Short Description';
             $history->previous = $lastDocument->short_description;
             $history->current = $root->short_description;
-            $history->comment = $request->short_description_comment;
+            $history->comment = $request->comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+            $history->action_name = 'Update';
+           
+
             $history->save();
         }
-        if ($lastDocument->assign_to != $root->assign_to || !empty($request->assign_to_comment)) {
+        if ($lastDocument->assign_to != $root->assign_to || !empty($request->comment)) {
 
             $history = new RootAuditTrial();
             $history->root_id = $id;
             $history->activity_type = 'Assign Id';
             $history->previous = $lastDocument->assign_to;
             $history->current = $root->assign_to;
-            $history->comment = $request->assign_to_comment;
+            $history->comment = $request->comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+            $history->action_name = 'Update';
+           
+
             $history->save();
         }
-        if ($lastDocument->Sample_Types != $root->Sample_Types || !empty($request->Sample_Types_comment)) {
 
+        if ($lastDocument->severity_level != $root->severity_level || !empty ($request->comment)) {
+            // return 'history';
             $history = new RootAuditTrial();
             $history->root_id = $id;
-            $history->activity_type = 'Sample Types';
-            $history->previous = $lastDocument->Sample_Types;
-            $history->current = $root->Sample_Types;
-            $history->comment = $request->Sample_Types_comment;
+            $history->activity_type = 'Sevrity Level';
+            $history->previous =  $lastDocument->severity_level;
+            $history->current = $root->severity_level;
+            $history->comment = $request->comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+            $history->action_name = 'Update';
             $history->save();
-        }
-        if ($lastDocument->investigators != $root->investigators || !empty($request->investigators_comment)) {
 
-            $history = new RootAuditTrial();
-            $history->root_id = $id;
-            $history->activity_type = 'Investigators';
-            $history->previous = $lastDocument->investigators;
-            $history->current = $root->investigators;
-            $history->comment = $request->investigators_comment;
-            $history->user_id = Auth::user()->id;
-            $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state = $lastDocument->status;
-            $history->save();
+        
         }
-        if ($lastDocument->cft_attchament_new != $root->cft_attchament_new || !empty($request->cft_attchament_new)) {
 
-            $history = new RootAuditTrial();
-            $history->root_id = $id;
-            $history->activity_type = 'Attachments';
-            $history->previous = $lastDocument->attachments;
-            $history->current = $root->attachments;
-            $history->comment = $request->attachments_comment;
-            $history->user_id = Auth::user()->id;
-            $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state = $lastDocument->status;
-            $history->save();
-        }
-        if ($lastDocument->comments != $root->comments || !empty($request->comments_comment)) {
 
-            $history = new RootAuditTrial();
-            $history->root_id = $id;
-            $history->activity_type = 'Comments';
-            $history->previous = $lastDocument->comments;
-            $history->current = $root->comments;
-            $history->comment = $request->comments_comment;
-            $history->user_id = Auth::user()->id;
-            $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state = $lastDocument->status;
-            $history->save();
-        }
-        if ($lastDocument->lab_inv_concl != $root->lab_inv_concl || !empty($request->lab_inv_concl_comment)) {
-
-            $history = new RootAuditTrial();
-            $history->root_id = $id;
-            $history->activity_type = 'Lab Inv Concl';
-            $history->previous = $lastDocument->lab_inv_concl;
-            $history->current = $root->lab_inv_concl;
-            $history->comment = $request->lab_inv_concl_comment;
-            $history->user_id = Auth::user()->id;
-            $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state = $lastDocument->status;
-            $history->save();
-        }
-        if ($lastDocument->lab_inv_attach != $root->lab_inv_attach || !empty($request->lab_inv_attach_comment)) {
-
-            $history = new RootAuditTrial();
-            $history->root_id = $id;
-            $history->activity_type = 'lab Inv Attach';
-            $history->previous = $lastDocument->lab_inv_attach;
-            $history->current = $root->lab_inv_attach;
-            $history->comment = $request->lab_inv_attach_comment;
-            $history->user_id = Auth::user()->id;
-            $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state = $lastDocument->status;
-            $history->save();
-        }
-        if ($lastDocument->qc_head_comments != $root->qc_head_comments || !empty($request->qc_head_comments_comment)) {
-
-            $history = new RootAuditTrial();
-            $history->root_id = $id;
-            $history->activity_type = 'Qc Head Comments';
-            $history->previous = $lastDocument->qc_head_comments;
-            $history->current = $root->qc_head_comments;
-            $history->comment = $request->qc_head_comments_comment;
-            $history->user_id = Auth::user()->id;
-            $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state = $lastDocument->status;
-            $history->save();
-        }
-        if ($lastDocument->inv_attach != $root->inv_attach || !empty($request->inv_attachcomment)) {
-
-            $history = new RootAuditTrial();
-            $history->root_id = $id;
-            $history->activity_type = 'Inv Attach';
-            $history->previous = $lastDocument->inv_attach;
-            $history->current = $root->inv_attach;
-            $history->comment = $request->inv_attach_comment;
-            $history->user_id = Auth::user()->id;
-            $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state = $lastDocument->status;
-            $history->save();
-        }
-        if ($lastDocument->due_date != $root->due_date || !empty($request->due_date_comment)) {
+        if ($lastDocument->due_date != $root->due_date || !empty($request->comment)) {
 
             $history = new RootAuditTrial();
             $history->root_id = $id;
             $history->activity_type = 'Due Date';
             $history->previous = $lastDocument->due_date;
             $history->current = $root->due_date;
-            $history->comment = $request->due_date_comment;
+            $history->comment = $request->comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastDocument->status;
-            $history->save();
-        }
-        if ($lastDocument->due_date != $root->due_date || !empty($request->due_date_comment)) {
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+            $history->action_name = 'Update';
+           
 
-            $history = new RootAuditTrial();
-            $history->root_id = $id;
-            $history->activity_type = 'Due Date';
-            $history->previous = $lastDocument->due_date;
-            $history->current = $root->due_date;
-            $history->comment = $request->due_date_comment;
-            $history->user_id = Auth::user()->id;
-            $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state = $lastDocument->status;
             $history->save();
         }
+
+     //---------------------------------------------------------------------------
+
+     if ($lastDocument->initiated_through != $root->initiated_through || !empty($request->comment)) {
+
+        $history = new RootAuditTrial();
+        $history->root_id = $id;
+        $history->activity_type = 'Initiated Through';
+        $history->previous = $lastDocument->initiated_through;
+        $history->current = $root->initiated_through;
+        $history->comment = $request->comment;
+        $history->user_id = Auth::user()->id;
+        $history->user_name = Auth::user()->name;
+        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        $history->origin_state = $lastDocument->status;
+        $history->change_to =   "Not Applicable";
+        $history->change_from = $lastDocument->status;
+        $history->action_name = 'Update';
+       
+
+        $history->save();
+    }
+
+
+
+
+     if ($lastDocument->initiated_if_other != $root->initiated_if_other || !empty($request->comment)) {
+
+        $history = new RootAuditTrial();
+        $history->root_id = $id;
+        $history->activity_type = 'Others';
+        $history->previous = $lastDocument->initiated_if_other;
+        $history->current = $root->initiated_if_other;
+        $history->comment = $request->comment;
+        $history->user_id = Auth::user()->id;
+        $history->user_name = Auth::user()->name;
+        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        $history->origin_state = $lastDocument->status;
+        $history->change_to =   "Not Applicable";
+        $history->change_from = $lastDocument->status;
+        $history->action_name = 'Update';
+       
+
+        $history->save();
+    }
+
+
+    
+
+
+     if ($lastDocument->Type != $root->Type || !empty($request->comment)) {
+
+        $history = new RootAuditTrial();
+        $history->root_id = $id;
+        $history->activity_type = 'Type';
+        $history->previous = $lastDocument->Type;
+        $history->current = $root->Type;
+        $history->comment = $request->comment;
+        $history->user_id = Auth::user()->id;
+        $history->user_name = Auth::user()->name;
+        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        $history->origin_state = $lastDocument->status;
+        $history->change_to =   "Not Applicable";
+        $history->change_from = $lastDocument->status;
+        $history->action_name = 'Update';
+       
+
+        $history->save();
+    }
+
+    
+    if ($lastDocument->priority_level != $root->priority_level|| !empty($request->comment)) {
+
+        $history = new RootAuditTrial();
+        $history->root_id = $id;
+        $history->activity_type = 'Priority-Level';
+        $history->previous = $lastDocument->priority_level;
+        $history->current = $root->priority_level;
+        $history->comment = $request->comment;
+        $history->user_id = Auth::user()->id;
+        $history->user_name = Auth::user()->name;
+        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        $history->origin_state = $lastDocument->status;
+        $history->change_to =   "Not Applicable";
+        $history->change_from = $lastDocument->status;
+        $history->action_name = 'Update';
+       
+
+        $history->save();
+    }
+
+    if ($lastDocument->department != $root->department|| !empty($request->comment)) {
+
+        $history = new RootAuditTrial();
+        $history->root_id = $id;
+        $history->activity_type = 'Departments';
+        $history->previous = $lastDocument->department;
+        $history->current = $root->department;
+        $history->comment = $request->comment;
+        $history->user_id = Auth::user()->id;
+        $history->user_name = Auth::user()->name;
+        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        $history->origin_state = $lastDocument->status;
+        $history->change_to =   "Not Applicable";
+        $history->change_from = $lastDocument->status;
+        $history->action_name = 'Update';
+       
+
+        $history->save();
+
+    }   
+    
+
+    
+    if ($lastDocument->root_cause_initial_attachment != $root->root_cause_initial_attachment|| !empty($request->comment)) {
+
+        $history = new RootAuditTrial();
+        $history->root_id = $id;
+        $history->activity_type = 'Initial Attachment';
+        $history->previous = $lastDocument->root_cause_initial_attachment;
+        $history->current = $root->root_cause_initial_attachment;
+        $history->comment = $request->comment;
+        $history->user_id = Auth::user()->id;
+        $history->user_name = Auth::user()->name;
+        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        $history->origin_state = $lastDocument->status;
+        $history->change_to =   "Not Applicable";
+        $history->change_from = $lastDocument->status;
+        $history->action_name = 'Update';
+       
+
+        $history->save();
+
+    }   
+    if ($lastDocument->related_url != $root->related_url|| !empty($request->comment)) {
+
+        $history = new RootAuditTrial();
+        $history->root_id = $id;
+        $history->activity_type = 'Related URL';
+        $history->previous = $lastDocument->related_url;
+        $history->current = $root->related_url;
+        $history->comment = $request->comment;
+        $history->user_id = Auth::user()->id;
+        $history->user_name = Auth::user()->name;
+        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        $history->origin_state = $lastDocument->status;
+        $history->change_to =   "Not Applicable";
+        $history->change_from = $lastDocument->status;
+        $history->action_name = 'Update';
+       
+
+        $history->save();
+    }
+
+    if ($lastDocument->root_cause_methodology != $root->root_cause_methodology|| !empty($request->comment)) {
+
+        $history = new RootAuditTrial();
+        $history->root_id = $id;
+        $history->activity_type = 'Root Cause Methodology';
+        $history->previous = $lastDocument->root_cause_methodology;
+        $history->current = $root->root_cause_methodology;
+        $history->comment = $request->comment;
+        $history->user_id = Auth::user()->id;
+        $history->user_name = Auth::user()->name;
+        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        $history->origin_state = $lastDocument->status;
+        $history->change_to =   "Not Applicable";
+        $history->change_from = $lastDocument->status;
+        $history->action_name = 'Update';
+       
+
+        $history->save();
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        //---------------------------------------------------------------
+        // if ($lastDocument->investigators != $root->investigators || !empty($request->comment)) {
+
+        //     $history = new RootAuditTrial();
+        //     $history->root_id = $id;
+        //     $history->activity_type = 'Investigators';
+        //     $history->previous = $lastDocument->investigators;
+        //     $history->current = $root->investigators;
+        //     $history->comment = $request->investigators_comment;
+        //     $history->user_id = Auth::user()->id;
+        //     $history->user_name = Auth::user()->name;
+        //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        //     $history->origin_state = $lastDocument->status;
+        //     $history->change_to =   "Not Applicable";
+        //     $history->change_from = $lastDocument->status;
+        //     $history->action_name = 'Update';
+           
+
+        //     $history->save();
+        // }
+        // if ($lastDocument->cft_attchament_new != $root->cft_attchament_new || !empty($request->comment)) {
+
+        //     $history = new RootAuditTrial();
+        //     $history->root_id = $id;
+        //     $history->activity_type = 'Attachments';
+        //     $history->previous = $lastDocument->attachments;
+        //     $history->current = $root->attachments;
+        //     $history->comment = $request->attachments_comment;
+        //     $history->user_id = Auth::user()->id;
+        //     $history->user_name = Auth::user()->name;
+        //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        //     $history->origin_state = $lastDocument->status;
+        //     $history->change_to =   "Not Applicable";
+        //     $history->change_from = $lastDocument->status;
+        //     $history->action_name = 'Update';
+           
+
+        //     $history->save();
+        // }
+        // if ($lastDocument->comments != $root->comments || !empty($request->comment)) {
+
+        //     $history = new RootAuditTrial();
+        //     $history->root_id = $id;
+        //     $history->activity_type = 'Comments';
+        //     $history->previous = $lastDocument->comments;
+        //     $history->current = $root->comments;
+        //     $history->comment = $request->comments_comment;
+        //     $history->user_id = Auth::user()->id;
+        //     $history->user_name = Auth::user()->name;
+        //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        //     $history->origin_state = $lastDocument->status;
+        //     $history->change_to =   "Not Applicable";
+        //     $history->change_from = $lastDocument->status;
+        //     $history->action_name = 'Update';
+           
+
+        //     $history->save();
+        // }
+        // if ($lastDocument->lab_inv_concl != $root->lab_inv_concl || !empty($request->comment)) {
+
+        //     $history = new RootAuditTrial();
+        //     $history->root_id = $id;
+        //     $history->activity_type = 'Lab Inv Concl';
+        //     $history->previous = $lastDocument->lab_inv_concl;
+        //     $history->current = $root->lab_inv_concl;
+        //     $history->comment = $request->lab_inv_concl_comment;
+        //     $history->user_id = Auth::user()->id;
+        //     $history->user_name = Auth::user()->name;
+        //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        //     $history->origin_state = $lastDocument->status;
+        //     $history->change_to =   "Not Applicable";
+        //     $history->change_from = $lastDocument->status;
+        //     $history->action_name = 'Update';
+           
+
+        //     $history->save();
+        // }
+        // if ($lastDocument->lab_inv_attach != $root->lab_inv_attach || !empty($request->comment)) {
+
+        //     $history = new RootAuditTrial();
+        //     $history->root_id = $id;
+        //     $history->activity_type = 'lab Inv Attach';
+        //     $history->previous = $lastDocument->lab_inv_attach;
+        //     $history->current = $root->lab_inv_attach;
+        //     $history->comment = $request->lab_inv_attach_comment;
+        //     $history->user_id = Auth::user()->id;
+        //     $history->user_name = Auth::user()->name;
+        //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        //     $history->origin_state = $lastDocument->status;
+        //     $history->change_to =   "Not Applicable";
+        //     $history->change_from = $lastDocument->status;
+        //     $history->action_name = 'Update';
+           
+
+        //     $history->save();
+        // }
+        // if ($lastDocument->qc_head_comments != $root->qc_head_comments || !empty($request->comment)) {
+
+        //     $history = new RootAuditTrial();
+        //     $history->root_id = $id;
+        //     $history->activity_type = 'Qc Head Comments';
+        //     $history->previous = $lastDocument->qc_head_comments;
+        //     $history->current = $root->qc_head_comments;
+        //     $history->comment = $request->qc_head_comments_comment;
+        //     $history->user_id = Auth::user()->id;
+        //     $history->user_name = Auth::user()->name;
+        //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        //     $history->origin_state = $lastDocument->status;
+        //     $history->change_to =   "Not Applicable";
+        //     $history->change_from = $lastDocument->status;
+        //     $history->action_name = 'Update';
+           
+
+        //     $history->save();
+        // }
+        // if ($lastDocument->inv_attach != $root->inv_attach || !empty($request->comment)) {
+
+        //     $history = new RootAuditTrial();
+        //     $history->root_id = $id;
+        //     $history->activity_type = 'Inv Attach';
+        //     $history->previous = $lastDocument->inv_attach;
+        //     $history->current = $root->inv_attach;
+        //     $history->comment = $request->inv_attach_comment;
+        //     $history->user_id = Auth::user()->id;
+        //     $history->user_name = Auth::user()->name;
+        //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        //     $history->origin_state = $lastDocument->status;
+        //     $history->change_to =   "Not Applicable";
+        //     $history->change_from = $lastDocument->status;
+        //     $history->action_name = 'Update';
+           
+
+        //     $history->save();
+        // }
+        // if ($lastDocument->due_date != $root->due_date || !empty($request->comment)) {
+
+        //     $history = new RootAuditTrial();
+        //     $history->root_id = $id;
+        //     $history->activity_type = 'Due Date';
+        //     $history->previous = $lastDocument->due_date;
+        //     $history->current = $root->due_date;
+        //     $history->comment = $request->due_date_comment;
+        //     $history->user_id = Auth::user()->id;
+        //     $history->user_name = Auth::user()->name;
+        //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        //     $history->origin_state = $lastDocument->status;
+        //     $history->change_to =   "Not Applicable";
+        //     $history->change_from = $lastDocument->status;
+        //     $history->action_name = 'Update';
+           
+
+        //     $history->save();
+        // }
+        // if ($lastDocument->due_date != $root->due_date || !empty($request->comment)) {
+
+        //     $history = new RootAuditTrial();
+        //     $history->root_id = $id;
+        //     $history->activity_type = 'Due Date';
+        //     $history->previous = $lastDocument->due_date;
+        //     $history->current = $root->due_date;
+        //     $history->comment = $request->due_date_comment;
+        //     $history->user_id = Auth::user()->id;
+        //     $history->user_name = Auth::user()->name;
+        //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        //     $history->origin_state = $lastDocument->status;
+        //     $history->change_to =   "Not Applicable";
+        //     $history->change_from = $lastDocument->status;
+        //     $history->action_name = 'Update';
+           
+
+        //     $history->save();
+        // }
         toastr()->success("Record is update Successfully");
         return back();
     }
@@ -831,17 +1387,25 @@ use Illuminate\Support\Facades\Hash;
                 $root->status = "Investigation in Progress";
                 $root->acknowledge_by= Auth::user()->name;
                 $root->acknowledge_on= Carbon::now()->format('d-M-Y');
+
+
                 $history = new RootAuditTrial();
                 $history->root_id = $id;
                 $history->activity_type = 'Activity Log';
-                $history->previous = $lastDocument->acknowledge_by;
-                $history->current = $root->acknowledge_by;
+                $history->previous ="";
+                $history->current = $root->submitted_by;
                 $history->comment = $request->comment;
+                $history->action = 'Acknowledge';
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 $history->origin_state = $lastDocument->status;
-                $history->stage='Acknowledge';
+                $history->change_to =   "Investigation in Progress";
+                $history->change_from = $lastDocument->status;
+                $history->action_name = 'Not Applicable';
+                $history->stage = 'Investigation in Progress';
+              
+                
 
                 $history->save();
             //     $list = Helpers::getQAUserList();
@@ -868,26 +1432,35 @@ use Illuminate\Support\Facades\Hash;
             }
             if ($root->stage == 2) {
                 $root->stage = "3";
-                $root->status = 'Pending Group Review Discussion';
+                $root->status = 'Pending QA Review';
                 $root->submitted_by = Auth::user()->name;
                 $root->submitted_on = Carbon::now()->format('d-M-Y');
+
                 $history = new RootAuditTrial();
                 $history->root_id = $id;
                 $history->activity_type = 'Activity Log';
-                $history->previous = $lastDocument->submitted_by;
+                $history->previous ="";
                 $history->current = $root->submitted_by;
                 $history->comment = $request->comment;
+                $history->action = 'submit';
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 $history->origin_state = $lastDocument->status;
-                $history->stage='Submited';
-
+                $history->change_to =   "Pending QA Review";
+                $history->change_from = $lastDocument->status;
+                $history->action_name = 'Not Applicable';
+                $history->stage = 'Pending QA Review';
+              
                 $history->save();
                 $root->update();
                 toastr()->success('Document Sent');
                 return back();
             }
+
+
+
+            
             // if ($root->stage == 3) {
             //     $root->stage = "4";
             //     $root->status = "Pending Group Review";

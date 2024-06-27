@@ -503,7 +503,15 @@
                                         <div class="col-12">
                                             <div class="group-input">
                                                 <label for="Department(s)">Department(s)</label>
-                                                <select multiple name="departments[]" placeholder="Select Departments"
+
+                                                @php
+    
+                                                    $storedDepartments = $data->departments; 
+
+                                                
+                                                    $selectedDepartments = explode(',', $storedDepartments);
+                                                @endphp
+                                                {{--  <select multiple name="departments[]" placeholder="Select Departments"
                                                     data-search="false" data-silent-initial-value-set="true"
                                                     id="departments" class="new_first_department"
                                                     {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}>
@@ -524,6 +532,22 @@
                                                         {{ in_array('5', explode(',', $data->departments)) ? 'selected' : '' }}>
                                                         Warehouse</option>
 
+                                                </select>  --}}
+
+
+                                                 <select name="departments[]" placeholder="Select Departments" data-search="false"
+                                                        data-silent-initial-value-set="true" id="departments" multiple>
+                                                    <option value="">Select Department</option>
+                                                    <option value="QA" {{ in_array('QA', $selectedDepartments) ? 'selected' : '' }}>QA</option>
+                                                    <option value="QC" {{ in_array('QC', $selectedDepartments) ? 'selected' : '' }}>QC</option>
+                                                    <option value="R&D" {{ in_array('R&D', $selectedDepartments) ? 'selected' : '' }}>R&D</option>
+                                                    <option value="Wet Chemistry Area" {{ in_array('Wet Chemistry Area', $selectedDepartments) ? 'selected' : '' }}>Wet Chemistry Area</option>
+                                                    <option value="Warehouse" {{ in_array('Warehouse', $selectedDepartments) ? 'selected' : '' }}>Warehouse</option>
+                                                    <option value="Molecular Area" {{ in_array('Molecular Area', $selectedDepartments) ? 'selected' : '' }}>Molecular Area</option>
+                                                    <option value="Microbiology Area" {{ in_array('Microbiology Area', $selectedDepartments) ? 'selected' : '' }}>Microbiology Area</option>
+                                                    <option value="Instrumental Area" {{ in_array('Instrumental Area', $selectedDepartments) ? 'selected' : '' }}>Instrumental Area</option>
+                                                    <option value="Administration" {{ in_array('Administration', $selectedDepartments) ? 'selected' : '' }}>Administration</option>
+                                                    <option value="Financial Department" {{ in_array('Financial Department', $selectedDepartments) ? 'selected' : '' }}>Financial Department</option>
                                                 </select>
                                             </div>
                                         </div>
@@ -706,7 +730,16 @@
                                         <div class="col-lg-6">
                                             <div class="group-input">
                                                 <label for="Department(s)">Department(s)</label>
-                                                <select multiple name="departments2[]" placeholder="Select Departments"
+
+                                                @php
+                                                
+                                                    $storedDepartments =$data->departments2; 
+
+                                                
+                                                    $selectedDepartments = explode(',', $storedDepartments);
+                                                @endphp
+
+                                                {{--  <select multiple name="departments2[]" placeholder="Select Departments"
                                                     data-search="false" data-silent-initial-value-set="true"
                                                     id="departments2" class="new_department"
                                                     {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}>
@@ -726,6 +759,24 @@
                                                     <option value="5"
                                                         {{ in_array('5', explode(',', $data->departments2)) ? 'selected' : '' }}>
                                                         Warehouse</option>
+                                                </select>  --}}
+
+
+                                                  <select multiple name="departments2[]" placeholder="Select Departments"
+                                                    data-search="false" data-silent-initial-value-set="true"
+                                                    id="departments2" class="new_department"
+                                                    {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}>
+                                                    <option value="">Select Department</option>
+                                                    <option value="QA" {{ in_array('QA', $selectedDepartments) ? 'selected' : '' }}>QA</option>
+                                                    <option value="QC" {{ in_array('QC', $selectedDepartments) ? 'selected' : '' }}>QC</option>
+                                                    <option value="R&D" {{ in_array('R&D', $selectedDepartments) ? 'selected' : '' }}>R&D</option>
+                                                    <option value="Wet Chemistry Area" {{ in_array('Wet Chemistry Area', $selectedDepartments) ? 'selected' : '' }}>Wet Chemistry Area</option>
+                                                    <option value="Warehouse" {{ in_array('Warehouse', $selectedDepartments) ? 'selected' : '' }}>Warehouse</option>
+                                                    <option value="Molecular Area" {{ in_array('Molecular Area', $selectedDepartments) ? 'selected' : '' }}>Molecular Area</option>
+                                                    <option value="Microbiology Area" {{ in_array('Microbiology Area', $selectedDepartments) ? 'selected' : '' }}>Microbiology Area</option>
+                                                    <option value="Instrumental Area" {{ in_array('Instrumental Area', $selectedDepartments) ? 'selected' : '' }}>Instrumental Area</option>
+                                                    <option value="Administration" {{ in_array('Administration', $selectedDepartments) ? 'selected' : '' }}>Administration</option>
+                                                    <option value="Financial Department" {{ in_array('Financial Department', $selectedDepartments) ? 'selected' : '' }}>Financial Department</option>
                                                 </select>
                                             </div>
                                         </div>

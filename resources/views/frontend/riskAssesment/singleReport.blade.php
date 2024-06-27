@@ -233,7 +233,7 @@
                     <tr>
                      {{--  {{dd($data->departments)}}  --}}
                          <th class="w-20">Department(s)</th>
-                         <td class="w-80">@if($data->departments){{  Helpers::getDepartmentNameWithString($data->departments )}}@else Not Applicable @endif</td>
+                         <td class="w-80">@if($data->departments){{  ($data->departments )}}@else Not Applicable @endif</td>
                        {{--  <td class="w-80">
                             @php
                                 $departments = Helpers::getDepartmentNameWithString($data->departments);
@@ -276,7 +276,7 @@
                 <table>
                     <tr>
                             <th class="w-20">Department(s)</th>
-                            <td class="w-80">@if($data->departments){{  Helpers::getDepartmentNameWithString($data->departments) }}@else Not Applicable @endif</td>
+                            <td class="w-80">@if($data->departments2){{ ($data->departments2) }}@else Not Applicable @endif</td>
                             <th class="w-20">Source of Risk</th>
                             <td class="w-80">@if($data->source_of_risk){{ $data->source_of_risk }}@else Not Applicable @endif</td>
                     </tr>

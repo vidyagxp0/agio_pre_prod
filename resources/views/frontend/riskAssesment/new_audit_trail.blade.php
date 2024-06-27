@@ -352,8 +352,8 @@
                 <table>
                     <tr class="table_bg">
                         <th>S.No</th>
-                        <th>Flow Changed From</th>
-                        <th>Flow Changed To</th>
+                        <th>Changed From</th>
+                        <th>Changed To</th>
                         <th>Data Field</th>
                         <th>Action Type</th>
                         <th>Performer</th>
@@ -365,7 +365,7 @@
                         @endphp
 
                         @foreach ($audit as $audits => $dataDemo)
-                                      {{--  {{ dd($audit) }}  --}}
+                                      {{--  {{ dd($dataDemo) }}  --}}
                             <td>{{ $dataDemo ? ($audit->currentPage() - 1) * $audit->perPage() + $audits + 1 : 'Not Applicable' }}
                             </td>
 
@@ -378,8 +378,11 @@
                             </td>
                             <td>
                                 <div>
-                                    <strong> Data Field Name :</strong><a
-                                        href="{{ url('auditDetailsrisk', $dataDemo->id) }}">{{ $dataDemo->activity_type ? $dataDemo->activity_type : 'Not Applicable' }}</a>
+                                    <strong> Data Field Name :</strong>
+                                      {{ $dataDemo->activity_type}}
+                                       {{--  <a href="{{ url('auditDetailsrisk', $dataDemo->id) }}">
+                                        {{ $dataDemo->activity_type ? $dataDemo->activity_type : 'Not Applicable' }}
+                                        </a>  --}}
                                 </div>
                                 <div style="margin-top: 5px;">
                                     @if($dataDemo->activity_type == "Activity Log")
