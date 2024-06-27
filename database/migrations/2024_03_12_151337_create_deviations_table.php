@@ -24,7 +24,7 @@ return new class extends Migration
             $table->longText('who')->nullable();
             $table->longText('when_when')->nullable();
             $table->longText('where_where')->nullable();
-            $table->longText('why')->nullable();
+            $table->longText('why_why')->nullable();
             $table->longText('what')->nullable();
             $table->integer('Hod_person_to')->nullable();
             $table->integer('Approver_to')->nullable();

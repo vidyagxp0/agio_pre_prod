@@ -529,43 +529,48 @@
             });
         });
     </script>
-    <script>
-        function calculateDueDate() {
-            const initiationDateInput = document.getElementById('intiation_date');
-            const deviationCategorySelect = document.getElementById('Deviation_category');
-            const dueDateInput = document.getElementById('due_date');
+<script>
+    function calculateDueDate() {
+        const initiationDateInput = document.getElementById('intiation_date');
+        const deviationCategorySelect = document.getElementById('Deviation_category');
+        const dueDateInput = document.getElementById('due_date');
 
-            if (initiationDateInput.value && deviationCategorySelect.value) {
-                const initiationDate = new Date(initiationDateInput.value);
-                let dueDate = new Date(initiationDate);
+        if (initiationDateInput.value && deviationCategorySelect.value) {
+            const initiationDate = new Date(initiationDateInput.value);
+            let dueDate = new Date(initiationDate);
 
-                switch (deviationCategorySelect.value) {
-                    case 'minor':
-                        dueDate.setDate(dueDate.getDate() + 15);
-                        break;
-                    case 'major':
-                        dueDate.setDate(dueDate.getDate() + 30);
-                        break;
-                    case 'critical':
-                        dueDate.setDate(dueDate.getDate() + 45);
-                        break;
-                    default:
-                        dueDate = null;
-                        break;
-                }
+            switch (deviationCategorySelect.value) {
+                case 'minor':
+                    dueDate.setDate(dueDate.getDate() + 15);
+                    break;
+                case 'major':
+                    dueDate.setDate(dueDate.getDate() + 30);
+                    break;
+                case 'critical':
+                    dueDate.setDate(dueDate.getDate() + 45);
+                    break;
+                default:
+                    dueDate = null;
+                    break;
+            }
 
-                if (dueDate) {
-                    const day = String(dueDate.getDate()).padStart(2, '0');
-                    const month = String(dueDate.getMonth() + 1).padStart(2, '0');
-                    const year = dueDate.getFullYear();
-                    dueDateInput.value = `${day}-${month}-${year}`;
-                }
+            if (dueDate) {
+                const day = String(dueDate.getDate()).padStart(2, '0');
+                const monthNames = [
+                    'January', 'February', 'March', 'April', 'May', 'June',
+                    'July', 'August', 'September', 'October', 'November', 'December'
+                ];
+                const month = monthNames[dueDate.getMonth()];
+                const year = dueDate.getFullYear();
+                dueDateInput.value = `${day}-${month}-${year}`;
             }
         }
+    }
 
-        document.getElementById('intiation_date').addEventListener('change', calculateDueDate);
-        document.getElementById('Deviation_category').addEventListener('change', calculateDueDate);
-    </script>
+    document.getElementById('intiation_date').addEventListener('change', calculateDueDate);
+    document.getElementById('Deviation_category').addEventListener('change', calculateDueDate);
+</script>
+
 
 
     <div class="form-field-head">
@@ -681,47 +686,53 @@
             <div class="col-lg-12 new-date-data-field">
             <div class="group-input input-date">
                         <label for="due_date">Due Date</label>
-            <div><small class="text-primary">If revising Due Date, kindly mention revision reason in "Due Date Extension Justification" data field.</small></div>
-            <div class="calenderauditee">
-                        <input type="text" id="due_date" name="due_date" readonly placeholder="DD-MM-YYYY" />
-            </div>
+                        <div><small class="text-primary">If revising Due Date, kindly mention revision reason in "Due Date Extension Justification" data field.</small></div>
+    <div class="calenderauditee">
+<input type="text" id="due_date" name="due_date" readonly placeholder="DD-Month-YYYY" />
+    </div>
             </div>
             </div>
             <script>
-                        function calculateDueDate() {
-                            const initiationDateInput = document.getElementById('intiation_date');
-                            const deviationCategorySelect = document.getElementById('Deviation_category');
-                            const dueDateInput = document.getElementById('due_date');
+        function calculateDueDate() {
+            const initiationDateInput = document.getElementById('intiation_date');
+            const deviationCategorySelect = document.getElementById('Deviation_category');
+            const dueDateInput = document.getElementById('due_date');
 
-                        if (initiationDateInput.value && deviationCategorySelect.value !== "NA") {
-                            const initiationDate = new Date(initiationDateInput.value);
-                            let dueDate = new Date(initiationDate);
+            if (initiationDateInput.value && deviationCategorySelect.value) {
+                const initiationDate = new Date(initiationDateInput.value);
+                let dueDate = new Date(initiationDate);
 
-                            let daysToAdd = 0;
-                            switch (deviationCategorySelect.value) {
-                                case 'minor':
-                                    daysToAdd = 15;
-                                    break;
-                                case 'major':
-                                    daysToAdd = 30;
-                                    break;
-                                case 'critical':
-                                    daysToAdd = 45;
-                                    break;
-                            }
+                switch (deviationCategorySelect.value) {
+                    case 'minor':
+                        dueDate.setDate(dueDate.getDate() + 15);
+                        break;
+                    case 'major':
+                        dueDate.setDate(dueDate.getDate() + 30);
+                        break;
+                    case 'critical':
+                        dueDate.setDate(dueDate.getDate() + 45);
+                        break;
+                    default:
+                        dueDate = null;
+                        break;
+                }
 
-                            dueDate.setDate(dueDate.getDate() + daysToAdd);
+                if (dueDate) {
+                    const day = String(dueDate.getDate()).padStart(2, '0');
+                    const monthNames = [
+                        'January', 'February', 'March', 'April', 'May', 'June',
+                        'July', 'August', 'September', 'October', 'November', 'December'
+                    ];
+                    const month = monthNames[dueDate.getMonth()];
+                    const year = dueDate.getFullYear();
+                    dueDateInput.value = `${day}-${month}-${year}`;
+                }
+            }
+        }
 
-                            const day = String(dueDate.getDate()).padStart(2, '0');
-                            const month = String(dueDate.getMonth() + 1).padStart(2, '0');
-                            const year = dueDate.getFullYear();
-                            dueDateInput.value = `${day}-${month}-${year}`;
-                        }
-                        }
-
-                        document.getElementById('intiation_date').addEventListener('change', calculateDueDate);
-                        document.getElementById('Deviation_category').addEventListener('change', calculateDueDate);
-        </script>
+        document.getElementById('intiation_date').addEventListener('change', calculateDueDate);
+        document.getElementById('Deviation_category').addEventListener('change', calculateDueDate);
+    </script>
 
 
 
