@@ -635,8 +635,8 @@
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="RLS Record Number"><b>Record Number</b></label>
-                                        <input disabled type="text" name="record_number">
-                                        {{-- value="{{ Helpers::getDivisionName(session()->get('division')) }}/DEV/{{ date('Y') }}/{{ $record_number }}"> --}}
+                                        <input disabled type="text" name="record_number"  value="{{ Helpers::getDivisionName(session()->get('division')) }}/DEV/{{ date('Y') }}/{{ $record_number }}">
+                                        
                                         {{-- <div class="static">QMS-EMEA/CAPA/{{ date('Y') }}/{{ $record_number }}</div> --}}
                                     </div>
                                 </div>
@@ -686,9 +686,9 @@
             <div class="col-lg-12 new-date-data-field">
             <div class="group-input input-date">
                         <label for="due_date">Due Date</label>
-                        <div><small class="text-primary">If revising Due Date, kindly mention revision reason in "Due Date Extension Justification" data field.</small></div>
+                        <!-- <div><small class="text-primary">If revising Due Date, kindly mention revision reason in "Due Date Extension Justification" data field.</small></div> -->
     <div class="calenderauditee">
-<input type="text" id="due_date" name="due_date" readonly placeholder="DD-Month-YYYY" />
+<input type="text" id="due_date" name="due_date" readonly placeholder="DDD-MMM-YYYY" />
     </div>
             </div>
             </div>
@@ -710,7 +710,7 @@
                         dueDate.setDate(dueDate.getDate() + 30);
                         break;
                     case 'critical':
-                        dueDate.setDate(dueDate.getDate() + 45);
+                        dueDate.setDate(dueDate.getDate() + 30);
                         break;
                     default:
                         dueDate = null;
@@ -1972,7 +1972,7 @@
                             $('#Customer_notification').change();
                         });
                     </script>
-                    {{-- <script>
+                     <script>
                         $(document).ready(function () {
                             // Event listener for Investigation_required dropdown
                             $('#Investigation_required').change(function () {
