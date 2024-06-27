@@ -1005,10 +1005,14 @@ $OOS_CQ_Review = [
         ];
 @endphp
                             @foreach ($batchDisposition as $key => $value)
-                            @if(bcmod($loop->index, 2) == 0) <tr> @endif
-                                <th class="w-20">{{$value}}</th>
-                                <td class="w-80">@if($data->$key){{ $data->$key}} @else Not Applicable @endif</td>
-                            @if(bcmod($loop->index, 2) == 1 || $loop->last)  </tr> @endif
+                            @if(bcmod($loop->index, 2) == 0) 
+                                <tr>
+                             @endif
+                                    <th class="w-20">{{$value}}</th>
+                                    <td class="w-80">@if($data->$key){{ $data->$key}} @else Not Applicable @endif</td>
+                                @if(bcmod($loop->index, 2) == 1 || $loop->last)  
+                            </tr> 
+                            @endif
                             @endforeach
 
 
@@ -1020,13 +1024,7 @@ $OOS_CQ_Review = [
                         <td class="w-80">@if($data->initiator_group_code_gi){{ $data->initiator_group_code_gi }} @else Not Applicable @endif</td>
                     </tr>
                     </table>
-
                 </div>
-
-
-
-
-
                 <div class="block-head">
                        Capa Attachement
                     </div>

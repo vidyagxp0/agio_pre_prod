@@ -2084,9 +2084,7 @@ if($lastDocument->$key != $request->$key){
             $canvas->page_text($width / 4, $height / 2, $doc->status, null, 25, [0, 0, 0], 2, 6, -20);
             return $pdf->stream('OOS-Audit' . $id . '.pdf');
         }
-        
     }
-
     public static function singleReport($id)
     {
         $data = OOS_MICRO::find($id);
@@ -2099,7 +2097,7 @@ if($lastDocument->$key != $request->$key){
             $phase_two_invs = $data->grids()->where('identifier', 'phase_two_inv')->first();
             $oos_conclusions = $data->grids()->where('identifier', 'oos_conclusion')->first();
             $oos_conclusion_reviews = $data->grids()->where('identifier', 'oos_conclusion_review')->first();
-    
+            
             $data->originator = User::where('id', $data->initiator_id)->value('name');
             $pdf = App::make('dompdf.wrapper');
             $time = Carbon::now();

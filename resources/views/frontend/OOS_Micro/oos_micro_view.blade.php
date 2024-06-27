@@ -232,12 +232,9 @@
 
         <div class="division-bar pt-3">
             <strong>Site Division/Project</strong> :
-            QMS-North America / OOS_Micro
+            {{ Helpers::getDivisionName(session()->get('division')) }} / OOS Micro
         </div>
     </div>
-
-
-
     {{-- ======================================
                     DATA FIELDS
     ======================================= --}}
@@ -280,10 +277,6 @@
                 <button class="cctablinks" onclick="openCity(event, 'CCForm10')">OOS CQ Review</button>
                 <button class="cctablinks" onclick="openCity(event, 'CCForm11')">Batch Disposition</button>
                 <button class="cctablinks" onclick="openCity(event, 'CCForm12')">Re-Open</button>
-                {{--<button class="cctablinks" onclick="openCity(event, 'CCForm13')">Under Addendum Approval</button>--}}
-                {{--<button class="cctablinks" onclick="openCity(event, 'CCForm14')">Under Addendum Execution</button>--}}
-                {{--<button class="cctablinks" onclick="openCity(event, 'CCForm15')">Under Addendum Review</button>--}}
-                {{--<button class="cctablinks" onclick="openCity(event, 'CCForm16')">Under Addendum Verification</button>--}}
                 {{--<button class="cctablinks" onclick="openCity(event, 'CCForm17')">Signature</button>--}}
             </div>
             <!-- General Information -->
@@ -311,7 +304,6 @@
                 <!-- reopen -->
                 @include('frontend.OOS_Micro.comps_micro.reopen')
                 <!-- Signature  -->
-
         </div>
       </form>
     </div>
