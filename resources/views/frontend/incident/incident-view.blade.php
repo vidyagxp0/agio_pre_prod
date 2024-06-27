@@ -7858,13 +7858,6 @@
                                 </div>
                             @endif
 
-
-
-
-
-
-
-
                         </div>
                         <div class="button-block">
                             <button style=" justify-content: center; width: 4rem; margin-left: 1px;;" type="submit"{{ $data->stage == 0 || $data->stage == 7 || $data->stage == 9 ? 'disabled' : '' }}
@@ -8065,8 +8058,6 @@
                                                     <th style="width: 16%"> Remarks</th>
 
                                                     <th style="width: 8%">Action</th>
-
-
                                                 </tr>
                                             </thead>
 

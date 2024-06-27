@@ -458,8 +458,6 @@ class NonConformaceController extends Controller
         $newDataGridFishbone->data = $request->fishbone;
         $newDataGridFishbone->save();
 
-
-
         $data3 = new NonConformanceGrid();
         $data3->non_conformances_grid_id = $NonConformance->id;
         $data3->type = "NonConformance";
@@ -503,8 +501,6 @@ class NonConformaceController extends Controller
             $data5->batch_no = serialize($request->batch_no);
         }
         $data5->save();
-
-
 
         $Cft = new NonConformanceCFTs();
         $Cft->non_conformances_id = $NonConformance->id;
@@ -720,7 +716,6 @@ class NonConformaceController extends Controller
                 }
             }
 
-
             $Cft->Kilo_Lab_attachment = json_encode($files);
         }
         if (!empty ($request->Technology_transfer_attachment)) {
@@ -732,7 +727,6 @@ class NonConformaceController extends Controller
                     $files[] = $name;
                 }
             }
-
 
             $Cft->Technology_transfer_attachment = json_encode($files);
         }
@@ -759,7 +753,6 @@ class NonConformaceController extends Controller
                 }
             }
 
-
             $Cft->Human_Resource_attachment = json_encode($files);
         }
         if (!empty ($request->Information_Technology_attachment)) {
@@ -785,7 +778,6 @@ class NonConformaceController extends Controller
                 }
             }
 
-
             $Cft->Project_management_attachment = json_encode($files);
         }
         if (!empty ($request->Other1_attachment)) {
@@ -797,7 +789,6 @@ class NonConformaceController extends Controller
                     $files[] = $name;
                 }
             }
-
 
             $Cft->Other1_attachment = json_encode($files);
         }
@@ -1316,7 +1307,7 @@ class NonConformaceController extends Controller
         if ($request->form_name == 'capa')
         {
             if($request->source_doc!=""){
-                $NonConformance->capa_number = $request->capa_number ? $request->capa_number : $NonConformance->capa_number;
+                // $NonConformance->capa_number = $request->capa_number ? $request->capa_number : $NonConformance->capa_number;
                 $NonConformance->department_capa = $request->department_capa ? $request->department_capa : $NonConformance->department_capa;
                 $NonConformance->source_of_capa = $request->source_of_capa ? $request->source_of_capa : $NonConformance->source_of_capa;
                 $NonConformance->capa_others = $request->capa_others ? $request->capa_others : $NonConformance->capa_others;
@@ -1631,7 +1622,6 @@ class NonConformaceController extends Controller
                     }
                 }
 
-
                 $Cft->production_attachment = json_encode($files);
             }
             if (!empty ($request->Warehouse_attachment)) {
@@ -1696,7 +1686,6 @@ class NonConformaceController extends Controller
                     }
                 }
 
-
                 $Cft->Analytical_Development_attachment = json_encode($files);
             }
             if (!empty ($request->Kilo_Lab_attachment)) {
@@ -1722,7 +1711,6 @@ class NonConformaceController extends Controller
                     }
                 }
 
-
                 $Cft->Technology_transfer_attachment = json_encode($files);
             }
             if (!empty ($request->Environment_Health_Safety_attachment)) {
@@ -1747,7 +1735,6 @@ class NonConformaceController extends Controller
                         $files[] = $name;
                     }
                 }
-
 
                 $Cft->Human_Resource_attachment = json_encode($files);
             }
@@ -2087,7 +2074,6 @@ class NonConformaceController extends Controller
                 }
             }
 
-
             $NonConformance->closure_attachment = json_encode($files);
         }
 
@@ -2183,7 +2169,6 @@ class NonConformaceController extends Controller
         $newDataGridFishbone->save();
 
         }
-
 
         $NonConformance->form_progress = isset($form_progress) ? $form_progress : null;
         $NonConformance->update();
@@ -4527,14 +4512,16 @@ class NonConformaceController extends Controller
     public function singleReport($id)
     {
         $data = NonConformance::find($id);
+
         $data1 =  NonConformanceCFTs::where('non_conformances_id', $id)->first();
         if (!empty ($data)) {
             $data->originator = User::where('id', $data->initiator_id)->value('name');
             $grid_data = NonConformanceGrid::where('non_conformances_grid_id', $id)->where('type', "NonConformance")->first();
             $grid_data1 = NonConformanceGrid::where('non_conformances_grid_id', $id)->where('type', "Document")->first();
 
-            $investigation_data = NonConformanceGridDatas::where(['non_conformances_id' => $id, 'identifier' => 'investication'])->first();
-            $root_cause_data = NonConformanceGridDatas::where(['non_conformances_id' => $id, 'identifier' => 'rootCause'])->first();
+            $investigation_data = NonConformanceGridDatas::where(['non_conformances_id' => $id, 'identifier' => 'TeamInvestigation'])->first();
+
+            $root_cause_data = NonConformanceGridDatas::where(['non_conformances_id' => $id, 'identifier' => 'RootCause'])->first();
             $why_data = NonConformanceGridDatas::where(['non_conformances_id' => $id, 'identifier' => 'why'])->first();
 
             $capaExtension = NonConformanceLunchExtension::where(['non_conformances_id' => $id, "extension_identifier" => "Capa"])->first();
