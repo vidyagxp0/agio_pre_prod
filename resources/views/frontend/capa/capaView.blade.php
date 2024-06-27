@@ -219,12 +219,23 @@
                             <div id="CCForm1" class="inner-block cctabcontent">
                                 <div class="inner-block-content">
                                     <div class="row">
-                                        <div class="col-lg-6">
+                                        {{-- <div class="col-lg-6">
                                             <div class="group-input">
                                                 <label for="RLS Record Number">Record Number</label>
                                                 <input disabled type="text" name="record_number"
                                                     value="{{ Helpers::getDivisionName($data->division_id) }}/CAPA/{{ Helpers::year($data->created_at) }}/{{ $data->record_number ? str_pad($data->record_number->record_number, 4, "0", STR_PAD_LEFT ) : '1' }}">
                                                 {{-- <div class="static"></div> --}}
+                                            {{-- </div> --}}
+                                        {{-- </div> --}}
+
+                                        <div class="col-lg-6">
+                                            <div class="group-input">
+                                                <label for="RLS Record Number"><b>Record Number</b></label>
+                                                {{-- <input disabled type="text" name="record"
+                                                    value="{{ $data->record }}"> --}}
+                                                    <input disabled type="text" name="record" id="record"
+                                                    value="{{ $data->initiator_group_code}}/CP/{{ Helpers::year($data->created_at) }}/{{ $data->record }}">
+            
                                             </div>
                                         </div>
                                         <div class="col-lg-6">
@@ -279,7 +290,7 @@
 
                                             </div>
                                         </div> -->
-                                        <div class="col-md-6">
+                                        {{-- <div class="col-md-6">
                                     <div class="group-input">
                                         <label for="due-date">Due Date <span class="text-danger"></span></label>
                                         <div><small class="text-primary">If revising Due Date, kindly mention revision reason in "Due Date Extension Justification" data field.</small></div>
@@ -289,8 +300,39 @@
                                         {{-- <input type="text" value="{{ $data->due_date }}" name="due_date"> --}}
                                         {{-- <div class="static"> {{ $due_date }}</div> --}}
 
+                                    {{-- </div>
+                                </div> --}} 
+                                
+                                <div class="col-md-6 new-date-data-field">
+                                    <div class="group-input input-date">
+                                        <label for="due-date">Due Date <span class="text-danger">*</span></label>
+                                        <div class="calenderauditee">
+                                            <!-- Display the formatted date in a readonly input -->
+                                            <input type="text" id="due_date_display" readonly placeholder="DD-MMM-YYYY" value="{{ Helpers::getDueDate(30, true) }}" />
+                                           
+                                            <input type="date" name="due_date" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" value="{{ Helpers::getDueDate(30, false) }}" class="hide-input" readonly />
+                                        </div>
                                     </div>
                                 </div>
+                                <script>
+                                    function handleDateInput(dateInput, displayId) {
+                                        const date = new Date(dateInput.value);
+                                        const options = { day: '2-digit', month: 'short', year: 'numeric' };
+                                        document.getElementById(displayId).value = date.toLocaleDateString('en-GB', options).replace(/ /g, '-');
+                                    }
+                                    
+                                    // Call this function initially to ensure the correct format is shown on page load
+                                    document.addEventListener('DOMContentLoaded', function() {
+                                        const dateInput = document.querySelector('input[name="due_date"]');
+                                        handleDateInput(dateInput, 'due_date_display');
+                                    });
+                                    </script>
+                                    
+                                    <style>
+                                    .hide-input {
+                                        display: none;
+                                    }
+                                    </style>
                                         <div class="col-lg-6">
                                             <div class="group-input">
                                                 <label for="Initiator Group">Initiator Group </label>
@@ -1622,10 +1664,15 @@
                                             <input type="radio" name="child_type" value="Action_Item">
                                             Action Item
                                         </label>
-                                        <!-- <label for="major">
+                                       
+                                        <label for="major">
                                             <input type="radio" name="child_type" value="extension">
                                             Extension
-                                        </label> -->
+                                        </label>
+                                        <label for="major">
+                                            <input type="radio" name="child_type" value="rca">
+                                           RCA
+                                        </label>
                                     @endif
 
                                     @if ($data->stage == 6)
@@ -1793,11 +1840,11 @@
                                     which is legally binding equivalent of a hand written signature.
                                 </div>
                                 <div class="group-input">
-                                    <label for="username">Username</label>
+                                    <label for="username">Username<span class="text-danger">*</span></label>
                                     <input type="text" name="username" required>
                                 </div>
                                 <div class="group-input">
-                                    <label for="password">Password</label>
+                                    <label for="password">Password<span class="text-danger">*</span></label>
                                     <input type="password" name="password" required>
                                 </div>
                                 <div class="group-input">
@@ -1838,15 +1885,15 @@
                                     which is legally binding equivalent of a hand written signature.
                                 </div>
                                 <div class="group-input">
-                                    <label for="username">Username</label>
+                                    <label for="username">Username<span class="text-danger">*</span></label>
                                     <input type="text" name="username" required>
                                 </div>
                                 <div class="group-input">
-                                    <label for="password">Password</label>
+                                    <label for="password">Password<span class="text-danger">*</span></label>
                                     <input type="password" name="password" required>
                                 </div>
                                 <div class="group-input">
-                                    <label for="comment">Comment</label>
+                                    <label for="comment">Comment<span class="text-danger">*</span></label>
                                     <input type="comment" name="comment">
                                 </div>
                             </div>

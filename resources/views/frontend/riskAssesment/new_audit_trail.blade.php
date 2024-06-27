@@ -1,8 +1,5 @@
 @extends('frontend.layout.main')
 @section('container')
-    {{-- ======================================
-                    DASHBOARD
-    ======================================= --}}
     <div id="audit-trial">
         <div class="container-fluid">
             <!DOCTYPE html>
@@ -85,8 +82,6 @@
                 td {
                     padding: 10px;
                     text-align: left;
-                    overflow:auto;
-                    max-width: 150px;
                 }
 
                 header .head {
@@ -159,8 +154,6 @@
                     margin-bottom: 10px;
                     margin-top: 10px;
                     background: #4274da;
-                    overflow: auto;
-                    max-width: 100%;
                 }
 
                 .heading-new {
@@ -184,10 +177,148 @@
                                 <img src="https://development.vidyagxp.com/public/user/images/logo.png" alt=""
                                     class="w-100">
                             </div>
+
                         </tr>
                     </table>
+                    @php
+                        $userRoles = DB::table('user_roles')
+                            ->where(['user_id' => Auth::user()->id, 'q_m_s_divisions_id' => $document->division_id])
+                            ->get();
+                        $userRoleIds = $userRoles->pluck('q_m_s_roles_id')->toArray();
+                        $auditCollect = DB::table('audit_reviewers_details')
+                            ->where(['doc_id' => $document->id, 'user_id' => Auth::user()->id])
+                            ->latest()
+                            ->first();
+                    @endphp
 
-                 
+                    <div class="d-flex justify-content-between align-items-center">
+                        @if ($auditCollect)
+                            <div style="color: green; font-weight: 600">The Audit Trail has been reviewed.</div>
+                        @else
+                            <div style="color: red; font-weight: 600">The Audit Trail has is yet to be reviewed.</div>
+                        @endif
+                        <div class="buttons-new">
+                            @if ($document->stage < 7 && !(count($userRoleIds) === 1 && in_array(3, $userRoleIds)))
+                                {{--  <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#auditReviewer">
+                                    Review
+                                </button>  --}}
+                            @endif
+                            {{--  <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#auditViewers">
+                                View
+                            </button>  --}}
+                            <button class="button_theme1"><a class="text-white"
+                                    href="{{ url('RiskManagement/' . $document->id) }}"> Back
+                                </a>
+                            </button>
+                            <button class="button_theme1" onclick="window.print();">
+                                Print
+                            </button>
+                        </div>
+                    </div>
+                    <div class="modal fade" id="auditViewers">
+                        <div class="modal-dialog modal-dialog-centered">
+                            <div class="modal-content">
+
+                                <style>
+                                    .validationClass {
+                                        margin-left: 100px
+                                    }
+                                </style>
+
+                                <!-- Modal Header -->
+                                <div class="modal-header">
+                                    <h4 class="modal-title">Audit Reviewers Details</h4>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                                </div>
+
+                                @php
+                                    $reviewer = DB::table('audit_reviewers_details')
+                                        ->where(['doc_id' => $document->id, 'type' => 'Deviation'])
+                                        ->get();
+                                @endphp
+                                <!-- Customer grid view -->
+                                <div class="table-responsive" style="padding: 20px;">
+                                    <table class="table">
+                                        <thead>
+                                            <tr>
+                                                <th>Review By</th>
+                                                <th>Review On</th>
+                                                <th>Comment</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <!-- Check if reviewer array is empty or null -->
+                                            @if ($reviewer && count($reviewer) > 0)
+                                                <!-- Iterate over stored reviewer and display them -->
+                                                @foreach ($reviewer as $review)
+                                                    <tr>
+                                                        <td>{{ $review->reviewer_comment_by }}</td>
+                                                        <td>{{ $review->reviewer_comment_on }}</td>
+                                                        <td>{{ $review->reviewer_comment }}</td>
+                                                    </tr>
+                                                @endforeach
+                                            @else
+                                                <tr>
+                                                    <td colspan="9">No results available</td>
+                                                </tr>
+                                            @endif
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="modal fade" id="auditReviewer">
+                        <div class="modal-dialog modal-dialog-centered">
+                            <div class="modal-content">
+
+                                <style>
+                                    .validationClass {
+                                        margin-left: 100px
+                                    }
+                                </style>
+
+                                <!-- Modal Header -->
+                                <div class="modal-header">
+                                    <h4 class="modal-title">Audit Reviewers</h4>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                                </div>
+                                <!-- <form action="" method="POST"> -->
+                                    <form action="{{ route('store_audit_review', $document->id) }}" method="POST">
+                                        @csrf
+                                        <!-- Modal body -->
+                                        <div class="modal-body">
+                                            <div class="group-input">
+                                                <label for="Reviewer commnet">Reviewer Comment <span id=""
+                                                        class="text-danger">*</span></label>
+                                                <div><small class="text-primary">Please insert "NA" in the data field if it
+                                                        does not require completion</small></div>
+                                                <textarea {{ $auditCollect ? 'disabled' : '' }} class="summernote w-100" name="reviewer_comment" id="summernote-17">{{ $auditCollect ? $auditCollect->reviewer_comment : '' }}</textarea>
+                                            </div>
+                                            <div class="group-input">
+                                                <label for="Reviewer Completed By">Reviewer Completed By</label>
+                                                <input disabled type="text" class="form-control"
+                                                    name="reviewer_completed_by" id="reviewer_completed_by"
+                                                    value="{{ $auditCollect ? $auditCollect->reviewer_comment_by : '' }}">
+                                            </div>
+                                            <div class="group-input">
+                                                <label for="Reviewer Completed on">Reviewer Completed On</label>
+                                                <input disabled type="text" class="form-control"
+                                                    name="reviewer_completed_on" id="reviewer_completed_on"
+                                                    value="{{ $auditCollect ? $auditCollect->reviewer_comment_on : '' }}">
+                                            </div>
+                                            <input type="hidden" id="type" name="type" value="Deviation">
+                                        </div>
+                                        <div class="modal-footer">
+                                            {!! $auditCollect ? '' : '<button type="submit" >Submit</button>' !!}
+                                            <button type="button" data-bs-dismiss="modal">Close</button>
+                                        </div>
+                                    </form>
+
+                            </div>
+                        </div>
+                    </div>
 
                     <table>
                         <div class="heading">
@@ -195,13 +326,13 @@
                             <div class="heading-new">
                                 Audit Trail
                             </div>
-
+                        
                             <div> <strong>Record ID.</strong> {{ str_pad($document->record, 4, '0', STR_PAD_LEFT) }}</div>
                             <div style="margin-bottom: 5px;  font-weight: bold;"> Originator
-                                :{{ $document->initiator ? $document->initiator : '' }}</div>
+                                :{{ $document->record_initiator ? $document->record_initiator->name : '' }}</div>
                             <div style="margin-bottom: 5px; font-weight: bold;">Short Description :
-                                {{ $document->description_gi }}</div>
-                            <div style="margin-bottom: 5px;  font-weight: bold;">Due Date : {{ $document->due_date_gi }}</div>
+                                {{ $document->short_description }}</div>
+                            <div style="margin-bottom: 5px;  font-weight: bold;">Due Date : {{ $document->due_date }}</div>
 
                         </div>
         </div>
@@ -210,14 +341,19 @@
         </header>
 
         <div class="inner-block">
+
+            <!-- <div class="head">Extension Audit Trial Report</div> -->
+
             <div class="division">
             </div>
+
+
             <div class="second-table">
                 <table>
                     <tr class="table_bg">
                         <th>S.No</th>
-                        <th>Flow Changed From</th>
-                        <th>Flow Changed To</th>
+                        <th>Changed From</th>
+                        <th>Changed To</th>
                         <th>Data Field</th>
                         <th>Action Type</th>
                         <th>Performer</th>
@@ -229,6 +365,7 @@
                         @endphp
 
                         @foreach ($audit as $audits => $dataDemo)
+                                      {{--  {{ dd($dataDemo) }}  --}}
                             <td>{{ $dataDemo ? ($audit->currentPage() - 1) * $audit->perPage() + $audits + 1 : 'Not Applicable' }}
                             </td>
 
@@ -241,8 +378,11 @@
                             </td>
                             <td>
                                 <div>
-                                    <strong> Data Field Name :</strong><a
-                                        href="{{ url('rcms/marketcomplaint/MarketComplaintAuditReport/',$document->id)}}">{{ $dataDemo->activity_type ? $dataDemo->activity_type : 'Not Applicable' }}</a>
+                                    <strong> Data Field Name :</strong>
+                                      {{ $dataDemo->activity_type}}
+                                       {{--  <a href="{{ url('auditDetailsrisk', $dataDemo->id) }}">
+                                        {{ $dataDemo->activity_type ? $dataDemo->activity_type : 'Not Applicable' }}
+                                        </a>  --}}
                                 </div>
                                 <div style="margin-top: 5px;">
                                     @if($dataDemo->activity_type == "Activity Log")

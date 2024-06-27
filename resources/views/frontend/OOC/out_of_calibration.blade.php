@@ -188,14 +188,14 @@ $users = DB::table('users')->get();
                             {{-- @foreach ($record_number as $record) --}}
                             
                                 
-                            @php
+                            {{-- @php
                                 $division =  Helpers::getDivisionName(session()->get('division')) 
-                            @endphp
+                            @endphp --}}
                             <div class="col-lg-6">
                                 <div class="group-input">
                                     <label for="RLS Record Number"><b>Record Number</b></label>
                                     {{-- <input disabled type="number" name="record_number" value="" > --}}
-                                    <input disabled type="number" name="record_number" value="{{$record_number}}">
+                                    <input disabled type="text" name="record_number" value="{{Helpers::getDivisionName(session()->get('division'))}}/{{ date('y') }}/OOC/{{$record_number}}">
                                   
                                 </div>
                             </div>
@@ -858,6 +858,7 @@ $(document).ready(function() {
                             <div class="group-input">
                                 <label for="Initiator Group">Assignable root cause found?</label>
                                 <select name="is_repeat_assingable_ooc" onchange="">
+                                    <option value="NA">Select</option>
                                     <option value="YES">YES</option>
                                     <option value="NO">NO</option>
 
@@ -1046,7 +1047,7 @@ $(document).ready(function() {
                             <div class="group-input">
                                 <label for="Initiator Group">Rectification by Service Engineer required</label>
                                 <select name="is_repeat_stageii_ooc" onchange="">
-                                    <option value="">-- select --</option>
+                                    <option value="NA">-- select --</option>
                                     <option value="YES">Yes</option>
                                     <option value="No">No</option>
 
@@ -1058,7 +1059,7 @@ $(document).ready(function() {
                             <div class="group-input">
                                 <label for="Initiator Group">Instrument is Out of Order</label>
                                 <select name="is_repeat_stage_instrument_ooc" onchange="">
-                                    <option value="">-- select --</option>
+                                    <option value="NA">-- select --</option>
                                     <option value="Yes">Yes</option>
                                     <option value="No">No</option>
                                 </select>

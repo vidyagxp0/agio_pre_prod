@@ -384,7 +384,7 @@
                                                     <td><input type="text" name="Root_Cause_Sub_Category[]"></td>
                                                     <td><input type="text" name="Probability[]"></td>
                                                     <td><input type="text" name="Remarks[]"></td>
-                                                    <td></td>
+                                                    <td><button type="text" class="removeRowBtn">Remove</button></td>
                                                 </tbody>
                                             </table>
                                         </div>
