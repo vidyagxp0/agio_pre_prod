@@ -207,7 +207,7 @@
                                 View
                             </button>
                             <button class="button_theme1"><a class="text-white"
-                                    href="{{ route('oos.oos_view', $document->id) }}"> Back
+                                    href="url"> Back
                                 </a>
                             </button>
                             <button class="button_theme1" onclick="window.print();">

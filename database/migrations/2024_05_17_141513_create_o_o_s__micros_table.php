@@ -263,11 +263,9 @@ return new class extends Migration
             $table->text('completed_by_close_done')->nullable();
             $table->text('completed_on_close_done')->nullable();
             $table->text('comment_close_done')->nullable();
-
+            $table->text('Capachild')->nullable();
+            $table->text('actionchild')->nullable();
             $table->timestamps();
-
-
-
         });
     }
 

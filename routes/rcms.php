@@ -187,7 +187,7 @@ Route::group(['prefix' => 'rcms'], function () {
             Route::get('internalauditReport/{id}', [InternalauditController::class, 'auditReport'])->name('internalauditReport');
             Route::get('oos_micro/audit_report/{id}', [OOSMicroController::class, 'auditReport'])->name('audit_report');
             Route::get('oos_micro/single_report/{id}', [OOSMicroController::class, 'singleReport'])->name('oos_micro/single_report');
-
+            Route::post('oos_micro/child/{id}', [OOSMicroController::class, 'child'])->name('oos_micro/child');
             Route::post('errata/stages/{id}',[ErrataController::class, 'stageChange'])->name('errata.stage');
             Route::post('errata/stagesreject/{id}',[ErrataController::class, 'stageReject'])->name('errata.stagereject');
             Route::get('errata_audit/{id}', [ErrataController::class, 'auditTrailPdf'])->name('errataaudit.pdf');

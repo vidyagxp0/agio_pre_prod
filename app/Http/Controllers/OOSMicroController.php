@@ -1213,43 +1213,43 @@ if($lastDocument->$key != $request->$key){
 // }
 // }
 //  Batch Disposition
-    // $batchDisposition = [
-    //     'others_BI' => 'Others',
-    //     'oos_category_BI' => 'OOS Category',
-    //     'material_batch_release_BI' => 'Material/Batch Release',
-    //     'other_action_BI' => 'Other Action (Specify)',
-    //     'field_alert_reference_BI' => 'Field Alert Reference',
-    //     'other_parameter_result_BI' => 'Other Parameters Results',
-    //     'trend_of_previous_batches_BI' => 'Trend of Previous Batches',
-    //     'stability_data_BI' => 'Stability Data',
-    //     'process_validation_data_BI' => 'Process Validation Data',
-    //     'method_validation_BI' => 'Method Validation',
-    //     'any_market_complaints_BI' => 'Any Market Complaints',
-    //     'statistical_evaluation_BI' => 'Statistical Evaluation',
-    //     'risk_analysis_for_disposition_BI' => 'Risk Analysis for Disposition',
-    //     'conclusion_BI' => 'Conclusion',
-    //     'phase_III_inves_required_BI' => 'Phase-III Inves.Required?',
-    //     'phase_III_inves_reference_BI' => 'Phase-III Inves.Reference',
-    //     'justify_for_delay_BI' => 'Justify for Delay in Activity',
-    //     'reopen_request'=> 'Other Action (Specify)',
-    // ];
+    $batchDisposition = [
+        'others_BI' => 'Others',
+        'oos_category_BI' => 'OOS Category',
+        'material_batch_release_BI' => 'Material/Batch Release',
+        'other_action_BI' => 'Other Action (Specify)',
+        'field_alert_reference_BI' => 'Field Alert Reference',
+        'other_parameter_result_BI' => 'Other Parameters Results',
+        'trend_of_previous_batches_BI' => 'Trend of Previous Batches',
+        'stability_data_BI' => 'Stability Data',
+       // 'process_validation_data_BI' => 'Process Validation Data',
+        'method_validation_BI' => 'Method Validation',
+        'any_market_complaints_BI' => 'Any Market Complaints',
+        'statistical_evaluation_BI' => 'Statistical Evaluation',
+        'risk_analysis_for_disposition_BI' => 'Risk Analysis for Disposition',
+        'conclusion_BI' => 'Conclusion',
+        'phase_III_inves_required_BI' => 'Phase-III Inves.Required?',
+       // 'phase_III_inves_reference_BI' => 'Phase-III Inves.Reference',
+        'justify_for_delay_BI' => 'Justify for Delay in Activity',
+        'reopen_request'=> 'Other Action (Specify)',
+    ];
 
-    // foreach ($batchDisposition as $key => $value) {
+    foreach ($batchDisposition as $key => $value) {
 
-    //     if($lastDocument->$key != $request->$key){
-    //         $history =  new OOSmicroAuditTrail();
-    //         $history->OOS_micro_id = $id;
-    //         $history->activity_type = $value;
-    //         $history->previous = $lastDocument->$key;
-    //         $history->current= $request->$key;
-    //         $history->comment= $request->comment;
-    //         $history->user_id = Auth::user()->id;
-    //         $history->user_name = Auth::user()->name;
-    //         $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-    //         $history->origin_state = $lastDocument->status;
-    //         $history->save();
-    //     }
-    // }
+        if($lastDocument->$key != $request->$key){
+            $history =  new OOSmicroAuditTrail();
+            $history->OOS_micro_id = $id;
+            $history->activity_type = $value;
+            $history->previous = $lastDocument->$key;
+            $history->current= $request->$key;
+            $history->comment= $request->comment;
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->save();
+        }
+    }
 
 
     // =========================== Audit Trail Update ===============================// 
@@ -2040,6 +2040,52 @@ if($lastDocument->$key != $request->$key){
             return back();
         }
     }
+    public function child(Request $request, $id)
+    {
+        $cft = [];
+        $parent_id = $id;
+        $parent_type = "Audit_Program";
+        $record_number = ((RecordNumber::first()->value('counter')) + 1);
+        $record_number = str_pad($record_number, 4, '0', STR_PAD_LEFT);
+        $currentDate = Carbon::now();
+        $formattedDate = $currentDate->addDays(30);
+        $due_date = $formattedDate->format('d-M-Y');
+        $parent_record = OOS_MICRO::where('id', $id)->value('record');
+        $parent_record = str_pad($parent_record, 4, '0', STR_PAD_LEFT);
+        $parent_division_id = OOS_MICRO::where('id', $id)->value('division_id');
+        $parent_initiator_id = OOS_MICRO::where('id', $id)->value('initiator_id');
+        $parent_intiation_date = OOS_MICRO::where('id', $id)->value('intiation_date');
+        $parent_created_at = OOS_MICRO::where('id', $id)->value('created_at');
+        $parent_short_description = OOS_MICRO::where('id', $id)->value('description_gi');
+        $hod = User::where('role', 4)->get();
+        // dd($record_number);
+        $old_record = OOS_MICRO::select('id', 'division_id', 'record')->get();
+
+        if ($request->child_type == "capa") {
+            $parent_name = "CAPA";
+            $Capachild = OOS_MICRO::find($id);
+            $Capachild->Capachild = $record_number;
+            $Capachild->save();
+
+            return view('frontend.forms.capa', compact('parent_id', 'parent_record','parent_type', 'record_number', 'due_date', 'parent_short_description', 'parent_initiator_id', 'parent_intiation_date', 'parent_name', 'parent_division_id', 'parent_record', 'old_record', 'cft'));
+        } elseif ($request->child_type == "Action_Item")
+         {
+            $parent_name = "CAPA";
+            $actionchild = OOS_MICRO::find($id);
+            $actionchild->actionchild = $record_number;
+            $parent_id = $id;
+            $actionchild->save();
+
+            return view('frontend.forms.action-item', compact('parent_short_description', 'parent_initiator_id', 'parent_intiation_date', 'parent_name', 'parent_division_id', 'parent_record', 'record_number', 'due_date', 'parent_id', 'parent_type'));
+        }
+        else {
+            $parent_name = "Root";
+            $Rootchild = OOS_MICRO::find($id);
+            $Rootchild->Rootchild = $record_number;
+            $Rootchild->save();
+            return view('frontend.forms.root-cause-analysis', compact('parent_id', 'parent_record','parent_type', 'record_number', 'due_date', 'parent_short_description', 'parent_initiator_id', 'parent_intiation_date', 'parent_name', 'parent_division_id', 'parent_record', ));
+        }
+    }
 // ================= close workflow ===================
     public function AuditTrial($id)
     {
@@ -2055,8 +2101,10 @@ if($lastDocument->$key != $request->$key){
     public function auditDetails($id)
     {
         $detail = OOSmicroAuditTrail::find($id);
-        $detail_data = OOSmicroAuditTrail::where('activity_type', $detail->activity_type)->where('oos_micro_id', $detail->id)->latest()->get();
-        $doc = OOS_MICRO::where('id', $detail->oos_micro_id)->first();
+        
+        $detail_data = OOSmicroAuditTrail::where('activity_type', $detail->activity_type)->where('id', $detail->id)->latest()->get();
+        $doc = OOS_MICRO::where('id', $detail->OOS_micro_id)->first();
+        $doc->origiator_name = User::find($doc->initiator_id);
         return view('frontend.OOS_Micro.comps_micro.audit-trial-inner', compact('detail', 'doc', 'detail_data'));
     }
     public static function auditReport($id)
@@ -2085,6 +2133,7 @@ if($lastDocument->$key != $request->$key){
             return $pdf->stream('OOS-Audit' . $id . '.pdf');
         }
     }
+
     public static function singleReport($id)
     {
         $data = OOS_MICRO::find($id);
@@ -2120,5 +2169,6 @@ if($lastDocument->$key != $request->$key){
             return $pdf->stream('OOS Micro' . $id . '.pdf');
         }
     }
+
 
 }

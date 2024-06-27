@@ -922,10 +922,7 @@ class OOSController extends Controller
         $detail = OosAuditTrial::find($id);
 
         $detail_data = OosAuditTrial::where('activity_type', $detail->activity_type)->where('oos_id', $detail->id)->latest()->get();
-
         $doc = OOS::where('id', $detail->oos_id)->first();
-        
-
         $doc->origiator_name = User::find($doc->initiator_id);
         
         return view('frontend.OOS.comps.audit-trial-inner', compact('detail', 'doc', 'detail_data'));

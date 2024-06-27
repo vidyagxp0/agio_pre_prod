@@ -220,179 +220,7 @@
                         <td class="w-80">@if($data->description_gi){{ $data->description_gi }}@else Not Applicable @endif</td>
                         <th class="w-20">Severity Level</th>
                         <td class="w-80">@if($data->severity_level_gi){{ $data->severity_level_gi }}@else Not Applicable @endif</td>
-
-
                     </tr>
-                    <tr>
-                    {{-- <th class="w-20">Assigned To</th>
-                        <td class="w-30">@if($data->assign_to){{ Helpers::getInitiatorName($data->assign_to) }} @else Not Applicable @endif</td> --}}
-                        <th class="w-20">Due Date</th>
-                        <td class="w-80"> @if($data->due_date){{ $data->due_date }} @else Not Applicable @endif</td>
-                        <th class="w-20">Deviation Occured On</th>
-                        <td class="w-80"> @if($data->deviation_occured_on_gi){{ $data->deviation_occured_on_gi }} @else Not Applicable @endif</td>
-
-                    </tr>
-
-
-                    <tr>
-                        <th class="w-20">Initiated Through</th>
-                        <td class="w-80">@if($data->initiated_through_gi){{ $data->initiated_through_gi }}@else Not Applicable @endif</td>
-
-                        <th class="w-20">If Others</th>
-                        <td class="w-80">@if($data->if_others_gi){{ $data->if_others_gi }}@else Not Applicable @endif</td>
-                    </tr>
-                    <tr>
-                        <th class="w-20"> Is Repeat</th>
-                        <td class="w-80">@if($data->is_repeat_gi){{ $data->is_repeat_gi }}@else Not Applicable @endif</td>
-                        <th class="w-20">Repeat Nature</th>
-                        <td class="w-80">@if($data->repeat_nature_gi){{ $data->repeat_nature_gi }}@else Not Applicable @endif</td>
-                    </tr>
-                    <tr>
-
-                            <th class="w-20">Nature of Change</th>
-                            <td class="w-30">@if($data->nature_of_change_gi){{ $data->nature_of_change_gi }} @else Not Applicable @endif</td>
-                    </tr>
-                     <tr>
-                        <th class="w-20">Source Document Type</th>
-                        <td class="w-80">@if($data->source_document_type_gi){{ $data->source_document_type_gi }} @else Not Applicable @endif</td>
-                    </tr>
-                    <tr>
-                            <th class="w-20">Reference System Document</th>
-                            <td class="w-80">@if($data->reference_system_document_gi){{ $data->reference_system_document_gi }} @else Not Applicable @endif</td>
-                            <th class="w-20">Reference Document</th>
-                            <td class="w-80">@if($data->reference_document_gi){{ $data->reference_document_gi }} @else Not Applicable @endif</td>
-                        </tr>
-                    <tr>
-                        <th class="w-20">Sample Type</th>
-                        <td class="w-80">@if($data->sample_type_gi){{ $data->sample_type_gi}}@else Not Applicable @endif</td>
-                        <th class="w-20">Product / Material Name</th>
-                        <td class="w-80">@if($data->product_material_name_gi){{ $data->product_material_name_gi }}@else Not Applicable @endif</td>
-                    </tr>
-                    <tr>
-                        <th class="w-20">Market</th>
-                        <td class="w-80">@if($data->market_gi){{ $data->market_gi }}@else Not Applicable @endif</td>
-
-                    </tr>
-                    <tr>
-                        <th class="w-20">Customer</th>
-                        <td class="w-80">@if($data->customer_gi){{ $data->customer_gi }}@else Not Applicable @endif</td>
-                    </tr>
-                </table>
-                {{-- --------------------------  Grid 1  ------------------------------- --}}
-
-                <div class="block"><strong>
-                                Info. On Product/ Material</strong>
-                        <hr style="width: 100%; height: 3px; background-color: black; border: none;">
-                            <div class="border-table">
-                                <table>
-                                    <tr class="table_bg">
-                                    {{-- <th colspan="1">SR no.</th> --}}
-                                    <th style="width: 4%">Row#</th>
-                                    <th style="width: 10%">Item/Product Code</th>
-                                    <th style="width: 8%"> Batch No*.</th>
-                                    <th style="width: 8%"> Mfg.Date</th>
-                                    <th style="width: 8%">Expiry Date</th>
-                                    <th style="width: 8%"> Label Claim.</th>
-                                    </tr>
-                                    <tr>
-                                        <td>Not Applicable</td>
-                                        <td>Not Applicable</td>
-                                        <td>Not Applicable</td>
-                                        <td>Not Applicable</td>
-                                        <td>Not Applicable</td>
-                                        <td>Not Applicable</td>
-                                    </tr>
-                                    {{-- @endif --}}
-                                </table>
-                            </div>
-                        </div>
-                        <div class="border-table">
-                            <table>
-                                <tr class="table_bg">
-                                {{-- <th colspan="1">SR no.</th> --}}
-                                <th style="width: 8%">Pack Size</th>
-                                <th style="width: 8%">Analyst Name</th>
-                                <th style="width: 10%">Others (Specify)</th>
-                                <th style="width: 10%"> In- Process Sample Stage.</th>
-                                <th style="width: 12% pt-3">Packing Material Type</th>
-                                <th style="width: 16% pt-2"> Stability for</th>
-                                </tr>
-                                <tr>
-                                    <td>Not Applicable</td>
-                                    <td>Not Applicable</td>
-                                    <td>Not Applicable</td>
-                                    <td>Not Applicable</td>
-                                    <td>Not Applicable</td>
-                                    <td>Not Applicable</td>
-                                </tr>
-                                {{-- @endif --}}
-                            </table>
-                        </div>
-
-                        <div class="sub-head"><strong> Details of Stability Study </strong></div>
-                        <hr style="width: 100%; height: 3px; background-color: black; border: none;">
-
-                            <div class="border-table">
-                                <table>
-                                    <tr class="table_bg">
-                                    {{-- <th colspan="1">SR no.</th> --}}
-                                    <th style="width: 4%">Row#</th>
-                                            <th style="width: 1%">AR Number</th>
-                                            <th style="width: 1%">Condition: Temperature & RH</th>
-                                            <th style="width: 1%">Interval</th>
-                                            <th style="width: 2%">Orientation</th>
-                                            <th style="width: 8%">Pack Details (if any)</th>
-                                    </tr>
-                                    <tr>
-                                        <td>Not Applicable</td>
-                                        <td>Not Applicable</td>
-                                        <td>Not Applicable</td>
-                                        <td>Not Applicable</td>
-                                        <td>Not Applicable</td>
-                                        <td>Not Applicable</td>
-                                    </tr>
-                                </table>
-                        </div>
-                        <div class="border-table">
-                            <table>
-                                <tr class="table_bg">
-                                {{-- <th colspan="1">SR no.</th> --}}
-                                        <th style="width: 10%">Specification No.</th>
-                                        <th style="width: 10%">Sample Description</th>
-                                </tr>
-                                <tr>
-                                    <td>Not Applicable</td>
-                                    <td>Not Applicable</td>
-                                </tr>
-                            </table>
-                    </div>
-                        <div class="sub-head"><strong>OOS Details </strong></div>
-                        <hr style="width: 100%; height: 3px; background-color: black; border: none;">
-                            <div class="border-table">
-                                <table>
-                                    <tr class="table_bg">
-                                    {{-- <th colspan="1">SR no.</th> --}}
-                                    <th style="width: 4%">Row#</th>
-                                            <th style="width: 8%">AR Number.</th>
-                                            <th style="width: 8%">Test Name of OOS</th>
-                                            <th style="width: 12%">Results Obtained</th>
-                                            <th style="width: 16%">Specification Limit</th>
-                                            <th style="width: 16%">Details of Obvious Error</th>
-                                            <th style="width: 16%">File Attachment</th>
-                                    </tr>
-                                    <tr>
-                                        <td>Not Applicable</td>
-                                        <td>Not Applicable</td>
-                                        <td>Not Applicable</td>
-                                        <td>Not Applicable</td>
-                                        <td>Not Applicable</td>
-                                        <td>Not Applicable</td>
-                                        <td>Not Applicable</td>
-                                    </tr>
-                                    {{-- @endif --}}
-                                </table>
-                        </div>
-
 
 
                     {{-- -------------------------Preliminary Lab Investigation------------------- --}}
@@ -406,110 +234,28 @@
     $Preliminary_Lab_Investigation = [
                     'comments_pli' => 'Comments',
                     'field_alert_required_pli' => 'Field Alert Required',
-                    'field_alert_ref_no_pli' => 'Field Alert Ref.No.',
                     'justify_if_no_field_alert_pli' => 'Justify if no Field Alert',
                     'verification_analysis_required_pli' => 'Verification Analysis Required',
-                    'verification_analysis_ref_pli' => 'Verification Analysis Ref.',
                     'analyst_interview_req_pli' => 'Analyst Interview Req.',
-                    'analyst_interview_ref_pli' => 'Analyst Interview Ref.',
                     'justify_if_no_analyst_int_pli' => 'Justify if no Analyst Int.',
                     'phase_i_investigation_required_pli' => 'Phase I Investigation Required',
-                    'phase_i_investigation_pli' => 'Phase I Investigation ',
-                    'phase_i_investigation_ref_pli' => 'Phase I Investigation Ref.',
+                    'phase_i_investigation_pli' => 'Phase I Investigation '
 ];
 
 @endphp
 
-                      @foreach ($Preliminary_Lab_Investigation as $key => $value)
-                        @if(bcmod($loop->index, 2) == 0) <tr> @endif
+                    @foreach ($Preliminary_Lab_Investigation as $key => $value)
+                        @if(bcmod($loop->index, 2) == 0) 
+                        <tr> @endif
                             <th class="w-20">{{$value}}</th>
-                            <td class="w-80">@if($data->$key){{ $data->$key}} @else Not Applicable @endif</td>
-                        @if(bcmod($loop->index, 2) == 1 || $loop->last) </tr> @endif
+                            <td class="w-80">@if($data->$key) {{ $data->$key}} @else
+                                 Not Applicable @endif</td>
+                          @if(bcmod($loop->index, 2) == 1 || $loop->last) 
+                        </tr>
+                        @endif
                     @endforeach
                 </table>
-                <div class="col-12">
-
-                    <label style="font-weight: bold; for="Audit Attachments">PHASE- I B INVESTIGATION REPORT</label>
-
-
-                    @php
-                    $phase_I_investigations = [
-                            "Aliquot and standard solutions preserved.",
-                            "Visual examination (solid and solution) reveals normal or abnormal appearance.",
-                            "The analyst is trained on the method.",
-                            "Correct test procedure followed e.g. Current Version of standard testing procedure has been used in testing.",
-                            "Current Validated analytical Method has been used and the data of analytical method validation has been reviewed and found satisfactory.",
-                            "Correct sample(s) tested.",
-                            "Sample Integrity maintained, correct container is used in testing.",
-                            "Assessment of the possibility that the sample contamination (sample left open to air or unattended) has occurred during the testing/ re-testing procedure.",
-                            "All equipment used in the testing is within calibration due period.",
-                            "Equipment log book has been reviewed and no any failure or malfunction has been reviewed.",
-                            "Any malfunctioning and / or out of calibration analytical instruments (including glassware) is used.",
-                            "Whether reference standard / working standard is correct (in terms of appearance, purity, LOD/water content & its storage) and assay values are determined correctly.",
-                            "Whether test solution / volumetric solution used are properly prepared & standardized.",
-                            "Review RSD, resolution factor and other parameters required for the suitability of the test system. Check if any out of limit parameters is included in the chromatographic analysis, correctness of the column used previous use of the column.",
-                            "In the raw data, including chromatograms and spectra; any anomalous or suspect peaks or data has been observed.",
-                            "Any such type of observation has been observed previously (Assay, Dissolution etc.).",
-                            "Any unusual or unexpected response observed with standard or test preparations (e.g. whether contamination of equipment by previous sample observed).",
-                            "System suitability conditions met (those before analysis and during analysis).",
-                            "Correct and clean pipette / volumetric flasks volumes, glassware used as per recommendation.",
-                            "Other potentially interfering testing/activities occurring at the time of the test which might lead to OOS.",
-                            "Review of other data for other batches performed within the same analysis set and any nonconformance observed.",
-                            "Consideration of any other OOS results obtained on the batch of material under test and any non-conformance observed.",
-                            "Media/Reagents prepared according to procedure.",
-                            "All the materials are within the due period of expiry.",
-                            "Whether, analysis was performed by any other alternate validated procedure",
-                            "Whether environmental condition is suitable to perform the test.",
-                            "Interview with analyst to assess knowledge of the correct procedure."
-
-                    ];
-                @endphp
-                <div class="group-input ">
-
-                    <div class="why-why-chart mx-auto" style="width: 100%">
-
-                        <table class="table table-bordered ">
-                            <thead>
-                                <tr>
-                                    <th style="width: 5%;">Sr.No.</th>
-                                    <th style="width: 40%;">Question</th>
-                                    <th style="width: 20%;">Response</th>
-                                    <th>Remarks</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-
-                                @foreach ($phase_I_investigations as $phase_I_investigation )
-                                <tr>
-                                    <td class="flex text-center">{{$loop->index+1}}</td>
-                                    <td>{{$phase_I_investigation}}</td>
-                                    <td>
-                                        <div
-                                            style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                            <select  type="text"  name="phase_IB_investigation[{{$loop->index}}][response]" id="response"
-                                                style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="">Select an Option</option>
-                                                <option value="Yes" {{ Helpers::getMicroGridData($data, 'phase_IB_investigation', true, 'response', true, $loop->index) == 'Yes' ? 'selected' : '' }}>Yes</option>
-                                                <option value="No" {{ Helpers::getMicroGridData($data, 'phase_IB_investigation', true, 'response', true, $loop->index) == 'No' ? 'selected' : '' }} >No</option>
-                                                <option value="N/A"  {{ Helpers::getMicroGridData($data, 'phase_IB_investigation', true, 'response', true, $loop->index) == 'N/A' ? 'selected' : '' }}>N/A</option>
-                                            </select>
-                                        </div>
-                                    </td>
-
-
-                                    <td style="vertical-align: middle;">
-                                        <div style="margin: auto; display: flex; justify-content: center;">
-                                            <textarea name="phase_IB_investigation[{{$loop->index}}][remark]" style="border-radius: 7px; border: 1.5px solid black;">{{ Helpers::getMicroGridData($data, 'phase_IB_investigation', true, 'remark', true, $loop->index) }}
-                                            </textarea>
-                                        </div>
-                                    </td>
-                                </tr>
-                                @endforeach
-
-                            </tbody>
-                        </table>
-                    </div>
-
+               
 
 
 {{-- -------------------------Preliminary Lab Investigation------------------- --}}
@@ -528,7 +274,6 @@
                             'root_cause_details_plic' => 'Root Cause Details',
                             'oos_category_root_cause_plic' => 'OOS Category-Root Cause Ident.',
                             'recommended_actions_required_plic' => 'Recommended Actions Required?',
-                            'recommended_actions_reference_plic' => 'Recommended Actions Reference',
                             'capa_required_plic' => 'CAPA Required',
                             'reference_capa_no_plic' => 'Reference CAPA No.',
                             'delay_justification_for_pi_plic' => 'Delay Justification for P.I.',
@@ -537,18 +282,17 @@
 @endphp
 
                             @foreach ($Preliminary_Lab_Investigation_Conclusion as $key => $value)
-                            @if(bcmod($loop->index, 2) == 0) <tr> @endif
+                            @if(bcmod($loop->index, 2) == 0) 
+                            <tr> 
+                            @endif
                                 <th class="w-20">{{$value}}</th>
                                 <td class="w-80">@if($data->$key){{ $data->$key}} @else Not Applicable @endif</td>
-                            @if(bcmod($loop->index, 2) == 1 || $loop->last) </tr> @endif
+                            @if(bcmod($loop->index, 2) == 1 || $loop->last) 
+                            </tr> 
+                            @endif
                             @endforeach
 
                     </table>
-
-
-
- {{-- -------------------------Preliminary Lab Investigation review------------------- --}}
-
                     <div class="block-head">
                         Preliminary Lab Invst Review
                     </div>
@@ -1204,7 +948,7 @@ $OOS_CQ_Review = [
                                  <td class="w-20">Not Applicable</td>
                              </tr>
                          @endif
-
+    
                      </table>
                    </div>
             </div>
@@ -1212,6 +956,12 @@ $OOS_CQ_Review = [
                     </div>
                     </div>
 
+
+
+
+ {{-- -------------------------Preliminary Lab Investigation review------------------- --}}
+
+              
 
             <div class="block">
                 <div class="block-head">
