@@ -41,13 +41,13 @@ class DeviationController extends Controller
 {
     public function deviation(Request $request){
         $old_record = Deviation::select('id', 'division_id', 'record')->get();
-        // $record_number = (RecordNumber::first()->value('counter')) + 1;
-        // $record_number = str_pad($record_number, 4, '0', STR_PAD_LEFT);
+        $record_number = (RecordNumber::first()->value('counter')) + 1;
+        $record_number = str_pad($record_number, 4, '0', STR_PAD_LEFT);
         $currentDate = Carbon::now();
         $formattedDate = $currentDate->addDays(30);
         $due_date = $formattedDate->format('d-M-Y');
         $pre = Deviation::all();
-        return response()->view('frontend.forms.deviation.deviation_new', compact('formattedDate', 'due_date', 'old_record', 'pre'));
+        return response()->view('frontend.forms.deviation.deviation_new', compact('formattedDate', 'due_date', 'old_record', 'pre','record_number'));
     }
 
     public function store(Request $request)
@@ -171,13 +171,6 @@ class DeviationController extends Controller
         $deviation->who=$request->who;
         $deviation->how=$request->how;
         $deviation->how_much=$request->how_much;
-        // $deviation->what = $validatedData['what'];
-        // $deviation->why_why = $validatedData['why_why'];
-        // $deviation->where_where = $validatedData['where_where'];
-        // $deviation->when_when = $validatedData['when_when'];
-        // $deviation->who = $validatedData['who'];
-        // $deviation->how = $validatedData['how'];
-        // $deviation->how_much = $validatedData['how_much'];
         $deviation->Detail_Of_Root_Cause=$request->Detail_Of_Root_Cause;
 
         if ($request->Deviation_category == 'major' || $request->Deviation_category == 'minor' || $request->Deviation_category == 'critical') {

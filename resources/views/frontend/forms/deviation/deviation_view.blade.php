@@ -1691,7 +1691,7 @@
                                                                             value="{{ isset(unserialize($grid_data2->product_name)[$key]) ? unserialize($grid_data2->product_name)[$key] : '' }}">
                                                                     </td>
                                                                     <td>
-                                                                    <input type="text" class="productStage" name="product_stage[]" value="{{ isset($product_stage[$key]) ? $product_stage[$key] : '' }}"
+                                                                    <input type="text" class="productStage" name="product_stage[]" value="{{ isset(unserialize($grid_data2->product_stage)[$key]) ? unserialize($grid_data2->product_stage)[$key] : '' }}"
                                                                     {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }} id="product_stage">
                                                                     </td>
                                                                     <td><input class="productBatchNo" type="text"
@@ -1777,8 +1777,7 @@
 
                                         <div class="col-md-12">
                                         <div class="group-input">
-                                            <label for="Description Deviation">Description of Deviation <span
-                                                    class="text-danger">*</span></label>
+                                            <label for="Description Deviation">Description of Deviation</label>
                                         </div>
                                     <table class="table table-bordered">
                                             <thead class="table-light">
