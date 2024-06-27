@@ -1005,10 +1005,10 @@ $users = DB::table('users')
                             Please Attach all relevant or supporting documents
                         </small>
                         <div class="file-attachment-field">
-                            <div class="file-attachment-list" id="file_attach"></div>
+                            <div class="file-attachment-list" id="file_attachments_pli"></div>
                             <div class="add-btn">
                                 <div>Add</div>
-                                <input type="file" id="myfile" name="file_attachments_pli[]" oninput="addMultipleFiles(this, 'file_attach')" multiple>
+                                <input type="file" id="myfile" name="file_attachments_pli[]" oninput="addMultipleFiles(this, 'file_attachments_pli')" multiple>
                             </div>
                         </div>
                     </div>
@@ -1351,11 +1351,11 @@ $users = DB::table('users')
                                     Please Attach all relevant or supporting documents
                                 </small>
                                 <div class="file-attachment-field">
-                                    <div class="file-attachment-list" id="file_attach"></div>
+                                    <div class="file-attachment-list" id="supporting_attachments_plir"></div>
                                     <div class="add-btn">
                                         <div>Add</div>
                                         <input type="file" id="myfile" name="supporting_attachments_plir[]"
-                                            oninput="addMultipleFiles(this, 'file_attach')" multiple>
+                                            oninput="addMultipleFiles(this, 'supporting_attachments_plir')" multiple>
                                     </div>
                                 </div>
                             </div>
@@ -5744,7 +5744,7 @@ $users = DB::table('users')
                             </div>
                         </div>
 
-    <div id="CCForm21" class="inner-block cctabcontent">
+        <div id="CCForm21" class="inner-block cctabcontent">
 
             <div class="inner-block-content">
 
@@ -5755,22 +5755,22 @@ $users = DB::table('users')
                 </div>
                     @php
                     $training_records_analyst_involvedIn_testing_microbial_asssays = [
-    [
-        'question' => "Was analyst trained on testing procedure?",
-        'is_sub_question' => false,
-        'input_type' => 'text'
-    ],
-    [
-        'question' => "Was the analyst qualified for testing?",
-        'is_sub_question' => false,
-        'input_type' => 'text'
-    ],
-    [
-        'question' => "Date of qualification:",
-        'is_sub_question' => true,
-        'input_type' => 'date'
-    ]
-    ];
+                    [
+                        'question' => "Was analyst trained on testing procedure?",
+                        'is_sub_question' => false,
+                        'input_type' => 'text'
+                    ],
+                    [
+                        'question' => "Was the analyst qualified for testing?",
+                        'is_sub_question' => false,
+                        'input_type' => 'text'
+                    ],
+                    [
+                        'question' => "Date of qualification:",
+                        'is_sub_question' => true,
+                        'input_type' => 'date'
+                    ]
+                    ];
 
                     @endphp
         <div class="row">
@@ -6870,13 +6870,8 @@ $users = DB::table('users')
                     <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"> Exit </a> </button>
 
                 </div>
-
             </div>
-
         </div>
-
-
-
         <div id="CCForm22" class="inner-block cctabcontent">
             <div class="inner-block-content">
                 <div class="sub-head">
@@ -8135,12 +8130,10 @@ $users = DB::table('users')
                         <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white">
                                 Exit </a> </button>
                     </div>
-                </div>
             </div>
         </div>
-
-
-        <div id="CCForm23" class="inner-block cctabcontent">
+    </div>
+    <div id="CCForm23" class="inner-block cctabcontent">
             <div class="inner-block-content">
                 <div class="sub-head">
                     Checklist for Analyst training & Procedure
@@ -8924,11 +8917,11 @@ $users = DB::table('users')
                                     <div class="group-input">
                                         <label for="Audit Attachments">If Yes, Provide attachment details</label>
                                         <div class="file-attachment-field">
-                                            <div class="file-attachment-list" id="file_attach"></div>
+                                            <div class="file-attachment-list" id="attachment_details_cimst"></div>
                                                 <div class="add-btn">
                                                 <div>Add</div>
                                                 <input type="file" id="myfile" name="attachment_details_cimst[]"
-                                                    oninput="addMultipleFiles(this, 'file_attach')" multiple/>
+                                                    oninput="addMultipleFiles(this, 'attachment_details_cimst')" multiple/>
                                             </div>
                                         </div>
                                     </div>

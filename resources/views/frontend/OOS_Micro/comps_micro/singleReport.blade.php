@@ -655,7 +655,7 @@
             </div>
            <!-- Preliminary Lab. Investigation TapII -->
         
-           <div class="block">
+            <div class="block">
                 <div class="block-head"> Investigation Conclusion </div>
                 <table>
                     <tr>  {{ $data->created_at }} added by {{ $data->originator }}
@@ -820,116 +820,9 @@
                     </table>
                     </div>
                 </div>
-           </table>
+              </table>
             </div>
-            <div class="block">
-                <div class="block-head"> Phase II Investigation </div>
-                <table>
-                    <tr> 
-                        <th class="w-20">QA Approver Comments</th>
-                        <td class="w-30">{{ $data->qa_approver_comments_piii ? $data->qa_approver_comments_piii : 'Not Applicable' }}</td>
-                    </tr>
-                   <tr>
-                        <th class="w-20">Manufact. Invest. Required?</th>
-                        <td class="w-30">{{ $data->manufact_invest_required_piii ? $data->manufact_invest_required_piii : 'Not Applicable' }}</td>
-                        <th class="w-20">Manufacturing Invest. Type</th>
-                        <td class="w-80">No Applicable</td>
-                   </tr>
-                   <tr>
-                        <th class="w-20">Manufacturing Invst. Ref.</th>
-                        <td class="w-30">{{ $data->manufact_invest_required_piii ? $data->manufact_invest_required_piii : 'Not Applicable' }}</td>
-                        <th class="w-20">Re-sampling Required?</th>
-                        <td class="w-80">{{ $data->re_sampling_required_piii ? $data->re_sampling_required_piii : 'Not Applicable' }}
-                            </td>
-                   </tr>
-                 <tr>
-                    <th class="w-20">Audit Comments</th>
-                    <td class="w-80">{{ $data->audit_comments_piii ? $data->audit_comments_piii : 'Not Applicable' }}</td>
-                </tr>
-                <tr>
-                    <th class="w-20">Re-sampling Ref. No.</th>
-                    <td class="w-80">No Applicable</td>
-                </tr>    
-                  <tr>
-                  
-                        <th class="w-20">Hypo/Exp. Required.</th>
-                        <td class="w-80">{{ $data->hypo_exp_required_piii ? $data->hypo_exp_required_piii : 'Not Applicable' }}</td>
-                        <th class="w-20">Hypo/Exp. Reference</th>
-                        <td class="w-80">No Applicable </td>
-                  </tr>
-                  <div class="block-head"> Attachments</div>
-                      <div class="border-table">
-                        <table>
-                            <tr class="table_bg">
-                                <th class="w-20">S.N.</th>
-                                <th class="w-80">File </th>
-                            </tr>
-                            @if ($data->file_attachments_pII)
-                            @foreach ($data->file_attachments_pII as $key => $file)
-                                 <tr>
-                                    <td class="w-20">{{ $key + 1 }}</td>
-                                    <td class="w-80"><a href="{{ asset('upload/' . $file) }}" target="_blank"><b>{{ $file }}</b></a> </td>
-                                </tr>
-                            @endforeach
-                            @else
-                                <tr>
-                                    <td class="w-20">1</td>
-                                    <td class="w-20">Not Applicable</td>
-                                </tr>
-                            @endif
-                        </table>
-                      </div>
-                </table>
-            </div>
-            <div class="block">
-                <div class="block-head"> CheckList - Phase II Investigation</div>
-                  <div class="border-table">
-                    @php
-                        $phase_II_OOS_investigations = [
-                        "Is correct batch manufacturing record used?",
-                        "Correct quantities of correct ingredients were used in manufacturing?",
-                        "Balances used in dispensing / verification were calibrated using valid standard weights?",
-                        "Equipment used in the manufacturing is as per batch manufacturing record?",
-                        "Processing steps followed in correct sequence as per the BMR?",
-                        "Whether material used in the batch had any OOS result?",
-                        "All the processing parameters were within the range specified in BMR?",
-                        "Environmental conditions during manufacturing are as per BMR?",
-                        "Whether there was any deviation observed during manufacturing?",
-                        "The yields at different stages were within the acceptable range as per BMR?",
-                        "All the equipment’s used during manufacturing are calibrated?",
-                        "Whether there is malfunctioning or breakdown of equipment during manufacturing?",
-                        "Whether the processing equipment was maintained as per preventive maintenance schedule?",
-                        "All the in process checks were carried out as per the frequency given in BMR & the results were within acceptance limit?",
-                        "Whether there were any failures of utilities (like Power, Compressed air, steam etc.) during manufacturing?",
-                        "Whether other batches/products impacted?",
-                        "Any Other"
-                        ];
-                    @endphp
-                    <table>
-                        <tr class="table_bg">
-                            <th style="width: 5%;">Sr.No.</th>
-                            <th style="width: 40%;">Question</th>
-                            <th style="width: 20%;">Response</th>
-                            <th>Remarks</th>
-                        </tr>
-                        @if ($phase_II_OOS_investigations)
-                        @foreach ($phase_II_OOS_investigations as $phase_II_OOS_investigation)
-                        <tr>
-                            <td class="w-15">{{ $loop->index+1 }}</td>
-                            <td class="w-15">{{ $phase_II_OOS_investigation }}</td>
-                            <td class="w-15">{{ Helpers::getMicroGridData($data, 'phase_II_OOS_investigations', true, 'response', true, $loop->index) }}</td>
-                            <td class="w-35">{{ Helpers::getMicroGridData($data, 'phase_II_OOS_investigations', true, 'remark', true, $loop->index) }}</td>
-                        </tr>
-                        @endforeach
-                        @else
-                        <tr>
-                            Not Applicable
-                        </tr>
-                        @endif
-                    </table>
-                </div>
-            </div>
-            <!--Start Checklist - Investigation of Bacterial Endotoxin Test -->
+            <!--Start Checklist - Investigation of Bacterial Endotoxin Test CCForm18 -->
             <div class="block">
                <div class="block-head"> Checklist for Review of Training records Analyst Involved in Testing </div>
                <div class="block-head"> Checklist for Sample receiving & verification in lab : </div>
@@ -993,7 +886,7 @@
                     </table>
                 </div>
             </div>
-            <!-- Checklist - Investigation of Sterility-->
+            <!-- Checklist - Investigation of Sterility CCForm19-->
             <div class="block">
                 <div class="block-head"> Checklist - Investigation of Sterility: </div>
                     <div class="border-table">
@@ -1307,7 +1200,7 @@
                 @endif
             </table>
             </div>
-            <!--  Checklist3 - Investigation of Microbial limit test/Bioburden and Water Test -->
+            <!--  Checklist3 - Investigation of Microbial limit test/Bioburden and Water Test CCForm20-->
             <div class="block">
                 <div class="block-head"> Checklist - Investigation of Microbial limit test/Bioburden and Water Test </div>
                 <div class="block-head"> Checklist for Review of Training records Analyst Involved in Testing </div>
@@ -2114,7 +2007,7 @@
                     </table>
                     </div>
             </div>
-            <!-- Checklist - Investigation of Microbial assay ----------------->
+            <!-- Checklist - Investigation of Microbial assay CCForm21----------------->
             <div class="block">
                 <div class="block-head"> Checklist - Investigation of Microbial assay </div>
                 <div class="block-head">Checklist for Review of Training records Analyst Involved in Testing: </div>
@@ -2478,7 +2371,6 @@
                             @endforeach
                     </table>
                 </div> 
-                <!-- AFTER PHOTO -->
                 <div class="block-head"> Checklist for Review of Microbial cultures/Inoculation (Test organism): </div>
                     <div class="border-table">
                     @php
@@ -2547,7 +2439,6 @@
                             @endforeach
                     </table>
                 </div>
-                <!-- after PHOTO -->
                 <div class="block-head">  Checklist for Review of Environmental conditions in the testing area : </div>
                     <div class="border-table">
                     @php
@@ -2785,9 +2676,1458 @@
                     </table>
                     </div>
             </div>
-             
-        <!-- ====================== close CheckList Part ==================-->
+            <!-- Checklist - Investigation of Environmental Monitoring CCForm22----------------->
             <div class="block">
+                <div class="block-head"> Checklist - Investigation of Environmental Monitoring </div>
+                <div class="block-head">Checklist for review of Training records Analyst Involved in monitoring: </div>
+                    <div class="border-table">
+                    @php
+                                                $CR_of_training_rec_anaylst_in_monitoring_CIEMs = [
+                            [
+                                'question' => "Is the analyst trained for Environmental monitoring?",
+                                'is_sub_question' => false,
+                                'input_type' => 'text'
+                            ],
+                            [
+                                'question' => "Was the analyst qualified for Personnel qualification?",
+                                'is_sub_question' => false,
+                                'input_type' => 'text'
+                            ],
+                            [
+                                'question' => "Date of qualification:",
+                                'is_sub_question' => true,
+                                'input_type' => 'date'
+                            ],
+                            [
+                                'question' => "Was the analyst trained on entry exit /procedure/In production area or any monitoring area?",
+                                'is_sub_question' => false,
+                                'input_type' => 'text'
+                            ],
+                            [
+                                'question' => "SOP No.:",
+                                'is_sub_question' => true,
+                                'input_type' => 'number'
+                            ],
+                            [
+                                'question' => "Was an analyst /sampling persons suffering from any ailment such as cough/cold or open wound or skin infections during analysis?",
+                                'is_sub_question' => false,
+                                'input_type' => 'text'
+                            ],
+                            [
+                                'question' => "Was the analyst followed gowning procedure properly?",
+                                'is_sub_question' => true,
+                                'input_type' => 'text'
+                            ],
+                            [
+                                'question' => "Was analyst performed colony counting correctly?",
+                                'is_sub_question' => false,
+                                'input_type' => 'text'
+                            ]
+                        ];
+                    @endphp
+                    <table>
+                        <tr class="table_bg">
+                            <th style="width: 5%;">Sr.No.</th>
+                            <th style="width: 40%;">Question</th>
+                            <th style="width: 20%;">Response</th>
+                            <th>Remarks</th>
+                        </tr> 
+                        @php
+                            $main_question_index = 1.0;
+                            $sub_question_index = 0;
+                        @endphp
+
+                        @foreach ($CR_of_training_rec_anaylst_in_monitoring_CIEMs as $index => $review_item)
+                        @php
+                            if ($review_item['is_sub_question']) {
+                                $sub_question_index++;
+                            } else {
+                                $sub_question_index = 0;
+                                $main_question_index += 0.1;
+                            }
+                        @endphp        
+                        <tr>
+                            <td class="flex text-center">{{ $review_item['is_sub_question'] ? $main_question_index .'.'. $sub_question_index : number_format($main_question_index, 1) }}</td>
+                            <td>{{$review_item['question']}}</td>
+                            <td>{{ Helpers::getMicroGridData($data, 'CR_of_training_rec_anaylst_in_monitoring_CIEM', true, 'response', true, $index) ?? '' }}</td>
+                            <td>{{ Helpers::getMicroGridData($data, 'CR_of_training_rec_anaylst_in_monitoring_CIEM', true, 'remark', true, $index) ?? '' }}</td>
+                        </tr>
+                        @endforeach
+                    </table>
+                </div>
+                <div class="block-head"> Checklist for sample details: </div>
+                    <div class="border-table">
+                    @php
+                        $Check_for_Sample_details_CIEMs = [
+                            [
+                                'question' => "Was the plate verified at the time of monitoring?",
+                                'is_sub_question' => false,
+                                'input_type' => 'text'
+                            ],
+                            [
+                                'question' => "Was the plate transported as per approved procedure?",
+                                'is_sub_question' => false,
+                                'input_type' => 'text'
+                            ],
+                            [
+                                'question' => "Was the correct location ID & Room Name mentioned on plate exposed?",
+                                'is_sub_question' => false,
+                                'input_type' => 'text'
+                            ],
+                            [
+                                'question' => "What is the grade of plate exposed area?",
+                                'is_sub_question' => false,
+                                'input_type' => 'number'
+                            ],
+                            [
+                                'question' => "Is area crossing Alert limit or action limit?",
+                                'is_sub_question' => false,
+                                'input_type' => 'text'
+                            ]
+                        ];
+
+                    @endphp
+
+                    <table>
+                        <tr class="table_bg">
+                            <th style="width: 5%;">Sr.No.</th>
+                            <th style="width: 40%;">Question</th>
+                            <th style="width: 20%;">Response</th>
+                            <th>Remarks</th>
+                        </tr> 
+                        @php
+                            $main_question_index = 2.0;
+                            $sub_question_index = 0;
+                        @endphp
+
+                        @foreach ($Check_for_Sample_details_CIEMs as $index => $review_item)
+                        @php
+                            if ($review_item['is_sub_question']) {
+                                $sub_question_index++;
+                            } else {
+                                $sub_question_index = 0;
+                                $main_question_index += 0.1;
+                            }
+                        @endphp
+                        <tr>
+                            <td class="flex text-center">{{ $review_item['is_sub_question'] ? $main_question_index .'.'. $sub_question_index : number_format($main_question_index, 1) }}</td>
+                            <td>{{$review_item['question']}}</td>
+                            <td>{{ Helpers::getMicroGridData($data, 'Check_for_Sample_details_CIEM', true, 'response', true, $index) ?? '' }}</td>
+                            <td>{{ Helpers::getMicroGridData($data, 'Check_for_Sample_details_CIEM', true, 'remark', true, $index) ?? '' }}</td>
+                        </tr>
+                        @endforeach
+                    </table>
+                </div>
+                <div class="block-head">  Checklist for comparison of results with other parameters: </div>
+                    <div class="border-table">
+                    @php
+                        $Check_for_comparision_of_results_CIEMs = [
+                            [
+                                'question' => "Was any Excursions in other settle plate exposure?",
+                                'is_sub_question' => false,
+                                'input_type' => 'text'
+                            ],
+                            [
+                                'question' => "Was any Excursions in other active air plate sampling?",
+                                'is_sub_question' => false,
+                                'input_type' => 'text'
+                            ],
+                            [
+                                'question' => "Was any Excursions in surface monitoring?",
+                                'is_sub_question' => false,
+                                'input_type' => 'text'
+                            ],
+                            [
+                                'question' => "Was any Excursions in personnel monitoring on same day?",
+                                'is_sub_question' => false,
+                                'input_type' => 'text'
+                            ],
+                            [
+                                'question' => "Is results of next day monitoring within the acceptance?",
+                                'is_sub_question' => false,
+                                'input_type' => 'text'
+                            ],
+                            [
+                                'question' => "Was negative control of the test procedure found satisfactory?",
+                                'is_sub_question' => false,
+                                'input_type' => 'text'
+                            ],
+                            [
+                                'question' => "Were the results of the other samples analyzed on the same day/time by using same media, reagents and accessories found satisfactory?",
+                                'is_sub_question' => false,
+                                'input_type' => 'text'
+                            ],
+                            [
+                                'question' => "Were the plate transferred and incubated at desired temp.as per approved procedure?",
+                                'is_sub_question' => false,
+                                'input_type' => 'text'
+                            ]
+                        ];
+                    @endphp
+                    <table>
+                        <tr class="table_bg">
+                            <th style="width: 5%;">Sr.No.</th>
+                            <th style="width: 40%;">Question</th>
+                            <th style="width: 20%;">Response</th>
+                            <th>Remarks</th>
+                        </tr> 
+                        @php
+                            $main_question_index = 3.0;
+                            $sub_question_index = 0;
+                        @endphp
+
+                        @foreach ($Check_for_comparision_of_results_CIEMs as $index => $review_item)
+                        @php
+                            if ($review_item['is_sub_question']) {
+                                $sub_question_index++;
+                            } else {
+                                $sub_question_index = 0;
+                                $main_question_index += 0.1;
+                            }
+                        @endphp
+                        <tr>
+                            <td class="flex text-center">{{ $review_item['is_sub_question'] ? $main_question_index .'.'. $sub_question_index : number_format($main_question_index, 1) }}</td>
+                            <td>{{$review_item['question']}}</td>
+                            <td>{{ Helpers::getMicroGridData($data, 'Check_for_comparision_of_results_CIEM', true, 'response', true, $index) ?? '' }}</td>
+                            <td>{{ Helpers::getMicroGridData($data, 'Check_for_comparision_of_results_CIEM', true, 'remark', true, $index) ?? '' }}</td>
+                        </tr>
+                        @endforeach
+                    </table>
+                </div>
+                <div class="block-head">  Checklist for details of media dehydrated media used: </div>
+                    <div class="border-table"> 
+                    @php
+                    $checklist_for_media_dehydrated_CIEMs = [
+                        [
+                            'question' => "Name of media used for in the analysis:",
+                            'is_sub_question' => true,
+                            'input_type' => 'text'
+                        ],
+                        [
+                            'question' => "Did the COA of the media checked and found satisfactory?",
+                            'is_sub_question' => true,
+                            'input_type' => 'text'
+                        ],
+                        [
+                            'question' => "Media Lot. No.",
+                            'is_sub_question' => true,
+                            'input_type' => 'text'
+                        ],
+                        [
+                            'question' => "Media Qualified date /Qualified By",
+                            'is_sub_question' => true,
+                            'input_type' => 'date'
+                        ],
+                        [
+                            'question' => "Media expiry date",
+                            'is_sub_question' => true,
+                            'input_type' => 'date'
+                        ]
+                    ];
+                    @endphp
+
+                    <table>
+                        <tr class="table_bg">
+                            <th style="width: 5%;">Sr.No.</th>
+                            <th style="width: 40%;">Question</th>
+                            <th style="width: 20%;">Response</th>
+                            <th>Remarks</th>
+                        </tr> 
+                        @foreach ($checklist_for_media_dehydrated_CIEMs as $checklist_for_media_dehydrated_CIEM )
+                            <tbody>
+                                @php
+                                    $main_question_index = 4.1;
+                                    $sub_question_index = 0;
+                                @endphp
+
+                                @php
+                                    if ($checklist_for_media_dehydrated_CIEM['is_sub_question']) {
+                                        $sub_question_index++;
+                                    } else {
+                                        $sub_question_index = 0;
+                                        $main_question_index += 0.1;
+                                    }
+                                @endphp
+                                <tr>
+                                    <td class="flex text-center">{{ $checklist_for_media_dehydrated_CIEM['is_sub_question'] ? $main_question_index .'.'. $sub_question_index : number_format($main_question_index, 1) }}</td>
+                                    <td>{{$checklist_for_media_dehydrated_CIEM['question']}}</td>
+                                <td>{{ Helpers::getMicroGridData($data, 'checklist_for_media_dehydrated_CIEMs', true, 'response', true, $index) ?? '' }}</td>
+                                <td>{{ Helpers::getMicroGridData($data, 'checklist_for_media_dehydrated_CIEMs', true, 'remark', true, $index) ?? '' }}</td>
+                            </tr>
+                            @endforeach
+                    </table>
+                </div> 
+                <div class="block-head"> Checklist for media preparation details and sterilization: </div>
+                    <div class="border-table">
+                    @php
+                    $checklist_for_media_prepara_sterilization_CIEMs = [
+                    [
+                        'question' => "Date of media preparation",
+                        'is_sub_question' => true,
+                        'input_type' => 'date'
+                    ],
+                    [
+                        'question' => "Media Lot. No.",
+                        'is_sub_question' => true,
+                        'input_type' => 'number'
+                    ],
+                    [
+                        'question' => "Media prepared date",
+                        'is_sub_question' => true,
+                        'input_type' => 'date'
+                    ],
+                    [
+                        'question' => "Media expiry date",
+                        'is_sub_question' => true,
+                        'input_type' => 'date'
+                    ],
+                    [
+                        'question' => "Preincubation of media",
+                        'is_sub_question' => true,
+                        'input_type' => 'number'
+                    ],
+                    [
+                        'question' => "Was the media sterilized and sterilization cycle found satisfactory?",
+                        'is_sub_question' => true,
+                        'input_type' => 'text'
+                    ],
+                    [
+                        'question' => "Sterilization cycle No.:",
+                        'is_sub_question' => true,
+                        'input_type' => 'number'
+                    ],
+                    [
+                        'question' => "Were cycle sterilization parameters found satisfactory?",
+                        'is_sub_question' => true,
+                        'input_type' => 'text'
+                    ]
+                ];
+                @endphp
+
+                    <table>
+                        <tr class="table_bg">
+                            <th style="width: 5%;">Sr.No.</th>
+                            <th style="width: 40%;">Question</th>
+                            <th style="width: 20%;">Response</th>
+                            <th>Remarks</th>
+                        </tr> 
+                        @php
+                            $main_question_index = 5.1;
+                            $sub_question_index = 0;
+                        @endphp
+
+                        @foreach ($checklist_for_media_prepara_sterilization_CIEMs as $index => $review_item)
+                        @php
+                            if ($review_item['is_sub_question']) {
+                                $sub_question_index++;
+                            } else {
+                                $sub_question_index = 0;
+                                $main_question_index += 0.1;
+                            }
+                        @endphp
+                        <tr>
+                            <td class="flex text-center">{{ $review_item['is_sub_question'] ? $main_question_index .'.'. $sub_question_index : number_format($main_question_index, 1) }}</td>
+                            <td>{{$review_item['question']}}</td>
+                            <td>{{ Helpers::getMicroGridData($data, 'checklist_for_media_prepara_sterilization_CIEM', true, 'response', true, $index) ?? '' }}</td>
+                            <td>{{ Helpers::getMicroGridData($data, 'checklist_for_media_prepara_sterilization_CIEM', true, 'remark', true, $index) ?? '' }}</td>
+                        </tr>
+                        @endforeach
+                    </table>
+                </div>
+                <div class="block-head"> Checklist for review of environmental conditions in the testing area : </div>
+                    <div class="border-table">
+                    @php
+                    $CR_of_En_condition_in_testing_CIEMs = [
+                        [
+                            'question' => "Is temperature of MLT testing area within the acceptance?",
+                            'is_sub_question' => false,
+                            'input_type' => 'text'
+                        ],
+                        [
+                            'question' => "Was the differential pressure of the area within limit?",
+                            'is_sub_question' => false,
+                            'input_type' => 'text'
+                        ],
+                        [
+                            'question' => "While media plate preparation is LAF working satisfactory?",
+                            'is_sub_question' => false,
+                            'input_type' => 'text'
+                        ]
+                    ];
+
+                    @endphp
+                    <table>
+                        <tr class="table_bg">
+                            <th style="width: 5%;">Sr.No.</th>
+                            <th style="width: 40%;">Question</th>
+                            <th style="width: 20%;">Response</th>
+                            <th>Remarks</th>
+                        </tr> 
+                        @php
+                            $main_question_index = 6.0;
+                            $sub_question_index = 0;
+                        @endphp
+
+                        @foreach ($CR_of_En_condition_in_testing_CIEMs as $index => $review_item)
+                        @php
+                            if ($review_item['is_sub_question']) {
+                                $sub_question_index++;
+                            } else {
+                                $sub_question_index = 0;
+                                $main_question_index += 0.1;
+                            }
+                        @endphp
+                        <tr>
+                            <td class="flex text-center">{{ $review_item['is_sub_question'] ? $main_question_index .'.'. $sub_question_index : number_format($main_question_index, 1) }}</td>
+                            <td>{{$review_item['question']}}</td>
+                            <td>{{ Helpers::getMicroGridData($data, 'CR_of_En_condition_in_testing_CIEMs', true, 'response', true, $index) ?? '' }}</td>
+                            <td>{{ Helpers::getMicroGridData($data, 'CR_of_En_condition_in_testing_CIEMs', true, 'remark', true, $index) ?? '' }}</td>
+                            </tr>
+                            @endforeach
+                    </table>
+                </div>
+                <div class="block-head"> Checklist for disinfectant Details: </div>
+                    <div class="border-table">
+                    @php
+                       $check_for_disinfectant_CIEMs = [
+                        [
+                            'question' => "Name of the disinfectant used for area cleaning",
+                            'is_sub_question' => true,
+                            'input_type' => 'number'
+                        ],
+                        [
+                            'question' => "Was the disinfectant used for cleaning and sanitization validated?",
+                            'is_sub_question' => true,
+                            'input_type' => 'text'
+                        ],
+                        [
+                            'question' => "Concentration:",
+                            'is_sub_question' => true,
+                            'input_type' => 'number'
+                        ],
+                        [
+                            'question' => "Was the disinfectant prepared as per validated concentration?",
+                            'is_sub_question' => true,
+                            'input_type' => 'text'
+                        ]
+                    ];
+                    @endphp
+                    <table>
+                        <tr class="table_bg">
+                            <th style="width: 5%;">Sr.No.</th>
+                            <th style="width: 40%;">Question</th>
+                            <th style="width: 20%;">Response</th>
+                            <th>Remarks</th>
+                        </tr> 
+                        @php
+                            $main_question_index = 7.1;
+                            $sub_question_index = 0;
+                        @endphp
+
+                        @foreach ($check_for_disinfectant_CIEMs as $index => $review_item)
+                        @php
+                            if ($review_item['is_sub_question']) {
+                                $sub_question_index++;
+                            } else {
+                                $sub_question_index = 0;
+                                $main_question_index += 0.1;
+                            }
+                        @endphp
+                        <tr>
+                            <td class="flex text-center">{{ $review_item['is_sub_question'] ? $main_question_index .'.'. $sub_question_index : number_format($main_question_index, 1) }}</td>
+                            <td>{{$review_item['question']}}</td>
+                            <td>{{ Helpers::getMicroGridData($data, 'check_for_disinfectant_CIEM', true, 'response', true, $index) ?? '' }}</td>
+                            <td>{{ Helpers::getMicroGridData($data, 'check_for_disinfectant_CIEM', true, 'remark', true, $index) ?? '' }}</td>
+                            </tr>
+                            @endforeach
+                    </table>
+                </div>
+                <div class="block-head">  Checklist for fogging details : </div>
+                    <div class="border-table">
+                    @php
+                    $checklist_for_fogging_CIEMs = [
+                        [
+                            'question' => "Name of the fogging agents used for area fogging",
+                            'is_sub_question' => true,
+                            'input_type' => 'number'
+                        ],
+                        [
+                            'question' => "Was the fogging agent used for fogging and validated?",
+                            'is_sub_question' => true,
+                            'input_type' => 'text'
+                        ],
+                        [
+                            'question' => "Concentration:",
+                            'is_sub_question' => true,
+                            'input_type' => 'number'
+                        ],
+                        [
+                            'question' => "Was the fogging agent prepared as per validated concentration?",
+                            'is_sub_question' => true,
+                            'input_type' => 'text'
+                        ]
+                    ];
+                    @endphp
+                    <table>
+                        <tr class="table_bg">
+                            <th style="width: 5%;">Sr.No.</th>
+                            <th style="width: 40%;">Question</th>
+                            <th style="width: 20%;">Response</th>
+                            <th>Remarks</th>
+                        </tr> 
+                        @php
+                            $main_question_index = 8.1;
+                            $sub_question_index = 0;
+                        @endphp
+
+                        @foreach ($checklist_for_fogging_CIEMs as $index => $review_item)
+                        @php
+                            if ($review_item['is_sub_question']) {
+                                $sub_question_index++;
+                            } else {
+                                $sub_question_index = 0;
+                                $main_question_index += 0.1;
+                            }
+                        @endphp
+                        <tr>
+                            <td class="flex text-center">{{ $review_item['is_sub_question'] ? $main_question_index .'.'. $sub_question_index : number_format($main_question_index, 1) }}</td>
+                            <td>{{$review_item['question']}}</td>
+                            <td>{{ Helpers::getMicroGridData($data, 'checklist_for_fogging_CIEM', true, 'response', true, $index) ?? '' }}</td>
+                            <td>{{ Helpers::getMicroGridData($data, 'checklist_for_fogging_CIEM', true, 'remark', true, $index) ?? '' }}</td>
+                        </tr>
+                        @endforeach
+                    </table>
+                </div>
+                <div class="block-head">  Checklist for review of Test Method & procedure: : </div>
+                    <div class="border-table">
+                    @php
+                      $CR_of_test_method_CIEMs = [
+                        [
+                        'question' => "Was the test method, monitoring SOP followed correctly?",
+                        'is_sub_question' => true,
+                        'input_type' => 'text'
+                        ],
+                        [
+                        'question' => "SOP No.:",
+                        'is_sub_question' => true,
+                        'input_type' => 'number'
+                        ]
+                     ];
+                    @endphp
+                    <table>
+                        <tr class="table_bg">
+                            <th style="width: 5%;">Sr.No.</th>
+                            <th style="width: 40%;">Question</th>
+                            <th style="width: 20%;">Response</th>
+                            <th>Remarks</th>
+                        </tr> 
+                        @php
+                            $main_question_index = 9.1;
+                            $sub_question_index = 0;
+                        @endphp
+
+                        @foreach ($CR_of_test_method_CIEMs as $index => $review_item)
+                        @php
+                            if ($review_item['is_sub_question']) {
+                                $sub_question_index++;
+                            } else {
+                                $sub_question_index = 0;
+                                $main_question_index += 0.1;
+                            }
+                        @endphp
+                        <tr>
+                            <td class="flex text-center">{{ $review_item['is_sub_question'] ? $main_question_index .'.'. $sub_question_index : number_format($main_question_index, 1) }}</td>
+                            <td>{{$review_item['question']}}</td>
+                            <td>{{ Helpers::getMicroGridData($data, 'CR_of_test_method_CIEM', true, 'response', true, $index) ?? '' }}</td>
+                            <td>{{ Helpers::getMicroGridData($data, 'CR_of_test_method_CIEM', true, 'remark', true, $index) ?? '' }}</td>
+                        </tr>
+                        @endforeach
+                    </table>
+                </div>
+                <div class="block-head">Checklist for review of microbial isolates /Contamination (If completed at the time of filling of checklist, if not then this details shall be updated upon completion of identification) </div>
+                    <div class="border-table">
+                    @php
+                    $CR_microbial_isolates_contamination_CIEMs = [
+                        [
+                            'question' => "Were the contaminants/ isolates subculture?",
+                            'is_sub_question' => true,
+                            'input_type' => 'text'
+                        ],
+                        [
+                            'question' => "Attach the colony morphology details:",
+                            'is_sub_question' => true,
+                            'input_type' => 'number'
+                        ],
+                        [
+                            'question' => "Was recovered isolates (From sample), Identified Gram nature of the organism(GP/GN)",
+                            'is_sub_question' => true,
+                            'input_type' => 'text'
+                        ],
+                        [
+                            'question' => "Gram nature of the organism (GP/GN)",
+                            'is_sub_question' => true,
+                            'input_type' => 'number'
+                        ],
+                        [
+                            'question' => "(Attach the details, if more than single organism)",
+                            'is_sub_question' => true,
+                            'input_type' => 'number'
+                        ],
+                        [
+                            'question' => "Review the isolates for its occurrence in the past, source, frequency and controls taken against the isolates.",
+                            'is_sub_question' => false,
+                            'input_type' => 'number'
+                        ]
+                    ];
+                    @endphp
+                    <table>
+                        <tr class="table_bg">
+                            <th style="width: 5%;">Sr.No.</th>
+                            <th style="width: 40%;">Question</th>
+                            <th style="width: 20%;">Response</th>
+                            <th>Remarks</th>
+                        </tr> 
+                        @php
+                            $main_question_index = 10.1;
+                            $sub_question_index = 0;
+                        @endphp
+
+                        @foreach ($CR_microbial_isolates_contamination_CIEMs as $index => $review_item)
+                        @php
+                            if ($review_item['is_sub_question']) {
+                                $sub_question_index++;
+                            } else {
+                                $sub_question_index = 0;
+                                $main_question_index += 0.1;
+                            }
+                        @endphp
+                        <tr>
+                            <td class="flex text-center">{{ $review_item['is_sub_question'] ? $main_question_index .'.'. $sub_question_index : number_format($main_question_index, 1) }}</td>
+                            <td>{{$review_item['question']}}</td>
+                            <td>{{ Helpers::getMicroGridData($data, 'CR_microbial_isolates_contamination_CIEM', true, 'response', true, $index) ?? '' }}</td>
+                            <td>{{ Helpers::getMicroGridData($data, 'CR_microbial_isolates_contamination_CIEM', true, 'remark', true, $index) ?? '' }}</td>
+                        </tr>
+                        @endforeach
+                    </table>
+                </div>
+                <div class="block-head">  Checklist for review of Instrument/Equipment: </div>
+                    <div class="border-table">
+                    @php
+                        $CR_of_instru_equip_CIEMs = [
+                        [
+                            'question' => "Were there any preventative maintenances/ breakdowns/ changing of equipment parts etc) for the equipment’s used in the testing?",
+                            'is_sub_question' => false,
+                            'input_type' => 'text'
+                        ],
+                        [
+                            'question' => "Is used incubators are qualified?",
+                            'is_sub_question' => false,
+                            'input_type' => 'text'
+                        ],
+                        [
+                            'question' => "Incubator :ID No.",
+                            'is_sub_question' => true,
+                            'input_type' => 'number'
+                        ],
+                        [
+                            'question' => "Qualification date:",
+                            'is_sub_question' => true,
+                            'input_type' => 'date'
+                        ],
+                        [
+                            'question' => "Next due date:",
+                            'is_sub_question' => true,
+                            'input_type' => 'date'
+                        ],
+                        [
+                            'question' => "Is used Colony counter qualified?",
+                            'is_sub_question' => true,
+                            'input_type' => 'text'
+                        ],
+                        [
+                            'question' => "Colony counter ID:",
+                            'is_sub_question' => true,
+                            'input_type' => 'number'
+                        ],
+                        [
+                            'question' => "Qualification date:",
+                            'is_sub_question' => true,
+                            'input_type' => 'date'
+                        ],
+                        [
+                            'question' => "Next due date:",
+                            'is_sub_question' => true,
+                            'input_type' => 'date'
+                        ],
+                        [
+                            'question' => "Is used Air sampler qualified?",
+                            'is_sub_question' => true,
+                            'input_type' => 'text'
+                        ],
+                        [
+                            'question' => "Air sampler ID",
+                            'is_sub_question' => true,
+                            'input_type' => 'number'
+                        ],
+                        [
+                            'question' => "Validation date:",
+                            'is_sub_question' => true,
+                            'input_type' => 'date'
+                        ],
+                        [
+                            'question' => "Next due date:",
+                            'is_sub_question' => true,
+                            'input_type' => 'date'
+                        ],
+                        [
+                            'question' => "Was temp. of incubator with in the limit during incubation period?",
+                            'is_sub_question' => true,
+                            'input_type' => 'text'
+                        ],
+                        [
+                            'question' => "Was HVAC system of testing area qualified?",
+                            'is_sub_question' => false,
+                            'input_type' => 'text'
+                        ],
+                        [
+                            'question' => "Qualification date and Next due date:",
+                            'is_sub_question' => true,
+                            'input_type' => 'date'
+                        ]
+                    ];
+
+                    @endphp
+                    <table>
+                        <tr class="table_bg">
+                            <th style="width: 5%;">Sr.No.</th>
+                            <th style="width: 40%;">Question</th>
+                            <th style="width: 20%;">Response</th>
+                            <th>Remarks</th>
+                        </tr> 
+                        @php
+                            $main_question_index = 11.0;
+                            $sub_question_index = 0;
+                        @endphp
+
+                        @foreach ($CR_of_instru_equip_CIEMs as $index => $review_item)
+                        @php
+                            if ($review_item['is_sub_question']) {
+                                $sub_question_index++;
+                            } else {
+                                $sub_question_index = 0;
+                                $main_question_index += 0.1;
+                            }
+                        @endphp
+                        <tr>
+                            <td class="flex text-center">{{ $review_item['is_sub_question'] ? $main_question_index .'.'. $sub_question_index : number_format($main_question_index, 1) }}</td>
+                            <td>{{$review_item['question']}}</td>
+                            <td>{{ Helpers::getMicroGridData($data, 'CR_of_instru_equip_CIEM', true, 'response', true, $index) ?? '' }}</td>
+                            <td>{{ Helpers::getMicroGridData($data, 'CR_of_instru_equip_CIEM', true, 'remark', true, $index) ?? '' }}</td>
+                        </tr>
+                        @endforeach
+                    </table>
+                </div>
+                <div class="block-head">Checklist for trend Analysis: </div>
+                    <div class="border-table">
+                    @php
+                          $Ch_Trend_analysis_CIEMs = [
+                            [
+                                'question' => "Is trend of current month within acceptance?",
+                                'is_sub_question' => false,
+                                'input_type' => 'text'
+                            ],
+                            [
+                                'question' => "Is trend of previous month within acceptance?",
+                                'is_sub_question' => false,
+                                'input_type' => 'text'
+                            ]
+                        ];
+                        @endphp
+                    <table>
+                        <tr class="table_bg">
+                            <th style="width: 5%;">Sr.No.</th>
+                            <th style="width: 40%;">Question</th>
+                            <th style="width: 20%;">Response</th>
+                            <th>Remarks</th>
+                        </tr> 
+                        @php
+                            $main_question_index = 12.0;
+                            $sub_question_index = 0;
+                        @endphp
+
+                        @foreach ($Ch_Trend_analysis_CIEMs as $index => $review_item)
+                        @php
+                            if ($review_item['is_sub_question']) {
+                                $sub_question_index++;
+                            } else {
+                                $sub_question_index = 0;
+                                $main_question_index += 0.1;
+                            }
+                        @endphp
+                        <tr>
+                            <td class="flex text-center">{{ $review_item['is_sub_question'] ? $main_question_index .'.'. $sub_question_index : number_format($main_question_index, 1) }}</td>
+                            <td>{{$review_item['question']}}</td>
+                            <td>{{ Helpers::getMicroGridData($data, 'Ch_Trend_analysis_CIEM', true, 'response', true, $index) ?? '' }}</td>
+                            <td>{{ Helpers::getMicroGridData($data, 'Ch_Trend_analysis_CIEM', true, 'remark', true, $index) ?? '' }}</td>
+                        </tr>
+                        @endforeach
+                    </table>
+                </div>
+                
+                 <div class="block-head">If Yes, Provide attachment details </div>
+                    <div class="border-table">
+                    <table>
+                        <tr class="table_bg">
+                            <th class="w-20">S.N.</th>
+                            <th class="w-80">File </th>
+                        </tr>
+                        @if ($data->attachment_details_ciem)
+                        @foreach ($data->attachment_details_ciem as $key => $file)
+                                <tr>
+                                <td class="w-20">{{ $key + 1 }}</td>
+                                <td class="w-80"><a href="{{ asset('upload/' . $file) }}" target="_blank"><b>{{ $file }}</b></a> </td>
+                            </tr>
+                        @endforeach
+                        @else
+                            <tr>
+                                <td class="w-20">1</td>
+                                <td class="w-20">Not Applicable</td>
+                            </tr>
+                        @endif
+                    </table>
+                    </div>
+            </div>
+            <!-- Checklist - Investigation of MediaSuitability Test CCForm23----------------->
+            <div class="block">
+                <div class="block-head"> Checklist - Investigation of MediaSuitability Test </div>
+                <div class="block-head"> Checklist for Analyst training & Procedure: </div>
+                    <div class="border-table">
+                    @php
+                        $checklist_for_analyst_training_CIMTs = [
+                            [
+                                'question' => "Is the analyst trained/qualified GPT test procedure?",
+                                'is_sub_question' => false,
+                                'input_type' => 'text'
+                            ],
+                            [
+                                'question' => "Date of qualification:",
+                                'is_sub_question' => true,
+                                'input_type' => 'date'
+                            ],
+                            [
+                                'question' => "Were appropriate precaution taken by the analyst throughout the test?",
+                                'is_sub_question' => false,
+                                'input_type' => 'text'
+                            ],
+                            [
+                                'question' => "Analyst interview record.......",
+                                'is_sub_question' => true,
+                                'input_type' => 'number'
+                            ],
+                            [
+                                'question' => "Was an analyst persons suffering from any ailment such as cough/cold or open wound or skin infections?",
+                                'is_sub_question' => false,
+                                'input_type' => 'text'
+                            ],
+                            [
+                                'question' => "Was the correct procedure for the transfer of samples and accessories to sampling testing areas followed?",
+                                'is_sub_question' => false,
+                                'input_type' => 'text'
+                            ]
+                        ];
+
+                    @endphp
+                    <table>
+                        <tr class="table_bg">
+                            <th style="width: 5%;">Sr.No.</th>
+                            <th style="width: 40%;">Question</th>
+                            <th style="width: 20%;">Response</th>
+                            <th>Remarks</th>
+                        </tr> 
+                        @php
+                            $main_question_index = 1.0;
+                            $sub_question_index = 0;
+                        @endphp
+                        @foreach ($checklist_for_analyst_training_CIMTs as $index => $review_item)
+                        @php
+                            if ($review_item['is_sub_question']) {
+                                $sub_question_index++;
+                            } else {
+                                $sub_question_index = 0;
+                                $main_question_index += 0.1;
+                            }
+                        @endphp
+                        <tr>
+                            <td class="flex text-center">{{ $review_item['is_sub_question'] ? $main_question_index .'.'. $sub_question_index : number_format($main_question_index, 1) }}</td>
+                            <td>{{$review_item['question']}}</td>
+                            <td>{{ Helpers::getMicroGridData($data, 'checklist_for_analyst_training_CIMT', true, 'response', true, $index) ?? '' }}</td>
+                            <td>{{ Helpers::getMicroGridData($data, 'checklist_for_analyst_training_CIMT', true, 'remark', true, $index) ?? '' }}</td>
+                        </tr>
+                        @endforeach
+                    </table>
+                </div>
+                <div class="block-head"> Checklist for Comparison of results (With same & Previous Day Media GPT) : </div>
+                    <div class="border-table">
+                    @php
+                            $checklist_for_comp_results_CIMTs = [
+                            [
+                                'question' => "Which media GPT performed at previous day:",
+                                'is_sub_question' => false,
+                                'input_type' => 'text'
+                            ],
+                            [
+                                'question' => "Were dehydrated and ready to use media used for GPT?",
+                                'is_sub_question' => false,
+                                'input_type' => 'text'
+                            ],
+                            [
+                                'question' => "Lot No./Batch No:",
+                                'is_sub_question' => false,
+                                'input_type' => 'number'
+                            ],
+                            [
+                                'question' => "Date /Time of Incubation:",
+                                'is_sub_question' => false,
+                                'input_type' => 'date'
+                            ],
+                            [
+                                'question' => "Date/Time of Release:",
+                                'is_sub_question' => true,
+                                'input_type' => 'date'
+                            ],
+                            [
+                                'question' => "Results of previous day GPT record?",
+                                'is_sub_question' => false,
+                                'input_type' => 'text'
+                            ],
+                            [
+                                'question' => "Results of other plates released for GPT is within acceptance?",
+                                'is_sub_question' => false,
+                                'input_type' => 'text'
+                            ]
+                        ];
+
+                    @endphp
+
+                    <table>
+                        <tr class="table_bg">
+                            <th style="width: 5%;">Sr.No.</th>
+                            <th style="width: 40%;">Question</th>
+                            <th style="width: 20%;">Response</th>
+                            <th>Remarks</th>
+                        </tr> 
+                        @php
+                            $main_question_index = 2.0;
+                            $sub_question_index = 0;
+                        @endphp
+
+                        @foreach ($checklist_for_comp_results_CIMTs as $index => $review_item)
+                        @php
+                            if ($review_item['is_sub_question']) {
+                                $sub_question_index++;
+                            } else {
+                                $sub_question_index = 0;
+                                $main_question_index += 0.1;
+                            }
+                        @endphp
+                        <tr>
+                            <td class="flex text-center">{{ $review_item['is_sub_question'] ? $main_question_index .'.'. $sub_question_index : number_format($main_question_index, 1) }}</td>
+                            <td>{{$review_item['question']}}</td>
+                            <td>{{ Helpers::getMicroGridData($data, 'checklist_for_comp_results_CIMTs', true, 'response', true, $index) ?? '' }}</td>
+                            <td>{{ Helpers::getMicroGridData($data, 'checklist_for_comp_results_CIMTs', true, 'remark', true, $index) ?? '' }}</td>
+                        </tr>
+                        @endforeach
+                    </table>
+                </div>
+                <div class="block-head">  Checklist for Culture verification ? </div>
+                    <div class="border-table">
+                    @php
+                     $checklist_for_Culture_verification_CIMTs = [
+                        [
+                            'question' => "Is culture COA checked?",
+                            'is_sub_question' => false,
+                            'input_type' => 'text'
+                        ],
+                        [
+                            'question' => "Was the correct Inoculum used for GPT?",
+                            'is_sub_question' => false,
+                            'input_type' => 'text'
+                        ],
+                        [
+                            'question' => "Was used culture within culture due date?",
+                            'is_sub_question' => false,
+                            'input_type' => 'text'
+                        ],
+                        [
+                            'question' => "Date of culture dilution:",
+                            'is_sub_question' => true,
+                            'input_type' => 'date'
+                        ],
+                        [
+                            'question' => "Due date of culture dilution:",
+                            'is_sub_question' => true,
+                            'input_type' => 'date'
+                        ],
+                        [
+                            'question' => "Was the storage condition of culture is appropriate?",
+                            'is_sub_question' => false,
+                            'input_type' => 'text'
+                        ],
+                        [
+                            'question' => "Was culture strength used within acceptance range?",
+                            'is_sub_question' => false,
+                            'input_type' => 'text'
+                        ]
+                    ];
+
+                    @endphp
+                    <table>
+                        <tr class="table_bg">
+                            <th style="width: 5%;">Sr.No.</th>
+                            <th style="width: 40%;">Question</th>
+                            <th style="width: 20%;">Response</th>
+                            <th>Remarks</th>
+                        </tr> 
+                        @php
+                            $main_question_index = 3.0;
+                            $sub_question_index = 0;
+                        @endphp
+
+                        @foreach ($checklist_for_Culture_verification_CIMTs as $index => $review_item)
+                        @php
+                            if ($review_item['is_sub_question']) {
+                                $sub_question_index++;
+                            } else {
+                                $sub_question_index = 0;
+                                $main_question_index += 0.1;
+                            }
+                        @endphp
+                        <tr>
+                            <td class="flex text-center">{{ $review_item['is_sub_question'] ? $main_question_index .'.'. $sub_question_index : number_format($main_question_index, 1) }}</td>
+                            <td>{{$review_item['question']}}</td>
+                            <td>{{ Helpers::getMicroGridData($data, 'checklist_for_Culture_verification_CIMTs', true, 'response', true, $index) ?? '' }}</td>
+                            <td>{{ Helpers::getMicroGridData($data, 'checklist_for_Culture_verification_CIMTs', true, 'remark', true, $index) ?? '' }}</td>
+                        </tr>
+                        @endforeach
+                    </table>
+                </div>
+                <div class="block-head"> Checklist for Sterilize Accessories: </div>
+                    <div class="border-table"> 
+                    @php
+                        $sterilize_accessories_CIMTs = [
+                        [
+                            'question' => "Was the media sterilized and sterilization cycle found satisfactory?",
+                            'is_sub_question' => false,
+                            'input_type' => 'text'
+                        ],
+                        [
+                            'question' => "Sterilization cycle No.:",
+                            'is_sub_question' => true,
+                            'input_type' => 'number'
+                        ],
+                        [
+                            'question' => "Whether disposable sterilized gloves used during testing were within the expiry date?",
+                            'is_sub_question' => false,
+                            'input_type' => 'text'
+                        ],
+                        [
+                            'question' => "Results of other plates released for GPT is within acceptance?",
+                            'is_sub_question' => false,
+                            'input_type' => 'text'
+                        ]
+                    ];
+                    @endphp
+
+                    <table>
+                        <tr class="table_bg">
+                            <th style="width: 5%;">Sr.No.</th>
+                            <th style="width: 40%;">Question</th>
+                            <th style="width: 20%;">Response</th>
+                            <th>Remarks</th>
+                        </tr> 
+                        @php
+                            $main_question_index = 4.0;
+                            $sub_question_index = 0;
+                        @endphp
+
+                        @foreach ($sterilize_accessories_CIMTs as $index => $review_item)
+                        @php
+                            if ($review_item['is_sub_question']) {
+                                $sub_question_index++;
+                            } else {
+                                $sub_question_index = 0;
+                                $main_question_index += 0.1;
+                            }
+                        @endphp
+                        <tr>
+                            <td class="flex text-center">{{ $review_item['is_sub_question'] ? $main_question_index .'.'. $sub_question_index : number_format($main_question_index, 1) }}</td>
+                            <td>{{$review_item['question']}}</td>       
+                            <td>{{ Helpers::getMicroGridData($data, 'sterilize_accessories_CIMTs', true, 'response', true, $index) ?? '' }}</td>
+                            <td>{{ Helpers::getMicroGridData($data, 'sterilize_accessories_CIMTs', true, 'remark', true, $index) ?? '' }}</td>
+                        </tr>
+                        @endforeach
+                    </table>
+                </div> 
+                <div class="block-head"> Checklist for Instrument/Equipment Details: </div>
+                    <div class="border-table">
+                    @php
+                    $checklist_for_intrument_equip_last_CIMTs = [
+                    [
+                        'question' => "Was the equipment used, calibrated/qualified and within the specified range?",
+                        'is_sub_question' => false,
+                        'input_type' => 'text'
+                    ],
+                    [
+                        'question' => "Biosafety equipment ID:",
+                        'is_sub_question' => true,
+                        'input_type' => 'number'
+                    ],
+                    [
+                        'question' => "Validation date:",
+                        'is_sub_question' => true,
+                        'input_type' => 'date'
+                    ],
+                    [
+                        'question' => "Next due date:",
+                        'is_sub_question' => true,
+                        'input_type' => 'date'
+                    ],
+                    [
+                        'question' => "Colony counter equipment ID:",
+                        'is_sub_question' => false,
+                        'input_type' => 'number'
+                    ],
+                    [
+                        'question' => "Calibration date:",
+                        'is_sub_question' => true,
+                        'input_type' => 'date'
+                    ],
+                    [
+                        'question' => "Was used pipettes within calibration?",
+                        'is_sub_question' => false,
+                        'input_type' => 'text'
+                    ],
+                    [
+                        'question' => "Pipettes ID:",
+                        'is_sub_question' => true,
+                        'input_type' => 'number'
+                    ],
+                    [
+                        'question' => "Calibration date",
+                        'is_sub_question' => true,
+                        'input_type' => 'date'
+                    ],
+                    [
+                        'question' => "Was the refrigerator used for storage of culture is validated?",
+                        'is_sub_question' => false,
+                        'input_type' => 'text'
+                    ],
+                    [
+                        'question' => "Refrigerator (2-8̊ C) ID:",
+                        'is_sub_question' => true,
+                        'input_type' => 'number'
+                    ],
+                    [
+                        'question' => "Validation date:",
+                        'is_sub_question' => true,
+                        'input_type' => 'date'
+                    ],
+                    [
+                        'question' => "Incubator ID:",
+                        'is_sub_question' => false,
+                        'input_type' => 'number'
+                    ],
+                    [
+                        'question' => "Validation date and next due date:",
+                        'is_sub_question' => true,
+                        'input_type' => 'date'
+                    ],
+                    [
+                        'question' => "Was there any power failure noticed during the incubation of samples in the heating block?",
+                        'is_sub_question' => false,
+                        'input_type' => 'text'
+                    ],
+                    [
+                        'question' => "Were any other media GPT tested along with this sample?",
+                        'is_sub_question' => false,
+                        'input_type' => 'text'
+                    ],
+                    [
+                        'question' => "If yes, whether those media GPT results found satisfactory?",
+                        'is_sub_question' => true,
+                        'input_type' => 'text'
+                    ]
+                    ];
+
+                    @endphp
+                    <table>
+                        <tr class="table_bg">
+                            <th style="width: 5%;">Sr.No.</th>
+                            <th style="width: 40%;">Question</th>
+                            <th style="width: 20%;">Response</th>
+                            <th>Remarks</th>
+                        </tr> 
+                        @php
+                            $main_question_index = 5.0;
+                            $sub_question_index = 0;
+                        @endphp
+
+                        @foreach ($checklist_for_intrument_equip_last_CIMTs as $index => $review_item)
+                        @php
+                            if ($review_item['is_sub_question']) {
+                                $sub_question_index++;
+                            } else {
+                                $sub_question_index = 0;
+                                $main_question_index += 0.1;
+                            }
+                        @endphp
+                        <tr>
+                            <td class="flex text-center">{{ $review_item['is_sub_question'] ? $main_question_index .'.'. $sub_question_index : number_format($main_question_index, 1) }}</td>
+                            <td>{{$review_item['question']}}</td>
+                            <td>{{ Helpers::getMicroGridData($data, 'checklist_for_intrument_equip_last_CIMTs', true, 'response', true, $index) ?? '' }}</td>
+                            <td>{{ Helpers::getMicroGridData($data, 'checklist_for_intrument_equip_last_CIMTs', true, 'remark', true, $index) ?? '' }}</td>
+                        </tr>
+                        @endforeach
+                    </table>
+                </div>
+                <div class="block-head">  Checklist for Disinfectant Details: </div>
+                    <div class="border-table">
+                    @php
+                       $disinfectant_details_last_CIMTs = [
+                            [
+                                'question' => "Name of the disinfectant used for area cleaning",
+                                'is_sub_question' => false,
+                                'input_type' => 'number'
+                            ],
+                            [
+                                'question' => "Was the disinfectant used for cleaning and sanitization validated?",
+                                'is_sub_question' => false,
+                                'input_type' => 'text'
+                            ],
+                            [
+                                'question' => "Concentration:",
+                                'is_sub_question' => true,
+                                'input_type' => 'text'
+                            ],
+                            [
+                                'question' => "Was the disinfectant prepared as per validated concentration?",
+                                'is_sub_question' => false,
+                                'input_type' => 'text'
+                            ]
+                        ];
+
+                    @endphp
+                    <table>
+                        <tr class="table_bg">
+                            <th style="width: 5%;">Sr.No.</th>
+                            <th style="width: 40%;">Question</th>
+                            <th style="width: 20%;">Response</th>
+                            <th>Remarks</th>
+                        </tr> 
+                        @php
+                            $main_question_index = 6.0;
+                            $sub_question_index = 0;
+                        @endphp
+
+                        @foreach ($disinfectant_details_last_CIMTs as $index => $review_item)
+                        @php
+                            if ($review_item['is_sub_question']) {
+                                $sub_question_index++;
+                            } else {
+                                $sub_question_index = 0;
+                                $main_question_index += 0.1;
+                            }
+                        @endphp
+                        <tr>
+                            <td class="flex text-center">{{ $review_item['is_sub_question'] ? $main_question_index .'.'. $sub_question_index : number_format($main_question_index, 1) }}</td>
+                            <td>{{$review_item['question']}}</td>
+                            <td>{{ Helpers::getMicroGridData($data, 'disinfectant_details_last_CIMTs', true, 'response', true, $index) ?? '' }}</td>
+                            <td>{{ Helpers::getMicroGridData($data, 'disinfectant_details_last_CIMTs', true, 'remark', true, $index) ?? '' }}</td>
+                            </tr>
+                            @endforeach
+                    </table>
+                </div>
+                <div class="block-head"> Checklist for Results and Calculation : </div>
+                    <div class="border-table">
+                    @php
+                       $checklist_for_result_calculation_CIMTs = [
+                        [
+                            'question' => "Were results taken properly?",
+                            'is_sub_question' => false,
+                            'input_type' => 'text'
+                        ],
+                        [
+                            'question' => "Raw data checked?",
+                            'is_sub_question' => false,
+                            'input_type' => 'text'
+                        ],
+                        [
+                            'question' => "Was formula dilution factor used for calculating the results corrected?",
+                            'is_sub_question' => false,
+                            'input_type' => 'text'
+                        ]
+                    ];
+                    @endphp
+                    <table>
+                        <tr class="table_bg">
+                            <th style="width: 5%;">Sr.No.</th>
+                            <th style="width: 40%;">Question</th>
+                            <th style="width: 20%;">Response</th>
+                            <th>Remarks</th>
+                        </tr> 
+                        @php
+                            $main_question_index = 7.0;
+                            $sub_question_index = 0;
+                        @endphp
+
+                        @foreach ($checklist_for_result_calculation_CIMTs as $index => $review_item)
+                        @php
+                            if ($review_item['is_sub_question']) {
+                                $sub_question_index++;
+                            } else {
+                                $sub_question_index = 0;
+                                $main_question_index += 0.1;
+                            }
+                        @endphp
+                        <tr>
+                            <td class="flex text-center">{{ $review_item['is_sub_question'] ? $main_question_index .'.'. $sub_question_index : number_format($main_question_index, 1) }}</td>
+                            <td>{{$review_item['question']}}</td>
+                            <td>{{ Helpers::getMicroGridData($data, 'checklist_for_result_calculation_CIMTs', true, 'response', true, $index) ?? '' }}</td>
+                            <td>{{ Helpers::getMicroGridData($data, 'checklist_for_result_calculation_CIMTs', true, 'remark', true, $index) ?? '' }}</td>
+                            </tr>
+                            @endforeach
+                    </table>
+                </div>
+                
+                 <div class="block-head">If Yes, Provide attachment details </div>
+                    <div class="border-table">
+                    <table>
+                        <tr class="table_bg">
+                            <th class="w-20">S.N.</th>
+                            <th class="w-80">File </th>
+                        </tr>
+                        @if ($data->attachment_details_cimst)
+                        @foreach ($data->attachment_details_cimst as $key => $file)
+                                <tr>
+                                <td class="w-20">{{ $key + 1 }}</td>
+                                <td class="w-80"><a href="{{ asset('upload/' . $file) }}" target="_blank"><b>{{ $file }}</b></a> </td>
+                            </tr>
+                        @endforeach
+                        @else
+                            <tr>
+                                <td class="w-20">1</td>
+                                <td class="w-20">Not Applicable</td>
+                            </tr>
+                        @endif
+                    </table>
+                    </div>
+            </div>
+        <!-- ====================== close CheckList Part ==================-->
+        <div class="block">
+                <div class="block-head"> Phase II Investigation </div>
+                <table>
+                    <tr> 
+                        <th class="w-20">QA Approver Comments</th>
+                        <td class="w-30">{{ $data->qa_approver_comments_piii ? $data->qa_approver_comments_piii : 'Not Applicable' }}</td>
+                    </tr>
+                   <tr>
+                        <th class="w-20">Manufact. Invest. Required?</th>
+                        <td class="w-30">{{ $data->manufact_invest_required_piii ? $data->manufact_invest_required_piii : 'Not Applicable' }}</td>
+                        <th class="w-20">Manufacturing Invest. Type</th>
+                        <td class="w-80">No Applicable</td>
+                   </tr>
+                   <tr>
+                        <th class="w-20">Manufacturing Invst. Ref.</th>
+                        <td class="w-30">{{ $data->manufact_invest_required_piii ? $data->manufact_invest_required_piii : 'Not Applicable' }}</td>
+                        <th class="w-20">Re-sampling Required?</th>
+                        <td class="w-80">{{ $data->re_sampling_required_piii ? $data->re_sampling_required_piii : 'Not Applicable' }}
+                            </td>
+                   </tr>
+                 <tr>
+                    <th class="w-20">Audit Comments</th>
+                    <td class="w-80">{{ $data->audit_comments_piii ? $data->audit_comments_piii : 'Not Applicable' }}</td>
+                </tr>
+                <tr>
+                    <th class="w-20">Re-sampling Ref. No.</th>
+                    <td class="w-80">No Applicable</td>
+                </tr>    
+                <tr>
+                    <th class="w-20">Hypo/Exp. Required.</th>
+                    <td class="w-80">{{ $data->hypo_exp_required_piii ? $data->hypo_exp_required_piii : 'Not Applicable' }}</td>
+                    <th class="w-20">Hypo/Exp. Reference</th>
+                    <td class="w-80">No Applicable </td>
+                </tr>
+                  <div class="block-head"> Attachments</div>
+                      <div class="border-table">
+                        <table>
+                            <tr class="table_bg">
+                                <th class="w-20">S.N.</th>
+                                <th class="w-80">File </th>
+                            </tr>
+                            @if ($data->file_attachments_pII)
+                            @foreach ($data->file_attachments_pII as $key => $file)
+                                 <tr>
+                                    <td class="w-20">{{ $key + 1 }}</td>
+                                    <td class="w-80"><a href="{{ asset('upload/' . $file) }}" target="_blank"><b>{{ $file }}</b></a> </td>
+                                </tr>
+                            @endforeach
+                            @else
+                                <tr>
+                                    <td class="w-20">1</td>
+                                    <td class="w-20">Not Applicable</td>
+                                </tr>
+                            @endif
+                        </table>
+                      </div>
+                </table>
+                <div class="block-head">Checklist PHASE II OOS INVESTIGATION</div>
+                <div class="border-table">
+                     @php
+                        $phase_II_OOS_investigations = [
+                        "Is correct batch manufacturing record used?",
+                        "Correct quantities of correct ingredients were used in manufacturing?",
+                        "Balances used in dispensing / verification were calibrated using valid standard weights?",
+                        "Equipment used in the manufacturing is as per batch manufacturing record?",
+                        "Processing steps followed in correct sequence as per the BMR?",
+                        "Whether material used in the batch had any OOS result?",
+                        "All the processing parameters were within the range specified in BMR?",
+                        "Environmental conditions during manufacturing are as per BMR?",
+                        "Whether there was any deviation observed during manufacturing?",
+                        "The yields at different stages were within the acceptable range as per BMR?",
+                        "All the equipment’s used during manufacturing are calibrated?",
+                        "Whether there is malfunctioning or breakdown of equipment during manufacturing?",
+                        "Whether the processing equipment was maintained as per preventive maintenance schedule?",
+                        "All the in process checks were carried out as per the frequency given in BMR & the results were within acceptance limit?",
+                        "Whether there were any failures of utilities (like Power, Compressed air, steam etc.) during manufacturing?",
+                        "Whether other batches/products impacted?",
+                        "Any Other"
+                        ];
+                    @endphp
+                    <table>
+                        <tr class="table_bg">
+                            <th style="width: 5%;">Sr.No.</th>
+                            <th style="width: 40%;">Question</th>
+                            <th style="width: 20%;">Response</th>
+                            <th>Remarks</th>
+                        </tr>
+                        @if ($phase_II_OOS_investigations)
+                        @foreach ($phase_II_OOS_investigations as $phase_II_OOS_investigation)
+                        <tr>
+                            <td class="w-15">{{ $loop->index+1 }}</td>
+                            <td class="w-15">{{ $phase_II_OOS_investigation }}</td>
+                            <td class="w-15">{{ Helpers::getMicroGridData($data, 'phase_II_OOS_investigations', true, 'response', true, $loop->index) }}</td>
+                            <td class="w-35">{{ Helpers::getMicroGridData($data, 'phase_II_OOS_investigations', true, 'remark', true, $loop->index) }}</td>
+                        </tr>
+                        @endforeach
+                        @else
+                        <tr>
+                            Not Applicable
+                        </tr>
+                        @endif
+                    </table>
+                </div>
+            </div>    
+        <div class="block">
                 <div class="block-head"> Summary of Phase II Testing </div>
                 <table>
                     <tr>  {{ $data->created_at }} added by {{ $data->originator }}
