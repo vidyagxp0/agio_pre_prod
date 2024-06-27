@@ -484,17 +484,29 @@ class ActionItemController extends Controller
 
         // $openState->status = 'Opened';
         // $openState->stage = 1;
-             $files = [];
-            if ($request->hasfile('file_attach')) {
-                foreach ($request->file('file_attach') as $file) {
-                    if ($file instanceof \Illuminate\Http\UploadedFile) {  
-                    $name = $request->name . 'file_attach' . uniqid() . '.' . $file->getClientOriginalExtension();
-                    $file->move('upload/', $name);
-                    $files[] = $name;
-                }
-            }
+        if ($request->hasFile('file_attach')) {
+            $files = [];
+            foreach ($request->file('file_attach') as $file) {
+                $name = $request->name . '_file_attach_' . uniqid() . '.' . $file->getClientOriginalExtension();
+                $file->move(public_path('upload/'), $name);
+                $files[] = $name;
             }
             $openState->file_attach = json_encode($files);
+        }
+    
+        $openState->fill($request->except('file_attach'));
+
+            //  $files = [];
+            // if ($request->hasfile('file_attach')) {
+            //     foreach ($request->file('file_attach') as $file) {
+            //         if ($file instanceof \Illuminate\Http\UploadedFile) {  
+            //         $name = $request->name . 'file_attach' . uniqid() . '.' . $file->getClientOriginalExtension();
+            //         $file->move('upload/', $name);
+            //         $files[] = $name;
+            //     }
+            // }
+            // }
+            // $openState->file_attach = json_encode($files);
         
 
         if (!empty($request->Support_doc)) {

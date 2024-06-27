@@ -198,12 +198,12 @@
                                             <label for="due-date">Due Date <span class="text-danger"></span></label>
                                             <!-- <input type="date" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
                                                 value="" name="due_date"> -->
-                                            <div class="calenderauditee">                                     
-                                                <input type="text"  id="due_date_display" readonly placeholder="DD-MMM-YYYY" value="{{ Helpers::getDueDate(30, false) }}" />
-                                                <input type="date" name="due_date"  min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" value="{{ Helpers::getDueDate(30, false) }}"
-                                                class="hide-input"
-                                                oninput="handleDateInput(this, 'due_date_display')"/>
-                                            </div>
+                                                <div class="calenderauditee">
+                                                    <!-- Display the formatted date in a readonly input -->
+                                                    <input type="text" id="due_date_display" readonly placeholder="DD-MMM-YYYY" value="{{ Helpers::getDueDate(30, true) }}" />
+                                                   
+                                                    <input type="date" name="due_date_gi" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" value="{{ Helpers::getDueDate(30, false) }}" class="hide-input" readonly />
+                                                </div>
                                         </div>
                                     </div>
                                     <div class="col-12">
@@ -1124,12 +1124,15 @@
                 });
             });
         </script>
-        <script>
-            var maxLength = 255;
-            $('#docname').keyup(function() {
-                var textlen = maxLength - $(this).val().length;
-                $('#rchars').text(textlen);
-            });
-        </script>
+       <script>
+        var maxLength = 255;
+        var textlen = maxLength - $('#docname').val().length;
+        $('#rchars').text(textlen);
+    
+        $('#docname').keyup(function() {
+            var textlen = maxLength - $(this).val().length;
+            $('#rchars').text(textlen);
+        });
+    </script>
 
 @endsection

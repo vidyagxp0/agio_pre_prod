@@ -8,4 +8,11 @@ use Illuminate\Database\Eloquent\Model;
 class ActionItem extends Model
 {
     use HasFactory;
+    protected $table='action_items';
+    protected $fillable = [
+   
+        'file_attach'       
+    ];
+
+
 }

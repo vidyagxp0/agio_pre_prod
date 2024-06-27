@@ -605,13 +605,7 @@
                         });
                     });
                 </script>
-                <script>
-                    var maxLength = 255;
-                    $('#docname').keyup(function() {
-                        var textlen = maxLength - $(this).val().length;
-                        $('#rchars').text(textlen);
-                    });
-                </script>
+               
                 <script>
                     var maxLength = 240;
                     $('#duedoc').keyup(function() {
@@ -803,7 +797,7 @@
                                             <span id="rchars">255</span>
                                         <div><small class="text-primary">Please insert "NA" in the data field if it does
                                                 not require completion</small></div>
-                                        <input  name="description_gi" {{ $data->stage == 0 || $data->stage == 8 ? "disabled" : "" }} id="summernote-1" required value="{{ $data->description_gi }}"  >
+                                        <input  name="description_gi" {{ $data->stage == 0 || $data->stage == 8 ? "disabled" : "" }} id="docname" required value="{{ $data->description_gi }}"  maxlength="255" >
                                     
                                     </div>
                                 </div>
@@ -2868,13 +2862,16 @@
             referenceContainer.parentNode.insertBefore(newReference, referenceContainer.nextSibling);
         }
     </script>
-    <script>
-        var maxLength = 255;
-        $('#docname').keyup(function() {
-            var textlen = maxLength - $(this).val().length;
-            $('#rchars').text(textlen);
-        });
-    </script>
+  <script>
+    var maxLength = 255;
+    var textlen = maxLength - $('#docname').val().length;
+    $('#rchars').text(textlen);
+
+    $('#docname').keyup(function() {
+        var textlen = maxLength - $(this).val().length;
+        $('#rchars').text(textlen);
+    });
+</script>
     {{-- ====================script for record number and intir--code ===================== --}}
 <script>
     document.addEventListener('DOMContentLoaded', function() {
