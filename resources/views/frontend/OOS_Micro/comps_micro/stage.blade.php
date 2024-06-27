@@ -20,9 +20,8 @@
             @php
             $userRoles = DB::table('user_roles')->where(['user_id' => Auth::user()->id, 'q_m_s_divisions_id' => $micro_data->division_id])->get();
             $userRoleIds = $userRoles->pluck('q_m_s_roles_id')->toArray();
-             // dd($userRoleIds);
             @endphp
-            <button class="button_theme1"> <a class="text-white" href="{{ route('audit_trial', $micro_data->id) }}"> Audit Trail </a> </button>
+                 <button class="button_theme1"> <a class="text-white" href="{{ route('audit_trial', $micro_data->id) }}"> Audit Trail </a> </button>
 
             @if ($micro_data->stage == 1 && (in_array(3, $userRoleIds) || in_array(18, $userRoleIds)))
                 <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">Submit</button>
@@ -44,7 +43,6 @@
                 <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">Proposed Hypothesis Experiment</button>
                 <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal">Child</button>
             @elseif($micro_data->stage == 6 && (in_array(9, $userRoleIds) || in_array(18, $userRoleIds)))
-                <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#request-more-info-modal">Request More Info</button>
                 <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal-AssignableCause">Obvious Error Found</button>
                 <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">No Assignable Cause Found</button>
                 <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal">Child</button>
@@ -57,7 +55,6 @@
             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">Full Scale Investigation</button>
             @elseif($micro_data->stage == 9 && (in_array(9, $userRoleIds) || in_array(18, $userRoleIds)))
             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#request-more-info-modal">Request More Info</button>
-            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#">To Under Hypothesis Experiment State</button>
             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal-AssignableCause">Assignable Cause Found (Manufacturing Defect)</button>
             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">No Assignable Cause Found (No Manufacturing Defect)</button>
             @elseif($micro_data->stage == 10 && (in_array(9, $userRoleIds) || in_array(18, $userRoleIds)))
@@ -72,13 +69,13 @@
             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal">Child</button>
 
             @elseif($micro_data->stage == 12 && (in_array(9, $userRoleIds) || in_array(18, $userRoleIds)))
-            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal-AssignableCause">Under Batch Disposition</button>
-            @elseif($micro_data->stage == 13 && (in_array(9, $userRoleIds) || in_array(18, $userRoleIds)))
+            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal-AssignableCause"> Final Approval </button>
+            {{-- @elseif($micro_data->stage == 13 && (in_array(9, $userRoleIds) || in_array(18, $userRoleIds)))
             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#request-more-info-modal">Request More Info</button>
             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">Phase II Manufacturing Investigation</button>
             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal">Child</button>
-
-            @elseif($micro_data->stage == 14 && (in_array(9, $userRoleIds) || in_array(18, $userRoleIds)))
+                --}}
+            @elseif($micro_data->stage == 13 && (in_array(9, $userRoleIds) || in_array(18, $userRoleIds)))
             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#request-more-info-modal">Request More Info</button>
             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">Approval Completed</button>
             @endif
@@ -157,7 +154,7 @@
             </div>
             <div class="group-input">
                 <label for="comment">Comment</label>
-                <input type="comment" name="comment">
+                <input type="comment" name="comment" required>
             </div>
             </div>
             <div class="modal-footer">
@@ -356,19 +353,19 @@
                 <div class="d-flex justify-items-center align-items-center border border-1 border-dark p-2 border-start-0">Under Batch Disposition</div>
                 @endif
 
-                @if ($micro_data->stage >= 13)
+                {{-- @if ($micro_data->stage >= 13)
                 <div class="active d-flex justify-items-center align-items-center border border-1 border-dark p-2 border-start-0"> Under Phase III Investigation</div>
                 @else
                 <div class="d-flex justify-items-center align-items-center border border-1 border-dark p-2 border-start-0">Under Phase III Investigation</div>
-                @endif
+                @endif --}}
 
-                @if ($micro_data->stage >= 14)
+                @if ($micro_data->stage >= 13)
                 <div class="active d-flex justify-items-center align-items-center border border-1 border-dark p-2 border-start-0"> Pending Final Approval</div>
                 @else
                 <div class="d-flex justify-items-center align-items-center border border-1 border-dark p-2 border-start-0">Pending Final Approval</div>
                 @endif
 
-                @if ($micro_data->stage >= 15)
+                @if ($micro_data->stage >= 14)
                 <div class="bg-danger d-flex justify-items-center align-items-center border border-1 border-dark p-2 border-start-0"> Close Done</div>
                 @else
                     <div class="d-flex justify-items-center align-items-center border border-1 border-dark p-2 border-start-0"> Close Done</div>

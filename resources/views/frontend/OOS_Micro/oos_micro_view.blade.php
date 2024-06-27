@@ -9,83 +9,7 @@
             display: none;
         }
     </style>
-
-    <!-- --------------------------------------button--------------------- -->
-
-    <script>
-        VirtualSelect.init({
-            ele: '#related_records, #hod'
-        });
-
-        function openCity(evt, cityName) {
-            var i, cctabcontent, cctablinks;
-            cctabcontent = document.getElementsByClassName("cctabcontent");
-            for (i = 0; i < cctabcontent.length; i++) {
-                cctabcontent[i].style.display = "none";
-            }
-            cctablinks = document.getElementsByClassName("cctablinks");
-            for (i = 0; i < cctablinks.length; i++) {
-                cctablinks[i].className = cctablinks[i].className.replace(" active", "");
-            }
-            document.getElementById(cityName).style.display = "block";
-            evt.currentTarget.className += " active";
-
-            // Find the index of the clicked tab button
-            const index = Array.from(cctablinks).findIndex(button => button === evt.currentTarget);
-
-            // Update the currentStep to the index of the clicked tab
-            currentStep = index;
-        }
-
-        const saveButtons = document.querySelectorAll(".saveButton");
-        const nextButtons = document.querySelectorAll(".nextButton");
-        const form = document.getElementById("step-form");
-        const stepButtons = document.querySelectorAll(".cctablinks");
-        const steps = document.querySelectorAll(".cctabcontent");
-        let currentStep = 0;
-
-        function nextStep() {
-            // Check if there is a next step
-            if (currentStep < steps.length - 1) {
-                // Hide current step
-                steps[currentStep].style.display = "none";
-
-                // Show next step
-                steps[currentStep + 1].style.display = "block";
-
-                // Add active class to next button
-                stepButtons[currentStep + 1].classList.add("active");
-
-                // Remove active class from current button
-                stepButtons[currentStep].classList.remove("active");
-
-                // Update current step
-                currentStep++;
-            }
-        }
-
-        function previousStep() {
-            // Check if there is a previous step
-            if (currentStep > 0) {
-                // Hide current step
-                steps[currentStep].style.display = "none";
-
-                // Show previous step
-                steps[currentStep - 1].style.display = "block";
-
-                // Add active class to previous button
-                stepButtons[currentStep - 1].classList.add("active");
-
-                // Remove active class from current button
-                stepButtons[currentStep].classList.remove("active");
-
-                // Update current step
-                currentStep--;
-            }
-        }
-    </script>
-
- <!-- -----------------------------grid-1----------------------------script -->
+<!-- -----------------------------grid-1----------------------------script -->
     <script>
         $(document).ready(function() {
             $('#info_product_material').click(function(e) {
@@ -138,7 +62,7 @@
             });
         });
     </script>
-    <!-- --------------------------------grid-2--------------------------->
+ <!-- --------------------------------grid-2--------------------------->
     <script>
         $(document).ready(function() {
             $('#details_stability').click(function(e) {
@@ -204,9 +128,8 @@
             });
         });
     </script>
-
 <!-- ---------------------------grid-1 ---Preliminary Lab Invst. Review----------------------------- -->
-<script>
+    <script>
         $(document).ready(function() {
             $('#oos_capa').click(function(e) {
                 function generateTableRow(serialNumber) {
@@ -252,7 +175,7 @@
             });
         });
     </script>
-    <!-- -----------------------------grid-1----------OOS Conclusion ---------------- -->
+<!-- -----------------------------grid-1----------OOS Conclusion ---------------- -->
     <script>
         $(document).ready(function() {
             $('#oos_conclusion').click(function(e) {
@@ -279,7 +202,7 @@
             });
         });
     </script>
-    <!-- -----------------------------grid-1----------OOSConclusion_Review ---------------- -->
+<!-- -----------------------------grid-1----------OOSConclusion_Review ---------------- -->
     <script>
         $(document).ready(function() {
             $('#oosconclusion_review').click(function(e) {
@@ -465,6 +388,80 @@
             }
             document.getElementById(cityName).style.display = "block";
             evt.currentTarget.className += " active";
+        }
+    </script>
+    <!-- --------------------------------------button--------------------- -->
+
+    <script>
+        VirtualSelect.init({
+            ele: '#related_records, #hod'
+        });
+
+        function openCity(evt, cityName) {
+            var i, cctabcontent, cctablinks;
+            cctabcontent = document.getElementsByClassName("cctabcontent");
+            for (i = 0; i < cctabcontent.length; i++) {
+                cctabcontent[i].style.display = "none";
+            }
+            cctablinks = document.getElementsByClassName("cctablinks");
+            for (i = 0; i < cctablinks.length; i++) {
+                cctablinks[i].className = cctablinks[i].className.replace(" active", "");
+            }
+            document.getElementById(cityName).style.display = "block";
+            evt.currentTarget.className += " active";
+
+            // Find the index of the clicked tab button
+            const index = Array.from(cctablinks).findIndex(button => button === evt.currentTarget);
+
+            // Update the currentStep to the index of the clicked tab
+            currentStep = index;
+        }
+
+        const saveButtons = document.querySelectorAll(".saveButton");
+        const nextButtons = document.querySelectorAll(".nextButton");
+        const form = document.getElementById("step-form");
+        const stepButtons = document.querySelectorAll(".cctablinks");
+        const steps = document.querySelectorAll(".cctabcontent");
+        let currentStep = 0;
+
+        function nextStep() {
+            // Check if there is a next step
+            if (currentStep < steps.length - 1) {
+                // Hide current step
+                steps[currentStep].style.display = "none";
+
+                // Show next step
+                steps[currentStep + 1].style.display = "block";
+
+                // Add active class to next button
+                stepButtons[currentStep + 1].classList.add("active");
+
+                // Remove active class from current button
+                stepButtons[currentStep].classList.remove("active");
+
+                // Update current step
+                currentStep++;
+            }
+        }
+
+        function previousStep() {
+            // Check if there is a previous step
+            if (currentStep > 0) {
+                // Hide current step
+                steps[currentStep].style.display = "none";
+
+                // Show previous step
+                steps[currentStep - 1].style.display = "block";
+
+                // Add active class to previous button
+                stepButtons[currentStep - 1].classList.add("active");
+
+                // Remove active class from current button
+                stepButtons[currentStep].classList.remove("active");
+
+                // Update current step
+                currentStep--;
+            }
         }
     </script>
 

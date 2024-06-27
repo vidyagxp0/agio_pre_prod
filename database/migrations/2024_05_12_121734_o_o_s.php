@@ -173,6 +173,9 @@ return new class extends Migration
             $table->longtext('required_attachment_uar')->nullable();
             $table->longtext('verification_comments_uav')->nullable();
             $table->longtext('verification_attachment_uar')->nullable();
+            $table->longtext('actionchild')->nullable();
+            $table->longtext('Capachild')->nullable();
+            
             
             $table->text('stage')->nullable();
             $table->text('status')->nullable();

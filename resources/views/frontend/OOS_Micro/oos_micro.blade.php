@@ -521,7 +521,6 @@ $users = DB::table('users')
                                     value="">
                             </div>
                         </div>
-
                         <div class="col-lg-6">
                             <div class="group-input">
                                 <label for="Initiator Group">Initiated Through ?</label>
@@ -1115,7 +1114,7 @@ $users = DB::table('users')
                     <div class="row">
                         <div class="col-md-12 mb-4">
                             <div class="group-input">
-                                <label for="Description Deviation">Summary of Prelim.Investiga.</label>
+                                <label for="Description Deviation">Summary of Prelim.Investigation.</label>
                                 <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
                                 <textarea class="summernote" name="summary_of_prelim_investiga_plic" id="summernote-1">
                                     </textarea>
@@ -1530,14 +1529,12 @@ $users = DB::table('users')
                                                         style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                                         <select name="phase_II_OOS_investigation[{{$loop->index}}][response]" id="response"
                                                             style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                            <option value="Yes">Select an Option</option>
+                                                            <option value="">Select an Option</option>
                                                             <option value="Yes">Yes</option>
                                                             <option value="No">No</option>
                                                             <option value="N/A">N/A</option>
                                                         </select>
                                                     </div>
-
-
                                                 </td>
                                                 <td>
                                                     {{-- <textarea name="who_will_not_be"></textarea> --}} <div
@@ -4562,7 +4559,7 @@ $users = DB::table('users')
 
         </div>
 
-                    <div id="CCForm20" class="inner-block cctabcontent">
+        <div id="CCForm20" class="inner-block cctabcontent">
                         <div class="inner-block-content">
                             <div class="sub-head">
                             Checklist for Review of Training records Analyst Involved in Testing
@@ -4945,15 +4942,9 @@ $users = DB::table('users')
                                                                         id="response"
                                                                         style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
                                                                     <option value="">Select an Option</option>
-                                                                    <option value="Yes"
-                                                                    {{-- {{ Helpers::getMicroGridData($micro_, 'analyst_training_proce', true, 'response', true, $loop->index) == 'Yes' ? 'selected' : '' }} --}}
-                                                                    >Yes</option>
-                                                                    <option value="No"
-                                                                    {{-- {{ Helpers::getMicroGridData($micro_data, 'analyst_training_proce', true, 'response', true, $loop->index) == 'No' ? 'selected' : '' }} --}}
-                                                                    >No</option>
-                                                                    <option value="N/A"
-                                                                    {{-- {{ Helpers::getMicroGridData($micro_data, 'analyst_training_proce', true, 'response', true, $loop->index) == 'N/A' ? 'selected' : '' }} --}}
-                                                                    >N/A</option>
+                                                                    <option value="Yes">Yes</option>
+                                                                    <option value="No" >No</option>
+                                                                    <option value="N/A">N/A</option>
                                                                 </select>
                                                             @endif
 
@@ -5753,1136 +5744,1136 @@ $users = DB::table('users')
                             </div>
                         </div>
 
-                            <div id="CCForm21" class="inner-block cctabcontent">
+    <div id="CCForm21" class="inner-block cctabcontent">
 
-                                <div class="inner-block-content">
+            <div class="inner-block-content">
 
-                                    <div class="sub-head">
+                <div class="sub-head">
 
-                                        Checklist for Review of Training records Analyst Involved in Testing
+                    Checklist for Review of Training records Analyst Involved in Testing
 
-                                    </div>
-                                        @php
-                                        $training_records_analyst_involvedIn_testing_microbial_asssays = [
+                </div>
+                    @php
+                    $training_records_analyst_involvedIn_testing_microbial_asssays = [
+    [
+        'question' => "Was analyst trained on testing procedure?",
+        'is_sub_question' => false,
+        'input_type' => 'text'
+    ],
+    [
+        'question' => "Was the analyst qualified for testing?",
+        'is_sub_question' => false,
+        'input_type' => 'text'
+    ],
+    [
+        'question' => "Date of qualification:",
+        'is_sub_question' => true,
+        'input_type' => 'date'
+    ]
+    ];
+
+                    @endphp
+        <div class="row">
+            <div class="col-12">
+                <div class="group-input">
+                    <div class="why-why-chart">
+                        <table class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th style="width: 5%;">Sr.No.</th>
+                                    <th style="width: 40%;">Question</th>
+                                    <th style="width: 20%;">Response</th>
+                                    <th>Remarks</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tbody>
+                                    @php
+                                        $main_question_index = 1.0;
+                                        $sub_question_index = 0;
+                                    @endphp
+
+                                    @foreach ($training_records_analyst_involvedIn_testing_microbial_asssays as $index => $review_item)
+                                    @php
+                                        if ($review_item['is_sub_question']) {
+                                            $sub_question_index++;
+                                        } else {
+                                            $sub_question_index = 0;
+                                            $main_question_index += 0.1;
+                                        }
+                                    @endphp
+                                    <tr>
+                                        <td class="flex text-center">{{ $review_item['is_sub_question'] ? $main_question_index .'.'. $sub_question_index : number_format($main_question_index, 1) }}</td>
+                                        <td>{{$review_item['question']}}</td>
+                                        <td>
+                                            <div style="display: flex; justify-content: space-around; align-items: center; margin: 5%; gap:5px">
+                                                @if ($review_item['input_type'] == 'date')
+                                                <input type="date" name="training_records_analyst_involvedIn_testing_microbial_asssay[{{$loop->index}}][response]"
+                                                    style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
+                                                @elseif ($review_item['input_type'] == 'number')
+                                                <input type="number" name="training_records_analyst_involvedIn_testing_microbial_asssay[{{$loop->index}}][response]"
+                                                    style="padding: 2px; width:90%; border: 1px solid black; background-color: #f0f0f0;">
+                                                @else
+                                                <select name="training_records_analyst_involvedIn_testing_microbial_asssay[{{$loop->index}}][response]"
+                                                        id="response"
+                                                        style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
+                                                    <option value="">Select an Option</option>
+                                                    <option value="Yes">Yes</option>
+                                                    <option value="No">No</option>
+                                                    <option value="N/A">N/A</option>
+                                                </select>
+                                                @endif
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div style="margin: auto; display: flex; justify-content: center;">
+                                                <textarea name="training_records_analyst_involvedIn_testing_microbial_asssay[{{$loop->index}}][remark]"
+                                                        style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    @endforeach
+                                </tbody>
+
+
+                        </table>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+    <div class="inner-block-content">
+
+                <div class="sub-head">Checklist for Review of sample intactness before analysis ? </div>
+                    @php
+                    $sample_intactness_before_analysis = [
                         [
-                            'question' => "Was analyst trained on testing procedure?",
+                            'question' => "Was intact samples /sample container received in lab?",
                             'is_sub_question' => false,
                             'input_type' => 'text'
                         ],
                         [
-                            'question' => "Was the analyst qualified for testing?",
+                            'question' => "Was it verified by sample receipt persons at the time of receipt in lab?",
                             'is_sub_question' => false,
                             'input_type' => 'text'
                         ],
                         [
-                            'question' => "Date of qualification:",
-                            'is_sub_question' => true,
-                            'input_type' => 'date'
+                            'question' => "Was the sample collected in desired container and transported as per approved procedure?",
+                            'is_sub_question' => false,
+                            'input_type' => 'text'
+                        ],
+                        [
+                            'question' => "Was there any discrepancy observed during sampling?",
+                            'is_sub_question' => false,
+                            'input_type' => 'text'
+                        ],
+                        [
+                            'question' => "Were sample stored as per storage requirements specified in specification/SOP?",
+                            'is_sub_question' => false,
+                            'input_type' => 'text'
                         ]
                     ];
 
+                    @endphp
+
+                <div class="row">
+
+                    <div class="col-12">
+
+                        <div class="group-input">
+
+                            <div class="why-why-chart">
+
+                                <table class="table table-bordered">
+
+                                    <thead>
+
+                                        <tr>
+
+                                            <th style="width: 5%;">Sr.No.</th>
+
+                                            <th style="width: 40%;">Question</th>
+
+                                            <th style="width: 20%;">Response</th>
+
+                                            <th>Remarks</th>
+
+                                        </tr>
+
+                                    </thead>
+
+                                    <tbody>
+                                        @php
+                                            $main_question_index = 2.0;
+                                            $sub_question_index = 0;
                                         @endphp
-                            <div class="row">
-                                <div class="col-12">
-                                    <div class="group-input">
-                                        <div class="why-why-chart">
-                                            <table class="table table-bordered">
-                                                <thead>
-                                                    <tr>
-                                                        <th style="width: 5%;">Sr.No.</th>
-                                                        <th style="width: 40%;">Question</th>
-                                                        <th style="width: 20%;">Response</th>
-                                                        <th>Remarks</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                    <tbody>
-                                                        @php
-                                                            $main_question_index = 1.0;
-                                                            $sub_question_index = 0;
-                                                        @endphp
 
-                                                        @foreach ($training_records_analyst_involvedIn_testing_microbial_asssays as $index => $review_item)
-                                                        @php
-                                                            if ($review_item['is_sub_question']) {
-                                                                $sub_question_index++;
-                                                            } else {
-                                                                $sub_question_index = 0;
-                                                                $main_question_index += 0.1;
-                                                            }
-                                                        @endphp
-                                                        <tr>
-                                                            <td class="flex text-center">{{ $review_item['is_sub_question'] ? $main_question_index .'.'. $sub_question_index : number_format($main_question_index, 1) }}</td>
-                                                            <td>{{$review_item['question']}}</td>
-                                                            <td>
-                                                                <div style="display: flex; justify-content: space-around; align-items: center; margin: 5%; gap:5px">
-                                                                    @if ($review_item['input_type'] == 'date')
-                                                                    <input type="date" name="training_records_analyst_involvedIn_testing_microbial_asssay[{{$loop->index}}][response]"
-                                                                        style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
-                                                                    @elseif ($review_item['input_type'] == 'number')
-                                                                    <input type="number" name="training_records_analyst_involvedIn_testing_microbial_asssay[{{$loop->index}}][response]"
-                                                                        style="padding: 2px; width:90%; border: 1px solid black; background-color: #f0f0f0;">
-                                                                    @else
-                                                                    <select name="training_records_analyst_involvedIn_testing_microbial_asssay[{{$loop->index}}][response]"
-                                                                            id="response"
-                                                                            style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
-                                                                        <option value="">Select an Option</option>
-                                                                        <option value="Yes">Yes</option>
-                                                                        <option value="No">No</option>
-                                                                        <option value="N/A">N/A</option>
-                                                                    </select>
-                                                                    @endif
-                                                                </div>
-                                                            </td>
-                                                            <td>
-                                                                <div style="margin: auto; display: flex; justify-content: center;">
-                                                                    <textarea name="training_records_analyst_involvedIn_testing_microbial_asssay[{{$loop->index}}][remark]"
-                                                                            style="border-radius: 7px; border: 1.5px solid black;"></textarea>
-                                                                </div>
-                                                            </td>
-                                                        </tr>
-                                                        @endforeach
-                                                    </tbody>
+                                        @foreach ($sample_intactness_before_analysis as $review_item)
+                                        @php
+                                            if ($review_item['is_sub_question']) {
+                                                $sub_question_index++;
+                                            } else {
+                                                $sub_question_index = 0;
+                                                $main_question_index += 0.1;
+                                            }
+                                        @endphp
+                                        <tr>
+                                            <td class="flex text-center">{{ $review_item['is_sub_question'] ? $main_question_index .'.'. $sub_question_index : number_format($main_question_index, 1) }}</td>
+                                            <td>{{$review_item['question']}}</td>
+                                            <td>
+                                                <div style="display: flex; justify-content: space-around; align-items: center; margin: 5%; gap:5px">
+                                                    @if ($review_item['input_type'] == 'date')
+                                                    <input type="date" name="sample_intactness_before_analysis[{{$loop->index}}][response]"
+                                                        style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
+                                                    @elseif ($review_item['input_type'] == 'number')
+                                                    <input type="number" name="sample_intactness_before_analysis[{{$loop->index}}][response]"
+                                                        style="padding: 2px; width:90%; border: 1px solid black; background-color: #f0f0f0;">
+                                                    @else
+                                                    <select name="sample_intactness_before_analysis[{{$loop->index}}][response]"
+                                                            id="response"
+                                                            style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
+                                                        <option value="">Select an Option</option>
+                                                        <option value="Yes">Yes</option>
+                                                        <option value="No">No</option>
+                                                        <option value="N/A">N/A</option>
+                                                    </select>
+                                                    @endif
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div style="margin: auto; display: flex; justify-content: center;">
+                                                    <textarea name="sample_intactness_before_analysis[{{$loop->index}}][remark]"
+                                                            style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        @endforeach
+                                    </tbody>
 
-
-                                            </table>
-
-                                        </div>
-
-                                    </div>
-
-                                </div>
+                                    </table>
 
                             </div>
 
                         </div>
-                        <div class="inner-block-content">
 
-                                    <div class="sub-head">Checklist for Review of sample intactness before analysis ? </div>
+                    </div>
+
+                </div>
+
+            </div>
+            <div class="inner-block-content">
+
+                <div class="sub-head">Checklist for Review of test methods & Procedures</div>
+                        @php
+                    $checklist_for_review_of_test_method_IMAs = [
+                            [
+                                'question' => "Was correct applicable specification and method of analysis used for analysis?",
+                                'is_sub_question' => false,
+                                'input_type' => 'text'
+                            ],
+                            [
+                                'question' => "MOA & specification number?",
+                                'is_sub_question' => false,
+                                'input_type' => 'text'
+                            ],
+                            [
+                                'question' => "Were the results of the other samples analyzed on the same day/time satisfactory?",
+                                'is_sub_question' => false,
+                                'input_type' => 'text'
+                            ],
+                            [
+                                'question' => "Was the samples pipetted or loaded in appropriate quantity?",
+                                'is_sub_question' => false,
+                                'input_type' => 'text'
+                            ],
+                            [
+                                'question' => "Were the samples tested transferred and incubated at desired temperature as per approved procedure?",
+                                'is_sub_question' => false,
+                                'input_type' => 'text'
+                            ],
+                            [
+                                'question' => "Were the tested samples results observed within the valid time?",
+                                'is_sub_question' => false,
+                                'input_type' => 'text'
+                            ],
+                            [
+                                'question' => "Were zones /readings measured correctly? (Applicable for Antibiotics –Microbial Assay)",
+                                'is_sub_question' => false,
+                                'input_type' => 'text'
+                            ],
+                            [
+                                'question' => "Was formula, dilution factors used for calculation of results corrected?",
+                                'is_sub_question' => false,
+                                'input_type' => 'text'
+                            ]
+                        ];
+
+                        @endphp
+
+                    <div class="row">
+
+                    <div class="col-12">
+
+                        <div class="group-input">
+
+                            <div class="why-why-chart">
+
+                                <table class="table table-bordered">
+
+                                    <thead>
+
+                                        <tr>
+
+                                            <th style="width: 5%;">Sr.No.</th>
+
+                                            <th style="width: 40%;">Question</th>
+
+                                            <th style="width: 20%;">Response</th>
+
+                                            <th>Remarks</th>
+
+                                        </tr>
+
+                                    </thead>
+
+                                    <tbody>
                                         @php
-                                        $sample_intactness_before_analysis = [
-                                            [
-                                                'question' => "Was intact samples /sample container received in lab?",
-                                                'is_sub_question' => false,
-                                                'input_type' => 'text'
-                                            ],
-                                            [
-                                                'question' => "Was it verified by sample receipt persons at the time of receipt in lab?",
-                                                'is_sub_question' => false,
-                                                'input_type' => 'text'
-                                            ],
-                                            [
-                                                'question' => "Was the sample collected in desired container and transported as per approved procedure?",
-                                                'is_sub_question' => false,
-                                                'input_type' => 'text'
-                                            ],
-                                            [
-                                                'question' => "Was there any discrepancy observed during sampling?",
-                                                'is_sub_question' => false,
-                                                'input_type' => 'text'
-                                            ],
-                                            [
-                                                'question' => "Were sample stored as per storage requirements specified in specification/SOP?",
-                                                'is_sub_question' => false,
-                                                'input_type' => 'text'
-                                            ]
-                                        ];
-
+                                            $main_question_index = 3.0;
+                                            $sub_question_index = 0;
                                         @endphp
 
-                                    <div class="row">
-
-                                        <div class="col-12">
-
-                                            <div class="group-input">
-
-                                                <div class="why-why-chart">
-
-                                                    <table class="table table-bordered">
-
-                                                        <thead>
-
-                                                            <tr>
-
-                                                                <th style="width: 5%;">Sr.No.</th>
-
-                                                                <th style="width: 40%;">Question</th>
-
-                                                                <th style="width: 20%;">Response</th>
-
-                                                                <th>Remarks</th>
-
-                                                            </tr>
-
-                                                        </thead>
-
-                                                        <tbody>
-                                                            @php
-                                                                $main_question_index = 2.0;
-                                                                $sub_question_index = 0;
-                                                            @endphp
-
-                                                            @foreach ($sample_intactness_before_analysis as $review_item)
-                                                            @php
-                                                                if ($review_item['is_sub_question']) {
-                                                                    $sub_question_index++;
-                                                                } else {
-                                                                    $sub_question_index = 0;
-                                                                    $main_question_index += 0.1;
-                                                                }
-                                                            @endphp
-                                                            <tr>
-                                                                <td class="flex text-center">{{ $review_item['is_sub_question'] ? $main_question_index .'.'. $sub_question_index : number_format($main_question_index, 1) }}</td>
-                                                                <td>{{$review_item['question']}}</td>
-                                                                <td>
-                                                                    <div style="display: flex; justify-content: space-around; align-items: center; margin: 5%; gap:5px">
-                                                                        @if ($review_item['input_type'] == 'date')
-                                                                        <input type="date" name="sample_intactness_before_analysis[{{$loop->index}}][response]"
-                                                                            style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
-                                                                        @elseif ($review_item['input_type'] == 'number')
-                                                                        <input type="number" name="sample_intactness_before_analysis[{{$loop->index}}][response]"
-                                                                            style="padding: 2px; width:90%; border: 1px solid black; background-color: #f0f0f0;">
-                                                                        @else
-                                                                        <select name="sample_intactness_before_analysis[{{$loop->index}}][response]"
-                                                                                id="response"
-                                                                                style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
-                                                                            <option value="">Select an Option</option>
-                                                                            <option value="Yes">Yes</option>
-                                                                            <option value="No">No</option>
-                                                                            <option value="N/A">N/A</option>
-                                                                        </select>
-                                                                        @endif
-                                                                    </div>
-                                                                </td>
-                                                                <td>
-                                                                    <div style="margin: auto; display: flex; justify-content: center;">
-                                                                        <textarea name="sample_intactness_before_analysis[{{$loop->index}}][remark]"
-                                                                                style="border-radius: 7px; border: 1.5px solid black;"></textarea>
-                                                                    </div>
-                                                                </td>
-                                                            </tr>
-                                                            @endforeach
-                                                        </tbody>
-
-                                                        </table>
-
-                                                </div>
-
-                                            </div>
-
-                                        </div>
-
-                                    </div>
-
-                                </div>
-                                <div class="inner-block-content">
-
-                                    <div class="sub-head">Checklist for Review of test methods & Procedures</div>
-                                            @php
-                                        $checklist_for_review_of_test_method_IMAs = [
-                                                [
-                                                    'question' => "Was correct applicable specification and method of analysis used for analysis?",
-                                                    'is_sub_question' => false,
-                                                    'input_type' => 'text'
-                                                ],
-                                                [
-                                                    'question' => "MOA & specification number?",
-                                                    'is_sub_question' => false,
-                                                    'input_type' => 'text'
-                                                ],
-                                                [
-                                                    'question' => "Were the results of the other samples analyzed on the same day/time satisfactory?",
-                                                    'is_sub_question' => false,
-                                                    'input_type' => 'text'
-                                                ],
-                                                [
-                                                    'question' => "Was the samples pipetted or loaded in appropriate quantity?",
-                                                    'is_sub_question' => false,
-                                                    'input_type' => 'text'
-                                                ],
-                                                [
-                                                    'question' => "Were the samples tested transferred and incubated at desired temperature as per approved procedure?",
-                                                    'is_sub_question' => false,
-                                                    'input_type' => 'text'
-                                                ],
-                                                [
-                                                    'question' => "Were the tested samples results observed within the valid time?",
-                                                    'is_sub_question' => false,
-                                                    'input_type' => 'text'
-                                                ],
-                                                [
-                                                    'question' => "Were zones /readings measured correctly? (Applicable for Antibiotics –Microbial Assay)",
-                                                    'is_sub_question' => false,
-                                                    'input_type' => 'text'
-                                                ],
-                                                [
-                                                    'question' => "Was formula, dilution factors used for calculation of results corrected?",
-                                                    'is_sub_question' => false,
-                                                    'input_type' => 'text'
-                                                ]
-                                            ];
-
-                                            @endphp
-
-                                        <div class="row">
-
-                                        <div class="col-12">
-
-                                            <div class="group-input">
-
-                                                <div class="why-why-chart">
-
-                                                    <table class="table table-bordered">
-
-                                                        <thead>
-
-                                                            <tr>
-
-                                                                <th style="width: 5%;">Sr.No.</th>
-
-                                                                <th style="width: 40%;">Question</th>
-
-                                                                <th style="width: 20%;">Response</th>
-
-                                                                <th>Remarks</th>
-
-                                                            </tr>
-
-                                                        </thead>
-
-                                                        <tbody>
-                                                            @php
-                                                                $main_question_index = 3.0;
-                                                                $sub_question_index = 0;
-                                                            @endphp
-
-                                                            @foreach ($checklist_for_review_of_test_method_IMAs as $index => $review_item)
-                                                            @php
-                                                                if ($review_item['is_sub_question']) {
-                                                                    $sub_question_index++;
-                                                                } else {
-                                                                    $sub_question_index = 0;
-                                                                    $main_question_index += 0.1;
-                                                                }
-                                                            @endphp
-                                                            <tr>
-                                                                <td class="flex text-center">{{ $review_item['is_sub_question'] ? $main_question_index .'.'. $sub_question_index : number_format($main_question_index, 1) }}</td>
-                                                                <td>{{$review_item['question']}}</td>
-                                                                <td>
-                                                                    <div style="display: flex; justify-content: space-around; align-items: center; margin: 5%; gap:5px">
-                                                                        @if ($review_item['input_type'] == 'date')
-                                                                        <input type="date" name="checklist_for_review_of_test_method_IMA[{{$loop->index}}][response]"
-                                                                            style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
-                                                                        @elseif ($review_item['input_type'] == 'number')
-                                                                        <input type="number" name="checklist_for_review_of_test_method_IMA[{{$loop->index}}][response]"
-                                                                            style="padding: 2px; width:90%; border: 1px solid black; background-color: #f0f0f0;">
-                                                                        @else
-                                                                        <select name="checklist_for_review_of_test_method_IMA[{{$loop->index}}][response]"
-                                                                                id="response"
-                                                                                style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
-                                                                            <option value="">Select an Option</option>
-                                                                            <option value="Yes">Yes</option>
-                                                                            <option value="No">No</option>
-                                                                            <option value="N/A">N/A</option>
-                                                                        </select>
-                                                                        @endif
-                                                                    </div>
-                                                                </td>
-                                                                <td>
-                                                                    <div style="margin: auto; display: flex; justify-content: center;">
-                                                                        <textarea name="checklist_for_review_of_test_method_IMA[{{$loop->index}}][remark]"
-                                                                                style="border-radius: 7px; border: 1.5px solid black;"></textarea>
-                                                                    </div>
-                                                                </td>
-                                                            </tr>
-                                                            @endforeach
-                                                        </tbody>
-                                                    </table>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="inner-block-content">
-
-                                    <div class="sub-head">
-
-                                        Checklist for Review of Media, Buffer, Standards preparation & test accessories </div>
-                                    @php
-                                        $cr_of_media_buffer_st_IMAs = [
-                                        [
-                                            'question' => "Name of the media used in the analysis:",
-                                            'is_sub_question' => false,
-                                            'input_type' => 'number'
-                                        ],
-                                        [
-                                            'question' => "Did the COA of the media review and found satisfactory?",
-                                            'is_sub_question' => true,
-                                            'input_type' => 'text'
-                                        ],
-                                        [
-                                            'question' => "Date of media preparation:",
-                                            'is_sub_question' => true,
-                                            'input_type' => 'date'
-                                        ],
-                                        [
-                                            'question' => "Lot No.",
-                                            'is_sub_question' => true,
-                                            'input_type' => 'number'
-                                        ],
-                                        [
-                                            'question' => "Use before date:",
-                                            'is_sub_question' => true,
-                                            'input_type' => 'date'
-                                        ],
-                                        [
-                                            'question' => "Did appropriate size wells prepare in the media plates? (Applicable for Antibiotics –Microbial Assay)",
-                                            'is_sub_question' => true,
-                                            'input_type' => 'text'
-                                        ],
-                                        [
-                                            'question' => "Was the media sterilization and sanitization cycle found satisfactory?",
-                                            'is_sub_question' => true,
-                                            'input_type' => 'text'
-                                        ],
-                                        [
-                                            'question' => "Validated load pattern references documents No.",
-                                            'is_sub_question' => true,
-                                            'input_type' => 'number'
-                                        ],
-                                        [
-                                            'question' => "Was any contamination observed in test media /Buffers /Standard solution?",
-                                            'is_sub_question' => true,
-                                            'input_type' => 'text'
-                                        ],
-                                        [
-                                            'question' => "Was appropriate and cleaned glasswares used for testing?",
-                                            'is_sub_question' => true,
-                                            'input_type' => 'text'
-                                        ],
-                                        [
-                                            'question' => "Whether the volumetric flask calibrated?",
-                                            'is_sub_question' => true,
-                                            'input_type' => 'text'
-                                        ],
-                                        [
-                                            'question' => "References standard lot No./Batch No?",
-                                            'is_sub_question' => false,
-                                            'input_type' => 'number'
-                                        ],
-                                        [
-                                            'question' => "Reference standard expiry date?",
-                                            'is_sub_question' => true,
-                                            'input_type' => 'date'
-                                        ],
-                                        [
-                                            'question' => "Were the challenged samples stored in appropriate storage condition?",
-                                            'is_sub_question' => true,
-                                            'input_type' => 'text'
-                                        ],
-                                        [
-                                            'question' => "Was the standard weight accurately as mentioned in test procedure?",
-                                            'is_sub_question' => true,
-                                            'input_type' => 'text'
-                                        ],
-                                        [
-                                            'question' => "Any event observed with the references standard of the same batch?",
-                                            'is_sub_question' => true,
-                                            'input_type' => 'text'
-                                        ],
-                                        [
-                                            'question' => "Was the working standard prepared with appropriate dilutions?",
-                                            'is_sub_question' => true,
-                                            'input_type' => 'text'
-                                        ],
-                                        [
-                                            'question' => "Date of preparation:",
-                                            'is_sub_question' => true,
-                                            'input_type' => 'date',
-                                        ],
-                                        [
-                                            'question' => "Use before date:",
-                                            'is_sub_question' => true,
-                                            'input_type' => 'date',
-                                        ],
-                                        [
-                                            'question' => "Were sterilized petriplates used for testing?",
-                                            'is_sub_question' => false,
-                                            'input_type' => 'text'
-                                        ],
-                                        [
-                                            'question' => "Lot/Batch No. of petriplates",
-                                            'is_sub_question' => true,
-                                            'input_type' => 'number'
-                                        ],
-                                        [
-                                            'question' => "Size of the petriplates",
-                                            'is_sub_question' => false,
-                                            'input_type' => 'number'
-                                        ],
-                                        [
-                                            'question' => "Size of the petriplate",
-                                            'is_sub_question' => true, // <- corrected
-                                            'input_type' => 'text'
-                                        ],
-                                        [
-                                            'question' => "Dilutor prepared on:",
-                                            'is_sub_question' => false,
-                                            'input_type' => 'date'
-                                        ],
-                                        [
-                                            'question' => "Validity time of the dilutor:",
-                                            'is_sub_question' => true,
-                                            'input_type' => 'number'
-                                        ],
-                                        [
-                                            'question' => "Used on:",
-                                            'is_sub_question' => true,
-                                            'input_type' => 'date'
-                                        ],
-                                        ];
-
-                                    @endphp
-                                    <div class="row">
-
-                                        <div class="col-12">
-
-                                            <div class="group-input">
-
-                                                <div class="why-why-chart">
-
-                                                    <table class="table table-bordered">
-
-                                                        <thead>
-
-                                                            <tr>
-
-                                                                <th style="width: 5%;">Sr.No.</th>
-
-                                                                <th style="width: 40%;">Question</th>
-
-                                                                <th style="width: 20%;">Response</th>
-
-                                                                <th>Remarks</th>
-
-                                                            </tr>
-
-                                                        </thead>
-
-                                                        <tbody>
-                                                            @php
-                                                                $main_question_index = 4.0;
-                                                                $sub_question_index = 0;
-                                                            @endphp
-
-                                                            @foreach ($cr_of_media_buffer_st_IMAs as $index => $review_item)
-                                                            @php
-                                                                if ($review_item['is_sub_question']) {
-                                                                    $sub_question_index++;
-                                                                } else {
-                                                                    $sub_question_index = 0;
-                                                                    $main_question_index += 0.1;
-                                                                }
-                                                            @endphp
-                                                            <tr>
-                                                                <td class="flex text-center">{{ $review_item['is_sub_question'] ? $main_question_index .'.'. $sub_question_index : number_format($main_question_index, 1) }}</td>
-                                                                <td>{{$review_item['question']}}</td>
-                                                                <td>
-                                                                    <div style="display: flex; justify-content: space-around; align-items: center; margin: 5%; gap:5px">
-                                                                        @if ($review_item['input_type'] == 'date')
-                                                                        <input type="date" name="cr_of_media_buffer_st_IMA[{{$loop->index}}][response]"
-                                                                            style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
-                                                                        @elseif ($review_item['input_type'] == 'number')
-                                                                        <input type="number" name="cr_of_media_buffer_st_IMA[{{$loop->index}}][response]"
-                                                                            style="padding: 2px; width:90%; border: 1px solid black; background-color: #f0f0f0;">
-                                                                        @else
-                                                                        <select name="cr_of_media_buffer_st_IMA[{{$loop->index}}][response]"
-                                                                                id="response"
-                                                                                style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
-                                                                            <option value="">Select an Option</option>
-                                                                            <option value="Yes">Yes</option>
-                                                                            <option value="No">No</option>
-                                                                            <option value="N/A">N/A</option>
-                                                                        </select>
-                                                                        @endif
-                                                                    </div>
-                                                                </td>
-                                                                <td>
-                                                                    <div style="margin: auto; display: flex; justify-content: center;">
-                                                                        <textarea name="cr_of_media_buffer_st_IMA[{{$loop->index}}][remark]"
-                                                                                style="border-radius: 7px; border: 1.5px solid black;"></textarea>
-                                                                    </div>
-                                                                </td>
-                                                            </tr>
-                                                            @endforeach
-                                                        </tbody>
-
-
-                                                    </table>
-
-                                                </div>
-
-                                            </div>
-
-                                        </div>
-
-                                    </div>
-
-                                </div>
-
-
-
-                                <div class="inner-block-content">
-
-                                    <div class="sub-head">
-
-                                        Checklist for Review of Microbial cultures/Inoculation (Test organism) </div>
+                                        @foreach ($checklist_for_review_of_test_method_IMAs as $index => $review_item)
                                         @php
-                                        $CR_of_microbial_cultures_inoculation_IMAs = [
+                                            if ($review_item['is_sub_question']) {
+                                                $sub_question_index++;
+                                            } else {
+                                                $sub_question_index = 0;
+                                                $main_question_index += 0.1;
+                                            }
+                                        @endphp
+                                        <tr>
+                                            <td class="flex text-center">{{ $review_item['is_sub_question'] ? $main_question_index .'.'. $sub_question_index : number_format($main_question_index, 1) }}</td>
+                                            <td>{{$review_item['question']}}</td>
+                                            <td>
+                                                <div style="display: flex; justify-content: space-around; align-items: center; margin: 5%; gap:5px">
+                                                    @if ($review_item['input_type'] == 'date')
+                                                    <input type="date" name="checklist_for_review_of_test_method_IMA[{{$loop->index}}][response]"
+                                                        style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
+                                                    @elseif ($review_item['input_type'] == 'number')
+                                                    <input type="number" name="checklist_for_review_of_test_method_IMA[{{$loop->index}}][response]"
+                                                        style="padding: 2px; width:90%; border: 1px solid black; background-color: #f0f0f0;">
+                                                    @else
+                                                    <select name="checklist_for_review_of_test_method_IMA[{{$loop->index}}][response]"
+                                                            id="response"
+                                                            style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
+                                                        <option value="">Select an Option</option>
+                                                        <option value="Yes">Yes</option>
+                                                        <option value="No">No</option>
+                                                        <option value="N/A">N/A</option>
+                                                    </select>
+                                                    @endif
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div style="margin: auto; display: flex; justify-content: center;">
+                                                    <textarea name="checklist_for_review_of_test_method_IMA[{{$loop->index}}][remark]"
+                                                            style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        @endforeach
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="inner-block-content">
+
+                <div class="sub-head">
+
+                    Checklist for Review of Media, Buffer, Standards preparation & test accessories </div>
+                @php
+                    $cr_of_media_buffer_st_IMAs = [
+                    [
+                        'question' => "Name of the media used in the analysis:",
+                        'is_sub_question' => false,
+                        'input_type' => 'number'
+                    ],
+                    [
+                        'question' => "Did the COA of the media review and found satisfactory?",
+                        'is_sub_question' => true,
+                        'input_type' => 'text'
+                    ],
+                    [
+                        'question' => "Date of media preparation:",
+                        'is_sub_question' => true,
+                        'input_type' => 'date'
+                    ],
+                    [
+                        'question' => "Lot No.",
+                        'is_sub_question' => true,
+                        'input_type' => 'number'
+                    ],
+                    [
+                        'question' => "Use before date:",
+                        'is_sub_question' => true,
+                        'input_type' => 'date'
+                    ],
+                    [
+                        'question' => "Did appropriate size wells prepare in the media plates? (Applicable for Antibiotics –Microbial Assay)",
+                        'is_sub_question' => true,
+                        'input_type' => 'text'
+                    ],
+                    [
+                        'question' => "Was the media sterilization and sanitization cycle found satisfactory?",
+                        'is_sub_question' => true,
+                        'input_type' => 'text'
+                    ],
+                    [
+                        'question' => "Validated load pattern references documents No.",
+                        'is_sub_question' => true,
+                        'input_type' => 'number'
+                    ],
+                    [
+                        'question' => "Was any contamination observed in test media /Buffers /Standard solution?",
+                        'is_sub_question' => true,
+                        'input_type' => 'text'
+                    ],
+                    [
+                        'question' => "Was appropriate and cleaned glasswares used for testing?",
+                        'is_sub_question' => true,
+                        'input_type' => 'text'
+                    ],
+                    [
+                        'question' => "Whether the volumetric flask calibrated?",
+                        'is_sub_question' => true,
+                        'input_type' => 'text'
+                    ],
+                    [
+                        'question' => "References standard lot No./Batch No?",
+                        'is_sub_question' => false,
+                        'input_type' => 'number'
+                    ],
+                    [
+                        'question' => "Reference standard expiry date?",
+                        'is_sub_question' => true,
+                        'input_type' => 'date'
+                    ],
+                    [
+                        'question' => "Were the challenged samples stored in appropriate storage condition?",
+                        'is_sub_question' => true,
+                        'input_type' => 'text'
+                    ],
+                    [
+                        'question' => "Was the standard weight accurately as mentioned in test procedure?",
+                        'is_sub_question' => true,
+                        'input_type' => 'text'
+                    ],
+                    [
+                        'question' => "Any event observed with the references standard of the same batch?",
+                        'is_sub_question' => true,
+                        'input_type' => 'text'
+                    ],
+                    [
+                        'question' => "Was the working standard prepared with appropriate dilutions?",
+                        'is_sub_question' => true,
+                        'input_type' => 'text'
+                    ],
+                    [
+                        'question' => "Date of preparation:",
+                        'is_sub_question' => true,
+                        'input_type' => 'date',
+                    ],
+                    [
+                        'question' => "Use before date:",
+                        'is_sub_question' => true,
+                        'input_type' => 'date',
+                    ],
+                    [
+                        'question' => "Were sterilized petriplates used for testing?",
+                        'is_sub_question' => false,
+                        'input_type' => 'text'
+                    ],
+                    [
+                        'question' => "Lot/Batch No. of petriplates",
+                        'is_sub_question' => true,
+                        'input_type' => 'number'
+                    ],
+                    [
+                        'question' => "Size of the petriplates",
+                        'is_sub_question' => false,
+                        'input_type' => 'number'
+                    ],
+                    [
+                        'question' => "Size of the petriplate",
+                        'is_sub_question' => true, // <- corrected
+                        'input_type' => 'text'
+                    ],
+                    [
+                        'question' => "Dilutor prepared on:",
+                        'is_sub_question' => false,
+                        'input_type' => 'date'
+                    ],
+                    [
+                        'question' => "Validity time of the dilutor:",
+                        'is_sub_question' => true,
+                        'input_type' => 'number'
+                    ],
+                    [
+                        'question' => "Used on:",
+                        'is_sub_question' => true,
+                        'input_type' => 'date'
+                    ],
+                    ];
+
+                @endphp
+                <div class="row">
+
+                    <div class="col-12">
+
+                        <div class="group-input">
+
+                            <div class="why-why-chart">
+
+                                <table class="table table-bordered">
+
+                                    <thead>
+
+                                        <tr>
+
+                                            <th style="width: 5%;">Sr.No.</th>
+
+                                            <th style="width: 40%;">Question</th>
+
+                                            <th style="width: 20%;">Response</th>
+
+                                            <th>Remarks</th>
+
+                                        </tr>
+
+                                    </thead>
+
+                                    <tbody>
+                                        @php
+                                            $main_question_index = 4.0;
+                                            $sub_question_index = 0;
+                                        @endphp
+
+                                        @foreach ($cr_of_media_buffer_st_IMAs as $index => $review_item)
+                                        @php
+                                            if ($review_item['is_sub_question']) {
+                                                $sub_question_index++;
+                                            } else {
+                                                $sub_question_index = 0;
+                                                $main_question_index += 0.1;
+                                            }
+                                        @endphp
+                                        <tr>
+                                            <td class="flex text-center">{{ $review_item['is_sub_question'] ? $main_question_index .'.'. $sub_question_index : number_format($main_question_index, 1) }}</td>
+                                            <td>{{$review_item['question']}}</td>
+                                            <td>
+                                                <div style="display: flex; justify-content: space-around; align-items: center; margin: 5%; gap:5px">
+                                                    @if ($review_item['input_type'] == 'date')
+                                                    <input type="date" name="cr_of_media_buffer_st_IMA[{{$loop->index}}][response]"
+                                                        style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
+                                                    @elseif ($review_item['input_type'] == 'number')
+                                                    <input type="number" name="cr_of_media_buffer_st_IMA[{{$loop->index}}][response]"
+                                                        style="padding: 2px; width:90%; border: 1px solid black; background-color: #f0f0f0;">
+                                                    @else
+                                                    <select name="cr_of_media_buffer_st_IMA[{{$loop->index}}][response]"
+                                                            id="response"
+                                                            style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
+                                                        <option value="">Select an Option</option>
+                                                        <option value="Yes">Yes</option>
+                                                        <option value="No">No</option>
+                                                        <option value="N/A">N/A</option>
+                                                    </select>
+                                                    @endif
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div style="margin: auto; display: flex; justify-content: center;">
+                                                    <textarea name="cr_of_media_buffer_st_IMA[{{$loop->index}}][remark]"
+                                                            style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        @endforeach
+                                    </tbody>
+
+
+                                </table>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+
+            <div class="inner-block-content">
+
+                <div class="sub-head">
+
+                    Checklist for Review of Microbial cultures/Inoculation (Test organism) </div>
+                    @php
+                    $CR_of_microbial_cultures_inoculation_IMAs = [
+    [
+        'question' => "Name of the test organism used:",
+        'is_sub_question' => false,
+        'input_type' => 'number'
+    ],
+    [
+        'question' => "Passage No.",
+        'is_sub_question' => true,
+        'input_type' => 'number'
+    ],
+    [
+        'question' => "Whether the culture suspension was prepared from valid source (Slant/Cryo vails)?",
+        'is_sub_question' => false,
+        'input_type' => 'text'
+    ],
+    [
+        'question' => "Was the culture suspension used within the valid time?",
+        'is_sub_question' => false,
+        'input_type' => 'text'
+    ],
+    [
+        'question' => "Was appropriate quantity of the inoculum challenged in the product?",
+        'is_sub_question' => false,
+        'input_type' => 'text'
+    ],
+    [
+        'question' => "Was the stock/test culture dilution store as per recommended condition before used",
+        'is_sub_question' => false,
+        'input_type' => 'text'
+    ]
+    ];
+
+                    @endphp
+
+                <div class="row">
+
+                    <div class="col-12">
+
+                        <div class="group-input">
+
+                            <div class="why-why-chart">
+
+                                <table class="table table-bordered">
+
+                                    <thead>
+
+                                        <tr>
+
+                                            <th style="width: 5%;">Sr.No.</th>
+
+                                            <th style="width: 40%;">Question</th>
+
+                                            <th style="width: 20%;">Response</th>
+
+                                            <th>Remarks</th>
+
+                                        </tr>
+
+                                </thead>
+
+                                    <tbody>
+                                        @php
+                                            $main_question_index = 5.0;
+                                            $sub_question_index = 0;
+                                        @endphp
+
+                                        @foreach ($CR_of_microbial_cultures_inoculation_IMAs as $index => $review_item)
+                                        @php
+                                            if ($review_item['is_sub_question']) {
+                                                $sub_question_index++;
+                                            } else {
+                                                $sub_question_index = 0;
+                                                $main_question_index += 0.1;
+                                            }
+                                        @endphp
+                                        <tr>
+                                            <td class="flex text-center">{{ $review_item['is_sub_question'] ? $main_question_index .'.'. $sub_question_index : number_format($main_question_index, 1) }}</td>
+                                            <td>{{$review_item['question']}}</td>
+                                            <td>
+                                                <div style="display: flex; justify-content: space-around; align-items: center; margin: 5%; gap:5px">
+                                                    @if ($review_item['input_type'] == 'date')
+                                                    <input type="date" name="CR_of_microbial_cultures_inoculation_IMA[{{$loop->index}}][response]"
+                                                        style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
+                                                    @elseif ($review_item['input_type'] == 'number')
+                                                    <input type="number" name="CR_of_microbial_cultures_inoculation_IMA[{{$loop->index}}][response]"
+                                                        style="padding: 2px; width:90%; border: 1px solid black; background-color: #f0f0f0;">
+                                                    @else
+                                                    <select name="CR_of_microbial_cultures_inoculation_IMAs[{{ $index }}][response]"
+                                                                                                id="response"
+                                                                                                style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
+                                                                                            <option value="">Select an Option</option>
+                                                                                            <option value="Yes">Yes</option>
+                                                                                            <option value="No">No</option>
+                                                                                            <option value="N/A">N/A</option>
+                                                                                        </select>
+
+                                                    @endif
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div style="margin: auto; display: flex; justify-content: center;">
+                                                    <textarea name="CR_of_microbial_cultures_inoculation_IMA[{{$loop->index}}][remark]"
+                                                            style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        @endforeach
+                                    </tbody>
+
+                                </table>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+
+            </div>
+
+
+
+            <div class="inner-block-content">
+
+                <div class="sub-head">
+
+                    Checklist for Review of Environmental conditions in the testing area </div>
+                    @php
+                    $CR_of_Environmental_condition_in_testing_IMAs = [
+    [
+        'question' => "Was observed temp. of the area within limit",
+        'is_sub_question' => false,
+        'input_type' => 'text'
+    ],
+    [
+        'question' => "Was differential pressure of the area within limit:",
+        'is_sub_question' => true,
+        'input_type' => 'text'
+    ],
+    [
+        'question' => "Was viable environmental monitoring results of LAF /BSC (used for testing) found within limit?",
+        'is_sub_question' => false,
+        'input_type' => 'text'
+    ],
+    [
+        'question' => "LAF/BSC ID:",
+        'is_sub_question' => true,
+        'input_type' => 'number'
+    ]
+    ];
+                    @endphp
+
+                <div class="row">
+
+                    <div class="col-12">
+
+                        <div class="group-input">
+
+                            <div class="why-why-chart">
+
+                                <table class="table table-bordered">
+
+                                    <thead>
+
+                                        <tr>
+
+                                            <th style="width: 5%;">Sr.No.</th>
+
+                                            <th style="width: 40%;">Question</th>
+
+                                            <th style="width: 20%;">Response</th>
+
+                                            <th>Remarks</th>
+
+                                        </tr>
+
+                                    </thead>
+                                    <tbody>
+                                        @php
+                                            $main_question_index = 6.0;
+                                            $sub_question_index = 0;
+                                        @endphp
+
+                                        @foreach ($CR_of_Environmental_condition_in_testing_IMAs as $index => $review_item)
+                                        @php
+                                            if ($review_item['is_sub_question']) {
+                                                $sub_question_index++;
+                                            } else {
+                                                $sub_question_index = 0;
+                                                $main_question_index += 0.1;
+                                            }
+                                        @endphp
+                                        <tr>
+                                            <td class="flex text-center">{{ $review_item['is_sub_question'] ? $main_question_index .'.'. $sub_question_index : number_format($main_question_index, 1) }}</td>
+                                            <td>{{$review_item['question']}}</td>
+                                            <td>
+                                                <div style="display: flex; justify-content: space-around; align-items: center; margin: 5%; gap:5px">
+                                                    @if ($review_item['input_type'] == 'date')
+                                                    <input type="date" name="CR_of_Environmental_condition_in_testing_IMA[{{$loop->index}}][remark]"
+                                                        style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
+                                                    @elseif ($review_item['input_type'] == 'number')
+                                                    <input type="number" name="CR_of_Environmental_condition_in_testing_IMA[{{$loop->index}}][remark]"
+                                                        style="padding: 2px; width:90%; border: 1px solid black; background-color: #f0f0f0;">
+                                                    @else
+                                                    <select name="CR_of_Environmental_condition_in_testing_IMA[{{$loop->index}}][remark]"
+                                                            id="response"
+                                                            style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
+                                                        <option value="">Select an Option</option>
+                                                        <option value="Yes">Yes</option>
+                                                        <option value="No">No</option>
+                                                        <option value="N/A">N/A</option>
+                                                    </select>
+                                                    @endif
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div style="margin: auto; display: flex; justify-content: center;">
+                                                    <textarea name="CR_of_Environmental_condition_in_testing_IMA[{{$loop->index}}][remark]"
+                                                            style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        @endforeach
+                                    </tbody>
+
+
+                                </table>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+
+
+
+            </div>
+
+            <div class="inner-block-content">
+
+                <div class="sub-head">
+
+                    Checklist for Review of instrument/equipment </div>
+                            @php
+                            $CR_of_instru_equipment_IMAs = [
+                                        [
+                                            'question' => "Was there any malfunctioning of autoclave observed? verify the qualification and requalification of steam sterilizer?",
+                                            'is_sub_question' => false,
+                                            'input_type' => 'text'
+                                        ],
+                                        [
+                                            'question' => "Autoclave ID No:",
+                                            'is_sub_question' => true,
+                                            'input_type' => 'number'
+                                        ],
+                                        [
+                                            'question' => "Qualification date and Next due date:",
+                                            'is_sub_question' => true,
+                                            'input_type' => 'date'
+                                        ],
+                                        [
+                                            'question' => "Was any Microbial cultures handled in BSC/LAF prior testing",
+                                            'is_sub_question' => false,
+                                            'input_type' => 'text'
+                                        ],
+                                        [
+                                            'question' => "BSC/ULAF ID:",
+                                            'is_sub_question' => true,
+                                            'input_type' => 'number'
+                                        ],
+                                        [
+                                            'question' => "Did the equipment cleaned prior to testing?",
+                                            'is_sub_question' => true,
+                                            'input_type' => 'text'
+                                        ],
+                                        [
+                                            'question' => "Qualification date and Next due date:",
+                                            'is_sub_question' => true,
+                                            'input_type' => 'date'
+                                        ],
+                                        [
+                                            'question' => "Incubators ID:",
+                                            'is_sub_question' => true,
+                                            'input_type' => 'number'
+                                        ],
+                                        [
+                                            'question' => "Qualification date and Next due date:",
+                                            'is_sub_question' => true,
+                                            'input_type' => 'date'
+                                        ],
+                                        [
+                                            'question' => "Any events associated with incubators, when the samples under incubation.",
+                                            'is_sub_question' => true,
+                                            'input_type' => 'text'
+                                        ],
+                                        [
+                                            'question' => "Was there any power supply failure noted during analysis?",
+                                            'is_sub_question' => false,
+                                            'input_type' => 'text'
+                                        ],
+                                        [
+                                            'question' => "Pipette IDs",
+                                            'is_sub_question' => false,
+                                            'input_type' => 'number'
+                                        ],
+                                        [
+                                            'question' => "Calibration date & Next due date:",
+                                            'is_sub_question' => true,
+                                            'input_type' => 'date'
+                                        ],
+                                        [
+                                            'question' => "Was any breakdown/maintenance observed in any instrument/equipment/system, which may cause of this failure?",
+                                            'is_sub_question' => false,
+                                            'input_type' => 'text'
+                                        ]
+                                    ];
+
+                            @endphp
+
+                <div class="row">
+
+                    <div class="col-12">
+
+                        <div class="group-input">
+
+                            <div class="why-why-chart">
+
+                                <table class="table table-bordered">
+
+                                    <thead>
+
+                                        <tr>
+
+                                            <th style="width: 5%;">Sr.No.</th>
+
+                                            <th style="width: 40%;">Question</th>
+
+                                            <th style="width: 20%;">Response</th>
+
+                                            <th>Remarks</th>
+
+                                        </tr>
+
+                                    </thead>
+
+                                    <tbody>
+                                        @php
+                                            $main_question_index = 7.0;
+                                            $sub_question_index = 0;
+                                        @endphp
+
+                                        @foreach ($CR_of_instru_equipment_IMAs as $index => $review_item)
+                                        @php
+                                            if ($review_item['is_sub_question']) {
+                                                $sub_question_index++;
+                                            } else {
+                                                $sub_question_index = 0;
+                                                $main_question_index += 0.1;
+                                            }
+                                        @endphp
+                                        <tr>
+                                            <td class="flex text-center">{{ $review_item['is_sub_question'] ? $main_question_index .'.'. $sub_question_index : number_format($main_question_index, 1) }}</td>
+                                            <td>{{$review_item['question']}}</td>
+                                            <td>
+                                                <div style="display: flex; justify-content: space-around; align-items: center; margin: 5%; gap:5px">
+                                                    @if ($review_item['input_type'] == 'date')
+                                                    <input type="date" name="CR_of_instru_equipment_IMA[{{$loop->index}}][response]"
+                                                        style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
+                                                    @elseif ($review_item['input_type'] == 'number')
+                                                    <input type="number" name="CR_of_instru_equipment_IMA[{{$loop->index}}][response]"
+                                                        style="padding: 2px; width:90%; border: 1px solid black; background-color: #f0f0f0;">
+                                                    @else
+                                                    <select name="CR_of_instru_equipment_IMA[{{$loop->index}}][response]"
+                                                            id="response"
+                                                            style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
+                                                        <option value="">Select an Option</option>
+                                                        <option value="Yes">Yes</option>
+                                                        <option value="No">No</option>
+                                                        <option value="N/A">N/A</option>
+                                                    </select>
+                                                    @endif
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div style="margin: auto; display: flex; justify-content: center;">
+                                                    <textarea name="CR_of_instru_equipment_IMA[{{$loop->index}}][remark]"
+                                                            style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        @endforeach
+                                    </tbody>
+
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+        </div>
+
+            <div class="inner-block-content">
+
+                <div class="sub-head">
+
+                    Disinfectant Details: </div>
+                    @php
+                    $disinfectant_details_IMAs = [
                         [
-                            'question' => "Name of the test organism used:",
+                            'question' => "Name of the disinfectant used for cleaning of testing area:",
                             'is_sub_question' => false,
-                            'input_type' => 'number'
+                            'input_type' => 'text'
                         ],
                         [
-                            'question' => "Passage No.",
+                            'question' => "Was the disinfectant prepared as per validated concentration?",
                             'is_sub_question' => true,
                             'input_type' => 'number'
                         ],
                         [
-                            'question' => "Whether the culture suspension was prepared from valid source (Slant/Cryo vails)?",
-                            'is_sub_question' => false,
-                            'input_type' => 'text'
-                        ],
-                        [
-                            'question' => "Was the culture suspension used within the valid time?",
-                            'is_sub_question' => false,
-                            'input_type' => 'text'
-                        ],
-                        [
-                            'question' => "Was appropriate quantity of the inoculum challenged in the product?",
-                            'is_sub_question' => false,
-                            'input_type' => 'text'
-                        ],
-                        [
-                            'question' => "Was the stock/test culture dilution store as per recommended condition before used",
-                            'is_sub_question' => false,
+                            'question' => "Use before date of the disinfectant used for cleaning:",
+                            'is_sub_question' => true,
                             'input_type' => 'text'
                         ]
                     ];
 
-                                        @endphp
+                    @endphp
 
-                                    <div class="row">
+                <div class="row">
 
-                                        <div class="col-12">
+                    <div class="col-12">
 
-                                            <div class="group-input">
+                        <div class="group-input">
 
-                                                <div class="why-why-chart">
+                            <div class="why-why-chart">
 
-                                                    <table class="table table-bordered">
+                                <table class="table table-bordered">
 
-                                                        <thead>
+                                    <thead>
 
-                                                            <tr>
+                                        <tr>
 
-                                                                <th style="width: 5%;">Sr.No.</th>
+                                            <th style="width: 5%;">Sr.No.</th>
 
-                                                                <th style="width: 40%;">Question</th>
+                                            <th style="width: 40%;">Question</th>
 
-                                                                <th style="width: 20%;">Response</th>
+                                            <th style="width: 20%;">Response</th>
 
-                                                                <th>Remarks</th>
+                                            <th>Remarks</th>
 
-                                                            </tr>
+                                        </tr>
 
-                                                    </thead>
-
-                                                        <tbody>
-                                                            @php
-                                                                $main_question_index = 5.0;
-                                                                $sub_question_index = 0;
-                                                            @endphp
-
-                                                            @foreach ($CR_of_microbial_cultures_inoculation_IMAs as $index => $review_item)
-                                                            @php
-                                                                if ($review_item['is_sub_question']) {
-                                                                    $sub_question_index++;
-                                                                } else {
-                                                                    $sub_question_index = 0;
-                                                                    $main_question_index += 0.1;
-                                                                }
-                                                            @endphp
-                                                            <tr>
-                                                                <td class="flex text-center">{{ $review_item['is_sub_question'] ? $main_question_index .'.'. $sub_question_index : number_format($main_question_index, 1) }}</td>
-                                                                <td>{{$review_item['question']}}</td>
-                                                                <td>
-                                                                    <div style="display: flex; justify-content: space-around; align-items: center; margin: 5%; gap:5px">
-                                                                        @if ($review_item['input_type'] == 'date')
-                                                                        <input type="date" name="CR_of_microbial_cultures_inoculation_IMA[{{$loop->index}}][response]"
-                                                                            style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
-                                                                        @elseif ($review_item['input_type'] == 'number')
-                                                                        <input type="number" name="CR_of_microbial_cultures_inoculation_IMA[{{$loop->index}}][response]"
-                                                                            style="padding: 2px; width:90%; border: 1px solid black; background-color: #f0f0f0;">
-                                                                        @else
-                                                                        <select name="CR_of_microbial_cultures_inoculation_IMAs[{{ $index }}][response]"
-                                                                                                                    id="response"
-                                                                                                                    style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
-                                                                                                                <option value="">Select an Option</option>
-                                                                                                                <option value="Yes">Yes</option>
-                                                                                                                <option value="No">No</option>
-                                                                                                                <option value="N/A">N/A</option>
-                                                                                                            </select>
-
-                                                                        @endif
-                                                                    </div>
-                                                                </td>
-                                                                <td>
-                                                                    <div style="margin: auto; display: flex; justify-content: center;">
-                                                                        <textarea name="CR_of_microbial_cultures_inoculation_IMA[{{$loop->index}}][remark]"
-                                                                                style="border-radius: 7px; border: 1.5px solid black;"></textarea>
-                                                                    </div>
-                                                                </td>
-                                                            </tr>
-                                                            @endforeach
-                                                        </tbody>
-
-                                                    </table>
-
-                                                </div>
-
-                                            </div>
-
-                                        </div>
-
-                                    </div>
-
-
-
-                                </div>
-
-
-
-                                <div class="inner-block-content">
-
-                                    <div class="sub-head">
-
-                                        Checklist for Review of Environmental conditions in the testing area </div>
+                                    </thead>
+                                    <tbody>
                                         @php
-                                        $CR_of_Environmental_condition_in_testing_IMAs = [
-                        [
-                            'question' => "Was observed temp. of the area within limit",
-                            'is_sub_question' => false,
-                            'input_type' => 'text'
-                        ],
-                        [
-                            'question' => "Was differential pressure of the area within limit:",
-                            'is_sub_question' => true,
-                            'input_type' => 'text'
-                        ],
-                        [
-                            'question' => "Was viable environmental monitoring results of LAF /BSC (used for testing) found within limit?",
-                            'is_sub_question' => false,
-                            'input_type' => 'text'
-                        ],
-                        [
-                            'question' => "LAF/BSC ID:",
-                            'is_sub_question' => true,
-                            'input_type' => 'number'
-                        ]
-                    ];
+                                            $main_question_index = 8.0;
+                                            $sub_question_index = 0;
                                         @endphp
 
-                                    <div class="row">
-
-                                        <div class="col-12">
-
-                                            <div class="group-input">
-
-                                                <div class="why-why-chart">
-
-                                                    <table class="table table-bordered">
-
-                                                        <thead>
-
-                                                            <tr>
-
-                                                                <th style="width: 5%;">Sr.No.</th>
-
-                                                                <th style="width: 40%;">Question</th>
-
-                                                                <th style="width: 20%;">Response</th>
-
-                                                                <th>Remarks</th>
-
-                                                            </tr>
-
-                                                        </thead>
-                                                        <tbody>
-                                                            @php
-                                                                $main_question_index = 6.0;
-                                                                $sub_question_index = 0;
-                                                            @endphp
-
-                                                            @foreach ($CR_of_Environmental_condition_in_testing_IMAs as $index => $review_item)
-                                                            @php
-                                                                if ($review_item['is_sub_question']) {
-                                                                    $sub_question_index++;
-                                                                } else {
-                                                                    $sub_question_index = 0;
-                                                                    $main_question_index += 0.1;
-                                                                }
-                                                            @endphp
-                                                            <tr>
-                                                                <td class="flex text-center">{{ $review_item['is_sub_question'] ? $main_question_index .'.'. $sub_question_index : number_format($main_question_index, 1) }}</td>
-                                                                <td>{{$review_item['question']}}</td>
-                                                                <td>
-                                                                    <div style="display: flex; justify-content: space-around; align-items: center; margin: 5%; gap:5px">
-                                                                        @if ($review_item['input_type'] == 'date')
-                                                                        <input type="date" name="CR_of_Environmental_condition_in_testing_IMA[{{$loop->index}}][remark]"
-                                                                            style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
-                                                                        @elseif ($review_item['input_type'] == 'number')
-                                                                        <input type="number" name="CR_of_Environmental_condition_in_testing_IMA[{{$loop->index}}][remark]"
-                                                                            style="padding: 2px; width:90%; border: 1px solid black; background-color: #f0f0f0;">
-                                                                        @else
-                                                                        <select name="CR_of_Environmental_condition_in_testing_IMA[{{$loop->index}}][remark]"
-                                                                                id="response"
-                                                                                style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
-                                                                            <option value="">Select an Option</option>
-                                                                            <option value="Yes">Yes</option>
-                                                                            <option value="No">No</option>
-                                                                            <option value="N/A">N/A</option>
-                                                                        </select>
-                                                                        @endif
-                                                                    </div>
-                                                                </td>
-                                                                <td>
-                                                                    <div style="margin: auto; display: flex; justify-content: center;">
-                                                                        <textarea name="CR_of_Environmental_condition_in_testing_IMA[{{$loop->index}}][remark]"
-                                                                                style="border-radius: 7px; border: 1.5px solid black;"></textarea>
-                                                                    </div>
-                                                                </td>
-                                                            </tr>
-                                                            @endforeach
-                                                        </tbody>
-
-
-                                                    </table>
-
+                                        @foreach ($disinfectant_details_IMAs as $index => $review_item)
+                                        @php
+                                            if ($review_item['is_sub_question']) {
+                                                $sub_question_index++;
+                                            } else {
+                                                $sub_question_index = 0;
+                                                $main_question_index += 0.1;
+                                            }
+                                        @endphp
+                                        <tr>
+                                            <td class="flex text-center">{{ $review_item['is_sub_question'] ? $main_question_index .'.'. $sub_question_index : number_format($main_question_index, 1) }}</td>
+                                            <td>{{$review_item['question']}}</td>
+                                            <td>
+                                                <div style="display: flex; justify-content: space-around; align-items: center; margin: 5%; gap:5px">
+                                                    @if ($review_item['input_type'] == 'date')
+                                                    <input type="date" name="disinfectant_details_IMA[{{$loop->index}}][response]"
+                                                        style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
+                                                    @elseif ($review_item['input_type'] == 'number')
+                                                    <input type="number" name="disinfectant_details_IMA[{{$loop->index}}][response]"
+                                                        style="padding: 2px; width:90%; border: 1px solid black; background-color: #f0f0f0;">
+                                                    @else
+                                                    <select name="disinfectant_details_IMA[{{$loop->index}}][response]"
+                                                            id="response"
+                                                            style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
+                                                        <option value="">Select an Option</option>
+                                                        <option value="Yes">Yes</option>
+                                                        <option value="No">No</option>
+                                                        <option value="N/A">N/A</option>
+                                                    </select>
+                                                    @endif
                                                 </div>
-
-                                            </div>
-
-                                        </div>
-
-                                    </div>
-
-
-
-
-
-                                </div>
-
-                                <div class="inner-block-content">
-
-                                    <div class="sub-head">
-
-                                        Checklist for Review of instrument/equipment </div>
-                                                @php
-                                                $CR_of_instru_equipment_IMAs = [
-                                                            [
-                                                                'question' => "Was there any malfunctioning of autoclave observed? verify the qualification and requalification of steam sterilizer?",
-                                                                'is_sub_question' => false,
-                                                                'input_type' => 'text'
-                                                            ],
-                                                            [
-                                                                'question' => "Autoclave ID No:",
-                                                                'is_sub_question' => true,
-                                                                'input_type' => 'number'
-                                                            ],
-                                                            [
-                                                                'question' => "Qualification date and Next due date:",
-                                                                'is_sub_question' => true,
-                                                                'input_type' => 'date'
-                                                            ],
-                                                            [
-                                                                'question' => "Was any Microbial cultures handled in BSC/LAF prior testing",
-                                                                'is_sub_question' => false,
-                                                                'input_type' => 'text'
-                                                            ],
-                                                            [
-                                                                'question' => "BSC/ULAF ID:",
-                                                                'is_sub_question' => true,
-                                                                'input_type' => 'number'
-                                                            ],
-                                                            [
-                                                                'question' => "Did the equipment cleaned prior to testing?",
-                                                                'is_sub_question' => true,
-                                                                'input_type' => 'text'
-                                                            ],
-                                                            [
-                                                                'question' => "Qualification date and Next due date:",
-                                                                'is_sub_question' => true,
-                                                                'input_type' => 'date'
-                                                            ],
-                                                            [
-                                                                'question' => "Incubators ID:",
-                                                                'is_sub_question' => true,
-                                                                'input_type' => 'number'
-                                                            ],
-                                                            [
-                                                                'question' => "Qualification date and Next due date:",
-                                                                'is_sub_question' => true,
-                                                                'input_type' => 'date'
-                                                            ],
-                                                            [
-                                                                'question' => "Any events associated with incubators, when the samples under incubation.",
-                                                                'is_sub_question' => true,
-                                                                'input_type' => 'text'
-                                                            ],
-                                                            [
-                                                                'question' => "Was there any power supply failure noted during analysis?",
-                                                                'is_sub_question' => false,
-                                                                'input_type' => 'text'
-                                                            ],
-                                                            [
-                                                                'question' => "Pipette IDs",
-                                                                'is_sub_question' => false,
-                                                                'input_type' => 'number'
-                                                            ],
-                                                            [
-                                                                'question' => "Calibration date & Next due date:",
-                                                                'is_sub_question' => true,
-                                                                'input_type' => 'date'
-                                                            ],
-                                                            [
-                                                                'question' => "Was any breakdown/maintenance observed in any instrument/equipment/system, which may cause of this failure?",
-                                                                'is_sub_question' => false,
-                                                                'input_type' => 'text'
-                                                            ]
-                                                        ];
-
-                                                @endphp
-
-                                    <div class="row">
-
-                                        <div class="col-12">
-
-                                            <div class="group-input">
-
-                                                <div class="why-why-chart">
-
-                                                    <table class="table table-bordered">
-
-                                                        <thead>
-
-                                                            <tr>
-
-                                                                <th style="width: 5%;">Sr.No.</th>
-
-                                                                <th style="width: 40%;">Question</th>
-
-                                                                <th style="width: 20%;">Response</th>
-
-                                                                <th>Remarks</th>
-
-                                                            </tr>
-
-                                                        </thead>
-
-                                                        <tbody>
-                                                            @php
-                                                                $main_question_index = 7.0;
-                                                                $sub_question_index = 0;
-                                                            @endphp
-
-                                                            @foreach ($CR_of_instru_equipment_IMAs as $index => $review_item)
-                                                            @php
-                                                                if ($review_item['is_sub_question']) {
-                                                                    $sub_question_index++;
-                                                                } else {
-                                                                    $sub_question_index = 0;
-                                                                    $main_question_index += 0.1;
-                                                                }
-                                                            @endphp
-                                                            <tr>
-                                                                <td class="flex text-center">{{ $review_item['is_sub_question'] ? $main_question_index .'.'. $sub_question_index : number_format($main_question_index, 1) }}</td>
-                                                                <td>{{$review_item['question']}}</td>
-                                                                <td>
-                                                                    <div style="display: flex; justify-content: space-around; align-items: center; margin: 5%; gap:5px">
-                                                                        @if ($review_item['input_type'] == 'date')
-                                                                        <input type="date" name="CR_of_instru_equipment_IMA[{{$loop->index}}][response]"
-                                                                            style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
-                                                                        @elseif ($review_item['input_type'] == 'number')
-                                                                        <input type="number" name="CR_of_instru_equipment_IMA[{{$loop->index}}][response]"
-                                                                            style="padding: 2px; width:90%; border: 1px solid black; background-color: #f0f0f0;">
-                                                                        @else
-                                                                        <select name="CR_of_instru_equipment_IMA[{{$loop->index}}][response]"
-                                                                                id="response"
-                                                                                style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
-                                                                            <option value="">Select an Option</option>
-                                                                            <option value="Yes">Yes</option>
-                                                                            <option value="No">No</option>
-                                                                            <option value="N/A">N/A</option>
-                                                                        </select>
-                                                                        @endif
-                                                                    </div>
-                                                                </td>
-                                                                <td>
-                                                                    <div style="margin: auto; display: flex; justify-content: center;">
-                                                                        <textarea name="CR_of_instru_equipment_IMA[{{$loop->index}}][remark]"
-                                                                                style="border-radius: 7px; border: 1.5px solid black;"></textarea>
-                                                                    </div>
-                                                                </td>
-                                                            </tr>
-                                                            @endforeach
-                                                        </tbody>
-
-                                                    </table>
+                                            </td>
+                                            <td>
+                                                <div style="margin: auto; display: flex; justify-content: center;">
+                                                    <textarea name="disinfectant_details_IMA[{{$loop->index}}][remark]"
+                                                            style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                 </div>
-                                            </div>
-                                        </div>
-                                    </div>
+                                            </td>
+                                        </tr>
+                                        @endforeach
+                                    </tbody>
+
+
+                                </table>
+
                             </div>
 
-                                <div class="inner-block-content">
+                        </div>
 
-                                    <div class="sub-head">
+                    </div>
 
-                                        Disinfectant Details: </div>
-                                        @php
-                                        $disinfectant_details_IMAs = [
-                                            [
-                                                'question' => "Name of the disinfectant used for cleaning of testing area:",
-                                                'is_sub_question' => false,
-                                                'input_type' => 'text'
-                                            ],
-                                            [
-                                                'question' => "Was the disinfectant prepared as per validated concentration?",
-                                                'is_sub_question' => true,
-                                                'input_type' => 'number'
-                                            ],
-                                            [
-                                                'question' => "Use before date of the disinfectant used for cleaning:",
-                                                'is_sub_question' => true,
-                                                'input_type' => 'text'
-                                            ]
-                                        ];
+                </div>
 
-                                        @endphp
+                <div class="col-lg-12">
 
-                                    <div class="row">
+                    <div class="group-input">
 
-                                        <div class="col-12">
+                        <label for="Audit Attachments">If Yes, Provide attachment details</label>
+                            <div class="file-attachment-field">
+                            <div class="file-attachment-list" id="attachment_details_cima"></div>
 
-                                            <div class="group-input">
-
-                                                <div class="why-why-chart">
-
-                                                    <table class="table table-bordered">
-
-                                                        <thead>
-
-                                                            <tr>
-
-                                                                <th style="width: 5%;">Sr.No.</th>
-
-                                                                <th style="width: 40%;">Question</th>
-
-                                                                <th style="width: 20%;">Response</th>
-
-                                                                <th>Remarks</th>
-
-                                                            </tr>
-
-                                                        </thead>
-                                                        <tbody>
-                                                            @php
-                                                                $main_question_index = 8.0;
-                                                                $sub_question_index = 0;
-                                                            @endphp
-
-                                                            @foreach ($disinfectant_details_IMAs as $index => $review_item)
-                                                            @php
-                                                                if ($review_item['is_sub_question']) {
-                                                                    $sub_question_index++;
-                                                                } else {
-                                                                    $sub_question_index = 0;
-                                                                    $main_question_index += 0.1;
-                                                                }
-                                                            @endphp
-                                                            <tr>
-                                                                <td class="flex text-center">{{ $review_item['is_sub_question'] ? $main_question_index .'.'. $sub_question_index : number_format($main_question_index, 1) }}</td>
-                                                                <td>{{$review_item['question']}}</td>
-                                                                <td>
-                                                                    <div style="display: flex; justify-content: space-around; align-items: center; margin: 5%; gap:5px">
-                                                                        @if ($review_item['input_type'] == 'date')
-                                                                        <input type="date" name="disinfectant_details_IMA[{{$loop->index}}][response]"
-                                                                            style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
-                                                                        @elseif ($review_item['input_type'] == 'number')
-                                                                        <input type="number" name="disinfectant_details_IMA[{{$loop->index}}][response]"
-                                                                            style="padding: 2px; width:90%; border: 1px solid black; background-color: #f0f0f0;">
-                                                                        @else
-                                                                        <select name="disinfectant_details_IMA[{{$loop->index}}][response]"
-                                                                                id="response"
-                                                                                style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
-                                                                            <option value="">Select an Option</option>
-                                                                            <option value="Yes">Yes</option>
-                                                                            <option value="No">No</option>
-                                                                            <option value="N/A">N/A</option>
-                                                                        </select>
-                                                                        @endif
-                                                                    </div>
-                                                                </td>
-                                                                <td>
-                                                                    <div style="margin: auto; display: flex; justify-content: center;">
-                                                                        <textarea name="disinfectant_details_IMA[{{$loop->index}}][remark]"
-                                                                                style="border-radius: 7px; border: 1.5px solid black;"></textarea>
-                                                                    </div>
-                                                                </td>
-                                                            </tr>
-                                                            @endforeach
-                                                        </tbody>
-
-
-                                                    </table>
-
-                                                </div>
-
-                                            </div>
-
-                                        </div>
-
-                                    </div>
-
-                                    <div class="col-lg-12">
-
-                                        <div class="group-input">
-
-                                            <label for="Audit Attachments">If Yes, Provide attachment details</label>
-                                                <div class="file-attachment-field">
-                                                <div class="file-attachment-list" id="attachment_details_cima"></div>
-
-                                                <div class="add-btn">
-                                                    <div>Add</div>
-                                                    <input type="file" id="myfile" name="attachment_details_cima[]"
-                                                        oninput="addMultipleFiles(this, 'attachment_details_cima')" multiple/>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="button-block">
-                                        <button type="submit" id="ChangesaveButton" class="saveButton">Save</button>
-                                        <button type="button" class="backButton" onclick="previousStep()">Back</button>
-                                        <button type="button" id="ChangeNextButton" class="nextButton" onclick="nextStep()">Next</button>
-                                        <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"> Exit </a> </button>
-
-                                    </div>
-
-                                </div>
-
+                            <div class="add-btn">
+                                <div>Add</div>
+                                <input type="file" id="myfile" name="attachment_details_cima[]"
+                                    oninput="addMultipleFiles(this, 'attachment_details_cima')" multiple/>
                             </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="button-block">
+                    <button type="submit" id="ChangesaveButton" class="saveButton">Save</button>
+                    <button type="button" class="backButton" onclick="previousStep()">Back</button>
+                    <button type="button" id="ChangeNextButton" class="nextButton" onclick="nextStep()">Next</button>
+                    <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"> Exit </a> </button>
+
+                </div>
+
+            </div>
+
+        </div>
 
 
 

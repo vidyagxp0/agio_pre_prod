@@ -104,7 +104,7 @@
                         Please Attach all relevant or supporting documents
                     </small>
                     <div class="file-attachment-field">
-                        <div class="file-attachment-list" id="file_attach">
+                        <div class="file-attachment-list" id="attachment_piii">
                             @if ($micro_data->attachment_piii)
                             @foreach ($micro_data->attachment_piii as $file)
                                 <h6 type="button" class="file-container text-dark"
@@ -125,7 +125,7 @@
                         <div class="add-btn">
                             <div>Add</div>
                             <input type="file" id="myfile" name="attachment_piii[]"
-                                oninput="addMultipleFiles(this, 'file_attach')" multiple>
+                                oninput="addMultipleFiles(this, 'attachment_piii')" multiple>
                         </div>
                     </div>
 
@@ -173,27 +173,23 @@ $phase_II_OOS_investigations = [
                                     <td class="flex text-center">{{$loop->index+1}}</td>
                                     <td>{{$phase_II_OOS_investigation}}</td>
                                     <td>
-
-                                        <div
-                                            style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
+                                        <div style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="phase_II_OOS_investigation[{{$loop->index}}][response]" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
-                                                <option value="Yes">Yes</option>
-                                                <option value="No">No</option>
-                                                <option value="N/A">N/A</option>
+                                                <option value="">Select an Option</option>
+                                                <option value="Yes" {{ Helpers::getMicroGridData($micro_data, 'phase_II_OOS_investigation', true, 'response', true, $loop->index) == 'Yes' ? 'selected' : '' }}>Yes</option>
+                                                <option value="No" {{ Helpers::getMicroGridData($micro_data, 'phase_II_OOS_investigation', true, 'response', true, $loop->index) == 'No' ? 'selected' : '' }} >No</option>
+                                                <option value="N/A"  {{ Helpers::getMicroGridData($micro_data, 'phase_II_OOS_investigation', true, 'response', true, $loop->index) == 'N/A' ? 'selected' : '' }}>N/A</option>
                                             </select>
                                         </div>
-
-
                                     </td>
-                                    <td>
-                                        {{-- <textarea name="who_will_not_be"></textarea> --}} <div
-                                            style="margin: auto; display: flex; justify-content: center;">
-                                            <textarea name="phase_II_OOS_investigation[{{$loop->index}}][remark]" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                    <td style="vertical-align: middle;">
+                                        <div style="margin: auto; display: flex; justify-content: center;">
+                                            <textarea name="phase_II_OOS_investigation[{{$loop->index}}][remark]" style="border-radius: 7px; border: 1.5px solid black;">
+                                                {{ Helpers::getMicroGridData($micro_data, 'phase_II_OOS_investigation', true, 'remark', true, $loop->index) }}
+                                            </textarea>
                                         </div>
-                                    </td>
-
+                                    </td>   
                                 </tr>
                             @endforeach
                             </tbody>
