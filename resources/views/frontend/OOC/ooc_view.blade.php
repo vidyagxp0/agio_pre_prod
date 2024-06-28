@@ -365,7 +365,7 @@ $users = DB::table('users')->get();
                 </button>
                
                 @elseif($ooc->stage == 12 && (in_array(9, $userRoleIds) || in_array(18, $userRoleIds) || in_array(7, $userRoleIds)))
-                <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
+                <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#rejection-modal">
                     Pending Initial Assessment & Lab Investigation
                 </button>
                 <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
@@ -763,6 +763,7 @@ $users = DB::table('users')->get();
 
 
 
+
 {{-- stages ooc signature , child,reject,cancel modla --}}
         <!-- Tab links -->
         <div class="cctab">
@@ -800,7 +801,7 @@ $users = DB::table('users')->get();
                                 <div class="group-input">
                                     <label for="RLS Record Number"><b>Record Number</b></label>
                                     <input disabled type="text" name="record_number"
-                                        value="{{ Helpers::getDivisionName($ooc->division_id) }}/LI/{{ Helpers::year($ooc->created_at) }}/{{ $ooc->record }}">
+                                        value="{{ Helpers::getDivisionName($ooc->division_id) }}/OOC/{{ Helpers::year($ooc->created_at) }}/{{ $ooc->record }}">
                                     {{-- <div class="static">QMS-EMEA/CAPA/{{ date('Y') }}/{{ $record_number }}</div> --}}
                                 </div>
                             </div>
@@ -842,7 +843,7 @@ $users = DB::table('users')->get();
                                     <div class="calenderauditee">
                                         <input type="text" id="due_date" readonly
                                             placeholder="DD-MMM-YYYY" value="{{ Helpers::getdateFormat($ooc->due_date) }}" {{ $ooc->stage == 0 || $ooc->stage == 8 ? 'disabled' : ''}}/>
-                                        <input type="date" name="due_date" {{ $ooc->stage == 0 || $ooc->stage == 8 ? 'disabled' : ''}}  min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input"
+                                        <input type="date" name="due_date" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input"
                                             oninput="handleDateInput(this, 'due_date')" />
                                     </div>
 
@@ -1523,12 +1524,13 @@ $(document).ready(function() {
                         <div class="col-lg-12">
                             <div class="group-input">
                                 <label for="Initiator Group">Assignable root cause found?</label>
-                                <select  id="initiator_group" name="is_repeat_assingable_ooc">
-                                    <option value="NA"{{ $ooc->is_repeat_assingable_ooc == 'NA' ? 'selected' : '' }}>-- Select --</option>
-                                    <option value="Yes" {{ $ooc->is_repeat_assingable_ooc == 'Yes' ? 'selected' : '' }}>Yes</option>
-                                    <option value="No" {{ $ooc->is_repeat_assingable_ooc == 'No' ? 'selected' : '' }}>No</option>
-                                    {{-- <option value="NA" {{ $ooc->is_repeat_ooc == 'NA' ? 'selected' : '' }}>NA</option> --}}
-                                </select>
+                                <select id="initiator_group" name="is_repeat_assingable_ooc">
+                                    <option value="">--select --</option>
+                                <option value="Yes" {{ $ooc->is_repeat_assingable_ooc == 'Yes' ? 'selected' : '' }}>Yes</option>
+                                <option value="No" {{ $ooc->is_repeat_assingable_ooc == 'No' ? 'selected' : '' }}>No</option>
+                                <option value="NA"{{ $ooc->is_repeat_assingable_ooc == 'NA' ? 'selected' : '' }}>NA</option>
+
+                            </select>
                             </div>
                         </div>
 
@@ -1721,9 +1723,10 @@ $(document).ready(function() {
                             <div class="group-input">
                                 <label for="Initiator Group">Rectification by Service Engineer required</label>
                                 <select name="is_repeat_stageii_ooc" onchange="">
-                                    <option value="NA" {{ $ooc->is_repeat_stageii_ooc == 'NA' ? 'selected' : '' }}>-- Select --</option>
+                                    <option value="">--Select--</option>
                                     <option value="Yes" {{ $ooc->is_repeat_stageii_ooc == 'Yes' ? 'selected' : '' }}>Yes</option>
                                     <option value="No" {{ $ooc->is_repeat_stageii_ooc == 'No' ? 'selected' : '' }}>No</option>
+                                    <option value="NA" {{ $ooc->is_repeat_stageii_ooc == 'NA' ? 'selected' : '' }}>NA</option>
 
                                 </select>
                             </div>

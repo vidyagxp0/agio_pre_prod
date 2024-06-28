@@ -151,11 +151,11 @@
         <table>
             <tr>
                 <td class="w-70 head">
-                  Lab Incident Audit Trial Report
+                  Out Of Calibration Audit Trial Report
                 </td>
                 <td class="w-30">
                     <div class="logo">
-                        <img src="https://dms.mydemosoftware.com/user/images/logo1.png" alt="" class="w-100">
+                        <img src="https://vidyagxp.com/vidyaGxp_logo.png" alt="" class="w-100">
                     </div>
                 </td>
             </tr>
@@ -163,7 +163,7 @@
         <table>
             <tr>
                 <td class="w-30">
-                    <strong>  Lab Incident No.</strong>
+                    <strong>  Out Of Calibration No.</strong>
                 </td>
                 <td class="w-40">
                    {{ Helpers::divisionNameForQMS($doc->division_code) }}/{{ Helpers::year($doc->created_at) }}/{{ str_pad($doc->id, 4, '0', STR_PAD_LEFT) }}

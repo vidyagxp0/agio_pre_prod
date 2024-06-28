@@ -1300,22 +1300,20 @@ $(document).ready(function() {
                         </div>
 
                         <div class="col-lg-12">
-                            <div class="group-input">
-                                <label for="Initial Attachments">Details of Equipment Rectification</label>
-                                <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
-                                {{-- <input type="file" id="myfile" name="Initial_Attachment"> --}}
-                                
-                                <div class="file-attachment-field">
-                                    <div class="file-attachment-list" id="initial_attachment_closuress_ooc"></div>
-                                    <div class="add-btn">
-                                        <div>Add</div>
-                                        <input type="file" id="initial_attachment_closuress_ooc" name="initial_attachment_closuress_ooc[]"
-                                            oninput="addMultipleFiles(this, 'initial_attachment_closuress_ooc')" multiple>
+                                <div class="group-input">
+                                    <label for="Initial Attachments">Details of Equipment Rectification</label>
+                                    <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
+                                    {{-- <input type="file" id="myfile" name="initial_attachment_closure_ooc"> --}}
+                                    <div class="file-attachment-field">
+                                        <div class="file-attachment-list" id="initial_attachment_closure_ooc"></div>
+                                        <div class="add-btn">
+                                            <div>Add</div>
+                                            <input type="file" id="initial_attachment_closure_ooc" name="initial_attachment_closure_ooc[]"
+                                                oninput="addMultipleFiles(this, 'initial_attachment_closure_ooc')" multiple>
+                                        </div>
                                     </div>
                                 </div>
-                                
                             </div>
-                        </div>
                        
                        
                         

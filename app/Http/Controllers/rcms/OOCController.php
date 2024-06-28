@@ -2934,17 +2934,20 @@ public function RejectoocStateChange(Request $request, $id)
             toastr()->success('Document Sent');
             return back();
         }
+        if ($ooc->stage == 12) {
+            $ooc->stage = "2";
+            $ooc->status = "Pending Initial Assessment & Lab Investigation";
+            $ooc->update();
+            toastr()->success('Document Sent');
+            return back();
+        }
+        
 }
 else {
     toastr()->error('E-signature Not match');
     return back();
 }
 }
-
-
-
-
-
 
 public function OOCAuditTrial($id){
     $auditrecord = OutOfCalibration::find($id);
@@ -2984,6 +2987,8 @@ public function OOCAuditTrial($id){
                $old_record = Capa::select('id', 'division_id', 'record')->get();
                $record_number = ((RecordNumber::first()->value('counter')) + 1);
                $record_number = str_pad($record_number, 4, '0', STR_PAD_LEFT);
+               $record = ((RecordNumber::first()->value('counter')) + 1);
+               $record = str_pad($record_number, 4, '0', STR_PAD_LEFT);
                $parent_record =  ((RecordNumber::first()->value('counter')) + 1);
                $parent_record = str_pad($parent_record, 4, '0', STR_PAD_LEFT);
                $currentDate = Carbon::now();
@@ -3004,7 +3009,7 @@ public function OOCAuditTrial($id){
 
                if ($request->revision == "Action-Item") {
                    $cc->originator = User::where('id', $cc->initiator_id)->value('name');
-                   return view('frontend.forms.action-item', compact('record_number', 'due_date', 'parent_id', 'parent_type','parent_intiation_date','parent_record','parent_initiator_id'));
+                   return view('frontend.forms.action-item', compact('record_number','record','due_date', 'parent_id', 'parent_type','parent_intiation_date','parent_record','parent_initiator_id'));
                }
 
 
