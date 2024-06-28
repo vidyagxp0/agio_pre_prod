@@ -162,7 +162,7 @@ class DocumentController extends Controller
         $OriTypeIds = $OriValues->pluck('originator_id')->unique()->toArray();
         $originator = User::whereIn('id', $OriTypeIds)->select('id', 'name')->get();
 
-        return $documents;
+        // return $documents;
 
         // $count = Document::where('documents.originator_id', Auth::user()->id)->count();
         // $documents = Document::join('users', 'documents.originator_id', 'users.id')->join('document_types', 'documents.document_type_id', 'document_types.id')
