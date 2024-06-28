@@ -122,7 +122,7 @@ class CCController extends Controller
         $openState->record = DB::table('record_numbers')->value('counter') + 1;
 
         
-        $openState->cft_reviewer = implode(',', $request->cft_reviewer);        
+        // $openState->cft_reviewer = implode(',', $request->cft_reviewer);     
         $openState->due_days = $request->due_days;
         $openState->severity_level1 = $request->severity_level1;
 
@@ -132,8 +132,8 @@ class CCController extends Controller
         $openState->Initiator_Group = $request->Initiator_Group;
         $openState->initiator_group_code = $request->initiator_group_code;
         $openState->short_description = $request->short_description;
-        $openState->related_records = json_encode($request->related_records);
-        $openState->risk_assessment_related_record = implode(',',$request->risk_assessment_related_record);
+        // $openState->related_records = json_encode($request->related_records);
+        // $openState->risk_assessment_related_record = implode(',',$request->risk_assessment_related_record);
         $openState->risk_assessment_required = $request->risk_assessment_required;
         $openState->hod_person = $request->hod_person;
         $openState->doc_change = $request->natureChange;
@@ -151,7 +151,7 @@ class CCController extends Controller
 
         $openState->type_chnage = $request->type_chnage;
         $openState->qa_comments = $request->qa_comments;
-        $openState->related_records = implode(',', $request->related_records);
+        // $openState->related_records = implode(',', $request->related_records);
         $openState->qa_head = json_encode($request->qa_head);
 
         $openState->qa_eval_comments = json_encode($request->qa_eval_comments);
@@ -441,44 +441,17 @@ class CCController extends Controller
         // $Cft->Other5_by = $request->Other5_by;
         // $Cft->Other5_on = $request->Other5_on;
 
-        if (!empty ($request->production_attachment)) {
+        
+        if (!empty ($request->RA_attachment)) {
             $files = [];
-            if ($request->hasfile('production_attachment')) {
-                foreach ($request->file('production_attachment') as $file) {
-                    $name = $request->name . 'production_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+            if ($request->hasfile('RA_attachment')) {
+                foreach ($request->file('RA_attachment') as $file) {
+                    $name = $request->name . 'RA_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
                     $file->move('upload/', $name);
                     $files[] = $name;
                 }
             }
-
-
-            $Cft->production_attachment = json_encode($files);
-        }
-        if (!empty ($request->Warehouse_attachment)) {
-            $files = [];
-            if ($request->hasfile('Warehouse_attachment')) {
-                foreach ($request->file('Warehouse_attachment') as $file) {
-                    $name = $request->name . 'Warehouse_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
-                    $file->move('upload/', $name);
-                    $files[] = $name;
-                }
-            }
-
-
-            $Cft->Warehouse_attachment = json_encode($files);
-        }
-        if (!empty ($request->Quality_Control_attachment)) {
-            $files = [];
-            if ($request->hasfile('Quality_Control_attachment')) {
-                foreach ($request->file('Quality_Control_attachment') as $file) {
-                    $name = $request->name . 'Quality_Control_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
-                    $file->move('upload/', $name);
-                    $files[] = $name;
-                }
-            }
-
-
-            $Cft->Quality_Control_attachment = json_encode($files);
+            $Cft->RA_attachment = json_encode($files);
         }
         if (!empty ($request->Quality_Assurance_attachment)) {
             $files = [];
@@ -489,157 +462,62 @@ class CCController extends Controller
                     $files[] = $name;
                 }
             }
-
-
             $Cft->Quality_Assurance_attachment = json_encode($files);
         }
-        if (!empty ($request->Engineering_attachment)) {
+        if (!empty ($request->Production_Table_Attachment)) {
             $files = [];
-            if ($request->hasfile('Engineering_attachment')) {
-                foreach ($request->file('Engineering_attachment') as $file) {
-                    $name = $request->name . 'Engineering_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+            if ($request->hasfile('Production_Table_Attachment')) {
+                foreach ($request->file('Production_Table_Attachment') as $file) {
+                    $name = $request->name . 'Production_Table_Attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
                     $file->move('upload/', $name);
                     $files[] = $name;
                 }
             }
-
-
-            $Cft->Engineering_attachment = json_encode($files);
+            $Cft->Production_Table_Attachment = json_encode($files);
         }
-        if (!empty ($request->Analytical_Development_attachment)) {
+        if (!empty ($request->ProductionLiquid_attachment)) {
             $files = [];
-            if ($request->hasfile('Analytical_Development_attachment')) {
-                foreach ($request->file('Analytical_Development_attachment') as $file) {
-                    $name = $request->name . 'Analytical_Development_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+            if ($request->hasfile('ProductionLiquid_attachment')) {
+                foreach ($request->file('ProductionLiquid_attachment') as $file) {
+                    $name = $request->name . 'ProductionLiquid_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
                     $file->move('upload/', $name);
                     $files[] = $name;
                 }
             }
-
-
-            $Cft->Analytical_Development_attachment = json_encode($files);
+            $Cft->ProductionLiquid_attachment = json_encode($files);
         }
-        if (!empty ($request->Kilo_Lab_attachment)) {
+        if (!empty ($request->Production_Injection_Attachment)) {
             $files = [];
-            if ($request->hasfile('Kilo_Lab_attachment')) {
-                foreach ($request->file('Kilo_Lab_attachment') as $file) {
-                    $name = $request->name . 'Kilo_Lab_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+            if ($request->hasfile('Production_Injection_Attachment')) {
+                foreach ($request->file('Production_Injection_Attachment') as $file) {
+                    $name = $request->name . 'Production_Injection_Attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
                     $file->move('upload/', $name);
                     $files[] = $name;
                 }
             }
-
-
-            $Cft->Kilo_Lab_attachment = json_encode($files);
+            $Cft->Production_Injection_Attachment = json_encode($files);
+        }            
+        if (!empty ($request->Store_attachment)) {
+            $files = [];
+            if ($request->hasfile('Store_attachment')) {
+                foreach ($request->file('Store_attachment') as $file) {
+                    $name = $request->name . 'Store_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $file->move('upload/', $name);
+                    $files[] = $name;
+                }
+            }
+            $Cft->Store_attachment = json_encode($files);
         }
-        if (!empty ($request->Technology_transfer_attachment)) {
+        if (!empty ($request->Quality_Control_attachment)) {
             $files = [];
-            if ($request->hasfile('Technology_transfer_attachment')) {
-                foreach ($request->file('Technology_transfer_attachment') as $file) {
-                    $name = $request->name . 'Technology_transfer_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+            if ($request->hasfile('Quality_Control_attachment')) {
+                foreach ($request->file('Quality_Control_attachment') as $file) {
+                    $name = $request->name . 'Quality_Control_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
                     $file->move('upload/', $name);
                     $files[] = $name;
                 }
             }
-
-
-            $Cft->Technology_transfer_attachment = json_encode($files);
-        }
-        if (!empty ($request->Environment_Health_Safety_attachment)) {
-            $files = [];
-            if ($request->hasfile('Environment_Health_Safety_attachment')) {
-                foreach ($request->file('Environment_Health_Safety_attachment') as $file) {
-                    $name = $request->name . 'Environment_Health_Safety_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
-                    $file->move('upload/', $name);
-                    $files[] = $name;
-                }
-            }
-
-
-            $Cft->Environment_Health_Safety_attachment = json_encode($files);
-        }
-        if (!empty ($request->Human_Resource_attachment)) {
-            $files = [];
-            if ($request->hasfile('Human_Resource_attachment')) {
-                foreach ($request->file('Human_Resource_attachment') as $file) {
-                    $name = $request->name . 'Human_Resource_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
-                    $file->move('upload/', $name);
-                    $files[] = $name;
-                }
-            }
-
-
-            $Cft->Human_Resource_attachment = json_encode($files);
-        }
-        if (!empty ($request->Information_Technology_attachment)) {
-            $files = [];
-            if ($request->hasfile('Information_Technology_attachment')) {
-                foreach ($request->file('Information_Technology_attachment') as $file) {
-                    $name = $request->name . 'Information_Technology_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
-                    $file->move('upload/', $name);
-                    $files[] = $name;
-                }
-            }
-
-
-            $Cft->Information_Technology_attachment = json_encode($files);
-        }
-        if (!empty ($request->Project_management_attachment)) {
-            $files = [];
-            if ($request->hasfile('Project_management_attachment')) {
-                foreach ($request->file('Project_management_attachment') as $file) {
-                    $name = $request->name . 'Project_management_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
-                    $file->move('upload/', $name);
-                    $files[] = $name;
-                }
-            }
-            $Cft->Project_management_attachment = json_encode($files);
-        }
-
-
-        if (!empty ($request->ContractGiver_attachment)) {
-            $files = [];
-            if ($request->hasfile('ContractGiver_attachment')) {
-                foreach ($request->file('ContractGiver_attachment') as $file) {
-                    $name = $request->name . 'ContractGiver_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
-                    $file->move('upload/', $name);
-                    $files[] = $name;
-                }
-            }
-            $Cft->ContractGiver_attachment = json_encode($files);
-        }
-        if (!empty ($request->CorporateQualityAssurance_attachment)) {
-            $files = [];
-            if ($request->hasfile('CorporateQualityAssurance_attachment')) {
-                foreach ($request->file('CorporateQualityAssurance_attachment') as $file) {
-                    $name = $request->name . 'CorporateQualityAssurance_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
-                    $file->move('upload/', $name);
-                    $files[] = $name;
-                }
-            }
-            $Cft->CorporateQualityAssurance_attachment = json_encode($files);
-        }
-        if (!empty ($request->RegulatoryAffair_attachment)) {
-            $files = [];
-            if ($request->hasfile('RegulatoryAffair_attachment')) {
-                foreach ($request->file('RegulatoryAffair_attachment') as $file) {
-                    $name = $request->name . 'RegulatoryAffair_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
-                    $file->move('upload/', $name);
-                    $files[] = $name;
-                }
-            }
-            $Cft->RegulatoryAffair_attachment = json_encode($files);
-        }
-        if (!empty ($request->Microbiology_attachment)) {
-            $files = [];
-            if ($request->hasfile('Microbiology_attachment')) {
-                foreach ($request->file('Microbiology_attachment') as $file) {
-                    $name = $request->name . 'Microbiology_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
-                    $file->move('upload/', $name);
-                    $files[] = $name;
-                }
-            }
-            $Cft->Microbiology_attachment = json_encode($files);
+            $Cft->Quality_Control_attachment = json_encode($files);
         }
         if (!empty ($request->ResearchDevelopment_attachment)) {
             $files = [];
@@ -652,27 +530,93 @@ class CCController extends Controller
             }
             $Cft->ResearchDevelopment_attachment = json_encode($files);
         }
-        if (!empty ($request->Store_attachment)) {
+        if (!empty ($request->Engineering_attachment)) {
             $files = [];
-            if ($request->hasfile('Store_attachment')) {
-                foreach ($request->file('Store_attachment') as $file) {
-                    $name = $request->name . 'Store_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+            if ($request->hasfile('Engineering_attachment')) {
+                foreach ($request->file('Engineering_attachment') as $file) {
+                    $name = $request->name . 'Engineering_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
                     $file->move('upload/', $name);
                     $files[] = $name;
                 }
             }
-            $Cft->Store_attachment = json_encode($files);
+            $Cft->Engineering_attachment = json_encode($files);
         }
-        if (!empty ($request->ProductionLiquid_attachment)) {
+        if (!empty ($request->Human_Resource_attachment)) {
             $files = [];
-            if ($request->hasfile('ProductionLiquid_attachment')) {
-                foreach ($request->file('ProductionLiquid_attachment') as $file) {
-                    $name = $request->name . 'ProductionLiquid_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+            if ($request->hasfile('Human_Resource_attachment')) {
+                foreach ($request->file('Human_Resource_attachment') as $file) {
+                    $name = $request->name . 'Human_Resource_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
                     $file->move('upload/', $name);
                     $files[] = $name;
                 }
             }
-            $Cft->ProductionLiquid_attachment = json_encode($files);
+            $Cft->Human_Resource_attachment = json_encode($files);
+        }
+        if (!empty ($request->Microbiology_attachment)) {
+            $files = [];
+            if ($request->hasfile('Microbiology_attachment')) {
+                foreach ($request->file('Microbiology_attachment') as $file) {
+                    $name = $request->name . 'Microbiology_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $file->move('upload/', $name);
+                    $files[] = $name;
+                }
+            }
+            $Cft->Microbiology_attachment = json_encode($files);
+        }
+        if (!empty ($request->RegulatoryAffair_attachment)) {
+            $files = [];
+            if ($request->hasfile('RegulatoryAffair_attachment')) {
+                foreach ($request->file('RegulatoryAffair_attachment') as $file) {
+                    $name = $request->name . 'RegulatoryAffair_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $file->move('upload/', $name);
+                    $files[] = $name;
+                }
+            }
+            $Cft->RegulatoryAffair_attachment = json_encode($files);
+        }
+        if (!empty ($request->CorporateQualityAssurance_attachment)) {
+            $files = [];
+            if ($request->hasfile('CorporateQualityAssurance_attachment')) {
+                foreach ($request->file('CorporateQualityAssurance_attachment') as $file) {
+                    $name = $request->name . 'CorporateQualityAssurance_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $file->move('upload/', $name);
+                    $files[] = $name;
+                }
+            }
+            $Cft->CorporateQualityAssurance_attachment = json_encode($files);
+        }
+        if (!empty ($request->Environment_Health_Safety_attachment)) {
+            $files = [];
+            if ($request->hasfile('Environment_Health_Safety_attachment')) {
+                foreach ($request->file('Environment_Health_Safety_attachment') as $file) {
+                    $name = $request->name . 'Environment_Health_Safety_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $file->move('upload/', $name);
+                    $files[] = $name;
+                }
+            }
+            $Cft->Environment_Health_Safety_attachment = json_encode($files);
+        }            
+        if (!empty ($request->Information_Technology_attachment)) {
+            $files = [];
+            if ($request->hasfile('Information_Technology_attachment')) {
+                foreach ($request->file('Information_Technology_attachment') as $file) {
+                    $name = $request->name . 'Information_Technology_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $file->move('upload/', $name);
+                    $files[] = $name;
+                }
+            }
+            $Cft->Information_Technology_attachment = json_encode($files);
+        }
+        if (!empty ($request->ContractGiver_attachment)) {
+            $files = [];
+            if ($request->hasfile('ContractGiver_attachment')) {
+                foreach ($request->file('ContractGiver_attachment') as $file) {
+                    $name = $request->name . 'ContractGiver_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $file->move('upload/', $name);
+                    $files[] = $name;
+                }
+            }
+            $Cft->ContractGiver_attachment = json_encode($files);
         }
 
         
@@ -1039,7 +983,7 @@ class CCController extends Controller
 
             $history = new RcmDocHistory;
             $history->cc_id = $openState->id;
-            $history->activity_type = 'Inititator Group';
+            $history->activity_type = 'Initiation Department';
             $history->previous = "Null";
             $history->current = $openState->Initiator_Group;
             $history->comment = "Not Applicable";
@@ -1770,7 +1714,7 @@ class CCController extends Controller
         if(!empty($request->migration_action)){    
             $history = new RcmDocHistory;
             $history->cc_id = $openState->id;
-            $history->activity_type = 'Migration Action';
+            $history->activity_type = 'Mitigation Action';
             $history->previous = "Null";
             $history->current = $openState->migration_action;
             $history->comment = "Not Applicable";
@@ -1786,7 +1730,7 @@ class CCController extends Controller
         if(!empty($request->qa_appro_comments)){    
             $history = new RcmDocHistory;
             $history->cc_id = $openState->id;
-            $history->activity_type = 'Migration Action';
+            $history->activity_type = 'QA Approval Commnent';
             $history->previous = "Null";
             $history->current = $openState->qa_appro_comments;
             $history->comment = "Not Applicable";
@@ -1802,7 +1746,7 @@ class CCController extends Controller
         if(!empty($request->feedback)){    
             $history = new RcmDocHistory;
             $history->cc_id = $openState->id;
-            $history->activity_type = 'Migration Action';
+            $history->activity_type = 'Feedback';
             $history->previous = "Null";
             $history->current = $openState->feedback;
             $history->comment = "Not Applicable";
@@ -1836,7 +1780,7 @@ class CCController extends Controller
         if(!empty($request->qa_closure_comments)){    
             $history = new RcmDocHistory;
             $history->cc_id = $openState->id;
-            $history->activity_type = 'Migration Action';
+            $history->activity_type = 'QA Closure Comments';
             $history->previous = "Null";
             $history->current = $openState->qa_closure_comments;
             $history->comment = "Not Applicable";
@@ -1852,7 +1796,7 @@ class CCController extends Controller
         if(!empty($request->Effectiveness_checker)){    
             $history = new RcmDocHistory;
             $history->cc_id = $openState->id;
-            $history->activity_type = 'Migration Action';
+            $history->activity_type = 'Effectiveness Check';
             $history->previous = "Null";
             $history->current = $openState->Effectiveness_checker;
             $history->comment = "Not Applicable";
@@ -1868,7 +1812,7 @@ class CCController extends Controller
         if(!empty($request->feedbackeffective_check)){    
             $history = new RcmDocHistory;
             $history->cc_id = $openState->id;
-            $history->activity_type = 'Migration Action';
+            $history->activity_type = 'Feedback';
             $history->previous = "Null";
             $history->current = $openState->feedbackeffective_check;
             $history->comment = "Not Applicable";
@@ -1885,7 +1829,7 @@ class CCController extends Controller
         if(!empty($request->feedbackeffective_check_date)){    
             $history = new RcmDocHistory;
             $history->cc_id = $openState->id;
-            $history->activity_type = 'Migration Action';
+            $history->activity_type = 'Effectiveness Check Date';
             $history->previous = "Null";
             $history->current = $openState->feedbackeffective_check_date;
             $history->comment = "Not Applicable";
@@ -2040,7 +1984,7 @@ class CCController extends Controller
         $openState->other_comment = $request->other_comment;
         $openState->supervisor_comment = $request->supervisor_comment;
         $openState->qa_comments = $request->qa_comments;
-        $openState->related_records = implode(',', $request->related_records);
+        // $openState->related_records = implode(',', $request->related_records);
         $openState->qa_head = $request->qa_head;
 
         $openState->qa_eval_comments = $request->qa_eval_comments;
@@ -2147,10 +2091,7 @@ class CCController extends Controller
 
         if ($openState->stage == 3 || $openState->stage == 4 ){
             $Cft = CcCft::withoutTrashed()->where('cc_id', $id)->first();
-            if($Cft && $openState->stage == 4 ){
-                $Cft->Production_Review = $request->Production_Review == null ? $Cft->Production_Review : $request->Production_Review;
-                $Cft->Production_person = $request->Production_person == null ? $Cft->Production_person : $request->Production_Review;
-                
+            if($Cft && $openState->stage == 4 ){                
                 $Cft->RA_Review = $request->RA_Review == null ? $Cft->RA_Review : $request->RA_Review;
                 $Cft->RA_person = $request->RA_person == null ? $Cft->RA_person : $request->RA_person;
 
@@ -2159,8 +2100,6 @@ class CCController extends Controller
 
                 $Cft->Production_Table_Person = $request->Production_Table_Person == null ? $Cft->Production_Table_Person : $request->Production_Table_Person;
                 $Cft->Production_Table_Review = $request->Production_Table_Review == null ? $Cft->Production_Table_Review : $request->Production_Table_Review;
-
-                /****************** ******************/
                 
                 $Cft->ProductionLiquid_Review = $request->ProductionLiquid_Review == null ? $Cft->ProductionLiquid_Review : $request->ProductionLiquid_Review;
                 $Cft->ProductionLiquid_person = $request->ProductionLiquid_person == null ? $Cft->ProductionLiquid_person : $request->ProductionLiquid_person;
@@ -2183,49 +2122,45 @@ class CCController extends Controller
                 $Cft->ContractGiver_person = $request->ContractGiver_person == null ? $Cft->ContractGiver_person : $request->ContractGiver_person;
                 $Cft->ContractGiver_Review = $request->ContractGiver_Review == null ? $Cft->ContractGiver_Review : $request->ContractGiver_Review;
 
-                $Cft->Warehouse_review = $request->Warehouse_review == null ? $Cft->Warehouse_review : $request->Warehouse_review;
-                $Cft->Warehouse_notification = $request->Warehouse_notification == null ? $Cft->Warehouse_notification : $request->Warehouse_notification;
                 $Cft->Quality_review = $request->Quality_review == null ? $Cft->Quality_review : $request->Quality_review;;
                 $Cft->Quality_Control_Person = $request->Quality_Control_Person == null ? $Cft->Quality_Control_Person : $request->Quality_Control_Person;
+
                 $Cft->Quality_Assurance_Review = $request->Quality_Assurance_Review == null ? $Cft->Quality_Assurance_Review : $request->Quality_Assurance_Review;
                 $Cft->QualityAssurance_person = $request->QualityAssurance_person == null ? $Cft->QualityAssurance_person : $request->QualityAssurance_person;
 
                 $Cft->Engineering_review = $request->Engineering_review == null ? $Cft->Engineering_review : $request->Engineering_review;
                 $Cft->Engineering_person = $request->Engineering_person == null ? $Cft->Engineering_person : $request->Engineering_person;
-                $Cft->Analytical_Development_review = $request->Analytical_Development_review == null ? $Cft->Analytical_Development_review : $request->Analytical_Development_review;
-                $Cft->Analytical_Development_person = $request->Analytical_Development_person == null ? $Cft->Analytical_Development_person : $request->Analytical_Development_person;
-                $Cft->Kilo_Lab_review = $request->Kilo_Lab_review == null ? $Cft->Kilo_Lab_review : $request->Kilo_Lab_review;
-                $Cft->Kilo_Lab_person = $request->Kilo_Lab_person == null ? $Cft->Kilo_Lab_person : $request->Kilo_Lab_person;
-                $Cft->Technology_transfer_review = $request->Technology_transfer_review == null ? $Cft->Technology_transfer_review : $request->Technology_transfer_review;
-                $Cft->Technology_transfer_person = $request->Technology_transfer_person == null ? $Cft->Technology_transfer_person : $request->Technology_transfer_person;
+                
                 $Cft->Environment_Health_review = $request->Environment_Health_review == null ? $Cft->Environment_Health_review : $request->Environment_Health_review;
                 $Cft->Environment_Health_Safety_person = $request->Environment_Health_Safety_person == null ? $Cft->Environment_Health_Safety_person : $request->Environment_Health_Safety_person;
+
                 $Cft->Human_Resource_review = $request->Human_Resource_review == null ? $Cft->Human_Resource_review : $request->Human_Resource_review;
                 $Cft->Human_Resource_person = $request->Human_Resource_person == null ? $Cft->Human_Resource_person : $request->Human_Resource_person;
-                $Cft->Project_management_review = $request->Project_management_review == null ? $Cft->Project_management_review : $request->Project_management_review;
-                $Cft->Project_management_person = $request->Project_management_person == null ? $Cft->Project_management_person : $request->Project_management_person;
+                
                 $Cft->Information_Technology_review = $request->Information_Technology_review == null ? $Cft->Information_Technology_review : $request->Information_Technology_review;
                 $Cft->Information_Technology_person = $request->Information_Technology_person == null ? $Cft->Information_Technology_person : $request->Information_Technology_person;
+                
                 $Cft->Other1_review = $request->Other1_review  == null ? $Cft->Other1_review : $request->Other1_review;
                 $Cft->Other1_person = $request->Other1_person  == null ? $Cft->Other1_person : $request->Other1_person;
                 $Cft->Other1_Department_person = $request->Other1_Department_person  == null ? $Cft->Other1_Department_person : $request->Other1_Department_person;
+
                 $Cft->Other2_review = $request->Other2_review  == null ? $Cft->Other2_review : $request->Other2_review;
                 $Cft->Other2_person = $request->Other2_person  == null ? $Cft->Other2_person : $request->Other2_person;
                 $Cft->Other2_Department_person = $request->Other2_Department_person  == null ? $Cft->Other2_Department_person : $request->Other2_Department_person;
+
                 $Cft->Other3_review = $request->Other3_review  == null ? $Cft->Other3_review : $request->Other3_review;
                 $Cft->Other3_person = $request->Other3_person  == null ? $Cft->Other3_person : $request->Other3_person;
                 $Cft->Other3_Department_person = $request->Other3_Department_person  == null ? $Cft->Other3_Department_person : $request->Other3_Department_person;
+                
                 $Cft->Other4_review = $request->Other4_review  == null ? $Cft->Other4_review : $request->Other4_review;
                 $Cft->Other4_person = $request->Other4_person  == null ? $Cft->Other4_person : $request->Other4_person;
                 $Cft->Other4_Department_person = $request->Other4_Department_person  == null ? $Cft->Other4_Department_person : $request->Other4_Department_person;
+
                 $Cft->Other5_review = $request->Other5_review  == null ? $Cft->Other5_review : $request->Other5_review;
                 $Cft->Other5_person = $request->Other5_person  == null ? $Cft->Other5_person : $request->Other5_person;
                 $Cft->Other5_Department_person = $request->Other5_Department_person  == null ? $Cft->Other5_Department_person : $request->Other5_Department_person;
             }
             else{
-                $Cft->Production_Review = $request->Production_Review;
-                $Cft->Production_person = $request->Production_person;
-
                 $Cft->RA_Review = $request->RA_Review;
                 $Cft->RA_person = $request->RA_person;
 
@@ -2235,7 +2170,6 @@ class CCController extends Controller
                 $Cft->Production_Injection_Review = $request->Production_Injection_Review;
                 $Cft->Production_Injection_Person = $request->Production_Injection_Person;
 
-                /******************  *******************/
                 $Cft->ProductionLiquid_person = $request->ProductionLiquid_person;
                 $Cft->ProductionLiquid_Review = $request->ProductionLiquid_Review;
 
@@ -2257,47 +2191,47 @@ class CCController extends Controller
                 $Cft->ContractGiver_person = $request->ContractGiver_person;
                 $Cft->ContractGiver_Review = $request->ContractGiver_Review;
 
-                $Cft->Warehouse_review = $request->Warehouse_review;
-                $Cft->Warehouse_notification = $request->Warehouse_notification;
                 $Cft->Quality_review = $request->Quality_review;
                 $Cft->Quality_Control_Person = $request->Quality_Control_Person;
+
                 $Cft->Quality_Assurance_Review = $request->Quality_Assurance_Review;
                 $Cft->QualityAssurance_person = $request->QualityAssurance_person;
+
                 $Cft->Engineering_review = $request->Engineering_review;
                 $Cft->Engineering_person = $request->Engineering_person;
-                $Cft->Analytical_Development_review = $request->Analytical_Development_review;
-                $Cft->Analytical_Development_person = $request->Analytical_Development_person;
-                $Cft->Kilo_Lab_review = $request->Kilo_Lab_review;
-                $Cft->Kilo_Lab_person = $request->Kilo_Lab_person;
-                $Cft->Technology_transfer_review = $request->Technology_transfer_review;
-                $Cft->Technology_transfer_person = $request->Technology_transfer_person;
+                
                 $Cft->Environment_Health_review = $request->Environment_Health_review;
                 $Cft->Environment_Health_Safety_person = $request->Environment_Health_Safety_person;
+
                 $Cft->Human_Resource_review = $request->Human_Resource_review;
                 $Cft->Human_Resource_person = $request->Human_Resource_person;
+
                 $Cft->Project_management_review = $request->Project_management_review;
                 $Cft->Project_management_person = $request->Project_management_person;
+                
                 $Cft->Information_Technology_review = $request->Information_Technology_review;
                 $Cft->Information_Technology_person = $request->Information_Technology_person;
+                
                 $Cft->Other1_review = $request->Other1_review;
                 $Cft->Other1_person = $request->Other1_person;
                 $Cft->Other1_Department_person = $request->Other1_Department_person;
+
                 $Cft->Other2_review = $request->Other2_review;
                 $Cft->Other2_person = $request->Other2_person;
                 $Cft->Other2_Department_person = $request->Other2_Department_person;
+
                 $Cft->Other3_review = $request->Other3_review;
                 $Cft->Other3_person = $request->Other3_person;
                 $Cft->Other3_Department_person = $request->Other3_Department_person;
+
                 $Cft->Other4_review = $request->Other4_review;
                 $Cft->Other4_person = $request->Other4_person;
                 $Cft->Other4_Department_person = $request->Other4_Department_person;
+
                 $Cft->Other5_review = $request->Other5_review;
                 $Cft->Other5_person = $request->Other5_person;
                 $Cft->Other5_Department_person = $request->Other5_Department_person;
             }
-            $Cft->Production_assessment = $request->Production_assessment;
-            $Cft->Production_feedback = $request->Production_feedback;
-
             $Cft->RA_assessment = $request->RA_assessment;
             $Cft->RA_feedback = $request->RA_feedback;
 
@@ -2306,8 +2240,6 @@ class CCController extends Controller
 
             $Cft->Production_Table_Assessment = $request->Production_Table_Assessment;
             $Cft->Production_Table_Feedback = $request->Production_Table_Feedback;
-
-            /***************************  ***************************/
 
             $Cft->ProductionLiquid_feedback = $request->ProductionLiquid_feedback;
             $Cft->ProductionLiquid_assessment = $request->ProductionLiquid_assessment;
@@ -2330,1114 +2262,50 @@ class CCController extends Controller
             $Cft->ContractGiver_feedback = $request->ContractGiver_feedback;
             $Cft->ContractGiver_assessment = $request->ContractGiver_assessment;
 
-            $Cft->Warehouse_assessment = $request->Warehouse_assessment;
-            $Cft->Warehouse_feedback = $request->Warehouse_feedback;
             $Cft->Quality_Control_assessment = $request->Quality_Control_assessment;
             $Cft->Quality_Control_feedback = $request->Quality_Control_feedback;
-            $Cft->QualityAssurance_assessment = $request->QualityAssurance_assessment;
-            $Cft->QualityAssurance_feedback = $request->QualityAssurance_feedback;
-            $Cft->Engineering_assessment = $request->Engineering_assessment;
-            $Cft->Engineering_feedback = $request->Engineering_feedback;
-            $Cft->Analytical_Development_assessment = $request->Analytical_Development_assessment;
-            $Cft->Analytical_Development_feedback = $request->Analytical_Development_feedback;
-            $Cft->Kilo_Lab_assessment = $request->Kilo_Lab_assessment;
-            $Cft->Kilo_Lab_feedback = $request->Kilo_Lab_feedback;
-            $Cft->Technology_transfer_assessment = $request->Technology_transfer_assessment;
-            $Cft->Technology_transfer_feedback = $request->Technology_transfer_feedback;
-            $Cft->Health_Safety_assessment = $request->Health_Safety_assessment;
-            $Cft->Health_Safety_feedback = $request->Health_Safety_feedback;
-            $Cft->Human_Resource_assessment = $request->Human_Resource_assessment;
-            $Cft->Human_Resource_feedback = $request->Human_Resource_feedback;
-            $Cft->Information_Technology_assessment = $request->Information_Technology_assessment;
-            $Cft->Information_Technology_feedback = $request->Information_Technology_feedback;
-            $Cft->Project_management_assessment = $request->Project_management_assessment;
-            $Cft->Project_management_feedback = $request->Project_management_feedback;
-            $Cft->Other1_assessment = $request->Other1_assessment;
-            $Cft->Other1_feedback = $request->Other1_feedback;
-            $Cft->Other2_Assessment = $request->Other2_Assessment;
-            $Cft->Other2_feedback = $request->Other2_feedback;
-            $Cft->Other3_Assessment = $request->Other3_Assessment;
-            $Cft->Other3_feedback = $request->Other3_feedback;
-            $Cft->Other4_Assessment = $request->Other4_Assessment;
-            $Cft->Other4_feedback = $request->Other4_feedback;
-            $Cft->Other5_Assessment = $request->Other5_Assessment;
-            $Cft->Other5_feedback = $request->Other5_feedback;
-
-
-            if (!empty ($request->production_attachment)) {
-                $files = [];
-                if ($request->hasfile('production_attachment')) {
-                    foreach ($request->file('production_attachment') as $file) {
-                        $name = $request->name . 'production_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
-                        $file->move('upload/', $name);
-                        $files[] = $name;
-                    }
-                }
-
-
-                $Cft->production_attachment = json_encode($files);
-            }
-            if (!empty ($request->Warehouse_attachment)) {
-                $files = [];
-                if ($request->hasfile('Warehouse_attachment')) {
-                    foreach ($request->file('Warehouse_attachment') as $file) {
-                        $name = $request->name . 'Warehouse_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
-                        $file->move('upload/', $name);
-                        $files[] = $name;
-                    }
-                }
-
-
-                $Cft->Warehouse_attachment = json_encode($files);
-            }
-            if (!empty ($request->Quality_Control_attachment)) {
-                $files = [];
-                if ($request->hasfile('Quality_Control_attachment')) {
-                    foreach ($request->file('Quality_Control_attachment') as $file) {
-                        $name = $request->name . 'Quality_Control_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
-                        $file->move('upload/', $name);
-                        $files[] = $name;
-                    }
-                }
-
-
-                $Cft->Quality_Control_attachment = json_encode($files);
-            }
-            if (!empty ($request->Quality_Assurance_attachment)) {
-                $files = [];
-                if ($request->hasfile('Quality_Assurance_attachment')) {
-                    foreach ($request->file('Quality_Assurance_attachment') as $file) {
-                        $name = $request->name . 'Quality_Assurance_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
-                        $file->move('upload/', $name);
-                        $files[] = $name;
-                    }
-                }
-
-
-                $Cft->Quality_Assurance_attachment = json_encode($files);
-            }
-            if (!empty ($request->Engineering_attachment)) {
-                $files = [];
-                if ($request->hasfile('Engineering_attachment')) {
-                    foreach ($request->file('Engineering_attachment') as $file) {
-                        $name = $request->name . 'Engineering_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
-                        $file->move('upload/', $name);
-                        $files[] = $name;
-                    }
-                }
-
-
-                $Cft->Engineering_attachment = json_encode($files);
-            }
-            if (!empty ($request->Analytical_Development_attachment)) {
-                $files = [];
-                if ($request->hasfile('Analytical_Development_attachment')) {
-                    foreach ($request->file('Analytical_Development_attachment') as $file) {
-                        $name = $request->name . 'Analytical_Development_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
-                        $file->move('upload/', $name);
-                        $files[] = $name;
-                    }
-                }
-
-
-                $Cft->Analytical_Development_attachment = json_encode($files);
-            }
-            if (!empty ($request->Kilo_Lab_attachment)) {
-                $files = [];
-                if ($request->hasfile('Kilo_Lab_attachment')) {
-                    foreach ($request->file('Kilo_Lab_attachment') as $file) {
-                        $name = $request->name . 'Kilo_Lab_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
-                        $file->move('upload/', $name);
-                        $files[] = $name;
-                    }
-                }
-
-
-                $Cft->Kilo_Lab_attachment = json_encode($files);
-            }
-            if (!empty ($request->Technology_transfer_attachment)) {
-                $files = [];
-                if ($request->hasfile('Technology_transfer_attachment')) {
-                    foreach ($request->file('Technology_transfer_attachment') as $file) {
-                        $name = $request->name . 'Technology_transfer_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
-                        $file->move('upload/', $name);
-                        $files[] = $name;
-                    }
-                }
-
-
-                $Cft->Technology_transfer_attachment = json_encode($files);
-            }
-            if (!empty ($request->Environment_Health_Safety_attachment)) {
-                $files = [];
-                if ($request->hasfile('Environment_Health_Safety_attachment')) {
-                    foreach ($request->file('Environment_Health_Safety_attachment') as $file) {
-                        $name = $request->name . 'Environment_Health_Safety_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
-                        $file->move('upload/', $name);
-                        $files[] = $name;
-                    }
-                }
-
-
-                $Cft->Environment_Health_Safety_attachment = json_encode($files);
-            }
-            if (!empty ($request->Human_Resource_attachment)) {
-                $files = [];
-                if ($request->hasfile('Human_Resource_attachment')) {
-                    foreach ($request->file('Human_Resource_attachment') as $file) {
-                        $name = $request->name . 'Human_Resource_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
-                        $file->move('upload/', $name);
-                        $files[] = $name;
-                    }
-                }
-
-
-                $Cft->Human_Resource_attachment = json_encode($files);
-            }
-            if (!empty ($request->Information_Technology_attachment)) {
-                $files = [];
-                if ($request->hasfile('Information_Technology_attachment')) {
-                    foreach ($request->file('Information_Technology_attachment') as $file) {
-                        $name = $request->name . 'Information_Technology_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
-                        $file->move('upload/', $name);
-                        $files[] = $name;
-                    }
-                }
-
-
-                $Cft->Information_Technology_attachment = json_encode($files);
-            }
-            if (!empty ($request->Project_management_attachment)) {
-                $files = [];
-                if ($request->hasfile('Project_management_attachment')) {
-                    foreach ($request->file('Project_management_attachment') as $file) {
-                        $name = $request->name . 'Project_management_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
-                        $file->move('upload/', $name);
-                        $files[] = $name;
-                    }
-                }
-
-
-                $Cft->Project_management_attachment = json_encode($files);
-            }
-            if (!empty ($request->Other1_attachment)) {
-                $files = [];
-                if ($request->hasfile('Other1_attachment')) {
-                    foreach ($request->file('Other1_attachment') as $file) {
-                        $name = $request->name . 'Other1_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
-                        $file->move('upload/', $name);
-                        $files[] = $name;
-                    }
-                }
-
-
-                $Cft->Other1_attachment = json_encode($files);
-            }
-            if (!empty ($request->Other2_attachment)) {
-                $files = [];
-                if ($request->hasfile('Other2_attachment')) {
-                    foreach ($request->file('Other2_attachment') as $file) {
-                        $name = $request->name . 'Other2_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
-                        $file->move('upload/', $name);
-                        $files[] = $name;
-                    }
-                }
-
-
-                $Cft->Other2_attachment = json_encode($files);
-            }
-            if (!empty ($request->Other3_attachment)) {
-                $files = [];
-                if ($request->hasfile('Other3_attachment')) {
-                    foreach ($request->file('Other3_attachment') as $file) {
-                        $name = $request->name . 'Other3_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
-                        $file->move('upload/', $name);
-                        $files[] = $name;
-                    }
-                }
-                $Cft->Other3_attachment = json_encode($files);
-            }
-            if (!empty ($request->Other4_attachment)) {
-                $files = [];
-                if ($request->hasfile('Other4_attachment')) {
-                    foreach ($request->file('Other4_attachment') as $file) {
-                        $name = $request->name . 'Other4_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
-                        $file->move('upload/', $name);
-                        $files[] = $name;
-                    }
-                }
-
-                $Cft->Other4_attachment = json_encode($files);
-            }
-            if (!empty ($request->Other5_attachment)) {
-                $files = [];
-                if ($request->hasfile('Other5_attachment')) {
-                    foreach ($request->file('Other5_attachment') as $file) {
-                        $name = $request->name . 'Other5_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
-                        $file->move('upload/', $name);
-                        $files[] = $name;
-                    }
-                }
-                $Cft->Other5_attachment = json_encode($files);
-            }
-
-            if (!empty ($request->ContractGiver_attachment)) {
-                $files = [];
-                if ($request->hasfile('ContractGiver_attachment')) {
-                    foreach ($request->file('ContractGiver_attachment') as $file) {
-                        $name = $request->name . 'ContractGiver_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
-                        $file->move('upload/', $name);
-                        $files[] = $name;
-                    }
-                }
-                $Cft->ContractGiver_attachment = json_encode($files);
-            }
-            if (!empty ($request->CorporateQualityAssurance_attachment)) {
-                $files = [];
-                if ($request->hasfile('CorporateQualityAssurance_attachment')) {
-                    foreach ($request->file('CorporateQualityAssurance_attachment') as $file) {
-                        $name = $request->name . 'CorporateQualityAssurance_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
-                        $file->move('upload/', $name);
-                        $files[] = $name;
-                    }
-                }
-                $Cft->CorporateQualityAssurance_attachment = json_encode($files);
-            }
-            if (!empty ($request->RegulatoryAffair_attachment)) {
-                $files = [];
-                if ($request->hasfile('RegulatoryAffair_attachment')) {
-                    foreach ($request->file('RegulatoryAffair_attachment') as $file) {
-                        $name = $request->name . 'RegulatoryAffair_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
-                        $file->move('upload/', $name);
-                        $files[] = $name;
-                    }
-                }
-                $Cft->RegulatoryAffair_attachment = json_encode($files);
-            }
-            if (!empty ($request->Microbiology_attachment)) {
-                $files = [];
-                if ($request->hasfile('Microbiology_attachment')) {
-                    foreach ($request->file('Microbiology_attachment') as $file) {
-                        $name = $request->name . 'Microbiology_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
-                        $file->move('upload/', $name);
-                        $files[] = $name;
-                    }
-                }
-                $Cft->Microbiology_attachment = json_encode($files);
-            }
-            if (!empty ($request->ResearchDevelopment_attachment)) {
-                $files = [];
-                if ($request->hasfile('ResearchDevelopment_attachment')) {
-                    foreach ($request->file('ResearchDevelopment_attachment') as $file) {
-                        $name = $request->name . 'ResearchDevelopment_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
-                        $file->move('upload/', $name);
-                        $files[] = $name;
-                    }
-                }
-                $Cft->ResearchDevelopment_attachment = json_encode($files);
-            }
-            if (!empty ($request->Store_attachment)) {
-                $files = [];
-                if ($request->hasfile('Store_attachment')) {
-                    foreach ($request->file('Store_attachment') as $file) {
-                        $name = $request->name . 'Store_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
-                        $file->move('upload/', $name);
-                        $files[] = $name;
-                    }
-                }
-                $Cft->Store_attachment = json_encode($files);
-            }
-            if (!empty ($request->ProductionLiquid_attachment)) {
-                $files = [];
-                if ($request->hasfile('ProductionLiquid_attachment')) {
-                    foreach ($request->file('ProductionLiquid_attachment') as $file) {
-                        $name = $request->name . 'ProductionLiquid_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
-                        $file->move('upload/', $name);
-                        $files[] = $name;
-                    }
-                }
-                $Cft->ProductionLiquid_attachment = json_encode($files);
-            }
-        $Cft->save();
-        }
-
-
-        if ($openState->stage == 3 || $openState->stage == 4 ){
-            $Cft = CcCft::withoutTrashed()->where('cc_id', $id)->first();
-            if($Cft && $openState->stage == 4 ){
-                $Cft->Production_Review = $request->Production_Review == null ? $Cft->Production_Review : $request->Production_Review;
-                $Cft->Production_person = $request->Production_person == null ? $Cft->Production_person : $request->Production_Review;
-                
-                $Cft->RA_Review = $request->RA_Review == null ? $Cft->RA_Review : $request->RA_Review;
-                $Cft->RA_Review = $request->RA_Review == null ? $Cft->RA_Review : $request->RA_Review;
-
-                $Cft->Production_Injection_Person = $request->Production_Injection_Person == null ? $Cft->RA_Review : $request->Production_Injection_Person;
-                $Cft->Production_Injection_Review = $request->Production_Injection_Review == null ? $Cft->RA_person : $request->Production_Injection_Review;
-
-                $Cft->Production_Table_Person = $request->Production_Table_Person == null ? $Cft->RA_Review : $request->Production_Table_Person;
-                $Cft->Production_Table_Review = $request->Production_Table_Review == null ? $Cft->RA_person : $request->Production_Table_Review;
-
-
-                /****************** ******************/
-
-                $Cft->ProductionInjection_person = $request->ProductionInjection_person == null ? $Cft->ProductionInjection_person : $request->ProductionInjection_person;
-                $Cft->ProductionInjection_Review = $request->ProductionInjection_Review == null ? $Cft->ProductionInjection_Review : $request->ProductionInjection_Review;
-                
-                $Cft->ProductionLiquid_Review = $request->ProductionLiquid_Review == null ? $Cft->ProductionLiquid_Review : $request->ProductionLiquid_Review;
-                $Cft->ProductionLiquid_person = $request->ProductionLiquid_person == null ? $Cft->ProductionLiquid_person : $request->ProductionLiquid_person;
-
-                $Cft->Store_person = $request->Store_person == null ? $Cft->Store_person : $request->Store_person;
-                $Cft->Store_Review = $request->Store_Review == null ? $Cft->Store_Review : $request->Store_Review;
-
-                $Cft->ResearchDevelopment_person = $request->ResearchDevelopment_person == null ? $Cft->ResearchDevelopment_person : $request->ResearchDevelopment_person;
-                $Cft->ResearchDevelopment_Review = $request->ResearchDevelopment_Review == null ? $Cft->ResearchDevelopment_Review : $request->ResearchDevelopment_Review;
-
-                $Cft->Microbiology_person = $request->Microbiology_person == null ? $Cft->Microbiology_person : $request->Microbiology_person;
-                $Cft->Microbiology_Review = $request->Microbiology_Review == null ? $Cft->Microbiology_Review : $request->Microbiology_Review;
-
-                $Cft->RegulatoryAffair_person = $request->RegulatoryAffair_person == null ? $Cft->RegulatoryAffair_person : $request->RegulatoryAffair_person;
-                $Cft->RegulatoryAffair_Review = $request->RegulatoryAffair_Review == null ? $Cft->RegulatoryAffair_Review : $request->RegulatoryAffair_Review;
-
-                $Cft->CorporateQualityAssurance_person = $request->CorporateQualityAssurance_person == null ? $Cft->CorporateQualityAssurance_person : $request->CorporateQualityAssurance_person;
-                $Cft->CorporateQualityAssurance_Review = $request->CorporateQualityAssurance_Review == null ? $Cft->CorporateQualityAssurance_Review : $request->CorporateQualityAssurance_Review;
-
-                $Cft->ContractGiver_person = $request->ContractGiver_person == null ? $Cft->ContractGiver_person : $request->ContractGiver_person;
-                $Cft->ContractGiver_Review = $request->ContractGiver_Review == null ? $Cft->ContractGiver_Review : $request->ContractGiver_Review;
-
-                $Cft->Warehouse_review = $request->Warehouse_review == null ? $Cft->Warehouse_review : $request->Warehouse_review;
-                $Cft->Warehouse_notification = $request->Warehouse_notification == null ? $Cft->Warehouse_notification : $request->Warehouse_notification;
-                $Cft->Quality_review = $request->Quality_review == null ? $Cft->Quality_review : $request->Quality_review;;
-                $Cft->Quality_Control_Person = $request->Quality_Control_Person == null ? $Cft->Quality_Control_Person : $request->Quality_Control_Person;
-                $Cft->Quality_Assurance_Review = $request->Quality_Assurance_Review == null ? $Cft->Quality_Assurance_Review : $request->Quality_Assurance_Review;
-                $Cft->QualityAssurance_person = $request->QualityAssurance_person == null ? $Cft->QualityAssurance_person : $request->QualityAssurance_person;
-
-                $Cft->Engineering_review = $request->Engineering_review == null ? $Cft->Engineering_review : $request->Engineering_review;
-                $Cft->Engineering_person = $request->Engineering_person == null ? $Cft->Engineering_person : $request->Engineering_person;
-                $Cft->Analytical_Development_review = $request->Analytical_Development_review == null ? $Cft->Analytical_Development_review : $request->Analytical_Development_review;
-                $Cft->Analytical_Development_person = $request->Analytical_Development_person == null ? $Cft->Analytical_Development_person : $request->Analytical_Development_person;
-                $Cft->Kilo_Lab_review = $request->Kilo_Lab_review == null ? $Cft->Kilo_Lab_review : $request->Kilo_Lab_review;
-                $Cft->Kilo_Lab_person = $request->Kilo_Lab_person == null ? $Cft->Kilo_Lab_person : $request->Kilo_Lab_person;
-                $Cft->Technology_transfer_review = $request->Technology_transfer_review == null ? $Cft->Technology_transfer_review : $request->Technology_transfer_review;
-                $Cft->Technology_transfer_person = $request->Technology_transfer_person == null ? $Cft->Technology_transfer_person : $request->Technology_transfer_person;
-                $Cft->Environment_Health_review = $request->Environment_Health_review == null ? $Cft->Environment_Health_review : $request->Environment_Health_review;
-                $Cft->Environment_Health_Safety_person = $request->Environment_Health_Safety_person == null ? $Cft->Environment_Health_Safety_person : $request->Environment_Health_Safety_person;
-                $Cft->Human_Resource_review = $request->Human_Resource_review == null ? $Cft->Human_Resource_review : $request->Human_Resource_review;
-                $Cft->Human_Resource_person = $request->Human_Resource_person == null ? $Cft->Human_Resource_person : $request->Human_Resource_person;
-                $Cft->Project_management_review = $request->Project_management_review == null ? $Cft->Project_management_review : $request->Project_management_review;
-                $Cft->Project_management_person = $request->Project_management_person == null ? $Cft->Project_management_person : $request->Project_management_person;
-                $Cft->Information_Technology_review = $request->Information_Technology_review == null ? $Cft->Information_Technology_review : $request->Information_Technology_review;
-                $Cft->Information_Technology_person = $request->Information_Technology_person == null ? $Cft->Information_Technology_person : $request->Information_Technology_person;
-                $Cft->Other1_review = $request->Other1_review  == null ? $Cft->Other1_review : $request->Other1_review;
-                $Cft->Other1_person = $request->Other1_person  == null ? $Cft->Other1_person : $request->Other1_person;
-                $Cft->Other1_Department_person = $request->Other1_Department_person  == null ? $Cft->Other1_Department_person : $request->Other1_Department_person;
-                $Cft->Other2_review = $request->Other2_review  == null ? $Cft->Other2_review : $request->Other2_review;
-                $Cft->Other2_person = $request->Other2_person  == null ? $Cft->Other2_person : $request->Other2_person;
-                $Cft->Other2_Department_person = $request->Other2_Department_person  == null ? $Cft->Other2_Department_person : $request->Other2_Department_person;
-                $Cft->Other3_review = $request->Other3_review  == null ? $Cft->Other3_review : $request->Other3_review;
-                $Cft->Other3_person = $request->Other3_person  == null ? $Cft->Other3_person : $request->Other3_person;
-                $Cft->Other3_Department_person = $request->Other3_Department_person  == null ? $Cft->Other3_Department_person : $request->Other3_Department_person;
-                $Cft->Other4_review = $request->Other4_review  == null ? $Cft->Other4_review : $request->Other4_review;
-                $Cft->Other4_person = $request->Other4_person  == null ? $Cft->Other4_person : $request->Other4_person;
-                $Cft->Other4_Department_person = $request->Other4_Department_person  == null ? $Cft->Other4_Department_person : $request->Other4_Department_person;
-                $Cft->Other5_review = $request->Other5_review  == null ? $Cft->Other5_review : $request->Other5_review;
-                $Cft->Other5_person = $request->Other5_person  == null ? $Cft->Other5_person : $request->Other5_person;
-                $Cft->Other5_Department_person = $request->Other5_Department_person  == null ? $Cft->Other5_Department_person : $request->Other5_Department_person;
-            }
-            else{
-                $Cft->Production_Review = $request->Production_Review;
-                $Cft->Production_person = $request->Production_person;
-                $Cft->RA_Review = $request->RA_Review;
-                $Cft->RA_person = $request->RA_person;
-
-                $Cft->Production_Table_Review = $request->Production_Table_Review;
-                $Cft->Production_Table_Person = $request->Production_Table_Person;
-
-                $Cft->Production_Injection_Review = $request->Production_Injection_Review;
-                $Cft->Production_Injection_Person = $request->Production_Injection_Person;
-
-                /******************  *******************/
-                $Cft->ProductionLiquid_person = $request->ProductionLiquid_person;
-                $Cft->ProductionLiquid_Review = $request->ProductionLiquid_Review;
-
-                $Cft->Store_person = $request->Store_person;
-                $Cft->Store_Review = $request->Store_Review;
-
-                $Cft->ResearchDevelopment_person = $request->ResearchDevelopment_person;
-                $Cft->ResearchDevelopment_Review = $request->ResearchDevelopment_Review;
-
-                $Cft->Microbiology_person = $request->Microbiology_person;
-                $Cft->Microbiology_Review = $request->Microbiology_Review;
-
-                $Cft->RegulatoryAffair_person = $request->RegulatoryAffair_person;
-                $Cft->RegulatoryAffair_Review = $request->RegulatoryAffair_Review;
-
-                $Cft->CorporateQualityAssurance_person = $request->CorporateQualityAssurance_person;
-                $Cft->CorporateQualityAssurance_Review = $request->CorporateQualityAssurance_Review;
-
-                $Cft->ContractGiver_person = $request->ContractGiver_person;
-                $Cft->ContractGiver_Review = $request->ContractGiver_Review;
-
-                $Cft->Warehouse_review = $request->Warehouse_review;
-                $Cft->Warehouse_notification = $request->Warehouse_notification;
-                $Cft->Quality_review = $request->Quality_review;
-                $Cft->Quality_Control_Person = $request->Quality_Control_Person;
-                $Cft->Quality_Assurance_Review = $request->Quality_Assurance_Review;
-                $Cft->QualityAssurance_person = $request->QualityAssurance_person;
-                $Cft->Engineering_review = $request->Engineering_review;
-                $Cft->Engineering_person = $request->Engineering_person;
-                $Cft->Analytical_Development_review = $request->Analytical_Development_review;
-                $Cft->Analytical_Development_person = $request->Analytical_Development_person;
-                $Cft->Kilo_Lab_review = $request->Kilo_Lab_review;
-                $Cft->Kilo_Lab_person = $request->Kilo_Lab_person;
-                $Cft->Technology_transfer_review = $request->Technology_transfer_review;
-                $Cft->Technology_transfer_person = $request->Technology_transfer_person;
-                $Cft->Environment_Health_review = $request->Environment_Health_review;
-                $Cft->Environment_Health_Safety_person = $request->Environment_Health_Safety_person;
-                $Cft->Human_Resource_review = $request->Human_Resource_review;
-                $Cft->Human_Resource_person = $request->Human_Resource_person;
-                $Cft->Project_management_review = $request->Project_management_review;
-                $Cft->Project_management_person = $request->Project_management_person;
-                $Cft->Information_Technology_review = $request->Information_Technology_review;
-                $Cft->Information_Technology_person = $request->Information_Technology_person;
-                $Cft->Other1_review = $request->Other1_review;
-                $Cft->Other1_person = $request->Other1_person;
-                $Cft->Other1_Department_person = $request->Other1_Department_person;
-                $Cft->Other2_review = $request->Other2_review;
-                $Cft->Other2_person = $request->Other2_person;
-                $Cft->Other2_Department_person = $request->Other2_Department_person;
-                $Cft->Other3_review = $request->Other3_review;
-                $Cft->Other3_person = $request->Other3_person;
-                $Cft->Other3_Department_person = $request->Other3_Department_person;
-                $Cft->Other4_review = $request->Other4_review;
-                $Cft->Other4_person = $request->Other4_person;
-                $Cft->Other4_Department_person = $request->Other4_Department_person;
-                $Cft->Other5_review = $request->Other5_review;
-                $Cft->Other5_person = $request->Other5_person;
-                $Cft->Other5_Department_person = $request->Other5_Department_person;
-            }
-            $Cft->Production_assessment = $request->Production_assessment;
-            $Cft->Production_feedback = $request->Production_feedback;
-            $Cft->RA_assessment = $request->RA_assessment;
-            $Cft->RA_feedback = $request->RA_feedback;
-
-            $Cft->Production_Injection_Assessment = $request->Production_Injection_Assessment;
-            $Cft->Production_Injection_Feedback = $request->Production_Injection_Feedback;
-
-            $Cft->Production_Table_Assessment = $request->Production_Table_Assessment;
-            $Cft->Production_Table_Feedback = $request->Production_Table_Feedback;
-
-            $Cft->ProductionLiquid_feedback = $request->ProductionLiquid_feedback;
-            $Cft->ProductionLiquid_assessment = $request->ProductionLiquid_assessment;
-
-            $Cft->Store_feedback = $request->Store_feedback;
-            $Cft->Store_assessment = $request->Store_assessment;
-
-            $Cft->ResearchDevelopment_feedback = $request->ResearchDevelopment_feedback;
-            $Cft->ResearchDevelopment_assessment = $request->ResearchDevelopment_assessment;
-
-            $Cft->Microbiology_feedback = $request->Microbiology_feedback;
-            $Cft->Microbiology_assessment = $request->Microbiology_assessment;
-
-            $Cft->RegulatoryAffair_feedback = $request->RegulatoryAffair_feedback;
-            $Cft->RegulatoryAffair_assessment = $request->RegulatoryAffair_assessment;
-
-            $Cft->CorporateQualityAssurance_feedback = $request->CorporateQualityAssurance_feedback;
-            $Cft->CorporateQualityAssurance_assessment = $request->CorporateQualityAssurance_assessment;
-
-            $Cft->ContractGiver_feedback = $request->ContractGiver_feedback;
-            $Cft->ContractGiver_assessment = $request->ContractGiver_assessment;
-
-            $Cft->Warehouse_assessment = $request->Warehouse_assessment;
-            $Cft->Warehouse_feedback = $request->Warehouse_feedback;
-            $Cft->Quality_Control_assessment = $request->Quality_Control_assessment;
-            $Cft->Quality_Control_feedback = $request->Quality_Control_feedback;
-            $Cft->QualityAssurance_assessment = $request->QualityAssurance_assessment;
-            $Cft->QualityAssurance_feedback = $request->QualityAssurance_feedback;
-            $Cft->Engineering_assessment = $request->Engineering_assessment;
-            $Cft->Engineering_feedback = $request->Engineering_feedback;
-            $Cft->Analytical_Development_assessment = $request->Analytical_Development_assessment;
-            $Cft->Analytical_Development_feedback = $request->Analytical_Development_feedback;
-            $Cft->Kilo_Lab_assessment = $request->Kilo_Lab_assessment;
-            $Cft->Kilo_Lab_feedback = $request->Kilo_Lab_feedback;
-            $Cft->Technology_transfer_assessment = $request->Technology_transfer_assessment;
-            $Cft->Technology_transfer_feedback = $request->Technology_transfer_feedback;
-            $Cft->Health_Safety_assessment = $request->Health_Safety_assessment;
-            $Cft->Health_Safety_feedback = $request->Health_Safety_feedback;
-            $Cft->Human_Resource_assessment = $request->Human_Resource_assessment;
-            $Cft->Human_Resource_feedback = $request->Human_Resource_feedback;
-            $Cft->Information_Technology_assessment = $request->Information_Technology_assessment;
-            $Cft->Information_Technology_feedback = $request->Information_Technology_feedback;
-            $Cft->Project_management_assessment = $request->Project_management_assessment;
-            $Cft->Project_management_feedback = $request->Project_management_feedback;
-            $Cft->Other1_assessment = $request->Other1_assessment;
-            $Cft->Other1_feedback = $request->Other1_feedback;
-            $Cft->Other2_Assessment = $request->Other2_Assessment;
-            $Cft->Other2_feedback = $request->Other2_feedback;
-            $Cft->Other3_Assessment = $request->Other3_Assessment;
-            $Cft->Other3_feedback = $request->Other3_feedback;
-            $Cft->Other4_Assessment = $request->Other4_Assessment;
-            $Cft->Other4_feedback = $request->Other4_feedback;
-            $Cft->Other5_Assessment = $request->Other5_Assessment;
-            $Cft->Other5_feedback = $request->Other5_feedback;
-
-
-            if (!empty ($request->production_attachment)) {
-                $files = [];
-                if ($request->hasfile('production_attachment')) {
-                    foreach ($request->file('production_attachment') as $file) {
-                        $name = $request->name . 'production_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
-                        $file->move('upload/', $name);
-                        $files[] = $name;
-                    }
-                }
-
-
-                $Cft->production_attachment = json_encode($files);
-            }
-            if (!empty ($request->Warehouse_attachment)) {
-                $files = [];
-                if ($request->hasfile('Warehouse_attachment')) {
-                    foreach ($request->file('Warehouse_attachment') as $file) {
-                        $name = $request->name . 'Warehouse_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
-                        $file->move('upload/', $name);
-                        $files[] = $name;
-                    }
-                }
-
-
-                $Cft->Warehouse_attachment = json_encode($files);
-            }
-            if (!empty ($request->Quality_Control_attachment)) {
-                $files = [];
-                if ($request->hasfile('Quality_Control_attachment')) {
-                    foreach ($request->file('Quality_Control_attachment') as $file) {
-                        $name = $request->name . 'Quality_Control_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
-                        $file->move('upload/', $name);
-                        $files[] = $name;
-                    }
-                }
-
-
-                $Cft->Quality_Control_attachment = json_encode($files);
-            }
-            if (!empty ($request->Quality_Assurance_attachment)) {
-                $files = [];
-                if ($request->hasfile('Quality_Assurance_attachment')) {
-                    foreach ($request->file('Quality_Assurance_attachment') as $file) {
-                        $name = $request->name . 'Quality_Assurance_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
-                        $file->move('upload/', $name);
-                        $files[] = $name;
-                    }
-                }
-
-
-                $Cft->Quality_Assurance_attachment = json_encode($files);
-            }
-            if (!empty ($request->Engineering_attachment)) {
-                $files = [];
-                if ($request->hasfile('Engineering_attachment')) {
-                    foreach ($request->file('Engineering_attachment') as $file) {
-                        $name = $request->name . 'Engineering_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
-                        $file->move('upload/', $name);
-                        $files[] = $name;
-                    }
-                }
-
-
-                $Cft->Engineering_attachment = json_encode($files);
-            }
-            if (!empty ($request->Analytical_Development_attachment)) {
-                $files = [];
-                if ($request->hasfile('Analytical_Development_attachment')) {
-                    foreach ($request->file('Analytical_Development_attachment') as $file) {
-                        $name = $request->name . 'Analytical_Development_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
-                        $file->move('upload/', $name);
-                        $files[] = $name;
-                    }
-                }
-
-
-                $Cft->Analytical_Development_attachment = json_encode($files);
-            }
-            if (!empty ($request->Kilo_Lab_attachment)) {
-                $files = [];
-                if ($request->hasfile('Kilo_Lab_attachment')) {
-                    foreach ($request->file('Kilo_Lab_attachment') as $file) {
-                        $name = $request->name . 'Kilo_Lab_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
-                        $file->move('upload/', $name);
-                        $files[] = $name;
-                    }
-                }
-
-
-                $Cft->Kilo_Lab_attachment = json_encode($files);
-            }
-            if (!empty ($request->Technology_transfer_attachment)) {
-                $files = [];
-                if ($request->hasfile('Technology_transfer_attachment')) {
-                    foreach ($request->file('Technology_transfer_attachment') as $file) {
-                        $name = $request->name . 'Technology_transfer_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
-                        $file->move('upload/', $name);
-                        $files[] = $name;
-                    }
-                }
-
-
-                $Cft->Technology_transfer_attachment = json_encode($files);
-            }
-            if (!empty ($request->Environment_Health_Safety_attachment)) {
-                $files = [];
-                if ($request->hasfile('Environment_Health_Safety_attachment')) {
-                    foreach ($request->file('Environment_Health_Safety_attachment') as $file) {
-                        $name = $request->name . 'Environment_Health_Safety_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
-                        $file->move('upload/', $name);
-                        $files[] = $name;
-                    }
-                }
-
-
-                $Cft->Environment_Health_Safety_attachment = json_encode($files);
-            }
-            if (!empty ($request->Human_Resource_attachment)) {
-                $files = [];
-                if ($request->hasfile('Human_Resource_attachment')) {
-                    foreach ($request->file('Human_Resource_attachment') as $file) {
-                        $name = $request->name . 'Human_Resource_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
-                        $file->move('upload/', $name);
-                        $files[] = $name;
-                    }
-                }
-
-
-                $Cft->Human_Resource_attachment = json_encode($files);
-            }
-            if (!empty ($request->Information_Technology_attachment)) {
-                $files = [];
-                if ($request->hasfile('Information_Technology_attachment')) {
-                    foreach ($request->file('Information_Technology_attachment') as $file) {
-                        $name = $request->name . 'Information_Technology_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
-                        $file->move('upload/', $name);
-                        $files[] = $name;
-                    }
-                }
-
-
-                $Cft->Information_Technology_attachment = json_encode($files);
-            }
-            if (!empty ($request->Project_management_attachment)) {
-                $files = [];
-                if ($request->hasfile('Project_management_attachment')) {
-                    foreach ($request->file('Project_management_attachment') as $file) {
-                        $name = $request->name . 'Project_management_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
-                        $file->move('upload/', $name);
-                        $files[] = $name;
-                    }
-                }
-
-
-                $Cft->Project_management_attachment = json_encode($files);
-            }
-            if (!empty ($request->Other1_attachment)) {
-                $files = [];
-                if ($request->hasfile('Other1_attachment')) {
-                    foreach ($request->file('Other1_attachment') as $file) {
-                        $name = $request->name . 'Other1_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
-                        $file->move('upload/', $name);
-                        $files[] = $name;
-                    }
-                }
-
-
-                $Cft->Other1_attachment = json_encode($files);
-            }
-            if (!empty ($request->Other2_attachment)) {
-                $files = [];
-                if ($request->hasfile('Other2_attachment')) {
-                    foreach ($request->file('Other2_attachment') as $file) {
-                        $name = $request->name . 'Other2_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
-                        $file->move('upload/', $name);
-                        $files[] = $name;
-                    }
-                }
-
-
-                $Cft->Other2_attachment = json_encode($files);
-            }
-            if (!empty ($request->Other3_attachment)) {
-                $files = [];
-                if ($request->hasfile('Other3_attachment')) {
-                    foreach ($request->file('Other3_attachment') as $file) {
-                        $name = $request->name . 'Other3_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
-                        $file->move('upload/', $name);
-                        $files[] = $name;
-                    }
-                }
-                $Cft->Other3_attachment = json_encode($files);
-            }
-            if (!empty ($request->Other4_attachment)) {
-                $files = [];
-                if ($request->hasfile('Other4_attachment')) {
-                    foreach ($request->file('Other4_attachment') as $file) {
-                        $name = $request->name . 'Other4_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
-                        $file->move('upload/', $name);
-                        $files[] = $name;
-                    }
-                }
-
-                $Cft->Other4_attachment = json_encode($files);
-            }
-            if (!empty ($request->Other5_attachment)) {
-                $files = [];
-                if ($request->hasfile('Other5_attachment')) {
-                    foreach ($request->file('Other5_attachment') as $file) {
-                        $name = $request->name . 'Other5_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
-                        $file->move('upload/', $name);
-                        $files[] = $name;
-                    }
-                }
-
-
-                $Cft->Other5_attachment = json_encode($files);
-            }
-            if (!empty ($request->ContractGiver_attachment)) {
-                $files = [];
-                if ($request->hasfile('ContractGiver_attachment')) {
-                    foreach ($request->file('ContractGiver_attachment') as $file) {
-                        $name = $request->name . 'ContractGiver_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
-                        $file->move('upload/', $name);
-                        $files[] = $name;
-                    }
-                }
-                $Cft->ContractGiver_attachment = json_encode($files);
-            }
-            if (!empty ($request->CorporateQualityAssurance_attachment)) {
-                $files = [];
-                if ($request->hasfile('CorporateQualityAssurance_attachment')) {
-                    foreach ($request->file('CorporateQualityAssurance_attachment') as $file) {
-                        $name = $request->name . 'CorporateQualityAssurance_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
-                        $file->move('upload/', $name);
-                        $files[] = $name;
-                    }
-                }
-                $Cft->CorporateQualityAssurance_attachment = json_encode($files);
-            }
-            if (!empty ($request->RegulatoryAffair_attachment)) {
-                $files = [];
-                if ($request->hasfile('RegulatoryAffair_attachment')) {
-                    foreach ($request->file('RegulatoryAffair_attachment') as $file) {
-                        $name = $request->name . 'RegulatoryAffair_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
-                        $file->move('upload/', $name);
-                        $files[] = $name;
-                    }
-                }
-                $Cft->RegulatoryAffair_attachment = json_encode($files);
-            }
-            if (!empty ($request->Microbiology_attachment)) {
-                $files = [];
-                if ($request->hasfile('Microbiology_attachment')) {
-                    foreach ($request->file('Microbiology_attachment') as $file) {
-                        $name = $request->name . 'Microbiology_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
-                        $file->move('upload/', $name);
-                        $files[] = $name;
-                    }
-                }
-                $Cft->Microbiology_attachment = json_encode($files);
-            }
-            if (!empty ($request->ResearchDevelopment_attachment)) {
-                $files = [];
-                if ($request->hasfile('ResearchDevelopment_attachment')) {
-                    foreach ($request->file('ResearchDevelopment_attachment') as $file) {
-                        $name = $request->name . 'ResearchDevelopment_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
-                        $file->move('upload/', $name);
-                        $files[] = $name;
-                    }
-                }
-                $Cft->ResearchDevelopment_attachment = json_encode($files);
-            }
-            if (!empty ($request->Store_attachment)) {
-                $files = [];
-                if ($request->hasfile('Store_attachment')) {
-                    foreach ($request->file('Store_attachment') as $file) {
-                        $name = $request->name . 'Store_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
-                        $file->move('upload/', $name);
-                        $files[] = $name;
-                    }
-                }
-                $Cft->Store_attachment = json_encode($files);
-            }
-            if (!empty ($request->ProductionLiquid_attachment)) {
-                $files = [];
-                if ($request->hasfile('ProductionLiquid_attachment')) {
-                    foreach ($request->file('ProductionLiquid_attachment') as $file) {
-                        $name = $request->name . 'ProductionLiquid_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
-                        $file->move('upload/', $name);
-                        $files[] = $name;
-                    }
-                }
-                $Cft->ProductionLiquid_attachment = json_encode($files);
-            }
-
-
-        $Cft->save();
-        }
-
-
-        if ($openState->stage == 3 || $openState->stage == 4 ){
-            $Cft = CcCft::withoutTrashed()->where('cc_id', $id)->first();
-            if($Cft && $openState->stage == 4 ){
-                $Cft->Production_Review = $request->Production_Review == null ? $Cft->Production_Review : $request->Production_Review;
-                $Cft->Production_person = $request->Production_person == null ? $Cft->Production_person : $request->Production_Review;
-                $Cft->RA_Review = $request->RA_Review == null ? $Cft->RA_Review : $request->RA_Review;
-                $Cft->RA_Review = $request->RA_Review == null ? $Cft->RA_Review : $request->RA_Review;
-
-                $Cft->Production_Injection_Person = $request->Production_Injection_Person == null ? $Cft->RA_Review : $request->Production_Injection_Person;
-                $Cft->Production_Injection_Review = $request->Production_Injection_Review == null ? $Cft->RA_person : $request->Production_Injection_Review;
-
-                $Cft->Production_Table_Person = $request->Production_Table_Person == null ? $Cft->RA_Review : $request->Production_Table_Person;
-                $Cft->Production_Table_Review = $request->Production_Table_Review == null ? $Cft->RA_person : $request->Production_Table_Review;
-
-
-                /****************** ******************/
-
-                $Cft->ProductionInjection_person = $request->ProductionInjection_person == null ? $Cft->ProductionInjection_person : $request->ProductionInjection_person;
-                $Cft->ProductionInjection_Review = $request->ProductionInjection_Review == null ? $Cft->ProductionInjection_Review : $request->ProductionInjection_Review;
-                
-                $Cft->ProductionLiquid_Review = $request->ProductionLiquid_Review == null ? $Cft->ProductionLiquid_Review : $request->ProductionLiquid_Review;
-                $Cft->ProductionLiquid_person = $request->ProductionLiquid_person == null ? $Cft->ProductionLiquid_person : $request->ProductionLiquid_person;
-
-                $Cft->Store_person = $request->Store_person == null ? $Cft->Store_person : $request->Store_person;
-                $Cft->Store_Review = $request->Store_Review == null ? $Cft->Store_Review : $request->Store_Review;
-
-                $Cft->ResearchDevelopment_person = $request->ResearchDevelopment_person == null ? $Cft->ResearchDevelopment_person : $request->ResearchDevelopment_person;
-                $Cft->ResearchDevelopment_Review = $request->ResearchDevelopment_Review == null ? $Cft->ResearchDevelopment_Review : $request->ResearchDevelopment_Review;
-
-                $Cft->Microbiology_person = $request->Microbiology_person == null ? $Cft->Microbiology_person : $request->Microbiology_person;
-                $Cft->Microbiology_Review = $request->Microbiology_Review == null ? $Cft->Microbiology_Review : $request->Microbiology_Review;
-
-                $Cft->RegulatoryAffair_person = $request->RegulatoryAffair_person == null ? $Cft->RegulatoryAffair_person : $request->RegulatoryAffair_person;
-                $Cft->RegulatoryAffair_Review = $request->RegulatoryAffair_Review == null ? $Cft->RegulatoryAffair_Review : $request->RegulatoryAffair_Review;
-
-                $Cft->CorporateQualityAssurance_person = $request->CorporateQualityAssurance_person == null ? $Cft->CorporateQualityAssurance_person : $request->CorporateQualityAssurance_person;
-                $Cft->CorporateQualityAssurance_Review = $request->CorporateQualityAssurance_Review == null ? $Cft->CorporateQualityAssurance_Review : $request->CorporateQualityAssurance_Review;
-
-                $Cft->ContractGiver_person = $request->ContractGiver_person == null ? $Cft->ContractGiver_person : $request->ContractGiver_person;
-                $Cft->ContractGiver_Review = $request->ContractGiver_Review == null ? $Cft->ContractGiver_Review : $request->ContractGiver_Review;
-
-                $Cft->Warehouse_review = $request->Warehouse_review == null ? $Cft->Warehouse_review : $request->Warehouse_review;
-                $Cft->Warehouse_notification = $request->Warehouse_notification == null ? $Cft->Warehouse_notification : $request->Warehouse_notification;
-                $Cft->Quality_review = $request->Quality_review == null ? $Cft->Quality_review : $request->Quality_review;;
-                $Cft->Quality_Control_Person = $request->Quality_Control_Person == null ? $Cft->Quality_Control_Person : $request->Quality_Control_Person;
-                $Cft->Quality_Assurance_Review = $request->Quality_Assurance_Review == null ? $Cft->Quality_Assurance_Review : $request->Quality_Assurance_Review;
-                $Cft->QualityAssurance_person = $request->QualityAssurance_person == null ? $Cft->QualityAssurance_person : $request->QualityAssurance_person;
-
-                $Cft->Engineering_review = $request->Engineering_review == null ? $Cft->Engineering_review : $request->Engineering_review;
-                $Cft->Engineering_person = $request->Engineering_person == null ? $Cft->Engineering_person : $request->Engineering_person;
-                $Cft->Analytical_Development_review = $request->Analytical_Development_review == null ? $Cft->Analytical_Development_review : $request->Analytical_Development_review;
-                $Cft->Analytical_Development_person = $request->Analytical_Development_person == null ? $Cft->Analytical_Development_person : $request->Analytical_Development_person;
-                $Cft->Kilo_Lab_review = $request->Kilo_Lab_review == null ? $Cft->Kilo_Lab_review : $request->Kilo_Lab_review;
-                $Cft->Kilo_Lab_person = $request->Kilo_Lab_person == null ? $Cft->Kilo_Lab_person : $request->Kilo_Lab_person;
-                $Cft->Technology_transfer_review = $request->Technology_transfer_review == null ? $Cft->Technology_transfer_review : $request->Technology_transfer_review;
-                $Cft->Technology_transfer_person = $request->Technology_transfer_person == null ? $Cft->Technology_transfer_person : $request->Technology_transfer_person;
-                $Cft->Environment_Health_review = $request->Environment_Health_review == null ? $Cft->Environment_Health_review : $request->Environment_Health_review;
-                $Cft->Environment_Health_Safety_person = $request->Environment_Health_Safety_person == null ? $Cft->Environment_Health_Safety_person : $request->Environment_Health_Safety_person;
-                $Cft->Human_Resource_review = $request->Human_Resource_review == null ? $Cft->Human_Resource_review : $request->Human_Resource_review;
-                $Cft->Human_Resource_person = $request->Human_Resource_person == null ? $Cft->Human_Resource_person : $request->Human_Resource_person;
-                $Cft->Project_management_review = $request->Project_management_review == null ? $Cft->Project_management_review : $request->Project_management_review;
-                $Cft->Project_management_person = $request->Project_management_person == null ? $Cft->Project_management_person : $request->Project_management_person;
-                $Cft->Information_Technology_review = $request->Information_Technology_review == null ? $Cft->Information_Technology_review : $request->Information_Technology_review;
-                $Cft->Information_Technology_person = $request->Information_Technology_person == null ? $Cft->Information_Technology_person : $request->Information_Technology_person;
-                $Cft->Other1_review = $request->Other1_review  == null ? $Cft->Other1_review : $request->Other1_review;
-                $Cft->Other1_person = $request->Other1_person  == null ? $Cft->Other1_person : $request->Other1_person;
-                $Cft->Other1_Department_person = $request->Other1_Department_person  == null ? $Cft->Other1_Department_person : $request->Other1_Department_person;
-                $Cft->Other2_review = $request->Other2_review  == null ? $Cft->Other2_review : $request->Other2_review;
-                $Cft->Other2_person = $request->Other2_person  == null ? $Cft->Other2_person : $request->Other2_person;
-                $Cft->Other2_Department_person = $request->Other2_Department_person  == null ? $Cft->Other2_Department_person : $request->Other2_Department_person;
-                $Cft->Other3_review = $request->Other3_review  == null ? $Cft->Other3_review : $request->Other3_review;
-                $Cft->Other3_person = $request->Other3_person  == null ? $Cft->Other3_person : $request->Other3_person;
-                $Cft->Other3_Department_person = $request->Other3_Department_person  == null ? $Cft->Other3_Department_person : $request->Other3_Department_person;
-                $Cft->Other4_review = $request->Other4_review  == null ? $Cft->Other4_review : $request->Other4_review;
-                $Cft->Other4_person = $request->Other4_person  == null ? $Cft->Other4_person : $request->Other4_person;
-                $Cft->Other4_Department_person = $request->Other4_Department_person  == null ? $Cft->Other4_Department_person : $request->Other4_Department_person;
-                $Cft->Other5_review = $request->Other5_review  == null ? $Cft->Other5_review : $request->Other5_review;
-                $Cft->Other5_person = $request->Other5_person  == null ? $Cft->Other5_person : $request->Other5_person;
-                $Cft->Other5_Department_person = $request->Other5_Department_person  == null ? $Cft->Other5_Department_person : $request->Other5_Department_person;
-            }
-            else{
-                $Cft->Production_Review = $request->Production_Review;
-                $Cft->Production_person = $request->Production_person;
-                $Cft->Production_Review = $request->Production_Review;
-                $Cft->Production_person = $request->Production_person;
-                $Cft->Production_Table_Review = $request->Production_Table_Review;
-                $Cft->Production_Table_Person = $request->Production_Table_Person;
-
-                $Cft->Production_Injection_Review = $request->Production_Injection_Review;
-                $Cft->Production_Injection_Person = $request->Production_Injection_Person;
-
-                /******************  *******************/
-                $Cft->ProductionLiquid_person = $request->ProductionLiquid_person;
-                $Cft->ProductionLiquid_Review = $request->ProductionLiquid_Review;
-
-                $Cft->Store_person = $request->Store_person;
-                $Cft->Store_Review = $request->Store_Review;
-
-                $Cft->ResearchDevelopment_person = $request->ResearchDevelopment_person;
-                $Cft->ResearchDevelopment_Review = $request->ResearchDevelopment_Review;
-
-                $Cft->Microbiology_person = $request->Microbiology_person;
-                $Cft->Microbiology_Review = $request->Microbiology_Review;
-
-                $Cft->RegulatoryAffair_person = $request->RegulatoryAffair_person;
-                $Cft->RegulatoryAffair_Review = $request->RegulatoryAffair_Review;
-
-                $Cft->CorporateQualityAssurance_person = $request->CorporateQualityAssurance_person;
-                $Cft->CorporateQualityAssurance_Review = $request->CorporateQualityAssurance_Review;
-
-                $Cft->ContractGiver_person = $request->ContractGiver_person;
-                $Cft->ContractGiver_Review = $request->ContractGiver_Review;
-
-                $Cft->Warehouse_review = $request->Warehouse_review;
-                $Cft->Warehouse_notification = $request->Warehouse_notification;
-                $Cft->Quality_review = $request->Quality_review;
-                $Cft->Quality_Control_Person = $request->Quality_Control_Person;
-                $Cft->Quality_Assurance_Review = $request->Quality_Assurance_Review;
-                $Cft->QualityAssurance_person = $request->QualityAssurance_person;
-                $Cft->Engineering_review = $request->Engineering_review;
-                $Cft->Engineering_person = $request->Engineering_person;
-                $Cft->Analytical_Development_review = $request->Analytical_Development_review;
-                $Cft->Analytical_Development_person = $request->Analytical_Development_person;
-                $Cft->Kilo_Lab_review = $request->Kilo_Lab_review;
-                $Cft->Kilo_Lab_person = $request->Kilo_Lab_person;
-                $Cft->Technology_transfer_review = $request->Technology_transfer_review;
-                $Cft->Technology_transfer_person = $request->Technology_transfer_person;
-                $Cft->Environment_Health_review = $request->Environment_Health_review;
-                $Cft->Environment_Health_Safety_person = $request->Environment_Health_Safety_person;
-                $Cft->Human_Resource_review = $request->Human_Resource_review;
-                $Cft->Human_Resource_person = $request->Human_Resource_person;
-                $Cft->Project_management_review = $request->Project_management_review;
-                $Cft->Project_management_person = $request->Project_management_person;
-                $Cft->Information_Technology_review = $request->Information_Technology_review;
-                $Cft->Information_Technology_person = $request->Information_Technology_person;
-                $Cft->Other1_review = $request->Other1_review;
-                $Cft->Other1_person = $request->Other1_person;
-                $Cft->Other1_Department_person = $request->Other1_Department_person;
-                $Cft->Other2_review = $request->Other2_review;
-                $Cft->Other2_person = $request->Other2_person;
-                $Cft->Other2_Department_person = $request->Other2_Department_person;
-                $Cft->Other3_review = $request->Other3_review;
-                $Cft->Other3_person = $request->Other3_person;
-                $Cft->Other3_Department_person = $request->Other3_Department_person;
-                $Cft->Other4_review = $request->Other4_review;
-                $Cft->Other4_person = $request->Other4_person;
-                $Cft->Other4_Department_person = $request->Other4_Department_person;
-                $Cft->Other5_review = $request->Other5_review;
-                $Cft->Other5_person = $request->Other5_person;
-                $Cft->Other5_Department_person = $request->Other5_Department_person;
-            }
-            $Cft->Production_assessment = $request->Production_assessment;
-            $Cft->Production_feedback = $request->Production_feedback;
-            $Cft->RA_assessment = $request->RA_assessment;
-            $Cft->RA_feedback = $request->RA_feedback;
-
-            $Cft->Production_Injection_Assessment = $request->Production_Injection_Assessment;
-            $Cft->Production_Injection_Feedback = $request->Production_Injection_Feedback;
-
-            $Cft->Production_Table_Assessment = $request->Production_Table_Assessment;
-            $Cft->Production_Table_Feedback = $request->Production_Table_Feedback;
-
-            $Cft->ProductionLiquid_feedback = $request->ProductionLiquid_feedback;
-            $Cft->ProductionLiquid_assessment = $request->ProductionLiquid_assessment;
-
-            $Cft->Store_feedback = $request->Store_feedback;
-            $Cft->Store_assessment = $request->Store_assessment;
-
-            $Cft->ResearchDevelopment_feedback = $request->ResearchDevelopment_feedback;
-            $Cft->ResearchDevelopment_assessment = $request->ResearchDevelopment_assessment;
-
-            $Cft->Microbiology_feedback = $request->Microbiology_feedback;
-            $Cft->Microbiology_assessment = $request->Microbiology_assessment;
-
-            $Cft->RegulatoryAffair_feedback = $request->RegulatoryAffair_feedback;
-            $Cft->RegulatoryAffair_assessment = $request->RegulatoryAffair_assessment;
-
-            $Cft->CorporateQualityAssurance_feedback = $request->CorporateQualityAssurance_feedback;
-            $Cft->CorporateQualityAssurance_assessment = $request->CorporateQualityAssurance_assessment;
-
-            $Cft->ContractGiver_feedback = $request->ContractGiver_feedback;
-            $Cft->ContractGiver_assessment = $request->ContractGiver_assessment;
-
             
-            $Cft->Warehouse_assessment = $request->Warehouse_assessment;
-            $Cft->Warehouse_feedback = $request->Warehouse_feedback;
-            $Cft->Quality_Control_assessment = $request->Quality_Control_assessment;
-            $Cft->Quality_Control_feedback = $request->Quality_Control_feedback;
             $Cft->QualityAssurance_assessment = $request->QualityAssurance_assessment;
             $Cft->QualityAssurance_feedback = $request->QualityAssurance_feedback;
+
             $Cft->Engineering_assessment = $request->Engineering_assessment;
             $Cft->Engineering_feedback = $request->Engineering_feedback;
-            $Cft->Analytical_Development_assessment = $request->Analytical_Development_assessment;
-            $Cft->Analytical_Development_feedback = $request->Analytical_Development_feedback;
-            $Cft->Kilo_Lab_assessment = $request->Kilo_Lab_assessment;
-            $Cft->Kilo_Lab_feedback = $request->Kilo_Lab_feedback;
-            $Cft->Technology_transfer_assessment = $request->Technology_transfer_assessment;
-            $Cft->Technology_transfer_feedback = $request->Technology_transfer_feedback;
+            
             $Cft->Health_Safety_assessment = $request->Health_Safety_assessment;
             $Cft->Health_Safety_feedback = $request->Health_Safety_feedback;
+
             $Cft->Human_Resource_assessment = $request->Human_Resource_assessment;
             $Cft->Human_Resource_feedback = $request->Human_Resource_feedback;
+
             $Cft->Information_Technology_assessment = $request->Information_Technology_assessment;
             $Cft->Information_Technology_feedback = $request->Information_Technology_feedback;
-            $Cft->Project_management_assessment = $request->Project_management_assessment;
-            $Cft->Project_management_feedback = $request->Project_management_feedback;
+            
             $Cft->Other1_assessment = $request->Other1_assessment;
             $Cft->Other1_feedback = $request->Other1_feedback;
+
             $Cft->Other2_Assessment = $request->Other2_Assessment;
             $Cft->Other2_feedback = $request->Other2_feedback;
+
             $Cft->Other3_Assessment = $request->Other3_Assessment;
             $Cft->Other3_feedback = $request->Other3_feedback;
+
             $Cft->Other4_Assessment = $request->Other4_Assessment;
             $Cft->Other4_feedback = $request->Other4_feedback;
+
             $Cft->Other5_Assessment = $request->Other5_Assessment;
             $Cft->Other5_feedback = $request->Other5_feedback;
 
 
-            if (!empty ($request->production_attachment)) {
+            if (!empty ($request->RA_attachment)) {
                 $files = [];
-                if ($request->hasfile('production_attachment')) {
-                    foreach ($request->file('production_attachment') as $file) {
-                        $name = $request->name . 'production_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                if ($request->hasfile('RA_attachment')) {
+                    foreach ($request->file('RA_attachment') as $file) {
+                        $name = $request->name . 'RA_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
                         $file->move('upload/', $name);
                         $files[] = $name;
                     }
                 }
-
-
-                $Cft->production_attachment = json_encode($files);
-            }
-            if (!empty ($request->Warehouse_attachment)) {
-                $files = [];
-                if ($request->hasfile('Warehouse_attachment')) {
-                    foreach ($request->file('Warehouse_attachment') as $file) {
-                        $name = $request->name . 'Warehouse_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
-                        $file->move('upload/', $name);
-                        $files[] = $name;
-                    }
-                }
-
-
-                $Cft->Warehouse_attachment = json_encode($files);
-            }
-            if (!empty ($request->Quality_Control_attachment)) {
-                $files = [];
-                if ($request->hasfile('Quality_Control_attachment')) {
-                    foreach ($request->file('Quality_Control_attachment') as $file) {
-                        $name = $request->name . 'Quality_Control_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
-                        $file->move('upload/', $name);
-                        $files[] = $name;
-                    }
-                }
-
-
-                $Cft->Quality_Control_attachment = json_encode($files);
+                $Cft->RA_attachment = json_encode($files);
             }
             if (!empty ($request->Quality_Assurance_attachment)) {
                 $files = [];
@@ -3448,9 +2316,73 @@ class CCController extends Controller
                         $files[] = $name;
                     }
                 }
-
-
                 $Cft->Quality_Assurance_attachment = json_encode($files);
+            }
+            if (!empty ($request->Production_Table_Attachment)) {
+                $files = [];
+                if ($request->hasfile('Production_Table_Attachment')) {
+                    foreach ($request->file('Production_Table_Attachment') as $file) {
+                        $name = $request->name . 'Production_Table_Attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                        $file->move('upload/', $name);
+                        $files[] = $name;
+                    }
+                }
+                $Cft->Production_Table_Attachment = json_encode($files);
+            }
+            if (!empty ($request->ProductionLiquid_attachment)) {
+                $files = [];
+                if ($request->hasfile('ProductionLiquid_attachment')) {
+                    foreach ($request->file('ProductionLiquid_attachment') as $file) {
+                        $name = $request->name . 'ProductionLiquid_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                        $file->move('upload/', $name);
+                        $files[] = $name;
+                    }
+                }
+                $Cft->ProductionLiquid_attachment = json_encode($files);
+            }
+            if (!empty ($request->Production_Injection_Attachment)) {
+                $files = [];
+                if ($request->hasfile('Production_Injection_Attachment')) {
+                    foreach ($request->file('Production_Injection_Attachment') as $file) {
+                        $name = $request->name . 'Production_Injection_Attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                        $file->move('upload/', $name);
+                        $files[] = $name;
+                    }
+                }
+                $Cft->Production_Injection_Attachment = json_encode($files);
+            }            
+            if (!empty ($request->Store_attachment)) {
+                $files = [];
+                if ($request->hasfile('Store_attachment')) {
+                    foreach ($request->file('Store_attachment') as $file) {
+                        $name = $request->name . 'Store_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                        $file->move('upload/', $name);
+                        $files[] = $name;
+                    }
+                }
+                $Cft->Store_attachment = json_encode($files);
+            }
+            if (!empty ($request->Quality_Control_attachment)) {
+                $files = [];
+                if ($request->hasfile('Quality_Control_attachment')) {
+                    foreach ($request->file('Quality_Control_attachment') as $file) {
+                        $name = $request->name . 'Quality_Control_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                        $file->move('upload/', $name);
+                        $files[] = $name;
+                    }
+                }
+                $Cft->Quality_Control_attachment = json_encode($files);
+            }
+            if (!empty ($request->ResearchDevelopment_attachment)) {
+                $files = [];
+                if ($request->hasfile('ResearchDevelopment_attachment')) {
+                    foreach ($request->file('ResearchDevelopment_attachment') as $file) {
+                        $name = $request->name . 'ResearchDevelopment_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                        $file->move('upload/', $name);
+                        $files[] = $name;
+                    }
+                }
+                $Cft->ResearchDevelopment_attachment = json_encode($files);
             }
             if (!empty ($request->Engineering_attachment)) {
                 $files = [];
@@ -3461,61 +2393,7 @@ class CCController extends Controller
                         $files[] = $name;
                     }
                 }
-
-
                 $Cft->Engineering_attachment = json_encode($files);
-            }
-            if (!empty ($request->Analytical_Development_attachment)) {
-                $files = [];
-                if ($request->hasfile('Analytical_Development_attachment')) {
-                    foreach ($request->file('Analytical_Development_attachment') as $file) {
-                        $name = $request->name . 'Analytical_Development_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
-                        $file->move('upload/', $name);
-                        $files[] = $name;
-                    }
-                }
-
-
-                $Cft->Analytical_Development_attachment = json_encode($files);
-            }
-            if (!empty ($request->Kilo_Lab_attachment)) {
-                $files = [];
-                if ($request->hasfile('Kilo_Lab_attachment')) {
-                    foreach ($request->file('Kilo_Lab_attachment') as $file) {
-                        $name = $request->name . 'Kilo_Lab_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
-                        $file->move('upload/', $name);
-                        $files[] = $name;
-                    }
-                }
-
-
-                $Cft->Kilo_Lab_attachment = json_encode($files);
-            }
-            if (!empty ($request->Technology_transfer_attachment)) {
-                $files = [];
-                if ($request->hasfile('Technology_transfer_attachment')) {
-                    foreach ($request->file('Technology_transfer_attachment') as $file) {
-                        $name = $request->name . 'Technology_transfer_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
-                        $file->move('upload/', $name);
-                        $files[] = $name;
-                    }
-                }
-
-
-                $Cft->Technology_transfer_attachment = json_encode($files);
-            }
-            if (!empty ($request->Environment_Health_Safety_attachment)) {
-                $files = [];
-                if ($request->hasfile('Environment_Health_Safety_attachment')) {
-                    foreach ($request->file('Environment_Health_Safety_attachment') as $file) {
-                        $name = $request->name . 'Environment_Health_Safety_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
-                        $file->move('upload/', $name);
-                        $files[] = $name;
-                    }
-                }
-
-
-                $Cft->Environment_Health_Safety_attachment = json_encode($files);
             }
             if (!empty ($request->Human_Resource_attachment)) {
                 $files = [];
@@ -3526,10 +2404,52 @@ class CCController extends Controller
                         $files[] = $name;
                     }
                 }
-
-
                 $Cft->Human_Resource_attachment = json_encode($files);
             }
+            if (!empty ($request->Microbiology_attachment)) {
+                $files = [];
+                if ($request->hasfile('Microbiology_attachment')) {
+                    foreach ($request->file('Microbiology_attachment') as $file) {
+                        $name = $request->name . 'Microbiology_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                        $file->move('upload/', $name);
+                        $files[] = $name;
+                    }
+                }
+                $Cft->Microbiology_attachment = json_encode($files);
+            }
+            if (!empty ($request->RegulatoryAffair_attachment)) {
+                $files = [];
+                if ($request->hasfile('RegulatoryAffair_attachment')) {
+                    foreach ($request->file('RegulatoryAffair_attachment') as $file) {
+                        $name = $request->name . 'RegulatoryAffair_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                        $file->move('upload/', $name);
+                        $files[] = $name;
+                    }
+                }
+                $Cft->RegulatoryAffair_attachment = json_encode($files);
+            }
+            if (!empty ($request->CorporateQualityAssurance_attachment)) {
+                $files = [];
+                if ($request->hasfile('CorporateQualityAssurance_attachment')) {
+                    foreach ($request->file('CorporateQualityAssurance_attachment') as $file) {
+                        $name = $request->name . 'CorporateQualityAssurance_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                        $file->move('upload/', $name);
+                        $files[] = $name;
+                    }
+                }
+                $Cft->CorporateQualityAssurance_attachment = json_encode($files);
+            }
+            if (!empty ($request->Environment_Health_Safety_attachment)) {
+                $files = [];
+                if ($request->hasfile('Environment_Health_Safety_attachment')) {
+                    foreach ($request->file('Environment_Health_Safety_attachment') as $file) {
+                        $name = $request->name . 'Environment_Health_Safety_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                        $file->move('upload/', $name);
+                        $files[] = $name;
+                    }
+                }
+                $Cft->Environment_Health_Safety_attachment = json_encode($files);
+            }            
             if (!empty ($request->Information_Technology_attachment)) {
                 $files = [];
                 if ($request->hasfile('Information_Technology_attachment')) {
@@ -3539,22 +2459,18 @@ class CCController extends Controller
                         $files[] = $name;
                     }
                 }
-
-
                 $Cft->Information_Technology_attachment = json_encode($files);
             }
-            if (!empty ($request->Project_management_attachment)) {
+            if (!empty ($request->ContractGiver_attachment)) {
                 $files = [];
-                if ($request->hasfile('Project_management_attachment')) {
-                    foreach ($request->file('Project_management_attachment') as $file) {
-                        $name = $request->name . 'Project_management_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                if ($request->hasfile('ContractGiver_attachment')) {
+                    foreach ($request->file('ContractGiver_attachment') as $file) {
+                        $name = $request->name . 'ContractGiver_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
                         $file->move('upload/', $name);
                         $files[] = $name;
                     }
                 }
-
-
-                $Cft->Project_management_attachment = json_encode($files);
+                $Cft->ContractGiver_attachment = json_encode($files);
             }
             if (!empty ($request->Other1_attachment)) {
                 $files = [];
@@ -3565,8 +2481,6 @@ class CCController extends Controller
                         $files[] = $name;
                     }
                 }
-
-
                 $Cft->Other1_attachment = json_encode($files);
             }
             if (!empty ($request->Other2_attachment)) {
@@ -3578,8 +2492,6 @@ class CCController extends Controller
                         $files[] = $name;
                     }
                 }
-
-
                 $Cft->Other2_attachment = json_encode($files);
             }
             if (!empty ($request->Other3_attachment)) {
@@ -3614,54 +2526,292 @@ class CCController extends Controller
                         $files[] = $name;
                     }
                 }
-
-
                 $Cft->Other5_attachment = json_encode($files);
             }
+            $Cft->save();
+        }
 
-            if (!empty ($request->ContractGiver_attachment)) {
-                $files = [];
-                if ($request->hasfile('ContractGiver_attachment')) {
-                    foreach ($request->file('ContractGiver_attachment') as $file) {
-                        $name = $request->name . 'ContractGiver_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
-                        $file->move('upload/', $name);
-                        $files[] = $name;
-                    }
-                }
-                $Cft->ContractGiver_attachment = json_encode($files);
+
+        if ($openState->stage == 3 || $openState->stage == 4 ){
+            $Cft = CcCft::withoutTrashed()->where('cc_id', $id)->first();
+            if($Cft && $openState->stage == 4 ){                
+                $Cft->RA_Review = $request->RA_Review == null ? $Cft->RA_Review : $request->RA_Review;
+                $Cft->RA_Review = $request->RA_Review == null ? $Cft->RA_Review : $request->RA_Review;
+
+                $Cft->Production_Injection_Person = $request->Production_Injection_Person == null ? $Cft->RA_Review : $request->Production_Injection_Person;
+                $Cft->Production_Injection_Review = $request->Production_Injection_Review == null ? $Cft->RA_person : $request->Production_Injection_Review;
+
+                $Cft->Production_Table_Person = $request->Production_Table_Person == null ? $Cft->RA_Review : $request->Production_Table_Person;
+                $Cft->Production_Table_Review = $request->Production_Table_Review == null ? $Cft->RA_person : $request->Production_Table_Review;
+                
+                $Cft->ProductionLiquid_Review = $request->ProductionLiquid_Review == null ? $Cft->ProductionLiquid_Review : $request->ProductionLiquid_Review;
+                $Cft->ProductionLiquid_person = $request->ProductionLiquid_person == null ? $Cft->ProductionLiquid_person : $request->ProductionLiquid_person;
+
+                $Cft->Store_person = $request->Store_person == null ? $Cft->Store_person : $request->Store_person;
+                $Cft->Store_Review = $request->Store_Review == null ? $Cft->Store_Review : $request->Store_Review;
+
+                $Cft->ResearchDevelopment_person = $request->ResearchDevelopment_person == null ? $Cft->ResearchDevelopment_person : $request->ResearchDevelopment_person;
+                $Cft->ResearchDevelopment_Review = $request->ResearchDevelopment_Review == null ? $Cft->ResearchDevelopment_Review : $request->ResearchDevelopment_Review;
+
+                $Cft->Microbiology_person = $request->Microbiology_person == null ? $Cft->Microbiology_person : $request->Microbiology_person;
+                $Cft->Microbiology_Review = $request->Microbiology_Review == null ? $Cft->Microbiology_Review : $request->Microbiology_Review;
+
+                $Cft->RegulatoryAffair_person = $request->RegulatoryAffair_person == null ? $Cft->RegulatoryAffair_person : $request->RegulatoryAffair_person;
+                $Cft->RegulatoryAffair_Review = $request->RegulatoryAffair_Review == null ? $Cft->RegulatoryAffair_Review : $request->RegulatoryAffair_Review;
+
+                $Cft->CorporateQualityAssurance_person = $request->CorporateQualityAssurance_person == null ? $Cft->CorporateQualityAssurance_person : $request->CorporateQualityAssurance_person;
+                $Cft->CorporateQualityAssurance_Review = $request->CorporateQualityAssurance_Review == null ? $Cft->CorporateQualityAssurance_Review : $request->CorporateQualityAssurance_Review;
+
+                $Cft->ContractGiver_person = $request->ContractGiver_person == null ? $Cft->ContractGiver_person : $request->ContractGiver_person;
+                $Cft->ContractGiver_Review = $request->ContractGiver_Review == null ? $Cft->ContractGiver_Review : $request->ContractGiver_Review;
+
+                $Cft->Quality_review = $request->Quality_review == null ? $Cft->Quality_review : $request->Quality_review;;
+                $Cft->Quality_Control_Person = $request->Quality_Control_Person == null ? $Cft->Quality_Control_Person : $request->Quality_Control_Person;
+
+                $Cft->Quality_Assurance_Review = $request->Quality_Assurance_Review == null ? $Cft->Quality_Assurance_Review : $request->Quality_Assurance_Review;
+                $Cft->QualityAssurance_person = $request->QualityAssurance_person == null ? $Cft->QualityAssurance_person : $request->QualityAssurance_person;
+
+                $Cft->Engineering_review = $request->Engineering_review == null ? $Cft->Engineering_review : $request->Engineering_review;
+                $Cft->Engineering_person = $request->Engineering_person == null ? $Cft->Engineering_person : $request->Engineering_person;
+                
+                $Cft->Environment_Health_review = $request->Environment_Health_review == null ? $Cft->Environment_Health_review : $request->Environment_Health_review;
+                $Cft->Environment_Health_Safety_person = $request->Environment_Health_Safety_person == null ? $Cft->Environment_Health_Safety_person : $request->Environment_Health_Safety_person;
+
+                $Cft->Human_Resource_review = $request->Human_Resource_review == null ? $Cft->Human_Resource_review : $request->Human_Resource_review;
+                $Cft->Human_Resource_person = $request->Human_Resource_person == null ? $Cft->Human_Resource_person : $request->Human_Resource_person;
+                
+                $Cft->Information_Technology_review = $request->Information_Technology_review == null ? $Cft->Information_Technology_review : $request->Information_Technology_review;
+                $Cft->Information_Technology_person = $request->Information_Technology_person == null ? $Cft->Information_Technology_person : $request->Information_Technology_person;
+
+                $Cft->Other1_review = $request->Other1_review  == null ? $Cft->Other1_review : $request->Other1_review;
+                $Cft->Other1_person = $request->Other1_person  == null ? $Cft->Other1_person : $request->Other1_person;
+                $Cft->Other1_Department_person = $request->Other1_Department_person  == null ? $Cft->Other1_Department_person : $request->Other1_Department_person;
+                
+                $Cft->Other2_review = $request->Other2_review  == null ? $Cft->Other2_review : $request->Other2_review;
+                $Cft->Other2_person = $request->Other2_person  == null ? $Cft->Other2_person : $request->Other2_person;
+                $Cft->Other2_Department_person = $request->Other2_Department_person  == null ? $Cft->Other2_Department_person : $request->Other2_Department_person;
+
+                $Cft->Other3_review = $request->Other3_review  == null ? $Cft->Other3_review : $request->Other3_review;
+                $Cft->Other3_person = $request->Other3_person  == null ? $Cft->Other3_person : $request->Other3_person;
+                $Cft->Other3_Department_person = $request->Other3_Department_person  == null ? $Cft->Other3_Department_person : $request->Other3_Department_person;
+
+                $Cft->Other4_review = $request->Other4_review  == null ? $Cft->Other4_review : $request->Other4_review;
+                $Cft->Other4_person = $request->Other4_person  == null ? $Cft->Other4_person : $request->Other4_person;
+                $Cft->Other4_Department_person = $request->Other4_Department_person  == null ? $Cft->Other4_Department_person : $request->Other4_Department_person;
+
+                $Cft->Other5_review = $request->Other5_review  == null ? $Cft->Other5_review : $request->Other5_review;
+                $Cft->Other5_person = $request->Other5_person  == null ? $Cft->Other5_person : $request->Other5_person;
+                $Cft->Other5_Department_person = $request->Other5_Department_person  == null ? $Cft->Other5_Department_person : $request->Other5_Department_person;
             }
-            if (!empty ($request->CorporateQualityAssurance_attachment)) {
-                $files = [];
-                if ($request->hasfile('CorporateQualityAssurance_attachment')) {
-                    foreach ($request->file('CorporateQualityAssurance_attachment') as $file) {
-                        $name = $request->name . 'CorporateQualityAssurance_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
-                        $file->move('upload/', $name);
-                        $files[] = $name;
-                    }
-                }
-                $Cft->CorporateQualityAssurance_attachment = json_encode($files);
+            else{
+                $Cft->RA_Review = $request->RA_Review;
+                $Cft->RA_person = $request->RA_person;
+
+                $Cft->Production_Table_Review = $request->Production_Table_Review;
+                $Cft->Production_Table_Person = $request->Production_Table_Person;
+
+                $Cft->Production_Injection_Review = $request->Production_Injection_Review;
+                $Cft->Production_Injection_Person = $request->Production_Injection_Person;
+
+                $Cft->ProductionLiquid_person = $request->ProductionLiquid_person;
+                $Cft->ProductionLiquid_Review = $request->ProductionLiquid_Review;
+
+                $Cft->Store_person = $request->Store_person;
+                $Cft->Store_Review = $request->Store_Review;
+
+                $Cft->ResearchDevelopment_person = $request->ResearchDevelopment_person;
+                $Cft->ResearchDevelopment_Review = $request->ResearchDevelopment_Review;
+
+                $Cft->Microbiology_person = $request->Microbiology_person;
+                $Cft->Microbiology_Review = $request->Microbiology_Review;
+
+                $Cft->RegulatoryAffair_person = $request->RegulatoryAffair_person;
+                $Cft->RegulatoryAffair_Review = $request->RegulatoryAffair_Review;
+
+                $Cft->CorporateQualityAssurance_person = $request->CorporateQualityAssurance_person;
+                $Cft->CorporateQualityAssurance_Review = $request->CorporateQualityAssurance_Review;
+
+                $Cft->ContractGiver_person = $request->ContractGiver_person;
+                $Cft->ContractGiver_Review = $request->ContractGiver_Review;
+
+                $Cft->Quality_review = $request->Quality_review;
+                $Cft->Quality_Control_Person = $request->Quality_Control_Person;
+
+                $Cft->Quality_Assurance_Review = $request->Quality_Assurance_Review;
+                $Cft->QualityAssurance_person = $request->QualityAssurance_person;
+
+                $Cft->Engineering_review = $request->Engineering_review;
+                $Cft->Engineering_person = $request->Engineering_person;
+
+                $Cft->Environment_Health_review = $request->Environment_Health_review;
+                $Cft->Environment_Health_Safety_person = $request->Environment_Health_Safety_person;
+
+                $Cft->Human_Resource_review = $request->Human_Resource_review;
+                $Cft->Human_Resource_person = $request->Human_Resource_person;
+
+                $Cft->Information_Technology_review = $request->Information_Technology_review;
+                $Cft->Information_Technology_person = $request->Information_Technology_person;
+
+                $Cft->Other1_review = $request->Other1_review;
+                $Cft->Other1_person = $request->Other1_person;
+                $Cft->Other1_Department_person = $request->Other1_Department_person;
+
+                $Cft->Other2_review = $request->Other2_review;
+                $Cft->Other2_person = $request->Other2_person;
+                $Cft->Other2_Department_person = $request->Other2_Department_person;
+
+                $Cft->Other3_review = $request->Other3_review;
+                $Cft->Other3_person = $request->Other3_person;
+                $Cft->Other3_Department_person = $request->Other3_Department_person;
+
+                $Cft->Other4_review = $request->Other4_review;
+                $Cft->Other4_person = $request->Other4_person;
+                $Cft->Other4_Department_person = $request->Other4_Department_person;
+
+                $Cft->Other5_review = $request->Other5_review;
+                $Cft->Other5_person = $request->Other5_person;
+                $Cft->Other5_Department_person = $request->Other5_Department_person;
             }
-            if (!empty ($request->RegulatoryAffair_attachment)) {
+            $Cft->RA_assessment = $request->RA_assessment;
+            $Cft->RA_feedback = $request->RA_feedback;
+
+            $Cft->Production_Injection_Assessment = $request->Production_Injection_Assessment;
+            $Cft->Production_Injection_Feedback = $request->Production_Injection_Feedback;
+
+            $Cft->Production_Table_Assessment = $request->Production_Table_Assessment;
+            $Cft->Production_Table_Feedback = $request->Production_Table_Feedback;
+
+            $Cft->ProductionLiquid_feedback = $request->ProductionLiquid_feedback;
+            $Cft->ProductionLiquid_assessment = $request->ProductionLiquid_assessment;
+
+            $Cft->Store_feedback = $request->Store_feedback;
+            $Cft->Store_assessment = $request->Store_assessment;
+
+            $Cft->ResearchDevelopment_feedback = $request->ResearchDevelopment_feedback;
+            $Cft->ResearchDevelopment_assessment = $request->ResearchDevelopment_assessment;
+
+            $Cft->Microbiology_feedback = $request->Microbiology_feedback;
+            $Cft->Microbiology_assessment = $request->Microbiology_assessment;
+
+            $Cft->RegulatoryAffair_feedback = $request->RegulatoryAffair_feedback;
+            $Cft->RegulatoryAffair_assessment = $request->RegulatoryAffair_assessment;
+
+            $Cft->CorporateQualityAssurance_feedback = $request->CorporateQualityAssurance_feedback;
+            $Cft->CorporateQualityAssurance_assessment = $request->CorporateQualityAssurance_assessment;
+
+            $Cft->ContractGiver_feedback = $request->ContractGiver_feedback;
+            $Cft->ContractGiver_assessment = $request->ContractGiver_assessment;
+
+            $Cft->Quality_Control_assessment = $request->Quality_Control_assessment;
+            $Cft->Quality_Control_feedback = $request->Quality_Control_feedback;
+
+            $Cft->QualityAssurance_assessment = $request->QualityAssurance_assessment;
+            $Cft->QualityAssurance_feedback = $request->QualityAssurance_feedback;
+
+            $Cft->Engineering_assessment = $request->Engineering_assessment;
+            $Cft->Engineering_feedback = $request->Engineering_feedback;
+           
+            $Cft->Health_Safety_assessment = $request->Health_Safety_assessment;
+            $Cft->Health_Safety_feedback = $request->Health_Safety_feedback;
+
+            $Cft->Human_Resource_assessment = $request->Human_Resource_assessment;
+            $Cft->Human_Resource_feedback = $request->Human_Resource_feedback;
+
+            $Cft->Information_Technology_assessment = $request->Information_Technology_assessment;
+            $Cft->Information_Technology_feedback = $request->Information_Technology_feedback;
+
+            $Cft->Other1_assessment = $request->Other1_assessment;
+            $Cft->Other1_feedback = $request->Other1_feedback;
+
+            $Cft->Other2_Assessment = $request->Other2_Assessment;
+            $Cft->Other2_feedback = $request->Other2_feedback;
+
+            $Cft->Other3_Assessment = $request->Other3_Assessment;
+            $Cft->Other3_feedback = $request->Other3_feedback;
+
+            $Cft->Other4_Assessment = $request->Other4_Assessment;
+            $Cft->Other4_feedback = $request->Other4_feedback;
+
+            $Cft->Other5_Assessment = $request->Other5_Assessment;
+            $Cft->Other5_feedback = $request->Other5_feedback;
+
+
+            if (!empty ($request->RA_attachment)) {
                 $files = [];
-                if ($request->hasfile('RegulatoryAffair_attachment')) {
-                    foreach ($request->file('RegulatoryAffair_attachment') as $file) {
-                        $name = $request->name . 'RegulatoryAffair_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                if ($request->hasfile('RA_attachment')) {
+                    foreach ($request->file('RA_attachment') as $file) {
+                        $name = $request->name . 'RA_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
                         $file->move('upload/', $name);
                         $files[] = $name;
                     }
                 }
-                $Cft->RegulatoryAffair_attachment = json_encode($files);
+                $Cft->RA_attachment = json_encode($files);
             }
-            if (!empty ($request->Microbiology_attachment)) {
+            if (!empty ($request->Quality_Assurance_attachment)) {
                 $files = [];
-                if ($request->hasfile('Microbiology_attachment')) {
-                    foreach ($request->file('Microbiology_attachment') as $file) {
-                        $name = $request->name . 'Microbiology_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                if ($request->hasfile('Quality_Assurance_attachment')) {
+                    foreach ($request->file('Quality_Assurance_attachment') as $file) {
+                        $name = $request->name . 'Quality_Assurance_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
                         $file->move('upload/', $name);
                         $files[] = $name;
                     }
                 }
-                $Cft->Microbiology_attachment = json_encode($files);
+                $Cft->Quality_Assurance_attachment = json_encode($files);
+            }
+            if (!empty ($request->Production_Table_Attachment)) {
+                $files = [];
+                if ($request->hasfile('Production_Table_Attachment')) {
+                    foreach ($request->file('Production_Table_Attachment') as $file) {
+                        $name = $request->name . 'Production_Table_Attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                        $file->move('upload/', $name);
+                        $files[] = $name;
+                    }
+                }
+                $Cft->Production_Table_Attachment = json_encode($files);
+            }
+            if (!empty ($request->ProductionLiquid_attachment)) {
+                $files = [];
+                if ($request->hasfile('ProductionLiquid_attachment')) {
+                    foreach ($request->file('ProductionLiquid_attachment') as $file) {
+                        $name = $request->name . 'ProductionLiquid_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                        $file->move('upload/', $name);
+                        $files[] = $name;
+                    }
+                }
+                $Cft->ProductionLiquid_attachment = json_encode($files);
+            }
+            if (!empty ($request->Production_Injection_Attachment)) {
+                $files = [];
+                if ($request->hasfile('Production_Injection_Attachment')) {
+                    foreach ($request->file('Production_Injection_Attachment') as $file) {
+                        $name = $request->name . 'Production_Injection_Attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                        $file->move('upload/', $name);
+                        $files[] = $name;
+                    }
+                }
+                $Cft->Production_Injection_Attachment = json_encode($files);
+            }            
+            if (!empty ($request->Store_attachment)) {
+                $files = [];
+                if ($request->hasfile('Store_attachment')) {
+                    foreach ($request->file('Store_attachment') as $file) {
+                        $name = $request->name . 'Store_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                        $file->move('upload/', $name);
+                        $files[] = $name;
+                    }
+                }
+                $Cft->Store_attachment = json_encode($files);
+            }
+            if (!empty ($request->Quality_Control_attachment)) {
+                $files = [];
+                if ($request->hasfile('Quality_Control_attachment')) {
+                    foreach ($request->file('Quality_Control_attachment') as $file) {
+                        $name = $request->name . 'Quality_Control_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                        $file->move('upload/', $name);
+                        $files[] = $name;
+                    }
+                }
+                $Cft->Quality_Control_attachment = json_encode($files);
             }
             if (!empty ($request->ResearchDevelopment_attachment)) {
                 $files = [];
@@ -3674,16 +2824,402 @@ class CCController extends Controller
                 }
                 $Cft->ResearchDevelopment_attachment = json_encode($files);
             }
-            if (!empty ($request->Store_attachment)) {
+            if (!empty ($request->Engineering_attachment)) {
                 $files = [];
-                if ($request->hasfile('Store_attachment')) {
-                    foreach ($request->file('Store_attachment') as $file) {
-                        $name = $request->name . 'Store_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                if ($request->hasfile('Engineering_attachment')) {
+                    foreach ($request->file('Engineering_attachment') as $file) {
+                        $name = $request->name . 'Engineering_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
                         $file->move('upload/', $name);
                         $files[] = $name;
                     }
                 }
-                $Cft->Store_attachment = json_encode($files);
+                $Cft->Engineering_attachment = json_encode($files);
+            }
+            if (!empty ($request->Human_Resource_attachment)) {
+                $files = [];
+                if ($request->hasfile('Human_Resource_attachment')) {
+                    foreach ($request->file('Human_Resource_attachment') as $file) {
+                        $name = $request->name . 'Human_Resource_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                        $file->move('upload/', $name);
+                        $files[] = $name;
+                    }
+                }
+                $Cft->Human_Resource_attachment = json_encode($files);
+            }
+            if (!empty ($request->Microbiology_attachment)) {
+                $files = [];
+                if ($request->hasfile('Microbiology_attachment')) {
+                    foreach ($request->file('Microbiology_attachment') as $file) {
+                        $name = $request->name . 'Microbiology_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                        $file->move('upload/', $name);
+                        $files[] = $name;
+                    }
+                }
+                $Cft->Microbiology_attachment = json_encode($files);
+            }
+            if (!empty ($request->RegulatoryAffair_attachment)) {
+                $files = [];
+                if ($request->hasfile('RegulatoryAffair_attachment')) {
+                    foreach ($request->file('RegulatoryAffair_attachment') as $file) {
+                        $name = $request->name . 'RegulatoryAffair_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                        $file->move('upload/', $name);
+                        $files[] = $name;
+                    }
+                }
+                $Cft->RegulatoryAffair_attachment = json_encode($files);
+            }
+            if (!empty ($request->CorporateQualityAssurance_attachment)) {
+                $files = [];
+                if ($request->hasfile('CorporateQualityAssurance_attachment')) {
+                    foreach ($request->file('CorporateQualityAssurance_attachment') as $file) {
+                        $name = $request->name . 'CorporateQualityAssurance_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                        $file->move('upload/', $name);
+                        $files[] = $name;
+                    }
+                }
+                $Cft->CorporateQualityAssurance_attachment = json_encode($files);
+            }
+            if (!empty ($request->Environment_Health_Safety_attachment)) {
+                $files = [];
+                if ($request->hasfile('Environment_Health_Safety_attachment')) {
+                    foreach ($request->file('Environment_Health_Safety_attachment') as $file) {
+                        $name = $request->name . 'Environment_Health_Safety_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                        $file->move('upload/', $name);
+                        $files[] = $name;
+                    }
+                }
+                $Cft->Environment_Health_Safety_attachment = json_encode($files);
+            }
+            
+            if (!empty ($request->Information_Technology_attachment)) {
+                $files = [];
+                if ($request->hasfile('Information_Technology_attachment')) {
+                    foreach ($request->file('Information_Technology_attachment') as $file) {
+                        $name = $request->name . 'Information_Technology_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                        $file->move('upload/', $name);
+                        $files[] = $name;
+                    }
+                }
+                $Cft->Information_Technology_attachment = json_encode($files);
+            }
+            if (!empty ($request->ContractGiver_attachment)) {
+                $files = [];
+                if ($request->hasfile('ContractGiver_attachment')) {
+                    foreach ($request->file('ContractGiver_attachment') as $file) {
+                        $name = $request->name . 'ContractGiver_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                        $file->move('upload/', $name);
+                        $files[] = $name;
+                    }
+                }
+                $Cft->ContractGiver_attachment = json_encode($files);
+            }
+            if (!empty ($request->Other1_attachment)) {
+                $files = [];
+                if ($request->hasfile('Other1_attachment')) {
+                    foreach ($request->file('Other1_attachment') as $file) {
+                        $name = $request->name . 'Other1_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                        $file->move('upload/', $name);
+                        $files[] = $name;
+                    }
+                }
+                $Cft->Other1_attachment = json_encode($files);
+            }
+            if (!empty ($request->Other2_attachment)) {
+                $files = [];
+                if ($request->hasfile('Other2_attachment')) {
+                    foreach ($request->file('Other2_attachment') as $file) {
+                        $name = $request->name . 'Other2_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                        $file->move('upload/', $name);
+                        $files[] = $name;
+                    }
+                }
+                $Cft->Other2_attachment = json_encode($files);
+            }
+            if (!empty ($request->Other3_attachment)) {
+                $files = [];
+                if ($request->hasfile('Other3_attachment')) {
+                    foreach ($request->file('Other3_attachment') as $file) {
+                        $name = $request->name . 'Other3_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                        $file->move('upload/', $name);
+                        $files[] = $name;
+                    }
+                }
+                $Cft->Other3_attachment = json_encode($files);
+            }
+            if (!empty ($request->Other4_attachment)) {
+                $files = [];
+                if ($request->hasfile('Other4_attachment')) {
+                    foreach ($request->file('Other4_attachment') as $file) {
+                        $name = $request->name . 'Other4_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                        $file->move('upload/', $name);
+                        $files[] = $name;
+                    }
+                }
+
+                $Cft->Other4_attachment = json_encode($files);
+            }
+            if (!empty ($request->Other5_attachment)) {
+                $files = [];
+                if ($request->hasfile('Other5_attachment')) {
+                    foreach ($request->file('Other5_attachment') as $file) {
+                        $name = $request->name . 'Other5_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                        $file->move('upload/', $name);
+                        $files[] = $name;
+                    }
+                }
+                $Cft->Other5_attachment = json_encode($files);
+            }
+
+
+        $Cft->save();
+        }
+
+
+        if ($openState->stage == 3 || $openState->stage == 4 ){
+            $Cft = CcCft::withoutTrashed()->where('cc_id', $id)->first();
+            if($Cft && $openState->stage == 4 ){
+                $Cft->RA_Review = $request->RA_Review == null ? $Cft->RA_Review : $request->RA_Review;
+                $Cft->RA_Review = $request->RA_Review == null ? $Cft->RA_Review : $request->RA_Review;
+
+                $Cft->Production_Injection_Person = $request->Production_Injection_Person == null ? $Cft->RA_Review : $request->Production_Injection_Person;
+                $Cft->Production_Injection_Review = $request->Production_Injection_Review == null ? $Cft->RA_person : $request->Production_Injection_Review;
+
+                $Cft->Production_Table_Person = $request->Production_Table_Person == null ? $Cft->RA_Review : $request->Production_Table_Person;
+                $Cft->Production_Table_Review = $request->Production_Table_Review == null ? $Cft->RA_person : $request->Production_Table_Review;
+
+                $Cft->ProductionInjection_person = $request->ProductionInjection_person == null ? $Cft->ProductionInjection_person : $request->ProductionInjection_person;
+                $Cft->ProductionInjection_Review = $request->ProductionInjection_Review == null ? $Cft->ProductionInjection_Review : $request->ProductionInjection_Review;
+                
+                $Cft->ProductionLiquid_Review = $request->ProductionLiquid_Review == null ? $Cft->ProductionLiquid_Review : $request->ProductionLiquid_Review;
+                $Cft->ProductionLiquid_person = $request->ProductionLiquid_person == null ? $Cft->ProductionLiquid_person : $request->ProductionLiquid_person;
+
+                $Cft->Store_person = $request->Store_person == null ? $Cft->Store_person : $request->Store_person;
+                $Cft->Store_Review = $request->Store_Review == null ? $Cft->Store_Review : $request->Store_Review;
+
+                $Cft->ResearchDevelopment_person = $request->ResearchDevelopment_person == null ? $Cft->ResearchDevelopment_person : $request->ResearchDevelopment_person;
+                $Cft->ResearchDevelopment_Review = $request->ResearchDevelopment_Review == null ? $Cft->ResearchDevelopment_Review : $request->ResearchDevelopment_Review;
+
+                $Cft->Microbiology_person = $request->Microbiology_person == null ? $Cft->Microbiology_person : $request->Microbiology_person;
+                $Cft->Microbiology_Review = $request->Microbiology_Review == null ? $Cft->Microbiology_Review : $request->Microbiology_Review;
+
+                $Cft->RegulatoryAffair_person = $request->RegulatoryAffair_person == null ? $Cft->RegulatoryAffair_person : $request->RegulatoryAffair_person;
+                $Cft->RegulatoryAffair_Review = $request->RegulatoryAffair_Review == null ? $Cft->RegulatoryAffair_Review : $request->RegulatoryAffair_Review;
+
+                $Cft->CorporateQualityAssurance_person = $request->CorporateQualityAssurance_person == null ? $Cft->CorporateQualityAssurance_person : $request->CorporateQualityAssurance_person;
+                $Cft->CorporateQualityAssurance_Review = $request->CorporateQualityAssurance_Review == null ? $Cft->CorporateQualityAssurance_Review : $request->CorporateQualityAssurance_Review;
+
+                $Cft->ContractGiver_person = $request->ContractGiver_person == null ? $Cft->ContractGiver_person : $request->ContractGiver_person;
+                $Cft->ContractGiver_Review = $request->ContractGiver_Review == null ? $Cft->ContractGiver_Review : $request->ContractGiver_Review;
+
+                $Cft->Quality_review = $request->Quality_review == null ? $Cft->Quality_review : $request->Quality_review;;
+                $Cft->Quality_Control_Person = $request->Quality_Control_Person == null ? $Cft->Quality_Control_Person : $request->Quality_Control_Person;
+
+                $Cft->Quality_Assurance_Review = $request->Quality_Assurance_Review == null ? $Cft->Quality_Assurance_Review : $request->Quality_Assurance_Review;
+                $Cft->QualityAssurance_person = $request->QualityAssurance_person == null ? $Cft->QualityAssurance_person : $request->QualityAssurance_person;
+
+                $Cft->Engineering_review = $request->Engineering_review == null ? $Cft->Engineering_review : $request->Engineering_review;
+                $Cft->Engineering_person = $request->Engineering_person == null ? $Cft->Engineering_person : $request->Engineering_person;
+                
+                $Cft->Environment_Health_review = $request->Environment_Health_review == null ? $Cft->Environment_Health_review : $request->Environment_Health_review;
+                $Cft->Environment_Health_Safety_person = $request->Environment_Health_Safety_person == null ? $Cft->Environment_Health_Safety_person : $request->Environment_Health_Safety_person;
+
+                $Cft->Human_Resource_review = $request->Human_Resource_review == null ? $Cft->Human_Resource_review : $request->Human_Resource_review;
+                $Cft->Human_Resource_person = $request->Human_Resource_person == null ? $Cft->Human_Resource_person : $request->Human_Resource_person;
+
+                $Cft->Information_Technology_review = $request->Information_Technology_review == null ? $Cft->Information_Technology_review : $request->Information_Technology_review;
+                $Cft->Information_Technology_person = $request->Information_Technology_person == null ? $Cft->Information_Technology_person : $request->Information_Technology_person;
+
+                $Cft->Other1_review = $request->Other1_review  == null ? $Cft->Other1_review : $request->Other1_review;
+                $Cft->Other1_person = $request->Other1_person  == null ? $Cft->Other1_person : $request->Other1_person;
+                $Cft->Other1_Department_person = $request->Other1_Department_person  == null ? $Cft->Other1_Department_person : $request->Other1_Department_person;
+
+                $Cft->Other2_review = $request->Other2_review  == null ? $Cft->Other2_review : $request->Other2_review;
+                $Cft->Other2_person = $request->Other2_person  == null ? $Cft->Other2_person : $request->Other2_person;
+                $Cft->Other2_Department_person = $request->Other2_Department_person  == null ? $Cft->Other2_Department_person : $request->Other2_Department_person;
+
+                $Cft->Other3_review = $request->Other3_review  == null ? $Cft->Other3_review : $request->Other3_review;
+                $Cft->Other3_person = $request->Other3_person  == null ? $Cft->Other3_person : $request->Other3_person;
+                $Cft->Other3_Department_person = $request->Other3_Department_person  == null ? $Cft->Other3_Department_person : $request->Other3_Department_person;
+
+                $Cft->Other4_review = $request->Other4_review  == null ? $Cft->Other4_review : $request->Other4_review;
+                $Cft->Other4_person = $request->Other4_person  == null ? $Cft->Other4_person : $request->Other4_person;
+                $Cft->Other4_Department_person = $request->Other4_Department_person  == null ? $Cft->Other4_Department_person : $request->Other4_Department_person;
+
+                $Cft->Other5_review = $request->Other5_review  == null ? $Cft->Other5_review : $request->Other5_review;
+                $Cft->Other5_person = $request->Other5_person  == null ? $Cft->Other5_person : $request->Other5_person;
+                $Cft->Other5_Department_person = $request->Other5_Department_person  == null ? $Cft->Other5_Department_person : $request->Other5_Department_person;
+            }
+            else{
+                $Cft->Production_Review = $request->Production_Review;
+                $Cft->Production_person = $request->Production_person;
+
+                $Cft->Production_Table_Review = $request->Production_Table_Review;
+                $Cft->Production_Table_Person = $request->Production_Table_Person;
+
+                $Cft->Production_Injection_Review = $request->Production_Injection_Review;
+                $Cft->Production_Injection_Person = $request->Production_Injection_Person;
+
+                $Cft->ProductionLiquid_person = $request->ProductionLiquid_person;
+                $Cft->ProductionLiquid_Review = $request->ProductionLiquid_Review;
+
+                $Cft->Store_person = $request->Store_person;
+                $Cft->Store_Review = $request->Store_Review;
+
+                $Cft->ResearchDevelopment_person = $request->ResearchDevelopment_person;
+                $Cft->ResearchDevelopment_Review = $request->ResearchDevelopment_Review;
+
+                $Cft->Microbiology_person = $request->Microbiology_person;
+                $Cft->Microbiology_Review = $request->Microbiology_Review;
+
+                $Cft->RegulatoryAffair_person = $request->RegulatoryAffair_person;
+                $Cft->RegulatoryAffair_Review = $request->RegulatoryAffair_Review;
+
+                $Cft->CorporateQualityAssurance_person = $request->CorporateQualityAssurance_person;
+                $Cft->CorporateQualityAssurance_Review = $request->CorporateQualityAssurance_Review;
+
+                $Cft->ContractGiver_person = $request->ContractGiver_person;
+                $Cft->ContractGiver_Review = $request->ContractGiver_Review;
+
+                $Cft->Quality_review = $request->Quality_review;
+                $Cft->Quality_Control_Person = $request->Quality_Control_Person;
+
+                $Cft->Quality_Assurance_Review = $request->Quality_Assurance_Review;
+                $Cft->QualityAssurance_person = $request->QualityAssurance_person;
+
+                $Cft->Engineering_review = $request->Engineering_review;
+                $Cft->Engineering_person = $request->Engineering_person;
+                
+                $Cft->Environment_Health_review = $request->Environment_Health_review;
+                $Cft->Environment_Health_Safety_person = $request->Environment_Health_Safety_person;
+
+                $Cft->Human_Resource_review = $request->Human_Resource_review;
+                $Cft->Human_Resource_person = $request->Human_Resource_person;
+
+                $Cft->Project_management_review = $request->Project_management_review;
+                $Cft->Project_management_person = $request->Project_management_person;
+                
+                $Cft->Information_Technology_review = $request->Information_Technology_review;
+                $Cft->Information_Technology_person = $request->Information_Technology_person;
+
+                $Cft->Other1_review = $request->Other1_review;
+                $Cft->Other1_person = $request->Other1_person;
+                $Cft->Other1_Department_person = $request->Other1_Department_person;
+
+                $Cft->Other2_review = $request->Other2_review;
+                $Cft->Other2_person = $request->Other2_person;
+                $Cft->Other2_Department_person = $request->Other2_Department_person;
+
+                $Cft->Other3_review = $request->Other3_review;
+                $Cft->Other3_person = $request->Other3_person;
+                $Cft->Other3_Department_person = $request->Other3_Department_person;
+
+                $Cft->Other4_review = $request->Other4_review;
+                $Cft->Other4_person = $request->Other4_person;
+                $Cft->Other4_Department_person = $request->Other4_Department_person;
+
+                $Cft->Other5_review = $request->Other5_review;
+                $Cft->Other5_person = $request->Other5_person;
+                $Cft->Other5_Department_person = $request->Other5_Department_person;
+            }
+            $Cft->RA_assessment = $request->RA_assessment;
+            $Cft->RA_feedback = $request->RA_feedback;
+
+            $Cft->Production_Injection_Assessment = $request->Production_Injection_Assessment;
+            $Cft->Production_Injection_Feedback = $request->Production_Injection_Feedback;
+
+            $Cft->Production_Table_Assessment = $request->Production_Table_Assessment;
+            $Cft->Production_Table_Feedback = $request->Production_Table_Feedback;
+
+            $Cft->ProductionLiquid_feedback = $request->ProductionLiquid_feedback;
+            $Cft->ProductionLiquid_assessment = $request->ProductionLiquid_assessment;
+
+            $Cft->Store_feedback = $request->Store_feedback;
+            $Cft->Store_assessment = $request->Store_assessment;
+
+            $Cft->ResearchDevelopment_feedback = $request->ResearchDevelopment_feedback;
+            $Cft->ResearchDevelopment_assessment = $request->ResearchDevelopment_assessment;
+
+            $Cft->Microbiology_feedback = $request->Microbiology_feedback;
+            $Cft->Microbiology_assessment = $request->Microbiology_assessment;
+
+            $Cft->RegulatoryAffair_feedback = $request->RegulatoryAffair_feedback;
+            $Cft->RegulatoryAffair_assessment = $request->RegulatoryAffair_assessment;
+
+            $Cft->CorporateQualityAssurance_feedback = $request->CorporateQualityAssurance_feedback;
+            $Cft->CorporateQualityAssurance_assessment = $request->CorporateQualityAssurance_assessment;
+
+            $Cft->ContractGiver_feedback = $request->ContractGiver_feedback;
+            $Cft->ContractGiver_assessment = $request->ContractGiver_assessment;
+
+            $Cft->Quality_Control_assessment = $request->Quality_Control_assessment;
+            $Cft->Quality_Control_feedback = $request->Quality_Control_feedback;
+
+            $Cft->QualityAssurance_assessment = $request->QualityAssurance_assessment;
+            $Cft->QualityAssurance_feedback = $request->QualityAssurance_feedback;
+
+            $Cft->Engineering_assessment = $request->Engineering_assessment;
+            $Cft->Engineering_feedback = $request->Engineering_feedback;
+            
+            $Cft->Health_Safety_assessment = $request->Health_Safety_assessment;
+            $Cft->Health_Safety_feedback = $request->Health_Safety_feedback;
+
+            $Cft->Human_Resource_assessment = $request->Human_Resource_assessment;
+            $Cft->Human_Resource_feedback = $request->Human_Resource_feedback;
+
+            $Cft->Information_Technology_assessment = $request->Information_Technology_assessment;
+            $Cft->Information_Technology_feedback = $request->Information_Technology_feedback;
+
+            $Cft->Project_management_assessment = $request->Project_management_assessment;
+            $Cft->Project_management_feedback = $request->Project_management_feedback;
+
+            $Cft->Other1_assessment = $request->Other1_assessment;
+            $Cft->Other1_feedback = $request->Other1_feedback;
+
+            $Cft->Other2_Assessment = $request->Other2_Assessment;
+            $Cft->Other2_feedback = $request->Other2_feedback;
+
+            $Cft->Other3_Assessment = $request->Other3_Assessment;
+            $Cft->Other3_feedback = $request->Other3_feedback;
+
+            $Cft->Other4_Assessment = $request->Other4_Assessment;
+            $Cft->Other4_feedback = $request->Other4_feedback;
+
+            $Cft->Other5_Assessment = $request->Other5_Assessment;
+            $Cft->Other5_feedback = $request->Other5_feedback;
+
+
+            if (!empty ($request->RA_attachment)) {
+                $files = [];
+                if ($request->hasfile('RA_attachment')) {
+                    foreach ($request->file('RA_attachment') as $file) {
+                        $name = $request->name . 'RA_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                        $file->move('upload/', $name);
+                        $files[] = $name;
+                    }
+                }
+                $Cft->RA_attachment = json_encode($files);
+            }
+            if (!empty ($request->Quality_Assurance_attachment)) {
+                $files = [];
+                if ($request->hasfile('Quality_Assurance_attachment')) {
+                    foreach ($request->file('Quality_Assurance_attachment') as $file) {
+                        $name = $request->name . 'Quality_Assurance_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                        $file->move('upload/', $name);
+                        $files[] = $name;
+                    }
+                }
+                $Cft->Quality_Assurance_attachment = json_encode($files);
+            }
+            if (!empty ($request->Production_Table_Attachment)) {
+                $files = [];
+                if ($request->hasfile('Production_Table_Attachment')) {
+                    foreach ($request->file('Production_Table_Attachment') as $file) {
+                        $name = $request->name . 'Production_Table_Attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                        $file->move('upload/', $name);
+                        $files[] = $name;
+                    }
+                }
+                $Cft->Production_Table_Attachment = json_encode($files);
             }
             if (!empty ($request->ProductionLiquid_attachment)) {
                 $files = [];
@@ -3695,6 +3231,195 @@ class CCController extends Controller
                     }
                 }
                 $Cft->ProductionLiquid_attachment = json_encode($files);
+            }
+            if (!empty ($request->Production_Injection_Attachment)) {
+                $files = [];
+                if ($request->hasfile('Production_Injection_Attachment')) {
+                    foreach ($request->file('Production_Injection_Attachment') as $file) {
+                        $name = $request->name . 'Production_Injection_Attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                        $file->move('upload/', $name);
+                        $files[] = $name;
+                    }
+                }
+                $Cft->Production_Injection_Attachment = json_encode($files);
+            }            
+            if (!empty ($request->Store_attachment)) {
+                $files = [];
+                if ($request->hasfile('Store_attachment')) {
+                    foreach ($request->file('Store_attachment') as $file) {
+                        $name = $request->name . 'Store_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                        $file->move('upload/', $name);
+                        $files[] = $name;
+                    }
+                }
+                $Cft->Store_attachment = json_encode($files);
+            }
+            if (!empty ($request->Quality_Control_attachment)) {
+                $files = [];
+                if ($request->hasfile('Quality_Control_attachment')) {
+                    foreach ($request->file('Quality_Control_attachment') as $file) {
+                        $name = $request->name . 'Quality_Control_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                        $file->move('upload/', $name);
+                        $files[] = $name;
+                    }
+                }
+                $Cft->Quality_Control_attachment = json_encode($files);
+            }
+            if (!empty ($request->ResearchDevelopment_attachment)) {
+                $files = [];
+                if ($request->hasfile('ResearchDevelopment_attachment')) {
+                    foreach ($request->file('ResearchDevelopment_attachment') as $file) {
+                        $name = $request->name . 'ResearchDevelopment_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                        $file->move('upload/', $name);
+                        $files[] = $name;
+                    }
+                }
+                $Cft->ResearchDevelopment_attachment = json_encode($files);
+            }
+            if (!empty ($request->Engineering_attachment)) {
+                $files = [];
+                if ($request->hasfile('Engineering_attachment')) {
+                    foreach ($request->file('Engineering_attachment') as $file) {
+                        $name = $request->name . 'Engineering_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                        $file->move('upload/', $name);
+                        $files[] = $name;
+                    }
+                }
+                $Cft->Engineering_attachment = json_encode($files);
+            }
+            if (!empty ($request->Human_Resource_attachment)) {
+                $files = [];
+                if ($request->hasfile('Human_Resource_attachment')) {
+                    foreach ($request->file('Human_Resource_attachment') as $file) {
+                        $name = $request->name . 'Human_Resource_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                        $file->move('upload/', $name);
+                        $files[] = $name;
+                    }
+                }
+                $Cft->Human_Resource_attachment = json_encode($files);
+            }
+            if (!empty ($request->Microbiology_attachment)) {
+                $files = [];
+                if ($request->hasfile('Microbiology_attachment')) {
+                    foreach ($request->file('Microbiology_attachment') as $file) {
+                        $name = $request->name . 'Microbiology_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                        $file->move('upload/', $name);
+                        $files[] = $name;
+                    }
+                }
+                $Cft->Microbiology_attachment = json_encode($files);
+            }
+            if (!empty ($request->RegulatoryAffair_attachment)) {
+                $files = [];
+                if ($request->hasfile('RegulatoryAffair_attachment')) {
+                    foreach ($request->file('RegulatoryAffair_attachment') as $file) {
+                        $name = $request->name . 'RegulatoryAffair_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                        $file->move('upload/', $name);
+                        $files[] = $name;
+                    }
+                }
+                $Cft->RegulatoryAffair_attachment = json_encode($files);
+            }
+            if (!empty ($request->CorporateQualityAssurance_attachment)) {
+                $files = [];
+                if ($request->hasfile('CorporateQualityAssurance_attachment')) {
+                    foreach ($request->file('CorporateQualityAssurance_attachment') as $file) {
+                        $name = $request->name . 'CorporateQualityAssurance_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                        $file->move('upload/', $name);
+                        $files[] = $name;
+                    }
+                }
+                $Cft->CorporateQualityAssurance_attachment = json_encode($files);
+            }
+            if (!empty ($request->Environment_Health_Safety_attachment)) {
+                $files = [];
+                if ($request->hasfile('Environment_Health_Safety_attachment')) {
+                    foreach ($request->file('Environment_Health_Safety_attachment') as $file) {
+                        $name = $request->name . 'Environment_Health_Safety_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                        $file->move('upload/', $name);
+                        $files[] = $name;
+                    }
+                }
+                $Cft->Environment_Health_Safety_attachment = json_encode($files);
+            }
+            
+            if (!empty ($request->Information_Technology_attachment)) {
+                $files = [];
+                if ($request->hasfile('Information_Technology_attachment')) {
+                    foreach ($request->file('Information_Technology_attachment') as $file) {
+                        $name = $request->name . 'Information_Technology_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                        $file->move('upload/', $name);
+                        $files[] = $name;
+                    }
+                }
+                $Cft->Information_Technology_attachment = json_encode($files);
+            }
+            if (!empty ($request->ContractGiver_attachment)) {
+                $files = [];
+                if ($request->hasfile('ContractGiver_attachment')) {
+                    foreach ($request->file('ContractGiver_attachment') as $file) {
+                        $name = $request->name . 'ContractGiver_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                        $file->move('upload/', $name);
+                        $files[] = $name;
+                    }
+                }
+                $Cft->ContractGiver_attachment = json_encode($files);
+            }
+            if (!empty ($request->Other1_attachment)) {
+                $files = [];
+                if ($request->hasfile('Other1_attachment')) {
+                    foreach ($request->file('Other1_attachment') as $file) {
+                        $name = $request->name . 'Other1_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                        $file->move('upload/', $name);
+                        $files[] = $name;
+                    }
+                }
+                $Cft->Other1_attachment = json_encode($files);
+            }
+            if (!empty ($request->Other2_attachment)) {
+                $files = [];
+                if ($request->hasfile('Other2_attachment')) {
+                    foreach ($request->file('Other2_attachment') as $file) {
+                        $name = $request->name . 'Other2_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                        $file->move('upload/', $name);
+                        $files[] = $name;
+                    }
+                }
+                $Cft->Other2_attachment = json_encode($files);
+            }
+            if (!empty ($request->Other3_attachment)) {
+                $files = [];
+                if ($request->hasfile('Other3_attachment')) {
+                    foreach ($request->file('Other3_attachment') as $file) {
+                        $name = $request->name . 'Other3_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                        $file->move('upload/', $name);
+                        $files[] = $name;
+                    }
+                }
+                $Cft->Other3_attachment = json_encode($files);
+            }
+            if (!empty ($request->Other4_attachment)) {
+                $files = [];
+                if ($request->hasfile('Other4_attachment')) {
+                    foreach ($request->file('Other4_attachment') as $file) {
+                        $name = $request->name . 'Other4_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                        $file->move('upload/', $name);
+                        $files[] = $name;
+                    }
+                }
+
+                $Cft->Other4_attachment = json_encode($files);
+            }
+            if (!empty ($request->Other5_attachment)) {
+                $files = [];
+                if ($request->hasfile('Other5_attachment')) {
+                    foreach ($request->file('Other5_attachment') as $file) {
+                        $name = $request->name . 'Other5_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                        $file->move('upload/', $name);
+                        $files[] = $name;
+                    }
+                }
+                $Cft->Other5_attachment = json_encode($files);
             }
 
 
@@ -3973,7 +3698,7 @@ class CCController extends Controller
             $history->save();
         } 
 
-        if ($lastDocument->risk_assessment_required != $openState->risk_assessment_required) {
+        if ($lastDocument->risk_assessment_required != $request->risk_assessment_required) {
             // return 'history';
             $history = new RcmDocHistory;
             $history->cc_id = $id;
@@ -3991,7 +3716,7 @@ class CCController extends Controller
             $history->save();
         } 
 
-        if ($lastDocument->hod_person != $openState->hod_person) {
+        if ($lastDocument->hod_person != $request->hod_person) {
             $history = new RcmDocHistory;
             $history->cc_id = $id;
             $history->activity_type = 'HOD Person';
@@ -4008,10 +3733,10 @@ class CCController extends Controller
             $history->save();
         }
 
-        if ($lastDocument->Initiator_Group != $openState->Initiator_Group) {
+        if ($lastDocument->Initiator_Group != $request->Initiator_Group) {
             $history = new RcmDocHistory;
             $history->cc_id = $id;
-            $history->activity_type = 'Inititator Group';
+            $history->activity_type = 'Initiation Department';
             $history->previous = $lastDocument->Initiator_Group;
             $history->current = $openState->Initiator_Group;
             $history->comment = $request->Initiator_Group_comment;
@@ -4026,7 +3751,7 @@ class CCController extends Controller
         }
 
 
-        if ($lastDocument->assign_to != $openState->assign_to) {
+        if ($lastDocument->assign_to != $request->assign_to) {
             $history = new RcmDocHistory;
             $history->cc_id = $id;
             $history->activity_type = 'Assigned To';
@@ -4043,7 +3768,7 @@ class CCController extends Controller
             $history->save();
         }
 
-        if ($lastDocument->due_date != $openState->due_date) {
+        if ($lastDocument->due_date != $request->due_date) {
             $history = new RcmDocHistory;
             $history->cc_id = $id;
             $history->activity_type = 'Due Date';
@@ -4060,7 +3785,7 @@ class CCController extends Controller
             $history->save();
         }
 
-        if ($lastDocument->doc_change != $openState->doc_change) {
+        if ($lastDocument->doc_change != $request->doc_change) {
             $history = new RcmDocHistory;
             $history->cc_id = $id;
             $history->activity_type = 'Supporting Documents';
@@ -4092,7 +3817,7 @@ class CCController extends Controller
             $history->action_name = 'Update';
             $history->save();
         }
-        if ($lastDocument->Division_Code != $openState->Division_Code) {
+        if ($lastDocument->Division_Code != $request->Division_Code) {
             $history = new RcmDocHistory;
             $history->cc_id = $id;
             $history->activity_type = 'Division Code';
@@ -4109,7 +3834,206 @@ class CCController extends Controller
             $history->save();
         }
 
-        //<!---------------Change Details History---------------->
+        if ($lastDocument->initiated_through != $request->initiated_through) {
+            $history = new RcmDocHistory;
+            $history->cc_id = $id;
+            $history->activity_type = 'Initiated Through';
+            $history->previous = $lastDocument->initiated_through;
+            $history->current = $openState->initiated_through;
+            $history->comment = "";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+            $history->action_name = 'Update';
+            $history->save();
+        }
+        if ($lastDocument->repeat != $request->repeat) {
+            $history = new RcmDocHistory;
+            $history->cc_id = $id;
+            $history->activity_type = 'Repeat';
+            $history->previous = $lastDocument->repeat;
+            $history->current = $openState->repeat;
+            $history->comment = "";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+            $history->action_name = 'Update';
+            $history->save();
+        }
+        if ($lastDocument->repeat_nature != $request->repeat_nature) {
+            $history = new RcmDocHistory;
+            $history->cc_id = $id;
+            $history->activity_type = 'Repeat Nature';
+            $history->previous = $lastDocument->repeat_nature;
+            $history->current = $openState->repeat_nature;
+            $history->comment = "";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+            $history->action_name = 'Update';
+            $history->save();
+        }
+        if ($lastDocument->others != $request->others) {
+            $history = new RcmDocHistory;
+            $history->cc_id = $id;
+            $history->activity_type = 'Other';
+            $history->previous = $lastDocument->others;
+            $history->current = $openState->others;
+            $history->comment = "";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+            $history->action_name = 'Update';
+            $history->save();
+        }
+        if ($lastDocument->initiated_through_req != $request->initiated_through_req) {
+            $history = new RcmDocHistory;
+            $history->cc_id = $id;
+            $history->activity_type = 'Initated Request Comment';
+            $history->previous = $lastDocument->initiated_through_req;
+            $history->current = $openState->initiated_through_req;
+            $history->comment = "";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+            $history->action_name = 'Update';
+            $history->save();
+        }
+
+        /************ Risk Assessment ************/
+
+        if ($lastDocument->risk_identification != $openState->risk_identification ) {
+            $history = new RcmDocHistory;
+            $history->cc_id = $id;
+            $history->activity_type = 'Risk Identification';
+            $history->previous = $lastDocument->risk_identification;
+            $history->current = $openState->risk_identification;
+            $history->comment = "";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+            $history->action_name = 'Update';
+            $history->save();
+        }
+
+        if ($lastDocument->severity != $openState->severity ) {
+            $history = new RcmDocHistory;
+            $history->cc_id = $id;
+            $history->activity_type = 'Severity';
+            $history->previous = $lastDocument->severity;
+            $history->current = $openState->severity;
+            $history->comment = "";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+            $history->action_name = 'Update';
+            $history->save();
+        }
+        if ($lastDocument->Occurance != $openState->Occurance ) {
+            $history = new RcmDocHistory;
+            $history->cc_id = $id;
+            $history->activity_type = 'Occurance';
+            $history->previous = $lastDocument->Occurance;
+            $history->current = $openState->Occurance;
+            $history->comment = "";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+            $history->action_name = 'Update';
+            $history->save();
+        }
+        if ($lastDocument->Detection != $openState->Detection) {
+            $history = new RcmDocHistory;
+            $history->cc_id = $id;
+            $history->activity_type = 'Detection';
+            $history->previous = $lastDocument->Detection;
+            $history->current = $openState->Detection;
+            $history->comment = "";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+            $history->action_name = 'Update';
+            $history->save();
+        }
+        if ($lastDocument->RPN != $openState->RPN ) {
+            $history = new RcmDocHistory;
+            $history->cc_id = $id;
+            $history->activity_type = 'RPN';
+            $history->previous = $lastDocument->RPN;
+            $history->current = $openState->RPN;
+            $history->comment = "";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+            $history->action_name = 'Update';
+            $history->save();
+        }
+        if ($lastDocument->risk_evaluation != $openState->risk_evaluation ) {
+            $history = new RcmDocHistory;
+            $history->cc_id = $id;
+            $history->activity_type = 'Risk Evaluation';
+            $history->previous = $lastDocument->risk_evaluation;
+            $history->current = $openState->risk_evaluation;
+            $history->comment = "";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+            $history->action_name = 'Update';
+            $history->save();
+        }
+        if ($lastDocument->migration_action != $openState->migration_action ) {
+            $history = new RcmDocHistory;
+            $history->cc_id = $id;
+            $history->activity_type = 'Mitigation Action';
+            $history->previous = $lastDocument->migration_action;
+            $history->current = $openState->migration_action;
+            $history->comment = "";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+            $history->action_name = 'Update';
+            $history->save();
+        }
+
+        /************ Risk Assessment End ************/
+
+        /************ Change Details History ************/
 
         if ($lastDocument->current_practice != $openState->current_practice ) {
             $history = new RcmDocHistory;
@@ -4176,29 +4100,34 @@ class CCController extends Controller
             $history->action_name = 'Update';
             $history->save();
         }
+         /************ Change Details History End ************/
 
-        // if ($lastDocument->supervisor_comment != $openState->other_comment ) {
-        //     $history = new RcmDocHistory;
-        //     $history->cc_id = $id;
-        //     $history->activity_type = 'Supervisor Comments';
-        //     $history->previous = $lastDocument->supervisor_comment;
-        //     $history->current = $openState->supervisor_comment;
-        //     $history->comment = $request->supervisor_comment_comment;
-        //     $history->user_id = Auth::user()->id;
-        //     $history->user_name = Auth::user()->name;
-        //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-        //     $history->origin_state = $lastDocument->status;
-        //     $history->change_to =   "Not Applicable";
-        //     $history->change_from = $lastDocument->status;
-        //     $history->action_name = 'Update';
-        //     $history->save();
-        // }
-        if ($lastDocument->type_chnage != $openState->type_chnag) {
+         /************ HOD Review ************/
+         if ($lastDocument->HOD_Remarks != $openState->HOD_Remarks ) {
             $history = new RcmDocHistory;
             $history->cc_id = $id;
-            $history->activity_type = 'Type of Change';
-            $history->previous = $lastDocument->type_chnage;
-            $history->current = $openState->type_chnage;
+            $history->activity_type = 'HOD Remarks';
+            $history->previous = $lastDocument->HOD_Remarks;
+            $history->current = $openState->HOD_Remarks;
+            $history->comment = "";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+            $history->action_name = 'Update';
+            $history->save();
+        }
+         /************ HOD Review End ************/
+
+        /************ QA Initial ************/
+        if ($lastDocument->due_days != $openState->due_days) {
+            $history = new RcmDocHistory;
+            $history->cc_id = $id;
+            $history->activity_type = 'Due Days';
+            $history->previous = $lastDocument->due_days;
+            $history->current = $openState->due_days;
             $history->comment = $request->type_chnage_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -4209,92 +4138,43 @@ class CCController extends Controller
             $history->action_name = 'Update';
             $history->save();
         }
+        if ($lastDocument->severity_level1 != $openState->severity_level1) {
+            $history = new RcmDocHistory;
+            $history->cc_id = $id;
+            $history->activity_type = 'Severity Level';
+            $history->previous = $lastDocument->severity_level1;
+            $history->current = $openState->severity_level1;
+            $history->comment = $request->type_chnage_comment;
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+            $history->action_name = 'Update';
+            $history->save();
+        }
+        if ($lastDocument->qa_review_comments != $request->qa_review_comments) {
+            $history = new RcmDocHistory;
+            $history->cc_id = $id;
+            $history->activity_type = 'QA Initial Comment';
+            $history->previous = $lastDocument->qa_review_comments;
+            $history->current = $request->qa_review_comments;
+            $history->comment = $request->type_chnage_comment;
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+            $history->action_name = 'Update';
+            $history->save();
+        }
+        /************ QA Initial End ************/
 
-        if ($lastDocument->qa_comments != $openState->qa_comments) {
-            $history = new RcmDocHistory;
-            $history->cc_id = $id;
-            $history->activity_type = 'QA Review Comments';
-            $history->previous = $lastDocument->qa_comments;
-            $history->current = $openState->qa_comments;
-            $history->comment = $request->qa_comments_comment;
-            $history->user_id = Auth::user()->id;
-            $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state = $lastDocument->status;
-            $history->change_to =   "Not Applicable";
-            $history->change_from = $lastDocument->status;
-            $history->action_name = 'Update';
-            $history->save();
-        }
-        if ($lastDocument->related_records != $openState->related_records) {
-            $history = new RcmDocHistory;
-            $history->cc_id = $id;
-            $history->activity_type = 'Related Records';
-            $history->previous = $lastDocument->related_records;
-            $history->current = $openState->related_records;
-            $history->comment = $request->related_records_comment;
-            $history->user_id = Auth::user()->id;
-            $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state = $lastDocument->status;
-            $history->change_to =   "Not Applicable";
-            $history->change_from = $lastDocument->status;
-            $history->action_name = 'Update';
-            $history->save();
-        }
 
-
-        if ($lastDocument->qa_eval_comments != $openState->qa_eval_comments ) {
-            $history = new RcmDocHistory;
-            $history->cc_id = $id;
-            $history->activity_type = 'QA Evaluation Comments';
-            $history->previous = $lastDocument->qa_eval_comments;
-            $history->current = $openState->qa_eval_comments;
-            $history->comment = $request->qa_eval_comments_comment;
-            $history->user_id = Auth::user()->id;
-            $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state = $lastDocument->status;
-            $history->change_to =   "Not Applicable";
-            $history->change_from = $lastDocument->status;
-            $history->action_name = 'Update';
-            $history->save();
-        }
-        if ($lastDocument->train_comments != $openState->train_comments) {
-            $history = new RcmDocHistory;
-            $history->cc_id = $id;
-            $history->activity_type = 'Training Comments';
-            $history->previous = $lastDocument->train_comments;
-            $history->current = $openState->train_comments;
-            $history->comment = $request->train_comments_comment;
-            $history->user_id = Auth::user()->id;
-            $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state = $lastDocument->status;
-            $history->change_to =   "Not Applicable";
-            $history->change_from = $lastDocument->status;
-            $history->action_name = 'Update';
-            $history->save();
-        }
-        if ($lastDocument->training_required != $openState->training_required) {
-            $history = new RcmDocHistory;
-            $history->cc_id = $id;
-            $history->activity_type = 'Training Required';
-            $history->previous = $lastDocument->training_required;
-            $history->current = $openState->training_required;
-            $history->comment = $request->training_required_comment;
-            $history->user_id = Auth::user()->id;
-            $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state = $lastDocument->status;
-            $history->change_to =   "Not Applicable";
-            $history->change_from = $lastDocument->status;
-            $history->action_name = 'Update';
-            $history->save();
-        }
-        
-        /*************** RA Review ***************/
-        if ($lastCft->RA_Review != $request->RA_Review) {
+        /************ CFT Review ************/
+        if ($lastCft->RA_Review != $request->RA_Review && $request->RA_Review != null) {
             $history = new RcmDocHistory;
             $history->cc_id = $id;
             $history->activity_type = 'RA Review Required';
@@ -4305,9 +4185,12 @@ class CCController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+            $history->action_name = 'Update';
             $history->save();
         }
-        if ($lastCft->RA_person != $request->RA_person) {
+        if ($lastCft->RA_person != $request->RA_person && $request->RA_person != null) {
             $history = new RcmDocHistory;
             $history->cc_id = $id;
             $history->activity_type = 'RA Person';
@@ -4318,9 +4201,12 @@ class CCController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+            $history->action_name = 'Update';
             $history->save();
         }
-        if ($lastCft->RA_assessment != $request->RA_assessment) {
+        if ($lastCft->RA_assessment != $request->RA_assessment && $request->RA_assessment != null) {
             $history = new RcmDocHistory;
             $history->cc_id = $id;
             $history->activity_type = 'RA Assessment';
@@ -4331,9 +4217,12 @@ class CCController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+            $history->action_name = 'Update';
             $history->save();
         }
-        if ($lastCft->RA_feedback != $request->RA_feedback) {
+        if ($lastCft->RA_feedback != $request->RA_feedback && $request->RA_feedback != null) {
             $history = new RcmDocHistory;
             $history->cc_id = $id;
             $history->activity_type = 'RA Feedback';
@@ -4344,9 +4233,12 @@ class CCController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+            $history->action_name = 'Update';
             $history->save();
         }
-        if ($lastCft->RA_by != $request->RA_by) {
+        if ($lastCft->RA_by != $request->RA_by && $request->RA_by != null) {
             $history = new RcmDocHistory;
             $history->cc_id = $id;
             $history->activity_type = 'RA Review By';
@@ -4357,9 +4249,12 @@ class CCController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+            $history->action_name = 'Update';
             $history->save();
         }
-        if ($lastCft->RA_on != $request->RA_on) {
+        if ($lastCft->RA_on != $request->RA_on && $request->RA_on != null) {
             $history = new RcmDocHistory;
             $history->cc_id = $id;
             $history->activity_type = 'RA Review On';
@@ -4370,11 +4265,14 @@ class CCController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+            $history->action_name = 'Update';
             $history->save();
         }
 
         /*************** Quality Assurance ***************/
-        if ($lastCft->Quality_Assurance_Review != $request->Quality_Assurance_Review) {
+        if ($lastCft->Quality_Assurance_Review != $request->Quality_Assurance_Review && $request->Quality_Assurance_Review != null) {
             $history = new RcmDocHistory;
             $history->cc_id = $id;
             $history->activity_type = 'Quality Assurance Review Required';
@@ -4385,9 +4283,12 @@ class CCController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+            $history->action_name = 'Update';
             $history->save();
         }
-        if ($lastCft->QualityAssurance_person != $request->QualityAssurance_person) {
+        if ($lastCft->QualityAssurance_person != $request->QualityAssurance_person && $request->QualityAssurance_person != null) {
             $history = new RcmDocHistory;
             $history->cc_id = $id;
             $history->activity_type = 'Quality Assurance Person';
@@ -4398,9 +4299,12 @@ class CCController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+            $history->action_name = 'Update';
             $history->save();
         }
-        if ($lastCft->QualityAssurance_assessment != $request->QualityAssurance_assessment) {
+        if ($lastCft->QualityAssurance_assessment != $request->QualityAssurance_assessment && $request->QualityAssurance_assessment != null) {
             $history = new RcmDocHistory;
             $history->cc_id = $id;
             $history->activity_type = 'Quality Assurance Assessment';
@@ -4411,9 +4315,12 @@ class CCController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+            $history->action_name = 'Update';
             $history->save();
         }
-        if ($lastCft->QualityAssurance_feedback != $request->QualityAssurance_feedback) {
+        if ($lastCft->QualityAssurance_feedback != $request->QualityAssurance_feedback && $request->QualityAssurance_feedback != null) {
             $history = new RcmDocHistory;
             $history->cc_id = $id;
             $history->activity_type = 'Quality Assurance Feedback';
@@ -4424,9 +4331,12 @@ class CCController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+            $history->action_name = 'Update';
             $history->save();
         }
-        if ($lastCft->QualityAssurance_by != $request->QualityAssurance_by) {
+        if ($lastCft->QualityAssurance_by != $request->QualityAssurance_by && $request->QualityAssurance_by != null) {
             $history = new RcmDocHistory;
             $history->cc_id = $id;
             $history->activity_type = 'Quality Assurance Review By';
@@ -4437,9 +4347,12 @@ class CCController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+            $history->action_name = 'Update';
             $history->save();
         }
-        if ($lastCft->QualityAssurance_on != $request->QualityAssurance_on) {
+        if ($lastCft->QualityAssurance_on != $request->QualityAssurance_on && $request->QualityAssurance_on != null) {
             $history = new RcmDocHistory;
             $history->cc_id = $id;
             $history->activity_type = 'Quality Assurance Review On';
@@ -4450,12 +4363,15 @@ class CCController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+            $history->action_name = 'Update';
             $history->save();
         }
 
         
         /*************** Production Tablet ***************/
-        if ($lastCft->Production_Table_Review != $request->Production_Table_Review) {
+        if ($lastCft->Production_Table_Review != $request->Production_Table_Review && $request->Production_Table_Review != null) {
             $history = new RcmDocHistory;
             $history->cc_id = $id;
             $history->activity_type = 'Production Tablet Review Required';
@@ -4466,9 +4382,12 @@ class CCController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+            $history->action_name = 'Update';
             $history->save();
         }
-        if ($lastCft->Production_Table_Person != $request->Production_Table_Person) {
+        if ($lastCft->Production_Table_Person != $request->Production_Table_Person && $request->Production_Table_Person != null) {
             $history = new RcmDocHistory;
             $history->cc_id = $id;
             $history->activity_type = 'Production Tablet Person';
@@ -4479,9 +4398,12 @@ class CCController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+            $history->action_name = 'Update';
             $history->save();
         }
-        if ($lastCft->Production_Table_Assessment != $request->Production_Table_Assessment) {
+        if ($lastCft->Production_Table_Assessment != $request->Production_Table_Assessment && $request->Production_Table_Assessment != null) {
             $history = new RcmDocHistory;
             $history->cc_id = $id;
             $history->activity_type = 'Production Tablet Assessment';
@@ -4492,9 +4414,12 @@ class CCController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+            $history->action_name = 'Update';
             $history->save();
         }
-        if ($lastCft->Production_Table_Feedback != $request->Production_Table_Feedback) {
+        if ($lastCft->Production_Table_Feedback != $request->Production_Table_Feedback && $request->Production_Table_Feedback != null) {
             $history = new RcmDocHistory;
             $history->cc_id = $id;
             $history->activity_type = 'Production Tablet Feeback';
@@ -4505,9 +4430,12 @@ class CCController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+            $history->action_name = 'Update';
             $history->save();
         }
-        if ($lastCft->Production_Table_By != $request->Production_Table_By) {
+        if ($lastCft->Production_Table_By != $request->Production_Table_By && $request->Production_Table_By != null) {
             $history = new RcmDocHistory;
             $history->cc_id = $id;
             $history->activity_type = 'Production Tablet Review By';
@@ -4518,9 +4446,12 @@ class CCController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+            $history->action_name = 'Update';
             $history->save();
         }
-        if ($lastCft->Production_Table_On != $request->Production_Table_On) {
+        if ($lastCft->Production_Table_On != $request->Production_Table_On && $request->Production_Table_On != null) {
             $history = new RcmDocHistory;
             $history->cc_id = $id;
             $history->activity_type = 'Production Tablet On';
@@ -4531,11 +4462,14 @@ class CCController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+            $history->action_name = 'Update';
             $history->save();
         }
 
          /*************** Production Liquid ***************/
-         if ($lastCft->ProductionLiquid_Review != $request->ProductionLiquid_Review) {
+         if ($lastCft->ProductionLiquid_Review != $request->ProductionLiquid_Review && $request->ProductionLiquid_Review != null) {
             $history = new RcmDocHistory;
             $history->cc_id = $id;
             $history->activity_type = 'Production Liquid Review Required';
@@ -4546,9 +4480,12 @@ class CCController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+            $history->action_name = 'Update';
             $history->save();
         }
-        if ($lastCft->ProductionLiquid_person != $request->ProductionLiquid_person) {
+        if ($lastCft->ProductionLiquid_person != $request->ProductionLiquid_person && $request->ProductionLiquid_person != null) {
             $history = new RcmDocHistory;
             $history->cc_id = $id;
             $history->activity_type = 'Production Liquid Person';
@@ -4559,9 +4496,12 @@ class CCController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+            $history->action_name = 'Update';
             $history->save();
         }
-        if ($lastCft->ProductionLiquid_assessment != $request->ProductionLiquid_assessment) {
+        if ($lastCft->ProductionLiquid_assessment != $request->ProductionLiquid_assessment && $request->ProductionLiquid_assessment != null) {
             $history = new RcmDocHistory;
             $history->cc_id = $id;
             $history->activity_type = 'Production Liquid Assessment';
@@ -4572,9 +4512,12 @@ class CCController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+            $history->action_name = 'Update';
             $history->save();
         }
-        if ($lastCft->ProductionLiquid_feedback != $request->ProductionLiquid_feedback) {
+        if ($lastCft->ProductionLiquid_feedback != $request->ProductionLiquid_feedback && $request->ProductionLiquid_feedback != null) {
             $history = new RcmDocHistory;
             $history->cc_id = $id;
             $history->activity_type = 'Production Liquid Feedback';
@@ -4585,9 +4528,12 @@ class CCController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+            $history->action_name = 'Update';
             $history->save();
         }
-        if ($lastCft->ProductionLiquid_by != $request->ProductionLiquid_by) {
+        if ($lastCft->ProductionLiquid_by != $request->ProductionLiquid_by && $request->ProductionLiquid_by != null) {
             $history = new RcmDocHistory;
             $history->cc_id = $id;
             $history->activity_type = 'Production Liquid Review By';
@@ -4598,9 +4544,12 @@ class CCController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+            $history->action_name = 'Update';
             $history->save();
         }
-        if ($lastCft->ProductionLiquid_on != $request->ProductionLiquid_on) {
+        if ($lastCft->ProductionLiquid_on != $request->ProductionLiquid_on && $request->ProductionLiquid_on != null) {
             $history = new RcmDocHistory;
             $history->cc_id = $id;
             $history->activity_type = 'Production Liquid Review On';
@@ -4611,11 +4560,14 @@ class CCController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+            $history->action_name = 'Update';
             $history->save();
         }
 
         /*************** Production Injection ***************/
-        if ($lastCft->Production_Injection_Review != $request->Production_Injection_Review) {
+        if ($lastCft->Production_Injection_Review != $request->Production_Injection_Review && $request->Production_Injection_Review != null) {
             $history = new RcmDocHistory;
             $history->cc_id = $id;
             $history->activity_type = 'Production Injection Review Required';
@@ -4626,9 +4578,12 @@ class CCController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+            $history->action_name = 'Update';
             $history->save();
         }
-        if ($lastCft->Production_Injection_Person != $request->Production_Injection_Person) {
+        if ($lastCft->Production_Injection_Person != $request->Production_Injection_Person && $request->Production_Injection_Person != null) {
             $history = new RcmDocHistory;
             $history->cc_id = $id;
             $history->activity_type = 'Production Injection Person';
@@ -4639,9 +4594,12 @@ class CCController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+            $history->action_name = 'Update';
             $history->save();
         }
-        if ($lastCft->Production_Injection_Assessment != $request->Production_Injection_Assessment) {
+        if ($lastCft->Production_Injection_Assessment != $request->Production_Injection_Assessment && $request->Production_Injection_Assessment != null) {
             $history = new RcmDocHistory;
             $history->cc_id = $id;
             $history->activity_type = 'Production Injection Assessment';
@@ -4652,9 +4610,12 @@ class CCController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+            $history->action_name = 'Update';
             $history->save();
         }
-        if ($lastCft->Production_Injection_Feedback != $request->Production_Injection_Feedback) {
+        if ($lastCft->Production_Injection_Feedback != $request->Production_Injection_Feedback && $request->Production_Injection_Feedback != null) {
             $history = new RcmDocHistory;
             $history->cc_id = $id;
             $history->activity_type = 'Production Injection Feedback';
@@ -4665,9 +4626,12 @@ class CCController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+            $history->action_name = 'Update';
             $history->save();
         }
-        if ($lastCft->Production_Injection_By != $request->Production_Injection_By) {
+        if ($lastCft->Production_Injection_By != $request->Production_Injection_By && $request->Production_Injection_By != null) {
             $history = new RcmDocHistory;
             $history->cc_id = $id;
             $history->activity_type = 'Production Injection Review By';
@@ -4678,9 +4642,12 @@ class CCController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+            $history->action_name = 'Update';
             $history->save();
         }
-        if ($lastCft->Production_Injection_On != $request->Production_Injection_On) {
+        if ($lastCft->Production_Injection_On != $request->Production_Injection_On && $request->Production_Injection_On != null) {
             $history = new RcmDocHistory;
             $history->cc_id = $id;
             $history->activity_type = 'Production Injection On';
@@ -4691,11 +4658,14 @@ class CCController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+            $history->action_name = 'Update';
             $history->save();
         }
 
         /*************** Stores ***************/
-        if ($lastCft->Store_Review != $request->Store_Review) {
+        if ($lastCft->Store_Review != $request->Store_Review && $request->Store_Review != null) {
             $history = new RcmDocHistory;
             $history->cc_id = $id;
             $history->activity_type = 'Store Review Required';
@@ -4706,9 +4676,12 @@ class CCController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+            $history->action_name = 'Update';
             $history->save();
         }
-        if ($lastCft->Store_person != $request->Store_person) {
+        if ($lastCft->Store_person != $request->Store_person && $request->Store_person != null) {
             $history = new RcmDocHistory;
             $history->cc_id = $id;
             $history->activity_type = 'Store Person';
@@ -4719,9 +4692,12 @@ class CCController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+            $history->action_name = 'Update';
             $history->save();
         }
-        if ($lastCft->Store_assessment != $request->Store_assessment) {
+        if ($lastCft->Store_assessment != $request->Store_assessment && $request->Store_assessment != null) {
             $history = new RcmDocHistory;
             $history->cc_id = $id;
             $history->activity_type = 'Store Assessment';
@@ -4732,9 +4708,12 @@ class CCController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+            $history->action_name = 'Update';
             $history->save();
         }
-        if ($lastCft->Store_feedback != $request->Store_feedback) {
+        if ($lastCft->Store_feedback != $request->Store_feedback && $request->Store_feedback != null) {
             $history = new RcmDocHistory;
             $history->cc_id = $id;
             $history->activity_type = 'Store Feedback';
@@ -4745,9 +4724,12 @@ class CCController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+            $history->action_name = 'Update';
             $history->save();
         }
-        if ($lastCft->Store_by != $request->Store_by) {
+        if ($lastCft->Store_by != $request->Store_by && $request->Store_by != null) {
             $history = new RcmDocHistory;
             $history->cc_id = $id;
             $history->activity_type = 'Store Review By';
@@ -4758,9 +4740,12 @@ class CCController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+            $history->action_name = 'Update';
             $history->save();
         }
-        if ($lastCft->Store_on != $request->Store_on) {
+        if ($lastCft->Store_on != $request->Store_on && $request->Store_on != null) {
             $history = new RcmDocHistory;
             $history->cc_id = $id;
             $history->activity_type = 'Store Review On';
@@ -4771,11 +4756,14 @@ class CCController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+            $history->action_name = 'Update';
             $history->save();
         }
 
         /*************** Quality Control ***************/
-        if ($lastCft->Quality_review != $request->Quality_review) {
+        if ($lastCft->Quality_review != $request->Quality_review && $request->Quality_review != null) {
             $history = new RcmDocHistory;
             $history->cc_id = $id;
             $history->activity_type = 'Quality Control Required';
@@ -4786,9 +4774,12 @@ class CCController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+            $history->action_name = 'Update';
             $history->save();
         }
-        if ($lastCft->Quality_Control_Person != $request->Quality_Control_Person) {
+        if ($lastCft->Quality_Control_Person != $request->Quality_Control_Person && $request->Quality_Control_Person != null) {
             $history = new RcmDocHistory;
             $history->cc_id = $id;
             $history->activity_type = 'Quality Control Person';
@@ -4799,9 +4790,12 @@ class CCController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+            $history->action_name = 'Update';
             $history->save();
         }
-        if ($lastCft->Quality_Control_assessment != $request->Quality_Control_assessment) {
+        if ($lastCft->Quality_Control_assessment != $request->Quality_Control_assessment && $request->Quality_Control_assessment != null) {
             $history = new RcmDocHistory;
             $history->cc_id = $id;
             $history->activity_type = 'Quality Control Assessment';
@@ -4812,9 +4806,12 @@ class CCController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+            $history->action_name = 'Update';
             $history->save();
         }
-        if ($lastCft->Quality_Control_feedback != $request->Quality_Control_feedback) {
+        if ($lastCft->Quality_Control_feedback != $request->Quality_Control_feedback && $request->Quality_Control_feedback != null) {
             $history = new RcmDocHistory;
             $history->cc_id = $id;
             $history->activity_type = 'Quality Control Feeback';
@@ -4825,9 +4822,12 @@ class CCController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+            $history->action_name = 'Update';
             $history->save();
         }
-        if ($lastCft->Quality_Control_by != $request->Quality_Control_by) {
+        if ($lastCft->Quality_Control_by != $request->Quality_Control_by && $request->Quality_Control_by != null) {
             $history = new RcmDocHistory;
             $history->cc_id = $id;
             $history->activity_type = 'Quality Control By';
@@ -4838,9 +4838,12 @@ class CCController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+            $history->action_name = 'Update';
             $history->save();
         }
-        if ($lastCft->Quality_Control_on != $request->Quality_Control_on) {
+        if ($lastCft->Quality_Control_on != $request->Quality_Control_on && $request->Quality_Control_on != null) {
             $history = new RcmDocHistory;
             $history->cc_id = $id;
             $history->activity_type = 'Quality Control On';
@@ -4851,11 +4854,14 @@ class CCController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+            $history->action_name = 'Update';
             $history->save();
         }
 
         /*************** Research & Development ***************/
-        if ($lastCft->ResearchDevelopment_Review != $request->ResearchDevelopment_Review) {
+        if ($lastCft->ResearchDevelopment_Review != $request->ResearchDevelopment_Review && $request->ResearchDevelopment_Review != null) {
             $history = new RcmDocHistory;
             $history->cc_id = $id;
             $history->activity_type = 'Research & Development Required';
@@ -4866,9 +4872,12 @@ class CCController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+            $history->action_name = 'Update';
             $history->save();
         }
-        if ($lastCft->ResearchDevelopment_person != $request->ResearchDevelopment_person) {
+        if ($lastCft->ResearchDevelopment_person != $request->ResearchDevelopment_person && $request->ResearchDevelopment_person != null) {
             $history = new RcmDocHistory;
             $history->cc_id = $id;
             $history->activity_type = 'Research & Development Person';
@@ -4879,9 +4888,12 @@ class CCController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+            $history->action_name = 'Update';
             $history->save();
         }
-        if ($lastCft->ResearchDevelopment_assessment != $request->ResearchDevelopment_assessment) {
+        if ($lastCft->ResearchDevelopment_assessment != $request->ResearchDevelopment_assessment && $request->ResearchDevelopment_assessment != null) {
             $history = new RcmDocHistory;
             $history->cc_id = $id;
             $history->activity_type = 'Research & Development Assessment';
@@ -4892,9 +4904,12 @@ class CCController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+            $history->action_name = 'Update';
             $history->save();
         }
-        if ($lastCft->ResearchDevelopment_feedback != $request->ResearchDevelopment_feedback) {
+        if ($lastCft->ResearchDevelopment_feedback != $request->ResearchDevelopment_feedback && $request->ResearchDevelopment_feedback != null) {
             $history = new RcmDocHistory;
             $history->cc_id = $id;
             $history->activity_type = 'Research & Development Feedback';
@@ -4905,9 +4920,12 @@ class CCController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+            $history->action_name = 'Update';
             $history->save();
         }
-        if ($lastCft->ResearchDevelopment_by != $request->ResearchDevelopment_by) {
+        if ($lastCft->ResearchDevelopment_by != $request->ResearchDevelopment_by && $request->ResearchDevelopment_by != null) {
             $history = new RcmDocHistory;
             $history->cc_id = $id;
             $history->activity_type = 'Research & Development By';
@@ -4918,9 +4936,12 @@ class CCController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+            $history->action_name = 'Update';
             $history->save();
         }
-        if ($lastCft->ResearchDevelopment_on != $request->ResearchDevelopment_on) {
+        if ($lastCft->ResearchDevelopment_on != $request->ResearchDevelopment_on && $request->ResearchDevelopment_on != null) {
             $history = new RcmDocHistory;
             $history->cc_id = $id;
             $history->activity_type = 'Research & Development On';
@@ -4931,11 +4952,14 @@ class CCController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+            $history->action_name = 'Update';
             $history->save();
         }
 
         /*************** Engineering ***************/
-        if ($lastCft->Engineering_review != $request->Engineering_review) {
+        if ($lastCft->Engineering_review != $request->Engineering_review && $request->Engineering_review != null) {
             $history = new RcmDocHistory;
             $history->cc_id = $id;
             $history->activity_type = 'Engineering Review Required';
@@ -4946,9 +4970,12 @@ class CCController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+            $history->action_name = 'Update';
             $history->save();
         }
-        if ($lastCft->Engineering_person != $request->Engineering_person) {
+        if ($lastCft->Engineering_person != $request->Engineering_person && $request->Engineering_person != null) {
             $history = new RcmDocHistory;
             $history->cc_id = $id;
             $history->activity_type = 'Engineering Person';
@@ -4959,9 +4986,12 @@ class CCController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+            $history->action_name = 'Update';
             $history->save();
         }
-        if ($lastCft->Engineering_assessment != $request->Engineering_assessment) {
+        if ($lastCft->Engineering_assessment != $request->Engineering_assessment && $request->Engineering_assessment != null) {
             $history = new RcmDocHistory;
             $history->cc_id = $id;
             $history->activity_type = 'Engineering Assessment';
@@ -4972,9 +5002,12 @@ class CCController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+            $history->action_name = 'Update';
             $history->save();
         }
-        if ($lastCft->Engineering_feedback != $request->Engineering_feedback) {
+        if ($lastCft->Engineering_feedback != $request->Engineering_feedback && $request->Engineering_feedback != null) {
             $history = new RcmDocHistory;
             $history->cc_id = $id;
             $history->activity_type = 'Engineering Feedback';
@@ -4985,9 +5018,12 @@ class CCController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+            $history->action_name = 'Update';
             $history->save();
         }
-        if ($lastCft->Engineering_by != $request->Engineering_by) {
+        if ($lastCft->Engineering_by != $request->Engineering_by && $request->Engineering_by != null) {
             $history = new RcmDocHistory;
             $history->cc_id = $id;
             $history->activity_type = 'Engineering Review By';
@@ -4998,9 +5034,12 @@ class CCController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+            $history->action_name = 'Update';
             $history->save();
         }
-        if ($lastCft->Engineering_on != $request->Engineering_on) {
+        if ($lastCft->Engineering_on != $request->Engineering_on && $request->Engineering_on != null) {
             $history = new RcmDocHistory;
             $history->cc_id = $id;
             $history->activity_type = 'Engineering Review On';
@@ -5011,11 +5050,14 @@ class CCController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+            $history->action_name = 'Update';
             $history->save();
         }
 
         /*************** Human Resource ***************/
-        if ($lastCft->Human_Resource_review != $request->Human_Resource_review) {
+        if ($lastCft->Human_Resource_review != $request->Human_Resource_review && $request->Human_Resource_review != null) {
             $history = new RcmDocHistory;
             $history->cc_id = $id;
             $history->activity_type = 'Human Resource Review Required';
@@ -5026,9 +5068,12 @@ class CCController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+            $history->action_name = 'Update';
             $history->save();
         }
-        if ($lastCft->Human_Resource_person != $request->Human_Resource_person) {
+        if ($lastCft->Human_Resource_person != $request->Human_Resource_person && $request->Human_Resource_person != null) {
             $history = new RcmDocHistory;
             $history->cc_id = $id;
             $history->activity_type = 'Human Resource Person';
@@ -5039,9 +5084,12 @@ class CCController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+            $history->action_name = 'Update';
             $history->save();
         }
-        if ($lastCft->Human_Resource_assessment != $request->Human_Resource_assessment) {
+        if ($lastCft->Human_Resource_assessment != $request->Human_Resource_assessment && $request->Human_Resource_assessment != null) {
             $history = new RcmDocHistory;
             $history->cc_id = $id;
             $history->activity_type = 'Human Resource Assessment';
@@ -5052,9 +5100,12 @@ class CCController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+            $history->action_name = 'Update';
             $history->save();
         }
-        if ($lastCft->Human_Resource_feedback != $request->Human_Resource_feedback) {
+        if ($lastCft->Human_Resource_feedback != $request->Human_Resource_feedback && $request->Human_Resource_feedback != null) {
             $history = new RcmDocHistory;
             $history->cc_id = $id;
             $history->activity_type = 'Human Resource Feedback';
@@ -5065,9 +5116,12 @@ class CCController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+            $history->action_name = 'Update';
             $history->save();
         }
-        if ($lastCft->Human_Resource_by != $request->Human_Resource_by) {
+        if ($lastCft->Human_Resource_by != $request->Human_Resource_by && $request->Human_Resource_by != null) {
             $history = new RcmDocHistory;
             $history->cc_id = $id;
             $history->activity_type = 'Human Resource Review By';
@@ -5078,9 +5132,12 @@ class CCController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+            $history->action_name = 'Update';
             $history->save();
         }
-        if ($lastCft->Human_Resource_on != $request->Human_Resource_on) {
+        if ($lastCft->Human_Resource_on != $request->Human_Resource_on && $request->Human_Resource_on != null) {
             $history = new RcmDocHistory;
             $history->cc_id = $id;
             $history->activity_type = 'Human Resource Review On';
@@ -5091,11 +5148,14 @@ class CCController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+            $history->action_name = 'Update';
             $history->save();
         }
 
         /*************** Microbiology ***************/
-        if ($lastCft->Microbiology_Review != $request->Microbiology_Review) {
+        if ($lastCft->Microbiology_Review != $request->Microbiology_Review && $request->Microbiology_Review != null) {
             $history = new RcmDocHistory;
             $history->cc_id = $id;
             $history->activity_type = 'Microbiology Review Required';
@@ -5106,9 +5166,12 @@ class CCController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+            $history->action_name = 'Update';
             $history->save();
         }
-        if ($lastCft->Microbiology_person != $request->Microbiology_person) {
+        if ($lastCft->Microbiology_person != $request->Microbiology_person && $request->Microbiology_person != null) {
             $history = new RcmDocHistory;
             $history->cc_id = $id;
             $history->activity_type = 'Microbiology Person';
@@ -5119,9 +5182,12 @@ class CCController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+            $history->action_name = 'Update';
             $history->save();
         }
-        if ($lastCft->Microbiology_assessment != $request->Microbiology_assessment) {
+        if ($lastCft->Microbiology_assessment != $request->Microbiology_assessment && $request->Microbiology_assessment != null) {
             $history = new RcmDocHistory;
             $history->cc_id = $id;
             $history->activity_type = 'Microbiology Assessment';
@@ -5132,9 +5198,12 @@ class CCController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+            $history->action_name = 'Update';
             $history->save();
         }
-        if ($lastCft->Microbiology_feedback != $request->Microbiology_feedback) {
+        if ($lastCft->Microbiology_feedback != $request->Microbiology_feedback && $request->Microbiology_feedback != null) {
             $history = new RcmDocHistory;
             $history->cc_id = $id;
             $history->activity_type = 'Microbiology Feedback';
@@ -5145,9 +5214,12 @@ class CCController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+            $history->action_name = 'Update';
             $history->save();
         }
-        if ($lastCft->Microbiology_by != $request->Microbiology_by) {
+        if ($lastCft->Microbiology_by != $request->Microbiology_by && $request->Microbiology_by != null) {
             $history = new RcmDocHistory;
             $history->cc_id = $id;
             $history->activity_type = 'Microbiology Review By';
@@ -5158,9 +5230,12 @@ class CCController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+            $history->action_name = 'Update';
             $history->save();
         }
-        if ($lastCft->Microbiology_on != $request->Microbiology_on) {
+        if ($lastCft->Microbiology_on != $request->Microbiology_on && $request->Microbiology_on != null) {
             $history = new RcmDocHistory;
             $history->cc_id = $id;
             $history->activity_type = 'Microbiology Review On';
@@ -5171,11 +5246,14 @@ class CCController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+            $history->action_name = 'Update';
             $history->save();
         }
 
         /*************** Regulatory Affair ***************/
-        if ($lastCft->RegulatoryAffair_Review != $request->RegulatoryAffair_Review) {
+        if ($lastCft->RegulatoryAffair_Review != $request->RegulatoryAffair_Review && $request->RegulatoryAffair_Review != null) {
             $history = new RcmDocHistory;
             $history->cc_id = $id;
             $history->activity_type = 'Regulatory Affair Review Required';
@@ -5186,9 +5264,12 @@ class CCController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+            $history->action_name = 'Update';
             $history->save();
         }
-        if ($lastCft->RegulatoryAffair_person != $request->RegulatoryAffair_person) {
+        if ($lastCft->RegulatoryAffair_person != $request->RegulatoryAffair_person && $request->RegulatoryAffair_person != null) {
             $history = new RcmDocHistory;
             $history->cc_id = $id;
             $history->activity_type = 'Regulatory Affair Person';
@@ -5199,9 +5280,12 @@ class CCController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+            $history->action_name = 'Update';
             $history->save();
         }
-        if ($lastCft->RegulatoryAffair_assessment != $request->RegulatoryAffair_assessment) {
+        if ($lastCft->RegulatoryAffair_assessment != $request->RegulatoryAffair_assessment && $request->RegulatoryAffair_assessment != null) {
             $history = new RcmDocHistory;
             $history->cc_id = $id;
             $history->activity_type = 'Regulatory Affair Assessment';
@@ -5212,9 +5296,12 @@ class CCController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+            $history->action_name = 'Update';
             $history->save();
         }
-        if ($lastCft->RegulatoryAffair_feedback != $request->RegulatoryAffair_feedback) {
+        if ($lastCft->RegulatoryAffair_feedback != $request->RegulatoryAffair_feedback && $request->RegulatoryAffair_feedback != null) {
             $history = new RcmDocHistory;
             $history->cc_id = $id;
             $history->activity_type = 'Regulatory Affair Feedback';
@@ -5225,9 +5312,12 @@ class CCController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+            $history->action_name = 'Update';
             $history->save();
         }
-        if ($lastCft->RegulatoryAffair_by != $request->RegulatoryAffair_by) {
+        if ($lastCft->RegulatoryAffair_by != $request->RegulatoryAffair_by && $request->RegulatoryAffair_by != null) {
             $history = new RcmDocHistory;
             $history->cc_id = $id;
             $history->activity_type = 'Regulatory Affair Review By';
@@ -5238,9 +5328,12 @@ class CCController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+            $history->action_name = 'Update';
             $history->save();
         }
-        if ($lastCft->RegulatoryAffair_on != $request->RegulatoryAffair_on) {
+        if ($lastCft->RegulatoryAffair_on != $request->RegulatoryAffair_on  && $request->RegulatoryAffair_on != null) {
             $history = new RcmDocHistory;
             $history->cc_id = $id;
             $history->activity_type = 'Regulatory Affair Review On';
@@ -5251,11 +5344,14 @@ class CCController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+            $history->action_name = 'Update';
             $history->save();
         }
 
         /*************** Corporate Quality Assurance ***************/
-        if ($lastCft->CorporateQualityAssurance_Review != $request->CorporateQualityAssurance_Review) {
+        if ($lastCft->CorporateQualityAssurance_Review != $request->CorporateQualityAssurance_Review && $request->CorporateQualityAssurance_Review != null) {
             $history = new RcmDocHistory;
             $history->cc_id = $id;
             $history->activity_type = 'Corporate Quality Assurance Review Required';
@@ -5266,9 +5362,12 @@ class CCController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+            $history->action_name = 'Update';
             $history->save();
         }
-        if ($lastCft->CorporateQualityAssurance_person != $request->CorporateQualityAssurance_person) {
+        if ($lastCft->CorporateQualityAssurance_person != $request->CorporateQualityAssurance_person && $request->CorporateQualityAssurance_person != null) {
             $history = new RcmDocHistory;
             $history->cc_id = $id;
             $history->activity_type = 'Corporate Quality Assurance Person';
@@ -5279,9 +5378,12 @@ class CCController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+            $history->action_name = 'Update';
             $history->save();
         }
-        if ($lastCft->CorporateQualityAssurance_assessment != $request->CorporateQualityAssurance_assessment) {
+        if ($lastCft->CorporateQualityAssurance_assessment != $request->CorporateQualityAssurance_assessment && $request->CorporateQualityAssurance_assessment != null) {
             $history = new RcmDocHistory;
             $history->cc_id = $id;
             $history->activity_type = 'Corporate Quality Assurance Assessment';
@@ -5292,9 +5394,12 @@ class CCController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+            $history->action_name = 'Update';
             $history->save();
         }
-        if ($lastCft->CorporateQualityAssurance_feedback != $request->CorporateQualityAssurance_feedback) {
+        if ($lastCft->CorporateQualityAssurance_feedback != $request->CorporateQualityAssurance_feedback && $request->CorporateQualityAssurance_feedback != null) {
             $history = new RcmDocHistory;
             $history->cc_id = $id;
             $history->activity_type = 'Corporate Quality Assurance Feedback';
@@ -5305,9 +5410,12 @@ class CCController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+            $history->action_name = 'Update';
             $history->save();
         }
-        if ($lastCft->CorporateQualityAssurance_by != $request->CorporateQualityAssurance_by) {
+        if ($lastCft->CorporateQualityAssurance_by != $request->CorporateQualityAssurance_by && $request->CorporateQualityAssurance_by != null) {
             $history = new RcmDocHistory;
             $history->cc_id = $id;
             $history->activity_type = 'Corporate Quality Assurance Review By';
@@ -5318,9 +5426,12 @@ class CCController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+            $history->action_name = 'Update';
             $history->save();
         }
-        if ($lastCft->CorporateQualityAssurance_on != $request->CorporateQualityAssurance_on) {
+        if ($lastCft->CorporateQualityAssurance_on != $request->CorporateQualityAssurance_on && $request->CorporateQualityAssurance_on != null) {
             $history = new RcmDocHistory;
             $history->cc_id = $id;
             $history->activity_type = 'Corporate Quality Assurance Review On';
@@ -5331,11 +5442,14 @@ class CCController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+            $history->action_name = 'Update';
             $history->save();
         }
 
         /*************** Safety ***************/
-        if ($lastCft->Environment_Health_review != $request->Environment_Health_review) {
+        if ($lastCft->Environment_Health_review != $request->Environment_Health_review && $request->Environment_Health_review != null) {
             $history = new RcmDocHistory;
             $history->cc_id = $id;
             $history->activity_type = 'Safety Review Required';
@@ -5346,9 +5460,12 @@ class CCController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+            $history->action_name = 'Update';
             $history->save();
         }
-        if ($lastCft->Environment_Health_Safety_person != $request->Environment_Health_Safety_person) {
+        if ($lastCft->Environment_Health_Safety_person != $request->Environment_Health_Safety_person && $request->Environment_Health_Safety_person != null) {
             $history = new RcmDocHistory;
             $history->cc_id = $id;
             $history->activity_type = 'Safety Person';
@@ -5359,9 +5476,12 @@ class CCController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+            $history->action_name = 'Update';
             $history->save();
         }
-        if ($lastCft->Health_Safety_assessment != $request->Health_Safety_assessment) {
+        if ($lastCft->Health_Safety_assessment != $request->Health_Safety_assessment && $request->Health_Safety_assessment != null) {
             $history = new RcmDocHistory;
             $history->cc_id = $id;
             $history->activity_type = 'Safety Assessment';
@@ -5372,9 +5492,12 @@ class CCController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+            $history->action_name = 'Update';
             $history->save();
         }
-        if ($lastCft->Health_Safety_feedback != $request->Health_Safety_feedback) {
+        if ($lastCft->Health_Safety_feedback != $request->Health_Safety_feedback && $request->Health_Safety_feedback != null) {
             $history = new RcmDocHistory;
             $history->cc_id = $id;
             $history->activity_type = 'Safety Feedback';
@@ -5385,9 +5508,12 @@ class CCController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+            $history->action_name = 'Update';
             $history->save();
         }
-        if ($lastCft->Environment_Health_Safety_by != $request->Environment_Health_Safety_by) {
+        if ($lastCft->Environment_Health_Safety_by != $request->Environment_Health_Safety_by && $request->Environment_Health_Safety_by != null) {
             $history = new RcmDocHistory;
             $history->cc_id = $id;
             $history->activity_type = 'Safety Review By';
@@ -5398,9 +5524,12 @@ class CCController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+            $history->action_name = 'Update';
             $history->save();
         }
-        if ($lastCft->Environment_Health_Safety_on != $request->Environment_Health_Safety_on) {
+        if ($lastCft->Environment_Health_Safety_on != $request->Environment_Health_Safety_on && $request->Environment_Health_Safety_on != null) {
             $history = new RcmDocHistory;
             $history->cc_id = $id;
             $history->activity_type = 'Safety Review On';
@@ -5411,11 +5540,14 @@ class CCController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+            $history->action_name = 'Update';
             $history->save();
         }
 
         /*************** Information Technology ***************/
-        if ($lastCft->Information_Technology_review != $request->Information_Technology_review) {
+        if ($lastCft->Information_Technology_review != $request->Information_Technology_review && $request->Information_Technology_review != null) {
             $history = new RcmDocHistory;
             $history->cc_id = $id;
             $history->activity_type = 'Information Technology Review Required';
@@ -5426,9 +5558,12 @@ class CCController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+            $history->action_name = 'Update';
             $history->save();
         }
-        if ($lastCft->Information_Technology_person != $request->Information_Technology_person) {
+        if ($lastCft->Information_Technology_person != $request->Information_Technology_person && $request->Information_Technology_person != null) {
             $history = new RcmDocHistory;
             $history->cc_id = $id;
             $history->activity_type = 'Information Technology Person';
@@ -5439,9 +5574,12 @@ class CCController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+            $history->action_name = 'Update';
             $history->save();
         }
-        if ($lastCft->Information_Technology_assessment != $request->Information_Technology_assessment) {
+        if ($lastCft->Information_Technology_assessment != $request->Information_Technology_assessment && $request->Information_Technology_assessment != null) {
             $history = new RcmDocHistory;
             $history->cc_id = $id;
             $history->activity_type = 'Information Technology Assessment';
@@ -5452,9 +5590,12 @@ class CCController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+            $history->action_name = 'Update';
             $history->save();
         }
-        if ($lastCft->Information_Technology_feedback != $request->Information_Technology_feedback) {
+        if ($lastCft->Information_Technology_feedback != $request->Information_Technology_feedback && $request->Information_Technology_feedback != null) {
             $history = new RcmDocHistory;
             $history->cc_id = $id;
             $history->activity_type = 'Information Technology Feedback';
@@ -5465,9 +5606,12 @@ class CCController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+            $history->action_name = 'Update';
             $history->save();
         }
-        if ($lastCft->Information_Technology_by != $request->Information_Technology_by) {
+        if ($lastCft->Information_Technology_by != $request->Information_Technology_by && $request->Information_Technology_by != null) {
             $history = new RcmDocHistory;
             $history->cc_id = $id;
             $history->activity_type = 'Information Technology Review By';
@@ -5478,9 +5622,12 @@ class CCController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+            $history->action_name = 'Update';
             $history->save();
         }
-        if ($lastCft->Information_Technology_on != $request->Information_Technology_on) {
+        if ($lastCft->Information_Technology_on != $request->Information_Technology_on && $request->Information_Technology_on != null) {
             $history = new RcmDocHistory;
             $history->cc_id = $id;
             $history->activity_type = 'Information Technology Review On';
@@ -5491,11 +5638,14 @@ class CCController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+            $history->action_name = 'Update';
             $history->save();
         }
 
         /*************** Contract Giver ***************/
-        if ($lastCft->ContractGiver_Review != $request->ContractGiver_Review) {
+        if ($lastCft->ContractGiver_Review != $request->ContractGiver_Review && $request->ContractGiver_Review != null) {
             $history = new RcmDocHistory;
             $history->cc_id = $id;
             $history->activity_type = 'Contract Giver Review Required';
@@ -5506,9 +5656,12 @@ class CCController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+            $history->action_name = 'Update';
             $history->save();
         }
-        if ($lastCft->ContractGiver_person != $request->ContractGiver_person) {
+        if ($lastCft->ContractGiver_person != $request->ContractGiver_person && $request->ContractGiver_person != null) {
             $history = new RcmDocHistory;
             $history->cc_id = $id;
             $history->activity_type = 'Contract Giver Person';
@@ -5519,9 +5672,12 @@ class CCController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+            $history->action_name = 'Update';
             $history->save();
         }
-        if ($lastCft->ContractGiver_assessment != $request->ContractGiver_assessment) {
+        if ($lastCft->ContractGiver_assessment != $request->ContractGiver_assessment && $request->ContractGiver_assessment != null) {
             $history = new RcmDocHistory;
             $history->cc_id = $id;
             $history->activity_type = 'Contract Giver Assessment';
@@ -5532,9 +5688,12 @@ class CCController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+            $history->action_name = 'Update';
             $history->save();
         }
-        if ($lastCft->ContractGiver_feedback != $request->ContractGiver_feedback) {
+        if ($lastCft->ContractGiver_feedback != $request->ContractGiver_feedback && $request->ContractGiver_feedback != null) {
             $history = new RcmDocHistory;
             $history->cc_id = $id;
             $history->activity_type = 'Contract Giver Feedback';
@@ -5545,9 +5704,12 @@ class CCController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+            $history->action_name = 'Update';
             $history->save();
         }
-        if ($lastCft->ContractGiver_by != $request->ContractGiver_by) {
+        if ($lastCft->ContractGiver_by != $request->ContractGiver_by && $request->ContractGiver_by != null) {
             $history = new RcmDocHistory;
             $history->cc_id = $id;
             $history->activity_type = 'Contract Giver Review By';
@@ -5558,9 +5720,12 @@ class CCController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+            $history->action_name = 'Update';
             $history->save();
         }
-        if ($lastCft->ContractGiver_on != $request->ContractGiver_on) {
+        if ($lastCft->ContractGiver_on != $request->ContractGiver_on && $request->ContractGiver_on != null) {
             $history = new RcmDocHistory;
             $history->cc_id = $id;
             $history->activity_type = 'Contract Giver Review On';
@@ -5571,10 +5736,13 @@ class CCController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+            $history->action_name = 'Update';
             $history->save();
         }
         
-        if ($lastDocument->Microbiology != $openState->Microbiology) {
+        if ($lastDocument->Microbiology != $openState->Microbiology && $request->Microbiology != null) {
             $history = new RcmDocHistory;
             $history->cc_id = $id;
             $history->activity_type = 'CFT Reviewer';
@@ -5590,7 +5758,7 @@ class CCController extends Controller
             $history->action_name = 'Update';
             $history->save();
         }
-        if ($lastDocument->Microbiology_Person != $openState->Microbiology_Person) {
+        if ($lastDocument->Microbiology_Person != $openState->Microbiology_Person && $request->Microbiology_Person != null) {
             $history = new RcmDocHistory;
             $history->cc_id = $id;
             $history->activity_type = 'CFT Reviewer Person';
@@ -5608,7 +5776,7 @@ class CCController extends Controller
         }
     
         /*************** Other 1 ***************/
-        if ($lastCft->Other1_review != $request->Other1_review) {
+        if ($lastCft->Other1_review != $request->Other1_review && $request->Other1_review != null) {
             $history = new RcmDocHistory;
             $history->cc_id = $id;
             $history->activity_type = 'Other 1 Review Required';
@@ -5619,9 +5787,12 @@ class CCController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+            $history->action_name = 'Update';
             $history->save();
         }
-        if ($lastCft->Other1_person != $request->Other1_person) {
+        if ($lastCft->Other1_person != $request->Other1_person && $request->Other1_person != null) {
             $history = new RcmDocHistory;
             $history->cc_id = $id;
             $history->activity_type = 'Other 1 Person';
@@ -5632,9 +5803,12 @@ class CCController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+            $history->action_name = 'Update';
             $history->save();
         }
-        if ($lastCft->Other1_Department_person != $request->Other1_Department_person) {
+        if ($lastCft->Other1_Department_person != $request->Other1_Department_person && $request->Other1_Department_person != null) {
             $history = new RcmDocHistory;
             $history->cc_id = $id;
             $history->activity_type = 'Other 1 Review Required';
@@ -5645,9 +5819,12 @@ class CCController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+            $history->action_name = 'Update';
             $history->save();
         }
-        if ($lastCft->Other1_assessment != $request->Other1_assessment) {
+        if ($lastCft->Other1_assessment != $request->Other1_assessment && $request->Other1_assessment != null) {
             $history = new RcmDocHistory;
             $history->cc_id = $id;
             $history->activity_type = 'Other 1 Assessment';
@@ -5658,9 +5835,12 @@ class CCController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+            $history->action_name = 'Update';
             $history->save();
         }
-        if ($lastCft->Other1_feedback != $request->Other1_feedback) {
+        if ($lastCft->Other1_feedback != $request->Other1_feedback && $request->Other1_feedback != null) {
             $history = new RcmDocHistory;
             $history->cc_id = $id;
             $history->activity_type = 'Other 1 Feedback';
@@ -5671,9 +5851,12 @@ class CCController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+            $history->action_name = 'Update';
             $history->save();
         }
-        if ($lastCft->Other1_by != $request->Other1_by) {
+        if ($lastCft->Other1_by != $request->Other1_by && $request->Other1_by != null) {
             $history = new RcmDocHistory;
             $history->cc_id = $id;
             $history->activity_type = 'Other 1 Review By';
@@ -5684,9 +5867,12 @@ class CCController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+            $history->action_name = 'Update';
             $history->save();
         }
-        if ($lastCft->Other1_on != $request->Other1_on) {
+        if ($lastCft->Other1_on != $request->Other1_on && $request->Other1_on != null) {
             $history = new RcmDocHistory;
             $history->cc_id = $id;
             $history->activity_type = 'Other 1 Review On';
@@ -5697,12 +5883,15 @@ class CCController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+            $history->action_name = 'Update';
             $history->save();
         }
 
 
         /*************** Other 2 ***************/
-        if ($lastCft->Other2_review != $request->Other2_review) {
+        if ($lastCft->Other2_review != $request->Other2_review && $request->Other2_review != null) {
             $history = new RcmDocHistory;
             $history->cc_id = $id;
             $history->activity_type = 'Other 2 Review Required';
@@ -5713,9 +5902,12 @@ class CCController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+            $history->action_name = 'Update';
             $history->save();
         }
-        if ($lastCft->Other2_person != $request->Other2_person) {
+        if ($lastCft->Other2_person != $request->Other2_person && $request->Other2_person != null) {
             $history = new RcmDocHistory;
             $history->cc_id = $id;
             $history->activity_type = 'Other 2 Person';
@@ -5726,9 +5918,12 @@ class CCController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+            $history->action_name = 'Update';
             $history->save();
         }
-        if ($lastCft->Other2_Department_person != $request->Other2_Department_person) {
+        if ($lastCft->Other2_Department_person != $request->Other2_Department_person && $request->Other2_Department_person != null) {
             $history = new RcmDocHistory;
             $history->cc_id = $id;
             $history->activity_type = 'Other 2 Review Required';
@@ -5739,9 +5934,12 @@ class CCController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+            $history->action_name = 'Update';
             $history->save();
         }
-        if ($lastCft->Other2_assessment != $request->Other2_assessment) {
+        if ($lastCft->Other2_assessment != $request->Other2_assessment && $request->Other2_assessment != null) {
             $history = new RcmDocHistory;
             $history->cc_id = $id;
             $history->activity_type = 'Other 2 Assessment';
@@ -5752,9 +5950,12 @@ class CCController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+            $history->action_name = 'Update';
             $history->save();
         }
-        if ($lastCft->Other2_feedback != $request->Other2_feedback) {
+        if ($lastCft->Other2_feedback != $request->Other2_feedback && $request->Other2_feedback != null) {
             $history = new RcmDocHistory;
             $history->cc_id = $id;
             $history->activity_type = 'Other 2 Feedback';
@@ -5765,9 +5966,12 @@ class CCController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+            $history->action_name = 'Update';
             $history->save();
         }
-        if ($lastCft->Other2_by != $request->Other2_by) {
+        if ($lastCft->Other2_by != $request->Other2_by && $request->Other2_by != null) {
             $history = new RcmDocHistory;
             $history->cc_id = $id;
             $history->activity_type = 'Other 2 Review By';
@@ -5778,9 +5982,12 @@ class CCController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+            $history->action_name = 'Update';
             $history->save();
         }
-        if ($lastCft->Other2_on != $request->Other2_on) {
+        if ($lastCft->Other2_on != $request->Other2_on && $request->Other2_on != null) {
             $history = new RcmDocHistory;
             $history->cc_id = $id;
             $history->activity_type = 'Other 2 Review On';
@@ -5791,11 +5998,14 @@ class CCController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+            $history->action_name = 'Update';
             $history->save();
         }
 
         /*************** Other 3 ***************/
-        if ($lastCft->Other3_review != $request->Other3_review) {
+        if ($lastCft->Other3_review != $request->Other3_review && $request->Other3_review != null) {
             $history = new RcmDocHistory;
             $history->cc_id = $id;
             $history->activity_type = 'Other 3 Review Required';
@@ -5806,9 +6016,12 @@ class CCController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+            $history->action_name = 'Update';
             $history->save();
         }
-        if ($lastCft->Other3_person != $request->Other3_person) {
+        if ($lastCft->Other3_person != $request->Other3_person && $request->Other3_person != null) {
             $history = new RcmDocHistory;
             $history->cc_id = $id;
             $history->activity_type = 'Other 3 Person';
@@ -5819,9 +6032,12 @@ class CCController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+            $history->action_name = 'Update';
             $history->save();
         }
-        if ($lastCft->Other3_Department_person != $request->Other3_Department_person) {
+        if ($lastCft->Other3_Department_person != $request->Other3_Department_person && $request->Other3_Department_person != null) {
             $history = new RcmDocHistory;
             $history->cc_id = $id;
             $history->activity_type = 'Other 3 Review Required';
@@ -5832,9 +6048,12 @@ class CCController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+            $history->action_name = 'Update';
             $history->save();
         }
-        if ($lastCft->Other3_assessment != $request->Other3_assessment) {
+        if ($lastCft->Other3_assessment != $request->Other3_assessment && $request->Other3_assessment != null) {
             $history = new RcmDocHistory;
             $history->cc_id = $id;
             $history->activity_type = 'Other 3 Assessment';
@@ -5845,9 +6064,12 @@ class CCController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+            $history->action_name = 'Update';
             $history->save();
         }
-        if ($lastCft->Other3_feedback != $request->Other3_feedback) {
+        if ($lastCft->Other3_feedback != $request->Other3_feedback && $request->Other3_feedback != null) {
             $history = new RcmDocHistory;
             $history->cc_id = $id;
             $history->activity_type = 'Other 3 Feedback';
@@ -5858,9 +6080,12 @@ class CCController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+            $history->action_name = 'Update';
             $history->save();
         }
-        if ($lastCft->Other3_by != $request->Other3_by) {
+        if ($lastCft->Other3_by != $request->Other3_by && $request->Other3_by != null) {
             $history = new RcmDocHistory;
             $history->cc_id = $id;
             $history->activity_type = 'Other 3 Review By';
@@ -5871,9 +6096,12 @@ class CCController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+            $history->action_name = 'Update';
             $history->save();
         }
-        if ($lastCft->Other3_on != $request->Other3_on) {
+        if ($lastCft->Other3_on != $request->Other3_on && $request->Other3_on != null) {
             $history = new RcmDocHistory;
             $history->cc_id = $id;
             $history->activity_type = 'Other 3 Review On';
@@ -5884,11 +6112,14 @@ class CCController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+            $history->action_name = 'Update';
             $history->save();
         }
 
         /*************** Other 4 ***************/
-        if ($lastCft->Other4_review != $request->Other4_review) {
+        if ($lastCft->Other4_review != $request->Other4_review && $request->Other4_review != null) {
             $history = new RcmDocHistory;
             $history->cc_id = $id;
             $history->activity_type = 'Other 4 Review Required';
@@ -5899,9 +6130,12 @@ class CCController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+            $history->action_name = 'Update';
             $history->save();
         }
-        if ($lastCft->Other4_person != $request->Other4_person) {
+        if ($lastCft->Other4_person != $request->Other4_person && $request->Other4_person != null) {
             $history = new RcmDocHistory;
             $history->cc_id = $id;
             $history->activity_type = 'Other 4 Person';
@@ -5912,9 +6146,12 @@ class CCController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+            $history->action_name = 'Update';
             $history->save();
         }
-        if ($lastCft->Other4_Department_person != $request->Other4_Department_person) {
+        if ($lastCft->Other4_Department_person != $request->Other4_Department_person && $request->Other4_Department_person != null) {
             $history = new RcmDocHistory;
             $history->cc_id = $id;
             $history->activity_type = 'Other 4 Review Required';
@@ -5925,9 +6162,12 @@ class CCController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+            $history->action_name = 'Update';
             $history->save();
         }
-        if ($lastCft->Other4_assessment != $request->Other4_assessment) {
+        if ($lastCft->Other4_assessment != $request->Other4_assessment && $request->Other4_assessment != null) {
             $history = new RcmDocHistory;
             $history->cc_id = $id;
             $history->activity_type = 'Other 4 Assessment';
@@ -5938,9 +6178,12 @@ class CCController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+            $history->action_name = 'Update';
             $history->save();
         }
-        if ($lastCft->Other4_feedback != $request->Other4_feedback) {
+        if ($lastCft->Other4_feedback != $request->Other4_feedback && $request->Other4_feedback != null) {
             $history = new RcmDocHistory;
             $history->cc_id = $id;
             $history->activity_type = 'Other 4 Feedback';
@@ -5951,9 +6194,12 @@ class CCController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+            $history->action_name = 'Update';
             $history->save();
         }
-        if ($lastCft->Other4_by != $request->Other4_by) {
+        if ($lastCft->Other4_by != $request->Other4_by && $request->Other4_by != null) {
             $history = new RcmDocHistory;
             $history->cc_id = $id;
             $history->activity_type = 'Other 4 Review By';
@@ -5964,9 +6210,12 @@ class CCController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+            $history->action_name = 'Update';
             $history->save();
         }
-        if ($lastCft->Other4_on != $request->Other4_on) {
+        if ($lastCft->Other4_on != $request->Other4_on && $request->Other4_on != null) {
             $history = new RcmDocHistory;
             $history->cc_id = $id;
             $history->activity_type = 'Other 4 Review On';
@@ -5977,11 +6226,14 @@ class CCController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+            $history->action_name = 'Update';
             $history->save();
         }
 
         /*************** Other 5 ***************/
-        if ($lastCft->Other5_review != $request->Other5_review) {
+        if ($lastCft->Other5_review != $request->Other5_review && $request->Other5_review != null) {
             $history = new RcmDocHistory;
             $history->cc_id = $id;
             $history->activity_type = 'Other 5 Review Required';
@@ -5992,9 +6244,12 @@ class CCController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+            $history->action_name = 'Update';
             $history->save();
         }
-        if ($lastCft->Other5_person != $request->Other5_person) {
+        if ($lastCft->Other5_person != $request->Other5_person && $request->Other5_person != null) {
             $history = new RcmDocHistory;
             $history->cc_id = $id;
             $history->activity_type = 'Other 5 Person';
@@ -6005,9 +6260,12 @@ class CCController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+            $history->action_name = 'Update';
             $history->save();
         }
-        if ($lastCft->Other5_Department_person != $request->Other5_Department_person) {
+        if ($lastCft->Other5_Department_person != $request->Other5_Department_person && $request->Other5_Department_person != null) {
             $history = new RcmDocHistory;
             $history->cc_id = $id;
             $history->activity_type = 'Other 5 Review Required';
@@ -6018,9 +6276,12 @@ class CCController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+            $history->action_name = 'Update';
             $history->save();
         }
-        if ($lastCft->Other5_assessment != $request->Other5_assessment) {
+        if ($lastCft->Other5_assessment != $request->Other5_assessment && $request->Other5_assessment != null) {
             $history = new RcmDocHistory;
             $history->cc_id = $id;
             $history->activity_type = 'Other 5 Assessment';
@@ -6031,9 +6292,12 @@ class CCController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+            $history->action_name = 'Update';
             $history->save();
         }
-        if ($lastCft->Other5_feedback != $request->Other5_feedback) {
+        if ($lastCft->Other5_feedback != $request->Other5_feedback && $request->Other5_feedback != null) {
             $history = new RcmDocHistory;
             $history->cc_id = $id;
             $history->activity_type = 'Other 5 Feedback';
@@ -6044,9 +6308,12 @@ class CCController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+            $history->action_name = 'Update';
             $history->save();
         }
-        if ($lastCft->Other5_by != $request->Other5_by) {
+        if ($lastCft->Other5_by != $request->Other5_by && $request->Other5_by != null) {
             $history = new RcmDocHistory;
             $history->cc_id = $id;
             $history->activity_type = 'Other 5 Review By';
@@ -6057,9 +6324,12 @@ class CCController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+            $history->action_name = 'Update';
             $history->save();
         }
-        if ($lastCft->Other5_on != $request->Other5_on) {
+        if ($lastCft->Other5_on != $request->Other5_on && $request->Other5_on != null) {
             $history = new RcmDocHistory;
             $history->cc_id = $id;
             $history->activity_type = 'Other 5 Review On';
@@ -6070,38 +6340,22 @@ class CCController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastDocument->status;
-            $history->save();
-        }
-
-
-
-
-
-
-        // ----------------------Group Comments History------------------------
-        if ($lastDocument->qa_comments != $openState->qa_comments) {
-            $history = new RcmDocHistory;
-            $history->cc_id = $id;
-            $history->activity_type = 'QA Comments';
-            $history->previous= $lastDocument->qa_comments;
-            $history->current = $openState->qa_comments;
-            $history->comment = $request->qa_comments_comment;
-            $history->user_id = Auth::user()->id;
-            $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state = $lastDocument->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDocument->status;
             $history->action_name = 'Update';
             $history->save();
         }
-        if ($lastDocument->designee_comments != $openState->designee_comments) {
+        /************ CFT Review End ************/
+
+         /************ Evalution ************/
+
+         if ($lastDocument->qa_eval_comments != $openState->qa_eval_comments ) {
             $history = new RcmDocHistory;
             $history->cc_id = $id;
-            $history->activity_type = 'QA Head Designee Comments';
-            $history->previous= $lastDocument->designee_comments;
-            $history->current = $openState->designee_comments;
-            $history->comment = $request->designee_comments_comment;
+            $history->activity_type = 'QA Evaluation Comments';
+            $history->previous = $lastDocument->qa_eval_comments;
+            $history->current = $openState->qa_eval_comments;
+            $history->comment = $request->qa_eval_comments_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -6112,207 +6366,14 @@ class CCController extends Controller
             $history->save();
         }
 
-        if ($lastDocument->Instrumentation_comments != $openState->Instrumentation_comments ) {
-            $history = new RcmDocHistory;
-            $history->cc_id = $id;
-            $history->activity_type = 'Instrumentation Comments';
-            $history->previous= $lastDocument->Instrumentation_comments;
-            $history->current = $openState->Instrumentation_comments;
-            $history->comment = $request->Instrumentation_comments_comment;
-            $history->user_id = Auth::user()->id;
-            $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state = $lastDocument->status;
-            $history->change_to =   "Not Applicable";
-            $history->change_from = $lastDocument->status;
-            $history->action_name = 'Update';
-            $history->save();
-        }
-        if ($lastDocument->Validation_comments != $openState->Validation_comments ) {
-            $history = new RcmDocHistory;
-            $history->cc_id = $id;
-            $history->activity_type = 'Validation Comments';
-            $history->previous= $lastDocument->Validation_comments;
-            $history->current = $openState->Validation_comments;
-            $history->comment = $request->Validation_comments_comment;
-            $history->user_id = Auth::user()->id;
-            $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state = $lastDocument->status;
-            $history->change_to =   "Not Applicable";
-            $history->change_from = $lastDocument->status;
-            $history->action_name = 'Update';
-            $history->save();
-        }
-        if ($lastDocument->Others_comments != $openState->Others_comments ) {
-            $history = new RcmDocHistory;
-            $history->cc_id = $id;
-            $history->activity_type = 'Others Comments';
-            $history->previous= $lastDocument->Others_comments;
-            $history->current = $openState->Others_comments;
-            $history->comment = $request->Others_comments_comment;
-            $history->user_id = Auth::user()->id;
-            $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state = $lastDocument->status;
-            $history->change_to =   "Not Applicable";
-            $history->change_from = $lastDocument->status;
-            $history->action_name = 'Update';
-            $history->save();
-        }
-        if ($lastDocument->Group_comments != $openState->Group_comments ) {
-            $history = new RcmDocHistory;
-            $history->cc_id = $id;
-            $history->activity_type = 'Comments';
-            $history->previous= $lastDocument->Group_comments;
-            $history->current = $openState->Group_comments;
-            $history->comment = $request->Group_comments_comment;
-            $history->user_id = Auth::user()->id;
-            $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state = $lastDocument->status;
-            $history->change_to =   "Not Applicable";
-            $history->change_from = $lastDocument->status;
-            $history->action_name = 'Update';
-            $history->save();
-        }
-        if ($lastDocument->group_attachments != $openState->group_attachments ) {
-            $history = new RcmDocHistory;
-            $history->cc_id = $id;
-            $history->activity_type = 'Attachments';
-            $history->previous= $lastDocument->group_attachments;
-            $history->current = $openState->group_attachments;
-            $history->comment = $request->group_attachments_comment;
-            $history->user_id = Auth::user()->id;
-            $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state = $lastDocument->status;
-            $history->change_to =   "Not Applicable";
-            $history->change_from = $lastDocument->status;
-            $history->action_name = 'Update';
-            $history->save();
-        }
-        // ----------------------Risk Assesments------------------------
+        /************ Evalution End ************/
 
-        if ($lastDocument->risk_identification != $openState->risk_identification ) {
-            $history = new RcmDocHistory;
-            $history->cc_id = $id;
-            $history->activity_type = 'Risk Identification';
-            $history->previous = $lastDocument->risk_identification;
-            $history->current = $openState->risk_identification;
-            $history->comment = $request->risk_identification_comment;
-            $history->user_id = Auth::user()->id;
-            $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state = $lastDocument->status;
-            $history->change_to =   "Not Applicable";
-            $history->change_from = $lastDocument->status;
-            $history->action_name = 'Update';
-            $history->save();
-        }
-
-        if ($lastDocument->severity != $openState->severity ) {
-            $history = new RcmDocHistory;
-            $history->cc_id = $id;
-            $history->activity_type = 'Severity';
-            $history->previous = $lastDocument->severity;
-            $history->current = $openState->severity;
-            $history->comment = $request->severity_comment;
-            $history->user_id = Auth::user()->id;
-            $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state = $lastDocument->status;
-            $history->change_to =   "Not Applicable";
-            $history->change_from = $lastDocument->status;
-            $history->action_name = 'Update';
-            $history->save();
-        }
-        if ($lastDocument->Occurance != $openState->Occurance ) {
-            $history = new RcmDocHistory;
-            $history->cc_id = $id;
-            $history->activity_type = 'Occurance';
-            $history->previous = $lastDocument->Occurance;
-            $history->current = $openState->Occurance;
-            $history->comment = $request->Occurance_comment;
-            $history->user_id = Auth::user()->id;
-            $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state = $lastDocument->status;
-            $history->change_to =   "Not Applicable";
-            $history->change_from = $lastDocument->status;
-            $history->action_name = 'Update';
-            $history->save();
-        }
-        if ($lastDocument->Detection != $openState->Detection) {
-            $history = new RcmDocHistory;
-            $history->cc_id = $id;
-            $history->activity_type = 'Detection';
-            $history->previous = $lastDocument->Detection;
-            $history->current = $openState->Detection;
-            $history->comment = $request->Detection_comment;
-            $history->user_id = Auth::user()->id;
-            $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state = $lastDocument->status;
-            $history->change_to =   "Not Applicable";
-            $history->change_from = $lastDocument->status;
-            $history->action_name = 'Update';
-            $history->save();
-        }
-        if ($lastDocument->RPN != $openState->RPN ) {
-            $history = new RcmDocHistory;
-            $history->cc_id = $id;
-            $history->activity_type = 'RPN';
-            $history->previous = $lastDocument->RPN;
-            $history->current = $openState->RPN;
-            $history->comment = $request->RPN_comment;
-            $history->user_id = Auth::user()->id;
-            $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state = $lastDocument->status;
-            $history->change_to =   "Not Applicable";
-            $history->change_from = $lastDocument->status;
-            $history->action_name = 'Update';
-            $history->save();
-        }
-        if ($lastDocument->risk_evaluation != $openState->risk_evaluation ) {
-            $history = new RcmDocHistory;
-            $history->cc_id = $id;
-            $history->activity_type = 'Risk Evaluation';
-            $history->previous = $lastDocument->risk_evaluation;
-            $history->current = $openState->risk_evaluation;
-            $history->comment = $request->risk_evaluation_comment;
-            $history->user_id = Auth::user()->id;
-            $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state = $lastDocument->status;
-            $history->change_to =   "Not Applicable";
-            $history->change_from = $lastDocument->status;
-            $history->action_name = 'Update';
-            $history->save();
-        }
-        if ($lastDocument->migration_action != $openState->migration_action ) {
-            $history = new RcmDocHistory;
-            $history->cc_id = $id;
-            $history->activity_type = 'Migration Action';
-            $history->previous = $lastDocument->migration_action;
-            $history->current = $openState->migration_action;
-            $history->comment = $request->migration_action_comment;
-            $history->user_id = Auth::user()->id;
-            $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state = $lastDocument->status;
-            $history->change_to =   "Not Applicable";
-            $history->change_from = $lastDocument->status;
-            $history->action_name = 'Update';
-            $history->save();
-        }
-        //-----------------------QA Approval Comments-----------------
+        /************ QA Approval ************/
 
         if ($lastDocument->qa_appro_comments != $openState->qa_appro_comments ) {
             $history = new RcmDocHistory;
             $history->cc_id = $id;
-            $history->activity_type = 'Migration Action';
+            $history->activity_type = 'QA Approval Comment';
             $history->previous = $lastDocument->qa_appro_comments;
             $history->current = $openState->qa_appro_comments;
             $history->comment = $request->qa_appro_comments_comment;
@@ -6328,7 +6389,7 @@ class CCController extends Controller
         if ($lastDocument->feedback != $openState->feedback ) {
             $history = new RcmDocHistory;
             $history->cc_id = $id;
-            $history->activity_type = 'Migration Action';
+            $history->activity_type = 'Feedback';
             $history->previous = $lastDocument->feedback;
             $history->current = $openState->feedback;
             $history->comment = $request->feedback_comment;
@@ -6341,30 +6402,17 @@ class CCController extends Controller
             $history->action_name = 'Update';
             $history->save();
         }
-        if ($lastDocument->tran_attach != $openState->tran_attach ) {
-            $history = new RcmDocHistory;
-            $history->cc_id = $id;
-            $history->activity_type = 'Training Attachments';
-            $history->previous = $lastDocument->tran_attach;
-            $history->current = $openState->tran_attach;
-            $history->comment = $request->tran_attach_comment;
-            $history->user_id = Auth::user()->id;
-            $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state = $lastDocument->status;
-            $history->change_to =   "Not Applicable";
-            $history->change_from = $lastDocument->status;
-            $history->action_name = 'Update';
-            $history->save();
-        }
-        // --------------------Change Closure------------------
+
+        /************ QA Approval Ends ************/
+
+        /************ Change Closure ************/
         if ($lastDocument->qa_closure_comments != $openState->qa_closure_comments) {
             $history = new RcmDocHistory;
             $history->cc_id = $id;
-            $history->activity_type = 'Migration Action';
+            $history->activity_type = 'QA Closure Comment';
             $history->previous = $lastDocument->qa_closure_comments;
             $history->current = $openState->qa_closure_comments;
-            $history->comment = $request->qa_closure_comments_comment;
+            $history->comment = "";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -6375,13 +6423,13 @@ class CCController extends Controller
             $history->save();
             // return $closure;
         }
-        if ($lastDocument->Effectiveness_checker != $openState->Effectiveness_checker ) {
+        if ($lastDocument->due_date_extension != $openState->due_date_extension) {
             $history = new RcmDocHistory;
             $history->cc_id = $id;
-            $history->activity_type = 'Migration Action';
-            $history->previous = $lastDocument->Effectiveness_checker;
-            $history->current = $openState->Effectiveness_checker;
-            $history->comment = $request->Effectiveness_checker_comment;
+            $history->activity_type = 'Due Date Extension';
+            $history->previous = $lastDocument->due_date_extension;
+            $history->current = $openState->due_date_extension;
+            $history->comment = "";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -6392,57 +6440,7 @@ class CCController extends Controller
             $history->save();
             // return $closure;
         }
-        if ($lastDocument->effective_check != $openState->effective_check ) {
-            $history = new RcmDocHistory;
-            $history->cc_id = $id;
-            $history->activity_type = 'Migration Action';
-            $history->previous = $lastDocument->effective_check;
-            $history->current = $openState->feedbackeffective_check;
-            $history->comment = $request->effective_check_comment;
-            $history->user_id = Auth::user()->id;
-            $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state = $lastDocument->status;
-            $history->change_to =   "Not Applicable";
-            $history->change_from = $lastDocument->status;
-            $history->action_name = 'Update';
-            $history->save();
-        }
-
-
-        if ($lastDocument->effective_check_date != $openState->feedbackeffective_check_date ) {
-            $history = new RcmDocHistory;
-            $history->cc_id = $id;
-            $history->activity_type = 'Migration Action';
-            $history->previous = $lastDocument->effective_check_date;
-            $history->current = $openState->feedbackeffective_check_date;
-            $history->comment = $request->effective_check_date_comment;
-            $history->user_id = Auth::user()->id;
-            $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state = $lastDocument->status;
-            $history->change_to =   "Not Applicable";
-            $history->change_from = $lastDocument->status;
-            $history->action_name = 'Update';
-            $history->save();
-        }
-        if ($lastDocument->attach_list != $openState->attach_list) {
-            $history = new RcmDocHistory;
-            $history->cc_id = $id;
-            $history->activity_type = 'List Of Attachments 1';
-            $history->previous = $lastDocument->attach_list;
-            $history->current = $openState->attach_list;
-            $history->comment = $request->attach_list_comment;
-            $history->user_id = Auth::user()->id;
-            $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state = $lastDocument->status;
-            $history->change_to =   "Not Applicable";
-            $history->change_from = $lastDocument->status;
-            $history->action_name = 'Update';
-            $history->save();
-            // return $history;
-        }
+        /************ Change Closure Ends ************/
         return back();
     }
 
@@ -6593,7 +6591,7 @@ class CCController extends Controller
                     $history->cc_id = $id;
                     $history->activity_type = 'Activity Log';
                     $history->previous = "";
-                    $history->action=' QA Initial Review Complete';
+                    $history->action='RA Review Required';
                     $history->current = $changeControl->submit_by;
                     $history->comment = $request->comments;
                     $history->user_id = Auth::user()->id;
@@ -6705,19 +6703,139 @@ class CCController extends Controller
                 toastr()->success('Pending CFT Review');
                 return back();
             }
-            if ($changeControl->stage == 5) {
-                $changeControl->stage = "6";
-                $changeControl->status = "QA Final Review";
-                $changeControl->cft_review_by = Auth::user()->name;
-                $changeControl->cft_review_on = Carbon::now()->format('d-M-Y');
-                $changeControl->cft_review_comment = $request->comments;
+            if ($failureInvestigation->stage == 5) {
+                $IsCFTRequired = ChangeControlCftResponse::withoutTrashed()->where(['is_required' => 1, 'cc_id' => $id])->latest()->first();
+                $cftUsers = DB::table('cc_cfts')->where(['cc_id' => $id])->first();
 
-                $history = new RcmDocHistory();
+                $columns = ['Quality_Control_Person', 'QualityAssurance_person', 'Engineering_person', 'Environment_Health_Safety_person', 'Human_Resource_person', 'Information_Technology_person', 'Other1_person', 'Other2_person', 'Other3_person', 'Other4_person', 'Other5_person','RA_person', 'Production_Table_Person','ProductionLiquid_person','Production_Injection_Person','Store_person','ResearchDevelopment_person','Microbiology_person','RegulatoryAffair_person','CorporateQualityAssurance_person','ContractGiver_person'];
+                $valuesArray = [];
+
+                foreach ($columns as $index => $column) {
+                    $value = $cftUsers->$column;
+                    if($index == 0 && $cftUsers->$column == Auth::user()->id){
+                        $updateCFT->Quality_Control_by = Auth::user()->name;
+                        $updateCFT->Quality_Control_on = Carbon::now()->format('Y-m-d');
+                    }
+                    if($index == 1 && $cftUsers->$column == Auth::user()->id){
+                        $updateCFT->QualityAssurance_by = Auth::user()->name;
+                        $updateCFT->QualityAssurance_on = Carbon::now()->format('Y-m-d');
+                    }
+                    if($index == 2 && $cftUsers->$column == Auth::user()->id){
+                        $updateCFT->Engineering_by = Auth::user()->name;
+                        $updateCFT->Engineering_on = Carbon::now()->format('Y-m-d');
+                    }
+                    if($index == 3 && $cftUsers->$column == Auth::user()->id){
+                        $updateCFT->Environment_Health_Safety_by = Auth::user()->name;
+                        $updateCFT->Environment_Health_Safety_on = Carbon::now()->format('Y-m-d');
+                    }
+                    if($index == 4 && $cftUsers->$column == Auth::user()->id){
+                        $updateCFT->Human_Resource_by = Auth::user()->name;
+                        $updateCFT->Human_Resource_on = Carbon::now()->format('Y-m-d');
+                    }
+                    if($index == 5 && $cftUsers->$column == Auth::user()->id){
+                        $updateCFT->Information_Technology_by = Auth::user()->name;
+                        $updateCFT->Information_Technology_on = Carbon::now()->format('Y-m-d');
+                    }
+                    if($index == 6 && $cftUsers->$column == Auth::user()->id){
+                        $updateCFT->Other1_by = Auth::user()->name;
+                        $updateCFT->Other1_on = Carbon::now()->format('Y-m-d');
+                    }
+                    if($index == 7 && $cftUsers->$column == Auth::user()->id){
+                        $updateCFT->Other2_by = Auth::user()->name;
+                        $updateCFT->Other2_on = Carbon::now()->format('Y-m-d');
+                    }
+                    if($index == 8 && $cftUsers->$column == Auth::user()->id){
+                        $updateCFT->Other3_by = Auth::user()->name;
+                        $updateCFT->Other3_on = Carbon::now()->format('Y-m-d');
+                    }
+                    if($index == 9 && $cftUsers->$column == Auth::user()->id){
+                        $updateCFT->Other4_by = Auth::user()->name;
+                        $updateCFT->Other4_on = Carbon::now()->format('Y-m-d');
+                    }
+                    if($index == 10 && $cftUsers->$column == Auth::user()->id){
+                        $updateCFT->Other5_by = Auth::user()->name;
+                        $updateCFT->Other5_on = Carbon::now()->format('Y-m-d');
+                    }
+                    if($index == 11 && $cftUsers->$column == Auth::user()->id){
+                        $updateCFT->RA_by = Auth::user()->name;
+                        $updateCFT->RA_on = Carbon::now()->format('Y-m-d');
+                    }
+                    if($index == 12 && $cftUsers->$column == Auth::user()->id){
+                        $updateCFT->Production_Table_By = Auth::user()->name;
+                        $updateCFT->Production_Table_On = Carbon::now()->format('Y-m-d');
+                    }
+                    if($index == 13 && $cftUsers->$column == Auth::user()->id){
+                        $updateCFT->ProductionLiquid_by = Auth::user()->name;
+                        $updateCFT->ProductionLiquid_on = Carbon::now()->format('Y-m-d');
+                    }
+                    if($index == 14 && $cftUsers->$column == Auth::user()->id){
+                        $updateCFT->Production_Injection_By = Auth::user()->name;
+                        $updateCFT->Production_Injection_On = Carbon::now()->format('Y-m-d');
+                    }
+                    if($index == 15 && $cftUsers->$column == Auth::user()->id){
+                        $updateCFT->Store_by = Auth::user()->name;
+                        $updateCFT->Store_on = Carbon::now()->format('Y-m-d');
+                    }
+                    if($index == 16 && $cftUsers->$column == Auth::user()->id){
+                        $updateCFT->ResearchDevelopment_by = Auth::user()->name;
+                        $updateCFT->ResearchDevelopment_on = Carbon::now()->format('Y-m-d');
+                    }
+                    if($index == 17 && $cftUsers->$column == Auth::user()->id){
+                        $updateCFT->Microbiology_by = Auth::user()->name;
+                        $updateCFT->Microbiology_on = Carbon::now()->format('Y-m-d');
+                    }
+                    if($index == 18 && $cftUsers->$column == Auth::user()->id){
+                        $updateCFT->RegulatoryAffair_by = Auth::user()->name;
+                        $updateCFT->RegulatoryAffair_on = Carbon::now()->format('Y-m-d');
+                    }
+                    if($index == 19 && $cftUsers->$column == Auth::user()->id){
+                        $updateCFT->CorporateQualityAssurance_by = Auth::user()->name;
+                        $updateCFT->CorporateQualityAssurance_on = Carbon::now()->format('Y-m-d');
+                    }
+                    if($index == 20 && $cftUsers->$column == Auth::user()->id){
+                        $updateCFT->ContractGiver_by = Auth::user()->name;
+                        $updateCFT->ContractGiver_by = Carbon::now()->format('Y-m-d');
+                    }
+                    $updateCFT->update();
+
+                    if ($value != null && $value != 0) {
+                        $valuesArray[] = $value;
+                    }
+                }
+                if ($IsCFTRequired) {
+                    if (count(array_unique($valuesArray)) == ($cftDetails + 1)) {
+                        $stage = new ChangeControlCftResponse();
+                        $stage->cc_id = $id;
+                        $stage->cft_user_id = Auth::user()->id;
+                        $stage->status = "Completed";
+                        $stage->comment = $request->comment;
+                        $stage->save();
+                    } else {
+                        $stage = new ChangeControlCftResponse();
+                        $stage->cc_id = $id;
+                        $stage->cft_user_id = Auth::user()->id;
+                        $stage->status = "In-progress";
+                        $stage->comment = $request->comment;
+                        $stage->save();
+                    }
+                }
+
+                $checkCFTCount = ChangeControlCftResponse::withoutTrashed()->where(['status' => 'Completed', 'cc_id' => $id])->count();
+
+                if (!$IsCFTRequired || $checkCFTCount) {
+                    $changeControl->stage = "6";
+                    $changeControl->status = "QA Final Review";
+                    $changeControl->cft_review_by = Auth::user()->name;
+                    $changeControl->cft_review_on = Carbon::now()->format('d-M-Y');
+                    $changeControl->cft_review_comment = $request->comments;
+
+
+                    $history = new RcmDocHistory();
                     $history->cc_id = $id;
                     $history->activity_type = 'Activity Log';
                     $history->previous = "";
                     $history->action='CFT Review Complete';
-                    $history->current = $changeControl->submit_by;
+                    $history->current = "Not Applicable";
                     $history->comment = $request->comments;
                     $history->user_id = Auth::user()->id;
                     $history->user_name = Auth::user()->name;
@@ -6727,44 +6845,29 @@ class CCController extends Controller
                     $history->change_from = $lastDocument->status;
                     $history->stage = 'Plan Proposed';
                     $history->save();
-                //  $list = Helpers::getHodUserList();
-                //     foreach ($list as $u) {
-                //         if($u->q_m_s_divisions_id == $changeControl->division_id){
-                //             $email = Helpers::getInitiatorEmail($u->user_id);
-                //              if ($email !== null) {
-                //               Mail::send(
-                //                   'mail.view-mail',
-                //                    ['data' => $changeControl],
-                //                 function ($message) use ($email) {
-                //                     $message->to($email)
-                //                         ->subject("Document is Send By".Auth::user()->name);
-                //                 }
-                //               );
-                //             }
-                //      }
-                //   }
-                $changeControl->update();
-                $history = new CCStageHistory();
-                $history->type = "Change-Control";
-                $history->doc_id = $id;
-                $history->user_id = Auth::user()->id;
-                $history->user_name = Auth::user()->name;
-                $history->stage_id = $changeControl->stage;
-                $history->comments = $request->comments;
-                $history->status = $changeControl->status;
-                $history->save();
-
-                $history = new CCStageHistory();
-                $history->type = "Activity-log";
-                $history->doc_id = $id;
-                $history->user_id = Auth::user()->id;
-                $history->user_name = Auth::user()->name;
-                $history->stage_id = $changeControl->stage;
-                $history->comments = $request->comments;
-                $history->status = $changeControl->status;
-                $history->save();
-                // Helpers::hodMail($changeControl);
-                toastr()->success('Sent to QA Final Review');
+                    // $list = Helpers::getQAUserList();
+                    // foreach ($list as $u) {
+                    //     if ($u->q_m_s_divisions_id == $failureInvestigation->division_id) {
+                    //         $email = Helpers::getInitiatorEmail($u->user_id);
+                    //         if ($email !== null) {
+                    //             try {
+                    //                 Mail::send(
+                    //                     'mail.view-mail',
+                    //                     ['data' => $failureInvestigation],
+                    //                     function ($message) use ($email) {
+                    //                         $message->to($email)
+                    //                             ->subject("Activity Performed By " . Auth::user()->name);
+                    //                     }
+                    //                 );
+                    //             } catch (\Exception $e) {
+                    //                 //log error
+                    //             }
+                    //         }
+                    //     }
+                    // }
+                    $changeControl->update();
+                }
+                toastr()->success('Document Sent');
                 return back();
             }
             if ($changeControl->stage == 6) {
@@ -6969,6 +7072,9 @@ class CCController extends Controller
             if ($changeControl->stage == 1) {
                 $changeControl->stage = "0";
                 $changeControl->status = "Closed-Cancelled";
+                $changeControl->cancelled_by = Auth::user()->name;
+                $changeControl->cancelled_on = Carbon::now()->format('d-M-Y');;
+                $changeControl->cancelled_comment = $request->comments;;
             //     $list = Helpers::getHodUserList();
             //     foreach ($list as $u) {
             //         if($u->q_m_s_divisions_id == $changeControl->division_id){
@@ -7154,55 +7260,6 @@ class CCController extends Controller
                 toastr()->success('Document Sent');
                 return back();
             }
-            if ($changeControl->stage == 4) {
-                $changeControl->stage = "3";
-                $changeControl->status = "QA Initial Review";
-            //     $list = Helpers::getHodUserList();
-            //     foreach ($list as $u) {
-            //         if($u->q_m_s_divisions_id == $changeControl->division_id){
-            //             $email = Helpers::getInitiatorEmail($u->user_id);
-            //              if ($email !== null) {
-
-            //               Mail::send(
-            //                   'mail.view-mail',
-            //                    ['data' => $changeControl],
-            //                 function ($message) use ($email) {
-            //                     $message->to($email)
-            //                         ->subject("Document is Send By".Auth::user()->name);
-            //                 }
-            //               );
-            //             }
-            //      }
-            //   }
-                $changeControl->update();
-                $history = new CCStageHistory();
-
-                $history = new RcmDocHistory();
-                $history->cc_id = $id;
-                $history->activity_type = 'Activity Log';
-                $history->previous = "";
-                $history->action= 'More Info Required';
-                $history->current = "";
-                $history->comment = $request->comments;
-                $history->user_id = Auth::user()->id;
-                $history->user_name = Auth::user()->name;
-                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-                $history->origin_state = $openState->status;
-                $history->change_to =   "QA Inital Review";
-                $history->change_from = $openState->status;
-                $history->save();
-
-                $history->type = "Change-Control";
-                $history->doc_id = $id;
-                $history->user_id = Auth::user()->id;
-                $history->user_name = Auth::user()->name;
-                $history->comments = $request->comments;
-                $history->stage_id = $changeControl->stage;
-                $history->status = "QA Initial Review";
-                $history->save();
-                toastr()->success('Document Sent');
-                return back();
-            }
             if ($changeControl->stage == 5) {
                 $changeControl->stage = "3";
                 $changeControl->status = "QA Initial Review";
@@ -7239,41 +7296,12 @@ class CCController extends Controller
                 toastr()->success('Document Sent');
                 return back();
             }
-            if ($changeControl->stage == 6) {
-                $changeControl->stage = "5";
-                $changeControl->status = "CFT Review";
-                $changeControl->update();
-
-                $history = new RcmDocHistory();
-                $history->cc_id = $id;
-                $history->activity_type = 'Activity Log';
-                $history->previous = "";
-                $history->action= 'More Info Required';
-                $history->current = "";
-                $history->comment = $request->comments;
-                $history->user_id = Auth::user()->id;
-                $history->user_name = Auth::user()->name;
-                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-                $history->origin_state = $openState->status;
-                $history->change_to =   "CFT Review";
-                $history->change_from = $openState->status;
-                $history->save();
-
-                $history = new CCStageHistory();
-                $history->type = "Change-Control";
-                $history->doc_id = $id;
-                $history->user_id = Auth::user()->id;
-                $history->user_name = Auth::user()->name;
-                $history->comments = $request->comments;
-                $history->stage_id = $changeControl->stage;
-                $history->status = "CFT Review";
-                $history->save();
-                toastr()->success('Document Sent');
-                return back();
-            }
             if ($changeControl->stage == 7) {
                 $changeControl->stage = "6";
                 $changeControl->status = "QA Final Review";
+                $changeControl->QaHeadPreapprovalToQaFinal_by = Auth::user()->name;
+                $changeControl->QaHeadPreapprovalToQaFinal_on = Carbon::now()->format('d-M-Y');
+                $changeControl->QaHeadPreapprovalToQaFinal_comment = $request->comments;
                 $changeControl->update();
 
                 $history = new RcmDocHistory();
@@ -7305,7 +7333,10 @@ class CCController extends Controller
             }
             if ($changeControl->stage == 8) {
                 $changeControl->stage = "7";
-                $changeControl->status = "QA Head/Manager Designee Approval";
+                $changeControl->status = "QA Head/Manager Designee Pre-Approval";
+                $changeControl->QaHeadAapprovalToPreapproval_by = Auth::user()->name;
+                $changeControl->QaHeadAapprovalToPreapproval_on = Carbon::now()->format('d-M-Y');
+                $changeControl->QaHeadAapprovalToPreapproval_comment = $request->comments;
                 $changeControl->update();
 
                 $history = new RcmDocHistory();
@@ -7319,7 +7350,7 @@ class CCController extends Controller
                 $history->user_name = Auth::user()->name;
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 $history->origin_state = $openState->status;
-                $history->change_to =   "QA Head/Manager Designee Approval";
+                $history->change_to =   "QA Head/Manager Designee Pre-Approval";
                 $history->change_from = $openState->status;
                 $history->save();
 
@@ -7330,7 +7361,7 @@ class CCController extends Controller
                 $history->user_name = Auth::user()->name;
                 $history->comments = $request->comments;
                 $history->stage_id = $changeControl->stage;
-                $history->status = "QA Head/Manager Designee Approval";
+                $history->status = "QA Head/Manager Designee Pre-Approval";
                 $history->save();
                 toastr()->success('Document Sent');
                 return back();
@@ -7358,21 +7389,23 @@ class CCController extends Controller
         $changeControl->qa_final_to_initiator_by = Auth::user()->name;
         $changeControl->qa_final_to_initiator_on = Carbon::now()->format('d-M-Y');
         $changeControl->qa_final_to_initiator_comment = $request->comments;
-
+        
         $history = new RcmDocHistory();
         $history->cc_id = $id;
         $history->activity_type = 'Activity Log';
         $history->previous = "";
-        $history->current = $changeControl->qa_final_to_initiator_by;
+        $history->action= 'Send To Initiator';
+        $history->current = "";
         $history->comment = $request->comment;
         $history->user_id = Auth::user()->id;
         $history->user_name = Auth::user()->name;
         $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
         $history->origin_state = $lastDocument->status;
-        $history->stage = 'Send to Opened State';
-        
+        $history->change_to =   "Opened";
+        $history->change_from = $lastDocument->status;        
         $history->save();
         $changeControl->update();
+
         $history = new RcmDocHistory();
         $history->type = "CC";
         $history->doc_id = $id;
@@ -7433,15 +7466,18 @@ class CCController extends Controller
         $history->cc_id = $id;
         $history->activity_type = 'Activity Log';
         $history->previous = "";
+        $history->action= 'Send To HOD';
         $history->current = "";
         $history->comment = $request->comment;
         $history->user_id = Auth::user()->id;
         $history->user_name = Auth::user()->name;
         $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
         $history->origin_state = $lastDocument->status;
-        $history->stage = 'Send HOD Review';
+        $history->change_to =   "HOD Review";
+        $history->change_from = $lastDocument->status;        
         $history->save();
         $changeControl->update();
+        
         $history = new RcmDocHistory();
         $history->type = "CC";
         $history->doc_id = $id;
@@ -7502,15 +7538,18 @@ class CCController extends Controller
         $history->cc_id = $id;
         $history->activity_type = 'Activity Log';
         $history->previous = "";
+        $history->action= 'Send To QA Initial';
         $history->current = "";
         $history->comment = $request->comment;
         $history->user_id = Auth::user()->id;
         $history->user_name = Auth::user()->name;
         $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
         $history->origin_state = $lastDocument->status;
-        $history->stage = 'Send to QA Initial Review';
+        $history->change_to =   "QA Initial Review";
+        $history->change_from = $lastDocument->status;        
         $history->save();
         $changeControl->update();
+
         $history = new RcmDocHistory();
         $history->type = "CC";
         $history->doc_id = $id;
@@ -7566,19 +7605,23 @@ class CCController extends Controller
         $changeControl->status = "CFT Review";
         $changeControl->qa_more_info_required_by = Auth::user()->name;
         $changeControl->qa_more_info_required_on = Carbon::now()->format('d-M-Y');
+
         $history = new RcmDocHistory();
         $history->cc_id = $id;
         $history->activity_type = 'Activity Log';
         $history->previous = "";
+        $history->action= 'CFT Not Required';
         $history->current = "";
         $history->comment = $request->comment;
         $history->user_id = Auth::user()->id;
         $history->user_name = Auth::user()->name;
         $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
         $history->origin_state = $lastDocument->status;
-        $history->stage = 'Send to CFT Review';
+        $history->change_to =   "QA Final Review";
+        $history->change_from = $lastDocument->status;        
         $history->save();
         $changeControl->update();
+
         $history = new RcmDocHistory();
         $history->type = "CC";
         $history->doc_id = $id;
@@ -7627,6 +7670,10 @@ class CCController extends Controller
 
             $changeControl->stage = "6";
             $changeControl->status = "QA Final Review";
+            $changeControl->cftNotRequired_by = Auth::user()->name;
+            $changeControl->cftNotRequired_on = Carbon::now()->format('d-M-Y');
+            $changeControl->cftNotRequired_comment = $request->comments;
+
             $history = new RcmDocHistory;
             $history->cc_id = $id;
             $history->activity_type = 'Activity Log';
@@ -7640,6 +7687,7 @@ class CCController extends Controller
             $history->stage = 'CFT Review Not required';
             $history->save();
             $changeControl->update();
+
             $history = new CCStageHistory();
             $history->type = "Change-Control";
             $history->doc_id = $id;
@@ -7662,11 +7710,29 @@ class CCController extends Controller
             $changeControl = CC::find($id);
             $openState = CC::find($id);
 
-
-
             $changeControl->stage = "0";
             $changeControl->status = "Closed-Cancelled";
+            $changeControl->cancelled_by = Auth::user()->name;
+            $changeControl->cancelled_on = Carbon::now()->format('d-M-Y');
+            $changeControl->cancelled_comment = $request->comments;
             $changeControl->update();
+
+            $history = new RcmDocHistory();
+            $history->cc_id = $id;
+            $history->activity_type = 'Activity Log';
+            $history->previous = "";
+            $history->action= 'Cancel';
+            $history->current = "";
+            $history->comment = $request->comments;
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Closed - Cancelled";
+            $history->change_from = $lastDocument->status;
+            $history->stage = 'Plan Proposed';
+            $history->save();
+
             $history = new CCStageHistory();
             $history->type = "Change-Control";
             $history->doc_id = $id;

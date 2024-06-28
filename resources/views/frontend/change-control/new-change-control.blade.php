@@ -274,6 +274,7 @@
                                         <label for="initiator-group">Initiation Department <span
                                                 class="text-danger">*</span></label>
                                                 <select name="Initiator_Group" id="initiator_group">
+                                                        <optio value="">Select Initiation Department</option>
                                                         <option value="CQA" >Corporate Quality Assurance</option>
                                                         <option value="QA" >Quality Assurance</option>
                                                         <option value="QC" >Quality Control</option>
@@ -304,7 +305,7 @@
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Initiator Group Code">Initiation Department Code</label>
-                                        <input type="text" name="initiator_group_code" id="initiator_group_code"
+                                        <input type="text" name="initiator_group_code" id="initiator_group_code" placeholder="Initiator Group Code"
                                             value="" readonly>
                                     </div>
                                 </div>
