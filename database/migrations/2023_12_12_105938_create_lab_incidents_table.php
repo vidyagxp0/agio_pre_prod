@@ -194,11 +194,7 @@ return new class extends Migration
             $table->text('extension_date_idtc')->nullable();
             $table->longtext('extension_attachments_e')->nullable();
 
-
-
-
-
-
+            $table->string('ccf_attachments')->nullable();
 
 
             // $table->string('cancelled_by')->nullable();

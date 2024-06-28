@@ -587,7 +587,7 @@
     });
 </script>
 
-e
+
 <script>
     $(document).ready(function() {
         let investigationTeamIndex = 1;
@@ -643,8 +643,7 @@ e
                 <button class="cctablinks" onclick="openCity(event, 'CCForm8')">HOD Review</button>
                 <button class="cctablinks" onclick="openCity(event, 'CCForm2')">QA Initial Review</button>
                 <button class="cctablinks " onclick="openCity(event, 'CCForm7')">CFT</button>
-                <button class="cctablinks " id="Investigation_button" style="display: none"
-                    onclick="openCity(event, 'CCForm9')">Investigation</button>
+                <button class="cctablinks " id="Investigation_button" style="display: none" onclick="openCity(event, 'CCForm9')">Investigation</button>
                 <button id="QRM_button" class="cctablinks" style="display: none"
                     onclick="openCity(event, 'CCForm11')">QRM</button>
 
@@ -683,7 +682,7 @@ e
                                         <label for="RLS Record Number"><b>Record Number</b></label>
                                         {{-- <input disabled type="text" name="record_number"> --}}
                                         <input disabled type="text" name="record" id="record"
-                                            value="---/INC/{{ date('y') }}/{{ $data }}">
+                                            value="{{ Helpers::getDivisionName(session()->get('division')) }}/INC/{{date('y')}}/{{$data}}">
                                         {{-- <div class="static">QMS-EMEA/CAPA/{{ date('Y') }}/{{ $record_number }}</div> --}}
                                     </div>
                                 </div>
@@ -1453,8 +1452,7 @@ e
                                         <label for="Description Incident">Description of Incident</label>
                                         <div><small class="text-primary">Please insert "NA" in the data field if it does
                                                 not require completion</small></div>
-                                        <textarea class="tiny" name="Description_incident[]" id="summernote-1" required>
-                                    </textarea>
+                                        <textarea class="tiny" name="Description_incident[]" id="summernote-1" required> </textarea>
                                     </div>
                                     @error('Description_incident[]')
                                         <div class="text-danger">{{ $message }}</div>
@@ -1472,8 +1470,7 @@ e
                                         <label for="Immediate Action">Immediate Action (if any)</label>
                                         <div><small class="text-primary">Please insert "NA" in the data field if it does
                                                 not require completion</small></div>
-                                        <textarea class="tiny" name="Immediate_Action[]" id="summernote-2"required>
-                                    </textarea>
+                                        <textarea class="tiny" name="Immediate_Action[]" id="summernote-2"required></textarea>
                                     </div>
                                     @error('record')
                                         <div class="text-danger">{{ $message }}</div>
@@ -1490,8 +1487,7 @@ e
                                         <label for="Preliminary Impact">Preliminary Impact of Incident </label>
                                         <div><small class="text-primary">Please insert "NA" in the data field if it does
                                                 not require completion</small></div>
-                                        <textarea class="tiny" name="Preliminary_Impact[]" id="summernote-3" required>
-                                    </textarea>
+                                        <textarea class="tiny" name="Preliminary_Impact[]" id="summernote-3" required>  </textarea>
                                     </div>
                                     @error('Preliminary_Impact')
                                         <div class="text-danger">{{ $message }}</div>
@@ -1545,8 +1541,7 @@ e
                                         <label for="HOD Remarks">HOD Remarks</label>
                                         <div><small class="text-primary">Please insert "NA" in the data field if it does
                                                 not require completion</small></div>
-                                        <textarea class="tiny" name="HOD_Remarks" id="summernote-4">
-                                    </textarea>
+                                        <textarea class="tiny" name="HOD_Remarks" id="summernote-4">  </textarea>
                                     </div>
                                 </div>
                                 <div class="col-lg-12">
@@ -1570,14 +1565,10 @@ e
                             <div class="button-block">
                                 <button type="submit" style=" justify-content: center; width: 4rem; margin-left: 1px;"
                                     class="saveButton">Save </button>
-                                <a href="/rcms/qms-dashboard"
-                                    style=" justify-content: center; width: 4rem; margin-left: 1px;">
-                                    <button type="button"
-                                        style=" justify-content: center; width: 4rem; margin-left: 1px;"
-                                        class="backButton">Back</button>
-                                </a>
-                                <button type="button" style=" justify-content: center; width: 4rem; margin-left: 1px;"
-                                    class="nextButton" onclick="nextStep()">Next</button>
+
+                                <button type="button"  style=" justify-content: center; width: 4rem; margin-left: 1px;" class="backButton" onclick="previousStep()">Back</button>
+
+                                <button type="button" style=" justify-content: center; width: 4rem; margin-left: 1px;"   class="nextButton" onclick="nextStep()">Next</button>
                                 <button type="button" style=" justify-content: center; width: 4rem; margin-left: 1px;">
                                     <a href="{{ url('rcms/qms-dashboard') }}" class="text-white">
                                         Exit </a> </button>
@@ -1597,10 +1588,6 @@ e
                     <div id="CCForm2" class="inner-block cctabcontent">
                         <div class="inner-block-content">
                             <div class="row">
-
-
-
-
                                 <script>
                                     handleInvestigationRequiredChange();
 
@@ -1623,10 +1610,6 @@ e
                                     }
 
                                     // Call the function initially to set the initial visibility of the button
-
-
-
-
                                     // Function to handle the change event of the Initial Incident Category dropdown
                                     function handleincidentCategoryChange() {
                                         var selectElement = document.getElementById("incident_category");
@@ -1674,16 +1657,10 @@ e
                                             document.getElementById("Investigation_button").style.display = "none";
                                             document.getElementById("CAPA_button").style.display = "none";
                                             document.getElementById("QRM_button").style.display = "none";
-
-
-
                                         }
 
                                     }
                                 </script>
-
-
-
 
                                 <div style="margin-bottom: 0px;" class="col-lg-12 new-date-data-field ">
                                     <div class="group-input input-date">
@@ -1765,8 +1742,7 @@ e
                                         <label for="QAInitialRemark">QA Initial Remarks</label>
                                         <div><small class="text-primary">Please insert "NA" in the data field if it does
                                                 not require completion</small></div>
-                                        <textarea class="tiny" name="QAInitialRemark" id="summernote-7">
-                                    </textarea>
+                                        <textarea class="tiny" name="QAInitialRemark" id="summernote-7"></textarea>
                                     </div>
                                 </div>
                                 <div class="col-lg-12">
@@ -1789,10 +1765,9 @@ e
                             <div class="button-block">
                                 <button type="submit" style=" justify-content: center; width: 4rem; margin-left: 1px;"
                                     class="saveButton">Save</button>
-                                <a href="/rcms/qms-dashboard"
-                                    style=" justify-content: center; width: 4rem; margin-left: 1px;">
-                                    <button type="button" class="backButton">Back</button>
-                                </a>
+
+                                    <button type="button" class="backButton" onclick="previousStep()">Back</button>
+
 
                                 <button type="button" style=" justify-content: center; width: 4rem; margin-left: 1px;"
                                     class="nextButton" onclick="nextStep()">Next</button>
@@ -2075,8 +2050,7 @@ e
                                         <label for="Production assessment">Impact Assessment (By Production)</label>
                                         <div><small class="text-primary">Please insert "NA" in the data field if it does
                                                 not require completion</small></div>
-                                        <textarea class="" name="Production_assessment" id="summernote-17">
-                                    </textarea>
+                                        <textarea class="" name="Production_assessment" id="summernote-17">   </textarea>
                                     </div>
                                 </div>
                                 <div class="col-md-12 mb-3 p_erson">
@@ -2084,8 +2058,7 @@ e
                                         <label for="Production feedback">Production Feedback</label>
                                         <div><small class="text-primary">Please insert "NA" in the data field if it does
                                                 not require completion</small></div>
-                                        <textarea class="" name="Production_feedback" id="summernote-18">
-                                    </textarea>
+                                        <textarea class="" name="Production_feedback" id="summernote-18"></textarea>
                                     </div>
                                 </div>
 
@@ -2179,8 +2152,7 @@ e
                                         <label for="Impact Assessment1">Impact Assessment (By Warehouse)</label>
                                         <div><small class="text-primary">Please insert "NA" in the data field if it does
                                                 not require completion</small></div>
-                                        <textarea class="" name="Warehouse_assessment" id="summernote-19">
-                                    </textarea>
+                                        <textarea class="" name="Warehouse_assessment" id="summernote-19"> </textarea>
                                     </div>
                                 </div>
                                 <div class="col-md-12 mb-3 warehouse">
@@ -2188,8 +2160,7 @@ e
                                         <label for="productionfeedback">Warehouse Feedback</label>
                                         <div><small class="text-primary">Please insert "NA" in the data field if it does
                                                 not require completion</small></div>
-                                        <textarea class="" name="Warehouse_feedback" id="summernote-20">
-                                    </textarea>
+                                        <textarea class="" name="Warehouse_feedback" id="summernote-20"> </textarea>
                                     </div>
                                 </div>
                                 <div class="col-lg-12 warehouse">
@@ -2283,15 +2254,13 @@ e
                                 <div class="col-md-12 mb-3 quality_control">
                                     <div class="group-input">
                                         <label for="Impact Assessment2">Impact Assessment (By Quality Control)</label>
-                                        <textarea class="" name="Quality_Control_assessment" id="summernote-21">
-                                    </textarea>
+                                        <textarea class="" name="Quality_Control_assessment" id="summernote-21">  </textarea>
                                     </div>
                                 </div>
                                 <div class="col-md-12 mb-3 quality_control">
                                     <div class="group-input">
                                         <label for="Quality Control Feedback">Quality Control Feedback</label>
-                                        <textarea class="" name="Quality_Control_feedback" id="summernote-22">
-                                    </textarea>
+                                        <textarea class="" name="Quality_Control_feedback" id="summernote-22">    </textarea>
                                     </div>
                                 </div>
                                 <div class="col-lg-12 quality_control">
@@ -2389,8 +2358,7 @@ e
                                         <label for="Impact Assessment3">Impact Assessment (By Quality Assurance)</label>
                                         <div><small class="text-primary">Please insert "NA" in the data field if it does
                                                 not require completion</small></div>
-                                        <textarea class="" name="QualityAssurance_assessment" id="summernote-23">
-                                    </textarea>
+                                        <textarea class="" name="QualityAssurance_assessment" id="summernote-23"> </textarea>
                                     </div>
                                 </div>
                                 <div class="col-md-12 mb-3 quality_assurance">
@@ -2398,8 +2366,7 @@ e
                                         <label for="Quality Assurance Feedback">Quality Assurance Feedback</label>
                                         <div><small class="text-primary">Please insert "NA" in the data field if it does
                                                 not require completion</small></div>
-                                        <textarea class="" name="QualityAssurance_feedback" id="summernote-24">
-                                    </textarea>
+                                        <textarea class="" name="QualityAssurance_feedback" id="summernote-24">  </textarea>
                                     </div>
                                 </div>
                                 <div class="col-lg-12 quality_assurance">
@@ -2498,8 +2465,7 @@ e
                                         <label for="Impact Assessment4">Impact Assessment (By Engineering)</label>
                                         <div><small class="text-primary">Please insert "NA" in the data field if it does
                                                 not require completion</small></div>
-                                        <textarea class="" name="Engineering_assessment" id="summernote-25">
-                                    </textarea>
+                                        <textarea class="" name="Engineering_assessment" id="summernote-25">     </textarea>
                                     </div>
                                 </div>
                                 <div class="col-md-12 mb-3 engineering">
@@ -2507,8 +2473,7 @@ e
                                         <label for="productionfeedback">Engineering Feedback</label>
                                         <div><small class="text-primary">Please insert "NA" in the data field if it does
                                                 not require completion</small></div>
-                                        <textarea class="" name="Engineering_feedback" id="summernote-26">
-                                    </textarea>
+                                        <textarea class="" name="Engineering_feedback" id="summernote-26">  </textarea>
                                     </div>
                                 </div>
                                 <div class="col-lg-12 engineering">
@@ -2606,16 +2571,14 @@ e
                                     <div class="group-input">
                                         <label for="Impact Assessment5">Impact Assessment (By Analytical Development
                                             Laboratory)</label>
-                                        <textarea class="" name="Analytical_Development_assessment" id="summernote-27">
-                                    </textarea>
+                                        <textarea class="" name="Analytical_Development_assessment" id="summernote-27">  </textarea>
                                     </div>
                                 </div>
                                 <div class="col-md-12 mb-3 analytical_development">
                                     <div class="group-input">
                                         <label for="Analytical Development Laboratory Feedback"> Analytical Development
                                             Laboratory Feedback</label>
-                                        <textarea class="" name="Analytical_Development_feedback" id="summernote-28">
-                                    </textarea>
+                                        <textarea class="" name="Analytical_Development_feedback" id="summernote-28">  </textarea>
                                     </div>
                                 </div>
                                 <div class="col-lg-12 analytical_development">
@@ -2727,16 +2690,14 @@ e
                                     <div class="group-input">
                                         <label for="Impact Assessment6">Impact Assessment (By Process Development
                                             Laboratory / Kilo Lab)</label>
-                                        <textarea class="" name="Kilo_Lab_assessment" id="summernote-29">
-                                    </textarea>
+                                        <textarea class="" name="Kilo_Lab_assessment" id="summernote-29">  </textarea>
                                     </div>
                                 </div>
                                 <div class="col-md-12 mb-3 kilo_lab">
                                     <div class="group-input">
                                         <label for="Kilo Lab Feedback"> Process Development Laboratory / Kilo Lab
                                             Feedback</label>
-                                        <textarea class="" name="Kilo_Lab_feedback" id="summernote-30">
-                                    </textarea>
+                                        <textarea class="" name="Kilo_Lab_feedback" id="summernote-30">   </textarea>
                                     </div>
                                 </div>
                                 <div class="col-lg-12 kilo_lab">
@@ -2839,15 +2800,13 @@ e
                                     <div class="group-input">
                                         <label for="Impact Assessment7">Impact Assessment (By Technology Transfer /
                                             Design)</label>
-                                        <textarea class="" name="Technology_transfer_assessment" id="summernote-31">
-                                    </textarea>
+                                        <textarea class="" name="Technology_transfer_assessment" id="summernote-31">      </textarea>
                                     </div>
                                 </div>
                                 <div class="col-md-12 mb-3 technology_transfer">
                                     <div class="group-input">
                                         <label for="Design Feedback"> Technology Transfer / Design Feedback</label>
-                                        <textarea class="" name="Technology_transfer_feedback" id="summernote-32">
-                                    </textarea>
+                                        <textarea class="" name="Technology_transfer_feedback" id="summernote-32">   </textarea>
                                     </div>
                                 </div>
                                 <div class="col-lg-12 technology_transfer">
@@ -2948,15 +2907,13 @@ e
                                     <div class="group-input">
                                         <label for="Impact Assessment8">Impact Assessment (By Environment, Health &
                                             Safety)</label>
-                                        <textarea class="" name="Health_Safety_assessment" id="summernote-33">
-                                    </textarea>
+                                        <textarea class="" name="Health_Safety_assessment" id="summernote-33">    </textarea>
                                     </div>
                                 </div>
                                 <div class="col-md-12 mb-3 environmental_health">
                                     <div class="group-input">
                                         <label for="productionfeedback">Environment, Health & Safety Feedback</label>
-                                        <textarea class="" name="Health_Safety_feedback" id="summernote-34">
-                                    </textarea>
+                                        <textarea class="" name="Health_Safety_feedback" id="summernote-34">    </textarea>
                                     </div>
                                 </div>
                                 <div class="col-lg-12 environmental_health">
@@ -3061,15 +3018,13 @@ e
                                     <div class="group-input">
                                         <label for="Impact Assessment9">Impact Assessment (By Human Resource &
                                             Administration )</label>
-                                        <textarea class="" name="Human_Resource_assessment" id="summernote-35">
-                                    </textarea>
+                                        <textarea class="" name="Human_Resource_assessment" id="summernote-35">   </textarea>
                                     </div>
                                 </div>
                                 <div class="col-md-12 mb-3 human_resources">
                                     <div class="group-input">
                                         <label for="productionfeedback">Human Resource & Administration Feedback</label>
-                                        <textarea class="" name="Human_Resource_feedback" id="summernote-36">
-                                    </textarea>
+                                        <textarea class="" name="Human_Resource_feedback" id="summernote-36">   </textarea>
                                     </div>
                                 </div>
                                 <div class="col-lg-12 human_resources">
@@ -3172,16 +3127,14 @@ e
                                     <div class="group-input">
                                         <label for="Impact Assessment10">Impact Assessment (By Information
                                             Technology)</label>
-                                        <textarea class="" name="Information_Technology_assessment" id="summernote-37">
-                                    </textarea>
+                                        <textarea class="" name="Information_Technology_assessment" id="summernote-37">     </textarea>
                                     </div>
                                 </div>
                                 <div class="col-md-12 mb-3 information_technology">
                                     <div class="group-input">
                                         <label for="Information Technology Feedback"> Information Technology
                                             Feedback</label>
-                                        <textarea class="" name="Information_Technology_feedback" id="summernote-38">
-                                    </textarea>
+                                        <textarea class="" name="Information_Technology_feedback" id="summernote-38"> </textarea>
                                     </div>
                                 </div>
                                 <div class="col-lg-12 information_technology">
@@ -3285,8 +3238,7 @@ e
                                     <div class="group-input">
                                         <label for="Impact Assessment11">Impact Assessment (By Project management
                                             )</label>
-                                        <textarea class="" name="Project_management_assessment" id="summernote-39">
-                                    </textarea>
+                                        <textarea class="" name="Project_management_assessment" id="summernote-39">   </textarea>
                                     </div>
                                 </div>
                                 <div class="col-md-12 mb-3 project_management">
@@ -3421,15 +3373,13 @@ e
                                 <div class="col-md-12 mb-3 other1_reviews">
                                     <div class="group-input">
                                         <label for="productionfeedback">Impact Assessment (By Other's 1)</label>
-                                        <textarea class="" name="Other1_assessment" id="summernote-41">
-                                        </textarea>
+                                        <textarea class="" name="Other1_assessment" id="summernote-41">      </textarea>
                                     </div>
                                 </div>
                                 <div class="col-md-12 mb-3 other1_reviews">
                                     <div class="group-input">
                                         <label for="productionfeedback"> Other's 1 Feedback</label>
-                                        <textarea class="" name="Other1_feedback" id="summernote-42">
-                                        </textarea>
+                                        <textarea class="" name="Other1_feedback" id="summernote-42"></textarea>
                                     </div>
                                 </div>
                                 <div class="col-lg-12 other1_reviews">
@@ -3538,9 +3488,6 @@ e
                                                 Administration</option>
                                             <option value="Information Technology">Information Technology</option>
                                             <option value="Project management">Project management</option>
-
-
-
                                         </select>
 
                                     </div>
@@ -3548,15 +3495,13 @@ e
                                 <div class="col-md-12 mb-3 Other2_reviews">
                                     <div class="group-input">
                                         <label for="Impact Assessment13">Impact Assessment (By Other's 2)</label>
-                                        <textarea class="" name="Other2_Assessment" id="summernote-43">
-                                        </textarea>
+                                        <textarea class="" name="Other2_Assessment" id="summernote-43"> </textarea>
                                     </div>
                                 </div>
                                 <div class="col-md-12 mb-3 Other2_reviews">
                                     <div class="group-input">
                                         <label for="Feedback2"> Other's 2 Feedback</label>
-                                        <textarea class="" name="Other2_feedback" id="summernote-44">
-                                        </textarea>
+                                        <textarea class="" name="Other2_feedback" id="summernote-44">    </textarea>
                                     </div>
                                 </div>
                                 <div class="col-lg-12 Other2_reviews">
@@ -3667,9 +3612,6 @@ e
                                                 Administration</option>
                                             <option value="Information Technology">Information Technology</option>
                                             <option value="Project management">Project management</option>
-
-
-
                                         </select>
 
                                     </div>
@@ -3677,15 +3619,13 @@ e
                                 <div class="col-md-12 mb-3 Other3_reviews">
                                     <div class="group-input">
                                         <label for="productionfeedback">Impact Assessment (By Other's 3)</label>
-                                        <textarea class="" name="Other3_Assessment" id="summernote-45">
-                                        </textarea>
+                                        <textarea class="" name="Other3_Assessment" id="summernote-45">    </textarea>
                                     </div>
                                 </div>
                                 <div class="col-md-12 mb-3 Other3_reviews">
                                     <div class="group-input">
                                         <label for="productionfeedback"> Other's 3 Feedback</label>
-                                        <textarea class="" name="Other3_feedback" id="summernote-46">
-                                        </textarea>
+                                        <textarea class="" name="Other3_feedback" id="summernote-46">  </textarea>
                                     </div>
                                 </div>
                                 <div class="col-lg-12 Other3_reviews">
@@ -3796,9 +3736,6 @@ e
                                                 Administration</option>
                                             <option value="Information Technology">Information Technology</option>
                                             <option value="Project management">Project management</option>
-
-
-
                                         </select>
 
                                     </div>
@@ -3806,15 +3743,13 @@ e
                                 <div class="col-md-12 mb-3 Other4_reviews">
                                     <div class="group-input">
                                         <label for="Impact Assessment15">Impact Assessment (By Other's 4)</label>
-                                        <textarea class="" name="Other4_Assessment" id="summernote-47">
-                                        </textarea>
+                                        <textarea class="" name="Other4_Assessment" id="summernote-47">   </textarea>
                                     </div>
                                 </div>
                                 <div class="col-md-12 mb-3 Other4_reviews">
                                     <div class="group-input">
                                         <label for="feedback4"> Other's 4 Feedback</label>
-                                        <textarea class="" name="Other4_feedback" id="summernote-48">
-                                        </textarea>
+                                        <textarea class="" name="Other4_feedback" id="summernote-48">    </textarea>
                                     </div>
                                 </div>
                                 <div class="col-lg-12 Other4_reviews">
@@ -3926,9 +3861,6 @@ e
                                                 Administration</option>
                                             <option value="Information Technology">Information Technology</option>
                                             <option value="Project management">Project management</option>
-
-
-
                                         </select>
 
                                     </div>
@@ -3936,15 +3868,13 @@ e
                                 <div class="col-md-12 mb-3 Other5_reviews">
                                     <div class="group-input">
                                         <label for="productionfeedback">Impact Assessment (By Other's 5)</label>
-                                        <textarea class="" name="Other5_Assessment" id="summernote-49">
-                                        </textarea>
+                                        <textarea class="" name="Other5_Assessment" id="summernote-49"> </textarea>
                                     </div>
                                 </div>
                                 <div class="col-md-12 mb-3 Other5_reviews">
                                     <div class="group-input">
                                         <label for="productionfeedback"> Other's 5 Feedback</label>
-                                        <textarea class="" name="Other5_feedback" id="summernote-50">
-                                        </textarea>
+                                        <textarea class="" name="Other5_feedback" id="summernote-50"> </textarea>
                                     </div>
                                 </div>
                                 <div class="col-lg-12 Other5_reviews">
@@ -3985,12 +3915,12 @@ e
                                 <button type="submit" id="ChangesaveButton"
                                     style=" justify-content: center; width: 4rem; margin-left: 1px;"
                                     class="saveButton">Save</button>
-                                <a href="/rcms/qms-dashboard"
-                                    style=" justify-content: center; width: 4rem; margin-left: 1px;">
-                                    <button type="button" class="backButton">Back</button>
-                                </a>
+
+                                    <button type="button" class="backButton" onclick="previousStep()">Back</button>
+
+
                                 <button type="button" style=" justify-content: center; width: 4rem; margin-left: 1px;"
-                                    id="ChangeNextButton" class="nextButton" onclick="nextStep()">Next</button>
+                                    class="nextButton" onclick="nextStep()">Next</button>
                                 <button type="button" style=" justify-content: center; width: 4rem; margin-left: 1px;">
                                     <a href="{{ url('rcms/qms-dashboard') }}" class="text-white">
                                         Exit </a> </button>
@@ -4007,8 +3937,6 @@ e
 
                         </div>
                     </div>
-
-
                     <!-- investigation -->
                     <div id="CCForm9" class="inner-block cctabcontent">
                         <div class="inner-block-content">
@@ -4019,8 +3947,7 @@ e
                                         <label for="Investigation Summary">Description of Event</label>
                                         <div><small class="text-primary">Please insert "NA" in the data field if it does
                                                 not require completion</small></div>
-                                        <textarea class="tiny" name="Discription_Event" id="summernote-8">
-                                </textarea>
+                                        <textarea class="tiny" name="Discription_Event" id="summernote-8">   </textarea>
                                     </div>
                                 </div>
 
@@ -4029,8 +3956,7 @@ e
                                         <label for="Impact Assessment">Objective</label>
                                         <div><small class="text-primary">Please insert "NA" in the data field if it does
                                                 not require completion</small></div>
-                                        <textarea class="tiny" name="objective" id="summernote-9">
-                                </textarea>
+                                        <textarea class="tiny" name="objective" id="summernote-9">   </textarea>
                                     </div>
                                 </div>
 
@@ -4039,8 +3965,7 @@ e
                                         <label for="Root Cause">Scope</label>
                                         <div><small class="text-primary">Please insert "NA" in the data field if it does
                                                 not require completion</small></div>
-                                        <textarea class="tiny" name="scope" id="summernote-10">
-                                </textarea>
+                                        <textarea class="tiny" name="scope" id="summernote-10">  </textarea>
                                     </div>
                                 </div>
                                 <div class="col-md-12 mb-3">
@@ -4048,8 +3973,7 @@ e
                                         <label for="Root Cause">Immediate Action</label>
                                         <div><small class="text-primary">Please insert "NA" in the data field if it does
                                                 not require completion</small></div>
-                                        <textarea class="tiny" name="imidiate_action" id="summernote-10">
-                                </textarea>
+                                        <textarea class="tiny" name="imidiate_action" id="summernote-10">    </textarea>
                                     </div>
                                 </div>
 
@@ -4662,10 +4586,8 @@ e
                             <div class="button-block">
                                 <button type="submit" class="saveButton"
                                     style=" justify-content: center; width: 4rem; margin-left: 1px;">Save</button>
-                                <a href="/rcms/qms-dashboard"
-                                    style=" justify-content: center; width: 4rem; margin-left: 1px;">
-                                    <button type="button" class="backButton">Back</button>
-                                </a>
+                                    <button type="button" class="backButton" onclick="previousStep()">Back</button>
+
                                 <button type="button" class="nextButton"
                                     style=" justify-content: center; width: 4rem; margin-left: 1px;"
                                     onclick="nextStep()">Next</button>
@@ -4741,8 +4663,7 @@ e
                                         <label for="Investigation Summary">Conclusion</label>
                                         <div><small class="text-primary">Please insert "NA" in the data field if it does
                                                 not require completion</small></div>
-                                        <textarea class="tiny" name="Conclusion" id="summernote-8">
-                                         </textarea>
+                                        <textarea class="tiny" name="Conclusion" id="summernote-8">  </textarea>
                                     </div>
                                 </div>
 
@@ -4751,8 +4672,7 @@ e
                                         <label for="Investigation Summary">Identified Risk</label>
                                         <div><small class="text-primary">Please insert "NA" in the data field if it does
                                                 not require completion</small></div>
-                                        <textarea class="tiny" name="Identified_Risk" id="summernote-8">
-                                        </textarea>
+                                        <textarea class="tiny" name="Identified_Risk" id="summernote-8"> </textarea>
                                     </div>
                                 </div>
 
@@ -5010,8 +4930,7 @@ e
                                 <div class="col-md-12 mb-3">
                                     <div class="group-input">
                                         <label for="Description_of_Discrepancy">Description of Discrepancy </label>
-                                        <textarea class="tiny" name="Description_of_Discrepancy" id="summernote-8">
-                                    </textarea>
+                                        <textarea class="tiny" name="Description_of_Discrepancy" id="summernote-8">        </textarea>
                                     </div>
                                 </div>
                                 {{-- <div class="col-12">
@@ -5025,8 +4944,7 @@ e
                                         <label for="Root_Cause">Root Cause</label>
                                         <div><small class="text-primary">Please insert "NA" in the data field if it does
                                                 not require completion</small></div>
-                                        <textarea class="tiny" name="Root_Cause" id="summernote-9">
-                                    </textarea>
+                                        <textarea class="tiny" name="Root_Cause" id="summernote-9">    </textarea>
                                     </div>
                                 </div>
                                 {{-- <div class="col-12">
@@ -5040,8 +4958,7 @@ e
                                         <label for="Immediate_Action_Take">Immediate Action Taken (If Applicable)</label>
                                         <div><small class="text-primary">Please insert "NA" in the data field if it does
                                                 not require completion</small></div>
-                                        <textarea class="tiny" name="Immediate_Action_Take" id="summernote-10">
-                                    </textarea>
+                                        <textarea class="tiny" name="Immediate_Action_Take" id="summernote-10">         </textarea>
                                     </div>
                                 </div>
                                 <div class="col-md-12 mb-3">
@@ -5049,8 +4966,7 @@ e
                                         <label for="Corrective_Action_Details">Corrective Action Details</label>
                                         <div><small class="text-primary">Please insert "NA" in the data field if it does
                                                 not require completion</small></div>
-                                        <textarea class="tiny" name="Corrective_Action_Details" id="summernote-10">
-                                    </textarea>
+                                        <textarea class="tiny" name="Corrective_Action_Details" id="summernote-10">                       </textarea>
                                     </div>
                                 </div>
                                 <div class="col-md-12 mb-3">
@@ -5058,8 +4974,7 @@ e
                                         <label for="Preventive_Action_Details">Preventive Action Details</label>
                                         <div><small class="text-primary">Please insert "NA" in the data field if it does
                                                 not require completion</small></div>
-                                        <textarea class="tiny" name="Preventive_Action_Details" id="summernote-10">
-                                    </textarea>
+                                        <textarea class="tiny" name="Preventive_Action_Details" id="summernote-10">     </textarea>
                                     </div>
                                 </div>
 
@@ -5081,8 +4996,7 @@ e
                                         <label for="Corrective_Action_Taken">Corrective Action Taken</label>
                                         <div><small class="text-primary">Please insert "NA" in the data field if it does
                                                 not require completion</small></div>
-                                        <textarea class="tiny" name="Corrective_Action_Taken" id="summernote-10">
-                                    </textarea>
+                                        <textarea class="tiny" name="Corrective_Action_Taken" id="summernote-10">  </textarea>
                                     </div>
 
                                 </div>
@@ -5091,8 +5005,7 @@ e
                                         <label for="Preventive_action_Taken">Preventive Action Taken</label>
                                         <div><small class="text-primary">Please insert "NA" in the data field if it does
                                                 not require completion</small></div>
-                                        <textarea class="tiny" name="Preventive_action_Taken" id="summernote-10">
-                                    </textarea>
+                                        <textarea class="tiny" name="Preventive_action_Taken" id="summernote-10">   </textarea>
                                     </div>
                                 </div>
                                 <div class="sub-head">
@@ -5103,8 +5016,7 @@ e
                                         <label for="CAPA_Closure_Comments">CAPA Closure Comments</label>
                                         <div><small class="text-primary">Please insert "NA" in the data field if it does
                                                 not require completion</small></div>
-                                        <textarea class="" name="CAPA_Closure_Comments" id="summernote-10">
-                                    </textarea>
+                                        <textarea class="" name="CAPA_Closure_Comments" id="summernote-10">  </textarea>
                                     </div>
 
                                     <div class="col-lg-12">
@@ -5131,10 +5043,8 @@ e
                                     <button type="submit"
                                         style=" justify-content: center; width: 4rem; margin-left: 1px;"
                                         class="saveButton">Save</button>
-                                    <a href="/rcms/qms-dashboard"
-                                        style=" justify-content: center; width: 4rem; margin-left: 1px;">
-                                        <button type="button" class="backButton">Back</button>
-                                    </a>
+                                        <button type="button" class="backButton" onclick="previousStep()">Back</button>
+
                                     <button type="button"
                                         style=" justify-content: center; width: 4rem; margin-left: 1px;"
                                         class="nextButton" onclick="nextStep()">Next</button>
@@ -5308,8 +5218,7 @@ e
                                         <label for="QA Feedbacks">Initiator Feedbacks</label>
                                         <div><small class="text-primary">Please insert "NA" in the data field if it does
                                                 not require completion</small></div>
-                                        <textarea class="tiny" name="QA_Feedbacks" id="summernote-14">
-                                    </textarea>
+                                        <textarea class="tiny" name="QA_Feedbacks" id="summernote-14">  </textarea>
                                     </div>
                                 </div>
                                 <div class="col-lg-12">
@@ -5379,8 +5288,7 @@ e
                                             Category</label>
                                         <div><small class="text-primary">Please insert "NA" in the data field if it does
                                                 not require completion</small></div>
-                                        <textarea class="tiny" name="Investigation_Of_Review" id="summernote-13">
-                                    </textarea>
+                                        <textarea class="tiny" name="Investigation_Of_Review" id="summernote-13">   </textarea>
                                     </div>
                                 </div>
                                 <div class="col-12">
@@ -5466,8 +5374,7 @@ e
                                             (Incident)</label>
                                         <div><small class="text-primary">Please insert "NA" in the data field if it does
                                                 not require completion</small></div>
-                                        <textarea class="tiny" name="Extension_Justification_incident" id="summernote-10">
-                                    </textarea>
+                                        <textarea class="tiny" name="Extension_Justification_incident" id="summernote-10">       </textarea>
                                     </div>
                                 </div>
 
@@ -5522,8 +5429,7 @@ e
                                         <label for="Extension_Justification_CAPA">Extension Justification (CAPA)</label>
                                         <div><small class="text-primary">Please insert "NA" in the data field if it does
                                                 not require completion</small></div>
-                                        <textarea class="tiny" name="Extension_Justification_CAPA" id="summernote-10">
-                                    </textarea>
+                                        <textarea class="tiny" name="Extension_Justification_CAPA" id="summernote-10">     </textarea>
                                     </div>
                                 </div>
 
@@ -5591,8 +5497,6 @@ e
 
                                 {{-- row --}}
                                 <div class="row">
-
-
                                     <div class="col-lg-6">
                                         <div class="group-input">
                                             <label for=" Quality_Risk_Management_Extension_Completed_By"> Quality Risk
@@ -5651,8 +5555,7 @@ e
                                             (Investigation)</label>
                                         <div><small class="text-primary">Please insert "NA" in the data field if it does
                                                 not require completion</small></div>
-                                        <textarea class="tiny" name="Extension_Justification_investigation" id="summernote-10">
-                                    </textarea>
+                                        <textarea class="tiny" name="Extension_Justification_investigation" id="summernote-10">    </textarea>
                                     </div>
                                 </div>
 

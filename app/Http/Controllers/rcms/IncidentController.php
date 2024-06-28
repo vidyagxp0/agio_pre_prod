@@ -146,7 +146,7 @@ class IncidentController extends Controller
         $incident->Disposition_Batch = $request->Disposition_Batch;
         $incident->Facility_Equipment = $request->Facility_Equipment;
         $incident->Document_Details_Required = $request->Document_Details_Required;
-      
+
         if ($request->incident_category == 'major' || $request->incident_category == 'minor' || $request->incident_category == 'critical') {
             $list = Helpers::getHeadoperationsUserList();
                     foreach ($list as $u) {
@@ -294,7 +294,7 @@ class IncidentController extends Controller
                                                                 }
                                                             }
                                                         }
-                                                          
+
      if (!empty ($request->Initial_attachment)) {
 
    $files = [];
@@ -336,7 +336,7 @@ if ($incident->Initial_attachment) {
             $incident->initial_file = json_encode($files);
         }
         //dd($request->Initial_attachment);
-       
+
 
         if (!empty ($request->QA_attachment)) {
             $files = [];
@@ -486,8 +486,6 @@ if ($incident->Initial_attachment) {
             $data5->batch_no = serialize($request->batch_no);
         }
         $data5->save();
-
-
 
         $Cft = new IncidentCft();
         $Cft->incident_id = $incident->id;
@@ -1118,7 +1116,7 @@ if ($incident->Initial_attachment) {
         $incidentNewGrid = IncidentGridData::where('incident_id', $id)->latest()->first();
 
          $investigation_data = IncidentGridData::where(['incident_id' => $id, 'identifier' => 'investication'])->first();
-        
+
         // $why_data = IncidentGridData::where(['incident_id' => $id, 'identifier' => 'why'])->first();
         // $fishbone_data = IncidentGridData::where(['incident_id' => $id, 'identifier' => 'fishbone'])->first();
 
@@ -1138,8 +1136,8 @@ if ($incident->Initial_attachment) {
 
 
         $whyData = IncidentGridData::where(['incident_id' => $id, 'identifier' => 'why'])->first();
-        $why_data = json_decode($whyData->data, true); 
-        
+        $why_data = json_decode($whyData->data, true);
+
 
         $fishbone = IncidentGridData::where(['incident_id' => $id, 'identifier' =>'fishbone'])->first();
         $fishbone_data = json_decode($fishbone->data, true);
@@ -1151,7 +1149,7 @@ if ($incident->Initial_attachment) {
     public function update(Request $request, $id)
     {
         $form_progress = null;
-        
+
         $lastIncident = Incident::find($id);
         $incident = Incident::find($id);
         $incident->Delay_Justification = $request->Delay_Justification;
@@ -1888,14 +1886,14 @@ if ($incident->Initial_attachment) {
                 }
 
                 $incident->Initial_attachment = json_encode($files);
-                
+
             }
 
 
 
         }
 
-        
+
         if (!empty ($request->Audit_file)) {
 
             $files = [];
@@ -2123,7 +2121,7 @@ if ($incident->Initial_attachment) {
             $teamInvestigationData->identifier = "TeamInvestigation";
             $teamInvestigationData->data = $request->investigationTeam;
             $teamInvestigationData->save();
-    
+
             $rootCauseData = IncidentGridData::where(['incident_id' => $incident->id,'identifier' => "RootCause"])->firstOrCreate();
             $rootCauseData->incident_id = $incident->id;
             $rootCauseData->identifier = "RootCause";
@@ -2141,7 +2139,7 @@ if ($incident->Initial_attachment) {
             $newDataGridFishbone->identifier = 'fishbone';
             $newDataGridFishbone->data = $request->fishbone;
             $newDataGridFishbone->save();
-            
+
         }
 
 
@@ -3514,14 +3512,14 @@ if ($incident->Initial_attachment) {
     }
 
     public function incident_send_stage(Request $request, $id)
-    { 
+    {
         try {
             if ($request->username == Auth::user()->email && Hash::check($request->password, Auth::user()->password)) {
                 $incident = Incident::find($id);
                 $updateCFT = IncidentCft::where('incident_id', $id)->latest()->first();
                 $lastDocument = Incident::find($id);
                 $cftDetails = IncidentCftResponse::withoutTrashed()->where(['status' => 'In-progress', 'incident_id' => $id])->distinct('cft_user_id')->count();
-    
+
                 if ($incident->stage == 1) {
                     if ($incident->form_progress !== 'general-open')
                     {
@@ -3531,23 +3529,23 @@ if ($incident->Initial_attachment) {
                             'title' => 'Mandatory Fields!',
                             'message' => 'General Information Tab is yet to be filled'
                         ]);
-    
+
                         return redirect()->back();
                     } else {
-                        
+
                         Session::flash('swal', [
                             'type' => 'success',
                             'title' => 'Success',
                             'message' => 'Sent for HOD review state'
                         ]);
                     }
-                    
+
                     $incident->stage = "2";
                     $incident->status = "HOD Review";
                     $incident->submit_by = Auth::user()->name;
                     $incident->submit_on = Carbon::now()->format('d-M-Y');
                     $incident->submit_comment = $request->comment;
-                    
+
                     $history = new IncidentAuditTrail();
                     $history->incident_id = $id;
                     $history->activity_type = 'Activity Log';
@@ -3563,14 +3561,14 @@ if ($incident->Initial_attachment) {
                     $history->change_from = $lastDocument->status;
                     $history->stage = 'Plan Proposed';
                     $history->save();
-    
-    
+
+
                     // $list = Helpers::getHodUserList();
                     // foreach ($list as $u) {
                     //     if ($u->q_m_s_divisions_id == $incident->division_id) {
                     //         $email = Helpers::getInitiatorEmail($u->user_id);
                     //         if ($email !== null) {
-    
+
                     //             try {
                     //                 Mail::send(
                     //                     'mail.view-mail',
@@ -3586,13 +3584,13 @@ if ($incident->Initial_attachment) {
                     //         }
                     //     }
                     // }
-    
+
                     // $list = Helpers::getHeadoperationsUserList();
                     // foreach ($list as $u) {
                     //     if ($u->q_m_s_divisions_id == $incident->division_id) {
                     //         $email = Helpers::getInitiatorEmail($u->user_id);
                     //         if ($email !== null) {
-    
+
                     //             Mail::send(
                     //                 'mail.Categorymail',
                     //                 ['data' => $incident],
@@ -3609,16 +3607,16 @@ if ($incident->Initial_attachment) {
                     return back();
                 }
                 if ($incident->stage == 2) {
-    
+
                     // Check HOD remark value
                     if (!$incident->HOD_Remarks) {
-    
+
                         Session::flash('swal', [
                             'title' => 'Mandatory Fields Required!',
                             'message' => 'HOD Remarks is yet to be filled!',
                             'type' => 'warning',
                         ]);
-    
+
                         return redirect()->back();
                     } else {
                         Session::flash('swal', [
@@ -3627,7 +3625,7 @@ if ($incident->Initial_attachment) {
                             'message' => 'Sent for QA initial review state'
                         ]);
                     }
-    
+
                     $incident->stage = "3";
                     $incident->status = "QA Initial Review";
                     $incident->HOD_Review_Complete_By = Auth::user()->name;
@@ -3669,8 +3667,8 @@ if ($incident->Initial_attachment) {
                     //         }
                     //     }
                     // }
-    
-    
+
+
                     $incident->update();
                     toastr()->success('Document Sent');
                     return back();
@@ -3683,7 +3681,7 @@ if ($incident->Initial_attachment) {
                             'title' => 'Mandatory Fields!',
                             'message' => 'QA initial review / CFT Mandatory Tab is yet to be filled!'
                         ]);
-    
+
                         return redirect()->back();
                     } else {
                         Session::flash('swal', [
@@ -3692,10 +3690,10 @@ if ($incident->Initial_attachment) {
                             'message' => 'Sent for CFT review state'
                         ]);
                     }
-    
+
                     $incident->stage = "4";
                     $incident->status = "CFT Review";
-    
+
                     // Code for the CFT required
                     $stage = new IncidentCftResponse();
                     $stage->incident_id = $id;
@@ -3705,7 +3703,7 @@ if ($incident->Initial_attachment) {
                     $stage->comment = $request->comment;
                     $stage->is_required = 1;
                     $stage->save();
-    
+
                     $incident->QA_Initial_Review_Complete_By = Auth::user()->name;
                     $incident->QA_Initial_Review_Complete_On = Carbon::now()->format('d-M-Y');
                     $incident->QA_Initial_Review_Comments = $request->comment;
@@ -3744,7 +3742,7 @@ if ($incident->Initial_attachment) {
                     //         }
                     //     }
                     // }
-    
+
                     if ($request->Incident_category == 'major' || $request->Incident_category == 'minor' || $request->Incident_category == 'critical') {
                         $list = Helpers::getHeadoperationsUserList();
                                 // foreach ($list as $u) {
@@ -3762,7 +3760,7 @@ if ($incident->Initial_attachment) {
                                 //                     );
                                 //                 } catch (\Exception $e) {
                                 //                 }
-    
+
                                 //         }
                                 //     }
                                 // }
@@ -3786,7 +3784,7 @@ if ($incident->Initial_attachment) {
                                         //                 } catch (\Exception $e) {
                                         //                     //log error
                                         //                 }
-    
+
                                         //         }
                                         //     }
                                         // }
@@ -3810,18 +3808,18 @@ if ($incident->Initial_attachment) {
                                                 //                 } catch (\Exception $e) {
                                                 //                     //log error
                                                 //                 }
-    
+
                                                 //         }
                                                 //     }
                                                 // }
                                             }
-    
+
                     $incident->update();
                     toastr()->success('Document Sent');
                     return back();
                 }
                 if ($incident->stage == 4) {
-    
+
                     // CFT review state update form_progress
                     if ($incident->form_progress !== 'cft')
                     {
@@ -3830,7 +3828,7 @@ if ($incident->Initial_attachment) {
                             'title' => 'Mandatory Fields!',
                             'message' => 'CFT Tab is yet to be filled'
                         ]);
-    
+
                         return redirect()->back();
                     } else {
                         Session::flash('swal', [
@@ -3839,17 +3837,17 @@ if ($incident->Initial_attachment) {
                             'message' => 'Sent for Investigation and CAPA review state'
                         ]);
                     }
-    
-    
+
+
                     $IsCFTRequired = IncidentCftResponse::withoutTrashed()->where(['is_required' => 1, 'incident_id' => $id])->latest()->first();
                     $cftUsers = DB::table('incident_cfts')->where(['incident_id' => $id])->first();
                     // Define the column names
                     $columns = ['Production_person', 'Warehouse_notification', 'Quality_Control_Person', 'QualityAssurance_person', 'Engineering_person', 'Analytical_Development_person', 'Kilo_Lab_person', 'Technology_transfer_person', 'Environment_Health_Safety_person', 'Human_Resource_person', 'Information_Technology_person', 'Project_management_person','Other1_person','Other2_person','Other3_person','Other4_person','Other5_person'];
                     // $columns2 = ['Production_review', 'Warehouse_review', 'Quality_Control_review', 'QualityAssurance_review', 'Engineering_review', 'Analytical_Development_review', 'Kilo_Lab_review', 'Technology_transfer_review', 'Environment_Health_Safety_review', 'Human_Resource_review', 'Information_Technology_review', 'Project_management_review'];
-    
+
                     // Initialize an array to store the values
                     $valuesArray = [];
-    
+
                     // Iterate over the columns and retrieve the values
                     foreach ($columns as $index => $column) {
                         $value = $cftUsers->$column;
@@ -3922,7 +3920,7 @@ if ($incident->Initial_attachment) {
                             $updateCFT->Other5_on = Carbon::now()->format('Y-m-d');
                         }
                         $updateCFT->update();
-    
+
                         // Check if the value is not null and not equal to 0
                         if ($value != null && $value != 0) {
                             $valuesArray[] = $value;
@@ -3948,19 +3946,19 @@ if ($incident->Initial_attachment) {
                             $stage->save();
                         }
                     }
-    
+
                     $checkCFTCount = IncidentCftResponse::withoutTrashed()->where(['status' => 'Completed', 'incident_id' => $id])->count();
                     // dd(count(array_unique($valuesArray)), $checkCFTCount);
-    
-    
+
+
                     if (!$IsCFTRequired || $checkCFTCount) {
-    
+
                         $incident->stage = "5";
                         $incident->status = "QA Final Review";
                         $incident->CFT_Review_Complete_By = Auth::user()->name;
                         $incident->CFT_Review_Complete_On = Carbon::now()->format('d-M-Y');
                         $incident->CFT_Review_Comments = $request->comment;
-    
+
                         $history = new IncidentAuditTrail();
                         $history->incident_id = $id;
                         $history->activity_type = 'Activity Log';
@@ -4001,9 +3999,9 @@ if ($incident->Initial_attachment) {
                     toastr()->success('Document Sent');
                     return back();
                 }
-    
+
                 if ($incident->stage == 5) {
-    
+
                     if ($incident->form_progress === 'capa' && !empty($incident->QA_Feedbacks))
                     {
                         Session::flash('swal', [
@@ -4011,24 +4009,24 @@ if ($incident->Initial_attachment) {
                             'title' => 'Success',
                             'message' => 'Sent for QA Head/Manager Designee Approval'
                         ]);
-    
+
                     } else {
                         Session::flash('swal', [
                             'type' => 'warning',
                             'title' => 'Mandatory Fields!',
                             'message' => 'Investigation and CAPA / QA Final review Tab is yet to be filled!'
                         ]);
-    
+
                         return redirect()->back();
                     }
-    
-    
+
+
                     $incident->stage = "6";
                     $incident->status = "QA Head/Manager Designee Approval";
                     $incident->QA_Final_Review_Complete_By = Auth::user()->name;
                     $incident->QA_Final_Review_Complete_On = Carbon::now()->format('d-M-Y');
                     $incident->QA_Final_Review_Comments = $request->comment;
-    
+
                     $history = new IncidentAuditTrail();
                     $history->incident_id = $id;
                     $history->activity_type = 'Activity Log';
@@ -4069,16 +4067,16 @@ if ($incident->Initial_attachment) {
                     return back();
                 }
                 if ($incident->stage == 6) {
-    
+
                     if ($incident->form_progress !== 'qah')
                     {
-    
+
                         Session::flash('swal', [
                             'title' => 'Mandatory Fields!',
                             'message' => 'QAH/Designee Approval Tab is yet to be filled!',
                             'type' => 'warning',
                         ]);
-    
+
                         return redirect()->back();
                     } else {
                         Session::flash('swal', [
@@ -4087,39 +4085,39 @@ if ($incident->Initial_attachment) {
                             'message' => 'Incident sent to Intiator Update'
                         ]);
                     }
-    
+
                     $extension = Extension::where('parent_id', $incident->id)->first();
-    
+
                     $rca = RootCauseAnalysis::where('parent_record', str_pad($incident->id, 4, 0, STR_PAD_LEFT))->first();
-    
+
                     if ($extension && $extension->status !== 'Closed-Done') {
                         Session::flash('swal', [
                             'title' => 'Extension record pending!',
                             'message' => 'There is an Extension record which is yet to be closed/done!',
                             'type' => 'warning',
                         ]);
-    
+
                         return redirect()->back();
                     }
-    
+
                     if ($rca && $rca->status !== 'Closed-Done') {
                         Session::flash('swal', [
                             'title' => 'RCA record pending!',
                             'message' => 'There is an Root Cause Analysis record which is yet to be closed/done!',
                             'type' => 'warning',
                         ]);
-    
+
                         return redirect()->back();
                     }
-    
+
                     // return "PAUSE";
-    
+
                     $incident->stage = "7";
                     $incident->status = "Pending Initiator Update";
                     $incident->QA_head_approved_by = Auth::user()->name;
                     $incident->QA_head_approved_on = Carbon::now()->format('d-M-Y');
                     $incident->QA_head_approved_comment	 = $request->comment;
-    
+
                     $history = new IncidentAuditTrail();
                     $history->incident_id = $id;
                     $history->activity_type = 'Activity Log';
@@ -4160,16 +4158,16 @@ if ($incident->Initial_attachment) {
                     return back();
                 }
                 if ($incident->stage == 7) {
-    
+
                     if ($incident->form_progress !== 'qah')
                     {
-    
+
                         Session::flash('swal', [
                             'title' => 'Mandatory Fields!',
                             'message' => 'QAH/Designee Approval Tab is yet to be filled!',
                             'type' => 'warning',
                         ]);
-    
+
                         return redirect()->back();
                     } else {
                         Session::flash('swal', [
@@ -4178,39 +4176,39 @@ if ($incident->Initial_attachment) {
                             'message' => 'Incident sent to QA Final Approval.'
                         ]);
                     }
-    
+
                     $extension = Extension::where('parent_id', $incident->id)->first();
-    
+
                     $rca = RootCauseAnalysis::where('parent_record', str_pad($incident->id, 4, 0, STR_PAD_LEFT))->first();
-    
+
                     if ($extension && $extension->status !== 'Closed-Done') {
                         Session::flash('swal', [
                             'title' => 'Extension record pending!',
                             'message' => 'There is an Extension record which is yet to be closed/done!',
                             'type' => 'warning',
                         ]);
-    
+
                         return redirect()->back();
                     }
-    
+
                     if ($rca && $rca->status !== 'Closed-Done') {
                         Session::flash('swal', [
                             'title' => 'RCA record pending!',
                             'message' => 'There is an Root Cause Analysis record which is yet to be closed/done!',
                             'type' => 'warning',
                         ]);
-    
+
                         return redirect()->back();
                     }
-    
+
                     // return "PAUSE";
-    
+
                     $incident->stage = "8";
                     $incident->status = "QA Final Approval";
                     $incident->pending_initiator_approved_by = Auth::user()->name;
                     $incident->pending_initiator_approved_on = Carbon::now()->format('d-M-Y');
                     $incident->pending_initiator_approved_comment = $request->comment;
-    
+
                     $history = new IncidentAuditTrail();
                     $history->incident_id = $id;
                     $history->activity_type = 'Activity Log';
@@ -4250,19 +4248,19 @@ if ($incident->Initial_attachment) {
                     toastr()->success('Document Sent');
                     return back();
                 }
-    
-    
+
+
                 if ($incident->stage == 8) {
-    
+
                     if ($incident->form_progress !== 'qah')
                     {
-    
+
                         Session::flash('swal', [
                             'title' => 'Mandatory Fields!',
                             'message' => 'QAH/Designee Approval Tab is yet to be filled!',
                             'type' => 'warning',
                         ]);
-    
+
                         return redirect()->back();
                     } else {
                         Session::flash('swal', [
@@ -4271,39 +4269,39 @@ if ($incident->Initial_attachment) {
                             'message' => 'Incident sent to Closed/Done state'
                         ]);
                     }
-    
+
                     $extension = Extension::where('parent_id', $incident->id)->first();
-    
+
                     $rca = RootCauseAnalysis::where('parent_record', str_pad($incident->id, 4, 0, STR_PAD_LEFT))->first();
-    
+
                     if ($extension && $extension->status !== 'Closed-Done') {
                         Session::flash('swal', [
                             'title' => 'Extension record pending!',
                             'message' => 'There is an Extension record which is yet to be closed/done!',
                             'type' => 'warning',
                         ]);
-    
+
                         return redirect()->back();
                     }
-    
+
                     if ($rca && $rca->status !== 'Closed-Done') {
                         Session::flash('swal', [
                             'title' => 'RCA record pending!',
                             'message' => 'There is an Root Cause Analysis record which is yet to be closed/done!',
                             'type' => 'warning',
                         ]);
-    
+
                         return redirect()->back();
                     }
-    
+
                     // return "PAUSE";
-    
+
                     $incident->stage = "9";
                     $incident->status = "Closed-Done";
                     $incident->QA_final_approved_by = Auth::user()->name;
                     $incident->QA_final_approved_on = Carbon::now()->format('d-M-Y');
                     $incident->QA_final_approved_comment = $request->comment;
-    
+
                     $history = new IncidentAuditTrail();
                     $history->incident_id = $id;
                     $history->activity_type = 'Activity Log';
@@ -4353,7 +4351,7 @@ if ($incident->Initial_attachment) {
                 'message' => $th->getMessage()
             ], 500);
         }
-        
+
     }
 
     public function cftnotreqired(Request $request, $id)
@@ -4562,7 +4560,7 @@ if ($incident->Initial_attachment) {
         $today = Carbon::now()->format('d-m-y');
         $document = Incident::where('id', $id)->first();
         $document->initiator = User::where('id', $document->initiator_id)->value('name');
-        
+
         return view('frontend.incident.audit-trail', compact('audit', 'document', 'today'));
     }
 
@@ -4611,9 +4609,14 @@ if ($incident->Initial_attachment) {
             $grid_data = IncidentGrid::where('incident_grid_id', $id)->where('type', "Incident")->first();
             $grid_data1 = IncidentGrid::where('incident_grid_id', $id)->where('type', "Document")->first();
 
-            $investigation_data = IncidentGridData::where(['incident_id' => $id, 'identifier' => 'investication'])->first();
-            $root_cause_data = IncidentGridData::where(['incident_id' => $id, 'identifier' => 'rootCause'])->first();
-            $why_data = IncidentGridData::where(['incident_id' => $id, 'identifier' => 'why'])->first();
+            $json_decode = IncidentGridData::where(['incident_id' => $id, 'identifier' => 'TeamInvestigation'])->first();
+            $investigation_data = json_decode($json_decode->data, true);
+
+            $json_decode = IncidentGridData::where(['incident_id' => $id, 'identifier' => 'RootCause'])->first();
+            $root_cause_data = json_decode($json_decode->data,true);
+
+            $json_decode = IncidentGridData::where(['incident_id' => $id, 'identifier' => 'why'])->first();
+            $why_data = json_decode($json_decode->data, true);
 
             $capaExtension = IncidentLaunchExtension::where(['incident_id' => $id, "extension_identifier" => "Capa"])->first();
             $qrmExtension = IncidentLaunchExtension::where(['incident_id' => $id, "extension_identifier" => "QRM"])->first();

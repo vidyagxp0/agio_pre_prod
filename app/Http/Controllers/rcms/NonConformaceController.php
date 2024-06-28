@@ -41,8 +41,8 @@ use Illuminate\Support\Facades\Validator;
 class NonConformaceController extends Controller
 {
     public function index(){
-        
-        
+
+
         $old_record = NonConformance::select('id', 'division_id', 'record')->get();
         $data = ((RecordNumber::first()->value('counter')) + 1);
         $data = str_pad($data, 4, '0', STR_PAD_LEFT);
@@ -145,7 +145,7 @@ class NonConformaceController extends Controller
         $NonConformance->Disposition_Batch = $request->Disposition_Batch;
         $NonConformance->Facility_Equipment = $request->Facility_Equipment;
         $NonConformance->Document_Details_Required = $request->Document_Details_Required;
-      
+
         if ($request->non_conformances_category == 'major' || $request->non_conformances_category == 'minor' || $request->non_conformances_category == 'critical') {
             $list = Helpers::getHeadoperationsUserList();
                     foreach ($list as $u) {
@@ -334,8 +334,8 @@ class NonConformaceController extends Controller
 
             $NonConformance->hod_file = json_encode($files);
         }
-       
-        
+
+
 
         //dd($request->Initial_attachment);
         if (!empty ($request->Initial_attachment)) {
@@ -431,7 +431,8 @@ class NonConformaceController extends Controller
 
         $NonConformance->save();
 
-        
+
+
         $teamInvestigationData = NonConformanceGridDatas::where(['non_conformances_id' => $NonConformance->id,'identifier' => "TeamInvestigation"])->firstOrCreate();
         $teamInvestigationData->non_conformances_id = $NonConformance->id;
         $teamInvestigationData->identifier = "TeamInvestigation";
@@ -456,8 +457,6 @@ class NonConformaceController extends Controller
         $newDataGridFishbone->identifier = 'fishbone';
         $newDataGridFishbone->data = $request->fishbone;
         $newDataGridFishbone->save();
-
-
 
         $data3 = new NonConformanceGrid();
         $data3->non_conformances_grid_id = $NonConformance->id;
@@ -502,8 +501,6 @@ class NonConformaceController extends Controller
             $data5->batch_no = serialize($request->batch_no);
         }
         $data5->save();
-
-
 
         $Cft = new NonConformanceCFTs();
         $Cft->non_conformances_id = $NonConformance->id;
@@ -719,7 +716,6 @@ class NonConformaceController extends Controller
                 }
             }
 
-
             $Cft->Kilo_Lab_attachment = json_encode($files);
         }
         if (!empty ($request->Technology_transfer_attachment)) {
@@ -731,7 +727,6 @@ class NonConformaceController extends Controller
                     $files[] = $name;
                 }
             }
-
 
             $Cft->Technology_transfer_attachment = json_encode($files);
         }
@@ -758,7 +753,6 @@ class NonConformaceController extends Controller
                 }
             }
 
-
             $Cft->Human_Resource_attachment = json_encode($files);
         }
         if (!empty ($request->Information_Technology_attachment)) {
@@ -784,7 +778,6 @@ class NonConformaceController extends Controller
                 }
             }
 
-
             $Cft->Project_management_attachment = json_encode($files);
         }
         if (!empty ($request->Other1_attachment)) {
@@ -796,7 +789,6 @@ class NonConformaceController extends Controller
                     $files[] = $name;
                 }
             }
-
 
             $Cft->Other1_attachment = json_encode($files);
         }
@@ -1140,14 +1132,14 @@ class NonConformaceController extends Controller
 
         $investigationTeam = NonConformanceGridDatas::where(['non_conformances_id' => $id, 'identifier' =>'TeamInvestigation'])->first();
         $investigationTeamData = json_decode($investigationTeam->data, true);
-        
+
         $rootCause = NonConformanceGridDatas::where(['non_conformances_id' => $id, 'identifier' =>'RootCause'])->first();
         $rootCauseData = json_decode($rootCause->data, true);
 
 
         $whyData = NonConformanceGridDatas::where(['non_conformances_id' => $id, 'identifier' => 'why'])->first();
-        $why_data = json_decode($whyData->data, true); 
-        
+        $why_data = json_decode($whyData->data, true);
+
 
         $fishbone = NonConformanceGridDatas::where(['non_conformances_id' => $id, 'identifier' =>'fishbone'])->first();
         $fishbone_data = json_decode($fishbone->data, true);
@@ -1158,7 +1150,7 @@ class NonConformaceController extends Controller
     public function update(Request $request,$id)
     {
         $form_progress = null;
-        
+
         $lastNonConformance = NonConformance::find($id);
         $NonConformance = NonConformance::find($id);
         $NonConformance->Delay_Justification = $request->Delay_Justification;
@@ -1315,7 +1307,7 @@ class NonConformaceController extends Controller
         if ($request->form_name == 'capa')
         {
             if($request->source_doc!=""){
-                $NonConformance->capa_number = $request->capa_number ? $request->capa_number : $NonConformance->capa_number;
+                // $NonConformance->capa_number = $request->capa_number ? $request->capa_number : $NonConformance->capa_number;
                 $NonConformance->department_capa = $request->department_capa ? $request->department_capa : $NonConformance->department_capa;
                 $NonConformance->source_of_capa = $request->source_of_capa ? $request->source_of_capa : $NonConformance->source_of_capa;
                 $NonConformance->capa_others = $request->capa_others ? $request->capa_others : $NonConformance->capa_others;
@@ -1630,7 +1622,6 @@ class NonConformaceController extends Controller
                     }
                 }
 
-
                 $Cft->production_attachment = json_encode($files);
             }
             if (!empty ($request->Warehouse_attachment)) {
@@ -1695,7 +1686,6 @@ class NonConformaceController extends Controller
                     }
                 }
 
-
                 $Cft->Analytical_Development_attachment = json_encode($files);
             }
             if (!empty ($request->Kilo_Lab_attachment)) {
@@ -1721,7 +1711,6 @@ class NonConformaceController extends Controller
                     }
                 }
 
-
                 $Cft->Technology_transfer_attachment = json_encode($files);
             }
             if (!empty ($request->Environment_Health_Safety_attachment)) {
@@ -1746,7 +1735,6 @@ class NonConformaceController extends Controller
                         $files[] = $name;
                     }
                 }
-
 
                 $Cft->Human_Resource_attachment = json_encode($files);
             }
@@ -1875,12 +1863,12 @@ class NonConformaceController extends Controller
                                     }
                                 );
                             } catch (\Exception $e) {
-                                //log error 
+                                //log error
                             }
                     }
                 }
 
-            
+
         if (!empty ($request->Initial_attachment)) {
 
             $files = [];
@@ -2086,11 +2074,10 @@ class NonConformaceController extends Controller
                 }
             }
 
-
             $NonConformance->closure_attachment = json_encode($files);
         }
 
-        
+
         if (!empty ($request->hod_file)) {
 
             $files = [];
@@ -2114,7 +2101,7 @@ class NonConformaceController extends Controller
 
             $NonConformance->hod_file = json_encode($files);
         }
-    
+
         if($NonConformance->stage > 0){
 
 
@@ -2156,32 +2143,32 @@ class NonConformaceController extends Controller
             $NonConformance->who_rationable = $request->who_rationable;
 
             // dd($id);
-            $newDataGridInvestication = NonConformanceGridDatas::where(['non_conformances_id' => $id, 'identifier' => 'investication'])->firstOrCreate();
-            $newDataGridInvestication->non_conformances_id = $id;
-            $newDataGridInvestication->identifier = 'investication';
-            $newDataGridInvestication->data = $request->investication;
-            $newDataGridInvestication->save();
+        $newDataGridInvestication = NonConformanceGridDatas::where(['non_conformances_id' => $id, 'identifier' => 'TeamInvestigation'])->firstOrCreate();
+        $newDataGridInvestication->non_conformances_id = $id;
+        $newDataGridInvestication->identifier = 'TeamInvestigation';
+        $newDataGridInvestication->data = $request->investigationTeam;
+        $newDataGridInvestication->save();
 
-            $newDataGridRCA = NonConformanceGridDatas::where(['non_conformances_id' => $id, 'identifier' => 'rootCause'])->firstOrCreate();
-            $newDataGridRCA->non_conformances_id = $id;
-            $newDataGridRCA->identifier = 'rootCause';
-            $newDataGridRCA->data = $request->rootCause;
-            $newDataGridRCA->save();
+        $newDataGridRCA = NonConformanceGridDatas::where(['non_conformances_id' => $id, 'identifier' => 'RootCause'])->firstOrCreate();
+        $newDataGridRCA->non_conformances_id = $id;
+        $newDataGridRCA->identifier = 'RootCause';
+        $newDataGridRCA->data = $request->rootCauseData;
+        $newDataGridRCA->save();
 
-            $newDataGridWhy = NonConformanceGridDatas::where(['non_conformances_id' => $id, 'identifier' => 'why'])->firstOrCreate();
-            $newDataGridWhy->non_conformances_id = $id;
-            $newDataGridWhy->identifier = 'why';
-            $newDataGridWhy->data = $request->why;
-            $newDataGridWhy->save();
 
-            $newDataGridFishbone = NonConformanceGridDatas::where(['non_conformances_id' => $id, 'identifier' => 'fishbone'])->firstOrCreate();
-            $newDataGridFishbone->non_conformances_id = $id;
-            $newDataGridFishbone->identifier = 'fishbone';
-            $newDataGridFishbone->data = $request->fishbone;
-            $newDataGridFishbone->save();
-            
+        $newDataGridWhy = NonConformanceGridDatas::where(['non_conformances_id' => $id, 'identifier' => 'why'])->firstOrCreate();
+        $newDataGridWhy->non_conformances_id = $id;
+        $newDataGridWhy->identifier = 'why';
+        $newDataGridWhy->data = $request->why;
+        $newDataGridWhy->save();
+
+        $newDataGridFishbone = NonConformanceGridDatas::where(['non_conformances_id' => $id, 'identifier' => 'fishbone'])->firstOrCreate();
+        $newDataGridFishbone->non_conformances_id = $id;
+        $newDataGridFishbone->identifier = 'fishbone';
+        $newDataGridFishbone->data = $request->fishbone;
+        $newDataGridFishbone->save();
+
         }
-
 
         $NonConformance->form_progress = isset($form_progress) ? $form_progress : null;
         $NonConformance->update();
@@ -3435,40 +3422,40 @@ class NonConformaceController extends Controller
     }
 
     public function non_conformance_send_stage(Request $request, $id)
-    { 
+    {
         try {
             if ($request->username == Auth::user()->email && Hash::check($request->password, Auth::user()->password)) {
                 $NonConformance = NonConformance::find($id);
                 $updateCFT = NonConformanceCFTs::where('non_conformances_id', $id)->latest()->first();
                 $lastDocument = NonConformance::find($id);
                 $cftDetails = NonConformanceCFTResponse::withoutTrashed()->where(['status' => 'In-progress', 'non_conformances_id' => $id])->distinct('cft_user_id')->count();
-    
+
                 if ($NonConformance->stage == 1) {
                     if ($NonConformance->form_progress !== 'general-open')
                     {
-                       
+
                         Session::flash('swal', [
                             'type' => 'warning',
                             'title' => 'Mandatory Fields!',
                             'message' => 'General Information Tab is yet to be filled'
                         ]);
-    
+
                         return redirect()->back();
                     } else {
-                        
+
                         Session::flash('swal', [
                             'type' => 'success',
                             'title' => 'Success',
                             'message' => 'Sent for HOD review state'
                         ]);
                     }
-                    
+
                     $NonConformance->stage = "2";
                     $NonConformance->status = "HOD Review";
                     $NonConformance->submit_by = Auth::user()->name;
                     $NonConformance->submit_on = Carbon::now()->format('d-M-Y');
                     $NonConformance->submit_comment = $request->comment;
-                    
+
                     $history = new NonConformanceAuditTrails();
                     $history->non_conformances_id = $id;
                     $history->activity_type = 'Activity Log';
@@ -3484,14 +3471,14 @@ class NonConformaceController extends Controller
                     $history->change_from = $lastDocument->status;
                     $history->stage = 'Plan Proposed';
                     $history->save();
-    
-    
+
+
                     // $list = Helpers::getHodUserList();
                     // foreach ($list as $u) {
                     //     if ($u->q_m_s_divisions_id == $NonConformance->division_id) {
                     //         $email = Helpers::getInitiatorEmail($u->user_id);
                     //         if ($email !== null) {
-    
+
                     //             try {
                     //                 Mail::send(
                     //                     'mail.view-mail',
@@ -3507,13 +3494,13 @@ class NonConformaceController extends Controller
                     //         }
                     //     }
                     // }
-    
+
                     // $list = Helpers::getHeadoperationsUserList();
                     // foreach ($list as $u) {
                     //     if ($u->q_m_s_divisions_id == $NonConformance->division_id) {
                     //         $email = Helpers::getInitiatorEmail($u->user_id);
                     //         if ($email !== null) {
-    
+
                     //             Mail::send(
                     //                 'mail.Categorymail',
                     //                 ['data' => $NonConformance],
@@ -3530,16 +3517,16 @@ class NonConformaceController extends Controller
                     return back();
                 }
                 if ($NonConformance->stage == 2) {
-    
+
                     // Check HOD remark value
                     if (!$NonConformance->HOD_Remarks) {
-    
+
                         Session::flash('swal', [
                             'title' => 'Mandatory Fields Required!',
                             'message' => 'HOD Remarks is yet to be filled!',
                             'type' => 'warning',
                         ]);
-    
+
                         return redirect()->back();
                     } else {
                         Session::flash('swal', [
@@ -3548,7 +3535,7 @@ class NonConformaceController extends Controller
                             'message' => 'Sent for QA initial review state'
                         ]);
                     }
-    
+
                     $NonConformance->stage = "3";
                     $NonConformance->status = "QA Initial Review";
                     $NonConformance->HOD_Review_Complete_By = Auth::user()->name;
@@ -3590,8 +3577,8 @@ class NonConformaceController extends Controller
                     //         }
                     //     }
                     // }
-    
-    
+
+
                     $NonConformance->update();
                     toastr()->success('Document Sent');
                     return back();
@@ -3604,7 +3591,7 @@ class NonConformaceController extends Controller
                             'title' => 'Mandatory Fields!',
                             'message' => 'QA initial review / CFT Mandatory Tab is yet to be filled!'
                         ]);
-    
+
                         return redirect()->back();
                     } else {
                         Session::flash('swal', [
@@ -3613,10 +3600,10 @@ class NonConformaceController extends Controller
                             'message' => 'Sent for CFT review state'
                         ]);
                     }
-    
+
                     $NonConformance->stage = "4";
                     $NonConformance->status = "CFT Review";
-    
+
                     // Code for the CFT required
                     $stage = new NonConformanceCFTResponse();
                     $stage->non_conformances_id = $id;
@@ -3626,7 +3613,7 @@ class NonConformaceController extends Controller
                     $stage->comment = $request->comment;
                     $stage->is_required = 1;
                     $stage->save();
-    
+
                     $NonConformance->QA_Initial_Review_Complete_By = Auth::user()->name;
                     $NonConformance->QA_Initial_Review_Complete_On = Carbon::now()->format('d-M-Y');
                     $NonConformance->QA_Initial_Review_Comments = $request->comment;
@@ -3665,7 +3652,7 @@ class NonConformaceController extends Controller
                     //         }
                     //     }
                     // }
-    
+
                     if ($request->non_conformances_category == 'major' || $request->non_conformances_category == 'minor' || $request->non_conformances_category == 'critical') {
                         $list = Helpers::getHeadoperationsUserList();
                                 // foreach ($list as $u) {
@@ -3683,7 +3670,7 @@ class NonConformaceController extends Controller
                                 //                     );
                                 //                 } catch (\Exception $e) {
                                 //                 }
-    
+
                                 //         }
                                 //     }
                                 // }
@@ -3707,7 +3694,7 @@ class NonConformaceController extends Controller
                                         //                 } catch (\Exception $e) {
                                         //                     //log error
                                         //                 }
-    
+
                                         //         }
                                         //     }
                                         // }
@@ -3731,18 +3718,18 @@ class NonConformaceController extends Controller
                                                 //                 } catch (\Exception $e) {
                                                 //                     //log error
                                                 //                 }
-    
+
                                                 //         }
                                                 //     }
                                                 // }
                                             }
-    
+
                     $NonConformance->update();
                     toastr()->success('Document Sent');
                     return back();
                 }
                 if ($NonConformance->stage == 4) {
-    
+
                     // CFT review state update form_progress
                     if ($NonConformance->form_progress !== 'cft')
                     {
@@ -3751,7 +3738,7 @@ class NonConformaceController extends Controller
                             'title' => 'Mandatory Fields!',
                             'message' => 'CFT Tab is yet to be filled'
                         ]);
-    
+
                         return redirect()->back();
                     } else {
                         Session::flash('swal', [
@@ -3760,17 +3747,17 @@ class NonConformaceController extends Controller
                             'message' => 'Sent for Investigation and CAPA review state'
                         ]);
                     }
-    
-    
+
+
                     $IsCFTRequired = NonConformanceCFTResponse::withoutTrashed()->where(['is_required' => 1, 'non_conformances_id' => $id])->latest()->first();
                     $cftUsers = DB::table('non_conformance_c_f_ts')->where(['non_conformances_id' => $id])->first();
                     // Define the column names
                     $columns = ['Production_person', 'Warehouse_notification', 'Quality_Control_Person', 'QualityAssurance_person', 'Engineering_person', 'Analytical_Development_person', 'Kilo_Lab_person', 'Technology_transfer_person', 'Environment_Health_Safety_person', 'Human_Resource_person', 'Information_Technology_person', 'Project_management_person','Other1_person','Other2_person','Other3_person','Other4_person','Other5_person'];
                     // $columns2 = ['Production_review', 'Warehouse_review', 'Quality_Control_review', 'QualityAssurance_review', 'Engineering_review', 'Analytical_Development_review', 'Kilo_Lab_review', 'Technology_transfer_review', 'Environment_Health_Safety_review', 'Human_Resource_review', 'Information_Technology_review', 'Project_management_review'];
-    
+
                     // Initialize an array to store the values
                     $valuesArray = [];
-    
+
                     // Iterate over the columns and retrieve the values
                     foreach ($columns as $index => $column) {
                         $value = $cftUsers->$column;
@@ -3843,7 +3830,7 @@ class NonConformaceController extends Controller
                             $updateCFT->Other5_on = Carbon::now()->format('Y-m-d');
                         }
                         $updateCFT->update();
-    
+
                         // Check if the value is not null and not equal to 0
                         if ($value != null && $value != 0) {
                             $valuesArray[] = $value;
@@ -3869,19 +3856,19 @@ class NonConformaceController extends Controller
                             $stage->save();
                         }
                     }
-    
+
                     $checkCFTCount = NonConformanceCFTResponse::withoutTrashed()->where(['status' => 'Completed', 'non_conformances_id' => $id])->count();
                     // dd(count(array_unique($valuesArray)), $checkCFTCount);
-    
-    
+
+
                     if (!$IsCFTRequired || $checkCFTCount) {
-    
+
                         $NonConformance->stage = "5";
                         $NonConformance->status = "QA Final Review";
                         $NonConformance->CFT_Review_Complete_By = Auth::user()->name;
                         $NonConformance->CFT_Review_Complete_On = Carbon::now()->format('d-M-Y');
                         $NonConformance->CFT_Review_Comments = $request->comment;
-    
+
                         $history = new NonConformanceAuditTrails();
                         $history->non_conformances_id = $id;
                         $history->activity_type = 'Activity Log';
@@ -3922,9 +3909,9 @@ class NonConformaceController extends Controller
                     toastr()->success('Document Sent');
                     return back();
                 }
-    
+
                 if ($NonConformance->stage == 5) {
-    
+
                     if ($NonConformance->form_progress === 'capa' && !empty($NonConformance->QA_Feedbacks))
                     {
                         Session::flash('swal', [
@@ -3932,24 +3919,24 @@ class NonConformaceController extends Controller
                             'title' => 'Success',
                             'message' => 'Sent for QA Head/Manager Designee Approval'
                         ]);
-    
+
                     } else {
                         Session::flash('swal', [
                             'type' => 'warning',
                             'title' => 'Mandatory Fields!',
                             'message' => 'Investigation and CAPA / QA Final review Tab is yet to be filled!'
                         ]);
-    
+
                         return redirect()->back();
                     }
-    
-    
+
+
                     $NonConformance->stage = "6";
                     $NonConformance->status = "QA Head/Manager Designee Approval";
                     $NonConformance->QA_Final_Review_Complete_By = Auth::user()->name;
                     $NonConformance->QA_Final_Review_Complete_On = Carbon::now()->format('d-M-Y');
                     $NonConformance->QA_Final_Review_Comments = $request->comment;
-    
+
                     $history = new NonConformanceAuditTrails();
                     $history->non_conformances_id = $id;
                     $history->activity_type = 'Activity Log';
@@ -3990,16 +3977,16 @@ class NonConformaceController extends Controller
                     return back();
                 }
                 if ($NonConformance->stage == 6) {
-    
+
                     if ($NonConformance->form_progress !== 'qah')
                     {
-    
+
                         Session::flash('swal', [
                             'title' => 'Mandatory Fields!',
                             'message' => 'QAH/Designee Approval Tab is yet to be filled!',
                             'type' => 'warning',
                         ]);
-    
+
                         return redirect()->back();
                     } else {
                         Session::flash('swal', [
@@ -4008,39 +3995,39 @@ class NonConformaceController extends Controller
                             'message' => 'Failure Investigation sent to Intiator Update'
                         ]);
                     }
-    
+
                     $extension = Extension::where('parent_id', $NonConformance->id)->first();
-    
+
                     $rca = RootCauseAnalysis::where('parent_record', str_pad($NonConformance->id, 4, 0, STR_PAD_LEFT))->first();
-    
+
                     if ($extension && $extension->status !== 'Closed-Done') {
                         Session::flash('swal', [
                             'title' => 'Extension record pending!',
                             'message' => 'There is an Extension record which is yet to be closed/done!',
                             'type' => 'warning',
                         ]);
-    
+
                         return redirect()->back();
                     }
-    
+
                     if ($rca && $rca->status !== 'Closed-Done') {
                         Session::flash('swal', [
                             'title' => 'RCA record pending!',
                             'message' => 'There is an Root Cause Analysis record which is yet to be closed/done!',
                             'type' => 'warning',
                         ]);
-    
+
                         return redirect()->back();
                     }
-    
+
                     // return "PAUSE";
-    
+
                     $NonConformance->stage = "7";
                     $NonConformance->status = "Pending Initiator Update";
                     $NonConformance->QA_head_approved_by = Auth::user()->name;
                     $NonConformance->QA_head_approved_on = Carbon::now()->format('d-M-Y');
                     $NonConformance->QA_head_approved_comment	 = $request->comment;
-    
+
                     $history = new NonConformanceAuditTrails();
                     $history->non_conformances_id = $id;
                     $history->activity_type = 'Activity Log';
@@ -4081,16 +4068,16 @@ class NonConformaceController extends Controller
                     return back();
                 }
                 if ($NonConformance->stage == 7) {
-    
+
                     if ($NonConformance->form_progress !== 'qah')
                     {
-    
+
                         Session::flash('swal', [
                             'title' => 'Mandatory Fields!',
                             'message' => 'QAH/Designee Approval Tab is yet to be filled!',
                             'type' => 'warning',
                         ]);
-    
+
                         return redirect()->back();
                     } else {
                         Session::flash('swal', [
@@ -4099,39 +4086,39 @@ class NonConformaceController extends Controller
                             'message' => 'Failure Investigation sent to QA Final Approval.'
                         ]);
                     }
-    
+
                     $extension = Extension::where('parent_id', $NonConformance->id)->first();
-    
+
                     $rca = RootCauseAnalysis::where('parent_record', str_pad($NonConformance->id, 4, 0, STR_PAD_LEFT))->first();
-    
+
                     if ($extension && $extension->status !== 'Closed-Done') {
                         Session::flash('swal', [
                             'title' => 'Extension record pending!',
                             'message' => 'There is an Extension record which is yet to be closed/done!',
                             'type' => 'warning',
                         ]);
-    
+
                         return redirect()->back();
                     }
-    
+
                     if ($rca && $rca->status !== 'Closed-Done') {
                         Session::flash('swal', [
                             'title' => 'RCA record pending!',
                             'message' => 'There is an Root Cause Analysis record which is yet to be closed/done!',
                             'type' => 'warning',
                         ]);
-    
+
                         return redirect()->back();
                     }
-    
+
                     // return "PAUSE";
-    
+
                     $NonConformance->stage = "8";
                     $NonConformance->status = "QA Final Approval";
                     $NonConformance->pending_initiator_approved_by = Auth::user()->name;
                     $NonConformance->pending_initiator_approved_on = Carbon::now()->format('d-M-Y');
                     $NonConformance->pending_initiator_approved_comment = $request->comment;
-    
+
                     $history = new NonConformanceAuditTrails();
                     $history->non_conformances_id = $id;
                     $history->activity_type = 'Activity Log';
@@ -4171,19 +4158,19 @@ class NonConformaceController extends Controller
                     toastr()->success('Document Sent');
                     return back();
                 }
-    
-    
+
+
                 if ($NonConformance->stage == 8) {
-    
+
                     if ($NonConformance->form_progress !== 'qah')
                     {
-    
+
                         Session::flash('swal', [
                             'title' => 'Mandatory Fields!',
                             'message' => 'QAH/Designee Approval Tab is yet to be filled!',
                             'type' => 'warning',
                         ]);
-    
+
                         return redirect()->back();
                     } else {
                         Session::flash('swal', [
@@ -4192,39 +4179,39 @@ class NonConformaceController extends Controller
                             'message' => 'Failure Investigation sent to Closed/Done state'
                         ]);
                     }
-    
+
                     $extension = Extension::where('parent_id', $NonConformance->id)->first();
-    
+
                     $rca = RootCauseAnalysis::where('parent_record', str_pad($NonConformance->id, 4, 0, STR_PAD_LEFT))->first();
-    
+
                     if ($extension && $extension->status !== 'Closed-Done') {
                         Session::flash('swal', [
                             'title' => 'Extension record pending!',
                             'message' => 'There is an Extension record which is yet to be closed/done!',
                             'type' => 'warning',
                         ]);
-    
+
                         return redirect()->back();
                     }
-    
+
                     if ($rca && $rca->status !== 'Closed-Done') {
                         Session::flash('swal', [
                             'title' => 'RCA record pending!',
                             'message' => 'There is an Root Cause Analysis record which is yet to be closed/done!',
                             'type' => 'warning',
                         ]);
-    
+
                         return redirect()->back();
                     }
-    
+
                     // return "PAUSE";
-    
+
                     $NonConformance->stage = "9";
                     $NonConformance->status = "Closed-Done";
                     $NonConformance->QA_final_approved_by = Auth::user()->name;
                     $NonConformance->QA_final_approved_on = Carbon::now()->format('d-M-Y');
                     $NonConformance->QA_final_approved_comment = $request->comment;
-    
+
                     $history = new NonConformanceAuditTrails();
                     $history->non_conformances_id = $id;
                     $history->activity_type = 'Activity Log';
@@ -4274,12 +4261,11 @@ class NonConformaceController extends Controller
                 'message' => $th->getMessage()
             ], 500);
         }
-        
+
     }
 
     public function cftnotreqired(Request $request, $id)
     {
-
 
         if ($request->username == Auth::user()->email && Hash::check($request->password, Auth::user()->password)) {
             $NonConformance = NonConformance::find($id);
@@ -4483,7 +4469,7 @@ class NonConformaceController extends Controller
         $today = Carbon::now()->format('d-m-y');
         $document = NonConformance::where('id', $id)->first();
         $document->initiator = User::where('id', $document->initiator_id)->value('name');
-        
+
         return view('frontend.non-conformance.audit-trail', compact('audit', 'document', 'today'));
     }
 
@@ -4526,14 +4512,16 @@ class NonConformaceController extends Controller
     public function singleReport($id)
     {
         $data = NonConformance::find($id);
+
         $data1 =  NonConformanceCFTs::where('non_conformances_id', $id)->first();
         if (!empty ($data)) {
             $data->originator = User::where('id', $data->initiator_id)->value('name');
             $grid_data = NonConformanceGrid::where('non_conformances_grid_id', $id)->where('type', "NonConformance")->first();
             $grid_data1 = NonConformanceGrid::where('non_conformances_grid_id', $id)->where('type', "Document")->first();
 
-            $investigation_data = NonConformanceGridDatas::where(['non_conformances_id' => $id, 'identifier' => 'investication'])->first();
-            $root_cause_data = NonConformanceGridDatas::where(['non_conformances_id' => $id, 'identifier' => 'rootCause'])->first();
+            $investigation_data = NonConformanceGridDatas::where(['non_conformances_id' => $id, 'identifier' => 'TeamInvestigation'])->first();
+
+            $root_cause_data = NonConformanceGridDatas::where(['non_conformances_id' => $id, 'identifier' => 'RootCause'])->first();
             $why_data = NonConformanceGridDatas::where(['non_conformances_id' => $id, 'identifier' => 'why'])->first();
 
             $capaExtension = NonConformanceLunchExtension::where(['non_conformances_id' => $id, "extension_identifier" => "Capa"])->first();

@@ -959,7 +959,7 @@ class DashboardController extends Controller
             $audit = "riskAuditReport/" . $data->id;
             $division = QMSDivision::find($data->division_id);
             $division_name = $division->name;
-        } elseif ($type == "Out_Of_Calibration") {
+        } elseif ($type == "Out Of Calibration") {
             $data = OutOfCalibration::find($id);
             $recordno = ((RecordNumber::first()->value('counter')) + 1);
             $single = "OOCSingleReport/" . $data->id;
