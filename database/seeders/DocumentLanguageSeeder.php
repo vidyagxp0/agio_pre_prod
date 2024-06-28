@@ -20,6 +20,11 @@ class DocumentLanguageSeeder extends Seeder
         $department->lcode = "EN";
         $department->save();
 
+        $department  = new DocumentLanguage();
+        $department->lname = "Marathi";
+        $department->lcode = "MR";
+        $department->save();
+
         // $department  = new DocumentLanguage();
         // $department->lname = "Korean";
         // $department->lcode = "KN";

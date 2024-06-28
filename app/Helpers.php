@@ -432,7 +432,7 @@ class Helpers
                 $full_department_name = "Regulatory Affairs";
                 break; 
             case 'PV':
-                $full_department_name = "Regulatory Affairs";
+                $full_department_name = "Pharmacovigilance";
                 break;         
 
             default:
@@ -441,6 +441,57 @@ class Helpers
 
         return $full_department_name;
 
+    }
+
+    static function getDepartments()
+    {
+        $departments = [
+            'CQA' => 'Corporate Quality Assurance',
+            'QA' => 'Quality Assurance',
+            'QC' => 'Quality Control',
+            'QM' => 'Quality Control (Microbiology department)',
+            'PG' => 'Production General',
+            'PL' => 'Production Liquid Orals',
+            'PT' => 'Production Tablet and Powder',
+            'PE' => 'Production External (Ointment, Gels, Creams and Liquid)',
+            'PC' => 'Production Capsules',
+            'PI' => 'Production Injectable',
+            'EN' => 'Engineering',
+            'HR' => 'Human Resource',
+            'ST' => 'Store',
+            'IT' => 'Electronic Data Processing',
+            'FD' => 'Formulation Development',
+            'AL' => 'Analytical research and Development Laboratory',
+            'PD' => 'Packaging Development',
+            'PU' => 'Purchase Department',
+            'DC' => 'Document Cell',
+            'RA' => 'Regulatory Affairs',
+            'PV' => 'Pharmacovigilance',
+        ];
+        
+        return $departments;
+    }
+
+
+    static function getDocumentTypes()
+    {
+        $document_types = [
+            'SOP' => 'SOP’s (All types)',
+            'BOM' => 'Bill of Material',
+            'BMR' => 'Batch Manufacturing Record',
+            'BPR' => 'Batch Packing Record',
+            'SPEC' => 'Specification (All types)',
+            'STP' => 'Standard Testing Procedure (All types)',
+            'TDS' => 'Test Data Sheet',
+            'GTP' => 'General Testing Procedure',
+            'PROTO' => 'Protocols (All types)',
+            'REPORT' => 'Reports (All types)',
+            'SMF' => 'Site Master File',
+            'VMP' => 'Validation Master Plan',
+            'QM' => 'Quality Manual',
+        ];
+        
+        return $document_types;
     }
 
 

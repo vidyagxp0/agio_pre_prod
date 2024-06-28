@@ -227,24 +227,23 @@
                             @endif
 
                             <div class="col-12">
-                                {{-- <div class="group-input">
+                                <div class="group-input">
                                     <label for="sop_type">SOP Type</label>
-                                    <select name="sop_type" {{Helpers::isRevised($document->stage)}} >
-                                        <option  value="0">-- Select --</option>
-                                        <option @if ($document->sop_type =='Chemistry SOP') selected @endif
-                                            value="Chemistry SOP">Chemistry SOP</option>
-                                            <option @if ($document->sop_type =='Instrument SOP') selected @endif
-                                                value="Instrument SOP">Instrument SOP</option>
-                                                <option @if ($document->sop_type =='Analytical SOP') selected @endif
-                                                    value="Analytical SOP">Analytical SOP</option>
-                                                    <option @if ($document->sop_type =='Microbiology SOP') selected @endif
-                                                        value="Microbiology SOP">Microbiology SOP</option>
-                                                        <option @if ($document->sop_type =='Quality Policies') selected @endif
-                                                            value="Quality Policies">Quality Policies</option>
-                                                            <option @if ($document->sop_type =='Others') selected @endif
-                                                                value="Others">Others</option>
+                                    
+                                    <select name="sop_type" required>
+                                            <option value="" disabled selected {{ $document->sop_type == '' ? 'selected' : '' }}>Enter your selection</option>
+                                            <option 
+                                            value="SOP (Standard Operating procedure)" 
+                                            {{ $document->sop_type == 'SOP (Standard Operating procedure)' ? 'selected' : '' }}>SOP (Standard Operating procedure)</option>
+                                            <option 
+                                            value="EOP (Equipment Operating procedure)" 
+                                            {{ $document->sop_type == 'EOP (Equipment Operating procedure)' ? 'selected' : '' }}>EOP (Equipment Operating procedure)</option>
+                                            <option 
+                                            value="IOP (Instrument Operating Procedure)" 
+                                            {{ $document->sop_type == 'IOP (Instrument Operating Procedure)' ? 'selected' : '' }}>IOP (Instrument Operating Procedure)</option>
                                     </select>
-                                    @foreach ($history as $tempHistory)
+
+                                    {{-- @foreach ($history as $tempHistory)
                                     @if (
                                         $tempHistory->activity_type == 'SOP Type' &&
                                             !empty($tempHistory->comment)  &&
@@ -262,7 +261,7 @@
                                         color: black;"
                                             type="text" value="{{ $tempHistory->comment }}" disabled>
                                     @endif
-                                    @endforeach
+                                    @endforeach --}}
                                 </div>
                                 @if (Auth::user()->role != 3 && $document->stage < 8)
 
@@ -276,7 +275,7 @@
                                     </div>
                                     <div class="button">Add Comment</div>
                                 </div>
-                            @endif    --}}
+                            @endif
                             </div>
                             <div class="col-md-4 new-date-data-field">
                                 <div class="group-input input-date">
@@ -513,66 +512,17 @@
                                 <div class="group-input">
                                     <label for="depart-name">Department Name</label>
                                     <select name="department_id" id="depart-name" {{Helpers::isRevised($document->stage)}} >
-                                        <option value="">Enter your Selection</option>
-                                            <option value="CQA"
-                                                @if ($document->department_id == 'CQA') selected @endif>Corporate
-                                                Quality Assurance</option>
-                                            <option value="QAB"
-                                                @if ($document->department_id == 'QAB') selected @endif>Quality
-                                                Assurance Biopharma</option>
-                                            <option value="CQC"
-                                                @if ($document->department_id == 'CQC') selected @endif>Central
-                                                Quality Control</option>
-                                            <option value="MANU"
-                                                @if ($document->department_id == 'MANU') selected @endif>Manufacturing
-                                            </option>
-                                            <option value="PSG"
-                                                @if ($document->department_id == 'PSG') selected @endif>Plasma
-                                                Sourcing Group</option>
-                                            <option value="CS"
-                                                @if ($document->department_id == 'CS') selected @endif>Central
-                                                Stores</option>
-                                            <option value="ITG"
-                                                @if ($document->department_id == 'ITG') selected @endif>Information
-                                                Technology Group</option>
-                                            <option value="MM"
-                                                @if ($document->department_id == 'MM') selected @endif>Molecular
-                                                Medicine</option>
-                                            <option value="CL"
-                                                @if ($document->department_id == 'CL') selected @endif>Central
-                                                Laboratory</option>
-                                            <option value="TT"
-                                                @if ($document->department_id == 'TT') selected @endif>Tech
-                                                Team</option>
-                                            <option value="QA"
-                                                @if ($document->department_id == 'QA') selected @endif>Quality
-                                                Assurance</option>
-                                            <option value="QM"
-                                                @if ($document->department_id == 'QM') selected @endif>Quality
-                                                Management</option>
-                                            <option value="IA"
-                                                @if ($document->department_id == 'IA') selected @endif>IT
-                                                Administration</option>
-                                            <option value="ACC"
-                                                @if ($document->department_id == 'ACC') selected @endif>Accounting
-                                            </option>
-                                            <option value="LOG"
-                                                @if ($document->department_id == 'LOG') selected @endif>Logistics
-                                            </option>
-                                            <option value="SM"
-                                                @if ($document->department_id == 'SM') selected @endif>Senior
-                                                Management</option>
-                                            <option value="BA"
-                                                @if ($document->department_id == 'BA') selected @endif>Business
-                                                Administration</option>
-                                            <option value="BA"
-                                                @if ($document->department_id == 'others') selected @endif>Others
-                                                </option>
-                                        @foreach ($departments as $department)
+                                        <option value="" disabled selected>Enter your Selection</option>
+                                        
+                                        @foreach (Helpers::getDepartments() as $code => $department)
+                                                <option value="{{ $code }}" @if ($document->department_id == $code ) selected @endif>{{ $department }}</option>
+                                        @endforeach
+
+                                        {{-- @foreach ($departments as $department)
                                             <option data-id="{{ $department->dc }}" value="{{ $department->id }}"
                                                 {{ $department->id == $document->department_id ? 'selected' : '' }}>
                                                 {{ $department->name }}</option>
-                                        @endforeach
+                                        @endforeach --}}
                                     </select>
                                     @foreach ($history as $tempHistory)
                                         @if (
@@ -742,10 +692,9 @@
                                     <label for="doc-type">Document Type</label>
                                     <select name="document_type_id" id="doc-type" {{Helpers::isRevised($document->stage)}} >
                                         <option value="">Enter your Selection</option>
-                                        @foreach ($documentTypes as $type)
-                                            <option data-id="{{ $type->typecode }}" value="{{ $type->id }}"
-                                                {{ $type->id == $document->document_type_id ? 'selected' : '' }}>
-                                                {{ $type->name }}</option>
+                                        @foreach (Helpers::getDocumentTypes() as $code => $type)
+                                            <option data-id="{{ $code }}" value="{{ $code }}" {{ $code == $document->document_type_id ? 'selected' : '' }}>
+                                                {{ $type }}</option>
                                         @endforeach
                                     </select>
                                     @foreach ($history as $tempHistory)
@@ -788,13 +737,9 @@
                                 <div class="group-input">
                                     <label for="doc-code">Document Type Code</label>
                                     <div class="default-name"> <span id="document_type_code">
-                                            @if (!empty($documentTypes))
-                                                @foreach ($documentTypes as $type)
-                                                    {{ $document->document_type_id == $type->id ? $type->typecode : '' }}
-                                                @endforeach
-                                            @else
-                                                Not Selected
-                                            @endif
+                                            @foreach (Helpers::getDocumentTypes() as $code => $type)
+                                                {{ $code == $document->document_type_id ? $code : '' }}
+                                            @endforeach
 
                                         </span> </div>
 

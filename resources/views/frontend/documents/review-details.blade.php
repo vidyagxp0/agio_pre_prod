@@ -87,7 +87,7 @@
                                 </div> --}}
                                 <div>
                                     <div class="head">Document Type</div>
-                                    <div>{{ $document->doc_type->name }}</div>
+                                    <div>{{ $document->document_type_id }}</div>
                                 </div>
                                 <div>
                                     <div class="head">Working Status</div>

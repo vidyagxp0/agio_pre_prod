@@ -347,7 +347,7 @@
                                            
                                             @foreach ($due as $temp)
                                                 @if ($temp->root_document)
-                                                    @if ($temp->root_document->stage >= 6 && $temp->trainer == auth()->id() && $temp->root_document->status == 'Under-Training' && $temp->status == 'Past-due')
+                                                    @if ($temp->root_document->stage >= 8 && $temp->trainer == auth()->id() && $temp->root_document->status == 'Under-Training' && $temp->status == 'Past-due')
                                                         <tr>
                                                             <td class="text-center">
                                                                 <input 
