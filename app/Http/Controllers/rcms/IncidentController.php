@@ -1826,7 +1826,6 @@ if ($incident->Initial_attachment) {
                     }
                 }
 
-
                 $Cft->Other5_attachment = json_encode($files);
             }
 
@@ -4617,6 +4616,7 @@ if ($incident->Initial_attachment) {
 
             $json_decode = IncidentGridData::where(['incident_id' => $id, 'identifier' => 'why'])->first();
             $why_data = json_decode($json_decode->data, true);
+
 
             $capaExtension = IncidentLaunchExtension::where(['incident_id' => $id, "extension_identifier" => "Capa"])->first();
             $qrmExtension = IncidentLaunchExtension::where(['incident_id' => $id, "extension_identifier" => "QRM"])->first();

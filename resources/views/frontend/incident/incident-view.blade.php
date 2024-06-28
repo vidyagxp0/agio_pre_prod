@@ -1592,7 +1592,6 @@
                                                     <tr>
                                                         <th style="width: 4%">Row#</th>
                                                         <th style="width: 12%">Document Number</th>
-
                                                         <th style="width: 16%"> Reference Document Name</th>
                                                         <th style="width: 16%"> Remarks</th>
                                                         <th style="width: 8%"> Action</th>
@@ -1723,15 +1722,13 @@
                                                                 <th style="width: 16%"> Stage</th>
                                                                 <th style="width: 16%">Batch No</th>
                                                                 <th style="width: 8%">Action</th>
-
-
-
                                                             </tr>
                                                         </thead>
                                                         <tbody>
                                                             @if ($grid_data2->product_name)
                                                                 @foreach (unserialize($grid_data2->product_name) as $key => $temps)
-                                                                    <td><input disabled type="text"
+                                                                   <tr>
+                                                                <td><input disabled type="text"
                                                                             name="serial[]"{{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
                                                                             value="{{ $key + 1 }}"></td>
                                                                     <td><input class="productName" type="text"
@@ -1787,8 +1784,8 @@
                                                                             name="batch_no[]"{{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
                                                                             value="{{ isset(unserialize($grid_data2->batch_no)[$key]) ? unserialize($grid_data2->batch_no)[$key] : '' }}">
                                                                     </td>
-                                                                    <td><input type="text" class="Removebtn"
-                                                                            name="Action[]" readonly></td>
+                                                                    <td><input type="text" class="Removebtn"     name="Action[]" readonly></td>
+                                                                </tr>
                                                                 @endforeach
                                                             @endif
                                                         </tbody>

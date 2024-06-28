@@ -482,7 +482,6 @@
                                 <th class="w-25">Product</th>
                                 <th class="w-25">Stage</th>
                                 <th class="w-25">Batch No.</th>
-
                             </tr>
                             @if (!empty($grid_data1->Number))
                                 @foreach (unserialize($grid_data1->Number) as $key => $dataDemo)
@@ -497,7 +496,6 @@
                                         <td class="w-15">
                                             {{ unserialize($grid_data1->Document_Remarks)[$key] ? unserialize($grid_data1->Document_Remarks)[$key] : 'Not Applicable' }}
                                         </td>
-
                                     </tr>
                                 @endforeach
                             @else
@@ -518,7 +516,6 @@
                         Initial Attachments
                     </div>
                     <table>
-
                         <tr class="table_bg">
                             <th class="w-20">S.N.</th>
                             <th class="w-60">Attachment</th>
@@ -677,7 +674,6 @@
                             <td class="w-20">Not Applicable</td>
                         </tr>
                     @endif
-
                 </table>
             </div>
 
@@ -691,9 +687,7 @@
                             Production
                         </div>
                         <table>
-
                             <tr>
-
                                 <th class="w-20">Production Review Required ?
                                 </th>
                                 <td class="w-30">
@@ -716,7 +710,6 @@
                                     </div>
                                 </td>
                             </tr>
-
 
                             <tr>
 
@@ -2713,19 +2706,19 @@
                                         @if($investigation_data && is_array($investigation_data))
                                         @php
                                             $serialNumber = 1;
-                                            $users = DB::table('users')->select('id', 'name')->get();
+                                            $users = DB::table('users')->select('id', 'name')->get()->keyBy('id'); // Index by id for quick lookup
                                         @endphp
                                             @foreach($investigation_data as $investigation_item)
 
                                                 <tr>
                                                     <td class="w-20">{{ $serialNumber++ }}</td>
-                                                    @foreach ($users as $user)
-                                                        <td {{ $investigation_item['teamMember'] == $user->id ? 'selected' : '' }}>{{ $user->name }}</td>
-                                                    @endforeach
+                                                    <td>
+                                                        {{ $users[$investigation_item['teamMember']]->name ?? 'User not found' }}
+                                                    </td>
                                                     <td class="w-15">
                                                         {{ isset($investigation_item['responsibility']) ? $investigation_item['responsibility'] : 'Not Applicable' }}
                                                     </td>
-                                                    <td class="w-15">
+                                                    <td class="w-80">
                                                         {{ isset($investigation_item['remarks']) ? $investigation_item['remarks'] : 'Not Applicable' }}
                                                     </td>
                                                 </tr>
@@ -2764,29 +2757,26 @@
                                         @foreach($root_cause_data as $rootCause_data)
                                             <tr>
                                                 <td class="w-20">{{ $serialNumber++ }}</td>
-                                                <td class="w-20">{{ $rootCause_data['rootCauseCategory'] }}</td>
-                                                <td class="w-20">{{ $rootCause_data['rootCauseSubCategory'] }}</td>
-                                                <td class="w-20">{{ $rootCause_data['ifOthers'] }}</td>
-                                                <td class="w-20">{{ $rootCause_data['probability'] }}</td>
-                                                <td class="w-20">{{ $rootCause_data['remarks'] }}</td>
+                                                <td class="w-15">{{ $rootCause_data['rootCauseCategory'] }}</td>
+                                                <td class="w-15">{{ $rootCause_data['rootCauseSubCategory'] }}</td>
+                                                <td class="w-15">{{ $rootCause_data['ifOthers'] }}</td>
+                                                <td class="w-15">{{ $rootCause_data['probability'] }}</td>
+                                                <td class="w-80">{{ $rootCause_data['remarks'] }}</td>
                                             </tr>
                                         @endforeach
                                     @else
                                             <tr>
                                                 <td class="w-20">1</td>
-                                                <td class="w-20">Not Applicable</td>
-                                                <td class="w-20">Not Applicable</td>
-                                                <td class="w-20">Not Applicable</td>
-                                                <td class="w-20">Not Applicable</td>
-                                                <td class="w-20">Not Applicable</td>
+                                                <td class="w-15">Not Applicable</td>
+                                                <td class="w-15">Not Applicable</td>
+                                                <td class="w-15">Not Applicable</td>
+                                                <td class="w-15">Not Applicable</td>
+                                                <td class="w-80">Not Applicable</td>
                                             </tr>
                                     @endif
                                 </tbody>
                                 </table>
                             </div>
-
-
-
 
                             <div class="border-table" style="margin-bottom: 15px;">
                                 <div class="block-head">
@@ -2828,22 +2818,20 @@
                                         <th class="w-60">Description</th>
                                     </tr>
                                     <tbody>
-                                        @if($why_data && is_array($why_data))
-                                        @php
-                                            $serialNumber = 1;
-                                        @endphp
-                                            @foreach($why_data as $whyData)
+                                        @if ($why_data && isset($why_data['why_1']) && is_array($why_data['why_1']))
+                                            @php
+                                                $serialNumber = 1;
+                                            @endphp
+                                            @foreach ($why_data['why_1'] as $whyData)
                                                 <tr>
                                                     <td class="w-20">{{ $serialNumber++ }}</td>
-                                                    {{-- <td class="w-20">{{ $whyData }}</td> --}}
-                                                <td class="w-15">{{ isset($whyData['why_1']) ? $whyData['why_1'] : 'Not Applicable' }}</td>
-
+                                                    <td class="w-60">{{ $whyData }}</td>
                                                 </tr>
                                             @endforeach
                                         @else
                                             <tr>
                                                 <td class="w-20">1</td>
-                                                <td class="w-20">Not Applicable</td>
+                                                <td class="w-60">Not Applicable</td>
                                             </tr>
                                         @endif
                                     </tbody>
@@ -2860,22 +2848,20 @@
                                         <th class="w-60">Description</th>
                                     </tr>
                                     <tbody>
-                                        @if($why_data && is_array($why_data))
-                                        @php
-                                            $serialNumber = 1;
-                                        @endphp
-                                            @foreach($why_data as $whyData)
+                                        @if ($why_data && isset($why_data['why_2']) && is_array($why_data['why_2']))
+                                            @php
+                                                $serialNumber = 1;
+                                            @endphp
+                                            @foreach ($why_data['why_2'] as $whyData)
                                                 <tr>
                                                     <td class="w-20">{{ $serialNumber++ }}</td>
-                                                    {{-- <td class="w-20">{{ $whyData }}</td> --}}
-                                                    <td class="w-15">{{ isset($whyData['why_2']) ? $whyData['why_2'] : 'Not Applicable' }}</td>
-
+                                                    <td class="w-60">{{ $whyData }}</td>
                                                 </tr>
                                             @endforeach
                                         @else
                                             <tr>
                                                 <td class="w-20">1</td>
-                                                <td class="w-20">Not Applicable</td>
+                                                <td class="w-60">Not Applicable</td>
                                             </tr>
                                         @endif
                                     </tbody>
@@ -2892,17 +2878,15 @@
                                         <th class="w-60">Description</th>
                                     </tr>
                                     <tbody>
-                                        @if($why_data && is_array($why_data))
+                                        @if($why_data && isset($why_data['why_3']) && is_array($why_data['why_3']))
                                         @php
                                             $serialNumber = 1;
                                         @endphp
-                                            @foreach($why_data as $whyData)
-                                                <tr>
-                                                    <td class="w-20">{{ $serialNumber++ }}</td>
-                                                    {{-- <td class="w-20">{{ $whyData }}</td> --}}
-                                                <td class="w-15">{{ isset($whyData['why_3']) ? $whyData['why_3'] : 'Not Applicable' }}</td>
-
-                                                </tr>
+                                            @foreach($why_data['why_3'] as $whyData)
+                                            <tr>
+                                                <td class="w-20">{{ $serialNumber++ }}</td>
+                                                <td class="w-60">{{ $whyData }}</td>
+                                            </tr>
                                             @endforeach
                                         @else
                                             <tr>
@@ -2924,17 +2908,15 @@
                                         <th class="w-60">Description</th>
                                     </tr>
                                     <tbody>
-                                        @if($why_data && is_array($why_data))
+                                        @if($why_data && isset($why_data['why_4']) && is_array($why_data['why_4']))
                                         @php
                                             $serialNumber = 1;
                                         @endphp
-                                            @foreach($why_data as $whyData)
-                                                <tr>
-                                                    <td class="w-20">{{ $serialNumber++ }}</td>
-                                                    {{-- <td class="w-20">{{ $whyData }}</td> --}}
-                                                <td class="w-15">{{ isset($whyData['why_4']) ? $whyData['why_4'] : 'Not Applicable' }}</td>
-
-                                                </tr>
+                                            @foreach($why_data['why_4'] as $whyData)
+                                            <tr>
+                                                <td class="w-20">{{ $serialNumber++ }}</td>
+                                                <td class="w-60">{{ $whyData }}</td>
+                                            </tr>
                                             @endforeach
                                         @else
                                             <tr>
@@ -2956,17 +2938,15 @@
                                         <th class="w-60">Description</th>
                                     </tr>
                                     <tbody>
-                                        @if($why_data && is_array($why_data))
+                                        @if($why_data && isset($why_data['why_5']) && is_array($why_data['why_5']))
                                         @php
                                             $serialNumber = 1;
                                         @endphp
-                                            @foreach($why_data as $whyData)
-                                                <tr>
-                                                    <td class="w-20">{{ $serialNumber++ }}</td>
-                                                    {{-- <td class="w-20">{{ $whyData }}</td> --}}
-                                                <td class="w-15">{{ isset($whyData['why_5']) ? $whyData['why_5'] : 'Not Applicable' }}</td>
-
-                                                </tr>
+                                            @foreach($why_data['why_5'] as $whyData)
+                                            <tr>
+                                                <td class="w-20">{{ $serialNumber++ }}</td>
+                                                <td class="w-60">{{ $whyData }}</td>
+                                            </tr>
                                             @endforeach
                                         @else
                                             <tr>
@@ -3190,8 +3170,6 @@
                     </div>
 
                     <!-- **************************INVESTIGATION TAB ENDS******************************** -->
-
-
 
                     <!-- **************************QRM TAB START******************************* -->
 

@@ -287,7 +287,7 @@ class OOTController extends Controller
          $checkList->in_charge                   = $request->in_charge;
          $checkList->pli_head_designee           = $request->pli_head_designee;
          $checkList->data                        = $request->data;
-        //   dd($checkList->data);
+        //  dd($checkList->data);
         $checkList->save();
 
         $productGrid = ProductGridOot::where(['ootcs_id' => $data->id, 'identifier' =>'product_materiel'])->firstOrCreate();

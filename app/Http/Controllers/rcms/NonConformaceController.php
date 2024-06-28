@@ -4519,10 +4519,15 @@ class NonConformaceController extends Controller
             $grid_data = NonConformanceGrid::where('non_conformances_grid_id', $id)->where('type', "NonConformance")->first();
             $grid_data1 = NonConformanceGrid::where('non_conformances_grid_id', $id)->where('type', "Document")->first();
 
-            $investigation_data = NonConformanceGridDatas::where(['non_conformances_id' => $id, 'identifier' => 'TeamInvestigation'])->first();
+            $json_decode = NonConformanceGridDatas::where(['non_conformances_id' => $id, 'identifier' => 'TeamInvestigation'])->first();
+            $investigation_data = json_decode($json_decode->data, true);
 
-            $root_cause_data = NonConformanceGridDatas::where(['non_conformances_id' => $id, 'identifier' => 'RootCause'])->first();
-            $why_data = NonConformanceGridDatas::where(['non_conformances_id' => $id, 'identifier' => 'why'])->first();
+             $json_decode = NonConformanceGridDatas::where(['non_conformances_id' => $id, 'identifier' => 'RootCause'])->first();
+             $root_cause_data = json_decode($json_decode->data, true);
+
+             $json_decode = NonConformanceGridDatas::where(['non_conformances_id' => $id, 'identifier' => 'why'])->first();
+             $why_data    = json_decode($json_decode->data, true);
+
 
             $capaExtension = NonConformanceLunchExtension::where(['non_conformances_id' => $id, "extension_identifier" => "Capa"])->first();
             $qrmExtension = NonConformanceLunchExtension::where(['non_conformances_id' => $id, "extension_identifier" => "QRM"])->first();

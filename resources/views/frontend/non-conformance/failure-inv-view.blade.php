@@ -1730,14 +1730,12 @@
                                                                 <th style="width: 16%"> Stage</th>
                                                                 <th style="width: 16%">Batch No</th>
                                                                 <th style="width: 8%">Action</th>
-
-
-
                                                             </tr>
                                                         </thead>
                                                         <tbody>
                                                             @if ($grid_data2->product_name)
                                                                 @foreach (unserialize($grid_data2->product_name) as $key => $temps)
+                                                                <tr>
                                                                     <td><input disabled type="text"
                                                                             name="serial[]"{{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
                                                                             value="{{ $key + 1 }}"></td>
@@ -1796,6 +1794,7 @@
                                                                     </td>
                                                                     <td><input type="text" class="Removebtn"
                                                                             name="Action[]" readonly></td>
+                                                                        </tr>
                                                                 @endforeach
                                                             @endif
                                                         </tbody>

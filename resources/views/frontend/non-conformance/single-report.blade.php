@@ -2737,19 +2737,17 @@
                                     <th class="w-60">Remarks</th>
                                 </tr>
                                 <tbody>
-                                    @if ($investigation_data && is_array($investigation_data->data))
-                                        @php
-                                            $serialNumber = 1;
-                                            $users = DB::table('users')->select('id', 'name')->get();
-                                        @endphp
-                                        @foreach ($investigation_data->data as $investigation_item)
+                                    @if ($investigation_data && is_array($investigation_data))
+                                    @php
+                                    $serialNumber = 1;
+                                    $users = DB::table('users')->select('id', 'name')->get()->keyBy('id'); // Index by id for quick lookup
+                                @endphp
+                                        @foreach ($investigation_data as $investigation_item)
                                             <tr>
                                                 <td class="w-80">{{ $serialNumber++ }}</td>
-                                                @foreach ($users as $user)
-                                                    <td
-                                                        {{ $investigation_data['investioncation_team'] == $user->id ? 'selected' : '' }}>
-                                                        {{ $user->name }}</td>
-                                                @endforeach
+                                                <td>
+                                                    {{ $users[$investigation_item['teamMember']]->name ?? 'User not found' }}
+                                                </td>
                                                 <td class="w-80">{{ $investigation_item['responsibility'] }}</td>
                                                 <td class="w-80">{{ $investigation_item['remarks'] }}</td>
                                             </tr>
@@ -2781,20 +2779,19 @@
                                 </tr>
 
                                 <tbody>
-                                    @if ($root_cause_data && is_array($root_cause_data->data))
+                                    @if ($root_cause_data && is_array($root_cause_data))
                                         @php
                                             $serialNumber = 1;
                                         @endphp
-                                        @foreach ($root_cause_data->data as $rootCause_data)
-                                            <tr>
-                                                <td class="w-20">{{ $serialNumber++ }}</td>
-                                                <td class="w-20">{{ $rootCause_data['Root_Cause_Category'] }}</td>
-                                                <td class="w-20">{{ $rootCause_data['Root_Cause_Sub_Category'] }}
-                                                </td>
-                                                <td class="w-20">{{ $rootCause_data['ifother'] }}</td>
-                                                <td class="w-20">{{ $rootCause_data['probability'] }}</td>
-                                                <td class="w-20">{{ $rootCause_data['remarks'] }}</td>
-                                            </tr>
+                                        @foreach ($root_cause_data as $rootCause_data)
+                                        <tr>
+                                            <td class="w-20">{{ $serialNumber++ }}</td>
+                                            <td class="w-15">{{ $rootCause_data['rootCauseCategory'] }}</td>
+                                            <td class="w-15">{{ $rootCause_data['rootCauseSubCategory'] }}</td>
+                                            <td class="w-15">{{ $rootCause_data['ifOthers'] }}</td>
+                                            <td class="w-15">{{ $rootCause_data['probability'] }}</td>
+                                            <td class="w-80">{{ $rootCause_data['remarks'] }}</td>
+                                        </tr>
                                         @endforeach
                                     @else
                                         <tr>
@@ -2826,10 +2823,10 @@
                                     <th class="w-20">Problem Statement</th>
                                     <td class="w-30">
                                         <div>
-                                            @if (is_array($why_data->data) && isset($why_data->data['problem_statement']))
-                                                {{ $why_data->data['problem_statement'] }}
-                                            @elseif (is_object($why_data->data) && property_exists($why_data->data, 'problem_statement'))
-                                                {{ $why_data->data->problem_statement }}
+                                            @if (is_array($why_data) && isset($why_data['problem_statement']))
+                                                {{ $why_data['problem_statement'] }}
+                                            @elseif (is_object($why_data) && property_exists($why_data, 'problem_statement'))
+                                                {{ $why_data->problem_statement }}
                                             @else
                                                 Not Applicable
                                             @endif
@@ -2838,10 +2835,10 @@
                                     <th class="w-20">Root Cause</th>
                                     <td class="w-30">
                                         <div>
-                                            @if (is_array($why_data->data) && isset($why_data->data['root-cause']))
-                                                {{ $why_data->data['root-cause'] }}
-                                            @elseif (is_object($why_data->data) && property_exists($why_data->data, 'root-cause'))
-                                                {{ $why_data->data->{"root-cause"} }}
+                                            @if (is_array($why_data) && isset($why_data['root-cause']))
+                                                {{ $why_data['root-cause'] }}
+                                            @elseif (is_object($why_data) && property_exists($why_data, 'root-cause'))
+                                                {{ $why_data->{"root-cause"} }}
                                             @else
                                                 Not Applicable
                                             @endif
@@ -2885,11 +2882,11 @@
                                     <th class="w-60">Description</th>
                                 </tr>
                                 <tbody>
-                                    @if ($why_data && isset($why_data->data['why_2']) && is_array($why_data->data['why_2']))
+                                    @if ($why_data && isset($why_data['why_2']) && is_array($why_data['why_2']))
                                         @php
                                             $serialNumber = 1;
                                         @endphp
-                                        @foreach ($why_data->data['why_2'] as $whyData)
+                                        @foreach ($why_data['why_2'] as $whyData)
                                             <tr>
                                                 <td class="w-20">{{ $serialNumber++ }}</td>
                                                 <td class="w-20">{{ $whyData }}</td>
@@ -2915,11 +2912,11 @@
                                     <th class="w-60">Description</th>
                                 </tr>
                                 <tbody>
-                                    @if ($why_data && isset($why_data->data['why_3']) && is_array($why_data->data['why_3']))
+                                    @if ($why_data && isset($why_data['why_3']) && is_array($why_data['why_3']))
                                         @php
                                             $serialNumber = 1;
                                         @endphp
-                                        @foreach ($why_data->data['why_3'] as $whyData)
+                                        @foreach ($why_data['why_3'] as $whyData)
                                             <tr>
                                                 <td class="w-20">{{ $serialNumber++ }}</td>
                                                 <td class="w-20">{{ $whyData }}</td>
@@ -2945,11 +2942,11 @@
                                     <th class="w-60">Description</th>
                                 </tr>
                                 <tbody>
-                                    @if ($why_data && isset($why_data->data['why_4']) && is_array($why_data->data['why_4']))
+                                    @if ($why_data && isset($why_data['why_4']) && is_array($why_data['why_4']))
                                         @php
                                             $serialNumber = 1;
                                         @endphp
-                                        @foreach ($why_data->data['why_4'] as $whyData)
+                                        @foreach ($why_data['why_4'] as $whyData)
                                             <tr>
                                                 <td class="w-20">{{ $serialNumber++ }}</td>
                                                 <td class="w-20">{{ $whyData }}</td>
@@ -2975,11 +2972,11 @@
                                     <th class="w-60">Description</th>
                                 </tr>
                                 <tbody>
-                                    @if ($why_data && isset($why_data->data['why_5']) && is_array($why_data->data['why_5']))
+                                    @if ($why_data && isset($why_data['why_5']) && is_array($why_data['why_5']))
                                         @php
                                             $serialNumber = 1;
                                         @endphp
-                                        @foreach ($why_data->data['why_5'] as $whyData)
+                                        @foreach ($why_data['why_5'] as $whyData)
                                             <tr>
                                                 <td class="w-20">{{ $serialNumber++ }}</td>
                                                 <td class="w-20">{{ $whyData }}</td>
