@@ -2942,11 +2942,29 @@ public function RejectoocStateChange(Request $request, $id)
             return back();
         }
         
+        
 }
 else {
     toastr()->error('E-signature Not match');
     return back();
 }
+}
+
+public function RejectoocStatetwo(Request $request,$id){
+
+    if ($request->username == Auth::user()->email && Hash::check($request->password, Auth::user()->password)) {
+        $ooc = OutOfCalibration::find($id);
+
+        if ($ooc->stage == 12) {
+            $ooc->stage = "3";
+            $ooc->status = "Under Stage I Investigation";
+            $ooc->update();
+            toastr()->success('Document Sent');
+            return back();
+        }
+    }
+
+
 }
 
 public function OOCAuditTrial($id){
