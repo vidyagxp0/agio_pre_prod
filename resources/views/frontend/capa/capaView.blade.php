@@ -335,7 +335,7 @@
                                     </style>
                                         <div class="col-lg-6">
                                             <div class="group-input">
-                                                <label for="Initiator Group">Initiator Group </label>
+                                                <label for="Initiator Group">Department Group </label>
                                                 <select name="initiator_Group" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}
                                                      id="initiator_group">
                                                     <option value="CQA"
@@ -395,7 +395,7 @@
                                         </div>
                                         <div class="col-lg-6">
                                             <div class="group-input">
-                                                <label for="Initiator Group Code">Initiator Group Code</label>
+                                                <label for="Initiator Group Code">Department Group Code</label>
                                                 <input readonly type="text" name="initiator_group_code"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}
                                                     value="{{ $data->initiator_Group}}" id="initiator_group_code"
                                                     readonly>
@@ -423,18 +423,7 @@
                                         </div>
 
 
-                                        <div class="col-12">
-                                            <div class="group-input">
-                                                <label for="severity-level">Severity Level</label>
-                                                <span class="text-primary">Severity levels in a QMS record gauge issue seriousness, guiding priority for corrective actions. Ranging from low to high, they ensure quality standards and mitigate critical risks.</span>
-                                                <select {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} name="severity_level_form">
-                                                    <option  value="0">-- Select --</option>
-                                                    <option @if ($data->severity_level_form=='minor') selected @endif value="minor">Minor</option>
-                                                    <option @if ($data->severity_level_form=='major') selected @endif value="major">Major</option>
-                                                    <option @if ($data->severity_level_form=='critical') selected @endif value="critical">Critical</option>
-                                                </select>
-                                            </div>
-                                        </div>
+                                       
                                         <div class="col-lg-6">
                                             <div class="group-input">
                                                 <label for="Initiator Group">Initiated Through</label>
@@ -460,6 +449,24 @@
                                                         value="lab-incident">Lab Incident</option>
                                                     <option @if ($data->initiated_through == 'improvement') selected @endif
                                                         value="improvement">Improvement</option>
+                                                    <option @if ($data->initiated_through == 'process_product') selected @endif
+                                                        value="process_product">Process/Product</option>
+                                                    <option @if ($data->initiated_through == 'supplier') selected @endif
+                                                         value="supplier">Supplier</option>
+                                                    <option @if ($data->initiated_through == 'gmp_invastigation') selected @endif
+                                                    value="gmp_invastigation">GMP Investigation</option>
+                                                    <option @if ($data->initiated_through == 'discreoancy_nc') selected @endif
+                                                        value="discreoancy_nc">Discrepancy/NC</option>
+                                                    <option @if ($data->initiated_through == 'change_control') selected @endif
+                                                         value="change_control">Change Control</option>
+                                                    <option @if ($data->initiated_through == 'utility_quipment_system') selected @endif
+                                                            value="utility_quipment_system">Utility/Equipment/System</option>
+                                                    <option @if ($data->initiated_through == 'oos') selected @endif
+                                                             value="oos">OOS</option>
+                                                        <option @if ($data->initiated_through == 'product_failure') selected @endif
+                                                            value="product_failure">Product Failure</option>
+                                                            <option @if ($data->initiated_through == 'apqr') selected @endif
+                                                                value="apqr">APQR</option>
                                                     <option @if ($data->initiated_through == 'others') selected @endif
                                                         value="others">Others</option>
                                                 </select>
@@ -604,7 +611,7 @@
                                         </div>
                                         <div class="col-12">
                                             <div class="group-input">
-                                                <label for="CAPA QA Comments">CAPA QA Comments</label>
+                                                <label for="CAPA QA Comments">CAPA QA Review</label>
                                                 <textarea name="capa_qa_comments" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>{{ $data->capa_qa_comments }}</textarea>
                                             </div>
                                         </div>
@@ -684,25 +691,25 @@
                                             </div>
                                         </div> --}}
                                         <div class="col-12 sub-head">
-                                            Material Details
+                                        Product Material Details
                                         </div>
                                         <div class="col-12">
                                             <div class="group-input">
                                                 <label for="Material Details">
-                                                    Material Details<button type="button" name="ann" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : ''}}
+                                                    Product Material Details<button type="button" name="ann" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : ''}}
                                                     id="material">+</button>
                                                 </label>
                                                 <table class="table table-bordered" id="material_details">
                                                     <thead>
                                                         <tr>
                                                             <th>Row #</th>
-                                                            <th>Material Name</th>
-                                                            <th>Batch No./Lot No./AR No.</th>
-                                                            <th>Manufacturing Date</th>
-                                                            <th>Date Of Expiry</th>
-                                                            <th>Batch Disposition Decision</th>
-                                                            <th>Remark</th>
-                                                            <th>Batch Status</th>
+                                                            <th>Product Material Name</th>
+                                                            <th>Product Batch No./Lot No./AR No.</th>
+                                                            <th>Product Manufacturing Date</th>
+                                                            <th>Product Date Of Expiry</th>
+                                                            <th>Product Batch Disposition Decision</th>
+                                                            <th>Product Remark</th>
+                                                            <th>Product Batch Status</th>
                                                         </tr>
                                                     </thead>
                                                     <tbody>
@@ -848,7 +855,19 @@
                                         </div>
                                         <div class="col-12">
                                             <div class="group-input">
-                                                <label for="Comments"> CAPA QA Comments </label>
+                                                <label for="severity-level">Severity Level</label>
+                                                <span class="text-primary">Severity levels in a QMS record gauge issue seriousness, guiding priority for corrective actions. Ranging from low to high, they ensure quality standards and mitigate critical risks.</span>
+                                                <select {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} name="severity_level_form">
+                                                    <option  value="0">-- Select --</option>
+                                                    <option @if ($data->severity_level_form=='minor') selected @endif value="minor">Minor</option>
+                                                    <option @if ($data->severity_level_form=='major') selected @endif value="major">Major</option>
+                                                    <option @if ($data->severity_level_form=='critical') selected @endif value="critical">Critical</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-12">
+                                            <div class="group-input">
+                                                <label for="Comments"> CAPA QA Review </label>
                                                 <textarea name="capa_qa_comments2" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>{{ $data->capa_qa_comments2 }}</textarea>
                                             </div>
                                         </div>
@@ -1206,7 +1225,7 @@
                                         </div>
                                         <div class="col-lg-6">
                                             <div class="group-input">
-                                                <label for="comments">QA Comments</label>
+                                                <label for="comments">QA Review</label>
                                                 <textarea name="qa_comments_new"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>{{ $data->qa_comments_new}}
                                                     {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}</textarea>
                                             </div>
@@ -1335,7 +1354,7 @@
                                         </div>
                                         <div class="col-12">
                                             <div class="group-input">
-                                                <label for="Supervisor Review Comments">Supervisor Review
+                                                <label for="Supervisor Review Comments">QA Review
                                                     Comments</label>
                                                 <textarea name="supervisor_review_comments" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>{{ $data->supervisor_review_comments }}</textarea>
                                             </div>
@@ -1358,7 +1377,7 @@
                                     <div class="row">
                                         <div class="col-12">
                                             <div class="group-input">
-                                                <label for="QA Review & Closure">QA Review & Closure</label>
+                                                <label for="QA Review & Closure">HOD Review & Closure</label>
                                                 <textarea name="qa_review" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>{{ $data->qa_review }}</textarea>
                                             </div>
                                         </div>

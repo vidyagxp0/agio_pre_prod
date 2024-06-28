@@ -239,7 +239,7 @@
                                     </style>
                                 <div class="col-lg-6">
                                     <div class="group-input">
-                                        <label for="Initiator Group">Initiator Group</label>
+                                        <label for="Initiator Group">Department Group</label>
                                         <select name="initiator_Group" id="initiator_group">
                                             <option value="">-- Select --</option>
                                             <option value="CQA" @if (old('initiator_Group') == 'CQA') selected @endif>
@@ -285,7 +285,7 @@
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="group-input">
-                                        <label for="Initiator Group Code">Initiator Group Code</label>
+                                        <label for="Initiator Group Code">Department Group Code</label>
                                         <input type="text" name="initiator_group_code" id="initiator_group_code"
                                             value="">
                                     </div>
@@ -308,20 +308,7 @@
                                     </div>
                                 </div>
                                     <p id="docnameError" style="color:red">**Short Description is required</p>
-                                <div class="col-12">
-                                    <div class="group-input">
-                                        <label for="severity-level">Severity Level</label>
-                                        <span class="text-primary">Severity levels in a QMS record gauge issue seriousness,
-                                            guiding priority for corrective actions. Ranging from low to high, they ensure
-                                            quality standards and mitigate critical risks.</span>
-                                        <select name="severity_level_form">
-                                            <option value="0">-- Select --</option>
-                                            <option value="minor">Minor</option>
-                                            <option value="major">Major</option>
-                                            <option value="critical">Critical</option>
-                                        </select>
-                                    </div>
-                                </div>
+                               
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Initiator Group">Initiated Through</label>
@@ -335,9 +322,18 @@
                                             <option value="return">Return</option>
                                             <option value="deviation">Deviation</option>
                                             <option value="complaint">Complaint</option>
-                                            <option value="regulatory">Regulatory</option>
+                                            <option value="regulatory_inspection">Regulatory Inspection</option>
                                             <option value="lab-incident">Lab Incident</option>
                                             <option value="improvement">Improvement</option>
+                                            <option value="process_product">Process/Product</option>
+                                            <option value="supplier">Supplier</option>
+                                            <option value="gmp_invastigation">GMP Investigation</option>
+                                            <option value="discreoancy_nc">Discrepancy/NC</option>
+                                            <option value="change_control">Change Control</option>
+                                            <option value="utility_quipment_system">Utility/Equipment/System</option>
+                                            <option value="oos">OOS</option>
+                                            <option value="product_failure">Product Failure</option>
+                                            <option value="apqr">APQR</option>
                                             <option value="others">Others</option>
                                         </select>
                                     </div>
@@ -478,7 +474,7 @@
                                 </div>
                                 <div class="col-12">
                                     <div class="group-input">
-                                        <label for="Comments"> CAPA QA Comments </label>
+                                        <label for="Comments"> CAPA QA Review </label>
                                         <textarea name="capa_qa_comments"></textarea>
                                     </div>
                                 </div>
@@ -592,24 +588,24 @@
                             </div>
                             {{-- </div> --}}
                             <div class="col-12 sub-head">
-                                Material Details
+                                Product Material Details
                             </div>
                             <div class="col-12">
                                 <div class="group-input">
                                     <label for="Material Details">
-                                        Material Details<button type="button" name="ann" id="material">+</button>
+                                        Product Material Details<button type="button" name="ann" id="material">+</button>
                                     </label>
                                     <table class="table table-bordered" id="material_details">
                                         <thead>
                                             <tr>
                                                 <th>Row #</th>
-                                                <th>Material Name</th>
-                                                <th>Batch No./Lot No./AR No.</th>
-                                                <th>Manufacturing Date</th>
-                                                <th>Date Of Expiry</th>
-                                                <th>Batch Disposition Decision</th>
-                                                <th>Remark</th>
-                                                <th>Batch Status</th>
+                                                <th>Product Material Name</th>
+                                                <th>Product Batch No./Lot No./AR No.</th>
+                                                <th>Product Manufacturing Date</th>
+                                                <th>Product Date Of Expiry</th>
+                                                <th>Product Batch Disposition Decision</th>
+                                                <th>Product Remark</th>
+                                                <th>Product Batch Status</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -727,7 +723,21 @@
                                 </div>
                                 <div class="col-12">
                                     <div class="group-input">
-                                        <label for="Comments"> CAPA QA Comments </label>
+                                        <label for="severity-level">Severity Level</label>
+                                        <span class="text-primary">Severity levels in a QMS record gauge issue seriousness,
+                                            guiding priority for corrective actions. Ranging from low to high, they ensure
+                                            quality standards and mitigate critical risks.</span>
+                                        <select name="severity_level_form">
+                                            <option value="0">-- Select --</option>
+                                            <option value="minor">Minor</option>
+                                            <option value="major">Major</option>
+                                            <option value="critical">Critical</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <div class="group-input">
+                                        <label for="Comments"> CAPA QA Review </label>
                                         <textarea name="capa_qa_comments2"></textarea>
                                     </div>
                                 </div>
@@ -843,7 +853,7 @@
                             </div>
                             <div class="col-12">
                                 <div class="group-input">
-                                    <label for="Supervisor Review Comments">Supervisor Review Comments</label>
+                                    <label for="Supervisor Review Comments">QA Review Comments</label>
                                     <textarea name="supervisor_review_comments"></textarea>
                                 </div>
                             </div>
@@ -1104,7 +1114,7 @@
                             <div class="row">
                                 <div class="col-12">
                                     <div class="group-input">
-                                        <label for="QA Review & Closure">QA Review & Closure</label>
+                                        <label for="QA Review & Closure">HOD Review & Closure</label>
                                         <textarea name="qa_review"></textarea>
                                     </div>
                                 </div>
