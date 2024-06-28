@@ -682,7 +682,7 @@
                                         <label for="RLS Record Number"><b>Record Number</b></label>
                                         {{-- <input disabled type="text" name="record_number"> --}}
                                         <input disabled type="text" name="record" id="record"
-                                            value="{{ Helpers::getDivisionName(session()->get('division')) }}/OOT/{{date('y')}}/{{$data}}">
+                                            value="{{ Helpers::getDivisionName(session()->get('division')) }}/INC/{{date('y')}}/{{$data}}">
                                         {{-- <div class="static">QMS-EMEA/CAPA/{{ date('Y') }}/{{ $record_number }}</div> --}}
                                     </div>
                                 </div>
