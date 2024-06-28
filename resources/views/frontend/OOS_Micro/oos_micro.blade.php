@@ -1554,7 +1554,7 @@ $users = DB::table('users')
                             <div class="group-input">
                                 <label for="Description Deviation">Impact Assessment.</label>
                                 <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
-                                <textarea class="summernote" name="impact_assessment_piiqcr[]" id="summernote-1">
+                                <textarea class="summernote" name="impact_assessment_piiqcr" id="summernote-1">
                                         </textarea>
                             </div>
                         </div>
@@ -1736,15 +1736,15 @@ $users = DB::table('users')
                         <!-- ---------------------------grid-1 -------------------------------- -->
                         <div class="group-input">
                         <label for="audit-agenda-grid">
-                            Summary of OOS Test Results
+                            Summary of OOS Test Results dsdsdsds
                             <button type="button" name="audit-agenda-grid" id="oos_conclusion">+</button>
                             <span class="text-primary" data-bs-toggle="modal"
                                 data-bs-target="#document-details-field-instruction-modal"
                                 style="font-size: 0.8rem; font-weight: 400; cursor: pointer;">
                                 (Launch Instruction)
                             </span>
+                            <div class="table-responsive">
                         </label>
-                        <div class="table-responsive">
                             <table class="table table-bordered" id="oos_conclusion_details" style="width: 100%;">
                                 <thead>
                                     <tr>
@@ -1935,6 +1935,7 @@ $users = DB::table('users')
                                         <th style="width: 16%">Batch No.(s) / A.R. No. (s)</th>
                                         <th style="width: 16%">Any Other Information</th>
                                         <th style="width: 16%">Action Taken on Affec.batch</th>
+                                        <th> Action </th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -1943,6 +1944,7 @@ $users = DB::table('users')
                                     <td><input type="text" name="oos_conclusion_review[0][conclusion_review_batch_no]"></td>
                                     <td><input type="text" name="oos_conclusion_review[0][conclusion_review_any_other_information]"></td>
                                     <td><input type="text" name="oos_conclusion_review[0][conclusion_review_action_affecte_batch]"></td>
+                                    <td><button type="text" class="removeRowBtn">Remove</button></td>
                                 </tbody>
                             </table>
                         </div>
@@ -2123,7 +2125,6 @@ $users = DB::table('users')
                                 <input type="num" name="ref_action_plan_OOS_CQ">
                             </div>
                         </div>
-
                         <div class="col-12">
                             <div class="group-input">
                                 <label for="Audit Attachments"> CQ Attachment</label>
@@ -4388,11 +4389,11 @@ $users = DB::table('users')
 
                                                                 <div class="file-attachment-field">
                                                                     <div style="width: 170px; height: 30px; border: 2px solid black; position: relative; top: 17px; left:27px; border-radius: 5px;"
-                                                                    id="file_attach "></div>
+                                                                    id="microbial_isolates_bioburden "></div>
                                                                     <div class="add-btn" style="position:relative; left:23px; width: 75px; height: 43px; background-color:white;" >
                                                                         <div>Add</div>
                                                                         <input type="file" id="myfile" name="microbial_isolates_bioburden[1][attachment]"
-                                                                            oninput="addMultipleFiles(this, 'file_attach')" multiple>
+                                                                            oninput="addMultipleFiles(this, 'microbial_isolates_bioburden')" multiple>
                                                                     </div>
                                                                 </div>
                                                             </div>

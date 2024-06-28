@@ -44,7 +44,7 @@ class OOSMicroController extends Controller
                 $record_number = '0001';
             }
         }
-
+        
         $currentDate = Carbon::now();
         $formattedDate = $currentDate->addDays(30);
         $due_date= $formattedDate->format('Y-m-d');
@@ -159,7 +159,7 @@ class OOSMicroController extends Controller
         }
 
         //=========== Audit Trail -- For Store  =========================//
-       
+        
         if (!empty($request->description_gi)) {
             $history = new OOSmicroAuditTrail();
             $history->OOS_micro_id = $OOSmicro->id;
@@ -699,319 +699,52 @@ class OOSMicroController extends Controller
 
      //---------------------Audit Trail Update-------------------------------/////////////////
      $lastDocument = OOS_micro::find($id);
-                
-     if($lastDocument->description_gi != $request->description_gi){
-        $history =  new OOSmicroAuditTrail();
-        $history->OOS_micro_id = $lastDocument->id;
-        $history->activity_type = 'Short Description';
-        $history->previous = $lastDocument->description_gi;
-        $history->current= $request->description_gi;
-        $history->comment= $request->comment;
-        $history->user_id = Auth::user()->id;
-        $history->user_name = Auth::user()->name;
-        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-        $history->origin_state = $lastDocument->status;
-        $history->change_from = $lastDocument->status;
-        $history->change_to =   $lastDocument->status;
-        $history->action_name = 'Update';
-        $history->save();
-    }
-    if($lastDocument->intiation_date != $request->intiation_date){
-        $history =  new OOSmicroAuditTrail();
-        $history->OOS_micro_id = $id;
-        $history->activity_type = 'Initiation Date';
-        $history->previous = $lastDocument->intiation_date;
-        $history->current= $request->intiation_date;
-        $history->comment= $request->comment;
-        $history->user_id = Auth::user()->id;
-        $history->user_name = Auth::user()->name;
-        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-        $history->origin_state = $lastDocument->status;
-        $history->change_from = $lastDocument->status;
-        $history->change_to =   $lastDocument->status;
-        $history->action_name = 'Update';
-        $history->save();
-    }
-    if($lastDocument->due_date != $request->due_date){
-        $history =  new OOSmicroAuditTrail();
-        $history->OOS_micro_id = $id;
-        $history->activity_type = 'Due Date';
-        $history->previous = $lastDocument->due_date;
-        $history->current= $request->due_date;
-        $history->comment= $request->comment;
-        $history->user_id = Auth::user()->id;
-        $history->user_name = Auth::user()->name;
-        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-        $history->origin_state = $lastDocument->status;
-        $history->change_from = $lastDocument->status;
-        $history->change_to =   $lastDocument->status;
-        $history->action_name = 'Update';
-        $history->save();
-    }
-    if($lastDocument->severity_level_gi != $request->severity_level_gi){
-        $history =  new OOSmicroAuditTrail();
-        $history->OOS_micro_id = $id;
-        $history->activity_type = 'Severity Level';
-        $history->previous = $lastDocument->severity_level_gi;
-        $history->current= $request->severity_level_gi;
-        $history->comment= $request->comment;
-        $history->user_id = Auth::user()->id;
-        $history->user_name = Auth::user()->name;
-        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-        $history->origin_state = $lastDocument->status;
-        $history->change_from = $lastDocument->status;
-        $history->change_to =   $lastDocument->status;
-        $history->action_name = 'Update';
-        $history->save();
-    }
-    if($lastDocument->initiator_group_gi != $request->initiator_group_gi){
-        $history =  new OOSmicroAuditTrail();
-        $history->OOS_micro_id = $id;
-        $history->activity_type = 'Initiator Group';
-        $history->previous = $lastDocument->initiator_group_gi;
-        $history->current= $request->initiator_group_gi;
-        $history->comment= $request->comment;
-        $history->user_id = Auth::user()->id;
-        $history->user_name = Auth::user()->name;
-        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-        $history->origin_state = $lastDocument->status;
-        $history->change_from = $lastDocument->status;
-        $history->change_to =   $lastDocument->status;
-        $history->action_name = 'Update';
-        $history->save();
-    }
-    if($lastDocument->initiator_group_code_gi != $request->initiator_group_code_gi){
-        $history =  new OOSmicroAuditTrail();
-        $history->OOS_micro_id = $id;
-        $history->activity_type = 'Initiator Group Code';
-        $history->previous = $lastDocument->initiator_group_code_gi;
-        $history->current= $request->initiator_group_code_gi;
-        $history->comment= $request->comment;
-        $history->user_id = Auth::user()->id;
-        $history->user_name = Auth::user()->name;
-        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-        $history->origin_state = $lastDocument->status;
-        $history->change_from = $lastDocument->status;
-        $history->change_to =   $lastDocument->status;
-        $history->action_name = 'Update';
-        $history->save();
-    }
-    if($lastDocument->initiated_through_gi != $request->initiated_through_gi){
-        $history =  new OOSmicroAuditTrail();
-        $history->OOS_micro_id = $id;
-        $history->activity_type = 'Initiated Through';
-        $history->previous = $lastDocument->initiated_through_gi;
-        $history->current= $request->initiated_through_gi;
-        $history->comment= $request->comment;
-        $history->user_id = Auth::user()->id;
-        $history->user_name = Auth::user()->name;
-        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-        $history->origin_state = $lastDocument->status;
-        $history->change_from = $lastDocument->status;
-        $history->change_to =   $lastDocument->status;
-        $history->action_name = 'Update';
-        $history->save();
-    }
-    if($lastDocument->if_others_gi != $request->if_others_gi){
-        $history =  new OOSmicroAuditTrail();
-        $history->OOS_micro_id = $id;
-        $history->activity_type = 'If Others';
-        $history->previous = $lastDocument->if_others_gi;
-        $history->current= $request->if_others_gi;
-        $history->comment= $request->comment;
-        $history->user_id = Auth::user()->id;
-        $history->user_name = Auth::user()->name;
-        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-        $history->origin_state = $lastDocument->status;
-        $history->change_from = $lastDocument->status;
-        $history->change_to =   $lastDocument->status;
-        $history->action_name = 'Update';
-        $history->save();
-    }
-    if($lastDocument->is_repeat_gi != $request->is_repeat_gi){
-        $history =  new OOSmicroAuditTrail();
-        $history->OOS_micro_id = $id;
-        $history->activity_type = 'Is Repeat ?';
-        $history->previous = $lastDocument->is_repeat_gi;
-        $history->current= $request->is_repeat_gi;
-        $history->comment= $request->comment;
-        $history->user_id = Auth::user()->id;
-        $history->user_name = Auth::user()->name;
-        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-        $history->origin_state = $lastDocument->status;
-        $history->change_from = $lastDocument->status;
-        $history->change_to =   $lastDocument->status;
-        $history->action_name = 'Update';
-        $history->save();
-    }
-    if($lastDocument->repeat_nature_gi != $request->repeat_nature_gi){
-        $history =  new OOSmicroAuditTrail();
-        $history->OOS_micro_id = $id;
-        $history->activity_type = 'Repeat Nature';
-        $history->previous = $lastDocument->repeat_nature_gi;
-        $history->current= $request->repeat_nature_gi;
-        $history->comment= $request->comment;
-        $history->user_id = Auth::user()->id;
-        $history->user_name = Auth::user()->name;
-        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-        $history->origin_state = $lastDocument->status;
-        $history->change_from = $lastDocument->status;
-        $history->change_to =   $lastDocument->status;
-        $history->action_name = 'Update';
-        $history->save();
-    }
-    if($lastDocument->nature_of_change_gi != $request->nature_of_change_gi){
-        $history =  new OOSmicroAuditTrail();
-        $history->OOS_micro_id = $id;
-        $history->activity_type = 'Nature of Change';
-        $history->previous = $lastDocument->nature_of_change_gi;
-        $history->current= $request->nature_of_change_gi;
-        $history->comment= $request->comment;
-        $history->user_id = Auth::user()->id;
-        $history->user_name = Auth::user()->name;
-        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-        $history->origin_state = $lastDocument->status;
-        $history->change_from = $lastDocument->status;
-        $history->change_to =   $lastDocument->status;
-        $history->action_name = 'Update';
-        $history->save();
-    }
-    if($lastDocument->deviation_occured_on_gi != $request->deviation_occured_on_gi){
-        $history =  new OOSmicroAuditTrail();
-        $history->OOS_micro_id = $id;
-        $history->activity_type = 'Deviation Occured On';
-        $history->previous = $lastDocument->deviation_occured_on_gi;
-        $history->current= $request->deviation_occured_on_gi;
-        $history->comment= $request->comment;
-        $history->user_id = Auth::user()->id;
-        $history->user_name = Auth::user()->name;
-        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-        $history->origin_state = $lastDocument->status;
-        $history->change_from = $lastDocument->status;
-        $history->change_to =   $lastDocument->status;
-        $history->action_name = 'Update';
-        $history->save();
-    }
-    // $array = [
-    //     "description_gi" => "Description"
-    // ];
+     
 
-    // foreach ($array as $index => $val) {
-    //     $request
-    // }
-    if($lastDocument->description_gi != $request->description_gi){
-        $history =  new OOSmicroAuditTrail();
-        $history->OOS_micro_id = $id;
-        $history->activity_type = 'Description';
-        $history->previous = $lastDocument->description_gi;
-        $history->current= $request->description_gi;
-        $history->comment= $request->comment;
-        $history->user_id = Auth::user()->id;
-        $history->user_name = Auth::user()->name;
-        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-        $history->origin_state = $lastDocument->status;
-        $history->change_from = $lastDocument->status;
-        $history->change_to =   $lastDocument->status;
-        $history->action_name = 'Update';
-        $history->save();
+     $general_information = [
+        'description_gi' => 'Short Description',
+        'initiation_date' => 'Initiation Date',
+        'due_date' => 'Due Date',
+        'severity_level_gi' => 'Severity Level',
+        'initiator_group_gi' => 'Initiator Group',
+        'initiator_group_code_gi' => 'Initiator Group Code',
+        'initiated_through_gi' => 'Initiated Through',
+        'if_others_gi' => 'If Others',
+        'is_repeat_gi' => 'Is Repeat',
+        'repeat_nature_gi' => 'Repeat Nature',
+        'nature_of_change_gi' => 'Nature of Change',
+        'reference_system_document_gi' => 'Reference System Document',
+        'deviation_occured_on_gi' => 'Deviation Occurred On',
+        'source_document_type_gi' => 'Source Document Type',
+        'sample_type_gi' => 'Sample Type',
+        'product_material_name_gi' => 'Product/Material Name',
+        'market_gi' => 'Market',
+        'customer_gi' => 'Customer'
+    ];
+    
+    foreach ($general_information as $key => $value) {
+        // Convert arrays to strings for comparison
+        $lastValue = is_array($lastDocument->$key) ? implode(',', $lastDocument->$key) : $lastDocument->$key;
+        $requestValue = is_array($request->$key) ? implode(',', $request->$key) : $request->$key;
+    
+        if ($lastValue != $requestValue) {
+            $history = new OOSmicroAuditTrail();
+            $history->OOS_micro_id = $id;
+            $history->activity_type = $value;
+            $history->previous = $lastValue;
+            $history->current = $requestValue;
+            $history->comment = $request->comment;
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_from = $lastDocument->status;
+            $history->change_to = $lastDocument->status;
+            $history->action_name = 'Update';
+            $history->save();
+        }
     }
-    if($lastDocument->source_document_type_gi != $request->source_document_type_gi){
-        $history =  new OOSmicroAuditTrail();
-        $history->OOS_micro_id = $id;
-        $history->activity_type = 'Source Document Type';
-        $history->previous = $lastDocument->source_document_type_gi;
-        $history->current= $request->source_document_type_gi;
-        $history->comment= $request->comment;
-        $history->user_id = Auth::user()->id;
-        $history->user_name = Auth::user()->name;
-        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-        $history->origin_state = $lastDocument->status;
-        $history->change_from = $lastDocument->status;
-        $history->change_to =   $lastDocument->status;
-        $history->action_name = 'Update';
-        $history->save();
-    }
-    // if($lastDocument->reference_document_gi != $request->reference_document_gi){
-    //     $history =  new OOSmicroAuditTrail();
-    //     $history->OOS_micro_id = $id;
-    //     $history->activity_type = 'Reference Document';
-    //     $history->previous = $lastDocument->reference_document_gi;
-    //     $history->current= $request->reference_document_gi;
-    //     $history->comment= $request->comment;
-    //     $history->user_id = Auth::user()->id;
-    //     $history->user_name = Auth::user()->name;
-    //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-    //     $history->origin_state = $lastDocument->status;
-        $history->change_from = $lastDocument->status;
-        $history->change_to =   $lastDocument->status;
-        $history->action_name = 'Update';
-    //     $history->save();
-    // }
-
-    if($lastDocument->sample_type_gi != $request->sample_type_gi){
-        $history =  new OOSmicroAuditTrail();
-        $history->OOS_micro_id = $id;
-        $history->activity_type = 'Sample Type';
-        $history->previous = $lastDocument->sample_type_gi;
-        $history->current= $request->sample_type_gi;
-        $history->comment= $request->comment;
-        $history->user_id = Auth::user()->id;
-        $history->user_name = Auth::user()->name;
-        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-        $history->origin_state = $lastDocument->status;
-        $history->change_from = $lastDocument->status;
-        $history->change_to =   $lastDocument->status;
-        $history->action_name = 'Update';
-        $history->save();
-    }
-    if($lastDocument->product_material_name_gi != $request->product_material_name_gi){
-        $history =  new OOSmicroAuditTrail();
-        $history->OOS_micro_id = $id;
-        $history->activity_type = 'Product/Material Name';
-        $history->previous = $lastDocument->product_material_name_gi;
-        $history->current= $request->product_material_name_gi;
-        $history->comment= $request->comment;
-        $history->user_id = Auth::user()->id;
-        $history->user_name = Auth::user()->name;
-        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-        $history->origin_state = $lastDocument->status;
-        $history->change_from = $lastDocument->status;
-        $history->change_to =   $lastDocument->status;
-        $history->action_name = 'Update';
-        $history->save();
-    }
-    if($lastDocument->market_gi != $request->market_gi){
-        $history =  new OOSmicroAuditTrail();
-        $history->OOS_micro_id = $id;
-        $history->activity_type = 'Market';
-        $history->previous = $lastDocument->market_gi;
-        $history->current= $request->market_gi;
-        $history->comment= $request->comment;
-        $history->user_id = Auth::user()->id;
-        $history->user_name = Auth::user()->name;
-        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-        $history->origin_state = $lastDocument->status;
-        $history->change_from = $lastDocument->status;
-        $history->change_to =   $lastDocument->status;
-        $history->action_name = 'Update';
-        $history->save();
-    }
-    if($lastDocument->customer_gi != $request->customer_gi){
-        $history =  new OOSmicroAuditTrail();
-        $history->OOS_micro_id = $id;
-        $history->activity_type = 'Customer';
-        $history->previous = $lastDocument->customer_gi;
-        $history->current= $request->customer_gi;
-        $history->comment= $request->comment;
-        $history->user_id = Auth::user()->id;
-        $history->user_name = Auth::user()->name;
-        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-        $history->origin_state = $lastDocument->status;
-        $history->change_from = $lastDocument->status;
-        $history->change_to =   $lastDocument->status;
-        $history->action_name = 'Update';
-        $history->save();
-    }
+    
 //  Preliminary Lab Investigation
 
 $Preliminary_Lab_Investigation = [
@@ -1093,9 +826,9 @@ if($lastDocument->$key != $request->$key){
     $history->user_name = Auth::user()->name;
     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
     $history->origin_state = $lastDocument->status;
-        $history->change_from = $lastDocument->status;
-        $history->change_to =   $lastDocument->status;
-        $history->action_name = 'Update';
+    $history->change_from = $lastDocument->status;
+    $history->change_to =   $lastDocument->status;
+    $history->action_name = 'Update';
     $history->save();
 }
 }
@@ -1125,6 +858,105 @@ if($lastDocument->$key != $request->$key){
     $history->user_name = Auth::user()->name;
     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
     $history->origin_state = $lastDocument->status;
+    $history->change_from = $lastDocument->status;
+    $history->change_to =   $lastDocument->status;
+    $history->action_name = 'Update';
+    $history->save();
+}
+}
+
+// //Phase II QC REview
+
+$Phase_II_QC_Review = [
+'summary_of_exp_hyp_piiqcr' => 'Summary of Exp./Hyp.',
+'summary_mfg_investigation_piiqcr' => 'Summary Mfg.Investigation',
+'root_casue_identified_piiqcr' => 'Root Cause Identified',
+'oos_category_reason_identified_piiqcr' => 'OOS Category-Reason Identified',
+'others_oos_category_piiqcr' => 'Others (OOS category)',
+'details_of_root_cause_piiqcr' => 'Details of Root Cause',
+'impact_assessment_piiqcr' =>'Impact Assessment',
+'recommended_action_required_piiqcr' => 'Recommended Action Required?',
+// 'recommended_action_reference_piiqcr' => 'Recommended Action Reference',
+'investi_required_piiqcr' => 'Invest.Required',
+// 'invest_ref_piiqcr' => 'Invest ref.',
+];
+
+foreach($Phase_II_QC_Review as $key => $value){
+
+if($lastDocument->$key != $request->$key){
+    $history =  new OOSmicroAuditTrail();
+    $history->OOS_micro_id = $id;
+    $history->activity_type = $value;
+    $history->previous = $lastDocument->$key;
+    $history->current= $request->$key;
+    $history->comment= $request->comment;
+    $history->user_id = Auth::user()->id;
+    $history->user_name = Auth::user()->name;
+    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+    $history->origin_state = $lastDocument->status;
+    $history->change_from = $lastDocument->status;
+    $history->change_to =   $lastDocument->status;
+    $history->action_name = 'Update';
+    $history->save();
+}
+}
+
+// Additional testing Proposal
+
+$Additional_Testing_Proposal = [
+'review_comment_atp' => 'Review Comment',
+'additional_test_proposal_atp' => 'Additional Test Proposal',
+// 'additional_test_reference_atp' => 'Additional Test Reference',
+'any_other_actions_required_atp' => 'Any Other Actions Required',
+// 'action_task_reference_atp' => 'Action Task Reference',
+];
+foreach($Additional_Testing_Proposal as $key => $value){
+
+if($lastDocument->$key != $request->$key){
+    $history =  new OOSmicroAuditTrail();
+    $history->OOS_micro_id = $id;
+    $history->activity_type = $value;
+    $history->previous = $lastDocument->$key;
+    $history->current= $request->$key;
+    $history->comment= $request->comment;
+    $history->user_id = Auth::user()->id;
+    $history->user_name = Auth::user()->name;
+    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+    $history->origin_state = $lastDocument->status;
+    $history->change_from = $lastDocument->status;
+    $history->change_to =   $lastDocument->status;
+    $history->action_name = 'Update';
+    $history->save();
+}
+}
+
+$OOS_Conclusion = [
+"conclusion_comments_oosc" => 'Conclusion Comments',
+"specification_limit_oosc" => 'Specification Limit',
+"results_to_be_reported_oosc" => 'Results to be Reported',
+"final_reportable_results_oosc" => 'Final Reportable Results',
+"justifi_for_averaging_results_oosc" => 'Justifi. for Averaging Results',
+"oos_stands_oosc" => 'OOS Stands',
+"capa_req_oosc" => 'CAPA Req.',
+// "capa_ref_no_oosc" => 'CAPA Ref No.',
+"justify_if_capa_not_required_oosc" => 'Justify if CAPA not required',
+"action_plan_req_oosc" => 'Action Plan Req.',
+// "action_plan_ref_oosc" => 'Action Plan Ref.',
+"justification_for_delay_oosc" => 'Justification for Delay',
+];
+
+foreach($OOS_Conclusion as $key => $value){
+if($lastDocument->$key != $request->$key){
+    $history =  new OOSmicroAuditTrail();
+    $history->OOS_micro_id = $id;
+    $history->activity_type = $value;
+    $history->previous = $lastDocument->$key;
+    $history->current= $request->$key;
+    $history->comment= $request->comment;
+    $history->user_id = Auth::user()->id;
+    $history->user_name = Auth::user()->name;
+    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+    $history->origin_state = $lastDocument->status;
         $history->change_from = $lastDocument->status;
         $history->change_to =   $lastDocument->status;
         $history->action_name = 'Update';
@@ -1132,178 +964,79 @@ if($lastDocument->$key != $request->$key){
 }
 }
 
-// //Phase II QC REview
-
-// $Phase_II_QC_Review = [
-// 'summary_of_exp_hyp_piiqcr' => 'Summary of Exp./Hyp.',
-// 'summary_mfg_investigation_piiqcr' => 'Summary Mfg.Investigation',
-// 'root_casue_identified_piiqcr' => 'Root Cause Identified',
-// 'oos_category_reason_identified_piiqcr' => 'OOS Category-Reason Identified',
-// 'others_oos_category_piiqcr' => 'Others (OOS category)',
-// 'details_of_root_cause_piiqcr' => 'Details of Root Cause',
-// 'impact_assessment_piiqcr' =>'Impact Assessment',
-// 'recommended_action_required_piiqcr' => 'Recommended Action Required?',
-// 'recommended_action_reference_piiqcr' => 'Recommended Action Reference',
-// 'investi_required_piiqcr' => 'Invest.Required',
-// 'invest_ref_piiqcr' => 'Invest ref.',
-// ];
-
-// foreach($Phase_II_QC_Review as $key => $value){
-
-// if($lastDocument->$key != $request->$key){
-//     $history =  new OOSmicroAuditTrail();
-//     $history->OOS_micro_id = $id;
-//     $history->activity_type = $value;
-//     $history->previous = $lastDocument->$key;
-//     $history->current= $request->$key;
-//     $history->comment= $request->comment;
-//     $history->user_id = Auth::user()->id;
-//     $history->user_name = Auth::user()->name;
-//     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-//     $history->origin_state = $lastDocument->status;
-        $history->change_from = $lastDocument->status;
-        $history->change_to =   $lastDocument->status;
-        $history->action_name = 'Update';
-//     $history->save();
-// }
-// }
-
-// Additional testing Proposal
-
-// $Additional_Testing_Proposal = [
-// 'review_comment_atp' => 'Review Comment',
-// 'additional_test_proposal_atp' => 'Additional Test Proposal',
-// 'additional_test_reference_atp' => 'Additional Test Reference',
-// 'any_other_actions_required_atp' => 'Any Other Actions Required',
-// 'action_task_reference_atp' => 'Action Task Reference',
-// ];
-// foreach($Additional_Testing_Proposal as $key => $value){
-
-// if($lastDocument->$key != $request->$key){
-//     $history =  new OOSmicroAuditTrail();
-//     $history->OOS_micro_id = $id;
-//     $history->activity_type = $value;
-//     $history->previous = $lastDocument->$key;
-//     $history->current= $request->$key;
-//     $history->comment= $request->comment;
-//     $history->user_id = Auth::user()->id;
-//     $history->user_name = Auth::user()->name;
-//     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-//     $history->origin_state = $lastDocument->status;
-        $history->change_from = $lastDocument->status;
-        $history->change_to =   $lastDocument->status;
-        $history->action_name = 'Update';
-//     $history->save();
-// }
-// }
-
-// $OOS_Conclusion = [
-// "conclusion_comments_oosc" => 'Conclusion Comments',
-// "specification_limit_oosc" => 'Specification Limit',
-// "results_to_be_reported_oosc" => 'Results to be Reported',
-// "final_reportable_results_oosc" => 'Final Reportable Results',
-// "justifi_for_averaging_results_oosc" => 'Justifi. for Averaging Results',
-// "oos_stands_oosc" => 'OOS Stands',
-// "capa_req_oosc" => 'CAPA Req.',
-// "capa_ref_no_oosc" => 'CAPA Ref No.',
-// "justify_if_capa_not_required_oosc" => 'Justify if CAPA not required',
-// "action_plan_req_oosc" => 'Action Plan Req.',
-// "action_plan_ref_oosc" => 'Action Plan Ref.',
-// "justification_for_delay_oosc" => 'Justification for Delay',
-// ];
-
-// foreach($OOS_Conclusion as $key => $value){
-// if($lastDocument->$key != $request->$key){
-//     $history =  new OOSmicroAuditTrail();
-//     $history->OOS_micro_id = $id;
-//     $history->activity_type = $value;
-//     $history->previous = $lastDocument->$key;
-//     $history->current= $request->$key;
-//     $history->comment= $request->comment;
-//     $history->user_id = Auth::user()->id;
-//     $history->user_name = Auth::user()->name;
-//     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-//     $history->origin_state = $lastDocument->status;
-        $history->change_from = $lastDocument->status;
-        $history->change_to =   $lastDocument->status;
-        $history->action_name = 'Update';
-//     $history->save();
-// }
-// }
-
 // //OOS_Conclusion_Review
 
-// $OOS_Conclusion_Review = [
-// "conclusion_review_comments_ocr" => 'Conclusion Review Comments',
-// "action_taken_on_affec_batch_ocr" => 'Action Taken on Affec.batch',
-// "capa_req_ocr" => 'CAPA Req.?',
+$OOS_Conclusion_Review = [
+"conclusion_review_comments_ocr" => 'Conclusion Review Comments',
+"action_taken_on_affec_batch_ocr" => 'Action Taken on Affec.batch',
+"capa_req_ocr" => 'CAPA Req.?',
 // "capa_refer_ocr" => 'CAPA Refer.',
-// "required_action_plan_ocr" => 'Required Action Plan?',
-// "required_action_task_ocr" => 'Required Action Task?',
+"required_action_plan_ocr" => 'Required Action Plan?',
+"required_action_task_ocr" => 'Required Action Task?',
 // "action_task_reference_ocr" => 'Action Task Reference',
-// "risk_assessment_req_ocr" => 'Risk Assessment Req?',
+"risk_assessment_req_ocr" => 'Risk Assessment Req?',
 // "risk_assessment_ref_ocr" => 'Risk Assessment Ref.',
-// "justify_if_no_risk_assessment_ocr" => 'Justify if no risk Assessment',
-// "qa_approver_ocr" => 'CQ Approver',
-// ];
-// foreach($OOS_Conclusion_Review as $key => $value){
+"justify_if_no_risk_assessment_ocr" => 'Justify if no risk Assessment',
+"qa_approver_ocr" => 'CQ Approver',
+];
+foreach($OOS_Conclusion_Review as $key => $value){
 
-// if($lastDocument->$key != $request->$key){
-//     $history =  new OOSmicroAuditTrail();
-//     $history->OOS_micro_id = $id;
-//     $history->activity_type = $value;
-//     $history->previous = $lastDocument->$key;
-//     $history->current= $request->$key;
-//     $history->comment= $request->comment;
-//     $history->user_id = Auth::user()->id;
-//     $history->user_name = Auth::user()->name;
-//     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-//     $history->origin_state = $lastDocument->status;
+if($lastDocument->$key != $request->$key){
+    $history =  new OOSmicroAuditTrail();
+    $history->OOS_micro_id = $id;
+    $history->activity_type = $value;
+    $history->previous = $lastDocument->$key;
+    $history->current= $request->$key;
+    $history->comment= $request->comment;
+    $history->user_id = Auth::user()->id;
+    $history->user_name = Auth::user()->name;
+    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+    $history->origin_state = $lastDocument->status;
         $history->change_from = $lastDocument->status;
         $history->change_to =   $lastDocument->status;
         $history->action_name = 'Update';
-//     $history->save();
-// }
-// }
+    $history->save();
+}
+}
 //OOS CQ Review
 
-// $OOS_CQ_Review = [
-// "capa_required_OOS_CQ" => 'CAPA required?',
-// "ref_action_plan_OOS_CQ" => 'Ref Action Plan',
-// "reference_of_capa_OOS_CQ" => 'Reference of CAPA',
-// "cq_review_comments_OOS_CQ" => 'CQ Review Comments',
-// "action_plan_requirement_OOS_CQ" => 'Action plan requirement?',
-// ];
-// foreach($OOS_CQ_Review as $key => $value){
+$OOS_CQ_Review = [
+"capa_required_OOS_CQ" => 'CAPA required?',
+"ref_action_plan_OOS_CQ" => 'Ref Action Plan',
+"reference_of_capa_OOS_CQ" => 'Reference of CAPA',
+"cq_review_comments_OOS_CQ" => 'CQ Review Comments',
+"action_plan_requirement_OOS_CQ" => 'Action plan requirement?',
+];
+foreach($OOS_CQ_Review as $key => $value){
 
-// if($lastDocument->$key != $request->$key){
-//     $history =  new OOSmicroAuditTrail();
-//     $history->OOS_micro_id = $id;
-//     $history->activity_type = $value;
-//     $history->previous = $lastDocument->$key;
-//     $history->current= $request->$key;
-//     $history->comment= $request->comment;
-//     $history->user_id = Auth::user()->id;
-//     $history->user_name = Auth::user()->name;
-//     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-//     $history->origin_state = $lastDocument->status;
-        // $history->change_from = $lastDocument->status;
-        // $history->change_to =   $lastDocument->status;
-        // $history->action_name = 'Update';
-//     $history->save();
-// }
-// }
+if($lastDocument->$key != $request->$key){
+    $history =  new OOSmicroAuditTrail();
+    $history->OOS_micro_id = $id;
+    $history->activity_type = $value;
+    $history->previous = $lastDocument->$key;
+    $history->current= $request->$key;
+    $history->comment= $request->comment;
+    $history->user_id = Auth::user()->id;
+    $history->user_name = Auth::user()->name;
+    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+    $history->origin_state = $lastDocument->status;
+    $history->change_from = $lastDocument->status;
+    $history->change_to =   $lastDocument->status;
+    $history->action_name = 'Update';
+    $history->save();
+}
+}
 //  Batch Disposition
     $batchDisposition = [
         'others_BI' => 'Others',
         'oos_category_BI' => 'OOS Category',
         'material_batch_release_BI' => 'Material/Batch Release',
         'other_action_BI' => 'Other Action (Specify)',
-        'field_alert_reference_BI' => 'Field Alert Reference',
+        // 'field_alert_reference_BI' => 'Field Alert Reference',
         'other_parameter_result_BI' => 'Other Parameters Results',
         'trend_of_previous_batches_BI' => 'Trend of Previous Batches',
         'stability_data_BI' => 'Stability Data',
-       // 'process_validation_data_BI' => 'Process Validation Data',
+       'process_validation_data_BI' => 'Process Validation Data',
         'method_validation_BI' => 'Method Validation',
         'any_market_complaints_BI' => 'Any Market Complaints',
         'statistical_evaluation_BI' => 'Statistical Evaluation',

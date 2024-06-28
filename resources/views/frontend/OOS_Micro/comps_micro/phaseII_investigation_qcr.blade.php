@@ -274,7 +274,7 @@ $phase_II_OOS_investigations = [
                     <div class="col-md-12 mb-4">
                         <div class="group-input">
                             <label for="Description Deviation">Impact Assessment.</label>
-                                <textarea class="summernote" name="impact_assessment_piiqc" id="summernote-1">{{ $micro_data->impact_assessment_piiqc }}
+                                <textarea class="summernote" name="impact_assessment_piiqcr" id="summernote-1">{{ $micro_data->impact_assessment_piiqc }}
                                 </textarea>
                         </div>
                     </div>

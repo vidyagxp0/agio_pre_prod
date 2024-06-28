@@ -415,12 +415,12 @@
             <div class="col-lg-6">
                 <div class="group-input">
                     <label for="Auditee"> Action plan requirement ? </label>
-                    <select multiple name="action_plan_requirement_OOS_CQ" placeholder="Select Nature of Deviation"
+                    <select name="action_plan_requirement_OOS_CQ" 
                         data-search="false" data-silent-initial-value-set="true" id="auditee">
                         <option value="">Enter Your Selection Here</option>
-                        <option value="1" {{ (!empty($micro_data->action_plan_requirement_OOS_CQ) && in_array('1', explode(',', $micro_data->action_plan_requirement_OOS_CQ[0]))) ? 'selected' : '' }}>1</option>
-                        <option value="2" {{ (!empty($micro_data->action_plan_requirement_OOS_CQ) && in_array('2', explode(',', $micro_data->action_plan_requirement_OOS_CQ[0]))) ? 'selected' : '' }}>2</option>
-                    </select>
+                        <option value="yes" @if ($micro_data->action_plan_requirement_OOS_CQ == 'yes') selected @endif>Yes</option>
+                        <option value="no" @if ($micro_data->action_plan_requirement_OOS_CQ == 'no') selected @endif>No</option>
+                   </select>
                 </div>
             </div>
             <div class="col-lg-6">
