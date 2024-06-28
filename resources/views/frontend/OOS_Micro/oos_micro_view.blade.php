@@ -113,7 +113,6 @@
                             '</div>' +
                             '</div>' +
                             '</td>' +
-                            '<td><input type="text" name="oos_detail['+ serialNumber +'][oos_submit_by]"></td>' +
                             '<td><button type="text" class="removeRowBtn">Remove</button></td>' +
 
                         '</tr>';
@@ -137,6 +136,9 @@
                         '<tr>' +
                         '<td><input disabled type="text" name="serial[]" value="' + serialNumber +'"></td>' +
                         '<td><input type="text" name="oos_capa[' + serialNumber + '][info_oos_number]" value=""></td>' +
+                        '<td><input type="text" name="oos_capa[' + serialNumber + '][info_oos_description]" value=""></td>' +
+                        '<td><input type="text" name="oos_capa[' + serialNumber + '][info_oos_previous_root_cause]" value=""></td>' +
+                        '<td><input type="text" name="oos_capa[' + serialNumber + '][info_oos_capa]" value=""></td>' +
                         '<td>' +
                             '<div class="col-lg-6 new-date-data-field">' +
                             '<div class="group-input input-date">' +
@@ -147,9 +149,6 @@
                             '</div>' +
                             '</div>' +
                         '</td>' +
-                        '<td><input type="text" name="oos_capa[' + serialNumber + '][info_oos_description]" value=""></td>' +
-                        '<td><input type="text" name="oos_capa[' + serialNumber + '][info_oos_previous_root_cause]" value=""></td>' +
-                        '<td><input type="text" name="oos_capa[' + serialNumber + '][info_oos_capa]" value=""></td>' +
                         '<td>' +
                             '<div class="col-lg-6 new-date-data-field">' +
                             '<div class="group-input input-date">' +
@@ -277,7 +276,7 @@
                 <button class="cctablinks" onclick="openCity(event, 'CCForm10')">OOS CQ Review</button>
                 <button class="cctablinks" onclick="openCity(event, 'CCForm11')">Batch Disposition</button>
                 <button class="cctablinks" onclick="openCity(event, 'CCForm12')">Re-Open</button>
-                {{--<button class="cctablinks" onclick="openCity(event, 'CCForm17')">Signature</button>--}}
+                <button class="cctablinks" onclick="openCity(event, 'CCForm17')">Signature</button>
             </div>
             <!-- General Information -->
             <form action="{{ route('oos_micro.update', $micro_data->id) }}" method="POST" enctype="multipart/form-data">
@@ -304,6 +303,7 @@
                 <!-- reopen -->
                 @include('frontend.OOS_Micro.comps_micro.reopen')
                 <!-- Signature  -->
+                @include('frontend.OOS_Micro.comps_micro.signature')
         </div>
       </form>
     </div>
@@ -356,13 +356,14 @@
             let referenceContainer = document.querySelector('.reference-data');
             referenceContainer.parentNode.insertBefore(newReference, referenceContainer.nextSibling);
         }
-    </script>
-    <script>
-        document.getElementById('initiator_group').addEventListener('change', function() {
-            var selectedValue = this.value;
-            document.getElementById('initiator_group_code').value = selectedValue;
-        });
-    </script>
+</script>
+<script>
+    document.getElementById('initiator_group').addEventListener('change', function() {
+        var selectedValue = this.value;
+        document.getElementById('initiator_group_code').value = selectedValue;
+    });
+</script>
+ <!-- --------------------------------------button--------------------- -->
     <script>
         VirtualSelect.init({
             ele: '#facility_name, #group_name, #auditee, #audit_team'
@@ -382,9 +383,7 @@
             evt.currentTarget.className += " active";
         }
     </script>
-    <!-- --------------------------------------button--------------------- -->
-
-    <script>
+   <script>
         VirtualSelect.init({
             ele: '#related_records, #hod'
         });

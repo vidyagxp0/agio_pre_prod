@@ -15,83 +15,6 @@ $users = DB::table('users')
             display: none;
         }
     </style>
-
-
-    <!-- --------------------------------------button--------------------- -->
-
-    <script>
-        VirtualSelect.init({
-            ele: '#related_records, #hod'
-        });
-
-        function openCity(evt, cityName) {
-            var i, cctabcontent, cctablinks;
-            cctabcontent = document.getElementsByClassName("cctabcontent");
-            for (i = 0; i < cctabcontent.length; i++) {
-                cctabcontent[i].style.display = "none";
-            }
-            cctablinks = document.getElementsByClassName("cctablinks");
-            for (i = 0; i < cctablinks.length; i++) {
-                cctablinks[i].className = cctablinks[i].className.replace(" active", "");
-            }
-            document.getElementById(cityName).style.display = "block";
-            evt.currentTarget.className += " active";
-
-            // Find the index of the clicked tab button
-            const index = Array.from(cctablinks).findIndex(button => button === evt.currentTarget);
-
-            // Update the currentStep to the index of the clicked tab
-            currentStep = index;
-        }
-
-        const saveButtons = document.querySelectorAll(".saveButton");
-        const nextButtons = document.querySelectorAll(".nextButton");
-        const form = document.getElementById("step-form");
-        const stepButtons = document.querySelectorAll(".cctablinks");
-        const steps = document.querySelectorAll(".cctabcontent");
-        let currentStep = 0;
-
-        function nextStep() {
-            // Check if there is a next step
-            if (currentStep < steps.length - 1) {
-                // Hide current step
-                steps[currentStep].style.display = "none";
-
-                // Show next step
-                steps[currentStep + 1].style.display = "block";
-
-                // Add active class to next button
-                stepButtons[currentStep + 1].classList.add("active");
-
-                // Remove active class from current button
-                stepButtons[currentStep].classList.remove("active");
-
-                // Update current step
-                currentStep++;
-            }
-        }
-
-        function previousStep() {
-            // Check if there is a previous step
-            if (currentStep > 0) {
-                // Hide current step
-                steps[currentStep].style.display = "none";
-
-                // Show previous step
-                steps[currentStep - 1].style.display = "block";
-
-                // Add active class to previous button
-                stepButtons[currentStep - 1].classList.add("active");
-
-                // Remove active class from current button
-                stepButtons[currentStep].classList.remove("active");
-
-                // Update current step
-                currentStep--;
-            }
-        }
-    </script>
-
     <!-- -----------------------------grid-1----------------------------script -->
     <script>
         $(document).ready(function() {
@@ -201,7 +124,6 @@ $users = DB::table('users')
                             '<td><input type="text" name="oos_detail['+ serialNumber +'][oos_specification_limit]"></td>' +
                             '<td><input type="text" name="oos_detail['+ serialNumber +'][oos_details_obvious_error]"></td>' +
                             '<td><input type="file" name="oos_detail['+ serialNumber +'][oos_file_attachment]"></td>' +
-                            '<td><input type="text" name="oos_detail['+ serialNumber +'][oos_submit_by]"></td>' +
                             '<td>' +
                             '<div class="col-lg-6 new-date-data-field">' +
                             '<div class="group-input input-date">' +
@@ -238,23 +160,36 @@ $users = DB::table('users')
                 function generateTableRow(serialNumber) {
                     var html =
                         '<tr>' +
-                        '<td><input disabled type="text" name="oos_capa['+ serialNumber +'][serial]" value="' + serialNumber +
-                        '"></td>' +
-                        '<td><input type="text" name="oos_capa['+ serialNumber +'][info_oos_number]" value=""></td>' +
-                        '<td><input type="date" name="oos_capa['+ serialNumber +'][info_oos_reported_date]" value=""></td>' +
-                        '<td><input type="text" name="oos_capa['+ serialNumber +'][info_oos_description]" value=""></td>' +
-                        '<td><input type="text" name="oos_capa['+ serialNumber +'][info_oos_previous_root_cause]"value=""></td>' +
-                        '<td><input type="text" name="oos_capa['+ serialNumber +'][info_oos_capa]" value=""></td>' +
-                        '<td><input type="date" name="oos_capa['+ serialNumber +'][info_oos_closure_date]" value=""></td>' +
-                        '<td><select name="oos_capa['+ serialNumber +'][info_oos_capa_requirement]"><option value="">Select an Option</option><option value="yes">Yes</option><option value="No">No</option></select></td>' +
-                        '<td><input type="text" name="oos_capa['+ serialNumber +'][info_oos_capa_reference_number]" value=""></td>' +
+                        '<td><input disabled type="text" name="serial[]" value="' + serialNumber +'"></td>' +
+                        '<td><input type="text" name="oos_capa[' + serialNumber + '][info_oos_number]" value=""></td>' +
+                        '<td><input type="text" name="oos_capa[' + serialNumber + '][info_oos_description]" value=""></td>' +
+                        '<td><input type="text" name="oos_capa[' + serialNumber + '][info_oos_previous_root_cause]" value=""></td>' +
+                        '<td><input type="text" name="oos_capa[' + serialNumber + '][info_oos_capa]" value=""></td>' +
+                        '<td>' +
+                            '<div class="col-lg-6 new-date-data-field">' +
+                            '<div class="group-input input-date">' +
+                            '<div class="calenderauditee">' +
+                            '<input type="text" readonly id="info_oos_reported_date' + serialNumber + '" placeholder="DD-MM-YYYY" />' +
+                            '<input type="date" name="oos_capa[' + serialNumber + '][info_oos_reported_date]" value="" class="hide-input" oninput="handleDateInput(this, \'info_oos_reported_date' + serialNumber + '\')">' +
+                            '</div>' +
+                            '</div>' +
+                            '</div>' +
+                        '</td>' +
+                        '<td>' +
+                            '<div class="col-lg-6 new-date-data-field">' +
+                            '<div class="group-input input-date">' +
+                            '<div class="calenderauditee">' +
+                            '<input type="text" readonly id="info_oos_closure_date' + serialNumber + '" placeholder="DD-MM-YYYY" />' +
+                            '<input type="date" name="oos_capa[' + serialNumber + '][info_oos_closure_date]" value="" class="hide-input" oninput="handleDateInput(this, \'info_oos_closure_date' + serialNumber + '\')">' +
+                            '</div>' +
+                            '</div>' +
+                            '</div>' +
+                        '</td>' +
+                        '<td><select name="oos_capa['+ serialNumber +'][info_oos_capa_requirement]"><option vlaue="">--select--</option><option value="yes">Yes</option><option value="No">No</option></select></td>' +
+                        '<td><input type="text" name="oos_capa[' + serialNumber + '][info_oos_capa_reference_number]" value=""></td>' +
                         '<td><button type="text" class="removeRowBtn">Remove</button></td>' +
-                        '</tr>';
-                    // for (var i = 0; i < users.length; i++) {
-                    //     html += '<option value="' + users[i].id + '">' + users[i].name + '</option>';
-                    // }
 
-                    // html += '</select></td>' + 
+                        '</tr>';
                     return html;
                 }
 
@@ -370,6 +305,8 @@ $users = DB::table('users')
                 <button class="cctablinks" onclick="openCity(event, 'CCForm10')">OOS CQ Review</button>
                 <button class="cctablinks" onclick="openCity(event, 'CCForm11')">Batch Disposition</button>
                 <button class="cctablinks" onclick="openCity(event, 'CCForm12')">Re-Open</button>
+                <button class="cctablinks" onclick="openCity(event, 'CCForm17')">Signature</button>
+
             </div>
 
             <!-- General Information -->
@@ -820,7 +757,6 @@ $users = DB::table('users')
                                             <th style="width: 8%">Specification Limit</th>
                                             <th style="width: 8%">Details of Obvious Error</th>
                                             <th style="width: 16%">File Attachment</th>
-                                            <th style="width: 8%">Submit By</th>
                                             <th style="width: 16%">Submit On</th>
                                             <th style="width: 15%">Action</th>
                                         </tr>
@@ -834,7 +770,6 @@ $users = DB::table('users')
                                             <td><input type="text" name="oos_detail[0][oos_specification_limit]"></td>
                                             <td><input type="text" name="oos_detail[0][oos_details_obvious_error]"></td>
                                             <td><input type="file" name="oos_detail[0][oos_file_attachment]"></td>
-                                            <td><input type="text" name="oos_detail[0][oos_submit_by]"></td>
                                             <td>
                                                 <div class="col-lg-6 new-date-data-field">
                                                 <div class="group-input input-date">
@@ -856,7 +791,6 @@ $users = DB::table('users')
                         <!-- close grid -->
                         <div class="button-block">
                             <button type="submit" class="saveButton">Save</button>
-                            <!-- <button type="button" class="backButton" onclick="previousStep()">Back</button> -->
                             <button type="button" class="nextButton" onclick="nextStep()">Next</button>
                             <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white">
                                     Exit </a> </button>
@@ -1271,13 +1205,13 @@ $users = DB::table('users')
                                         <tr>
                                             <th style="width: 4%">Row#</th>
                                             <th style="width: 8%">OOS Number</th>
-                                            <th style="width: 16%"> OOS Reported Date</th>
-                                            <th style="width: 12%">Description of OOS</th>
-                                            <th style="width: 8%">Previous OOS Root Cause</th>
+                                            <th style="width: 10%">Description of OOS</th>
+                                            <th style="width: 10%">Previous OOS Root Cause</th>
                                             <th style="width: 8%"> CAPA</th>
-                                            <th style="width: 16% pt-3">Closure Date of CAPA</th>
-                                            <th style="width: 16%">CAPA Requirement</th>
-                                            <th style="width: 16%">Reference CAPA Number</th>
+                                            <th style="width: 13%"> OOS Reported Date</th>
+                                            <th style="width: 13%"> Closure Date of CAPA</th>
+                                            <th style="width: 10%">CAPA Requirement</th>
+                                            <th style="width: 8%">Reference CAPA Number</th>
                                             <th style="width: 4%">Action</th>
                                         </tr>
                                     </thead>
@@ -1285,6 +1219,9 @@ $users = DB::table('users')
                                         <tr>
                                             <td><input disabled type="text" name="oos_capa[0][serial]" value="1"></td>
                                             <td><input type="text" id="info_oos_number" name="oos_capa[0][info_oos_number]" value=""></td>
+                                            <td><input type="text" name="oos_capa[0][info_oos_description]" value=""></td>
+                                            <td><input type="text" name="oos_capa[0][info_oos_previous_root_cause]"value=""></td>
+                                            <td><input type="text" name="oos_capa[0][info_oos_capa]" value=""></td>
                                             <td>
                                             <div class="col-lg-6 new-date-data-field">
                                                 <div class="group-input input-date">
@@ -1297,9 +1234,6 @@ $users = DB::table('users')
                                                 </div>
                                             </div>
                                             </td>
-                                            <td><input type="text" name="oos_capa[0][info_oos_description]" value=""></td>
-                                            <td><input type="text" name="oos_capa[0][info_oos_previous_root_cause]"value=""></td>
-                                            <td><input type="text" name="oos_capa[0][info_oos_capa]" value=""></td>
                                             <td>
                                                 <div class="col-lg-6 new-date-data-field">
                                                 <div class="group-input input-date">
@@ -1394,6 +1328,7 @@ $users = DB::table('users')
                                 <label for="Auditee"> Manufacturing Invest. Type </label>
                                 <select multiple name="manufacturing_invest_type_piii[]" placeholder="Select Nature of Deviation"
                                     data-search="false" data-silent-initial-value-set="true" id="manufacturing_multi_select">
+                                    <option value="">Enter Your Selection Here</option>
                                     <option value="chemical">Chemical</option>
                                     <option value="microbiology">Microbiology</option>
                                 </select>
@@ -1413,6 +1348,7 @@ $users = DB::table('users')
                             <div class="group-input">
                                 <label for="Audit Attachments"> Re-sampling Required? </label>
                                 <select name="re_sampling_required_piii">
+                                    <option value="">Enter Your Selection Here</option>
                                     <option value="yes">Yes</option>
                                     <option value="no">No</option>
 
@@ -1441,6 +1377,7 @@ $users = DB::table('users')
                             <div class="group-input">
                                 <label for="Audit Attachments"> Hypo/Exp. Required</label>
                                 <select name="hypo_exp_required_piii">
+                                    <option value="">Enter Your Selection Here</option>
                                     <option value="yes">Yes</option>
                                     <option value="no">No</option>
 
@@ -1580,6 +1517,7 @@ $users = DB::table('users')
                             <div class="group-input">
                                 <label for="Cancelled By"> Root Casue Identified. </label>
                                 <select name="root_casue_identified_piiqcr">
+                                    <option value="">Enter Your Selection Here</option>
                                     <option value="yes">Yes</option>
                                     <option value="no">No</option>
 
@@ -1624,6 +1562,7 @@ $users = DB::table('users')
                             <div class="group-input">
                                 <label for="Audit Mgr.more Info Reqd On">Recommended Action Required? </label>
                                 <select name="recommended_action_required_piiqcr">
+                                    <option value="">Enter Your Selection Here</option>    
                                     <option value="yes">Yes</option>
                                     <option value="no">No</option>
                                 </select>
@@ -1643,6 +1582,7 @@ $users = DB::table('users')
                             <div class="group-input">
                                 <label for="Audit Observation Submitted On">Investi. Required</label>
                                 <select name="investi_required_piiqcr">
+                                    <option value="">Enter Your Selection Here</option>
                                     <option value="yes">Yes</option>
                                     <option value="no">No</option>
                                 </select>
@@ -1732,7 +1672,7 @@ $users = DB::table('users')
                             <div class="group-input">
                                 <label for="Audit Attachments"> Any Other Actions Required</label>
                                 <select name="any_other_actions_required_atp">
-                                    <option> -- Select Option -- </option>
+                                    <option value="">Enter Your Selection Here</option>
                                     <option value="Yes">Yes</option>
                                     <option value="No">No</option>
                                 </select>
@@ -1840,9 +1780,9 @@ $users = DB::table('users')
                             <div class="group-input">
                                 <label for="Audit Attachments">Results to be Reported</label>
                                 <select name="results_to_be_reported_oosc">
+                                    <option value="">Enter Your Selection Here</option>
                                     <option value="initial">Initial</option>
                                     <option value="retested-result">Retested Result</option>
-
                                 </select>
                             </div>
                         </div>
@@ -1864,6 +1804,7 @@ $users = DB::table('users')
                             <div class="group-input">
                                 <label for="Reference Recores">OOS Stands </label>
                                 <select name="oos_stands_oosc">
+                                    <option value="">Enter Your Selection Here</option>
                                     <option value="valid">Valid</option>
                                     <option value="invalid">Invalid</option>
                                 </select>
@@ -1873,11 +1814,9 @@ $users = DB::table('users')
                             <div class="group-input">
                                 <label for="Audit Attachments">CAPA Req.</label>
                                 <select name="capa_req_oosc">
+                                    <option value="">Enter Your Selection Here</option>
                                     <option value="yes">Yes</option>
-                                    <option value="no">No</option>
-
-
-                                </select>
+                                    <option value="no">No</option>                                </select>
                             </div>
                         </div>
 
@@ -1903,10 +1842,9 @@ $users = DB::table('users')
                             <div class="group-input">
                                 <label for="Audit Attachments">Action Plan Req.</label>
                                 <select name="action_plan_req_oosc">
+                                    <option value="">Enter Your Selection Here</option>
                                     <option value="yes">Yes</option>
                                     <option value="no">No</option>
-
-
                                 </select>
                             </div>
                         </div>
@@ -2017,20 +1955,13 @@ $users = DB::table('users')
                                         </textarea>
                             </div>
                         </div>
-
-
-
-
-
-
                         <div class="col-lg-6">
                             <div class="group-input">
                                 <label for="Audit Attachments">CAPA Req?</label>
                                 <select name="capa_req_ocr">
+                                    <option value="">Enter Your Selection Here</option>
                                     <option value="yes">Yes</option>
                                     <option value="no">No</option>
-
-
                                 </select>
                             </div>
                         </div>
@@ -2048,9 +1979,9 @@ $users = DB::table('users')
                             <div class="group-input">
                                 <label for="Report Attachments">Required Action Plan? </label>
                                 <select name="required_action_plan_ocr">
+                                    <option value="">Enter Your Selection Here</option>
                                     <option value="yes">Yes</option>
                                     <option value="no">No</option>
-
                                 </select>
                             </div>
                         </div>
@@ -2059,9 +1990,9 @@ $users = DB::table('users')
                             <div class="group-input">
                                 <label for="Reference Recores">Required Action Task?</label>
                                 <select name="required_action_task_ocr">
+                                    <option value="">Enter Your Selection Here</option>
                                     <option value="yes">Yes</option>
                                     <option value="no">No</option>
-
                                 </select>
                             </div>
                         </div>
@@ -2081,6 +2012,7 @@ $users = DB::table('users')
                             <div class="group-input">
                                 <label for="Audit Attachments">Risk Assessment Req?</label>
                                 <select name="risk_assessment_req_ocr">
+                                   <option value="">Enter Your Selection Here</option>
                                     <option value="yes">Yes</option>
                                     <option value="no">No</option>
 
@@ -2179,7 +2111,7 @@ $users = DB::table('users')
                             <div class="group-input">
                                 <label for="Auditee"> Action plan requirement ? </label>
                                 <select name="action_plan_requirement_OOS_CQ" data-search="false" data-silent-initial-value-set="true" id="auditee">
-                                    <option valu="">Enter Your Selection Here</option>
+                                    <option value="">Enter Your Selection Here</option>
                                     <option value="yes">Yes</option>
                                     <option value="no">No</option>
                                 </select>
@@ -2379,8 +2311,6 @@ $users = DB::table('users')
                                     <option value="">Enter Your Selection Here</option>
                                     <option value="yes">Yes</option>
                                     <option value="no">No</option>
-
-
                                 </select>
                             </div>
                         </div>
@@ -4229,7 +4159,7 @@ $users = DB::table('users')
                                                                 <input type="number" name="Checklist_for_Review_of_sampling_and_Transport[{{$loop->index}}][response]"
                                                                     style="padding: 2px; width:90%; border: 1px solid black; background-color: #f0f0f0;">
                                                                 @else
-                                                                <select name=" Checklist_for_Review_of_sampling_and_Transport[{{$loop->index}}][response]"
+                                                                <select name="Checklist_for_Review_of_sampling_and_Transport[{{$loop->index}}][response]"
                                                                         id="response"
                                                                         style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
                                                                     <option value="">Select an Option</option>
@@ -4484,7 +4414,7 @@ $users = DB::table('users')
                                                                 style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                                                 <select name="microbial_isolates_bioburden[2][response]" id="response"
                                                                     style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                                    <option value="Yes">Select an Option</option>
+                                                                    <option value="">Select an Option</option>
                                                                     <option value="Yes">Yes</option>
                                                                     <option value="No">No</option>
                                                                     <option value="N/A">N/A</option>
@@ -4510,7 +4440,7 @@ $users = DB::table('users')
                                                                 style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                                                 <select name="microbial_isolates_bioburden[3][response]" id="response"
                                                                     style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                                    <option value="Yes">Select an Option</option>
+                                                                    <option value="">Select an Option</option>
                                                                     <option value="Yes">Yes</option>
                                                                     <option value="No">No</option>
                                                                     <option value="N/A">N/A</option>
@@ -4562,7 +4492,7 @@ $users = DB::table('users')
                                                                 style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                                                 <select name="microbial_isolates_bioburden[5][response]" id="response"
                                                                     style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                                    <option value="Yes">Select an Option</option>
+                                                                    <option value="">Select an Option</option>
                                                                     <option value="Yes">Yes</option>
                                                                     <option value="No">No</option>
                                                                     <option value="N/A">N/A</option>
@@ -4885,7 +4815,7 @@ $users = DB::table('users')
                                                                 style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                                                 <select name="Checklist_Review_Environment_condition_in_test[{{$loop->index}}][response]" id="response"
                                                                     style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                                    <option value="Yes">Select an Option</option>
+                                                                    <option value="">Select an Option</option>
                                                                     <option value="Yes">Yes</option>
                                                                     <option value="No">No</option>
                                                                     <option value="N/A">N/A</option>
@@ -5127,7 +5057,7 @@ $users = DB::table('users')
                                                                 style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                                                 <select name="disinfectant_details_of_bioburden_and_water_test[{{$loop->index}}][response]" id="response"
                                                                     style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                                    <option value="Yes">Select an Option</option>
+                                                                    <option value="">Select an Option</option>
                                                                     <option value="Yes">Yes</option>
                                                                     <option value="No">No</option>
                                                                     <option value="N/A">N/A</option>
@@ -5853,14 +5783,13 @@ $users = DB::table('users')
                                                         style="padding: 2px; width:90%; border: 1px solid black; background-color: #f0f0f0;">
                                                     @else
                                                     <select name="CR_of_microbial_cultures_inoculation_IMAs[{{ $index }}][response]"
-                                                                                                id="response"
-                                                                                                style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
-                                                                                            <option value="">Select an Option</option>
-                                                                                            <option value="Yes">Yes</option>
-                                                                                            <option value="No">No</option>
-                                                                                            <option value="N/A">N/A</option>
-                                                                                        </select>
-
+                                                            id="response"
+                                                            style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
+                                                        <option value="">Select an Option</option>
+                                                        <option value="Yes">Yes</option>
+                                                        <option value="No">No</option>
+                                                        <option value="N/A">N/A</option>
+                                                    </select>
                                                     @endif
                                                 </div>
                                             </td>
@@ -5873,9 +5802,7 @@ $users = DB::table('users')
                                         </tr>
                                         @endforeach
                                     </tbody>
-
                                 </table>
-
                             </div>
 
                         </div>
@@ -8371,10 +8298,292 @@ $users = DB::table('users')
                         onclick="nextStep()">Next</button>
                         <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white">Exit </a> </button>
                     </div>
-
                 </div>
             </div>
-        </div>
+            </div>
+            <!----- Signature ----->
+            <div id="CCForm17" class="inner-block cctabcontent">
+                <div class="inner-block-content">
+                    <div class="sub-head">
+                        Activity Log
+                    </div>
+                    <div class="row">
+
+                        <div class="col-lg-6">
+                            <div class="group-input">
+                                <label for="Audit Agenda">Preliminary Lab Inves. Done By</label>
+                                <div class="static"></div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="group-input">
+                                <label for="Audit Agenda">Preliminary Lab Inves. Done On</label>
+                                <div class="Date"></div>
+                            </div>
+                        </div>
+
+
+                        <div class="col-lg-6">
+                            <div class="group-input">
+                                <label for="Audit Team">Pre. Lab Inv. Conclusion By</label>
+                                <div class="static"></div>
+
+                            </div>
+                        </div>
+
+                        <div class="col-lg-6">
+                            <div class="group-input">
+                                <label for="Audit Team">Pre. Lab Inv. Conclusion On</label>
+                                <div class="Date"></div>
+                            </div>
+                        </div>
+
+                        <div class="col-6">
+                            <div class="group-input">
+                                <label for="Audit Comments"> Pre.Lab Invest. Review By </label>
+                                <div class="static"></div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="group-input">
+                                <label for="Audit Attachments">Pre.Lab Invest. Review On</label>
+                                <div class="Date"></div>
+                            </div>
+                        </div>
+
+
+                        <div class="col-lg-6">
+                            <div class="group-input">
+                                <label for="Audit Attachments">Phase II Invest. Proposed By</label>
+                                <div class="static"></div>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-6">
+                            <div class="group-input">
+                                <label for="Audit Attachments">Phase II Invest. Proposed On</label>
+                                <div class="Date"></div>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-6">
+                            <div class="group-input">
+                                <label for="Audit Response Completed By"> Phase II QC Review Done By</label>
+                                <div class=" static"></div>
+
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="group-input">
+                                <label for="Audit Response Completed On">Phase II QC Review Done On</label>
+                                <div class="date"></div>
+
+                            </div>
+                        </div>
+
+                        <div class="col-lg-6">
+                            <div class="group-input">
+                                <label for="Audit Attachments">Additional Test Proposed By</label>
+                                <div class=" static"></div>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-6">
+                            <div class="group-input">
+                                <label for="Audit Attachments">Additional Test Proposed On</label>
+                                <div class="date"></div>
+                            </div>
+                        </div>
+
+
+                        <div class="col-lg-6">
+                            <div class="group-input">
+                                <label for="Audit Attachments">OOS Conclusion Complete By</label>
+                                <div class=" static"></div>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-6">
+                            <div class="group-input">
+                                <label for="Audit Attachments">OOS Conclusion Complete On</label>
+                                <div class="date"></div>
+                            </div>
+                        </div>
+
+
+                        <div class="col-lg-6">
+                            <div class="group-input">
+                                <label for="Audit Attachments">CQ Review Done By</label>
+                                <div class=" static"></div>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-6">
+                            <div class="group-input">
+                                <label for="Audit Attachments">CQ Review Done On</label>
+                                <div class="date"></div>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-6">
+                            <div class="group-input">
+                                <label for="Audit Attachments">Disposition Decision Done by</label>
+                                <div class=" static"></div>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-6">
+                            <div class="group-input">
+                                <label for="Audit Attachments">Disposition Decision Done On</label>
+                                <div class="date"></div>
+                            </div>
+                        </div>
+
+
+                        <div class="col-lg-6">
+                            <div class="group-input">
+                                <label for="Reference Recores">Reopen Addendum Complete By
+
+                                </label>
+                                <div class=" static"></div>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-6">
+                            <div class="group-input">
+                                <label for="Reference Recores">Reopen Addendum Complete on
+
+                                </label>
+                                <div class="date"></div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="group-input">
+                                <label for="Reference Recores">Addendum Approval Completed By
+
+                                </label>
+                                <div class=" static"></div>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-6">
+                            <div class="group-input">
+                                <label for="Reference Recores">Reopen Addendum Complete on
+
+                                </label>
+                                <div class="date"></div>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-6">
+                            <div class="group-input">
+                                <label for="Reference Recores">Addendum Execution Done By
+
+                                </label>
+                                <div class=" static"></div>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-6">
+                            <div class="group-input">
+                                <label for="Reference Recores">Addendum Execution Done On
+
+                                </label>
+                                <div class="date"></div>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-6">
+                            <div class="group-input">
+                                <label for="Reference Recores">Addendum Review Done By
+
+                                </label>
+                                <div class=" static"></div>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-6">
+                            <div class="group-input">
+                                <label for="Reference Recores">Addendum Review Done On
+
+                                </label>
+                                <div class="date"></div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="group-input">
+                                <label for="Reference Recores">Verification Review Done By
+                                </label>
+                                <div class=" static"></div>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-6">
+                            <div class="group-input">
+                                <label for="Reference Recores">Verification Review Done On
+
+                                </label>
+                                <div class="date"></div>
+                            </div>
+                        </div>
+                        <!-- ====================================================================== -->
+                        <div class="col-lg-6">
+                            <div class="group-input">
+                                <label for="submitted by">Submitted By :</label>
+                                <div class="static"></div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="group-input">
+                                <label for="submitted on">Submitted On :</label>
+                                <div class="Date"></div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="group-input">
+                                <label for="cancelled by">Cancelled By :</label>
+                                <div class="static"></div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="group-input">
+                                <label for="cancelled on">Cancelled On :</label>
+                                <div class="Date"></div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="group-input">
+                                <label for="More information required By">More information required By :</label>
+                                <div class="static"></div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="group-input">
+                                <label for="More information required On">More information required On :</label>
+                                <div class="Date"></div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="group-input">
+                                <label for="completed by">Completed By :</label>
+                                <div class="static"></div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="group-input">
+                                <label for="completed on">Completed On :</label>
+                                <div class="Date"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="button-block">
+                        <button type="submit" id="ChangesaveButton" class="saveButton">Save</button>
+                        <button type="button" class="backButton" onclick="previousStep()">Back</button>
+                        <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white">
+                                Exit </a> </button>
+                    </div>
+                </div>
+            </div>
       </form>
     </div>
 </div>
@@ -8426,18 +8635,21 @@ $users = DB::table('users')
             let referenceContainer = document.querySelector('.reference-data');
             referenceContainer.parentNode.insertBefore(newReference, referenceContainer.nextSibling);
         }
-    </script>
-    <script>
-        document.getElementById('initiator_group').addEventListener('change', function() {
-            var selectedValue = this.value;
-            document.getElementById('initiator_group_code').value = selectedValue;
-        });
-        document.getElementById("dynamicSelectType").addEventListener("change", function() {
-            var selectedRoute = this.value;
-            window.location.href = selectedRoute; // Redirect to the selected route
-        });
-    </script>
-    <script>
+</script>
+
+<script>
+    document.getElementById('initiator_group').addEventListener('change', function() {
+        var selectedValue = this.value;
+        document.getElementById('initiator_group_code').value = selectedValue;
+    });
+    document.getElementById("dynamicSelectType").addEventListener("change", function() {
+        var selectedRoute = this.value;
+        window.location.href = selectedRoute; // Redirect to the selected route
+    });
+</script>
+
+<!-- --------------------------------------button--------------------- -->
+<script>
         VirtualSelect.init({
             ele: '#facility_name, #group_name, #auditee, #audit_team'
         });
@@ -8455,18 +8667,90 @@ $users = DB::table('users')
             document.getElementById(cityName).style.display = "block";
             evt.currentTarget.className += " active";
         }
-    </script>
-    
-    <script>
-        var maxLength = 255;
-        $('#docname').keyup(function() {
-            var textlen = maxLength - $(this).val().length;
-            $('#rchars').text(textlen);
+</script>
+<script>
+        VirtualSelect.init({
+            ele: '#related_records, #hod'
         });
-    </script>
-    <script>
-        $(document).on('click', '.removeRowBtn', function() {
-            $(this).closest('tr').remove();
-        })
-    </script>
+
+        function openCity(evt, cityName) {
+            var i, cctabcontent, cctablinks;
+            cctabcontent = document.getElementsByClassName("cctabcontent");
+            for (i = 0; i < cctabcontent.length; i++) {
+                cctabcontent[i].style.display = "none";
+            }
+            cctablinks = document.getElementsByClassName("cctablinks");
+            for (i = 0; i < cctablinks.length; i++) {
+                cctablinks[i].className = cctablinks[i].className.replace(" active", "");
+            }
+            document.getElementById(cityName).style.display = "block";
+            evt.currentTarget.className += " active";
+
+            // Find the index of the clicked tab button
+            const index = Array.from(cctablinks).findIndex(button => button === evt.currentTarget);
+
+            // Update the currentStep to the index of the clicked tab
+            currentStep = index;
+        }
+
+        const saveButtons = document.querySelectorAll(".saveButton");
+        const nextButtons = document.querySelectorAll(".nextButton");
+        const form = document.getElementById("step-form");
+        const stepButtons = document.querySelectorAll(".cctablinks");
+        const steps = document.querySelectorAll(".cctabcontent");
+        let currentStep = 0;
+
+        function nextStep() {
+            // Check if there is a next step
+            if (currentStep < steps.length - 1) {
+                // Hide current step
+                steps[currentStep].style.display = "none";
+
+                // Show next step
+                steps[currentStep + 1].style.display = "block";
+
+                // Add active class to next button
+                stepButtons[currentStep + 1].classList.add("active");
+
+                // Remove active class from current button
+                stepButtons[currentStep].classList.remove("active");
+
+                // Update current step
+                currentStep++;
+            }
+        }
+
+        function previousStep() {
+            // Check if there is a previous step
+            if (currentStep > 0) {
+                // Hide current step
+                steps[currentStep].style.display = "none";
+
+                // Show previous step
+                steps[currentStep - 1].style.display = "block";
+
+                // Add active class to previous button
+                stepButtons[currentStep - 1].classList.add("active");
+
+                // Remove active class from current button
+                stepButtons[currentStep].classList.remove("active");
+
+                // Update current step
+                currentStep--;
+            }
+        }
+</script>
+
+<script>
+    var maxLength = 255;
+    $('#docname').keyup(function() {
+        var textlen = maxLength - $(this).val().length;
+        $('#rchars').text(textlen);
+    });
+</script>
+<script>
+    $(document).on('click', '.removeRowBtn', function() {
+        $(this).closest('tr').remove();
+    })
+</script>
 @endsection

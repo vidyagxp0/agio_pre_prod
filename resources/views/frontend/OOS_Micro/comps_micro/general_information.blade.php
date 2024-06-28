@@ -439,7 +439,6 @@
                                 <th style="width: 10%">Details of Obvious Error</th>
                                 <th style="width: 14%">File Attachment</th>
                                 <th style="width: 16%">Submit On</th>
-                                <th style="width: 8%">Submit By</th>
                                 <th style="width: 5%"> Action</th>
                             </tr>
                         </thead>
@@ -465,7 +464,6 @@
                                             </div>
                                           </div>
                                        </td>
-                                       <td><input type="text" name="oos_detail[{{ $loop->index }}][oos_submit_by]" value="{{ Helpers::getArrayKey($oos_detail, 'oos_submit_by') }}"></td>
                                        <td><button type="text" class="removeRowBtn">Remove</button></td>
                                     </tr>
                                 @endforeach

@@ -160,19 +160,6 @@ class OOSMicroController extends Controller
 
         //=========== Audit Trail -- For Store  =========================//
        
-        if (!empty($request->due_date)) {
-            $history = new OOSmicroAuditTrail();
-            $history->OOS_micro_id = $OOSmicro->id;
-            $history->activity_type = 'Due Date';
-            $history->previous = "Null";
-            $history->current = $request->due_date;
-            $history->comment = "NA";
-            $history->user_id = Auth::user()->id;
-            $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state = $request->status;
-            $history->save();
-        }
         if (!empty($request->description_gi)) {
             $history = new OOSmicroAuditTrail();
             $history->OOS_micro_id = $OOSmicro->id;
@@ -186,6 +173,20 @@ class OOSMicroController extends Controller
             $history->origin_state = $request->status;
             $history->save();
         }
+        if (!empty($request->due_date)) {
+            $history = new OOSmicroAuditTrail();
+            $history->OOS_micro_id = $OOSmicro->id;
+            $history->activity_type = 'Due Date';
+            $history->previous = "Null";
+            $history->current = $request->due_date;
+            $history->comment = "NA";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $request->status;
+            $history->save();
+        }
+        
         if(!empty($request->severity_level_gi)){
             $history = new OOSmicroAuditTrail();
             $history->OOS_micro_id = $OOSmicro->id;
@@ -684,7 +685,6 @@ class OOSMicroController extends Controller
             
             foreach ($file_input_names as $file_input_name)
             {
-                // dd($input[$file_input_name]);
                 if (empty($request->file($file_input_name)) && !empty($micro[$file_input_name])) {
                     // If the request does not contain file data but existing data is present, retain the existing data
                     $input[$file_input_name] = $micro[$file_input_name];
@@ -699,13 +699,10 @@ class OOSMicroController extends Controller
 
      //---------------------Audit Trail Update-------------------------------/////////////////
      $lastDocument = OOS_micro::find($id);
-    //  dd($lastDocument->description_gi.' request'.$request->description_gi);
                 
-    $lastDocument = OOS_micro::find($id);
-                
-    if($lastDocument->description_gi != $request->description_gi){
+     if($lastDocument->description_gi != $request->description_gi){
         $history =  new OOSmicroAuditTrail();
-        $history->OOS_micro_id = $id;
+        $history->OOS_micro_id = $lastDocument->id;
         $history->activity_type = 'Short Description';
         $history->previous = $lastDocument->description_gi;
         $history->current= $request->description_gi;
@@ -714,6 +711,9 @@ class OOSMicroController extends Controller
         $history->user_name = Auth::user()->name;
         $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
         $history->origin_state = $lastDocument->status;
+        $history->change_from = $lastDocument->status;
+        $history->change_to =   $lastDocument->status;
+        $history->action_name = 'Update';
         $history->save();
     }
     if($lastDocument->intiation_date != $request->intiation_date){
@@ -727,6 +727,9 @@ class OOSMicroController extends Controller
         $history->user_name = Auth::user()->name;
         $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
         $history->origin_state = $lastDocument->status;
+        $history->change_from = $lastDocument->status;
+        $history->change_to =   $lastDocument->status;
+        $history->action_name = 'Update';
         $history->save();
     }
     if($lastDocument->due_date != $request->due_date){
@@ -740,6 +743,9 @@ class OOSMicroController extends Controller
         $history->user_name = Auth::user()->name;
         $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
         $history->origin_state = $lastDocument->status;
+        $history->change_from = $lastDocument->status;
+        $history->change_to =   $lastDocument->status;
+        $history->action_name = 'Update';
         $history->save();
     }
     if($lastDocument->severity_level_gi != $request->severity_level_gi){
@@ -753,6 +759,9 @@ class OOSMicroController extends Controller
         $history->user_name = Auth::user()->name;
         $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
         $history->origin_state = $lastDocument->status;
+        $history->change_from = $lastDocument->status;
+        $history->change_to =   $lastDocument->status;
+        $history->action_name = 'Update';
         $history->save();
     }
     if($lastDocument->initiator_group_gi != $request->initiator_group_gi){
@@ -766,6 +775,9 @@ class OOSMicroController extends Controller
         $history->user_name = Auth::user()->name;
         $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
         $history->origin_state = $lastDocument->status;
+        $history->change_from = $lastDocument->status;
+        $history->change_to =   $lastDocument->status;
+        $history->action_name = 'Update';
         $history->save();
     }
     if($lastDocument->initiator_group_code_gi != $request->initiator_group_code_gi){
@@ -779,6 +791,9 @@ class OOSMicroController extends Controller
         $history->user_name = Auth::user()->name;
         $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
         $history->origin_state = $lastDocument->status;
+        $history->change_from = $lastDocument->status;
+        $history->change_to =   $lastDocument->status;
+        $history->action_name = 'Update';
         $history->save();
     }
     if($lastDocument->initiated_through_gi != $request->initiated_through_gi){
@@ -792,6 +807,9 @@ class OOSMicroController extends Controller
         $history->user_name = Auth::user()->name;
         $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
         $history->origin_state = $lastDocument->status;
+        $history->change_from = $lastDocument->status;
+        $history->change_to =   $lastDocument->status;
+        $history->action_name = 'Update';
         $history->save();
     }
     if($lastDocument->if_others_gi != $request->if_others_gi){
@@ -805,6 +823,9 @@ class OOSMicroController extends Controller
         $history->user_name = Auth::user()->name;
         $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
         $history->origin_state = $lastDocument->status;
+        $history->change_from = $lastDocument->status;
+        $history->change_to =   $lastDocument->status;
+        $history->action_name = 'Update';
         $history->save();
     }
     if($lastDocument->is_repeat_gi != $request->is_repeat_gi){
@@ -818,6 +839,9 @@ class OOSMicroController extends Controller
         $history->user_name = Auth::user()->name;
         $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
         $history->origin_state = $lastDocument->status;
+        $history->change_from = $lastDocument->status;
+        $history->change_to =   $lastDocument->status;
+        $history->action_name = 'Update';
         $history->save();
     }
     if($lastDocument->repeat_nature_gi != $request->repeat_nature_gi){
@@ -831,6 +855,9 @@ class OOSMicroController extends Controller
         $history->user_name = Auth::user()->name;
         $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
         $history->origin_state = $lastDocument->status;
+        $history->change_from = $lastDocument->status;
+        $history->change_to =   $lastDocument->status;
+        $history->action_name = 'Update';
         $history->save();
     }
     if($lastDocument->nature_of_change_gi != $request->nature_of_change_gi){
@@ -844,6 +871,9 @@ class OOSMicroController extends Controller
         $history->user_name = Auth::user()->name;
         $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
         $history->origin_state = $lastDocument->status;
+        $history->change_from = $lastDocument->status;
+        $history->change_to =   $lastDocument->status;
+        $history->action_name = 'Update';
         $history->save();
     }
     if($lastDocument->deviation_occured_on_gi != $request->deviation_occured_on_gi){
@@ -857,6 +887,9 @@ class OOSMicroController extends Controller
         $history->user_name = Auth::user()->name;
         $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
         $history->origin_state = $lastDocument->status;
+        $history->change_from = $lastDocument->status;
+        $history->change_to =   $lastDocument->status;
+        $history->action_name = 'Update';
         $history->save();
     }
     // $array = [
@@ -877,6 +910,9 @@ class OOSMicroController extends Controller
         $history->user_name = Auth::user()->name;
         $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
         $history->origin_state = $lastDocument->status;
+        $history->change_from = $lastDocument->status;
+        $history->change_to =   $lastDocument->status;
+        $history->action_name = 'Update';
         $history->save();
     }
     if($lastDocument->source_document_type_gi != $request->source_document_type_gi){
@@ -890,6 +926,9 @@ class OOSMicroController extends Controller
         $history->user_name = Auth::user()->name;
         $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
         $history->origin_state = $lastDocument->status;
+        $history->change_from = $lastDocument->status;
+        $history->change_to =   $lastDocument->status;
+        $history->action_name = 'Update';
         $history->save();
     }
     // if($lastDocument->reference_document_gi != $request->reference_document_gi){
@@ -903,6 +942,9 @@ class OOSMicroController extends Controller
     //     $history->user_name = Auth::user()->name;
     //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
     //     $history->origin_state = $lastDocument->status;
+        $history->change_from = $lastDocument->status;
+        $history->change_to =   $lastDocument->status;
+        $history->action_name = 'Update';
     //     $history->save();
     // }
 
@@ -917,6 +959,9 @@ class OOSMicroController extends Controller
         $history->user_name = Auth::user()->name;
         $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
         $history->origin_state = $lastDocument->status;
+        $history->change_from = $lastDocument->status;
+        $history->change_to =   $lastDocument->status;
+        $history->action_name = 'Update';
         $history->save();
     }
     if($lastDocument->product_material_name_gi != $request->product_material_name_gi){
@@ -930,6 +975,9 @@ class OOSMicroController extends Controller
         $history->user_name = Auth::user()->name;
         $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
         $history->origin_state = $lastDocument->status;
+        $history->change_from = $lastDocument->status;
+        $history->change_to =   $lastDocument->status;
+        $history->action_name = 'Update';
         $history->save();
     }
     if($lastDocument->market_gi != $request->market_gi){
@@ -943,6 +991,9 @@ class OOSMicroController extends Controller
         $history->user_name = Auth::user()->name;
         $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
         $history->origin_state = $lastDocument->status;
+        $history->change_from = $lastDocument->status;
+        $history->change_to =   $lastDocument->status;
+        $history->action_name = 'Update';
         $history->save();
     }
     if($lastDocument->customer_gi != $request->customer_gi){
@@ -956,6 +1007,9 @@ class OOSMicroController extends Controller
         $history->user_name = Auth::user()->name;
         $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
         $history->origin_state = $lastDocument->status;
+        $history->change_from = $lastDocument->status;
+        $history->change_to =   $lastDocument->status;
+        $history->action_name = 'Update';
         $history->save();
     }
 //  Preliminary Lab Investigation
@@ -983,6 +1037,9 @@ foreach ($Preliminary_Lab_Investigation as $key => $value){
         $history->user_name = Auth::user()->name;
         $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
         $history->origin_state = $lastDocument->status;
+        $history->change_from = $lastDocument->status;
+        $history->change_to =   $lastDocument->status;
+        $history->action_name = 'Update';
         $history->save();
     }
 }
@@ -1010,6 +1067,9 @@ foreach($Preliminary_Lab_Investigation_Conclusion as $key => $value){
         $history->user_name = Auth::user()->name;
         $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
         $history->origin_state = $lastDocument->status;
+        $history->change_from = $lastDocument->status;
+        $history->change_to =   $lastDocument->status;
+        $history->action_name = 'Update';
         $history->save();
     }
 }
@@ -1033,6 +1093,9 @@ if($lastDocument->$key != $request->$key){
     $history->user_name = Auth::user()->name;
     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
     $history->origin_state = $lastDocument->status;
+        $history->change_from = $lastDocument->status;
+        $history->change_to =   $lastDocument->status;
+        $history->action_name = 'Update';
     $history->save();
 }
 }
@@ -1062,6 +1125,9 @@ if($lastDocument->$key != $request->$key){
     $history->user_name = Auth::user()->name;
     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
     $history->origin_state = $lastDocument->status;
+        $history->change_from = $lastDocument->status;
+        $history->change_to =   $lastDocument->status;
+        $history->action_name = 'Update';
     $history->save();
 }
 }
@@ -1095,6 +1161,9 @@ if($lastDocument->$key != $request->$key){
 //     $history->user_name = Auth::user()->name;
 //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
 //     $history->origin_state = $lastDocument->status;
+        $history->change_from = $lastDocument->status;
+        $history->change_to =   $lastDocument->status;
+        $history->action_name = 'Update';
 //     $history->save();
 // }
 // }
@@ -1121,6 +1190,9 @@ if($lastDocument->$key != $request->$key){
 //     $history->user_name = Auth::user()->name;
 //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
 //     $history->origin_state = $lastDocument->status;
+        $history->change_from = $lastDocument->status;
+        $history->change_to =   $lastDocument->status;
+        $history->action_name = 'Update';
 //     $history->save();
 // }
 // }
@@ -1152,6 +1224,9 @@ if($lastDocument->$key != $request->$key){
 //     $history->user_name = Auth::user()->name;
 //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
 //     $history->origin_state = $lastDocument->status;
+        $history->change_from = $lastDocument->status;
+        $history->change_to =   $lastDocument->status;
+        $history->action_name = 'Update';
 //     $history->save();
 // }
 // }
@@ -1184,6 +1259,9 @@ if($lastDocument->$key != $request->$key){
 //     $history->user_name = Auth::user()->name;
 //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
 //     $history->origin_state = $lastDocument->status;
+        $history->change_from = $lastDocument->status;
+        $history->change_to =   $lastDocument->status;
+        $history->action_name = 'Update';
 //     $history->save();
 // }
 // }
@@ -1209,6 +1287,9 @@ if($lastDocument->$key != $request->$key){
 //     $history->user_name = Auth::user()->name;
 //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
 //     $history->origin_state = $lastDocument->status;
+        // $history->change_from = $lastDocument->status;
+        // $history->change_to =   $lastDocument->status;
+        // $history->action_name = 'Update';
 //     $history->save();
 // }
 // }
@@ -1247,6 +1328,9 @@ if($lastDocument->$key != $request->$key){
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastDocument->status;
+            $history->change_from = $lastDocument->status;
+            $history->change_to =   $lastDocument->status;
+            $history->action_name = 'Update';
             $history->save();
         }
     }

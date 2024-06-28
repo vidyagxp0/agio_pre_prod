@@ -500,7 +500,6 @@
                                 <th style="width: 16%">Specification Limit</th>
                                 <th style="width: 16%">Details of Obvious Error</th>
                                 <!-- <th style="width: 16%">File Attachment</th> -->
-                                <th style="width: 16%">Submit By</th>
                                 <th style="width: 16%">Submit On</th>
                         </tr>
                         @if(($data->oos_details) && is_array($data->oos_details->data))
@@ -512,7 +511,6 @@
                             <td class="w-15">{{ $datagridIII['oos_results_obtained'] ?  $datagridIII['oos_results_obtained']: "Not Applicable"}}</td>
                             <td class="w-15">{{ $datagridIII['oos_specification_limit'] ?  $datagridIII['oos_specification_limit']: "Not Applicable"}}</td>
                             <td class="w-15">{{ $datagridIII['oos_details_obvious_error'] ?  $datagridIII['oos_details_obvious_error']: "Not Applicable"}}</td>
-                            <td class="w-15">{{ $datagridIII['oos_submit_by'] ?  $datagridIII['oos_submit_by']: "Not Applicable"}}</td>
                             <td class="w-15">{{ $datagridIII['oos_submit_on'] ?  $datagridIII['oos_submit_on']: "Not Applicable"}}</td>
                         </tr>
                         @endforeach

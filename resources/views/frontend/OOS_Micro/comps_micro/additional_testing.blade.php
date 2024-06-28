@@ -36,7 +36,7 @@
                         <div class="group-input">
                             <label for="Audit Attachments"> Any Other Actions Required</label>
                             <select name="any_other_actions_required_atp">
-                                <option> Select Enter </option>
+                                <option value="">Enter Your Selection Here</option>
                                 <option value="yes" @if ($micro_data->any_other_actions_required_atp == 'yes') selected @endif>Yes</option>
                                 <option value="no" @if ($micro_data->any_other_actions_required_atp == 'no') selected @endif>No</option>
                             </select>
