@@ -434,7 +434,7 @@
                                         <select id="select-state" placeholder="Select..." name="complainant_gi">
                                             <option value="">Select a value</option>
                                             @foreach ($users as $value)
-                                                <option value="{{ $value->id }}">{{ $value->name }}</option>
+                                                <option value="{{ $value->name }}">{{ $value->name }}</option>
                                             @endforeach
                                         </select>
                                         @error('assign_to')

@@ -252,6 +252,10 @@
                     <tr>
                         <th class="w-20">If Other</th>
                         <td class="w-80">{!! $data->if_other_gi ?? 'Not Applicable' !!}</td>
+                        
+                            <th class="w-20">Due Date</th>
+                            <td class="w-80">{{  Helpers::getdateFormat($data->due_date_gi) ?? 'Not Applicable' }}</td>
+                        
                     </tr>
                     <tr>
                         <th class="w-20">Repeat Nature</th>
@@ -290,7 +294,7 @@
                 <table>
                     <tr>
                         <th class="w-20">Complaint Reported On</th>
-                        <td class="w-80">{{ $data->complaint_reported_on_gi ?? 'Not Applicable' }}</td>
+                        <td class="w-80">{{ Helpers::getdateFormat($data->complaint_reported_on_gi) ?? 'Not Applicable' }}</td>
                         <th class="w-20">Categorization Of Complaint</th>
                         <td class="w-80">{{ $data->categorization_of_complaint_gi ?? 'Not Applicable' }}</td>
 

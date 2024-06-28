@@ -195,19 +195,19 @@
                 <table>
 
                     <tr>  {{ $data->created_at }} added by {{ $data->originator }}
-                        <th class="w-20">Initiator</th>
+                        <th class="w-50">Initiator</th>
                         <td class="w-30">{{ $data->originator }}</td>
-                        <th class="w-20">Date of Initiation</th>
+                        <th class="w-50">Date of Initiation</th>
                         <td class="w-30">{{ Helpers::getdateFormat($data->created_at) }}</td>
                     </tr>
                     <tr>
-                        <th class="w-20">Record Number</th>
+                        <th class="w-50">Record Number</th>
                         <td class="w-30">@if($data->record_number){{  str_pad($data->record_number->record_number, 4, '0', STR_PAD_LEFT) }} @else Not Applicable @endif</td>
-                        <th class="w-20">Site/Location Code</th>
+                        <th class="w-50">Site/Location Code</th>
                         <td class="w-30">@if($data->division_id){{ Helpers::getDivisionName($data->division_id) }} @else Not Applicable @endif</td>
                     </tr>
                     <tr>
-                        <th class="w-20">Initiator Group</th>
+                        <th class="w-50">Initiator Group</th>
                         @php
                         $departments = [
                             'CQA' => 'Corporate Quality Assurance',
@@ -231,7 +231,7 @@
                         {{-- <td class="w-30">@if($data->initiator_Group){{ $data->initiator_Group }} @else Not Applicable @endif</td> --}}
                         <td class="w-80">{{ $departments[$data->initiator_Group] ?? 'Unknown Department' }}</td>
 
-                        <th class="w-20">Initiator Group Code</th>
+                        <th class="w-50">Initiator Group Code</th>
                         <td class="w-80">{{ $data->initiator_group_code }}</td>
 
                      </tr>
@@ -271,8 +271,8 @@
     
                     <tr>
                     
-                        <th class="w-20">Due Date</th>
-                        <td class="w-80"> @if($data->due_date){{ $data->due_date }} @else Not Applicable @endif</td>
+                        <th class="w-50">Due Date</th>
+                        <td class="w-80"> @if($data->due_date){{ Helpers::getdateFormat($data->due_date) }} @else Not Applicable @endif</td>
                        <th class="w-20">Initiated Through</th>
                         <td class="w-80">@if($data->initiated_through){{ $data->initiated_through }}@else Not Applicable @endif</td>
                     </tr>
