@@ -382,8 +382,58 @@
                             @endif
                         </td>
                     </tr>
+      
+                    </table>
+   
+        
+        <div class="block">
+            <div class="block-head">
+                Description of Deviation
+         </div>
+         <div class="border-table">
+        <table>
+                <tr class="table_bg">
+                    <th class="w-20" >5W/2H</th>
+                    <th class="w-80"  >Remarks</th>
+                </tr>
+            
+                <tr>
+                    <td class="w-20" style="background-color: #91b4f7;">What</td>
+                    <td class="w-80" >{{$data->what}}</td>
+                </tr>
+                <tr>
+                    <td class="w-20" style="background-color: #91b4f7;">Why</td>
+                    <td class="w-80">{{$data->why_why}}</td>
+                </tr>
+                <tr>
+                    <td class="w-20" style="background-color: #91b4f7;">Where</td>
+                    <td class="w-80">{{$data->where_where}}</td>
+                </tr>
+                <tr>
+                    <td class="w-20" style="background-color: #91b4f7;">When</td>
+                    <td class="w-80">{{$data->when_when}}</td>
+                </tr>
+                <tr>
+                    <td class="w-20" style="background-color: #91b4f7;">Who</td>
+                    <td class="w-80">{{$data->who}}</td>
+                </tr>
+                <tr>
+                    <td class="w-20" style="background-color: #91b4f7;">How</td>
+                    <td class="w-80">{{$data->how}}</td>
+                </tr>
+                <tr>
+                    <td class="w-20" style="background-color: #91b4f7;">How much</td>
+                    <td class="w-80">{{$data->how_much}}</td>
+                </tr>
+          
+        </table>
+    </div>
+    </div>
 
-                </table>
+
+
+                
+
                 <div class="block">
                     <div class="block-head">
                         Facility/ Equipment/ Instrument/ System Details
@@ -2707,11 +2757,8 @@
                             </table>
 
                             <div class="border-table" style="margin-bottom: 15px;">
-                                <div class="block-" style="margin-bottom:5px; font-weight:bold;">
-                                    Investigation team and Responsibilities
-                                </div>
+                            <div class="block-" style="margin-bottom:5px; font-weight:bold;">Investigation team and Responsibilities</div>
                                 <table>
-
                                     <tr class="table_bg">
                                         <th class="w-20">S.N.</th>
                                         <th class="w-60">Investigation Team</th>
@@ -2719,32 +2766,33 @@
                                         <th class="w-60">Remarks</th>
                                     </tr>
                                     <tbody>
-                                        @if($investigation_data && is_array($investigation_data->data))
-                                        @php
-                                            $serialNumber = 1;
-                                            $users = DB::table('users')->select('id', 'name')->get();
-                                        @endphp
-                                            @foreach($investigation_data->data as $investigation_item)
+                                        @if($investigation_data && is_array($investigation_data))
+                                            @php
+                                                $serialNumber = 1;
+                                                // Get all users and map them by id
+                                                $users = DB::table('users')->pluck('name', 'id')->all();
+                                            @endphp
+                                            @foreach($investigation_data as $investigation_item)
                                                 <tr>
                                                     <td class="w-20">{{ $serialNumber++ }}</td>
-                                                    @foreach ($users as $user)
-                                                        <td {{ $investigation_data['investioncation_team'] == $user->id ? 'selected' : '' }}>{{ $user->name }}</td>
-                                                    @endforeach
-                                                    <td class="w-20">{{$investigation_item['responsibility']}}</td>
-                                                    <td class="w-20">{{$investigation_item['remarks']}}</td>
+                                                    <td class="w-20">
+                                                        {{ isset($users[$investigation_item['teamMember']]) ? $users[$investigation_item['teamMember']] : 'Unknown User' }}
+                                                    </td>
+                                                    <td class="w-20">{{ $investigation_item['responsibility'] }}</td>
+                                                    <td class="w-20">{{ $investigation_item['remarks'] }}</td>
                                                 </tr>
                                             @endforeach
                                         @else
-                                                <tr>
-                                                    <td class="w-20">1</td>
-                                                    <td class="w-20">Not Applicable</td>
-                                                    <td class="w-20">Not Applicable</td>
-                                                    <td class="w-20">Not Applicable</td>
-                                                </tr>
+                                            <tr>
+                                                <td class="w-20">1</td>
+                                                <td class="w-20">Not Applicable</td>
+                                                <td class="w-20">Not Applicable</td>
+                                                <td class="w-20">Not Applicable</td>
+                                            </tr>
                                         @endif
-                                    </tbody>
-                                </table>
-                            </div>
+        </tbody>
+    </table>
+</div>
 
                             <div class="border-table" style="margin-bottom: 15px;">
                                 <div class="block-" style="margin-bottom:5px; font-weight:bold;">
@@ -2761,16 +2809,16 @@
                                     </tr>
 
                                     <tbody>
-                                    @if($root_cause_data && is_array($root_cause_data->data))
+                                    @if($root_cause_data && is_array($root_cause_data))
                                         @php
                                             $serialNumber = 1;
                                         @endphp
-                                        @foreach($root_cause_data->data as $rootCause_data)
+                                        @foreach($root_cause_data as $rootCause_data)
                                             <tr>
                                                 <td class="w-20">{{ $serialNumber++ }}</td>
-                                                <td class="w-20">{{ $rootCause_data['Root_Cause_Category'] }}</td>
-                                                <td class="w-20">{{ $rootCause_data['Root_Cause_Sub_Category'] }}</td>
-                                                <td class="w-20">{{ $rootCause_data['ifother'] }}</td>
+                                                <td class="w-20">{{ $rootCause_data['rootCauseCategory'] }}</td>
+                                                <td class="w-20">{{ $rootCause_data['rootCauseSubCategory'] }}</td>
+                                                <td class="w-20">{{ $rootCause_data['ifOthers'] }}</td>
                                                 <td class="w-20">{{ $rootCause_data['probability'] }}</td>
                                                 <td class="w-20">{{ $rootCause_data['remarks'] }}</td>
                                             </tr>
