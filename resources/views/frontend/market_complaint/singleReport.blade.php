@@ -175,7 +175,7 @@
         <table>
             <tr>
                 <td class="w-80">
-                    {{-- <strong.</strong> --}}
+                    <strong>MarketComplaint No.</strong>
                 </td>
                 <td class="w-40">
                    {{ Helpers::divisionNameForQMS($data->division_id) }}/MC/{{ Helpers::year($data->created_at) }}/{{ str_pad($data->record, 4, '0', STR_PAD_LEFT) }}
