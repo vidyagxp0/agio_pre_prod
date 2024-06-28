@@ -126,9 +126,9 @@ class DocumentController extends Controller
     public function index(Request $request)
     {
         $query = Document::join('users', 'documents.originator_id', 'users.id')
-                    ->join('document_types', 'documents.document_type_id', 'document_types.id')
-                    ->join('divisions', 'documents.division_id', 'divisions.id')
-                    ->select('documents.*', 'users.name as originator_name', 'document_types.name as document_type_name', 'divisions.name as division_name')
+                    // ->join('document_types', 'documents.document_type_id', 'document_types.id')
+                    // ->join('divisions', 'documents.division_id', 'divisions.id')
+                    // ->select('documents.*', 'users.name as originator_name', 'document_types.name as document_type_name', 'divisions.name as division_name')
                     ->orderByDesc('documents.id');
 
         // Apply filters
