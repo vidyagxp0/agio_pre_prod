@@ -253,9 +253,11 @@
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                 All CAPA Closed
                             </button>
-                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#">
-                                Regulatory Reporting child
-                            </button>
+                            {{-- ====regulatroy single child --}}
+                            {{-- <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal4">
+                                Child
+                            </button> --}}
+                           
 
 
 
@@ -537,18 +539,54 @@
                     @csrf
                     <!-- Modal body -->
                     <div class="modal-body">
-                        <div class="group-input">
+                        {{-- <div class="group-input">
                             <label style=" display: flex;     gap: 16px; width: 60px;" for="capa-child">
                                 <input type="radio" name="revision" id="rca-child" value="regulatory-child">
                                 Regulatory Reporting
                             </label>
-                        </div>
+                        </div> --}}
                         <div class="group-input">
                             <label style="  display: flex;     gap: 18px; width: 60px;"for="root-item">
                                 <input type="radio" name="revision" id="root-item" value="Effectiveness-child">
                                 Effectiveness Check
                             </label>
                         </div>
+                       
+                    </div>
+    
+                   
+                    <div class="modal-footer">
+                              <button type="submit">Submit</button>
+                             <button type="button" data-bs-dismiss="modal">Close</button>                         
+                   </div>
+                </form>
+            </div>
+
+        </div>
+    </div>
+</div>
+{{-- ==========================single regulatory ======================= --}}
+<div class="modal fade" id="child-modal4">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <h4 class="modal-title">Child</h4>
+            </div>
+            <div class="model-body">
+
+                <form action="{{ route('marketcomplaint.Regu_Effec_child', $data->id) }}" method="POST">
+                    @csrf
+                    <!-- Modal body -->
+                    <div class="modal-body">
+                        <div class="group-input">
+                            <label style=" display: flex;     gap: 16px; width: 60px;" for="capa-child">
+                                <input type="radio" name="revision" id="rca-child" value="regulatory-child">
+                                Regulatory Reporting
+                            </label>
+                        </div>
+                        
                        
                     </div>
     
