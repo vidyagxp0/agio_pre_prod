@@ -173,10 +173,10 @@
                 <header>
                     <table>
                         <tr>
-                            <div class="logo">
-                                <img src="https://development.vidyagxp.com/public/user/images/logo.png" alt=""
-                                    class="w-100">
-                            </div>
+                            <!-- <div class="logo">
+                                <img src="https://vidyagxp.com/vidyaGxp_logo.png" alt="" 
+                                    class="w-100 h-100">
+                            </div> -->
 
                         </tr>
                     </table>

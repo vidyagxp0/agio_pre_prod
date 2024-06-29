@@ -4,25 +4,24 @@ namespace App\Http\Controllers;
 use App\Models\Induction_training;
 use Illuminate\Http\Request;
 
-class InductionTrainingController extends Controller
+class InductionTrainingcontroller extends Controller
 {
     // Method to display the form
     public function index()
     {
-        return view('frontend\TMS\Induction_training\induction_training');
+        return view('frontend.TMS.Induction_training.induction_training');
     }
 
     public function store(Request $request)
     {
-// dd($request->all());
         $inductionTraining = new Induction_training();
-    $inductionTraining->employee_id = $request->employee_id;
-    $inductionTraining->name_employee = $request->name_employee;
-    $inductionTraining->department_location = $request->department_location;
-    $inductionTraining->designation = $request->designation;
-    $inductionTraining->qualification = $request->qualification;
-    $inductionTraining->experience_if_any = $request->experience_if_any;
-    $inductionTraining->date_joining = $request->date_joining;
+        $inductionTraining->employee_id = $request->employee_id;
+        $inductionTraining->name_employee = $request->name_employee;
+        $inductionTraining->department_location = $request->department_location;
+        $inductionTraining->designation = $request->designation;
+        $inductionTraining->qualification = $request->qualification;
+        $inductionTraining->experience_if_any = $request->experience_if_any;
+        $inductionTraining->date_joining = $request->date_joining;
 
     // Handle looping through the document fields
     for ($i = 1; $i <= 16; $i++) {

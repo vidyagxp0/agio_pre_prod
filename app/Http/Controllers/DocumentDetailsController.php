@@ -660,13 +660,13 @@ class DocumentDetailsController extends Controller
                 $document->update();
                 $history = new DocumentHistory();
                 $history->document_id = $request->document_id;
-                $history->activity_type = 'Send for Approver';
+                $history->activity_type = 'Send for Review';
                 $history->previous = '';
                 $history->current = '';
                 $history->comment = $request->comment;
                 $history->action_name = 'Submit'; 
-                $history->change_from = 'Reviewed';
-                $history->change_to = 'For-Approval';
+                $history->change_from = 'HOD-Review Complete';
+                $history->change_to = 'In-Review';
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -692,6 +692,24 @@ class DocumentDetailsController extends Controller
               }
             }
             if ($request->stage_id == 6) {
+              $document['stage'] = $request->stage_id;
+              $document['status'] = Stage::where('id', $request->stage_id)->value('name');
+              $document->update();
+              $history = new DocumentHistory();
+              $history->document_id = $request->document_id;
+              $history->activity_type = 'Send for Approver';
+              $history->previous = '';
+              $history->current = '';
+              $history->comment = $request->comment;
+              $history->action_name = 'Submit'; 
+              $history->change_from = 'Reviewed';
+              $history->change_to = 'For-Approval';
+              $history->user_id = Auth::user()->id;
+              $history->user_name = Auth::user()->name;
+              $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+              $history->origin_state = 'Reviewed';
+              $history->save();
+
               $traning = DocumentTraining::where('document_id', $document->id)->first();
               if ($traning){
                 $traning->trainer = User::find($traning->trainer);

@@ -14,11 +14,11 @@ return new class extends Migration
     public function up()
     {
         Schema::table('failure_investigations', function (Blueprint $table) {
-            $table->string('Delay_Justification')->nullable();
-            $table->string('Discription_Event')->nullable();
-            $table->string('objective')->nullable();
-            $table->string('scope')->nullable();
-            $table->string('imidiate_action')->nullable();
+            $table->longText('Delay_Justification')->nullable();
+            $table->longText('Discription_Event')->nullable();
+            $table->longText('objective')->nullable();
+            $table->longText('scope')->nullable();
+            $table->longText('imidiate_action')->nullable();
             $table->string('investigation_approach')->nullable();
 
             $table->longtext('attention_issues')->nullable();

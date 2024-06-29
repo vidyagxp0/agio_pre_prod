@@ -51,10 +51,9 @@
                                 <div class="sub-head">Parent Record Information</div>
                                 <div class="col-lg-6">
                                     <div class="group-input">
-                                        <label for="RLS Record Number">Record Number</label>
-                                        <input disabled type="text" name="record_number">
-                                        {{-- value="{{ Helpers::getDivisionName(session()->get('division')) }}/CAPA/{{ date('Y') }}/{{ $record_number }}"> --}}
-                                        {{-- <div class="static">QMS-EMEA/CAPA/{{ date('Y') }}/{{ $record_number }}</div> --}}
+                                        <label for="Record Number">Record Number</label>
+                                        <input disabled type="text" name="record"
+                                            value="{{ Helpers::getDivisionName(session()->get('division')) }}/ERRATA/{{ date('Y') }}/{{ $record_number }}">
                                     </div>
                                 </div>
 
@@ -85,7 +84,7 @@
 
                                 <div class="col-md-6">
                                     <div class="group-input">
-                                        <label for="search">
+                                        <label for="Initiated Through">
                                             Initiated Through <span class="text-danger"></span>
                                         </label>
                                         <select id="select-state" placeholder="Select..." name="initiated_by">
@@ -157,7 +156,7 @@
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Initiator Group Code">Department Code</label>
-                                        <input type="text" name="department_code" id="initiator_group_code"
+                                        <input readonly type="text" name="department_code" id="initiator_group_code"
                                             value="">
                                     </div>
                                 </div>
@@ -223,13 +222,13 @@
                                             required>
                                     </div>
                                 </div>
-                            @php
+                                @php
 
-                                $old_record = DB::table('erratas')->get();
+                                    $old_record = DB::table('erratas')->get();
                                     // $reference_documents = is_array($showdata->reference_document)
                                     //     ? $showdata->reference_document
                                     //     : explode(',', $showdata->reference_document);
-                            @endphp
+                                @endphp
 
                                 <div class="">
                                     <div class="group-input">
@@ -238,8 +237,8 @@
                                             id="">
                                             {{-- <option value="">--Select---</option> --}}
                                             @foreach ($old_record as $new)
-                                                <option value="{{ $new->id }}">
-                                                 {{ Helpers::getDivisionName($new->division_id) }}/ERRATA/{{ date('Y') }}/{{$new->id}}   {{-- {{ Helpers::recordFormat($new->record) }} --}}
+                                                <option value=" {{ Helpers::getDivisionName($new->division_id) }}/ERRATA/{{ date('Y') }}/{{ str_pad($new->id, 4, '0', STR_PAD_LEFT) }} ">
+                                                    {{ Helpers::getDivisionName($new->division_id) }}/ERRATA/{{ date('Y') }}/{{ str_pad($new->id, 4, '0', STR_PAD_LEFT) }}
                                                 </option>
                                             @endforeach
                                             {{-- <option
@@ -321,10 +320,12 @@
                                     <div class="group-input input-date">
                                         <label for="Errata_date">Date And Time of Correction</label>
                                         <div class="calenderauditee">
-
-                                            <input type="text" id="displayErrataDate" nmae="Date_and_time_of_correction" readonly placeholder="DD-MM-YYYY HH:MM" />
-
-                                            <input type="datetime-local" id="Errata_date" name="Date_and_time_of_correction" max="{{ \Carbon\Carbon::now()->format('Y-m-d\TH:i') }}" onchange="updateDisplayDateTime(this)" class="hide-input" required />
+                                            <input type="text" id="displayErrataDate"
+                                                name="Date_and_time_of_correction" readonly
+                                                placeholder="DD-MM-YYYY HH:MM" />
+                                            <input type="datetime-local" id="Errata_date"
+                                                name="Date_and_time_of_correction" onchange="updateDisplayDateTime(this)"
+                                                class="hide-input" />
                                         </div>
                                     </div>
                                     @error('Errata_date')
@@ -343,12 +344,14 @@
                                         const day = String(date.getDate()).padStart(2, '0');
                                         const monthIndex = date.getMonth();
                                         const monthNames = ["Jan", "Feb", "March", "April", "May", "June",
-                                                            "July", "Aug", "Sep", "Oct", "Nov", "Dec"];
+                                            "July", "Aug", "Sep", "Oct", "Nov", "Dec"
+                                        ];
                                         const month = monthNames[monthIndex];
                                         const year = date.getFullYear();
                                         let hours = date.getHours();
                                         let minutes = date.getMinutes();
 
+                                        hours = String(hours).padStart(2, '0');
                                         minutes = String(minutes).padStart(2, '0');
 
                                         const formattedDateTime = `${day}-${month}-${year} ${hours}:${minutes}`;
@@ -356,8 +359,6 @@
                                         return formattedDateTime;
                                     }
                                 </script>
-
-
 
                             </div>
                             <div class="button-block">
@@ -1932,7 +1933,7 @@
                         '<td><input type="text" name="details[' + serialNumber + '][PreparedBy]"></td>' +
                         '<td><input type="text" name="details[' + serialNumber + '][CheckedBy]"></td>' +
                         '<td><input type="text" name="details[' + serialNumber + '][ApprovedBy]"></td>' +
-                        '<td><button type="text" class="removeRowBtn" ">Remove</button></td>' +
+                        '<td><button type="text" class="removeRowBtn" >Remove</button></td>' +
                         '</tr>';
 
                     // for (var i = 0; i < users.length; i++) {

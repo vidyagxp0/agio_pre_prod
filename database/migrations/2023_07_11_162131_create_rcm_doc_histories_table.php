@@ -15,15 +15,15 @@ return new class extends Migration
     {
         Schema::create('rcm_doc_histories', function (Blueprint $table) {
             $table->id();
-            $table->string('cc_id');
-            $table->string('activity_type');
+            $table->string('cc_id')->nullable();
+            $table->string('activity_type')->nullable();
             $table->longText('previous')->nullable();
             $table->longText('current')->nullable();
             $table->longText('comment')->nullable();
-            $table->string('user_id');
-            $table->string('user_name');
-            $table->string('origin_state');
-            $table->string('user_role');
+            $table->string('user_id')->nullable();
+            $table->string('user_name')->nullable();
+            $table->string('origin_state')->nullable();
+            $table->string('user_role')->nullable();
             $table->string('stage')->nullable();
             $table->softDeletes();
             $table->timestamps();

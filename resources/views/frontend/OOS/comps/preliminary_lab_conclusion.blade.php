@@ -32,15 +32,15 @@
                     <label for="Audit Team"> OOS Category-Root Cause Ident.</label>
                     <select name="oos_category_root_cause_ident_plic">
                         <option value="0">Enter Your Selection Here</option>
-                        <option value="analyst_error" {{ $data->oos_category_root_cause_ident_plic ==
-                            'analyst_error' ? 'selected' : '' }}>Analyst Error</option>
-                        <option value="instrument_error" {{ $data->oos_category_root_cause_ident_plic ==
-                            'instrument_error' ? 'selected' : '' }}>Instrument Error</option>
-                        <option value="product_material_error" {{ $data->
-                            oos_category_root_cause_ident_plic == 'product_material_error' ? 'selected'
-                            : '' }}>Product/Material Related Error</option>
-                        <option value="other_error" {{ $data->oos_category_root_cause_ident_plic ==
-                            'other_error' ? 'selected' : '' }}>Other Error</option>
+                        <option value="Analyst Error"{{ $data->oos_category_root_cause_ident_plic ==
+                            'Analyst Error' ? 'selected' : '' }}>Analyst Error</option>
+                        <option value="Instrument Error"{{ $data->oos_category_root_cause_ident_plic ==
+                            'Instrument Error' ? 'selected' : '' }}>Instrument Error</option>
+                        <option value="Product/Material Related Error"{{ $data->oos_category_root_cause_ident_plic ==
+                            'Product/Material Related Error' ? 'selected' : '' }}>Product/Material Related Error</option>
+                        <option value="Other Error"{{ $data->oos_category_root_cause_ident_plic ==
+                            'Other Error' ? 'selected' : '' }}>Other Error</option>
+                        
                     </select>
                 </div>
             </div>
@@ -117,7 +117,7 @@
                         Please Attach all relevant or supporting documents
                     </small>
                     <div class="file-attachment-field">
-                        <div class="file-attachment-list" id="file_attach">
+                        <div class="file-attachment-list" id="supporting_attachment_plic">
 
                             @if ($data->supporting_attachment_plic)
                             @foreach ($data->supporting_attachment_plic as $file)
@@ -138,7 +138,7 @@
                         <div class="add-btn">
                             <div>Add</div>
                             <input type="file" id="myfile" name="supporting_attachment_plic[]"
-                                oninput="addMultipleFiles(this, 'file_attach')" multiple>
+                                oninput="addMultipleFiles(this, 'supporting_attachment_plic')" multiple>
                         </div>
                     </div>
 

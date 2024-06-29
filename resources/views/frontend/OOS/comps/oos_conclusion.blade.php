@@ -36,6 +36,7 @@
                                 <th style="width: 16%">Results</th>
                                 <th style="width: 16%">Analyst Name.</th>
                                 <th style="width: 16%">Remarks</th>
+                                <th style="width: 4%"> Action </th>
                             </tr>
                         </thead>
                         <tbody>
@@ -48,6 +49,7 @@
                                         <td><input type="text" name="oos_conclusion[{{$loop->index }}][summary_results]" value="{{ Helpers::getArrayKey($oos_conclusion, 'summary_results') }}"></td>
                                         <td><input type="text" name="oos_conclusion[{{$loop->index }}][summary_results_analyst_name]" value="{{ Helpers::getArrayKey($oos_conclusion, 'summary_results_analyst_name') }}"></td>
                                         <td><input type="text" name="oos_conclusion[{{$loop->index }}][summary_results_remarks]" value="{{ Helpers::getArrayKey($oos_conclusion, 'summary_results_remarks') }}"></td> 
+                                        <td><button type="text" class="removeRowBtn">Remove</button></td>
                                     </tr>  
                                 @endforeach
                             @endif
@@ -69,10 +71,13 @@
                 <div class="group-input">
                     <label for="Audit Attachments">Results to be Reported</label>
                     <select name="results_to_be_reported_oosc">
+                       <option value="">Enter Your Selection Here</option>
                         <option value="Initial" {{ $data->results_to_be_reported_oosc == 'Initial' ? 'selected' : ''
                             }}>Initial</option>
-                        <option value="Retested_result" {{ $data->results_to_be_reported_oosc == 'Retested_result' ?
-                            'selected' : '' }}>Retested Result</option>
+                            <option value="Intial"{{ $data->results_to_be_reported_oosc == 'Intial' ?
+                                'selected' : '' }}>Initial</option>
+                            <option value="Retested result"{{ $data->results_to_be_reported_oosc == 'Retested result' ?
+                                'selected' : '' }}>Retested Result</option>
                     </select>
                 </div>
             </div>
@@ -99,6 +104,7 @@
                 <div class="group-input">
                     <label for="Reference Recores">OOS Stands </label>
                     <select name="oos_stands_oosc">
+                       <option value="">Enter Your Selection Here</option>
                         <option value="Valid" {{ $data->oos_stands_oosc == 'Valid' ? 'selected' : '' }}>Valid
                         </option>
                         <option value="Invalid" {{ $data->oos_stands_oosc == 'Invalid' ? 'selected' : '' }}>Invalid
@@ -111,6 +117,7 @@
                 <div class="group-input">
                     <label for="Audit Attachments">CAPA Req.</label>
                     <select name="capa_req_oosc">
+                        <option value="">Enter Your Selection Here</option>
                         <option value="Yes" {{ $data->capa_req_oosc == 'Yes' ? 'selected' : '' }}>Yes</option>
                         <option value="No" {{ $data->capa_req_oosc == 'No' ? 'selected' : '' }}>No</option>
                     </select>
@@ -122,13 +129,8 @@
                     <label for="Reference Records">CAPA Ref No.</label>
                     <select multiple id="reference_record" name="capa_ref_no_oosc[]">
                         <option value="0">--Select---</option>
-                        {{-- {{ in_array('0', $data->capa_ref_no_oosc ?? []) ? 'selected' : '' }} --}}
-                        
-                        <option value="1">1
-                        </option>
-
-                        <option value="2">2
-                        </option>
+                        <option value="1" {{ (!empty($data->capa_ref_no_oosc) && str_contains($data->capa_ref_no_oosc, 1)) ? 'selected' : '' }}>1</option>
+                        <option value="2" {{ (!empty($data->capa_ref_no_oosc) && str_contains($data->capa_ref_no_oosc, 2)) ? 'selected' : '' }}>2</option>
                     </select>
                 </div>
             </div>
@@ -146,33 +148,29 @@
                 <div class="group-input">
                     <label for="Audit Attachments">Action Item Req.</label>
                     <select name="action_plan_req_oosc">
+                        <option value="">Enter Your Selection Here</option>
                         <option value="Yes" {{ $data->action_plan_req_oosc == 'Yes' ? 'selected' : '' }}>Yes
                         </option>
                         <option value="No" {{ $data->action_plan_req_oosc == 'No' ? 'selected' : '' }}>No</option>
                     </select>
                 </div>
             </div>
-
             <div class="col-lg-6">
                 <div class="group-input">
-                    <label for="Reference Records">Action Item Ref.</label>
-                    <select multiple id="reference_record" name="action_plan_ref_oosc[]">
-                        <option value="0" {{ in_array('0', $data->action_plan_ref_oosc ?? []) ? 'selected' : ''
-                            }}>--Select---</option>
-                        <option value="1" {{ in_array('1', $data->action_plan_ref_oosc ?? []) ? 'selected' : '' }}>1
-                        </option>
-                        <option value="2" {{ in_array('2', $data->action_plan_ref_oosc ?? []) ? 'selected' : '' }}>2
-                        </option>
-                    </select>
+                    <label for="Reference Recores">Action Item Ref.</label>
+                    <select multiple id="reference_record" name="action_plan_ref_oosc[]" id="">
+                    <option value="o">Enter Your Selection Here</option>
+                    <option value="1" {{ (!empty($data->action_plan_ref_oosc) && in_array('1', explode(',', $data->action_plan_ref_oosc[0]))) ? 'selected' : '' }}>1</option>
+                    <option value="2" {{ (!empty($data->action_plan_ref_oosc) && in_array('2', explode(',', $data->action_plan_ref_oosc[0]))) ? 'selected' : '' }}>2</option>
+                  </select>
                 </div>
             </div>
-
             <div class="col-md-12 mb-4">
                 <div class="group-input">
                     <label for="Description Deviation">Justification for Delay</label>
                     <textarea class="summernote" name="justification_for_delay_oosc" id="summernote-1">
                                 {{ $data->justification_for_delay_oosc ?? '' }}
-                            </textarea>
+                    </textarea>
                 </div>
             </div>
 
@@ -183,7 +181,7 @@
                         Please Attach all relevant or supporting documents
                     </small>
                     <div class="file-attachment-field">
-                        <div class="file-attachment-list" id="file_attach">
+                        <div class="file-attachment-list" id="file_attachments_if_any_ooscattach">
                             @if ($data->file_attachments_if_any_ooscattach)
                             @foreach($data->file_attachments_if_any_ooscattach as $file)
                             <h6 type="button" class="file-container text-dark"
@@ -201,7 +199,7 @@
                         <div class="add-btn">
                             <div>Add</div>
                             <input type="file" id="myfile" name="file_attachments_if_any_ooscattach[]"
-                                oninput="addMultipleFiles(this, 'file_attach')" multiple>
+                                oninput="addMultipleFiles(this, 'file_attachments_if_any_ooscattach')" multiple>
                         </div>
                     </div>
 

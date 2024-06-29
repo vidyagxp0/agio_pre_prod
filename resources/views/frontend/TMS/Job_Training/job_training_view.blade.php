@@ -80,18 +80,48 @@
                                             value="{{ $jobTraining->name }}">
                                     </div>
                                 </div>
+                                
                                 <div class="col-lg-6">
                                     <div class="group-input">
-                                        <label for="Division Code">Department & Location</label>
-                                        <input  type="text" name="department_location" value="{{ $jobTraining->department_location }}">
-                                            {{-- value="{{ Helpers::getDivisionName(session()->get('division')) }}"> --}}
-                                        {{-- <input type="hidden" name="division_id" value="{{ session()->get('division') }}"> --}}
-                                        {{-- <div class="static">{{ Helpers::getDivisionName(session()->get('division')) }}</div> --}}
+                                        <label for="Department">Department</label>
+                                        <select name="department">
+                                            <option value="">-- Select Dept --</option>
+                                            @foreach ($departments as $department)
+                                                <option value="{{ $department->id }}" {{ $department->id == old('department', $jobTraining->department) ? 'selected' : '' }}>
+                                                    {{ $department->name }}
+                                                </option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-6">
+                                    <div class="group-input">
+                                        <label for="Division Code">Location</label>
+                                 
+                                        <input type="text" name="location" value="{{$jobTraining->location}}">
+                            
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-6">
+                                    <div class="group-input">
+                                        <label for="HOD Persons">HOD</label>
+                                        <select name="hod" id="hod">
+                                            <option value="">-- Select HOD --</option>
+                                            @foreach ($users as $user)
+                                                <option value="{{ $user->id }}" {{ $user->id == old('hod', $jobTraining->hod) ? 'selected' : '' }}>
+                                                    {{ $user->name }}
+                                                </option>
+                                            @endforeach
+                                        </select>
                                     </div>
                                 </div>
                               
 
-                                <div class="col-md-6 new-date-data-field">
+                              
+
+                                <!-- <div class="col-md-6 new-date-data-field">
                                     <div class="group-input input-date">
                                         <label for="due-date">Start Date of Training</label>
                                         <div class="calenderauditee">                                     
@@ -114,10 +144,10 @@
                                         </div>
                                     </div>
                                 </div>
-                                
+                                 -->
                                
 
-                                <div class="col-12">
+                                 <div class="col-12">
                                     <div class="group-input">
                                         <div class="why-why-chart">
                                             <table class="table table-bordered">
@@ -129,6 +159,8 @@
                                                         <th>Reference Document No.</th>
                                                         <th>Trainee Name</th>
                                                         <th>Trainer </th>
+                                                        <th>Start Date of Training</th>
+                                                        <th>End Date of Training</th>
                                                        
 
 
@@ -140,7 +172,6 @@
                                                         // Fetch the trainers' IDs
                                                         $trainerIds = DB::table('user_roles')->where('q_m_s_roles_id', 6)->pluck('user_id');
                                                         $usersDetails = DB::table('users')->select('id', 'name')->get();
-                                                        // Fetch the user details using those trainer IDs
                                                         $trainers = DB::table('users')->whereIn('id', $trainerIds)->select('id', 'name')->get();
                                                     @endphp
                                                     <tr>
@@ -148,76 +179,93 @@
                                                        
                                                         
                                                         <td>
-                                                           <input type="text" name="subject_1" value="{{ $jobTraining->subject_1}}">
+                                                           <input type="text" name="subject_1" value="{{$jobTraining->subject_1}}">
                                                         </td>
+    
                                                         <td>
-                                                          <input type="text" name="type_of_training_1" value="{{ $jobTraining->type_of_training_1}}">
+                                                          <input type="text" name="type_of_training_1" value="{{$jobTraining->type_of_training_1}}">
                                                         </td>
+                                                        
                                                         <td>
-                                                           <input type="text" name="reference_document_no_1" value="{{ $jobTraining->reference_document_no_1}}">
+                                                           <input type="text" name="reference_document_no_1" value="{{$jobTraining->reference_document_no_1}}">
                                                          </td>
                                                          <td>
-                                                            <select name="trainee_name_1" id="" >
+                                                            <select name="trainee_name_1" id="">
                                                                 <option value="">-- Select --</option>
-                                                                    @foreach ($trainers as $trainer)
-                                                                        <option value="{{ $trainer->id }}" @if($jobTraining->trainee_name_1 == $trainer->id) selected @endif>{{ $trainer->name }}</option>
-                                                                    @endforeach
+                                                                @foreach ($trainers as $trainer)
+                                                                    <option value="{{ $trainer->id }}">{{ $trainer->name }}</option>
+                                                                @endforeach
                                                             </select>
                                                          </td>
                                                          <td>
                                                             <select name="trainer_1" id="">
                                                                 <option value="">-- Select --</option>
-                                                                    @foreach ($usersDetails as $u)
-                                                                        <option value="{{ $u->id }}" @if($jobTraining->trainer_1 == $u->id) selected @endif>{{ $u->name }}</option>
-                                                                    @endforeach
+                                                                @foreach ($usersDetails as $u)
+                                                                    <option value="{{ $u->id }}">{{ $u->name }}</option>
+                                                                @endforeach
                                                             </select>
                                                         </td>
+
+                                                        <td>
+                                                            <input type="date" name="startdate_1" value="{{$jobTraining->startdate_1}}" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" id="startdate" value="" class="hide-input" oninput="handleDateInput(this, 'startdate');checkDate('startdate','enddate')">
+                                                        </td>
+                                                        <td>
+                                                            <input type="date" name="enddate_1" value="{{$jobTraining->enddate_1}}" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" id="enddate" value="" class="hide-input" oninput="handleDateInput(this, 'enddate');checkDate('startdate','enddate')">
+                                                        </td>
+
                                                     </tr>
                                                     <tr>
                                                         <td>2</td>
                                                         <td>
-                                                           <input type="text" name="subject_2" value="{{ $jobTraining->subject_2}}">
+                                                           <input type="text" name="subject_2" value="{{$jobTraining->subject_2}}">
                                                         </td>
                                                         <td>
-                                                          <input type="text" name="type_of_training_2" value="{{ $jobTraining->type_of_training_2}}">
+                                                          <input type="text" name="type_of_training_2" value="{{$jobTraining->type_of_training_2}}">
                                                         </td>
                                                         <td>
-                                                           <input type="text" name="reference_document_no_2" value="{{ $jobTraining->reference_document_no_2}}">
+                                                           <input type="text" name="reference_document_no_2" value="{{$jobTraining->reference_document_no_2}}">
                                                          </td>
                                                          <td>
-                                                            <select name="trainee_name_2" id="" >
+                                                            <select name="trainee_name_2" id="">
                                                                 <option value="">-- Select --</option>
-                                                                    @foreach ($trainers as $trainer)
-                                                                        <option value="{{ $trainer->id }}" @if($jobTraining->trainee_name_2 == $trainer->id) selected @endif>{{ $trainer->name }}</option>
-                                                                    @endforeach
+                                                                @foreach ($trainers as $trainer)
+                                                                    <option value="{{ $trainer->id }}">{{ $trainer->name }}</option>
+                                                                @endforeach
                                                             </select>
                                                          </td>
                                                          <td>
                                                             <select name="trainer_2" id="">
                                                                 <option value="">-- Select --</option>
-                                                                    @foreach ($usersDetails as $u)
-                                                                        <option value="{{ $u->id }}" @if($jobTraining->trainer_2 == $u->id) selected @endif>{{ $u->name }}</option>
-                                                                    @endforeach
+                                                                @foreach ($usersDetails as $u)
+                                                                    <option value="{{ $u->id }}">{{ $u->name }}</option>
+                                                                @endforeach
                                                             </select>
+                                                        </td>
+
+                                                        <td>
+                                                            <input type="date" name="startdate_2" value="{{$jobTraining->startdate_2}}" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" id="startdate" value="" class="hide-input" oninput="handleDateInput(this, 'startdate');checkDate('startdate','enddate')">
+                                                        </td>
+                                                        <td>
+                                                            <input type="date" name="enddate_2" value="{{$jobTraining->enddate_2}}" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" id="enddate" value="" class="hide-input" oninput="handleDateInput(this, 'enddate');checkDate('startdate','enddate')">
                                                         </td>
         
                                                     </tr>
                                                     <tr>
                                                         <td>3</td>
                                                         <td>
-                                                            <input type="text" name="subject_3" value="{{ $jobTraining->subject_3}}">
+                                                            <input type="text" name="subject_3" value="{{$jobTraining->subject_3}}">
                                                          </td>
                                                          <td>
-                                                           <input type="text" name="type_of_training_3" value="{{ $jobTraining->type_of_training_3}}">
+                                                           <input type="text" name="type_of_training_3" value="{{$jobTraining->type_of_training_3}}">
                                                          </td>
                                                          <td>
-                                                            <input type="text" name="reference_document_no_3" value="{{ $jobTraining->reference_document_no_3}}">
+                                                            <input type="text" name="reference_document_no_3" value="{{$jobTraining->reference_document_no_3}}">
                                                           </td>
                                                           <td>
-                                                             <select name="trainee_name_3" id="" >
+                                                             <select name="trainee_name_3" id="">
                                                                 <option value="">-- Select --</option>
                                                                 @foreach ($trainers as $trainer)
-                                                                    <option value="{{ $trainer->id }}" @if($jobTraining->trainee_name_3 == $trainer->id) selected @endif>{{ $trainer->name }}</option>
+                                                                    <option value="{{ $trainer->id }}">{{ $trainer->name }}</option>
                                                                 @endforeach
                                                              </select>
                                                           </td>
@@ -225,28 +273,34 @@
                                                              <select name="trainer_3" id="">
                                                                 <option value="">-- Select --</option>
                                                                 @foreach ($usersDetails as $u)
-                                                                    <option value="{{ $u->id }}" @if($jobTraining->trainer_3 == $u->id) selected @endif>{{ $u->name }}</option>
+                                                                    <option value="{{ $u->id }}">{{ $u->name }}</option>
                                                                 @endforeach
                                                              </select>
                                                          </td>
         
+                                                         <td>
+                                                            <input type="date" name="startdate_3" value="{{$jobTraining->startdate_3}}" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" id="startdate" value="" class="hide-input" oninput="handleDateInput(this, 'startdate');checkDate('startdate','enddate')">
+                                                        </td>
+                                                        <td>
+                                                            <input type="date" name="enddate_3" value="{{$jobTraining->enddate_3}}" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" id="enddate" value="" class="hide-input" oninput="handleDateInput(this, 'enddate');checkDate('startdate','enddate')">
+                                                        </td>
                                                     </tr>
                                                     <tr>
                                                         <td>4</td>
                                                         <td>
-                                                            <input type="text" name="subject_4" value="{{ $jobTraining->subject_4}}">
+                                                            <input type="text" name="subject_4" value="{{$jobTraining->subject_4}}">
                                                          </td>
                                                          <td>
-                                                           <input type="text" name="type_of_training_4" value="{{ $jobTraining->type_of_training_4}}">
+                                                           <input type="text" name="type_of_training_4" value="{{$jobTraining->type_of_training_4}}">
                                                          </td>
                                                          <td>
-                                                            <input type="text" name="reference_document_no_4" value="{{ $jobTraining->reference_document_no_4}}">
+                                                            <input type="text" name="reference_document_no_4" value="{{$jobTraining->reference_document_no_4}}">
                                                           </td>
                                                           <td>
                                                              <select name="trainee_name_4" id="">
                                                                 <option value="">-- Select --</option>
                                                                 @foreach ($trainers as $trainer)
-                                                                    <option value="{{ $trainer->id }}" @if($jobTraining->trainee_name_4 == $trainer->id) selected @endif>{{ $trainer->name }}</option>
+                                                                    <option value="{{ $trainer->id }}">{{ $trainer->name }}</option>
                                                                 @endforeach
                                                              </select>
                                                           </td>
@@ -254,44 +308,52 @@
                                                              <select name="trainer_4" id="">
                                                                 <option value="">-- Select --</option>
                                                                 @foreach ($usersDetails as $u)
-                                                                    <option value="{{ $u->id }}" @if($jobTraining->trainer_4 == $u->id) selected @endif>{{ $u->name }}</option>
+                                                                    <option value="{{ $u->id }}">{{ $u->name }}</option>
                                                                 @endforeach
                                                              </select>
                                                          </td>
         
+                                                         <td>
+                                                            <input type="date" name="startdate_4" value="{{$jobTraining->startdate_4}}" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" id="startdate" value="" class="hide-input" oninput="handleDateInput(this, 'startdate');checkDate('startdate','enddate')">
+                                                        </td>
+                                                        <td>
+                                                            <input type="date" name="enddate_4" value="{{$jobTraining->enddate_4}}" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" id="enddate" value="" class="hide-input" oninput="handleDateInput(this, 'enddate');checkDate('startdate','enddate')">
+                                                        </td>
                                                     </tr>
                                                     <tr>
                                                         <td>5</td>
                                                         <td>
-                                                           <input type="text" name="subject_5" value="{{ $jobTraining->subject_5}}">
+                                                           <input type="text" name="subject_5" value="{{$jobTraining->subject_5}}">
                                                         </td>
                                                         <td>
-                                                          <input type="text" name="type_of_training_5" value="{{ $jobTraining->type_of_training_5}}">
+                                                          <input type="text" name="type_of_training_5" value="{{$jobTraining->type_of_training_5}}">
                                                         </td>
                                                         <td>
-                                                           <input type="text" name="reference_document_no_5" value="{{ $jobTraining->reference_document_no_5}}">
+                                                           <input type="text" name="reference_document_no_5" value="{{$jobTraining->reference_document_no_5}}">
                                                          </td>
                                                          <td>
                                                             <select name="trainee_name_5" id="">
                                                                 <option value="">-- Select --</option>
-                                                                    @foreach ($trainers as $trainer)
-                                                                        <option value="{{ $trainer->id }}" @if($jobTraining->trainee_name_5 == $trainer->id) selected @endif>{{ $trainer->name }}</option>
-                                                                    @endforeach
+                                                                @foreach ($trainers as $trainer)
+                                                                    <option value="{{ $trainer->id }}">{{ $trainer->name }}</option>
+                                                                @endforeach
                                                             </select>
                                                          </td>
                                                          <td>
                                                             <select name="trainer_5" id="">
                                                                 <option value="">-- Select --</option>
-                                                                    @foreach ($usersDetails as $u)
-                                                                        <option value="{{ $u->id }}" @if($jobTraining->trainer_5 == $u->id) selected @endif>{{ $u->name }}</option>
-                                                                    @endforeach
-
+                                                                @foreach ($usersDetails as $u)
+                                                                    <option value="{{ $u->id }}">{{ $u->name }}</option>
+                                                                @endforeach
                                                             </select>
                                                         </td>
+                                                        <td>
+                                                            <input type="date" name="startdate_5" value="{{$jobTraining->startdate_5}}" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" id="startdate" value="" class="hide-input" oninput="handleDateInput(this, 'startdate');checkDate('startdate}','enddate')">
+                                                        </td>
+                                                        <td>
+                                                            <input type="date" name="enddate_5" value="{{$jobTraining->startdate_5}}" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" id="enddate" value="" class="hide-input" oninput="handleDateInput(this, 'enddate');checkDate('startdate','enddate')">
+                                                        </td>
                                                     </tr>
-                                                   
-                                                 
-                                                   
                                                 </tbody>
                                             </table>
                                         </div>

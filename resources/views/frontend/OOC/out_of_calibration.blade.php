@@ -188,12 +188,14 @@ $users = DB::table('users')->get();
                             {{-- @foreach ($record_number as $record) --}}
                             
                                 
-                            
+                            {{-- @php
+                                $division =  Helpers::getDivisionName(session()->get('division')) 
+                            @endphp --}}
                             <div class="col-lg-6">
                                 <div class="group-input">
                                     <label for="RLS Record Number"><b>Record Number</b></label>
-                                    <input disabled type="number" name="record_number" value="" >
-                                    {{-- <input disabled type="number" name="record_number" value=""> --}}
+                                    {{-- <input disabled type="number" name="record_number" value="" > --}}
+                                    <input disabled type="text" name="record_number" value="{{Helpers::getDivisionName(session()->get('division'))}}/{{ date('y') }}/OOC/{{$record_number}}">
                                   
                                 </div>
                             </div>
@@ -241,7 +243,7 @@ $users = DB::table('users')->get();
                             </div>
 
 
-                            <div class="col-lg-6">
+                            {{-- <div class="col-lg-6"> --}}
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Initiator Group"><b>Initiator Group</b></label>
@@ -268,7 +270,17 @@ $users = DB::table('users')->get();
                                         </select>
                                     </div>
                                 </div>
+                            {{-- </div> --}}
+                            <div class="col-md-12 mb-3">
+                                <div class="group-input">
+                                    <label for="Description">Short Description <span class="text-danger">*</span></label>
+                                    <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
+                                    <input type="text" name="description_ooc" >
+                                    
+                                </div>
                             </div>
+
+                            
                             <div class="col-lg-12">
                                 <div class="group-input">
                                     <label for="Initiator Group Code">Initiator Group Code</label>
@@ -335,6 +347,16 @@ $users = DB::table('users')->get();
                                 </div>
                             </div>
 
+                            
+
+                            <div class="col-md-12 mb-3">
+                                <div class="group-input">
+                                    <label for="If Other">If Other</label>
+                                    <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
+                                    <textarea class="summernote" name="initiated_if_other" id="summernote-1">
+                                    </textarea>
+                                </div>
+                            </div>
                             <div class="col-lg-12">
                                 <div class="group-input">
                                     <label for="affected documents closed"><b>Affected Documents Closed</b></label>
@@ -345,15 +367,6 @@ $users = DB::table('users')->get();
                                         <option value="NA">NA</option>
                                       
                                     </select>
-                                </div>
-                            </div>
-
-                            <div class="col-md-12 mb-3">
-                                <div class="group-input">
-                                    <label for="If Other">If Other</label>
-                                    <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
-                                    <textarea class="summernote" name="initiated_if_other" id="summernote-1">
-                                    </textarea>
                                 </div>
                             </div>
 
@@ -394,14 +407,7 @@ $users = DB::table('users')->get();
 
 
 
-                            <div class="col-md-12 mb-3">
-                                <div class="group-input">
-                                    <label for="Description">Description</label>
-                                    <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
-                                    <textarea class="summernote" name="description_ooc" id="summernote-1">
-                                    </textarea>
-                                </div>
-                            </div>
+                           
 
 
                             <div class="col-lg-12">
@@ -445,7 +451,7 @@ $users = DB::table('users')->get();
                                     <div class="calenderauditee">
                                         <input type="text" id="ooc_due_date" readonly
                                             placeholder="DD-MMM-YYYY"/>
-                                        <input type="date" name="ooc_due_date"  min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input" oninput="handleDateInput(this, 'ooc_due_date')"  />
+                                        <input type="date" name="ooc_due_date"   class="hide-input" oninput="handleDateInput(this, 'ooc_due_date')"  />
                                     </div>
                                     
                                 </div>
@@ -852,6 +858,7 @@ $(document).ready(function() {
                             <div class="group-input">
                                 <label for="Initiator Group">Assignable root cause found?</label>
                                 <select name="is_repeat_assingable_ooc" onchange="">
+                                    <option value="NA">Select</option>
                                     <option value="YES">YES</option>
                                     <option value="NO">NO</option>
 
@@ -989,7 +996,7 @@ $(document).ready(function() {
 
                         <div class="col-lg-6">
                             <div class="group-input">
-                                <label for="Initiator Group">Initial OOC is Invalidated/Validated</label>
+                                <label for="Initiator Group">Invalidated & Validated</label>
                                 <select name="is_repeat_stae_ooc" onchange="">
                                     <option value="0">-- select --</option>
                                     <option value="Yes">Yes</option>
@@ -1000,12 +1007,12 @@ $(document).ready(function() {
                         </div>
 
 
-                        <div class="col-6">
+                        {{-- <div class="col-6">
                             <div class="group-input">
                                 <label for="qa_comments">Additinal Remarks (if any)</label>
                                 <textarea name="qa_comments_stage_ooc"></textarea>
                             </div>
-                        </div>
+                        </div> --}}
 
                         <div class="col-md-12 mb-3">
                             <div class="group-input">
@@ -1040,7 +1047,7 @@ $(document).ready(function() {
                             <div class="group-input">
                                 <label for="Initiator Group">Rectification by Service Engineer required</label>
                                 <select name="is_repeat_stageii_ooc" onchange="">
-                                    <option value="">-- select --</option>
+                                    <option value="NA">-- select --</option>
                                     <option value="YES">Yes</option>
                                     <option value="No">No</option>
 
@@ -1052,7 +1059,7 @@ $(document).ready(function() {
                             <div class="group-input">
                                 <label for="Initiator Group">Instrument is Out of Order</label>
                                 <select name="is_repeat_stage_instrument_ooc" onchange="">
-                                    <option value="">-- select --</option>
+                                    <option value="NA">-- select --</option>
                                     <option value="Yes">Yes</option>
                                     <option value="No">No</option>
                                 </select>
@@ -1285,7 +1292,7 @@ $(document).ready(function() {
                     </div>
                     <div class="row">
 
-                        <div class="col-6">
+                        <div class="col-12">
                             <div class="group-input">
                                 <label for="Short Description">Closure Comments
                                     <input id="docname" type="text" name="short_description_closure_ooc">

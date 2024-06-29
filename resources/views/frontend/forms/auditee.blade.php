@@ -746,7 +746,7 @@
                                 </div>
                                 <div class="col-12">
                                     <div class="group-input">
-                                        <label for="External Auditor Details">External Auditor Details</label>
+                                        <label for="    ">External Auditor Details</label>
                                         <textarea name="Auditor_Details"></textarea>
                                     </div>
                                 </div>

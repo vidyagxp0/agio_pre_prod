@@ -61,7 +61,7 @@
                                 </div> --}}
                                 <div>
                                     <div class="head">Document Type</div>
-                                    <div>{{ $document->doc_type->name }}</div>
+                                    <div>{{ $document->document_type_id }}</div>
                                 </div>
                                 <div>
                                     <div class="head">Working Status</div>
@@ -1125,12 +1125,13 @@
                             <input type="hidden" name="stage_id" value="9" />
                         @endif
                     @else
-                        @if ($document->stage == 5)
-                            <input type="hidden" name="stage_id" value="6" />
-                        @endif
                         @if ($document->stage == 7)
                             <input type="hidden" name="stage_id" value="10" />
                         @endif
+                    @endif
+
+                    @if ($document->stage == 5)
+                        <input type="hidden" name="stage_id" value="6" />
                     @endif
 
                     <!-- Modal footer -->

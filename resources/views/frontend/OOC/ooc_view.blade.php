@@ -304,9 +304,9 @@ $users = DB::table('users')->get();
                 <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal1">
                     Obvious Results Found
                 </button>
-                <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#rejection-modal">
+                {{-- <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#rejection-modal">
                     Request More Info
-                </button>
+                </button> --}}
                 <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal">
                     Child
                 </button> 
@@ -431,11 +431,11 @@ $users = DB::table('users')->get();
                 @else
                     <div class="">Under Stage II A Investigation</div>
                 @endif
-                @if ($ooc->stage >= 6)
+                {{-- @if ($ooc->stage >= 6)
                     <div class="active">To Pending Final Approval</div>
                 @else
                     <div class="">To Pending Final Approval</div>
-                @endif
+                @endif --}}
                 @if ($ooc->stage >= 7)
                     <div class="active">Under Stage II B Investigation</div>
                 @else
@@ -446,11 +446,11 @@ $users = DB::table('users')->get();
                 @else
                     <div class="">Under Stage II A Correction</div>    
                 @endif
-                @if ($ooc->stage >= 9)
+                {{-- @if ($ooc->stage >= 9)
                     <div class="active">To Pending Final Approval</div>
                 @else
                     <div class="">To Pending Final Approval</div>    
-                @endif
+                @endif --}}
                 @if ($ooc->stage >= 10)
                     <div class="active">Under Stage II A Correction</div>
                 @else
@@ -778,8 +778,9 @@ $users = DB::table('users')->get();
 
         </div>
 
-        <form action="{{ route('OutOfCalibrationUpdate' ,$ooc->id) }}" method="POST" enctype="multipart/form-data">
+        <form action="{{route('OutOfCalibrationUpdate' ,$ooc->id) }}" method="POST" enctype="multipart/form-data">
             @csrf
+           
 
             <div id="step-form">
                 @if (!empty($parent_id))
@@ -833,7 +834,7 @@ $users = DB::table('users')->get();
                                    </div>
                             </div>
 
-                            <div class="col-md-6 new-date-data-field">
+                            {{-- <div class="col-md-6 new-date-data-field">
                                 <div class="group-input input-date">
                                     <label for="due-date">Due Date <span class="text-danger"></span></label>
                                     <p class="text-primary"> last date this record should be closed by</p>
@@ -846,7 +847,40 @@ $users = DB::table('users')->get();
                                     </div>
 
                                 </div>
+                            </div> --}}
+
+                            <div class="col-md-6 new-date-data-field">
+                                <div class="group-input input-date">
+                                    <label for="due-date">Due Date <span class="text-danger"></span></label>
+                                    <p class="text-primary">Last date this record should be closed by</p>
+                            
+                                    <div class="calenderauditee">
+                                        <input type="text" id="due_date_display" readonly
+                                            placeholder="DD-MMM-YYYY" value="{{ Helpers::getdateFormat($ooc->due_date) }}"
+                                            {{ $ooc->stage == 0 || $ooc->stage == 8 ? 'disabled' : '' }} />
+                                        <input type="date" id="due_date" name="due_date"
+                                            {{ $ooc->stage == 0 || $ooc->stage == 8 ? 'disabled' : '' }}
+                                            min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input"
+                                            value="{{ $ooc->due_date }}" oninput="handleDateInput(this, 'due_date_display')" />
+                                    </div>
+                                </div>
                             </div>
+
+                            {{-- javascript for due date --}}
+                            <script>
+                                                        function handleDateInput(dateInput, displayId) {
+                            const displayElement = document.getElementById(displayId);
+                            if (displayElement) {
+                                const dateValue = new Date(dateInput.value);
+                                const options = { year: 'numeric', month: 'short', day: '2-digit' };
+                                displayElement.value = dateValue.toLocaleDateString('en-GB', options).replace(/ /g, '-');
+    }
+}
+
+                            </script>
+
+                            {{-- javascript for due date --}}
+
 
 
                             <div class="col-lg-6">
@@ -909,6 +943,17 @@ $users = DB::table('users')->get();
                                     </select>
                                 </div>
                             </div>
+
+                            <div class="col-md-12 mb-3">
+                                <div class="group-input">
+                                    <label for="Description">Short Description</label>
+                                    <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
+                                    <input type="text" name="description_ooc" value="{{$ooc->description_ooc}}">
+                                    
+                                </div>
+                            </div>
+
+
                             <div class="col-lg-12">
                                 <div class="group-input">
                                     <label for="Initiator Group Code">Initiator Group Code</label>
@@ -956,8 +1001,8 @@ $users = DB::table('users')->get();
                                         <input type="text" name="initiator_group_code" id="nitiator_group_code" value="" readonly>
                                     </div>
                                 </div> --}}
-
-                            <div class="col-lg-12">
+                                    
+                            {{-- <div class="col-lg-12">
                                 <div class="group-input">
                                     <label for="Initiator Group">Initiated Through</label>
                                     <div><small class="text-primary">Please select related information</small></div>
@@ -984,7 +1029,27 @@ $users = DB::table('users')->get();
                                         
                                     </select>
                                 </div>
+                            </div> --}}
+
+
+                            <div class="col-lg-12">
+                                <div class="group-input">
+                                    <label for="Initiator Group">Initiated Through</label>
+                                    <div><small class="text-primary">Please select related information</small></div>
+                                    <select name="initiated_through" onchange="">
+                                        <option value="0">-- select --</option>
+                                        <option value="recall" {{ isset($ooc) && $ooc->initiated_through == 'recall' ? 'selected' : '' }}>Recall</option>
+                                        <option value="return" {{ isset($ooc) && $ooc->initiated_through == 'return' ? 'selected' : '' }}>Return</option>
+                                        <option value="deviation" {{ isset($ooc) && $ooc->initiated_through == 'deviation' ? 'selected' : '' }}>Deviation</option>
+                                        <option value="complaint" {{ isset($ooc) && $ooc->initiated_through == 'complaint' ? 'selected' : '' }}>Complaint</option>
+                                        <option value="regulatory" {{ isset($ooc) && $ooc->initiated_through == 'regulatory' ? 'selected' : '' }}>Regulatory</option>
+                                        <option value="lab-incident" {{ isset($ooc) && $ooc->initiated_through == 'lab-incident' ? 'selected' : '' }}>Lab Incident</option>
+                                        <option value="improvement" {{ isset($ooc) && $ooc->initiated_through == 'improvement' ? 'selected' : '' }}>Improvement</option>
+                                        <option value="others" {{ isset($ooc) && $ooc->initiated_through == 'others' ? 'selected' : '' }}>Others</option>
+                                    </select>
+                                </div>
                             </div>
+
 
                             <div class="col-md-12 mb-3">
                                 <div class="group-input">
@@ -1020,14 +1085,7 @@ $users = DB::table('users')->get();
 
 
 
-                            <div class="col-md-12 mb-3">
-                                <div class="group-input">
-                                    <label for="Description">Description</label>
-                                    <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
-                                    <textarea class="summernote" name="description_ooc" id="summernote-1">{{$ooc->description_ooc}}
-                                    </textarea>
-                                </div>
-                            </div>
+                            
 
 
                             
@@ -1099,7 +1157,7 @@ $users = DB::table('users')->get();
                                     </div>
                                 </div>
                             </div> --}}
-                            <div class="col-lg-6 new-date-data-field">
+                            {{-- <div class="col-lg-6 new-date-data-field">
                                 <div class="group-input input-date">
                                     <label for="Date Due"> OOC Logged On </label>
                                     <div><small class="text-primary">Please mention expected date of completion</small></div>
@@ -1110,7 +1168,37 @@ $users = DB::table('users')->get();
                                             oninput="handleDateInput(this, 'ooc_due_date')" />
                                     </div>
                                 </div>
+                            </div> --}}
+
+
+                            <div class="col-md-6 new-date-data-field">
+                                <div class="group-input input-date">
+                                    <label for="ooc_due_date">OOC Logged On <span class="text-danger"></span></label>
+                                    <p class="text-primary">Last date this record should be closed by</p>
+                            
+                                    <div class="calenderauditee">
+                                        <input type="text" id="ooc_due_date_display" readonly
+                                            placeholder="DD-MMM-YYYY" value="{{ Helpers::getdateFormat($ooc->ooc_due_date) }}" />
+                                        <input type="date" id="ooc_due_date" name="ooc_due_date"
+                                            class="hide-input"
+                                            value="{{ $ooc->ooc_due_date }}" oninput="handleDateInput(this, 'ooc_due_date_display')" />
+                                    </div>
+                                </div>
                             </div>
+
+
+                            <script>
+                                                            function handleDateInput(dateInput, displayId) {
+                                const displayElement = document.getElementById(displayId);
+                                if (displayElement) {
+                                    const dateValue = new Date(dateInput.value);
+                                    const options = { year: 'numeric', month: 'short', day: '2-digit' };
+                                    displayElement.value = dateValue.toLocaleDateString('en-GB', options).replace(/ /g, '-');
+                                }
+                            }
+
+                            </script>
+                            
 
 
 
@@ -1136,6 +1224,7 @@ $users = DB::table('users')->get();
                         <th>Calibration Parameter</th>
                         <th>Acceptance Criteria</th>
                         <th>Results</th>
+                        <th>Action</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -1146,12 +1235,14 @@ $users = DB::table('users')->get();
 
                     <tr>
                     <td disabled >{{ $serialNumber++ }}</td>
-                    <td><input type="text" name="instrumentdetails[0][instrument_name]" value="{{$oogrid['instrument_name']}}"></td>
-                    <td><input type="text" name="instrumentdetails[0][instrument_id]" value="{{$oogrid['instrument_id']}}"></td>
-                    <td><input type="text" name="instrumentdetails[0][remarks]" value="{{$oogrid['remarks']}}"></td>
-                    <td><input type="text" name="instrumentdetails[0][calibration]" value="{{$oogrid['calibration']}}"></td>
-                    <td><input type="text" name="instrumentdetails[0][acceptancecriteria]" value="{{$oogrid['acceptancecriteria']}}"></td>
-                    <td><input type="text" name="instrumentdetails[0][results]" value="{{$oogrid['results']}}"></td>
+                    <td><input type="text" name="instrumentdetails[{{$loop->index}}][instrument_name]" value="{{$oogrid['instrument_name']}}"></td>
+                    <td><input type="text" name="instrumentdetails[{{$loop->index}}][instrument_id]" value="{{$oogrid['instrument_id']}}"></td>
+                    <td><input type="text" name="instrumentdetails[{{$loop->index}}][remarks]" value="{{$oogrid['remarks']}}"></td>
+                    <td><input type="text" name="instrumentdetails[{{$loop->index}}][calibration]" value="{{$oogrid['calibration']}}"></td>
+                    <td><input type="text" name="instrumentdetails[{{$loop->index}}][acceptancecriteria]" value="{{$oogrid['acceptancecriteria']}}"></td>
+                    <td><input type="text" name="instrumentdetails[{{$loop->index}}][results]" value="{{$oogrid['results']}}"></td>
+                    <td><button class="removeRowBtn">Remove</button>
+
                     @endforeach   
                 </tr>
                 </tbody>
@@ -1217,6 +1308,8 @@ $(document).ready(function() {
                 '<td><input type="text" name="instrumentdetails[' + investdetails + '][calibration]" value=""></td>' +
                 '<td><input type="text" name="instrumentdetails[' + investdetails + '][acceptancecriteria]" value=""></td>' +
                 '<td><input type="text" name="instrumentdetails[' + investdetails + '][results]" value=""></td>' +
+                '<td><button class="removeRowBtn">Remove</button>'+
+
                 '</tr>';
             investdetails++; // Increment the row number here
             return html;
@@ -1226,6 +1319,9 @@ $(document).ready(function() {
         var rowCount = tableBody.children('tr').length;
         var newRow = generateTableRow(rowCount + 1);
         tableBody.append(newRow);
+    });
+    $(document).on('click', '.removeRowBtn', function() {
+        $(this).closest('tr').remove();
     });
 });
 
@@ -1394,7 +1490,7 @@ $(document).ready(function() {
                                         </thead>
                                         <tbody>
                                             @foreach ($oocevaluations as $index => $item)
-        @if(isset($oocEvolution->data[$index]))
+             @if(isset($oocEvolution->data[$index]))
             <tr>
                 <td>{{ $index + 1 }}</td>
                 <td style="background: #DCD8D8">{{ $item }}</td>
@@ -1428,7 +1524,7 @@ $(document).ready(function() {
                             <div class="group-input">
                                 <label for="Initiator Group">Assignable root cause found?</label>
                                 <select  id="initiator_group" name="is_repeat_assingable_ooc">
-                                    <option value="0" {{ $ooc->is_repeat_assingable_ooc == '0' ? 'selected' : '' }}>-- Select --</option>
+                                    <option value="NA"{{ $ooc->is_repeat_assingable_ooc == 'NA' ? 'selected' : '' }}>-- Select --</option>
                                     <option value="Yes" {{ $ooc->is_repeat_assingable_ooc == 'Yes' ? 'selected' : '' }}>Yes</option>
                                     <option value="No" {{ $ooc->is_repeat_assingable_ooc == 'No' ? 'selected' : '' }}>No</option>
                                     {{-- <option value="NA" {{ $ooc->is_repeat_ooc == 'NA' ? 'selected' : '' }}>NA</option> --}}
@@ -1582,7 +1678,7 @@ $(document).ready(function() {
 
                         <div class="col-lg-6">
                             <div class="group-input">
-                                <label for="Initiator Group">Initial OOC is Invalidated/Validated</label>
+                                <label for="Initiator Group">Invalidated & Validated</label>
                                 <select name="is_repeat_stae_ooc" onchange="">
                                     <option value="0" {{ $ooc->is_repeat_stae_ooc == '0' ? 'selected' : '' }}>-- Select --</option>
                                     <option value="Yes" {{ $ooc->is_repeat_stae_ooc == 'Yes' ? 'selected' : '' }}>Yes</option>
@@ -1592,13 +1688,6 @@ $(document).ready(function() {
                             </div>
                         </div>
 
-
-                        <div class="col-6">
-                            <div class="group-input">
-                                <label for="qa_comments">Additinal Remarks (if any)</label>
-                                <textarea name="qa_comments_stage_ooc">{{$ooc->qa_comments_stage_ooc}}</textarea>
-                            </div>
-                        </div>
 
                         <div class="col-md-12 mb-3">
                             <div class="group-input">
@@ -1632,7 +1721,7 @@ $(document).ready(function() {
                             <div class="group-input">
                                 <label for="Initiator Group">Rectification by Service Engineer required</label>
                                 <select name="is_repeat_stageii_ooc" onchange="">
-                                    <option value="0" {{ $ooc->is_repeat_stageii_ooc == '0' ? 'selected' : '' }}>-- Select --</option>
+                                    <option value="NA" {{ $ooc->is_repeat_stageii_ooc == 'NA' ? 'selected' : '' }}>-- Select --</option>
                                     <option value="Yes" {{ $ooc->is_repeat_stageii_ooc == 'Yes' ? 'selected' : '' }}>Yes</option>
                                     <option value="No" {{ $ooc->is_repeat_stageii_ooc == 'No' ? 'selected' : '' }}>No</option>
 
@@ -1643,7 +1732,7 @@ $(document).ready(function() {
                             <div class="group-input">
                                 <label for="Initiator Group">Instrument is Out of Order</label>
                                 <select name="is_repeat_stage_instrument_ooc" onchange="">
-                                    <option value="0" {{ $ooc->is_repeat_stage_instrument_ooc == '0' ? 'selected' : '' }}>-- Select --</option>
+                                    <option value="NA" {{ $ooc->is_repeat_stage_instrument_ooc == 'NA' ? 'selected' : '' }}>-- Select --</option>
                                     <option value="Yes" {{ $ooc->is_repeat_stage_instrument_ooc == 'Yes' ? 'selected' : '' }}>Yes</option>
                                     <option value="No" {{ $ooc->is_repeat_stage_instrument_ooc == 'No' ? 'selected' : '' }}>No</option>
 
@@ -1923,7 +2012,7 @@ $(document).ready(function() {
                     </div>
                     <div class="row">
 
-                        <div class="col-6">
+                        <div class="col-12">
                             <div class="group-input">
                                 <label for="Short Description">Closure Comments
                                     <input id="docname" type="text" name="short_description_closure_ooc" value="{{$ooc->short_description_closure_ooc}}">

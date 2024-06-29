@@ -45,21 +45,76 @@
         }
     </script>
 
+    <script>
+        $(document).ready(function() {
+            let docIndex = 1;
+            $('#documentAdd').click(function(e) {
+                function generateTableRow(serialNumber) {
+                    var html =
+                        '<tr>' +
+                        '<td><input disabled type="text" name="serial[]" value="' + serialNumber +
+                        '"></td>' +
+                        ' <td><input type="text" name="documentDetails[' + docIndex + '][currentDocNumber]"></td>' +
+                        ' <td><input type="text"name="documentDetails[' + docIndex +'][currentVersionNumber]"></td>' +
+                        '<td><input type="text" name="documentDetails[' + docIndex + '][newDocNumber]"></td>' +
+                        '<td><input type="text" name="documentDetails[' + docIndex + '][newVersionNumber\]"></td>' +
+                        '<td><button type="text" class="removeRowBtn">Remove</button></td>' +
+                        '</tr>';
+                    '</tr>';
+
+                    docIndex++;
+                    return html;
+                }
+                var tableBody = $('#documentTableDetails tbody');
+                var rowCount = tableBody.children('tr').length;
+                var newRow = generateTableRow(rowCount + 1);
+                tableBody.append(newRow);
+            });
+        });
+    </script>
+
+    <script>
+        $(document).ready(function() {
+            let affectedDocIndex = 1;
+            $('#affectedDocAdd').click(function(e) {
+                function generateTableRow(serialNumber) {
+                    var html =
+                        '<tr>' +
+                        '<td><input disabled type="text" name="serial[]" value="' + serialNumber + '"></td>' +
+                        ' <td><input type="text" name="affectedDocuments[' + affectedDocIndex + '][afftectedDoc]"></td>' +
+                        ' <td><input type="text"name="affectedDocuments[' + affectedDocIndex +'][documentName]"></td>' +
+                        '<td><input type="number" name="affectedDocuments[' + affectedDocIndex + '][documentNumber]"></td>' +
+                        '<td><input type="text" name="affectedDocuments[' + affectedDocIndex + '][versionNumber]"></td>' +
+                        ' <td><input type="date"name="affectedDocuments[' + affectedDocIndex +'][implimentationDate]"></td>' +
+                        '<td><input type="text" name="affectedDocuments[' + affectedDocIndex + '][newDocumentNumber]"></td>' +
+                        '<td><input type="text" name="affectedDocuments[' + affectedDocIndex + '][newVersionNumber]"></td>' +
+                        '<td><button type="text" class="removeRowBtn">Remove</button></td>' +
+                        '</tr>';
+                    '</tr>';
+
+                    docIndex++;
+                    return html;
+                }
+                var tableBody = $('#affectedDocAddTable tbody');
+                var rowCount = tableBody.children('tr').length;
+                var newRow = generateTableRow(rowCount + 1);
+                tableBody.append(newRow);
+            });
+        });
+    </script>
+
     <div id="rcms_form-head">
         <div class="container-fluid">
             <div class="inner-block">
 
 
                 <div class="slogan">
-                    <strong>Site Site Division/Project </strong>:
+                    <strong>Site Division / Project </strong>:
                     {{ Helpers::getDivisionName(session()->get('division')) }} / Change Control
                 </div>
             </div>
         </div>
     </div>
-    {{-- ======================================
-                    DATA FIELDS
-    ======================================= --}}
     @php
         $users = DB::table('users')->get();
     @endphp
@@ -69,14 +124,14 @@
             <!-- Tab links -->
             <div class="cctab">
                 <button class="cctablinks active" onclick="openCity(event, 'CCForm1')">General Information</button>
+                <button class="cctablinks" onclick="openCity(event, 'CCForm8')" style="display: none" id="riskAssessmentButton">Risk Assessment</button>
                 <button class="cctablinks" onclick="openCity(event, 'CCForm2')">Change Details</button>
-                <button class="cctablinks" onclick="openCity(event, 'CCForm3')">Impact Assessment</button>
+                <!-- <button class="cctablinks" onclick="openCity(event, 'CCForm3')">Impact Assessment</button> -->
                 <button class="cctablinks" onclick="openCity(event, 'CCForm4')">QA Review</button>
                 <button class="cctablinks " onclick="openCity(event, 'CCForm12')">CFT</button>
                 <button class="cctablinks" onclick="openCity(event, 'CCForm5')">Evaluation</button>
                 {{-- <button class="cctablinks" onclick="openCity(event, 'CCForm6')">Additional Information</button> --}}
-                <button class="cctablinks" onclick="openCity(event, 'CCForm7')">Comments</button>
-                <button class="cctablinks" onclick="openCity(event, 'CCForm8')">Risk Assessment</button>
+                {{-- <button class="cctablinks" onclick="openCity(event, 'CCForm7')">Comments</button> --}}
                 <button class="cctablinks" onclick="openCity(event, 'CCForm9')">QA Approval Comments</button>
                 <button class="cctablinks" onclick="openCity(event, 'CCForm10')">Change Closure</button>
                 <button class="cctablinks" onclick="openCity(event, 'CCForm11')">Activity Log</button>
@@ -97,9 +152,7 @@
                                 <div class="col-6">
                                     <div class="group-input">
                                         <label for="RLS Record Number"><b>Record Number</b></label>
-                                        <input disabled type="text" name="record_number"
-                                            value="{{ Helpers::getDivisionName(session()->get('division')) }}/CC/{{ date('Y') }}/{{ $record_number }}">
-                                        {{-- <div class="static">QMS-EMEA/CAPA/{{ date('Y') }}/{{ $record_number }}</div> --}}
+                                        <input disabled type="text" placeholder="Record Number" readonly>
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
@@ -110,6 +163,13 @@
                                         <input type="hidden" name="division_id" value="{{ session()->get('division') }}">
                                     </div>
                                 </div>
+
+                                @php
+                                    // Calculate the due date (30 days from the initiation date)
+                                    $initiationDate = date('Y-m-d'); // Current date as initiation date
+                                    $dueDate = date('Y-m-d', strtotime($initiationDate . '+30 days')); // Due date
+                                @endphp
+                                
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Initiator"><b>Initiator</b></label>
@@ -125,7 +185,8 @@
                                         <input type="hidden" value="{{ date('Y-m-d') }}" name="intiation_date">
                                     </div>
                                 </div>
-                                <div class="col-md-6">
+
+                                <!-- <div class="col-md-6">
                                     <div class="group-input">
                                         <label for="search">
                                             Assigned To <span class="text-danger">*</span>
@@ -153,8 +214,9 @@
                                             <option value="no">No</option>
                                         </select>
                                     </div>
-                                </div>
-                                <div class="col-lg-6">
+                                </div> -->
+
+                                <!-- <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Microbiology-Person">CFT Reviewer Person</label>
                                         <select multiple name="Microbiology_Person[]" placeholder="Select CFT Reviewers"
@@ -167,7 +229,8 @@
                                             @endforeach
                                         </select>
                                     </div>
-                                </div>
+                                </div> -->
+
                                 <div class="col-md-6 new-date-data-field">
                                     <div class="group-input input-date ">
                                         <label for="due-date">Due Date<span class="text-danger"></span></label>
@@ -175,58 +238,65 @@
                                                 reason in "Due Date Extension Justification" data field.</small>
                                         </div>
                                         <div class="calenderauditee">
-                                            <input type="text" name="due_date" id="due_date" readonly
-                                                placeholder="DD-MMM-YYYY" />
-                                            <input type="date" name="due_date"
-                                                min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input"
-                                                oninput="handleDateInput(this, 'due_date')" />
+                                            <input type="text" readonly placeholder="DD-MM-YYYY" />
                                         </div>
                                     </div>
                                 </div>
+
+                                <script>
+                                    // Format the due date to DD-MM-YYYY
+                                    // Your input date
+                                    var dueDate = "{{ $dueDate }}"; // Replace {{ $dueDate }} with your actual date variable
+
+                                    // Create a Date object
+                                    var date = new Date(dueDate);
+
+                                    // Array of month names
+                                    var monthNames = [
+                                        "Jan", "Feb", "Mar", "Apr", "May", "Jun",
+                                        "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"
+                                    ];
+
+                                    // Extracting day, month, and year from the date
+                                    var day = date.getDate().toString().padStart(2, '0'); // Ensuring two digits
+                                    var monthIndex = date.getMonth();
+                                    var year = date.getFullYear();
+
+                                    // Formatting the date in "dd-MMM-yyyy" format
+                                    var dueDateFormatted = `${day}-${monthNames[monthIndex]}-${year}`;
+
+                                    // Set the formatted due date value to the input field
+                                    document.getElementById('due_date').value = dueDateFormatted;
+                                </script>
+
                                 <div class="col-lg-6">
                                     <div class="group-input">
-                                        <label for="initiator-group">Initiator Group <span
+                                        <label for="initiator-group">Initiation Department <span
                                                 class="text-danger">*</span></label>
-                                        <select name="Initiator_Group" id="initiator_group">
-                                            <option value="">-- Select --</option>
-                                            <option value="CQA" @if (old('Initiator_Group') == 'CQA') selected @endif>
-                                                Corporate Quality Assurance</option>
-                                            <option value="QAB" @if (old('Initiator_Group') == 'QAB') selected @endif>
-                                                Quality
-                                                Assurance Biopharma</option>
-                                            <option value="CQC" @if (old('Initiator_Group') == 'CQA') selected @endif>
-                                                Central
-                                                Quality Control</option>
-                                            <option value="MANU" @if (old('Initiator_Group') == 'MANU') selected @endif>
-                                                Manufacturing</option>
-                                            <option value="PSG" @if (old('Initiator_Group') == 'PSG') selected @endif>Plasma
-                                                Sourcing Group</option>
-                                            <option value="CS" @if (old('Initiator_Group') == 'CS') selected @endif>
-                                                Central
-                                                Stores</option>
-                                            <option value="ITG" @if (old('Initiator_Group') == 'ITG') selected @endif>
-                                                Information Technology Group</option>
-                                            <option value="MM" @if (old('Initiator_Group') == 'MM') selected @endif>
-                                                Molecular Medicine</option>
-                                            <option value="CL" @if (old('Initiator_Group') == 'CL') selected @endif>
-                                                Central Laboratory</option>
-                                            <option value="TT" @if (old('Initiator_Group') == 'TT') selected @endif>Tech
-                                                team</option>
-                                            <option value="QA" @if (old('Initiator_Group') == 'QA') selected @endif>
-                                                Quality Assurance</option>
-                                            <option value="QM" @if (old('Initiator_Group') == 'QM') selected @endif>
-                                                Quality Management</option>
-                                            <option value="IA" @if (old('Initiator_Group') == 'IA') selected @endif>IT
-                                                Administration</option>
-                                            <option value="ACC" @if (old('Initiator_Group') == 'ACC') selected @endif>
-                                                Accounting</option>
-                                            <option value="LOG" @if (old('Initiator_Group') == 'LOG') selected @endif>
-                                                Logistics</option>
-                                            <option value="SM" @if (old('Initiator_Group') == 'SM') selected @endif>
-                                                Senior Management</option>
-                                            <option value="BA" @if (old('Initiator_Group') == 'BA') selected @endif>
-                                                Business Administration</option>
-                                        </select>
+                                                <select name="Initiator_Group" id="initiator_group">
+                                                        <optio value="">Select Initiation Department</option>
+                                                        <option value="CQA" >Corporate Quality Assurance</option>
+                                                        <option value="QA" >Quality Assurance</option>
+                                                        <option value="QC" >Quality Control</option>
+                                                        <option value="QM" >Quality Control (Microbiology department)</option>
+                                                        <option value="PG" >Production General</option>
+                                                        <option value="PL" >Production Liquid Orals</option>
+                                                        <option value="PT" >Production Tablet and Powder</option>
+                                                        <option value="PE" >Production External (Ointment, Gels, Creams and Liquid)</option>
+                                                        <option value="PC" >Production Capsules</option>
+                                                        <option value="PI" >Production Injectable</option>
+                                                        <option value="EN" >Engineering</option>
+                                                        <option value="HR" >Human Resource</option>
+                                                        <option value="ST" >Store</option>
+                                                        <option value="IT" >Electronic Data Processing</option>
+                                                        <option value="FD" >Formulation  Development</option>
+                                                        <option value="AL" >Analytical research and Development Laboratory</option>
+                                                        <option value="PD">Packaging Development</option>
+                                                        <option value="PU">Purchase Department</option>
+                                                        <option value="DC">Document Cell</option>
+                                                        <option value="RA">Regulatory Affairs</option>
+                                                        <option value="PV">Pharmacovigilance</option>
+                                                    </select>
                                         {{-- @error('Initiator_Group')
                                             <p class="text-danger">{{ $message }}</p>
                                         @enderror --}}
@@ -234,8 +304,8 @@
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="group-input">
-                                        <label for="Initiator Group Code">Initiator Group Code</label>
-                                        <input type="text" name="initiator_group_code" id="initiator_group_code"
+                                        <label for="Initiator Group Code">Initiation Department Code</label>
+                                        <input type="text" name="initiator_group_code" id="initiator_group_code" placeholder="Initiator Group Code"
                                             value="" readonly>
                                     </div>
                                 </div>
@@ -250,6 +320,65 @@
                                         @enderror
                                     </div>
                                 </div>  --}}
+
+                                            <script>
+                                                $(document).ready(function() {
+                                                    $('#risk_assessment_required').change(
+                                                        function() {
+                                                            var riskAssessmentRequired = $('#risk_assessment_required').val();
+                                                            if (riskAssessmentRequired === 'yes') {
+                                                                $('#riskAssessmentButton').show(); // Show the investigation button
+                                                            } else {
+                                                                $('#riskAssessmentButton').hide(); // Hide the investigation button
+                                                            }
+                                                        }
+                                                    );
+                                                });
+                                            </script>
+
+                                            <div class="col-lg-6">
+                                                <div class="group-input">
+                                                    <label for="Risk Assessment Required">Risk Assessment Required? </label>
+                                                    <select name="risk_assessment_required" id="risk_assessment_required">
+                                                        <option value="">-- Select --</option>
+                                                        <option @if ($data->risk_assessment_required == 'yes') selected @endif value='yes'>Yes</option>
+                                                        <option @if ($data->risk_assessment_required == 'no') selected @endif value='no'>No</option>
+                                                    </select>
+                                                    <!-- @error('capa_required')
+                                                        <div class="text-danger">{{ $message }}</div>
+                                                    @enderror -->
+                                                </div>
+                                            </div>
+
+                                            @php
+                                            $division = DB::table('q_m_s_divisions')
+                                                ->where('name', Helpers::getDivisionName(session()->get('division')))
+                                                ->first();
+                                                $userRoles = DB::table('user_roles')
+                                                    ->where([
+                                                        'q_m_s_roles_id' => 4,
+                                                        'q_m_s_divisions_id' => $division->id,
+                                                    ])
+                                                    ->get();
+                                                $userRoleIds = $userRoles->pluck('user_id')->toArray();
+                                                $hodRoles = DB::table('users')->whereIn('id', $userRoleIds)->get();
+                                            @endphp
+
+                                            <div class="col-lg-6">
+                                                <div class="group-input">
+                                                    <label for="hod_person">HOD Person</label>
+                                                    <select name="hod_person" id="hod_person" >
+                                                        <option value="">Select HOD Person</option>
+                                                        @if($hodRoles)
+                                                            @foreach($hodRoles as $user)
+                                                                <option value="{{ $user->id }}" >{{ $user->name }}</option>
+                                                            @endforeach
+                                                        @endif
+                                                    </select>
+                                                </div>
+                                            </div>
+
+
                                 <div class="col-12">
                                     <div class="group-input">
                                         <label for="Short Description">Short Description<span
@@ -261,7 +390,8 @@
                                             required>
                                     </div>
                                 </div>
-                                <div class="col-12">
+
+                                <!-- <div class="col-12">
                                     <div class="group-input">
                                         <label for="severity-level">Severity Level</label>
                                         <span class="text-primary">Severity levels in a QMS record gauge issue seriousness,
@@ -274,7 +404,8 @@
                                             <option value="critical">Critical</option>
                                         </select>
                                     </div>
-                                </div>
+                                </div> -->
+
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Initiator Group">Initiated Through</label>
@@ -350,7 +481,7 @@
                                         <textarea name="others"></textarea>
                                     </div>
                                 </div>
-                                <div class="col-md-6">
+                                <!-- <div class="col-md-6">
                                     <div class="group-input">
                                         <label for="div_code">Division Code</label>
                                         <select name="div_code">
@@ -361,12 +492,11 @@
                                             <option value="Physical Lab">Physical Lab</option>
                                             <option value="Stability Lab">Stability Lab</option>
                                             <option value="Wet Chemistry">Wet Chemistry</option>
-                                            {{-- <option value="IPQA Lab">IPQA Lab</option> --}}
                                             <option value="Quality Department">Quality Department</option>
                                             <option value="Administration Department">Administration Department</option>
                                         </select>
                                     </div>
-                                </div>
+                                </div> -->
                                 <div class="col-lg-12">
                                     <div class="group-input">
                                         <label for="others">Initial attachment</label>
@@ -378,6 +508,7 @@
                                                 <div>Add</div>
                                                 <input type="file" id="myfile" name="in_attachment[]"
                                                     oninput="addMultipleFiles(this, 'in_attachment')" multiple>
+                                                    
                                             </div>
                                         </div>
 
@@ -393,19 +524,137 @@
                         </div>
                     </div>
 
+                    <div id="CCForm8" class="inner-block cctabcontent">
+                        <div class="inner-block-content">
+                            <div class="sub-head">
+                                Risk Assessment
+                            </div>
+
+                            <div class="col-12">
+                                <div class="group-input">
+                                    <label for="risk_assessment_related_record">Related Records</label>
+                                    <select multiple id="risk_assessment_related_record" name="risk_assessment_related_record[]"
+                                        placeholder="Select Reference Records" data-search="false" data-silent-initial-value-set="true">
+                                        @foreach ($preRiskAssessment as $prix)
+                                            <option value="{{ $prix->id }}">
+                                                {{ Helpers::getDivisionName($prix->division_id) }}/Risk-Assessment/{{ Helpers::year($prix->created_at) }}/{{ Helpers::record($prix->record) }}
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-12">
+                                    <div class="group-input">
+                                        <label for="risk-identification">Risk Identification</label>
+                                        <textarea name="risk_identification" disabled></textarea>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="group-input">
+                                        <label for="Severity Rate">Severity Rate</label>
+                                        <select name="severity" id="analysisR" onchange='calculateRiskAnalysis(this)' disabled>
+                                            <option value="">Enter Your Selection Here</option>
+                                            <option value="1">Negligible</option>
+                                            <option value="2">Moderate</option>
+                                            <option value="3">Major</option>
+                                            <option value="4">Fatal</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="group-input">
+                                        <label for="Occurrence">Occurrence</label>
+                                        <select name="Occurance" id="analysisP" onchange='calculateRiskAnalysis(this)' disabled>
+                                            <option value="">Enter Your Selection Here</option>
+                                            <option value="5">Extremely Unlikely</option>
+                                            <option value="4">Rare</option>
+                                            <option value="3">Unlikely</option>
+                                            <option value="2">Likely</option>
+                                            <option value="1">Very Likely</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="group-input">
+                                        <label for="Detection">Detection</label>
+                                        <select name="Detection" id="analysisN" onchange='calculateRiskAnalysis(this)' disabled>
+                                            <option value="">Enter Your Selection Here</option>
+                                            <option value="5">Impossible</option>
+                                            <option value="4">Rare</option>
+                                            <option value="3">Unlikely</option>
+                                            <option value="2">Likely</option>
+                                            <option value="1">Very Likely</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="group-input">
+                                        <label for="RPN">RPN</label>
+                                        <div><small class="text-primary">Auto - Calculated</small></div>
+                                        <input type="text" name="RPN" id="analysisRPN" disabled>
+                                    </div>
+                                </div>
+
+
+
+                                <div class="col-12">
+                                    <div class="group-input">
+                                        <label for="risk-evaluation">Risk Evaluation</label>
+                                        <textarea name="risk_evaluation" disabled></textarea>
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <div class="group-input">
+                                        <label for="migration-action">Mitigation Action</label>
+                                        <textarea name="migration_action" disabled></textarea>
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-12">
+                                        <div class="group-input">
+                                            <label for="others">Risk Assessment Attachment</label>
+                                            <div><small class="text-primary" disabled>Please Attach all relevant or supporting
+                                                    documents</small></div>
+                                            <div class="file-attachment-field">
+                                                <div class="file-attachment-list" id="risk_assessment_atch"></div>
+                                                <div class="add-btn">
+                                                    <div>Add</div>
+                                                    <input type="file" id="myfile" name="risk_assessment_atch[]"
+                                                        oninput="addMultipleFiles(this, 'risk_assessment_atch')" multiple>
+                                                        
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                            </div>
+                            <div class="button-block">
+                                <button type="submit" class="saveButton">Save</button>
+                                <button type="button" class="backButton" onclick="previousStep()">Back</button>
+                                <button type="button" class="nextButton" onclick="nextStep()">Next</button>
+                                <button type="button"> <a class="text-white" href="{{ url('rcms/qms-dashboard') }}">
+                                        Exit </a> </button>
+
+                            </div>
+                        </div>
+                    </div>
+
                     <div id="CCForm2" class="inner-block cctabcontent">
                         <div class="inner-block-content">
                             <div class="sub-head">
                                 Change Details
                             </div>
                             <div class="row">
-                                <div class="col-12">
+
+                                <!-- <div class="col-12">
                                     <div class="group-input">
                                         <label for="doc-detail">
                                             Document Details<button type="button" name="ann"
-                                                id="DocDetailbtn">+</button>
+                                                id="documentAdd">+</button>
                                         </label>
-                                        <table class="table-bordered table" id="doc-detail">
+                                        <table class="table-bordered table" id="documentTableDetails">
                                             <thead>
                                                 <tr>
                                                     <th>Sr. No.</th>
@@ -417,24 +666,23 @@
                                             </thead>
                                             <tbody>
                                                 <tr>
-                                                    <td><input type="text" value="1" name="serial_number[]"
-                                                            readonly></td>
-                                                    <td><input type="text" name="current_doc_number[]"></td>
-                                                    <td><input type="text" name="current_version[]"></td>
-                                                    <td><input type="text" name="new_doc_number[]"></td>
-                                                    <td><input type="text" name="new_version[]"></td>
+                                                    <td><input type="text" value="1" name="documentDetails[]" readonly></td>
+                                                    <td><input type="text" name="documentDetails[0][currentDocNumber]"></td>
+                                                    <td><input type="text" name="documentDetails[0][currentVersionNumber]"></td>
+                                                    <td><input type="text" name="documentDetails[0][newDocNumber]"></td>
+                                                    <td><input type="text" name="documentDetails[0][newVersionNumber]"></td>
                                                 </tr>
-                                                <div id="docdetaildiv"></div>
                                             </tbody>
                                         </table>
                                     </div>
-                                </div>
+                                </div> -->
+                                
                                 <div class="col-12">
                                     <div class="group-input">
                                         <label for="current-practice">
                                             Current Practice
                                         </label>
-                                        <textarea name="current_practice"></textarea>
+                                        <textarea name="current_practice" disabled></textarea>
                                     </div>
                                 </div>
                                 <div class="col-12">
@@ -442,7 +690,7 @@
                                         <label for="proposed_change">
                                             Proposed Change
                                         </label>
-                                        <textarea name="proposed_change"></textarea>
+                                        <textarea name="proposed_change" disabled></textarea>
                                     </div>
                                 </div>
                                 <div class="col-12">
@@ -450,7 +698,7 @@
                                         <label for="reason_change">
                                             Reason for Change
                                         </label>
-                                        <textarea name="reason_change"></textarea>
+                                        <textarea name="reason_change" disabled></textarea>
                                     </div>
                                 </div>
                                 <div class="col-12">
@@ -458,15 +706,126 @@
                                         <label for="other_comment">
                                             Any Other Comments
                                         </label>
-                                        <textarea name="other_comment"></textarea>
+                                        <textarea name="other_comment" disabled></textarea>
                                     </div>
                                 </div>
-                                <div class="col-12">
+                                <!-- <div class="col-12">
                                     <div class="group-input">
                                         <label for="supervisor_comment">
                                             Supervisor Comments
                                         </label>
                                         <textarea name="supervisor_comment"></textarea>
+                                    </div>
+                                </div> -->
+                            </div>
+                            <div class="button-block">
+                                <button type="submit" class="saveButton">Save</button>
+                                <button type="button" class="backButton" onclick="previousStep()">Back</button>
+                                <button type="button" class="nextButton" onclick="nextStep()">Next</button>
+                                <button type="button"> <a class="text-white" href="{{ url('rcms/qms-dashboard') }}">
+                                        Exit </a> </button>
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="CCForm4" class="inner-block cctabcontent">
+                        <div class="inner-block-content">
+                            <div class="row">
+                            
+                            <div class="col-lg-6">
+                                <div class="group-input">
+                                    <label for="Microbiology-Person">CFT Reviewer Person</label>
+                                    <select multiple name="cft_reviewer[]" placeholder="Select CFT Reviewers" data-search="false"
+                                        data-silent-initial-value-set="true" id="cft_reviewer" disabled>
+                                        <option value="">-- Select --</option>
+                                        @foreach ($cft as $data1)
+                                            @if (Helpers::checkUserRolesMicrobiology_Person($data1))
+                                                <option value="{{ $data1->id }}"> {{ $data1->name }}</option>
+                                            @endif
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-6">
+                                <div class="group-input">
+                                    <label for="due_days"> Due Days </label>
+                                    <input type="number" name="due_days" id="due_days" disabled>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-6">
+                                <div class="group-input">
+                                    <label for="severity-level">Severity Level</label>
+                                    <span class="text-primary">Severity levels in a QMS record gauge issue
+                                        seriousness, guiding priority for corrective actions. Ranging from
+                                        low to high, they ensure quality standards and mitigate critical
+                                        risks.</span>
+                                    <select name="severity_level1" disabled>
+                                        <option value="">-- Select --</option>
+                                        <option value="minor">Minor</option>
+                                        <option value="major">Major</option>
+                                        <option value="critical">Critical</option>
+                                    </select>
+                                </div>
+                            </div>
+
+
+                                <!-- <div class="col-lg-12">
+                                    <div class="group-input">
+                                        <label for="type_change">
+                                            Type of Change
+                                            <span class="text-primary" data-bs-toggle="modal"
+                                                data-bs-target="#change-control-type-of-change-instruction-modal"
+                                                style="font-size: 0.8rem; font-weight: 400; cursor:pointer;">
+                                                (Launch Instruction)
+                                            </span>
+                                        </label>
+                                        <select name="type_chnage">
+                                            <option value="">-- Select --</option>
+                                            <option value="major">Major</option>
+                                            <option value="minor">Minor</option>
+                                            <option value="critical">Critical</option>
+                                        </select>
+                                    </div>
+                                </div> -->
+
+                                <div class="col-12">
+                                    <div class="group-input">
+                                        <label for="qa_comments">QA Review Comments</label>
+                                        <textarea name="qa_comments" disabled></textarea>
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <div class="group-input">
+                                        <label for="related_records">Related Records</label>
+
+                                        <select multiple name="related_records[]" placeholder="Select Reference Records" disabled
+                                            data-search="false" data-silent-initial-value-set="true"
+                                            id="related_records">
+                                            @foreach ($pre as $prix)
+                                                <option value="{{ $prix->id }}">
+                                                    {{ Helpers::getDivisionName($prix->division_id) }}/Change-Control/{{ Helpers::year($prix->created_at) }}/{{ Helpers::record($prix->record) }}
+                                                </option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-lg-12">
+                                    <div class="group-input">
+                                        <label for="qa head">QA Attachments</label>
+                                        <div><small class="text-primary">Please Attach all relevant or supporting
+                                                documents</small></div>
+                                        <div class="file-attachment-field">
+                                            <div class="file-attachment-list" id="qa_head" disabled></div>
+                                            <div class="add-btn">
+                                                <div>Add</div>
+                                                <input type="file" id="myfile" name="qa_head[]" disabled
+                                                    oninput="addMultipleFiles(this, 'qa_head')" multiple>
+                                            </div>
+                                        </div>
+
                                     </div>
                                 </div>
                             </div>
@@ -480,6 +839,2486 @@
                             </div>
                         </div>
                     </div>
+
+                    <div id="CCForm12" class="inner-block cctabcontent">
+                        <div class="inner-block-content">
+                            <div class="row">                   
+                            
+                                <div class="sub-head">
+                                    RA Review
+                                </div>
+                                <script>
+                                    $(document).ready(function() {
+                                        $('.ra_review').hide();
+
+                                        $('[name="RA_Review"]').change(function() {
+                                            if ($(this).val() === 'yes') {
+
+                                                $('.ra_review').show();
+                                                $('.ra_review span').show();
+                                            } else {
+                                                $('.ra_review').hide();
+                                                $('.ra_review span').hide();
+                                            }
+                                        });
+                                    });
+                                </script>
+
+                                <div class="col-lg-6">
+                                    <div class="group-input">
+                                        <label for="RA Review"> RA Review</label>
+                                        <select name="RA_Review" id="RA_Review" disabled>
+                                            <option value="">-- Select --</option>
+                                            <option value='yes'>Yes</option>
+                                            <option value='no'>No</option>
+                                            <option value='na'>NA</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                @php
+                                    $division = DB::table('q_m_s_divisions')
+                                        ->where('name', Helpers::getDivisionName(session()->get('division')))
+                                        ->first();
+                                    $userRoles = DB::table('user_roles')
+                                        ->where(['q_m_s_roles_id' => 22, 'q_m_s_divisions_id' => $division->id])
+                                        ->get();
+                                    $userRoleIds = $userRoles->pluck('user_id')->toArray();
+                                    $users = DB::table('users')->whereIn('id', $userRoleIds)->get(); // Fetch user data based on user IDs
+                                @endphp
+                                <div class="col-lg-6 ra_review">
+                                    <div class="group-input">
+                                        <label for="RA notification">RA Person</label>
+                                        <select disabled name="RA_person" id="RA_person">
+                                            <option value="">-- Select --</option>
+                                            @foreach ($users as $user)
+                                                <option value="{{ $user->id }}">
+                                                    {{ $user->name }}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-12 mb-3 ra_review">
+                                    <div class="group-input">
+                                        <label for="RA assessment">Impact Assessment (By RA) </label>
+                                        <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
+                                        <textarea class="summernote RA_assessment" name="RA_assessment" id="summernote-17"></textarea>
+                                    </div>
+                                </div>
+                                <div class="col-md-12 mb-3 ra_review">
+                                    <div class="group-input">
+                                        <label for="RA feedback">RA Feedback</label>
+                                        <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
+                                        <textarea class="summernote RA_feedback" name="RA_feedback" id="summernote-18"></textarea>
+                                    </div>
+                                </div>
+                                <div class="col-lg-12 ra_review">
+                                    <div class="group-input">
+                                        <label for="RA attachment"> RA Attachments</label>
+                                        <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
+                                        <div class="file-attachment-field">
+                                            <div class="file-attachment-list" id="RA_attachment"></div>
+                                            <div class="add-btn">
+                                                <div>Add</div>
+                                                <input type="file" id="myfile" name="RA_attachment[]" oninput="addMultipleFiles(this, 'RA_attachment')" multiple>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 mb-3 ra_review">
+                                    <div class="group-input">
+                                        <label for="RA Review Completed By">RA Review Completed By</label>
+                                        <input readonly type="text" name="RA_by" id="RA_by">
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 ra_review">
+                                    <div class="group-input ">
+                                        <label for="RA Review Completed On">RA Review Completed On</label>
+                                        <input type="text" id="RA_on" readonly placeholder="DD-MMM-YYYY" />
+                                        <input type="date" name="RA_on" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input" oninput="handleDateInput(this, 'RA_on')" />
+                                    </div>
+                                </div>
+
+
+
+                                <div class="sub-head">
+                                    Quality Assurance
+                                </div>
+                                <script>
+                                    $(document).ready(function() {
+                                        $('.QualityAssurance').hide();
+
+                                        $('[name="Quality_Assurance_Review"]').change(function() {
+                                            if ($(this).val() === 'yes') {
+
+                                                $('.QualityAssurance').show();
+                                                $('.QualityAssurance span').show();
+                                            } else {
+                                                $('.QualityAssurance').hide();
+                                                $('.QualityAssurance span').hide();
+                                            }
+                                        });
+                                    });
+                                </script>
+
+                                <div class="col-lg-6">
+                                    <div class="group-input">
+                                        <label for="Quality Assurance"> Quality Assurance</label>
+                                        <select name="Quality_Assurance_Review" id="Quality_Assurance_Review" disabled>
+                                            <option value="">-- Select --</option>
+                                            <option value='yes'>Yes</option>
+                                            <option value='no'>No</option>
+                                            <option value='na'>NA</option>
+                                        </select>
+
+                                    </div>
+                                </div>
+                                @php
+                                    $division = DB::table('q_m_s_divisions')
+                                        ->where('name', Helpers::getDivisionName(session()->get('division')))
+                                        ->first();
+                                    $userRoles = DB::table('user_roles')
+                                        ->where(['q_m_s_roles_id' => 22, 'q_m_s_divisions_id' => $division->id])
+                                        ->get();
+                                    $userRoleIds = $userRoles->pluck('user_id')->toArray();
+                                    $users = DB::table('users')->whereIn('id', $userRoleIds)->get(); // Fetch user data based on user IDs
+                                @endphp
+                                <div class="col-lg-6 QualityAssurance">
+                                    <div class="group-input">
+                                        <label for="Quality Assurance notification">Quality Assurance Person</label>
+                                        <select name="QualityAssurance_Person" class="QualityAssurance_Person" id="QualityAssurance_Person">
+                                            <option value="">-- Select --</option>
+                                            @foreach ($users as $user)
+                                                <option value="{{ $user->id }}">{{ $user->name }}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-12 mb-3 QualityAssurance">
+                                    <div class="group-input">
+                                        <label for="Quality Assurance assessment">Impact Assessment (By Quality Assurance)</label>
+                                        <textarea class="summernote QualityAssurance_assessment" name="QualityAssurance_assessment" id="summernote-17"></textarea>
+                                    </div>
+                                </div>
+                                <div class="col-md-12 mb-3 QualityAssurance">
+                                    <div class="group-input">
+                                        <label for="Quality Assurance feedback">Quality Assurance Feedback</label>
+                                        <textarea class="summernote QualityAssurance_feedback" name="QualityAssurance_feedback" id="summernote-18"></textarea>
+                                    </div>
+                                </div>
+                                <div class="col-lg-12 QualityAssurance">
+                                    <div class="group-input">
+                                        <label for="RA attachment"> Quality Assurance Attachments</label>
+                                        <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
+                                        <div class="file-attachment-field">
+                                            <div class="file-attachment-list" id="Quality_Assurance_attachment"></div>
+                                            <div class="add-btn">
+                                                <div>Add</div>
+                                                <input type="file" id="myfile" name="Quality_Assurance_attachment[]"
+                                                    oninput="addMultipleFiles(this, 'Quality_Assurance_attachment')" multiple>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 mb-3 QualityAssurance">
+                                    <div class="group-input">
+                                        <label for="Quality Assurance Completed By">Quality Assurance Completed By</label>
+                                        <input readonly type="text" name="QualityAssurance_by" id="QualityAssurance_by">
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 QualityAssurance">
+                                    <div class="group-input ">
+                                        <label for="Quality Assurance Completed On">Quality Assurance Completed On</label>
+                                        <input type="date" id="QualityAssurance_on" name="QualityAssurance_on">
+                                    </div>
+                                </div>
+
+
+
+
+                                <div class="sub-head">
+                                    Production (Tablet/Capsule/Powder)
+                                </div>
+                                <script>
+                                    $(document).ready(function() {
+                                        $('.productionTable').hide();
+
+                                        $('[name="Production_Table_Review"]').change(function() {
+                                            if ($(this).val() === 'yes') {
+
+                                                $('.productionTable').show();
+                                                $('.productionTable span').show();
+                                            } else {
+                                                $('.productionTable').hide();
+                                                $('.productionTable span').hide();
+                                            }
+                                        });
+                                    });
+                                </script>
+
+                                <div class="col-lg-6">
+                                    <div class="group-input">
+                                        <label for="Production Tablet"> Production Tablet</label>
+                                        <select name="Production_Table_Review" id="Production_Table_Review" disabled>
+                                            <option value="">-- Select --</option>
+                                            <option value='yes'>
+                                                Yes</option>
+                                            <option value='no'>
+                                                No</option>
+                                            <option value='na'>
+                                                NA</option>
+                                        </select>
+
+                                    </div>
+                                </div>
+                                @php
+                                    $division = DB::table('q_m_s_divisions')
+                                        ->where('name', Helpers::getDivisionName(session()->get('division')))
+                                        ->first();
+                                    $userRoles = DB::table('user_roles')
+                                        ->where(['q_m_s_roles_id' => 22, 'q_m_s_divisions_id' => $division->id])
+                                        ->get();
+                                    $userRoleIds = $userRoles->pluck('user_id')->toArray();
+                                    $users = DB::table('users')->whereIn('id', $userRoleIds)->get(); // Fetch user data based on user IDs
+                                @endphp
+                                <div class="col-lg-6 productionTable">
+                                    <div class="group-input">
+                                        <label for="Production Tablet notification">Production Tablet Person</label>
+                                        <select name="Production_Table_Person" class="Production_Table_Person" id="Production_Table_Person">
+                                            <option value="">-- Select --</option>
+                                            @foreach ($users as $user)
+                                                <option value="{{ $user->id }}">{{ $user->name }}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-12 mb-3 productionTable">
+                                    <div class="group-input">
+                                        <label for="Production Tablet assessment">Impact Assessment (By Production Tablet)</label>
+                                        <textarea class="summernote Production_Table_Assessment" name="Production_Table_Assessment" id="summernote-17"></textarea>
+                                    </div>
+                                </div>
+                                <div class="col-md-12 mb-3 productionTable">
+                                    <div class="group-input">
+                                        <label for="Production Tablet feedback">Production Tablet Feedback</label>
+                                        <textarea class="summernote Production_Table_Feedback" name="Production_Table_Feedback" id="summernote-18"></textarea>
+                                    </div>
+                                </div>
+                                <div class="col-12 productionTable">
+                                    <div class="group-input">
+                                        <label for="Production Tablet attachment">Production Tablet Attachments</label>
+                                        <div><small class="text-primary">Please Attach all relevant or supporting
+                                                documents</small></div>
+                                        <div class="file-attachment-field">
+                                            <div class="file-attachment-list" id="Production_Table_Attachment"></div>
+                                            <div class="add-btn">
+                                                <div>Add</div>
+                                                <input type="file" id="myfile" name="Production_Table_Attachment[]"
+                                                    oninput="addMultipleFiles(this, 'Production_Table_Attachment')" multiple>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 mb-3 productionTable">
+                                    <div class="group-input">
+                                        <label for="Production Tablet Completed By">Production Tablet Completed By</label>
+                                        <input readonly type="text" name="Production_Table_By" id="Production_Table_By">
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 productionTable">
+                                    <div class="group-input ">
+                                        <label for="Production Tablet Completed On">Production Tablet Completed On</label>
+                                        <input type="date" id="Production_Table_On" name="Production_Table_On">
+                                    </div>
+                                </div>
+
+
+
+
+                                <div class="sub-head">
+                                    Production (Liquid/Ointment)
+                                </div>
+                                <script>
+                                    $(document).ready(function() {
+                                        $('.productionLiquid').hide();
+
+                                        $('[name="ProductionLiquid_Review"]').change(function() {
+                                            if ($(this).val() === 'yes') {
+
+                                                $('.productionLiquid').show();
+                                                $('.productionLiquid span').show();
+                                            } else {
+                                                $('.productionLiquid').hide();
+                                                $('.productionLiquid span').hide();
+                                            }
+                                        });
+                                    });
+                                </script>
+                                <div class="col-lg-6">
+                                    <div class="group-input">
+                                        <label for="Production Liquid"> Production Liquid </label>
+                                        <select name="ProductionLiquid_Review" id="ProductionLiquid_Review" disabled>
+                                            <option value="">-- Select --</option>
+                                            <option value='yes'>
+                                                Yes</option>
+                                            <option value='no'>
+                                                No</option>
+                                            <option value='na'>
+                                                NA</option>
+                                        </select>
+
+                                    </div>
+                                </div>
+                                @php
+                                    $division = DB::table('q_m_s_divisions')
+                                        ->where('name', Helpers::getDivisionName(session()->get('division')))
+                                        ->first();
+                                    $userRoles = DB::table('user_roles')
+                                        ->where(['q_m_s_roles_id' => 22, 'q_m_s_divisions_id' => $division->id])
+                                        ->get();
+                                    $userRoleIds = $userRoles->pluck('user_id')->toArray();
+                                    $users = DB::table('users')->whereIn('id', $userRoleIds)->get(); // Fetch user data based on user IDs
+                                @endphp
+                                <div class="col-lg-6 productionLiquid">
+                                    <div class="group-input">
+                                        <label for="Production Liquid notification">Production Liquid Person</label>
+                                        <select name="ProductionLiquid_Person" class="ProductionLiquid_Person" id="ProductionLiquid_Person">
+                                            <option value="">-- Select --</option>
+                                            @foreach ($users as $user)
+                                                <option value="{{ $user->id }}">{{ $user->name }}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-12 mb-3 productionLiquid">
+                                    <div class="group-input">
+                                        <label for="Production Liquid assessment">Impact Assessment (By Production Liquid)</label>
+                                        <textarea class="summernote ProductionLiquid_assessment" name="ProductionLiquid_assessment" id="summernote-17"></textarea>
+                                    </div>
+                                </div>
+                                <div class="col-md-12 mb-3 productionLiquid">
+                                    <div class="group-input">
+                                        <label for="Production Liquid feedback">Production Liquid Feedback</label>
+                                        <textarea class="summernote ProductionLiquid_feedback" name="ProductionLiquid_feedback" id="summernote-18"></textarea>
+                                    </div>
+                                </div>
+                                <div class="col-12 productionLiquid">
+                                    <div class="group-input">
+                                        <label for="Production Liquid attachment">Production Liquid Attachments</label>
+                                        <div><small class="text-primary">Please Attach all relevant or supporting
+                                                documents</small></div> ProductionLiquid_attachment
+                                        <div class="file-attachment-field">
+                                            <div class="file-attachment-list" id="ProductionLiquid_attachment"></div>
+                                            <div class="add-btn">
+                                                <div>Add</div>
+                                                <input type="file" id="myfile" name="ProductionLiquid_attachment[]"
+                                                    oninput="addMultipleFiles(this, 'ProductionLiquid_attachment')" multiple>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 mb-3 productionLiquid">
+                                    <div class="group-input">
+                                        <label for="Production Liquid Completed By">Production Liquid Completed By</label>
+                                        <input readonly type="text" name="ProductionLiquid_by" id="ProductionLiquid_by">
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 productionLiquid">
+                                    <div class="group-input ">
+                                        <label for="Production Liquid Completed On">Production Liquid Completed On</label>
+                                        <input type="date" id="ProductionLiquid_on" name="ProductionLiquid_on">
+                                    </div>
+                                </div>
+
+
+                                <div class="sub-head">
+                                    Production Injection
+                                </div>
+                                <script>
+                                    $(document).ready(function() {
+                                        $('.productionInjection').hide();
+
+                                        $('[name="Production_Injection_Review"]').change(function() {
+                                            if ($(this).val() === 'yes') {
+
+                                                $('.productionInjection').show();
+                                                $('.productionInjection span').show();
+                                            } else {
+                                                $('.productionInjection').hide();
+                                                $('.productionInjection span').hide();
+                                            }
+                                        });
+                                    });
+                                </script>
+
+                                <div class="col-lg-6">
+                                    <div class="group-input">
+                                        <label for="Production Injection"> Production Injection </label>
+                                        <select name="Production_Injection_Review" id="Production_Injection_Review" disabled>
+                                            <option value="">-- Select --</option>
+                                            <option value='yes'>
+                                                Yes</option>
+                                            <option value='no'>
+                                                No</option>
+                                            <option value='na'>
+                                                NA</option>
+                                        </select>
+
+                                    </div>
+                                </div>
+                                @php
+                                    $division = DB::table('q_m_s_divisions')
+                                        ->where('name', Helpers::getDivisionName(session()->get('division')))
+                                        ->first();
+                                    $userRoles = DB::table('user_roles')
+                                        ->where(['q_m_s_roles_id' => 22, 'q_m_s_divisions_id' => $division->id])
+                                        ->get();
+                                    $userRoleIds = $userRoles->pluck('user_id')->toArray();
+                                    $users = DB::table('users')->whereIn('id', $userRoleIds)->get(); // Fetch user data based on user IDs
+                                @endphp
+                                <div class="col-lg-6 productionInjection">
+                                    <div class="group-input">
+                                        <label for="Production Injection notification">Production Injection Person</label>
+                                        <select class="Production_Injection_Person" id="Production_Injection_Person">
+                                            <option value="">-- Select --</option>
+                                            @foreach ($users as $user)
+                                                <option value="{{ $user->id }}">{{ $user->name }}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-12 mb-3 productionInjection">
+                                    <div class="group-input">
+                                        <label for="Production Injection assessment">Impact Assessment (By Production Injection)</label>
+                                        <textarea class="summernote Production_Injection_Assessment" name="Production_Injection_Assessment" id="summernote-17"></textarea>
+                                    </div>
+                                </div>
+                                <div class="col-md-12 mb-3 productionInjection">
+                                    <div class="group-input">
+                                        <label for="Production Injection feedback">Production Injection Feedback </label>
+                                        <textarea class="summernote Production_Injection_Feedback" name="Production_Injection_Feedback" id="summernote-18"></textarea>
+                                    </div>
+                                </div>
+                                <div class="col-12 productionInjection">
+                                    <div class="group-input">
+                                        <label for="Production Injection attachment">Production Injection Attachments</label>
+                                        <div><small class="text-primary">Please Attach all relevant or supporting
+                                                documents</small></div>
+                                        <div class="file-attachment-field">
+                                            <div class="file-attachment-list" id="Production_Injection_Attachment"></div>
+                                            <div class="add-btn">
+                                                <div>Add</div>
+                                                <input type="file" id="myfile" name="Production_Injection_Attachment[]"
+                                                    oninput="addMultipleFiles(this, 'Production_Injection_Attachment')" multiple>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 mb-3 productionInjection">
+                                    <div class="group-input">
+                                        <label for="Production Injection Completed By">Production Injection Completed By</label>
+                                        <input readonly type="text" name="Production_Injection_By" id="Production_Injection_By">
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 productionInjection">
+                                    <div class="group-input ">
+                                        <label for="Production Injection Completed On">Production Injection Completed On</label>
+                                        <input type="date"id="Production_Injection_On" name="Production_Injection_On">
+                                    </div>
+                                </div>
+
+
+
+                                                    
+                                <div class="sub-head">
+                                    Stores
+                                </div>
+                                <script>
+                                    $(document).ready(function() {
+                                        $('.store').hide();
+
+                                        $('[name="Store_Review"]').change(function() {
+                                            if ($(this).val() === 'yes') {
+
+                                                $('.store').show();
+                                                $('.store span').show();
+                                            } else {
+                                                $('.store').hide();
+                                                $('.store span').hide();
+                                            }
+                                        });
+                                    });
+                                </script>
+
+                                <div class="col-lg-6">
+                                    <div class="group-input">
+                                        <label for="Store"> Store</label>
+                                        <select name="Store_Review" id="Store_Review" disabled>
+                                            <option value="">-- Select --</option>
+                                            <option value='yes'>
+                                                Yes</option>
+                                            <option value='no'>
+                                                No</option>
+                                            <option value='na'>
+                                                NA</option>
+                                        </select>
+
+                                    </div>
+                                </div>
+                                @php
+                                    $division = DB::table('q_m_s_divisions')
+                                        ->where('name', Helpers::getDivisionName(session()->get('division')))
+                                        ->first();
+                                    $userRoles = DB::table('user_roles')
+                                        ->where(['q_m_s_roles_id' => 23, 'q_m_s_divisions_id' => $division->id])
+                                        ->get();
+                                    $userRoleIds = $userRoles->pluck('user_id')->toArray();
+                                    $users = DB::table('users')->whereIn('id', $userRoleIds)->get(); // Fetch user data based on user IDs
+                                @endphp
+                                <div class="col-lg-6 store">
+                                    <div class="group-input">
+                                        <label for="Store notification">Store Person</label>
+                                        <select name="Store_Person" class="Store_Person" id="Store_Person">
+                                            <option value="">-- Select --</option>
+                                            @foreach ($users as $user)
+                                                <option value="{{ $user->id }}">{{ $user->name }}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-12 mb-3 store">
+                                    <div class="group-input">
+                                        <label for="Store assessment">Impact Assessment (By Store)</label>
+                                        <textarea class="summernote Store_assessment" name="Store_assessment" id="summernote-17"></textarea>
+                                    </div>
+                                </div>
+                                <div class="col-md-12 mb-3 store">
+                                    <div class="group-input">
+                                        <label for="Store feedback">Store Feedback</label>
+                                        <textarea class="summernote Store_feedback" name="Store_feedback" id="summernote-18"></textarea>
+                                    </div>
+                                </div>
+                                <div class="col-12 store">
+                                    <div class="group-input">
+                                        <label for="Store attachment">Store Attachments</label>
+                                        <div><small class="text-primary">Please Attach all relevant or supporting
+                                                documents</small></div>
+                                        <div class="file-attachment-field">
+                                            <div class="file-attachment-list" id="Store_attachment"></div>
+                                            <div class="add-btn">
+                                                <div>Add</div>
+                                                <input type="file" id="myfile" name="Store_attachment[]"
+                                                    oninput="addMultipleFiles(this, 'Store_attachment')" multiple>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 mb-3 store">
+                                    <div class="group-input">
+                                        <label for="Store Completed By">Store Completed By</label>
+                                        <input readonly type="text" name="Store_by" id="Store_by">
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 store">
+                                    <div class="group-input ">
+                                        <label for="Store Completed On">Store Completed On</label>
+                                        <input type="date"id="Store_on" name="Store_on">
+                                    </div>
+                                </div>
+
+
+                                <div class="sub-head">
+                                    Quality Control
+                                </div>
+                                <script>
+                                    $(document).ready(function() {
+                                        $('.quality_control').hide();
+
+                                        $('[name="Quality_review"]').change(function() {
+                                            if ($(this).val() === 'yes') {
+                                                $('.quality_control').show();
+                                                $('.quality_control span').show();
+                                            } else {
+                                                $('.quality_control').hide();
+                                                $('.quality_control span').hide();
+                                            }
+                                        });
+                                    });
+                                </script>
+                                <div class="col-lg-6 quality_control">
+                                    <div class="group-input">
+                                        <label for="Quality Control Review Required">Quality Control Review Required
+                                            ?</label>
+                                        <select name="Quality_review" id="Quality_review" disabled>
+                                            <option value="">-- Select --</option>
+                                            <option value="yes">Yes</option>
+                                            <option value="no">No</option>
+                                            <option value="na">NA</option>
+
+                                        </select>
+
+                                    </div>
+                                </div>
+                                @php
+                                    $division = DB::table('q_m_s_divisions')
+                                        ->where('name', Helpers::getDivisionName(session()->get('division')))
+                                        ->first();
+                                    $userRoles = DB::table('user_roles')
+                                        ->where(['q_m_s_roles_id' => 24, 'q_m_s_divisions_id' => $division->id])
+                                        ->get();
+                                    $userRoleIds = $userRoles->pluck('user_id')->toArray();
+                                    $users = DB::table('users')->whereIn('id', $userRoleIds)->get(); // Fetch user data based on user IDs
+                                @endphp
+                                <div class="col-lg-6">
+                                    <div class="group-input">
+                                        <label for="Quality Control Person">Quality Control Person</label>
+                                        <select name="Quality_Control_Person" id="Quality_Control_Person" disabled>
+                                            <option value="0">-- Select --</option>
+                                            @foreach ($users as $user)
+                                                <option value="{{ $user->id }}">{{ $user->name }}</option>
+                                            @endforeach
+                                        </select>
+
+                                    </div>
+                                </div>
+                                <div class="col-md-12 mb-3 quality_control">
+                                    <div class="group-input">
+                                        <label for="Impact Assessment2">Impact Assessment (By Quality Control)</label>
+                                        <textarea class="" name="Quality_Control_assessment" id="summernote-21">
+                                                        </textarea>
+                                    </div>
+                                </div>
+                                <div class="col-md-12 mb-3 quality_control">
+                                    <div class="group-input">
+                                        <label for="Quality Control Feedback">Quality Control Feedback</label>
+                                        <textarea class="" name="Quality_Control_feedback" id="summernote-22">
+                                                        </textarea>
+                                    </div>
+                                </div>
+                                <div class="col-lg-12 quality_control">
+                                    <div class="group-input">
+                                        <label for="Quality Control Attachments">Quality Control Attachments</label>
+                                        <div><small class="text-primary">Please Attach all relevant or supporting
+                                                documents</small></div>
+                                        <div class="file-attachment-field">
+                                            <div class="file-attachment-list" id="Quality_Control_attachment"></div>
+                                            <div class="add-btn">
+                                                <div>Add</div>
+                                                <input type="file" id="myfile" name="Quality_Control_attachment[]"
+                                                    oninput="addMultipleFiles(this, 'Quality_Control_attachment')" multiple>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 mb-3 quality_control">
+                                    <div class="group-input">
+                                        <label for="productionfeedback">Quality Control Review Completed By</label>
+                                        <input type="text" name="QualityAssurance__by" disabled>
+
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 new-date-data-field quality_control">
+                                    <div class="group-input input-date">
+                                        <label for="Quality Control Review Completed On">Quality Control Review Completed
+                                            On</label>
+                                        <div class="calenderauditee">
+                                            <input type="text" id="Quality_Control_on" readonly placeholder="DD-MMM-YYYY" />
+                                            <input type="date" name="Quality_Control_on"
+                                                min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input"
+                                                oninput="handleDateInput(this, 'Quality_Control_on')" />
+                                        </div>
+                                    </div>
+                                </div>
+
+                                
+                                <div class="sub-head">
+                                    Research & Development
+                                </div>
+                                <script>
+                                    $(document).ready(function() {
+                                        $('.researchDevelopment').hide();
+
+                                        $('[name="ResearchDevelopment_Review"]').change(function() {
+                                            if ($(this).val() === 'yes') {
+
+                                                $('.researchDevelopment').show();
+                                                $('.researchDevelopment span').show();
+                                            } else {
+                                                $('.researchDevelopment').hide();
+                                                $('.researchDevelopment span').hide();
+                                            }
+                                        });
+                                    });
+                                </script>
+
+                                <div class="col-lg-6">
+                                    <div class="group-input">
+                                        <label for="Research Development"> Research Development Required ?</label>
+                                        <select name="ResearchDevelopment_Review" id="ResearchDevelopment_Review" disabled>
+                                            <option value="">-- Select --</option>
+                                            <option value='yes'>
+                                                Yes</option>
+                                            <option value='no'>
+                                                No</option>
+                                            <option value='na'>
+                                                NA</option>
+                                        </select>
+
+                                    </div>
+                                </div>
+                                @php
+                                    $division = DB::table('q_m_s_divisions')
+                                        ->where('name', Helpers::getDivisionName(session()->get('division')))
+                                        ->first();
+                                    $userRoles = DB::table('user_roles')
+                                        ->where(['q_m_s_roles_id' => 22, 'q_m_s_divisions_id' => $division->id])
+                                        ->get();
+                                    $userRoleIds = $userRoles->pluck('user_id')->toArray();
+                                    $users = DB::table('users')->whereIn('id', $userRoleIds)->get(); // Fetch user data based on user IDs
+                                @endphp
+                                <div class="col-lg-6 researchDevelopment">
+                                    <div class="group-input">
+                                        <label for="Research Development notification">Research Development Person</label>
+                                        <select name="ResearchDevelopmentStore_Person" class="ResearchDevelopment_Person" id="ResearchDevelopment_Person">
+                                            <option value="">-- Select --</option>
+                                            @foreach ($users as $user)
+                                                <option value="{{ $user->id }}">{{ $user->name }}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-12 mb-3 researchDevelopment">
+                                    <div class="group-input">
+                                        <label for="Research Development assessment">Impact Assessment (By Research Development)</label>
+                                        <textarea class="summernote ResearchDevelopment_assessment" name="ResearchDevelopment_assessment" id="summernote-17"></textarea>
+                                    </div>
+                                </div>
+                                <div class="col-md-12 mb-3 researchDevelopment">
+                                    <div class="group-input">
+                                        <label for="Research Development feedback">Research Development Feedback</label>
+                                        <textarea class="summernote ResearchDevelopment_feedback" name="ResearchDevelopment_feedback" id="summernote-18"></textarea>
+                                    </div>
+                                </div>
+                                <div class="col-12 researchDevelopment"> 
+                                    <div class="group-input">
+                                        <label for="Research Development attachment">Research Development Attachments</label>
+                                        <div><small class="text-primary">Please Attach all relevant or supporting
+                                                documents</small></div>
+                                                <div class="file-attachment-field">
+                                            <div class="file-attachment-list" id="ResearchDevelopment_attachment"></div>
+                                            <div class="add-btn">
+                                                <div>Add</div>
+                                                <input type="file" id="myfile" name="ResearchDevelopment_attachment[]"
+                                                    oninput="addMultipleFiles(this, 'ResearchDevelopment_attachment')" multiple>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 mb-3 researchDevelopment">
+                                    <div class="group-input">
+                                        <label for="Research Development Completed By">Research Development Completed By</label>
+                                        <input readonly type="text" name="ResearchDevelopment_by" id="ResearchDevelopment_by">
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 researchDevelopment">
+                                    <div class="group-input ">
+                                        <label for="Research Development Completed On">Research Development Complete On</label>
+                                        <input type="date" id="ResearchDevelopment_on" name="ResearchDevelopment_on">
+                                    </div>
+                                </div>
+
+
+                                <div class="sub-head">
+                                    Engineering
+                                </div>
+                                <script>
+                                    $(document).ready(function() {
+                                        $('.engineering').hide();
+
+                                        $('[name="Engineering_review"]').change(function() {
+                                            if ($(this).val() === 'yes') {
+                                                $('.engineering').show();
+                                                $('.engineering span').show();
+                                            } else {
+                                                $('.engineering').hide();
+                                                $('.engineering span').hide();
+                                            }
+                                        });
+                                    });
+                                </script>
+                                <div class="col-lg-6">
+                                    <div class="group-input">
+                                        <label for="Engineering Review Required">Engineering Review Required ?</label>
+                                        <select name="Engineering_review" id="Engineering_review" disabled>
+                                            <option value="0">-- Select --</option>
+                                            <option value="yes">Yes</option>
+                                            <option value="no">No</option>
+                                            <option value="na">NA</option>
+                                        </select>
+
+                                    </div>
+                                </div>
+                                @php
+                                    $division = DB::table('q_m_s_divisions')
+                                        ->where('name', Helpers::getDivisionName(session()->get('division')))
+                                        ->first();
+                                    $userRoles = DB::table('user_roles')
+                                        ->where(['q_m_s_roles_id' => 26, 'q_m_s_divisions_id' => $division->id])
+                                        ->get();
+                                    $userRoleIds = $userRoles->pluck('user_id')->toArray();
+                                    $users = DB::table('users')->whereIn('id', $userRoleIds)->get(); // Fetch user data based on user IDs
+                                @endphp
+                                <div class="col-lg-6 engineering">
+                                    <div class="group-input">
+                                        <label for="Engineering Person">Engineering Person</label>
+                                        <select name="Engineering_person" id="Engineering_person">
+                                            <option value="0">-- Select --</option>
+                                            @foreach ($users as $user)
+                                                <option value="{{ $user->id }}">{{ $user->name }}</option>
+                                            @endforeach
+                                        </select>
+
+                                    </div>
+                                </div>
+                                <div class="col-md-12 mb-3 engineering">
+                                    <div class="group-input">
+                                        <label for="Impact Assessment4">Impact Assessment (By Engineering)</label>
+                                        <div><small class="text-primary">Please insert "NA" in the data field if it does
+                                                not require completion</small></div>
+                                        <textarea class="" name="Engineering_assessment" id="summernote-25">
+                                                        </textarea>
+                                    </div>
+                                </div>
+                                <div class="col-md-12 mb-3 engineering">
+                                    <div class="group-input">
+                                        <label for="productionfeedback">Engineering Feedback</label>
+                                        <div><small class="text-primary">Please insert "NA" in the data field if it does
+                                                not require completion</small></div>
+                                        <textarea class="" name="Engineering_feedback" id="summernote-26">
+                                                        </textarea>
+                                    </div>
+                                </div>
+                                <div class="col-lg-12 engineering">
+                                    <div class="group-input">
+                                        <label for="Audit Attachments">Engineering Attachments</label>
+                                        <div><small class="text-primary">Please Attach all relevant or supporting
+                                                documents</small></div>
+                                        <div class="file-attachment-field">
+                                            <div class="file-attachment-list" id="Engineering_attachment"></div>
+                                            <div class="add-btn">
+                                                <div>Add</div>
+                                                <input type="file" id="myfile" name="Engineering_attachment[]"
+                                                    oninput="addMultipleFiles(this, 'Engineering_attachment')" multiple>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 mb-3 engineering">
+                                    <div class="group-input">
+                                        <label for="Engineering Review Completed By">Engineering Review Completed
+                                            By</label>
+                                        <input type="text" name="Engineering_by" id="Engineering_by" disabled>
+
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 new-date-data-field engineering">
+                                    <div class="group-input input-date">
+                                        <label for="Engineering Review Completed On">Engineering Review Completed
+                                            On</label>
+                                        <div class="calenderauditee">
+                                            <input type="text" id="Engineering_on" readonly placeholder="DD-MMM-YYYY" />
+                                            <input type="date" name="Engineering_on"
+                                                min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input"
+                                                oninput="handleDateInput(this, 'Engineering_on')" />
+                                        </div>
+                                    </div>
+                                </div>
+
+
+
+
+                                <div class="sub-head">
+                                    Human Resource
+                                </div>
+                                <script>
+                                    $(document).ready(function() {
+                                        $('.human_resources').hide();
+
+                                        $('[name="Human_Resource_review"]').change(function() {
+                                            if ($(this).val() === 'yes') {
+                                                $('.human_resources').show();
+                                                $('.human_resources span').show();
+                                            } else {
+                                                $('.human_resources').hide();
+                                                $('.human_resources span').hide();
+                                            }
+                                        });
+                                    });
+                                </script>
+                                <div class="col-lg-6">
+                                    <div class="group-input">
+                                        <label for="Administration Review Required">Human Resource
+                                            Required ?</label>
+                                        <select name="Human_Resource_review" id="Human_Resource_review" disabled>
+                                            <option value="">-- Select --</option>
+                                            <option value="yes">Yes</option>
+                                            <option value="no">No</option>
+                                            <option value="na">NA</option>
+
+                                        </select>
+
+                                    </div>
+                                </div>
+                                @php
+                                    $division = DB::table('q_m_s_divisions')
+                                        ->where('name', Helpers::getDivisionName(session()->get('division')))
+                                        ->first();
+                                    $userRoles = DB::table('user_roles')
+                                        ->where(['q_m_s_roles_id' => 31, 'q_m_s_divisions_id' => $division->id])
+                                        ->get();
+                                    $userRoleIds = $userRoles->pluck('user_id')->toArray();
+                                    $users = DB::table('users')->whereIn('id', $userRoleIds)->get(); // Fetch user data based on user IDs
+                                @endphp
+                                <div class="col-lg-6 human_resources">
+                                    <div class="group-input">
+                                        <label for="Administration Person"> Human Resource Person</label>
+                                        <select name="Human_Resource_person" id="Human_Resource_person">
+                                            <option value="0">-- Select --</option>
+                                            @foreach ($users as $user)
+                                                <option value="{{ $user->id }}">{{ $user->name }}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-12 mb-3 human_resources">
+                                    <div class="group-input">
+                                        <label for="Impact Assessment9">Impact Assessment (By Human Resource )</label>
+                                        <textarea class="" name="Human_Resource_assessment" id="summernote-35"></textarea>
+                                    </div>
+                                </div>
+                                <div class="col-md-12 mb-3 human_resources">
+                                    <div class="group-input">
+                                        <label for="productionfeedback">Human Resource Feedback</label>
+                                        <textarea class="" name="Human_Resource_feedback" id="summernote-36"></textarea>
+                                    </div>
+                                </div>
+                                <div class="col-lg-12 human_resources">
+                                    <div class="group-input">
+                                        <label for="Audit Attachments"> Human Resource
+                                            Attachments</label>
+                                        <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
+                                        <div class="file-attachment-field">
+                                            <div class="file-attachment-list" id="Human_Resource_attachment"></div>
+                                            <div class="add-btn">
+                                                <div>Add</div>
+                                                <input type="file" id="myfile" name="Human_Resource_attachment[]"
+                                                    oninput="addMultipleFiles(this, 'Human_Resource_attachment')" multiple>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 mb-3 human_resources">
+                                    <div class="group-input">
+                                        <label for="Administration Review Completed By"> Human Resource Review Completed By</label>
+                                        <input type="text" name="Human_Resource_by" id="Human_Resource_by" disabled>
+
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 new-date-data-field human_resources">
+                                    <div class="group-input input-date">
+                                        <label for="Administration Review Completed On">Human Resource Review Completed On</label>
+                                        <div class="calenderauditee">
+                                            <input type="text" id="Human_Resource_on" readonly placeholder="DD-MMM-YYYY" />
+                                            <input type="date" name="Human_Resource_on"
+                                                min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input"
+                                                oninput="handleDateInput(this, 'Human_Resource_on')" />
+                                        </div>
+                                    </div>
+                                </div>
+
+
+
+                                <div class="sub-head">
+                                    Microbiology
+                                </div>
+                                <script>
+                                    $(document).ready(function() {
+                                        $('.Microbiology').hide();
+
+                                        $('[name="Microbiology_Review"]').change(function() {
+                                            if ($(this).val() === 'yes') {
+
+                                                $('.Microbiology').show();
+                                                $('.Microbiology span').show();
+                                            } else {
+                                                $('.Microbiology').hide();
+                                                $('.Microbiology span').hide();
+                                            }
+                                        });
+                                    });
+                                </script>
+
+                                <div class="col-lg-6">
+                                    <div class="group-input">
+                                        <label for="Microbiology"> Microbiology Required ?</label>
+                                        <select name="Microbiology_Review" id="Microbiology_Review" disabled>
+                                            <option value="">-- Select --</option>
+                                            <option value='yes'>
+                                                Yes</option>
+                                            <option value='no'>
+                                                No</option>
+                                            <option value='na'>
+                                                NA</option>
+                                        </select>
+
+                                    </div>
+                                </div>
+                                @php
+                                    $division = DB::table('q_m_s_divisions')
+                                        ->where('name', Helpers::getDivisionName(session()->get('division')))
+                                        ->first();
+                                    $userRoles = DB::table('user_roles')
+                                        ->where(['q_m_s_roles_id' => 22, 'q_m_s_divisions_id' => $division->id])
+                                        ->get();
+                                    $userRoleIds = $userRoles->pluck('user_id')->toArray();
+                                    $users = DB::table('users')->whereIn('id', $userRoleIds)->get(); // Fetch user data based on user IDs
+                                @endphp
+                                <div class="col-lg-6 Microbiology">
+                                    <div class="group-input">
+                                        <label for="Microbiology notification">Microbiology Person</label>
+                                        <select name="Microbiology_Person" class="Microbiology_Person" id="Microbiology_Person">
+                                            <option value="">-- Select --</option>
+                                            @foreach ($users as $user)
+                                                <option value="{{ $user->id }}">{{ $user->name }}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-12 mb-3 Microbiology">
+                                    <div class="group-input">
+                                        <label for="Microbiology assessment">Impact Assessment (By Microbiology)</label>
+                                        <textarea class="summernote Microbiology_assessment" name="Microbiology_assessment" id="summernote-17"></textarea>
+                                    </div>
+                                </div>
+                                <div class="col-md-12 mb-3 Microbiology">
+                                    <div class="group-input">
+                                        <label for="Microbiology feedback">Microbiology Feedback</label>
+                                        <textarea class="summernote Microbiology_feedback" name="Microbiology_feedback" id="summernote-18"></textarea>
+                                    </div>
+                                </div>
+                                <div class="col-12 Microbiology">
+                                    <div class="group-input">
+                                        <label for="Microbiology attachment">Microbiology Attachments</label>
+                                        <div><small class="text-primary">Please Attach all relevant or supporting
+                                                documents</small></div>
+                                        <div class="file-attachment-field">
+                                            <div class="file-attachment-list" id="Microbiology_attachment"></div>
+                                            <div class="add-btn">
+                                                <div>Add</div>
+                                                <input type="file" id="myfile" name="Microbiology_attachment[]"
+                                                    oninput="addMultipleFiles(this, 'Microbiology_attachment')" multiple>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 mb-3 Microbiology">
+                                    <div class="group-input">
+                                        <label for="Microbiology Completed By">Microbiology Completed By</label>
+                                        <input readonly type="text" name="Microbiology_by" id="Microbiology_by">
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 Microbiology">
+                                    <div class="group-input ">
+                                        <label for="Microbiology Completed On">Microbiology Completed On</label>
+                                        <input type="date" id="Microbiology_on" name="Microbiology_on">
+                                    </div>
+                                </div>
+
+
+
+                                <div class="sub-head">
+                                    Regulatory Affair
+                                </div>
+                                <script>
+                                    $(document).ready(function() {
+                                        $('.RegulatoryAffair').hide();
+
+                                        $('[name="RegulatoryAffair_Review"]').change(function() {
+                                            if ($(this).val() === 'yes') {
+
+                                                $('.RegulatoryAffair').show();
+                                                $('.RegulatoryAffair span').show();
+                                            } else {
+                                                $('.RegulatoryAffair').hide();
+                                                $('.RegulatoryAffair span').hide();
+                                            }
+                                        });
+                                    });
+                                </script>
+
+                                <div class="col-lg-6">
+                                    <div class="group-input">
+                                        <label for="RegulatoryAffair"> Regulatory Affair Required ?</label>
+                                        <select name="RegulatoryAffair_Review" id="RegulatoryAffair_Review" disabled>
+                                            <option value="">-- Select --</option>
+                                            <option value='yes'>
+                                                Yes</option>
+                                            <option value='no'>
+                                                No</option>
+                                            <option value='na'>
+                                                NA</option>
+                                        </select>
+
+                                    </div>
+                                </div>
+                                @php
+                                    $division = DB::table('q_m_s_divisions')
+                                        ->where('name', Helpers::getDivisionName(session()->get('division')))
+                                        ->first();
+                                    $userRoles = DB::table('user_roles')
+                                        ->where(['q_m_s_roles_id' => 22, 'q_m_s_divisions_id' => $division->id])
+                                        ->get();
+                                    $userRoleIds = $userRoles->pluck('user_id')->toArray();
+                                    $users = DB::table('users')->whereIn('id', $userRoleIds)->get(); // Fetch user data based on user IDs
+                                @endphp
+                                <div class="col-lg-6 RegulatoryAffair">
+                                    <div class="group-input">
+                                        <label for="Regulatory Affair notification">Regulatory Affair Person</label>
+                                        <select name="RegulatoryAffair_Person" class="RegulatoryAffair_Person" id="RegulatoryAffair_Person">
+                                            <option value="">-- Select --</option>
+                                            @foreach ($users as $user)
+                                                <option value="{{ $user->id }}">{{ $user->name }}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-12 mb-3 RegulatoryAffair">
+                                    <div class="group-input">
+                                        <label for="Regulatory Affair assessment">Impact Assessment (By Regulatory Affair)</label>
+                                        <textarea class="summernote RegulatoryAffair_assessment" name="RegulatoryAffair_assessment" id="summernote-17"></textarea>
+                                    </div>
+                                </div>
+                                <div class="col-md-12 mb-3 RegulatoryAffair">
+                                    <div class="group-input">
+                                        <label for="Regulatory Affair feedback">Regulatory Affair Feedback</label>
+                                        <textarea class="summernote RegulatoryAffair_feedback" name="RegulatoryAffair_feedback" id="summernote-18"></textarea>
+                                    </div>
+                                </div>
+                                <div class="col-12 RegulatoryAffair">
+                                    <div class="group-input">
+                                        <label for="Regulatory Affair attachment">Regulatory Affair Attachments</label>
+                                        <div><small class="text-primary">Please Attach all relevant or supporting
+                                                documents</small></div>
+                                        <div class="file-attachment-field">
+                                            <div class="file-attachment-list" id="RegulatoryAffair_attachment"></div>
+                                            <div class="add-btn">
+                                                <div>Add</div>
+                                                <input type="file" id="myfile" name="RegulatoryAffair_attachment[]"
+                                                    oninput="addMultipleFiles(this, 'RegulatoryAffair_attachment')" multiple>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 mb-3 RegulatoryAffair">
+                                    <div class="group-input">
+                                        <label for="Regulatory Affair Completed By">Regulatory Affair Completed By</label>
+                                        <input readonly type="text" name="RegulatoryAffair_by" id="RegulatoryAffair_by">
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 RegulatoryAffair">
+                                    <div class="group-input ">
+                                        <label for="Regulatory Affair Completed On">Regulatory Affair Completed On</label>
+                                        <input type="date"id="RegulatoryAffair_on" name="RegulatoryAffair_on">
+                                    </div>
+                                </div>
+
+
+                                <div class="sub-head">
+                                    Corporate Quality Assurance
+                                </div>
+                                <script>
+                                    $(document).ready(function() {
+                                        $('.CQA').hide();
+
+                                        $('[name="CorporateQualityAssurance_Review"]').change(function() {
+                                            if ($(this).val() === 'yes') {
+
+                                                $('.CQA').show();
+                                                $('.CQA span').show();
+                                            } else {
+                                                $('.CQA').hide();
+                                                $('.CQA span').hide();
+                                            }
+                                        });
+                                    });
+                                </script>
+
+                                <div class="col-lg-6">
+                                    <div class="group-input">
+                                        <label for="Corporate Quality Assurance"> Corporate Quality Assurance Required ?</label>
+                                        <select name="CorporateQualityAssurance_Review" id="CorporateQualityAssurance_Review" disabled>
+                                            <option value="">-- Select --</option>
+                                            <option value='yes'>
+                                                Yes</option>
+                                            <option value='no'>
+                                                No</option>
+                                            <option value='na'>
+                                                NA</option>
+                                        </select>
+
+                                    </div>
+                                </div>
+                                @php
+                                    $division = DB::table('q_m_s_divisions')
+                                        ->where('name', Helpers::getDivisionName(session()->get('division')))
+                                        ->first();
+                                    $userRoles = DB::table('user_roles')
+                                        ->where(['q_m_s_roles_id' => 22, 'q_m_s_divisions_id' => $division->id])
+                                        ->get();
+                                    $userRoleIds = $userRoles->pluck('user_id')->toArray();
+                                    $users = DB::table('users')->whereIn('id', $userRoleIds)->get(); // Fetch user data based on user IDs
+                                @endphp
+                                <div class="col-lg-6 CQA">
+                                    <div class="group-input">
+                                        <label for="Corporate Quality Assurance notification">Corporate Quality Assurance Person</label>
+                                        <select name="CorporateQualityAssurance_Person" class="CorporateQualityAssurance_Person"
+                                            id="CorporateQualityAssurance_Person">
+                                            <option value="">-- Select --</option>
+                                            @foreach ($users as $user)
+                                                <option value="{{ $user->id }}">{{ $user->name }}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-12 mb-3 CQA">
+                                    <div class="group-input">
+                                        <label for="Corporate Quality Assurance assessment">Impact Assessment (By Corporate Quality Assurance)</label>
+                                        <textarea class="summernote CorporateQualityAssurance_assessment" readonly name="CorporateQualityAssurance_assessment"
+                                            id="summernote-17"></textarea>
+                                    </div>
+                                </div>
+                                <div class="col-md-12 mb-3 CQA">
+                                    <div class="group-input">
+                                        <label for="Corporate Quality Assurance feedback">Corporate Quality Assurance Feedback</label>
+                                        <textarea class="summernote CorporateQualityAssurance_feedback" name="CorporateQualityAssurance_feedback"
+                                            id="summernote-18"></textarea>
+                                    </div>
+                                </div>
+                                <div class="col-12 CQA">
+                                    <div class="group-input">
+                                        <label for="Corporate Quality Assurance attachment">Corporate Quality Assurance Attachments</label>
+                                        <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
+                                        <div class="file-attachment-field">
+                                            <div class="file-attachment-list" id="CorporateQualityAssurance_attachment"></div>
+                                            <div class="add-btn">
+                                                <div>Add</div>
+                                                <input type="file" id="myfile" name="CorporateQualityAssurance_attachment[]"
+                                                    oninput="addMultipleFiles(this, 'CorporateQualityAssurance_attachment')" multiple>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 mb-3 CQA">
+                                    <div class="group-input">
+                                        <label for="Corporate Quality Assurance Completed By">Corporate Quality Assurance Completed By</label>
+                                        <input readonly type="text" name="CorporateQualityAssurance_by" id="CorporateQualityAssurance_by">
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 CQA">
+                                    <div class="group-input ">
+                                        <label for="Corporate Quality Assurance Completed On">Corporate Quality Assurance Completed On</label>
+                                        <input type="date"id="CorporateQualityAssurance_on" name="CorporateQualityAssurance_on">
+                                    </div>
+                                </div>
+
+
+                                <div class="sub-head">
+                                    Safety
+                                </div>
+                                <script>
+                                    $(document).ready(function() {
+                                        $('.environmental_health').hide();
+
+                                        $('[name="Environment_Health_review"]').change(function() {
+                                            if ($(this).val() === 'yes') {
+                                                $('.environmental_health').show();
+                                                $('.environmental_health span').show();
+                                            } else {
+                                                $('.environmental_health').hide();
+                                                $('.environmental_health span').hide();
+                                            }
+                                        });
+                                    });
+                                </script>
+                                <div class="col-lg-6">
+                                    <div class="group-input">
+                                        <label for="Safety Review Required">Safety Review Required
+                                            ?</label>
+                                        <select name="Environment_Health_review" id="Environment_Health_review" disabled>
+                                            <option value="0">-- Select --</option>
+                                            <option value="yes">Yes</option>
+                                            <option value="no">No</option>
+                                            <option value="na">NA</option>
+
+                                        </select>
+
+                                    </div>
+                                </div>
+                                @php
+                                    $division = DB::table('q_m_s_divisions')
+                                        ->where('name', Helpers::getDivisionName(session()->get('division')))
+                                        ->first();
+                                    $userRoles = DB::table('user_roles')
+                                        ->where(['q_m_s_roles_id' => 30, 'q_m_s_divisions_id' => $division->id])
+                                        ->get();
+                                    $userRoleIds = $userRoles->pluck('user_id')->toArray();
+                                    $users = DB::table('users')->whereIn('id', $userRoleIds)->get(); // Fetch user data based on user IDs
+                                @endphp
+                                <div class="col-lg-6 environmental_health">
+                                    <div class="group-input">
+                                        <label for="Safety Person"> Safety Person</label>
+                                        <select name="Environment_Health_Safety_person" id="Environment_Health_Safety_person">
+                                            <option value="0">-- Select --</option>
+                                            @foreach ($users as $user)
+                                                <option value="{{ $user->id }}">{{ $user->name }}</option>
+                                            @endforeach
+                                        </select>
+
+                                    </div>
+                                </div>
+                                <div class="col-md-12 mb-3 environmental_health">
+                                    <div class="group-input">
+                                        <label for="Impact Assessment8">Impact Assessment (By Safety)</label>
+                                        <textarea class="" name="Health_Safety_assessment" id="summernote-33">
+                                                        </textarea>
+                                    </div>
+                                </div>
+                                <div class="col-md-12 mb-3 environmental_health">
+                                    <div class="group-input">
+                                        <label for="productionfeedback">Safety Feedback</label>
+                                        <textarea class="" name="Health_Safety_feedback" id="summernote-34">
+                                                        </textarea>
+                                    </div>
+                                </div>
+                                <div class="col-lg-12 environmental_health">
+                                    <div class="group-input">
+                                        <label for="Audit Attachments"> Safety Attachments</label>
+                                        <div><small class="text-primary">Please Attach all relevant or supporting
+                                                documents</small></div>
+                                        <div class="file-attachment-field">
+                                            <div class="file-attachment-list" id="Environment_Health_Safety_attachment">
+                                            </div>
+                                            <div class="add-btn">
+                                                <div>Add</div>
+                                                <input type="file" id="myfile" name="Environment_Health_Safety_attachment[]"
+                                                    oninput="addMultipleFiles(this, 'Environment_Health_Safety_attachment')" multiple>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6 mb-3 environmental_health">
+                                    <div class="group-input">
+                                        <label for="productionfeedback">Safety Review Completed
+                                            By</label>
+                                        <input type="text" name="Environment_Health_Safety_by" id="Environment_Health_Safety_by"
+                                            disabled>
+
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 new-date-data-field environmental_health">
+                                    <div class="group-input input-date">
+                                        <label for="Safety Review Completed On">Safety Review
+                                            Completed On</label>
+                                        <div class="calenderauditee">
+                                            <input type="text" id="Environment_Health_Safety_on" readonly placeholder="DD-MMM-YYYY" />
+                                            <input type="date" name="Environment_Health_Safety_on"
+                                                min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input"
+                                                oninput="handleDateInput(this, 'Environment_Health_Safety_on')" />
+                                        </div>
+                                    </div>
+                                </div>
+
+                                
+                                <div class="sub-head">
+                                    Information Technology
+                                </div>
+                                <script>
+                                    $(document).ready(function() {
+                                        $('.information_technology').hide();
+
+                                        $('[name="Information_Technology_review"]').change(function() {
+                                            if ($(this).val() === 'yes') {
+                                                $('.information_technology').show();
+                                                $('.information_technology span').show();
+                                            } else {
+                                                $('.information_technology').hide();
+                                                $('.information_technology span').hide();
+                                            }
+                                        });
+                                    });
+                                </script>
+                                <div class="col-lg-6">
+                                    <div class="group-input">
+                                        <label for="Information Technology Review Required"> Information Technology Review
+                                            Required ?</label>
+                                        <select name=" Information_Technology_review" id=" Information_Technology_review" disabled>
+                                            <option value="0">-- Select --</option>
+                                            <option value="yes">Yes</option>
+                                            <option value="no">No</option>
+                                            <option value="na">NA</option>
+
+                                        </select>
+
+                                    </div>
+                                </div>
+                                @php
+                                    $division = DB::table('q_m_s_divisions')
+                                        ->where('name', Helpers::getDivisionName(session()->get('division')))
+                                        ->first();
+                                    $userRoles = DB::table('user_roles')
+                                        ->where(['q_m_s_roles_id' => 32, 'q_m_s_divisions_id' => $division->id])
+                                        ->get();
+                                    $userRoleIds = $userRoles->pluck('user_id')->toArray();
+                                    $users = DB::table('users')->whereIn('id', $userRoleIds)->get(); // Fetch user data based on user IDs
+                                @endphp
+                                <div class="col-lg-6 information_technology">
+                                    <div class="group-input">
+                                        <label for="Information Technology Person"> Information Technology Person</label>
+                                        <select name=" Information_Technology_person" id=" Information_Technology_person">
+                                            <option value="0">-- Select --</option>
+                                            @foreach ($users as $user)
+                                                <option value="{{ $user->id }}">{{ $user->name }}</option>
+                                            @endforeach
+                                        </select>
+
+                                    </div>
+                                </div>
+                                <div class="col-md-12 mb-3 information_technology">
+                                    <div class="group-input">
+                                        <label for="Impact Assessment10">Impact Assessment (By Information
+                                            Technology)</label>
+                                        <textarea class="" name="Information_Technology_assessment" id="summernote-37">
+                                                        </textarea>
+                                    </div>
+                                </div>
+                                <div class="col-md-12 mb-3 information_technology">
+                                    <div class="group-input">
+                                        <label for="Information Technology Feedback"> Information Technology
+                                            Feedback</label>
+                                        <textarea class="" name="Information_Technology_feedback" id="summernote-38">
+                                                        </textarea>
+                                    </div>
+                                </div>
+                                <div class="col-lg-12 information_technology">
+                                    <div class="group-input">
+                                        <label for="Audit Attachments"> Information Technology Attachments</label>
+                                        <div><small class="text-primary">Please Attach all relevant or supporting
+                                                documents</small></div>
+                                        <div class="file-attachment-field">
+                                            <div class="file-attachment-list" id="Information_Technology_attachment">
+                                            </div>
+                                            <div class="add-btn">
+                                                <div>Add</div>
+                                                <input type="file" id="myfile" name="Information_Technology_attachment[]"
+                                                    oninput="addMultipleFiles(this, 'Information_Technology_attachment')" multiple>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 mb-3 information_technology">
+                                    <div class="group-input">
+                                        <label for="Information Technology Review Completed By"> Information Technology
+                                            Review Completed By</label>
+                                        <input type="text" name="Information_Technology_by" disabled>
+
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 new-date-data-field information_technology">
+                                    <div class="group-input input-date">
+                                        <label for="Information Technology Review Completed On">Information Technology
+                                            Review Completed On</label>
+                                        <div class="calenderauditee">
+                                            <input type="text" id="Information_Technology_on" readonly placeholder="DD-MMM-YYYY" />
+                                            <input type="date" name="Information_Technology_on"
+                                                min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input"
+                                                oninput="handleDateInput(this, 'Information_Technology_on')" />
+                                        </div>
+                                    </div>
+                                </div>
+
+                                    
+
+                                <div class="sub-head">
+                                    Contract Giver
+                                </div>
+                                <script>
+                                    $(document).ready(function() {
+                                        $('.ContractGiver').hide();
+
+                                        $('[name="ContractGiver_Review"]').change(function() {
+                                            if ($(this).val() === 'yes') {
+
+                                                $('.ContractGiver').show();
+                                                $('.ContractGiver span').show();
+                                            } else {
+                                                $('.ContractGiver').hide();
+                                                $('.ContractGiver span').hide();
+                                            }
+                                        });
+                                    });
+                                </script>
+
+                                <div class="col-lg-6">
+                                    <div class="group-input">
+                                        <label for="Contract Giver"> Contract Giver Required ? </label>
+                                        <select name="ContractGiver_Review" id="ContractGiver_Review" disabled>
+                                            <option value="">-- Select --</option>
+                                            <option value='yes'>
+                                                Yes</option>
+                                            <option value='no'>
+                                                No</option>
+                                            <option value='na'>
+                                                NA</option>
+                                        </select>
+
+                                    </div>
+                                </div>
+                                @php
+                                    $division = DB::table('q_m_s_divisions')
+                                        ->where('name', Helpers::getDivisionName(session()->get('division')))
+                                        ->first();
+                                    $userRoles = DB::table('user_roles')
+                                        ->where(['q_m_s_roles_id' => 22, 'q_m_s_divisions_id' => $division->id])
+                                        ->get();
+                                    $userRoleIds = $userRoles->pluck('user_id')->toArray();
+                                    $users = DB::table('users')->whereIn('id', $userRoleIds)->get(); // Fetch user data based on user IDs
+                                @endphp
+                                <div class="col-lg-6 store">
+                                    <div class="group-input">
+                                        <label for="Contract Giver notification">Contract Giver Person</label>
+                                        <select name="ContractGiver_Person" class="ContractGiver_Person" id="ContractGiver_Person">
+                                            <option value="">-- Select --</option>
+                                            @foreach ($users as $user)
+                                                <option value="{{ $user->id }}">
+                                                    {{ $user->name }}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-12 mb-3 store">
+                                    <div class="group-input">
+                                        <label for="Contract Giver assessment">Impact Assessment (By Contract Giver)</label>
+                                        <textarea class="summernote ContractGiver_assessment" name="ContractGiver_assessment" id="summernote-17"></textarea>
+                                    </div>
+                                </div>
+                                <div class="col-md-12 mb-3 store">
+                                    <div class="group-input">
+                                        <label for="Contract Giver feedback">Contract Giver Feedback</label>
+                                        <textarea class="summernote ContractGiver_feedback" name="ContractGiver_feedback" id="summernote-18"></textarea>
+                                    </div>
+                                </div>
+                                <div class="col-12 store">
+                                    <div class="group-input">
+                                        <label for="Contract Giver attachment">Contract Giver Attachments</label>
+                                        <div><small class="text-primary">Please Attach all relevant or supporting
+                                                documents</small></div>
+                                        <div class="file-attachment-field">
+                                            <div class="file-attachment-list" id="ContractGiver_attachment"></div>
+                                            <div class="add-btn">
+                                                <div>Add</div>
+                                                <input type="file" id="myfile" name="ContractGiver_attachment[]"
+                                                    oninput="addMultipleFiles(this, 'ContractGiver_attachment')" multiple>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 mb-3 store">
+                                    <div class="group-input">
+                                        <label for="Contract Giver Completed By">Contract Giver Completed
+                                            By</label>
+                                        <input readonly type="text" name="ContractGiver_by" id="ContractGiver_by">
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 store">
+                                    <div class="group-input ">
+                                        <label for="Contract Giver Completed On">Contract Giver Completed On</label>
+                                        <input type="date"id="ContractGiver_on" name="ContractGiver_on">
+                                    </div>
+                                </div>
+
+
+                                <div class="sub-head">
+                                    Other's 1 ( Additional Person Review From Departments If Required)
+                                </div>
+                                <script>
+                                    $(document).ready(function() {
+                                        $('.other1_reviews').hide();
+
+                                        $('[name="Other1_review"]').change(function() {
+                                            if ($(this).val() === 'yes') {
+                                                $('.other1_reviews').show();
+                                                $('.other1_reviews span').show();
+                                            } else {
+                                                $('.other1_reviews').hide();
+                                                $('.other1_reviews span').hide();
+                                            }
+                                        });
+                                    });
+                                </script>
+                                <div class="col-lg-6">
+                                    <div class="group-input">
+                                        <label for="Customer notification"> Other's 1 Review Required ?</label>
+                                        <select name="Other1_review" id="Other1_review" disabled>
+                                            <option value="0">-- Select --</option>
+                                            <option value="yes">Yes</option>
+                                            <option value="no">No</option>
+                                            <option value="na">NA</option>
+
+                                        </select>
+
+                                    </div>
+                                </div>
+                                @php
+                                    $division = DB::table('q_m_s_divisions')
+                                        ->where('name', Helpers::getDivisionName(session()->get('division')))
+                                        ->first();
+                                    $userRoles = DB::table('user_roles')
+                                        ->where(['q_m_s_roles_id' => 34, 'q_m_s_divisions_id' => $division->id])
+                                        ->get();
+                                    $userRoleIds = $userRoles->pluck('user_id')->toArray();
+                                    $users = DB::table('users')->whereIn('id', $userRoleIds)->get(); // Fetch user data based on user IDs
+                                @endphp
+                                <div class="col-lg-6 other1_reviews">
+                                    <div class="group-input">
+                                        <label for="Customer notification"> Other's 1 Person</label>
+                                        <select name="Other1_person" id="Other1_person">
+                                            <option value="0">-- Select --</option>
+                                            @foreach ($users as $user)
+                                                <option value="{{ $user->id }}">{{ $user->name }}</option>
+                                            @endforeach
+
+                                        </select>
+
+                                    </div>
+                                </div>
+                                <div class="col-lg-12 other1_reviews">
+                                    <div class="group-input">
+                                        <label for="Customer notification"> Other's 1 Department</label>
+                                        <select name="Other1_Department_person" id="Other1_Department_person">
+                                            <option value="0">-- Select --</option>
+                                            <option value="Production">Production</option>
+                                            <option value="Warehouse">Warehouse</option>
+                                            <option value="Quality_Control">Quality Control</option>
+                                            <option value="Quality_Assurance">Quality Assurance</option>
+                                            <option value="Engineering">Engineering</option>
+                                            <option value="Analytical_Development_Laboratory">Analytical Development
+                                                Laboratory</option>
+                                            <option value="Process_Development_Lab">Process Development Laboratory / Kilo
+                                                Lab</option>
+                                            <option value="Technology transfer/Design">Technology Transfer/Design</option>
+                                            <option value="Environment, Health & Safety">Environment, Health & Safety
+                                            </option>
+                                            <option value="Human Resource & Administration">Human Resource &
+                                                Administration</option>
+                                            <option value="Information Technology">Information Technology</option>
+                                            <option value="Project management">Project management</option>
+
+
+
+                                        </select>
+
+                                    </div>
+                                </div>
+                                <div class="col-md-12 mb-3 other1_reviews">
+                                    <div class="group-input">
+                                        <label for="productionfeedback">Impact Assessment (By Other's 1)</label>
+                                        <textarea class="" name="Other1_assessment" id="summernote-41">
+                                                            </textarea>
+                                    </div>
+                                </div>
+                                <div class="col-md-12 mb-3 other1_reviews">
+                                    <div class="group-input">
+                                        <label for="productionfeedback"> Other's 1 Feedback</label>
+                                        <textarea class="" name="Other1_feedback" id="summernote-42">
+                                                            </textarea>
+                                    </div>
+                                </div>
+                                <div class="col-lg-12 other1_reviews">
+                                    <div class="group-input">
+                                        <label for="Audit Attachments"> Other's 1 Attachments</label>
+                                        <div><small class="text-primary">Please Attach all relevant or supporting
+                                                documents</small></div>
+                                        <div class="file-attachment-field">
+                                            <div class="file-attachment-list" id="Other1_attachment"></div>
+                                            <div class="add-btn">
+                                                <div>Add</div>
+                                                <input type="file" id="myfile" name="Other1_attachment[]"
+                                                    oninput="addMultipleFiles(this, 'Other1_attachment')" multiple>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 mb-3 other1_reviews">
+                                    <div class="group-input">
+                                        <label for="productionfeedback"> Other's 1 Review Completed By</label>
+                                        <input type="text" name="Other1_by" id="Other1_by" disabled>
+
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 new-date-data-field other1_reviews">
+                                    <div class="group-input input-date">
+                                        <label for="Review Completed On1">Other's 1 Review Completed On</label>
+                                        <div class="calenderauditee">
+                                            <input type="text" id="Other1_on" name="Other1_on" readonly placeholder="DD-MMM-YYYY" />
+                                        </div>
+                                    </div>
+                                </div>
+
+
+
+                                <div class="sub-head">
+                                    Other's 2 ( Additional Person Review From Departments If Required)
+                                </div>
+                                <script>
+                                    $(document).ready(function() {
+                                        $('.Other2_reviews').hide();
+
+                                        $('[name="Other2_review"]').change(function() {
+                                            if ($(this).val() === 'yes') {
+                                                $('.Other2_reviews').show();
+                                                $('.Other2_reviews span').show();
+                                            } else {
+                                                $('.Other2_reviews').hide();
+                                                $('.Other2_reviews span').hide();
+                                            }
+                                        });
+                                    });
+                                </script>
+                                <div class="col-lg-6 ">
+                                    <div class="group-input">
+                                        <label for="Customer notification"> Other's 2 Review Required ?</label>
+                                        <select name="Other2_review" id="Other2_review" disabled>
+                                            <option value="0">-- Select --</option>
+                                            <option value="yes">Yes</option>
+                                            <option value="no">No</option>
+                                            <option value="na">NA</option>
+
+                                        </select>
+
+                                    </div>
+                                </div>
+                                @php
+                                    $division = DB::table('q_m_s_divisions')
+                                        ->where('name', Helpers::getDivisionName(session()->get('division')))
+                                        ->first();
+                                    $userRoles = DB::table('user_roles')
+                                        ->where(['q_m_s_roles_id' => 35, 'q_m_s_divisions_id' => $division->id])
+                                        ->get();
+                                    $userRoleIds = $userRoles->pluck('user_id')->toArray();
+                                    $users = DB::table('users')->whereIn('id', $userRoleIds)->get(); // Fetch user data based on user IDs
+                                @endphp
+                                <div class="col-lg-6 Other2_reviews">
+                                    <div class="group-input">
+                                        <label for="Customer notification"> Other's 2 Person</label>
+                                        <select name="Other2_person" id="Other2_person">
+                                            <option value="0">-- Select --</option>
+                                            @foreach ($users as $user)
+                                                <option value="{{ $user->id }}">{{ $user->name }}</option>
+                                            @endforeach
+
+                                        </select>
+
+                                    </div>
+                                </div>
+                                <div class="col-lg-12 Other2_reviews">
+                                    <div class="group-input">
+                                        <label for="Customer notification"> Other's 2 Department</label>
+                                        <select name="Other2_Department_person" id="Other2_Department_person">
+                                            <option value="0">-- Select --</option>
+                                            <option value="Production">Production</option>
+                                            <option value="Warehouse">Warehouse</option>
+                                            <option value="Quality_Control">Quality Control</option>
+                                            <option value="Quality_Assurance">Quality Assurance</option>
+                                            <option value="Engineering">Engineering</option>
+                                            <option value="Analytical_Development_Laboratory">Analytical Development
+                                                Laboratory</option>
+                                            <option value="Process_Development_Lab">Process Development Laboratory / Kilo
+                                                Lab</option>
+                                            <option value="Technology transfer/Design">Technology Transfer/Design</option>
+                                            <option value="Environment, Health & Safety">Environment, Health & Safety
+                                            </option>
+                                            <option value="Human Resource & Administration">Human Resource &
+                                                Administration</option>
+                                            <option value="Information Technology">Information Technology</option>
+                                            <option value="Project management">Project management</option>
+
+
+
+                                        </select>
+
+                                    </div>
+                                </div>
+                                <div class="col-md-12 mb-3 Other2_reviews">
+                                    <div class="group-input">
+                                        <label for="Impact Assessment13">Impact Assessment (By Other's 2)</label>
+                                        <textarea class="" name="Other2_Assessment" id="summernote-43">
+                                                            </textarea>
+                                    </div>
+                                </div>
+                                <div class="col-md-12 mb-3 Other2_reviews">
+                                    <div class="group-input">
+                                        <label for="Feedback2"> Other's 2 Feedback</label>
+                                        <textarea class="" name="Other2_feedback" id="summernote-44">
+                                                            </textarea>
+                                    </div>
+                                </div>
+                                <div class="col-lg-12 Other2_reviews">
+                                    <div class="group-input">
+                                        <label for="Audit Attachments"> Other's 2 Attachments</label>
+                                        <div><small class="text-primary">Please Attach all relevant or supporting
+                                                documents</small></div>
+                                        <div class="file-attachment-field">
+                                            <div class="file-attachment-list" id="Other2_attachment"></div>
+                                            <div class="add-btn">
+                                                <div>Add</div>
+                                                <input type="file" id="myfile" name="Other2_attachment[]"
+                                                    oninput="addMultipleFiles(this, 'Other2_attachment')" multiple>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 mb-3 Other2_reviews">
+                                    <div class="group-input">
+                                        <label for="Review Completed By2"> Other's 2 Review Completed By</label>
+                                        <input type="text" name="Other2_by" disabled>
+
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 new-date-data-field Other2_reviews">
+                                    <div class="group-input input-date">
+                                        <label for="Review Completed On2">Other's 2 Review Completed On</label>
+                                        <div class="calenderauditee">
+                                            <input type="text" id="Other2_on" name="Other2_on" readonly placeholder="DD-MMM-YYYY" />
+                                            {{-- <input type="date"  name="Other2_on" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input"
+                                                                        oninput="handleDateInput(this, 'Other2_on')" /> --}}
+                                        </div>
+                                    </div>
+                                </div>
+
+
+
+                                <div class="sub-head">
+                                    Other's 3 ( Additional Person Review From Departments If Required)
+                                </div>
+                                <script>
+                                    $(document).ready(function() {
+                                        $('.Other3_reviews').hide();
+
+                                        $('[name="Other3_review"]').change(function() {
+                                            if ($(this).val() === 'yes') {
+                                                $('.Other3_reviews').show();
+                                                $('.Other3_reviews span').show();
+                                            } else {
+                                                $('.Other3_reviews').hide();
+                                                $('.Other3_reviews span').hide();
+                                            }
+                                        });
+                                    });
+                                </script>
+                                <div class="col-lg-6">
+                                    <div class="group-input">
+                                        <label for="Customer notification"> Other's 3 Review Required ?</label>
+                                        <select name="Other3_review" id="Other3_review" disabled>
+                                            <option value="0">-- Select --</option>
+                                            <option value="yes">Yes</option>
+                                            <option value="no">No</option>
+                                            <option value="na">NA</option>
+
+                                        </select>
+
+                                    </div>
+                                </div>
+                                @php
+                                    $division = DB::table('q_m_s_divisions')
+                                        ->where('name', Helpers::getDivisionName(session()->get('division')))
+                                        ->first();
+                                    $userRoles = DB::table('user_roles')
+                                        ->where(['q_m_s_roles_id' => 36, 'q_m_s_divisions_id' => $division->id])
+                                        ->get();
+                                    $userRoleIds = $userRoles->pluck('user_id')->toArray();
+                                    $users = DB::table('users')->whereIn('id', $userRoleIds)->get(); // Fetch user data based on user IDs
+                                @endphp
+                                <div class="col-lg-6 Other3_reviews">
+                                    <div class="group-input">
+                                        <label for="Customer notification"> Other's 3 Person</label>
+                                        <select name="Other3_person" id="Other3_person">
+                                            <option value="0">-- Select --</option>
+                                            @foreach ($users as $user)
+                                                <option value="{{ $user->id }}">{{ $user->name }}</option>
+                                            @endforeach
+
+                                        </select>
+
+                                    </div>
+                                </div>
+                                <div class="col-lg-12 Other3_reviews ">
+                                    <div class="group-input">
+                                        <label for="Customer notification"> Other's 3 Department</label>
+                                        <select name="Other3_Department_person" id="Other3_Department_person">
+                                            <option value="0">-- Select --</option>
+                                            <option value="Production">Production</option>
+                                            <option value="Warehouse">Warehouse</option>
+                                            <option value="Quality_Control">Quality Control</option>
+                                            <option value="Quality_Assurance">Quality Assurance</option>
+                                            <option value="Engineering">Engineering</option>
+                                            <option value="Analytical_Development_Laboratory">Analytical Development
+                                                Laboratory</option>
+                                            <option value="Process_Development_Lab">Process Development Laboratory / Kilo
+                                                Lab</option>
+                                            <option value="Technology transfer/Design">Technology Transfer/Design</option>
+                                            <option value="Environment, Health & Safety">Environment, Health & Safety
+                                            </option>
+                                            <option value="Human Resource & Administration">Human Resource &
+                                                Administration</option>
+                                            <option value="Information Technology">Information Technology</option>
+                                            <option value="Project management">Project management</option>
+
+
+
+                                        </select>
+
+                                    </div>
+                                </div>
+                                <div class="col-md-12 mb-3 Other3_reviews">
+                                    <div class="group-input">
+                                        <label for="productionfeedback">Impact Assessment (By Other's 3)</label>
+                                        <textarea class="" name="Other3_Assessment" id="summernote-45">
+                                                            </textarea>
+                                    </div>
+                                </div>
+                                <div class="col-md-12 mb-3 Other3_reviews">
+                                    <div class="group-input">
+                                        <label for="productionfeedback"> Other's 3 Feedback</label>
+                                        <textarea class="" name="Other3_feedback" id="summernote-46">
+                                                            </textarea>
+                                    </div>
+                                </div>
+                                <div class="col-lg-12 Other3_reviews">
+                                    <div class="group-input">
+                                        <label for="Audit Attachments"> Other's 3 Attachments</label>
+                                        <div><small class="text-primary">Please Attach all relevant or supporting
+                                                documents</small></div>
+                                        <div class="file-attachment-field">
+                                            <div class="file-attachment-list" id="Other3_attachment"></div>
+                                            <div class="add-btn">
+                                                <div>Add</div>
+                                                <input type="file" id="myfile" name="Other3_attachment[]"
+                                                    oninput="addMultipleFiles(this, 'Other3_attachment')" multiple>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 mb-3 Other3_reviews">
+                                    <div class="group-input">
+                                        <label for="productionfeedback"> Other's 3 Review Completed By</label>
+                                        <input type="text" name="Other3_by" disabled>
+
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 new-date-data-field Other3_reviews">
+                                    <div class="group-input input-date">
+                                        <label for="Review Completed On3">Other's 3 Review Completed On</label>
+                                        <div class="calenderauditee">
+                                            <input type="text" id="Other3_on" name="Other3_on" readonly placeholder="DD-MMM-YYYY" />
+                                            {{-- <input type="date"  name="Other3_on" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input"
+                                                                        oninput="handleDateInput(this, 'Other3_on')" /> --}}
+                                        </div>
+                                    </div>
+                                </div>
+
+
+
+
+                                <div class="sub-head">
+                                    Other's 4 ( Additional Person Review From Departments If Required)
+                                </div>
+                                <script>
+                                    $(document).ready(function() {
+                                        $('.Other4_reviews').hide();
+
+                                        $('[name="Other4_review"]').change(function() {
+                                            if ($(this).val() === 'yes') {
+                                                $('.Other4_reviews').show();
+                                                $('.Other4_reviews span').show();
+                                            } else {
+                                                $('.Other4_reviews').hide();
+                                                $('.Other4_reviews span').hide();
+                                            }
+                                        });
+                                    });
+                                </script>
+                                <div class="col-lg-6">
+                                    <div class="group-input">
+                                        <label for="review4"> Other's 4 Review Required ?</label>
+                                        <select name="Other4_review" id="Other4_review" disabled>
+                                            <option value="0">-- Select --</option>
+                                            <option value="yes">Yes</option>
+                                            <option value="no">No</option>
+                                            <option value="na">NA</option>
+
+                                        </select>
+
+                                    </div>
+                                </div>
+                                @php
+                                    $division = DB::table('q_m_s_divisions')
+                                        ->where('name', Helpers::getDivisionName(session()->get('division')))
+                                        ->first();
+                                    $userRoles = DB::table('user_roles')
+                                        ->where(['q_m_s_roles_id' => 37, 'q_m_s_divisions_id' => $division->id])
+                                        ->get();
+                                    $userRoleIds = $userRoles->pluck('user_id')->toArray();
+                                    $users = DB::table('users')->whereIn('id', $userRoleIds)->get(); // Fetch user data based on user IDs
+                                @endphp
+                                <div class="col-lg-6 Other4_reviews">
+                                    <div class="group-input">
+                                        <label for="Person4"> Other's 4 Person</label>
+                                        <select name="Other4_person" id="Other4_person">
+                                            <option value="0">-- Select --</option>
+                                            @foreach ($users as $user)
+                                                <option value="{{ $user->id }}">{{ $user->name }}</option>
+                                            @endforeach
+
+                                        </select>
+
+                                    </div>
+                                </div>
+                                <div class="col-lg-12 Other4_reviews">
+                                    <div class="group-input">
+                                        <label for="Department4"> Other's 4 Department</label>
+                                        <select name="Other4_Department_person" id="Other4_Department_person">
+                                            <option value="0">-- Select --</option>
+                                            <option value="Production">Production</option>
+                                            <option value="Warehouse">Warehouse</option>
+                                            <option value="Quality_Control">Quality Control</option>
+                                            <option value="Quality_Assurance">Quality Assurance</option>
+                                            <option value="Engineering">Engineering</option>
+                                            <option value="Analytical_Development_Laboratory">Analytical Development
+                                                Laboratory</option>
+                                            <option value="Process_Development_Lab">Process Development Laboratory / Kilo
+                                                Lab</option>
+                                            <option value="Technology transfer/Design">Technology Transfer/Design</option>
+                                            <option value="Environment, Health & Safety">Environment, Health & Safety
+                                            </option>
+                                            <option value="Human Resource & Administration">Human Resource &
+                                                Administration</option>
+                                            <option value="Information Technology">Information Technology</option>
+                                            <option value="Project management">Project management</option>
+
+
+
+                                        </select>
+
+                                    </div>
+                                </div>
+                                <div class="col-md-12 mb-3 Other4_reviews">
+                                    <div class="group-input">
+                                        <label for="Impact Assessment15">Impact Assessment (By Other's 4)</label>
+                                        <textarea class="" name="Other4_Assessment" id="summernote-47">
+                                                            </textarea>
+                                    </div>
+                                </div>
+                                <div class="col-md-12 mb-3 Other4_reviews">
+                                    <div class="group-input">
+                                        <label for="feedback4"> Other's 4 Feedback</label>
+                                        <textarea class="" name="Other4_feedback" id="summernote-48">
+                                                            </textarea>
+                                    </div>
+                                </div>
+                                <div class="col-lg-12 Other4_reviews">
+                                    <div class="group-input">
+                                        <label for="Audit Attachments"> Other's 4 Attachments</label>
+                                        <div><small class="text-primary">Please Attach all relevant or supporting
+                                                documents</small></div>
+                                        <div class="file-attachment-field">
+                                            <div class="file-attachment-list" id="Other4_attachment"></div>
+                                            <div class="add-btn">
+                                                <div>Add</div>
+                                                <input type="file" id="myfile" name="Other4_attachment[]"
+                                                    oninput="addMultipleFiles(this, 'Other4_attachment')" multiple>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 mb-3 Other4_reviews">
+                                    <div class="group-input">
+                                        <label for="Review Completed By4"> Other's 4 Review Completed By</label>
+                                        <input type="text" name="Other4_by" disabled>
+
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 new-date-data-field Other4_reviews">
+                                    <div class="group-input input-date">
+                                        <label for="Review Completed On4">Other's 4 Review Completed On</label>
+                                        <div class="calenderauditee">
+                                            <input type="text" id="Other4_on" name="Other4_on" readonly
+                                                placeholder="DD-MMM-YYYY" />
+                                            {{-- <input type="date"  name="Other4_on" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input"
+                                                                        oninput="handleDateInput(this, 'Other4_on')" /> --}}
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                                <div class="sub-head">
+                                    Other's 5 ( Additional Person Review From Departments If Required)
+                                </div>
+                                <script>
+                                    $(document).ready(function() {
+                                        $('.Other5_reviews').hide();
+
+                                        $('[name="Other5_review"]').change(function() {
+                                            if ($(this).val() === 'yes') {
+                                                $('.Other5_reviews').show();
+                                                $('.Other5_reviews span').show();
+                                            } else {
+                                                $('.Other5_reviews').hide();
+                                                $('.Other5_reviews span').hide();
+                                            }
+                                        });
+                                    });
+                                </script>
+                                <div class="col-lg-6">
+                                    <div class="group-input">
+                                        <label for="review5"> Other's 5 Review Required ?</label>
+                                        <select name="Other5_review" id="Other5_review" disabled>
+                                            <option value="0">-- Select --</option>
+                                            <option value="yes">Yes</option>
+                                            <option value="no">No</option>
+                                            <option value="na">NA</option>
+
+                                        </select>
+
+                                    </div>
+                                </div>
+                                @php
+                                    $division = DB::table('q_m_s_divisions')
+                                        ->where('name', Helpers::getDivisionName(session()->get('division')))
+                                        ->first();
+                                    $userRoles = DB::table('user_roles')
+                                        ->where(['q_m_s_roles_id' => 38, 'q_m_s_divisions_id' => $division->id])
+                                        ->get();
+                                    $userRoleIds = $userRoles->pluck('user_id')->toArray();
+                                    $users = DB::table('users')->whereIn('id', $userRoleIds)->get(); // Fetch user data based on user IDs
+                                @endphp
+                                <div class="col-lg-6 Other5_reviews">
+                                    <div class="group-input">
+                                        <label for="Person5">Other's 5 Person</label>
+                                        <select name="Other5_person" id="Other5_person">
+                                            <option value="0">-- Select --</option>
+                                            @foreach ($users as $user)
+                                                <option value="{{ $user->id }}">{{ $user->name }}</option>
+                                            @endforeach
+
+                                        </select>
+
+                                    </div>
+                                </div>
+                                <div class="col-lg-12 Other5_reviews">
+                                    <div class="group-input">
+                                        <label for="Department5"> Other's 5 Department</label>
+                                        <select name="Other5_Department_person" id="Other5_Department_person">
+                                            <option value="0">-- Select --</option>
+                                            <option value="Production">Production</option>
+                                            <option value="Warehouse">Warehouse</option>
+                                            <option value="Quality_Control">Quality Control</option>
+                                            <option value="Quality_Assurance">Quality Assurance</option>
+                                            <option value="Engineering">Engineering</option>
+                                            <option value="Analytical_Development_Laboratory">Analytical Development
+                                                Laboratory</option>
+                                            <option value="Process_Development_Lab">Process Development Laboratory / Kilo
+                                                Lab</option>
+                                            <option value="Technology transfer/Design">Technology Transfer/Design</option>
+                                            <option value="Environment, Health & Safety">Environment, Health & Safety
+                                            </option>
+                                            <option value="Human Resource & Administration">Human Resource &
+                                                Administration</option>
+                                            <option value="Information Technology">Information Technology</option>
+                                            <option value="Project management">Project management</option>
+
+
+
+                                        </select>
+
+                                    </div>
+                                </div>
+                                <div class="col-md-12 mb-3 Other5_reviews">
+                                    <div class="group-input">
+                                        <label for="productionfeedback">Impact Assessment (By Other's 5)</label>
+                                        <textarea class="" name="Other5_Assessment" id="summernote-49">
+                                                            </textarea>
+                                    </div>
+                                </div>
+                                <div class="col-md-12 mb-3 Other5_reviews">
+                                    <div class="group-input">
+                                        <label for="productionfeedback"> Other's 5 Feedback</label>
+                                        <textarea class="" name="Other5_feedback" id="summernote-50">
+                                                            </textarea>
+                                    </div>
+                                </div>
+                                <div class="col-lg-12 Other5_reviews">
+                                    <div class="group-input">
+                                        <label for="Audit Attachments"> Other's 5 Attachments</label>
+                                        <div><small class="text-primary">Please Attach all relevant or supporting
+                                                documents</small></div>
+                                        <div class="file-attachment-field">
+                                            <div class="file-attachment-list" id="Other5_attachment"></div>
+                                            <div class="add-btn">
+                                                <div>Add</div>
+                                                <input type="file" id="myfile" name="Other5_attachment[]"
+                                                    oninput="addMultipleFiles(this, 'Other5_attachment')" multiple>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 mb-3 Other5_reviews">
+                                    <div class="group-input">
+                                        <label for="Review Completed By5"> Other's 5 Review Completed By</label>
+                                        <input type="text" name="Other5_by" disabled>
+
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 new-date-data-field Other5_reviews">
+                                    <div class="group-input input-date">
+                                        <label for="Review Completed On5">Other's 5 Review Completed On</label>
+                                        <div class="calenderauditee">
+                                            <input type="text" id="Other5_on" name="Other5_on" readonly
+                                                placeholder="DD-MMM-YYYY" />
+                                            {{-- <input type="date"  name="Other5_on" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input"
+                                                                        oninput="handleDateInput(this, 'Other5_on')" /> --}}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="button-block">
+                                <button type="submit" id="ChangesaveButton"
+                                    style=" justify-content: center; width: 4rem; margin-left: 1px;" class="saveButton">Save</button>
+                                <a href="/rcms/qms-dashboard" style=" justify-content: center; width: 4rem; margin-left: 1px;">
+                                    <button type="button" class="backButton">Back</button>
+                                </a>
+                                <button type="button" style=" justify-content: center; width: 4rem; margin-left: 1px;"
+                                    id="ChangeNextButton" class="nextButton" onclick="nextStep()">Next</button>
+                                <button type="button" style=" justify-content: center; width: 4rem; margin-left: 1px;"> <a
+                                        href="{{ url('rcms/qms-dashboard') }}" class="text-white">
+                                        Exit </a> </button>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <div id="CCForm5" class="inner-block cctabcontent">
+                        <div class="inner-block-content">
+                            <div class="sub-head">
+                                Evaluation Detail
+                            </div>
+                            <div class="group-input">
+                                <label for="qa-eval-comments">QA Evaluation Comments</label>
+                                <textarea name="qa_eval_comments" readonly></textarea>
+                            </div>
+                            <div class="col-lg-12">
+                                <div class="group-input">
+                                    <label for="qa-eval-attach">QA Evaluation Attachments</label>
+                                    <div><small class="text-primary">Please Attach all relevant or supporting
+                                            documents</small>
+                                    </div>
+                                    <div class="file-attachment-field">
+                                        <div class="file-attachment-list" id="qa_eval_attach"></div>
+                                        <div class="add-btn">
+                                            <div>Add</div>
+                                            <input type="file" id="myfile" name="qa_eval_attach[]" disabled
+                                                oninput="addMultipleFiles(this, 'qa_eval_attach')" multiple>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- <div class="sub-head">
+                            Training Information
+                        </div>
+                        <div class="group-input">
+                            <label for="nature-change">Training Required</label>
+                            <select name="training_required">
+                                <option value="0">-- Select --</option>
+                                <option value="no">No</option>
+                                <option value="yes">Yes</option>
+                            </select>
+                        </div>
+                        <div class="group-input">
+                            <label for="train-comments">Training Comments</label>
+                            <textarea name="train_comments"></textarea>
+                        </div> -->
+                        <div class="button-block">
+                            <button type="submit" class="saveButton">Save</button>
+                            <button type="button" class="backButton" onclick="previousStep()">Back</button>
+                            <button type="button" class="nextButton" onclick="nextStep()">Next</button>
+                            <button type="button"> <a class="text-white" href="{{ url('rcms/qms-dashboard') }}">
+                                    Exit </a> </button>
+
+                        </div>
+                    </div>
+
+                    <div id="CCForm9" class="inner-block cctabcontent">
+                        <div class="inner-block-content">
+                            <div class="group-input">
+                                <label for="qa-appro-comments">QA Approval Comments</label>
+                                <textarea name="qa_appro_comments" disabled></textarea>
+                            </div>
+                            <div class="group-input">
+                                <label for="feedback">Training Feedback</label>
+                                <textarea name="feedback" disabled></textarea>
+                            </div>
+                            <div class="group-input">
+                                <label for="tran-attach">Training Attachments</label>
+                                <div><small class="text-primary">Please Attach all relevant or supporting documents</small>
+                                </div>
+                                <div class="file-attachment-field">
+                                    <div class="file-attachment-list" id="tran_attach"></div>
+                                    <div class="add-btn">
+                                        <div>Add</div>
+                                        <input type="file" id="myfile" name="tran_attach[]" disabled
+                                            oninput="addMultipleFiles(this, 'tran_attach')" multiple>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="button-block">
+                                <button type="submit" class="saveButton">Save</button>
+                                <button type="button" class="backButton" onclick="previousStep()">Back</button>
+                                <button type="button" class="nextButton" onclick="nextStep()">Next</button>
+                                <button type="button"> <a class="text-white" href="{{ url('rcms/qms-dashboard') }}">
+                                        Exit </a> </button>
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="CCForm10" class="inner-block cctabcontent">
+                        <div class="inner-block-content">
+                            <div class="group-input">
+                                <label for="risk-assessment">
+                                    Affected Documents<button type="button" name="ann"
+                                        id="affectedDocAdd">+</button>
+                                </label>
+                                <table class="table table-bordered" id="affectedDocAddTable">
+                                    <thead>
+                                        <tr>
+                                            <th>Sr. No.</th>
+                                            <th>Affected Documents</th>
+                                            <th>Document Name</th>
+                                            <th>Document No.</th>
+                                            <th>Version No.</th>
+                                            <th>Implementation Date</th>
+                                            <th>New Document No.</th>
+                                            <th>New Version No.</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td><input type="text" value="1" name="affectedDocuments[]" readonly></td>
+                                            <td><input type="text" name="affectedDocuments[0][afftectedDoc]" disabled></td>
+                                            <td><input type="text" name="affectedDocuments[0][documentName]" disabled></td>
+                                            <td><input type="number" name="affectedDocuments[0][documentNumber]" disabled></td>
+                                            <td><input type="text" name="affectedDocuments[0][versionNumber]" disabled></td>
+                                            <td><input type="date" name="affectedDocuments[0][implimentationDate]" disabled></td>
+                                            <td><input type="text" name="affectedDocuments[0][newDocumentNumber]" disabled></td>
+                                            <td><input type="text" name="affectedDocuments[0][newVersionNumber]" disabled></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="group-input">
+                                <label for="qa-closure-comments">QA Closure Comments</label>
+                                <textarea name="qa_closure_comments" disabled></textarea>
+                            </div>
+                            <div class="group-input">
+                                <label for="attach-list">List Of Attachments</label>
+                                <div><small class="text-primary">Please Attach all relevant or supporting documents</small>
+                                </div>
+                                <div class="file-attachment-field">
+                                    <div class="file-attachment-list" id="attach_list"></div>
+                                    <div class="add-btn">
+                                        <div>Add</div>
+                                        <input type="file" id="myfile" name="attach_list[]" disabled
+                                            oninput="addMultipleFiles(this, 'attach_list')" multiple>
+                                    </div>
+                                </div>
+                            </div>
+                            {{-- <div class="col-12 sub-head">
+                                    Effectiveness Check Details
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-6">
+                                        <div class="group-input">
+                                            <label for="effective-check">Effectivess Check Required?</label>
+                                            <select name="effective_check">
+                                                <option value="0">-- Select --</option>
+                                                <option value="yes">Yes</option>
+                                                <option value="no">No</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6 new-date-data-field">
+                                        <div class="group-input input-date">
+                                            <label for="effective-check-date">Effectiveness Check Creation Date</label>
+                                            <div class="calenderauditee">
+                                            <input type="text"  id="effective_check_date"  readonly placeholder="DD-MMM-YYYY" />
+                                            <input type="date" name="effective_check_date" value=""
+                                            class="hide-input"
+                                            oninput="handleDateInput(this, 'effective_check_date')"/>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                    <div class="col-12">
+                                        <div class="group-input">
+                                            <label for="Effectiveness_checker">Effectiveness Checker</label>
+                                            <select name="Effectiveness_checker">
+                                                <option value="">Enter Your Selection Here</option>
+                                                @foreach ($users as $data)
+                                                    <option value="{{ $data->id }}">{{ $data->name }}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-12">
+                                        <div class="group-input">
+                                            <label for="effective_check_plan">Effectiveness Check Plan</label>
+                                            <textarea name="effective_check_plan"></textarea>
+                                        </div>
+                                    </div> --}}
+                            <div class="col-12 sub-head">
+                                Extension Justification
+                            </div>
+                            <div class="col-12">
+                                <div class="group-input">
+                                    <label for="due_date_extension">Due Date Extension Justification</label>
+                                    <div><small class="text-primary">Please Mention justification if due date is
+                                            crossed</small></div>
+                                    <textarea name="due_date_extension"></textarea>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="button-block">
+                            <button type="submit" class="saveButton">Save</button>
+                            <button type="button" class="backButton" onclick="previousStep()">Back</button>
+                            <button type="button" class="nextButton" onclick="nextStep()">Next</button>
+                            <button type="button"> <a class="text-white" href="{{ url('rcms/qms-dashboard') }}">
+                                    Exit </a> </button>
+
+                        </div>
+                    </div>
+
+
                     <div id="CCForm3" class="inner-block cctabcontent">
                         <div class="col-12">
                             <div class="group-input">
@@ -2328,130 +5167,12 @@
                         </div>
                     </div>
 
-                    <div id="CCForm4" class="inner-block cctabcontent">
-                        <div class="inner-block-content">
-                            <div class="row">
-                                <div class="col-lg-12">
-                                    <div class="group-input">
-                                        <label for="type_change">
-                                            Type of Change
-                                            <span class="text-primary" data-bs-toggle="modal"
-                                                data-bs-target="#change-control-type-of-change-instruction-modal"
-                                                style="font-size: 0.8rem; font-weight: 400; cursor:pointer;">
-                                                (Launch Instruction)
-                                            </span>
-                                        </label>
-                                        <select name="type_chnage">
-                                            <option value="">-- Select --</option>
-                                            <option value="major">Major</option>
-                                            <option value="minor">Minor</option>
-                                            <option value="critical">Critical</option>
-                                        </select>
-                                    </div>
-                                </div>
+                   
 
-                                <div class="col-12">
-                                    <div class="group-input">
-                                        <label for="qa_comments">QA Review Comments</label>
-                                        <textarea name="qa_comments"></textarea>
-                                    </div>
-                                </div>
-                                <div class="col-12">
-                                    <div class="group-input">
-                                        <label for="related_records">Related Records</label>
-
-                                        <select multiple name="related_records[]" placeholder="Select Reference Records"
-                                            data-search="false" data-silent-initial-value-set="true"
-                                            id="related_records">
-                                            @foreach ($pre as $prix)
-                                                <option value="{{ $prix->id }}">
-                                                    {{ Helpers::getDivisionName($prix->division_id) }}/Change-Control/{{ Helpers::year($prix->created_at) }}/{{ Helpers::record($prix->record) }}
-                                                </option>
-                                            @endforeach
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="col-lg-12">
-                                    <div class="group-input">
-                                        <label for="qa head">QA Attachments</label>
-                                        <div><small class="text-primary">Please Attach all relevant or supporting
-                                                documents</small></div>
-                                        <div class="file-attachment-field">
-                                            <div class="file-attachment-list" id="qa_head"></div>
-                                            <div class="add-btn">
-                                                <div>Add</div>
-                                                <input type="file" id="myfile" name="qa_head[]"
-                                                    oninput="addMultipleFiles(this, 'qa_head')" multiple>
-                                            </div>
-                                        </div>
-
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="button-block">
-                                <button type="submit" class="saveButton">Save</button>
-                                <button type="button" class="backButton" onclick="previousStep()">Back</button>
-                                <button type="button" class="nextButton" onclick="nextStep()">Next</button>
-                                <button type="button"> <a class="text-white" href="{{ url('rcms/qms-dashboard') }}">
-                                        Exit </a> </button>
-
-                            </div>
-                        </div>
-                    </div>
-
-                    <div id="CCForm5" class="inner-block cctabcontent">
-                        <div class="inner-block-content">
-                            <div class="sub-head">
-                                Evaluation Detail
-                            </div>
-                            <div class="group-input">
-                                <label for="qa-eval-comments">QA Evaluation Comments</label>
-                                <textarea name="qa_eval_comments"></textarea>
-                            </div>
-                            <div class="col-lg-12">
-                                <div class="group-input">
-                                    <label for="qa-eval-attach">QA Evaluation Attachments</label>
-                                    <div><small class="text-primary">Please Attach all relevant or supporting
-                                            documents</small>
-                                    </div>
-                                    <div class="file-attachment-field">
-                                        <div class="file-attachment-list" id="qa_eval_attach"></div>
-                                        <div class="add-btn">
-                                            <div>Add</div>
-                                            <input type="file" id="myfile" name="qa_eval_attach[]"
-                                                oninput="addMultipleFiles(this, 'qa_eval_attach')" multiple>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="sub-head">
-                            Training Information
-                        </div>
-                        <div class="group-input">
-                            <label for="nature-change">Training Required</label>
-                            <select name="training_required">
-                                <option value="0">-- Select --</option>
-                                <option value="no">No</option>
-                                <option value="yes">Yes</option>
-                            </select>
-                        </div>
-                        <div class="group-input">
-                            <label for="train-comments">Training Comments</label>
-                            <textarea name="train_comments"></textarea>
-                        </div>
-                        <div class="button-block">
-                            <button type="submit" class="saveButton">Save</button>
-                            <button type="button" class="backButton" onclick="previousStep()">Back</button>
-                            <button type="button" class="nextButton" onclick="nextStep()">Next</button>
-                            <button type="button"> <a class="text-white" href="{{ url('rcms/qms-dashboard') }}">
-                                    Exit </a> </button>
-
-                        </div>
-                    </div>
+                    
                 </div>
 
-                {{-- <div id="CCForm6" class="inner-block cctabcontent">
+                    <!-- <div id="CCForm6" class="inner-block cctabcontent">
                         <div class="inner-block-content">
                             <div class="sub-head">
                                 CFT Information
@@ -2586,7 +5307,7 @@
 
                             </div>
                         </div>
-                    </div> --}}
+                    </div> -->
 
                 <div id="CCForm7" class="inner-block cctabcontent">
                     <div class="inner-block-content">
@@ -2696,264 +5417,9 @@
                     </div>
                 </div>
 
-                <div id="CCForm8" class="inner-block cctabcontent">
-                    <div class="inner-block-content">
-                        <div class="sub-head">
-                            Risk Assessment
-                        </div>
-                        <div class="row">
-                            <div class="col-12">
-                                <div class="group-input">
-                                    <label for="risk-identification">Risk Identification</label>
-                                    <textarea name="risk_identification"></textarea>
-                                </div>
-                            </div>
-                            <div class="col-lg-6">
-                                <div class="group-input">
-                                    <label for="Severity Rate">Severity Rate</label>
-                                    <select name="severity" id="analysisR" onchange='calculateRiskAnalysis(this)'>
-                                        <option value="">Enter Your Selection Here</option>
-                                        <option value="1">Negligible</option>
-                                        <option value="2">Moderate</option>
-                                        <option value="3">Major</option>
-                                        <option value="4">Fatal</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="col-lg-6">
-                                <div class="group-input">
-                                    <label for="Occurrence">Occurrence</label>
-                                    <select name="Occurance" id="analysisP" onchange='calculateRiskAnalysis(this)'>
-                                        <option value="">Enter Your Selection Here</option>
-                                        <option value="5">Extremely Unlikely</option>
-                                        <option value="4">Rare</option>
-                                        <option value="3">Unlikely</option>
-                                        <option value="2">Likely</option>
-                                        <option value="1">Very Likely</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="col-lg-6">
-                                <div class="group-input">
-                                    <label for="Detection">Detection</label>
-                                    <select name="Detection" id="analysisN" onchange='calculateRiskAnalysis(this)'>
-                                        <option value="">Enter Your Selection Here</option>
-                                        <option value="5">Impossible</option>
-                                        <option value="4">Rare</option>
-                                        <option value="3">Unlikely</option>
-                                        <option value="2">Likely</option>
-                                        <option value="1">Very Likely</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="col-lg-6">
-                                <div class="group-input">
-                                    <label for="RPN">RPN</label>
-                                    <div><small class="text-primary">Auto - Calculated</small></div>
-                                    <input type="text" name="RPN" id="analysisRPN" readonly>
-                                </div>
-                            </div>
+                
 
-
-
-                            <div class="col-12">
-                                <div class="group-input">
-                                    <label for="risk-evaluation">Risk Evaluation</label>
-                                    <textarea name="risk_evaluation"></textarea>
-                                </div>
-                            </div>
-                            <div class="col-12">
-                                <div class="group-input">
-                                    <label for="migration-action">Migration Action</label>
-                                    <textarea name="migration_action"></textarea>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="button-block">
-                            <button type="submit" class="saveButton">Save</button>
-                            <button type="button" class="backButton" onclick="previousStep()">Back</button>
-                            <button type="button" class="nextButton" onclick="nextStep()">Next</button>
-                            <button type="button"> <a class="text-white" href="{{ url('rcms/qms-dashboard') }}">
-                                    Exit </a> </button>
-
-                        </div>
-                    </div>
-                </div>
-
-                <div id="CCForm9" class="inner-block cctabcontent">
-                    <div class="inner-block-content">
-                        <div class="group-input">
-                            <label for="qa-appro-comments">QA Approval Comments</label>
-                            <textarea name="qa_appro_comments"></textarea>
-                        </div>
-                        <div class="group-input">
-                            <label for="feedback">Training Feedback</label>
-                            <textarea name="feedback"></textarea>
-                        </div>
-                        <div class="group-input">
-                            <label for="tran-attach">Training Attachments</label>
-                            <div><small class="text-primary">Please Attach all relevant or supporting documents</small>
-                            </div>
-                            <div class="file-attachment-field">
-                                <div class="file-attachment-list" id="tran_attach"></div>
-                                <div class="add-btn">
-                                    <div>Add</div>
-                                    <input type="file" id="myfile" name="tran_attach[]"
-                                        oninput="addMultipleFiles(this, 'tran_attach')" multiple>
-                                </div>
-                            </div>
-
-                        </div>
-                        <div class="button-block">
-                            <button type="submit" class="saveButton">Save</button>
-                            <button type="button" class="backButton" onclick="previousStep()">Back</button>
-                            <button type="button" class="nextButton" onclick="nextStep()">Next</button>
-                            <button type="button"> <a class="text-white" href="{{ url('rcms/qms-dashboard') }}">
-                                    Exit </a> </button>
-
-                        </div>
-                    </div>
-                </div>
-
-                <div id="CCForm10" class="inner-block cctabcontent">
-                    <div class="inner-block-content">
-                        <div class="group-input">
-                            <label for="risk-assessment">
-                                Affected Documents<button type="button" name="ann"
-                                    id="addAffectedDocumentsbtn">+</button>
-                            </label>
-                            <table class="table table-bordered" id="affected-documents">
-                                <thead>
-                                    <tr>
-                                        <th>Sr. No.</th>
-                                        <th>Affected Documents</th>
-                                        <th>Document Name</th>
-                                        <th>Document No.</th>
-                                        <th>Version No.</th>
-                                        <th>Implementation Date</th>
-                                        <th>New Document No.</th>
-                                        <th>New Version No.</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td><input type="text" Value="1" name="serial_number[]" readonly>
-                                        </td>
-
-                                        <td><input type="text" name="affected_documents[]">
-                                        </td>
-                                        <td><input type="text" name="document_name[]">
-                                        </td>
-                                        <td><input type="number" name="document_no[]">
-                                        </td>
-                                        <td><input type="text" name="version_no[]">
-                                        </td>
-                                        {{-- <td><input type="date" name="implementation_date[]">
-                                            </td> --}}
-                                        <td>
-                                            <div class="group-input new-date-data-field mb-0">
-                                                <div class="input-date ">
-                                                    <div class="calenderauditee">
-                                                        <input type="text"
-                                                            id="implementation_date' + serialNumber +'" readonly
-                                                            placeholder="DD-MMM-YYYY" />
-                                                        <input type="date" name="implementation_date[]"
-                                                            class="hide-input"
-                                                            oninput="handleDateInput(this, `implementation_date' + serialNumber +'`)" />
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </td>
-                                        <td><input type="text" name="new_document_no[]">
-                                        </td>
-                                        <td><input type="text" name="new_version_no[]">
-                                        </td>
-
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                        <div class="group-input">
-                            <label for="qa-closure-comments">QA Closure Comments</label>
-                            <textarea name="qa_closure_comments"></textarea>
-                        </div>
-                        <div class="group-input">
-                            <label for="attach-list">List Of Attachments</label>
-                            <div><small class="text-primary">Please Attach all relevant or supporting documents</small>
-                            </div>
-                            <div class="file-attachment-field">
-                                <div class="file-attachment-list" id="attach_list"></div>
-                                <div class="add-btn">
-                                    <div>Add</div>
-                                    <input type="file" id="myfile" name="attach_list[]"
-                                        oninput="addMultipleFiles(this, 'attach_list')" multiple>
-                                </div>
-                            </div>
-                        </div>
-                        {{-- <div class="col-12 sub-head">
-                                Effectiveness Check Details
-                            </div>
-                            <div class="row">
-                                <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="effective-check">Effectivess Check Required?</label>
-                                        <select name="effective_check">
-                                            <option value="0">-- Select --</option>
-                                            <option value="yes">Yes</option>
-                                            <option value="no">No</option>
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="col-lg-6 new-date-data-field">
-                                    <div class="group-input input-date">
-                                        <label for="effective-check-date">Effectiveness Check Creation Date</label>
-                                        <div class="calenderauditee">
-                                        <input type="text"  id="effective_check_date"  readonly placeholder="DD-MMM-YYYY" />
-                                        <input type="date" name="effective_check_date" value=""
-                                        class="hide-input"
-                                        oninput="handleDateInput(this, 'effective_check_date')"/>
-                                        </div>
-
-                                    </div>
-                                </div>
-                                <div class="col-12">
-                                    <div class="group-input">
-                                        <label for="Effectiveness_checker">Effectiveness Checker</label>
-                                        <select name="Effectiveness_checker">
-                                            <option value="">Enter Your Selection Here</option>
-                                            @foreach ($users as $data)
-                                                <option value="{{ $data->id }}">{{ $data->name }}</option>
-                                            @endforeach
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="col-12">
-                                    <div class="group-input">
-                                        <label for="effective_check_plan">Effectiveness Check Plan</label>
-                                        <textarea name="effective_check_plan"></textarea>
-                                    </div>
-                                </div> --}}
-                        <div class="col-12 sub-head">
-                            Extension Justification
-                        </div>
-                        <div class="col-12">
-                            <div class="group-input">
-                                <label for="due_date_extension">Due Date Extension Justification</label>
-                                <div><small class="text-primary">Please Mention justification if due date is
-                                        crossed</small></div>
-                                <textarea name="due_date_extension"></textarea>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="button-block">
-                        <button type="submit" class="saveButton">Save</button>
-                        <button type="button" class="backButton" onclick="previousStep()">Back</button>
-                        <button type="button" class="nextButton" onclick="nextStep()">Next</button>
-                        <button type="button"> <a class="text-white" href="{{ url('rcms/qms-dashboard') }}">
-                                Exit </a> </button>
-
-                    </div>
-                </div>
+                
         </div>
         @php
             $product = DB::table('products')->get();
@@ -3133,1982 +5599,8 @@
             </div>
         </div>
 
-        <div id="CCForm12" class="inner-block cctabcontent">
-                        <div class="inner-block-content">
-                            <div class="row">
-                                <div class="sub-head">
-                                    Production
-                                </div>
-                                <script>
-                                    $(document).ready(function() {
-                                        $('.p_erson').hide();
-
-                                        $('[name="Production_Review"]').change(function() {
-                                            if ($(this).val() === 'yes') {
-                                                $('.p_erson').show();
-                                                $('.p_erson span').show();
-                                            } else {
-                                                $('.p_erson').hide();
-                                                $('.p_erson span').hide();
-                                            }
-                                        });
-                                    });
-                                </script>
-                                <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="Production Review">Production Review Required ?</label>
-                                        <select name="Production_Review" id="Production_Review" disabled>
-                                            <option value="0">-- Select --</option>
-                                            <option value="yes">Yes</option>
-                                            <option value="no">No</option>
-                                            <option value="na">NA</option>
-
-                                        </select>
-
-                                    </div>
-                                </div>
-                                @php
-                                    $division = DB::table('q_m_s_divisions')
-                                        ->where('name', Helpers::getDivisionName(session()->get('division')))
-                                        ->first();
-                                    $userRoles = DB::table('user_roles')
-                                        ->where(['q_m_s_roles_id' => 22, 'q_m_s_divisions_id' => $division->id])
-                                        ->get();
-                                    $userRoleIds = $userRoles->pluck('user_id')->toArray();
-                                    $users = DB::table('users')->whereIn('id', $userRoleIds)->get(); // Fetch user data based on user IDs
-                                @endphp
-
-                                <div class="col-lg-6 p_erson">
-                                    <div class="group-input">
-                                        <label for="Production person">Production Person</label>
-                                        <select name="Production_person" id="Production_person">
-                                            <option value="">-- Select --</option>
-                                            @foreach ($users as $user)
-                                                <option value="{{ $user->id }}">{{ $user->name }}</option>
-                                            @endforeach
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="col-md-12 mb-3 p_erson" >
-                                    <div class="group-input">
-                                        <label for="Production assessment">Impact Assessment (By Production)</label>
-                                        <div><small class="text-primary">Please insert "NA" in the data field if it does
-                                                not require completion</small></div>
-                                        <textarea class="" name="Production_assessment" id="summernote-17">
-                                    </textarea>
-                                    </div>
-                                </div>
-                                <div class="col-md-12 mb-3 p_erson">
-                                    <div class="group-input">
-                                        <label for="Production feedback">Production Feedback</label>
-                                        <div><small class="text-primary">Please insert "NA" in the data field if it does
-                                                not require completion</small></div>
-                                        <textarea class="" name="Production_feedback" id="summernote-18">
-                                    </textarea>
-                                    </div>
-                                </div>
-
-                                <div class="col-lg-12 p_erson">
-                                    <div class="group-input">
-                                        <label for="production attachment"> Production Attachments</label>
-                                        <div><small class="text-primary">Please Attach all relevant or supporting
-                                                documents</small></div>
-                                        <div class="file-attachment-field">
-                                            <div class="file-attachment-list" id="production_attachment"></div>
-                                            <div class="add-btn">
-                                                <div>Add</div>
-                                                <input type="file" id="myfile" name="production_attachment[]"
-                                                    oninput="addMultipleFiles(this, 'production_attachment')" multiple>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-md-6 mb-3 p_erson">
-                                    <div class="group-input">
-                                        <label for="Production Review Completed By">Production Review Completed By</label>
-                                        <input disabled type="text" name="production_by" id="production_by">
-                                    </div>
-                                </div>
-                                <div class="col-lg-6 new-date-data-field p_erson">
-                                    <div class="group-input input-date">
-                                        <label for="Production Review Completed On">Production Review Completed On</label>
-                                        <div class="calenderauditee">
-                                            <input type="text" id="production_on" readonly
-                                                placeholder="DD-MMM-YYYY" />
-                                            <input type="date" name="production_on"
-                                                min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input"
-                                                oninput="handleDateInput(this, 'production_on')" />
-                                        </div>
-                                    </div>
-                                </div>
-                                <script>
-                                    $(document).ready(function() {
-                                        $('.warehouse').hide();
-
-                                        $('[name="Warehouse_review"]').change(function() {
-                                            if ($(this).val() === 'yes') {
-                                                $('.warehouse').show();
-                                                $('.warehouse span').show();
-                                            } else {
-                                                $('.warehouse').hide();
-                                                $('.warehouse span').hide();
-                                            }
-                                        });
-                                    });
-                                </script>
-                                <div class="sub-head">
-                                    Warehouse
-                                </div>
-                                <div class="col-lg-6 ">
-                                    <div class="group-input">
-                                        <label for="Warehouse Review Required">Warehouse Review Required ?</label>
-                                        <select name="Warehouse_review" id="Warehouse_review" disabled>
-                                            <option value="0">-- Select --</option>
-                                            <option value="yes">Yes</option>
-                                            <option value="no">No</option>
-                                            <option value="na">NA</option>
-
-                                        </select>
-
-                                    </div>
-                                </div>
-                                @php
-                                    $division = DB::table('q_m_s_divisions')
-                                        ->where('name', Helpers::getDivisionName(session()->get('division')))
-                                        ->first();
-                                    $userRoles = DB::table('user_roles')
-                                        ->where(['q_m_s_roles_id' => 23, 'q_m_s_divisions_id' => $division->id])
-                                        ->get();
-                                    $userRoleIds = $userRoles->pluck('user_id')->toArray();
-                                    $users = DB::table('users')->whereIn('id', $userRoleIds)->get(); // Fetch user data based on user IDs
-                                @endphp
-                                <div class="col-lg-6 warehouse">
-                                    <div class="group-input">
-                                        <label for="Customer notification">Warehouse Person</label>
-                                        <select name="Warehouse_notification" id="Warehouse_person">
-                                            <option value="0">-- Select --</option>
-                                            @foreach ($users as $user)
-                                                <option value="{{ $user->id }}">{{ $user->name }}</option>
-                                            @endforeach
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="col-md-12 mb-3 warehouse">
-                                    <div class="group-input">
-                                        <label for="Impact Assessment1">Impact Assessment (By Warehouse)</label>
-                                        <div><small class="text-primary">Please insert "NA" in the data field if it does
-                                                not require completion</small></div>
-                                        <textarea class="" name="Warehouse_assessment" id="summernote-19">
-                                    </textarea>
-                                    </div>
-                                </div>
-                                <div class="col-md-12 mb-3 warehouse">
-                                    <div class="group-input">
-                                        <label for="productionfeedback">Warehouse Feedback</label>
-                                        <div><small class="text-primary">Please insert "NA" in the data field if it does
-                                                not require completion</small></div>
-                                        <textarea class="" name="Warehouse_feedback" id="summernote-20">
-                                    </textarea>
-                                    </div>
-                                </div>
-                                <div class="col-lg-12 warehouse">
-                                    <div class="group-input">
-                                        <label for="Warehouse attachment"> Warehouse Attachments</label>
-                                        <div><small class="text-primary">Please Attach all relevant or supporting
-                                                documents</small></div>
-                                        <div class="file-attachment-field">
-                                            <div class="file-attachment-list" id="Warehouse_attachment"></div>
-                                            <div class="add-btn">
-                                                <div>Add</div>
-                                                <input type="file" id="myfile" name="Warehouse_attachment[]"
-                                                    oninput="addMultipleFiles(this, 'Warehouse_attachment')" multiple>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-md-6 mb-3 warehouse">
-                                    <div class="group-input">
-                                        <label for="Warehousefeedback">Warehouse Review Completed By</label>
-                                        <input disabled type="text" name="Warehouse_by" id="Warehouse_by">
-
-                                    </div>
-                                </div>
-
-                                <div class="col-lg-6 new-date-data-field warehouse">
-                                    <div class="group-input input-date">
-                                        <label for="Warehouse Review Completed On">Warehouse Review Completed On</label>
-                                        <div class="calenderauditee">
-                                            <input type="text" id="Warehouse_on" readonly placeholder="DD-MMM-YYYY" />
-                                            <input type="date" name="Warehouse_on"
-                                                min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input"
-                                                oninput="handleDateInput(this, 'Warehouse_on')" />
-                                        </div>
-                                    </div>
-                                </div>
-                                <script>
-                                    $(document).ready(function() {
-                                        $('.quality_control').hide();
-
-                                        $('[name="Quality_review"]').change(function() {
-                                            if ($(this).val() === 'yes') {
-                                                $('.quality_control').show();
-                                                $('.quality_control span').show();
-                                            } else {
-                                                $('.quality_control').hide();
-                                                $('.quality_control span').hide();
-                                            }
-                                        });
-                                    });
-                                </script>
-                                <div class="sub-head">
-                                    Quality Control
-                                </div>
-                                <div class="col-lg-6 quality_control">
-                                    <div class="group-input">
-                                        <label for="Quality Control Review Required">Quality Control Review Required
-                                            ?</label>
-                                        <select name="Quality_review" id="Quality_review" disabled>
-                                            <option value="0">-- Select --</option>
-                                            <option value="yes">Yes</option>
-                                            <option value="no">No</option>
-                                            <option value="na">NA</option>
-
-                                        </select>
-
-                                    </div>
-                                </div>
-                                @php
-                                    $division = DB::table('q_m_s_divisions')
-                                        ->where('name', Helpers::getDivisionName(session()->get('division')))
-                                        ->first();
-                                    $userRoles = DB::table('user_roles')
-                                        ->where(['q_m_s_roles_id' => 24, 'q_m_s_divisions_id' => $division->id])
-                                        ->get();
-                                    $userRoleIds = $userRoles->pluck('user_id')->toArray();
-                                    $users = DB::table('users')->whereIn('id', $userRoleIds)->get(); // Fetch user data based on user IDs
-                                @endphp
-                                <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="Quality Control Person">Quality Control Person</label>
-                                        <select name="Quality_Control_Person" id="Quality_Control_Person" disabled>
-                                            <option value="0">-- Select --</option>
-                                            @foreach ($users as $user)
-                                                <option value="{{ $user->id }}">{{ $user->name }}</option>
-                                            @endforeach
-                                        </select>
-
-                                    </div>
-                                </div>
-                                <div class="col-md-12 mb-3 quality_control">
-                                    <div class="group-input">
-                                        <label for="Impact Assessment2">Impact Assessment (By Quality Control)</label>
-                                        <textarea class="" name="Quality_Control_assessment" id="summernote-21">
-                                    </textarea>
-                                    </div>
-                                </div>
-                                <div class="col-md-12 mb-3 quality_control">
-                                    <div class="group-input">
-                                        <label for="Quality Control Feedback">Quality Control Feedback</label>
-                                        <textarea class="" name="Quality_Control_feedback" id="summernote-22">
-                                    </textarea>
-                                    </div>
-                                </div>
-                                <div class="col-lg-12 quality_control">
-                                    <div class="group-input">
-                                        <label for="Quality Control Attachments">Quality Control Attachments</label>
-                                        <div><small class="text-primary">Please Attach all relevant or supporting
-                                                documents</small></div>
-                                        <div class="file-attachment-field">
-                                            <div class="file-attachment-list" id="Quality_Control_attachment"></div>
-                                            <div class="add-btn">
-                                                <div>Add</div>
-                                                <input type="file" id="myfile" name="Quality_Control_attachment[]"
-                                                    oninput="addMultipleFiles(this, 'Quality_Control_attachment')"
-                                                    multiple>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-md-6 mb-3 quality_control">
-                                    <div class="group-input">
-                                        <label for="productionfeedback">Quality Control Review Completed By</label>
-                                        <input type="text" name="QualityAssurance__by" disabled>
-
-                                    </div>
-                                </div>
-                                <div class="col-lg-6 new-date-data-field quality_control">
-                                    <div class="group-input input-date">
-                                        <label for="Quality Control Review Completed On">Quality Control Review Completed
-                                            On</label>
-                                        <div class="calenderauditee">
-                                            <input type="text" id="Quality_Control_on" readonly
-                                                placeholder="DD-MMM-YYYY" />
-                                            <input type="date" name="Quality_Control_on"
-                                                min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input"
-                                                oninput="handleDateInput(this, 'Quality_Control_on')" />
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <script>
-                                    $(document).ready(function() {
-                                        $('.quality_assurance').hide();
-
-                                        $('[name="Quality_Assurance"]').change(function() {
-                                            if ($(this).val() === 'yes') {
-                                                $('.quality_assurance').show();
-                                                $('.quality_assurance span').show();
-                                            } else {
-                                                $('.quality_assurance').hide();
-                                                $('.quality_assurance span').hide();
-                                            }
-                                        });
-                                    });
-                                </script>
-                                <div class="sub-head">
-                                    Quality Assurance
-                                </div>
-                                <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="Customer notification">Quality Assurance Review Required ?</label>
-                                        <select name="Quality_Assurance" id="QualityAssurance_review" disabled>
-                                            <option value="0">-- Select --</option>
-                                            <option value="yes">Yes</option>
-                                            <option value="no">No</option>
-                                            <option value="na">NA</option>
-
-                                        </select>
-
-                                    </div>
-                                </div>
-                                @php
-                                    $division = DB::table('q_m_s_divisions')
-                                        ->where('name', Helpers::getDivisionName(session()->get('division')))
-                                        ->first();
-                                    $userRoles = DB::table('user_roles')
-                                        ->where(['q_m_s_roles_id' => 25, 'q_m_s_divisions_id' => $division->id])
-                                        ->get();
-                                    $userRoleIds = $userRoles->pluck('user_id')->toArray();
-                                    $users = DB::table('users')->whereIn('id', $userRoleIds)->get(); // Fetch user data based on user IDs
-                                @endphp
-                                <div class="col-lg-6 quality_assurance">
-                                    <div class="group-input">
-                                        <label for="Quality Assurance Person">Quality Assurance Person</label>
-                                        <select name="QualityAssurance_person" id="QualityAssurance_person">
-                                            <option value="0">-- Select --</option>
-                                            @foreach ($users as $user)
-                                                <option value="{{ $user->id }}">{{ $user->name }}</option>
-                                            @endforeach
-                                        </select>
-
-                                    </div>
-                                </div>
-                                <div class="col-md-12 mb-3 quality_assurance">
-                                    <div class="group-input">
-                                        <label for="Impact Assessment3">Impact Assessment (By Quality Assurance)</label>
-                                        <div><small class="text-primary">Please insert "NA" in the data field if it does
-                                                not require completion</small></div>
-                                        <textarea class="" name="QualityAssurance_assessment" id="summernote-23">
-                                    </textarea>
-                                    </div>
-                                </div>
-                                <div class="col-md-12 mb-3 quality_assurance">
-                                    <div class="group-input">
-                                        <label for="Quality Assurance Feedback">Quality Assurance Feedback</label>
-                                        <div><small class="text-primary">Please insert "NA" in the data field if it does
-                                                not require completion</small></div>
-                                        <textarea class="" name="QualityAssurance_feedback" id="summernote-24">
-                                    </textarea>
-                                    </div>
-                                </div>
-                                <div class="col-lg-12 quality_assurance">
-                                    <div class="group-input">
-                                        <label for="Quality Assurance Attachments">Quality Assurance Attachments</label>
-                                        <div><small class="text-primary">Please Attach all relevant or supporting
-                                                documents</small></div>
-                                        <div class="file-attachment-field">
-                                            <div class="file-attachment-list" id="Quality_Assurance_attachment"></div>
-                                            <div class="add-btn">
-                                                <div>Add</div>
-                                                <input type="file" id="myfile"
-                                                    name="Quality_Assurance_attachment[]"
-                                                    oninput="addMultipleFiles(this, 'Quality_Assurance_attachment')"
-                                                    multiple>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-md-6 mb-3 quality_assurance">
-                                    <div class="group-input">
-                                        <label for="Quality Assurance Review Completed By">Quality Assurance Review
-                                            Completed By</label>
-                                        <input type="text" name="QualityAssurance_by" disabled>
-
-                                    </div>
-                                </div>
-                                <div class="col-lg-6 new-date-data-field quality_assurance">
-                                    <div class="group-input input-date">
-                                        <label for="Quality Assurance Review Completed On">Quality Assurance Review
-                                            Completed On</label>
-                                        <div class="calenderauditee">
-                                            <input type="text" id="QualityAssurance_on" readonly
-                                                placeholder="DD-MMM-YYYY" />
-                                            <input type="date" name="QualityAssurance_on"
-                                                min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input"
-                                                oninput="handleDateInput(this, 'QualityAssurance_on')" />
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <script>
-                                    $(document).ready(function() {
-                                        $('.engineering').hide();
-
-                                        $('[name="Engineering_review"]').change(function() {
-                                            if ($(this).val() === 'yes') {
-                                                $('.engineering').show();
-                                                $('.engineering span').show();
-                                            } else {
-                                                $('.engineering').hide();
-                                                $('.engineering span').hide();
-                                            }
-                                        });
-                                    });
-                                </script>
-                                <div class="sub-head">
-                                    Engineering
-                                </div>
-                                <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="Engineering Review Required">Engineering Review Required ?</label>
-                                        <select name="Engineering_review" id="Engineering_review" disabled>
-                                            <option value="0">-- Select --</option>
-                                            <option value="yes">Yes</option>
-                                            <option value="no">No</option>
-                                            <option value="na">NA</option>
-                                        </select>
-
-                                    </div>
-                                </div>
-                                @php
-                                    $division = DB::table('q_m_s_divisions')
-                                        ->where('name', Helpers::getDivisionName(session()->get('division')))
-                                        ->first();
-                                    $userRoles = DB::table('user_roles')
-                                        ->where(['q_m_s_roles_id' => 26, 'q_m_s_divisions_id' => $division->id])
-                                        ->get();
-                                    $userRoleIds = $userRoles->pluck('user_id')->toArray();
-                                    $users = DB::table('users')->whereIn('id', $userRoleIds)->get(); // Fetch user data based on user IDs
-                                @endphp
-                                <div class="col-lg-6 engineering">
-                                    <div class="group-input">
-                                        <label for="Engineering Person">Engineering Person</label>
-                                        <select name="Engineering_person" id="Engineering_person">
-                                            <option value="0">-- Select --</option>
-                                            @foreach ($users as $user)
-                                                <option value="{{ $user->id }}">{{ $user->name }}</option>
-                                            @endforeach
-                                        </select>
-
-                                    </div>
-                                </div>
-                                <div class="col-md-12 mb-3 engineering">
-                                    <div class="group-input">
-                                        <label for="Impact Assessment4">Impact Assessment (By Engineering)</label>
-                                        <div><small class="text-primary">Please insert "NA" in the data field if it does
-                                                not require completion</small></div>
-                                        <textarea class="" name="Engineering_assessment" id="summernote-25">
-                                    </textarea>
-                                    </div>
-                                </div>
-                                <div class="col-md-12 mb-3 engineering">
-                                    <div class="group-input">
-                                        <label for="productionfeedback">Engineering Feedback</label>
-                                        <div><small class="text-primary">Please insert "NA" in the data field if it does
-                                                not require completion</small></div>
-                                        <textarea class="" name="Engineering_feedback" id="summernote-26">
-                                    </textarea>
-                                    </div>
-                                </div>
-                                <div class="col-lg-12 engineering">
-                                    <div class="group-input">
-                                        <label for="Audit Attachments">Engineering Attachments</label>
-                                        <div><small class="text-primary">Please Attach all relevant or supporting
-                                                documents</small></div>
-                                        <div class="file-attachment-field">
-                                            <div class="file-attachment-list" id="Engineering_attachment"></div>
-                                            <div class="add-btn">
-                                                <div>Add</div>
-                                                <input type="file" id="myfile" name="Engineering_attachment[]"
-                                                    oninput="addMultipleFiles(this, 'Engineering_attachment')" multiple>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-md-6 mb-3 engineering">
-                                    <div class="group-input">
-                                        <label for="Engineering Review Completed By">Engineering Review Completed
-                                            By</label>
-                                        <input type="text" name="Engineering_by" id="Engineering_by" disabled>
-
-                                    </div>
-                                </div>
-                                <div class="col-lg-6 new-date-data-field engineering">
-                                    <div class="group-input input-date">
-                                        <label for="Engineering Review Completed On">Engineering Review Completed
-                                            On</label>
-                                        <div class="calenderauditee">
-                                            <input type="text" id="Engineering_on" readonly
-                                                placeholder="DD-MMM-YYYY" />
-                                            <input type="date" name="Engineering_on"
-                                                min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input"
-                                                oninput="handleDateInput(this, 'Engineering_on')" />
-                                        </div>
-                                    </div>
-                                </div>
-                                <script>
-                                    $(document).ready(function() {
-                                        $('.analytical_development').hide();
-
-                                        $('[name="Analytical_Development_review"]').change(function() {
-                                            if ($(this).val() === 'yes') {
-                                                $('.analytical_development').show();
-                                                $('.analytical_development span').show();
-                                            } else {
-                                                $('.analytical_development').hide();
-                                                $('.analytical_development span').hide();
-                                            }
-                                        });
-                                    });
-                                </script>
-                                <div class="sub-head">
-                                    Analytical Development Laboratory
-                                </div>
-                                <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="Analytical Development Laboratory Review Required">Analytical
-                                            Development Laboratory Review Required ?</label>
-                                        <select name="Analytical_Development_review" id="Analytical_Development_review" disabled>
-                                            <option value="0">-- Select --</option>
-                                            <option value="yes">Yes</option>
-                                            <option value="no">No</option>
-                                            <option value="na">NA</option>
-
-                                        </select>
-
-                                    </div>
-                                </div>
-                                @php
-                                    $division = DB::table('q_m_s_divisions')
-                                        ->where('name', Helpers::getDivisionName(session()->get('division')))
-                                        ->first();
-                                    $userRoles = DB::table('user_roles')
-                                        ->where(['q_m_s_roles_id' => 27, 'q_m_s_divisions_id' => $division->id])
-                                        ->get();
-                                    $userRoleIds = $userRoles->pluck('user_id')->toArray();
-                                    $users = DB::table('users')->whereIn('id', $userRoleIds)->get(); // Fetch user data based on user IDs
-                                @endphp
-                                <div class="col-lg-6 analytical_development">
-                                    <div class="group-input">
-                                        <label for="Analytical Development Laboratory Person">Analytical Development
-                                            Laboratory Person</label>
-                                        <select name="Analytical_Development_person" id="Analytical_Development_person">
-                                            <option value="0">-- Select --</option>
-                                            @foreach ($users as $user)
-                                                <option value="{{ $user->id }}">{{ $user->name }}</option>
-                                            @endforeach
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="col-md-12 mb-3 analytical_development">
-                                    <div class="group-input">
-                                        <label for="Impact Assessment5">Impact Assessment (By Analytical Development
-                                            Laboratory)</label>
-                                        <textarea class="" name="Analytical_Development_assessment" id="summernote-27">
-                                    </textarea>
-                                    </div>
-                                </div>
-                                <div class="col-md-12 mb-3 analytical_development">
-                                    <div class="group-input">
-                                        <label for="Analytical Development Laboratory Feedback"> Analytical Development
-                                            Laboratory Feedback</label>
-                                        <textarea class="" name="Analytical_Development_feedback" id="summernote-28">
-                                    </textarea>
-                                    </div>
-                                </div>
-                                <div class="col-lg-12 analytical_development">
-                                    <div class="group-input">
-                                        <label for="Audit Attachments"> Analytical Development Laboratory
-                                            Attachments</label>
-                                        <div><small class="text-primary">Please Attach all relevant or supporting
-                                                documents</small></div>
-                                        <div class="file-attachment-field">
-                                            <div class="file-attachment-list" id="Analytical_Development_attachment">
-                                            </div>
-                                            <div class="add-btn">
-                                                <div>Add</div>
-                                                <input type="file" id="myfile"
-                                                    name="Analytical_Development_attachment[]"
-                                                    oninput="addMultipleFiles(this, 'Analytical_Development_attachment')"
-                                                    multiple>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-md-6 mb-3 analytical_development">
-                                    <div class="group-input">
-                                        <label for="Analytical Development Laboratory Review Completed By">Analytical
-                                            Development Laboratory Review Completed By</label>
-                                        <input type="text" name="Analytical_Development_by"
-                                            id="Analytical_Development_by" disabled>
-
-                                    </div>
-                                </div>
-                                {{-- <div class="col-md-6 mb-3">
-                                    <div class="group-input">
-                                        <label for="Analytical Development Laboratory Review Completed On">Analytical Development Laboratory Review Completed On</label>
-                                        <input type="date" name="Analytical_Development_on" disabled>
-
-                                    </div>
-                                </div> --}}
-                                <div class="col-lg-6 new-date-data-field analytical_development">
-                                    <div class="group-input input-date">
-                                        <label for="Analytical Development Laboratory Review Completed On">Analytical
-                                            Development Laboratory Review Completed On</label>
-                                        <div class="calenderauditee">
-                                            <input type="text" id="Analytical_Development_on" readonly
-                                                placeholder="DD-MMM-YYYY" />
-                                            <input type="date" name="Analytical_Development_on"
-                                                min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input"
-                                                oninput="handleDateInput(this, 'Analytical_Development_on')" />
-                                        </div>
-                                    </div>
-                                </div>
-                                <script>
-                                    $(document).ready(function() {
-                                        $('.kilo_lab').hide();
-
-                                        $('[name="Kilo_Lab_review"]').change(function() {
-                                            if ($(this).val() === 'yes') {
-                                                $('.kilo_lab').show();
-                                                $('.kilo_lab span').show();
-                                            } else {
-                                                $('.kilo_lab').hide();
-                                                $('.kilo_lab span').hide();
-                                            }
-                                        });
-                                    });
-                                </script>
-                                <div class="sub-head">
-                                    Process Development Laboratory / Kilo Lab
-                                </div>
-                                <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="Process Development Laboratory"> Process Development Laboratory / Kilo
-                                            Lab Review Required ?</label>
-                                        <select name="Kilo_Lab_review" id="Kilo_Lab_review" disabled>
-                                            <option value="0">-- Select --</option>
-                                            <option value="yes">Yes</option>
-                                            <option value="no">No</option>
-                                            <option value="na">NA</option>
-
-                                        </select>
-
-                                    </div>
-                                </div>
-                                @php
-                                    $division = DB::table('q_m_s_divisions')
-                                        ->where('name', Helpers::getDivisionName(session()->get('division')))
-                                        ->first();
-                                    $userRoles = DB::table('user_roles')
-                                        ->where(['q_m_s_roles_id' => 28, 'q_m_s_divisions_id' => $division->id])
-                                        ->get();
-                                    $userRoleIds = $userRoles->pluck('user_id')->toArray();
-                                    $users = DB::table('users')->whereIn('id', $userRoleIds)->get(); // Fetch user data based on user IDs
-                                @endphp
-                                <div class="col-lg-6 kilo_lab">
-                                    <div class="group-input">
-                                        <label for="Process Development Laboratory"> Process Development Laboratory / Kilo
-                                            Lab Person</label>
-                                        <select name="Kilo_Lab_person" id="Kilo_Lab_person">
-                                            <option value="0">-- Select --</option>
-                                            @foreach ($users as $user)
-                                                <option value="{{ $user->id }}">{{ $user->name }}</option>
-                                            @endforeach
-
-
-                                        </select>
-
-                                    </div>
-                                </div>
-                                <div class="col-md-12 mb-3 kilo_lab">
-                                    <div class="group-input">
-                                        <label for="Impact Assessment6">Impact Assessment (By Process Development
-                                            Laboratory / Kilo Lab)</label>
-                                        <textarea class="" name="Kilo_Lab_assessment" id="summernote-29">
-                                    </textarea>
-                                    </div>
-                                </div>
-                                <div class="col-md-12 mb-3 kilo_lab">
-                                    <div class="group-input">
-                                        <label for="Kilo Lab Feedback"> Process Development Laboratory / Kilo Lab
-                                            Feedback</label>
-                                        <textarea class="" name="Kilo_Lab_feedback" id="summernote-30">
-                                    </textarea>
-                                    </div>
-                                </div>
-                                <div class="col-lg-12 kilo_lab">
-                                    <div class="group-input">
-                                        <label for="Audit Attachments"> Process Development Laboratory / Kilo Lab
-                                            Attachments</label>
-                                        <div><small class="text-primary">Please Attach all relevant or supporting
-                                                documents</small></div>
-                                        <div class="file-attachment-field">
-                                            <div class="file-attachment-list" id="Kilo_Lab_attachment"></div>
-                                            <div class="add-btn">
-                                                <div>Add</div>
-                                                <input type="file" id="myfile" name="Kilo_Lab_attachment[]"
-                                                    oninput="addMultipleFiles(this, 'Kilo_Lab_attachment')" multiple>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="col-md-6 mb-3 kilo_lab">
-                                    <div class="group-input">
-                                        <label for="Kilo Lab Review Completed By">Process Development Laboratory / Kilo
-                                            Lab Review Completed By</label>
-                                        <input type="text" name="Kilo_Lab_attachment_by"
-                                            id="Kilo_Lab_attachment_by" disabled>
-
-                                    </div>
-                                </div>
-                                <div class="col-lg-6 new-date-data-field kilo_lab">
-                                    <div class="group-input input-date">
-                                        <label for="Kilo Lab Review Completed On">Process Development Laboratory / Kilo
-                                            Lab Review Completed On</label>
-                                        <div class="calenderauditee">
-                                            <input type="text" id="Kilo_Lab_attachment_on" readonly
-                                                placeholder="DD-MMM-YYYY" />
-                                            <input type="date" name="Kilo_Lab_attachment_on"
-                                                min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input"
-                                                oninput="handleDateInput(this, 'Kilo_Lab_attachment_on')" />
-                                        </div>
-                                    </div>
-                                </div>
-                                <script>
-                                    $(document).ready(function() {
-                                        $('.technology_transfer').hide();
-
-                                        $('[name="Technology_transfer_review"]').change(function() {
-                                            if ($(this).val() === 'yes') {
-                                                $('.technology_transfer').show();
-                                                $('.technology_transfer span').show();
-                                            } else {
-                                                $('.technology_transfer').hide();
-                                                $('.technology_transfer span').hide();
-                                            }
-                                        });
-                                    });
-                                </script>
-                                <div class="sub-head">
-                                    Technology Transfer / Design
-                                </div>
-                                <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="Design Review Required">Technology Transfer / Design Review Required
-                                            ?</label>
-                                        <select name="Technology_transfer_review" id="Technology_transfer_review" disabled>
-                                            <option value="0">-- Select --</option>
-                                            <option value="yes">Yes</option>
-                                            <option value="no">No</option>
-                                            <option value="na">NA</option>
-
-                                        </select>
-
-                                    </div>
-                                </div>
-                                @php
-                                    $division = DB::table('q_m_s_divisions')
-                                        ->where('name', Helpers::getDivisionName(session()->get('division')))
-                                        ->first();
-                                    $userRoles = DB::table('user_roles')
-                                        ->where(['q_m_s_roles_id' => 29, 'q_m_s_divisions_id' => $division->id])
-                                        ->get();
-                                    $userRoleIds = $userRoles->pluck('user_id')->toArray();
-                                    $users = DB::table('users')->whereIn('id', $userRoleIds)->get(); // Fetch user data based on user IDs
-                                @endphp
-                                <div class="col-lg-6 technology_transfer">
-                                    <div class="group-input">
-                                        <label for="Design Person"> Technology Transfer / Design Person</label>
-                                        <select name="Technology_transfer_person" id="Technology_transfer_person">
-                                            <option value="0">-- Select --</option>
-                                            @foreach ($users as $user)
-                                                <option value="{{ $user->id }}">{{ $user->name }}</option>
-                                            @endforeach
-
-
-                                        </select>
-
-                                    </div>
-                                </div>
-                                <div class="col-md-12 mb-3 technology_transfer">
-                                    <div class="group-input">
-                                        <label for="Impact Assessment7">Impact Assessment (By Technology Transfer /
-                                            Design)</label>
-                                        <textarea class="" name="Technology_transfer_assessment" id="summernote-31">
-                                    </textarea>
-                                    </div>
-                                </div>
-                                <div class="col-md-12 mb-3 technology_transfer">
-                                    <div class="group-input">
-                                        <label for="Design Feedback"> Technology Transfer / Design Feedback</label>
-                                        <textarea class="" name="Technology_transfer_feedback" id="summernote-32">
-                                    </textarea>
-                                    </div>
-                                </div>
-                                <div class="col-lg-12 technology_transfer">
-                                    <div class="group-input">
-                                        <label for="Audit Attachments"> Technology Transfer / Design Attachments</label>
-                                        <div><small class="text-primary">Please Attach all relevant or supporting
-                                                documents</small></div>
-                                        <div class="file-attachment-field">
-                                            <div class="file-attachment-list" id="Technology_transfer_attachment"></div>
-                                            <div class="add-btn">
-                                                <div>Add</div>
-                                                <input type="file" id="myfile"
-                                                    name="Technology_transfer_attachment[]"
-                                                    oninput="addMultipleFiles(this, 'Technology_transfer_attachment')"
-                                                    multiple>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-md-6 mb-3 technology_transfer">
-                                    <div class="group-input">
-                                        <label for="Design Review Completed By">Technology Transfer / Design Review
-                                            Completed By</label>
-                                        <input type="text" name="Technology_transfer_by" disabled>
-
-                                    </div>
-                                </div>
-                                <div class="col-lg-6 new-date-data-field technology_transfer">
-                                    <div class="group-input input-date">
-                                        <label for="Design Review Completed On">Technology Transfer / Design Review
-                                            Completed On</label>
-                                        <div class="calenderauditee">
-                                            <input type="text" id="Technology_transfer_on" readonly
-                                                placeholder="DD-MMM-YYYY" />
-                                            <input type="date" name="Technology_transfer_on"
-                                                min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input"
-                                                oninput="handleDateInput(this, 'Technology_transfer_on')" />
-                                        </div>
-                                    </div>
-                                </div>
-                                <script>
-                                    $(document).ready(function() {
-                                        $('.environmental_health').hide();
-
-                                        $('[name="Environment_Health_review"]').change(function() {
-                                            if ($(this).val() === 'yes') {
-                                                $('.environmental_health').show();
-                                                $('.environmental_health span').show();
-                                            } else {
-                                                $('.environmental_health').hide();
-                                                $('.environmental_health span').hide();
-                                            }
-                                        });
-                                    });
-                                </script>
-                                <div class="sub-head">
-                                    Environment, Health & Safety
-                                </div>
-                                <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="Safety Review Required">Environment, Health & Safety Review Required
-                                            ?</label>
-                                        <select name="Environment_Health_review" id="Environment_Health_review" disabled>
-                                            <option value="0">-- Select --</option>
-                                            <option value="yes">Yes</option>
-                                            <option value="no">No</option>
-                                            <option value="na">NA</option>
-
-                                        </select>
-
-                                    </div>
-                                </div>
-                                @php
-                                    $division = DB::table('q_m_s_divisions')
-                                        ->where('name', Helpers::getDivisionName(session()->get('division')))
-                                        ->first();
-                                    $userRoles = DB::table('user_roles')
-                                        ->where(['q_m_s_roles_id' => 30, 'q_m_s_divisions_id' => $division->id])
-                                        ->get();
-                                    $userRoleIds = $userRoles->pluck('user_id')->toArray();
-                                    $users = DB::table('users')->whereIn('id', $userRoleIds)->get(); // Fetch user data based on user IDs
-                                @endphp
-                                <div class="col-lg-6 environmental_health">
-                                    <div class="group-input">
-                                        <label for="Safety Person"> Environment, Health & Safety Person</label>
-                                        <select name="Environment_Health_Safety_person"
-                                            id="Environment_Health_Safety_person">
-                                            <option value="0">-- Select --</option>
-                                            @foreach ($users as $user)
-                                                <option value="{{ $user->id }}">{{ $user->name }}</option>
-                                            @endforeach
-                                        </select>
-
-                                    </div>
-                                </div>
-                                <div class="col-md-12 mb-3 environmental_health">
-                                    <div class="group-input">
-                                        <label for="Impact Assessment8">Impact Assessment (By Environment, Health &
-                                            Safety)</label>
-                                        <textarea class="" name="Health_Safety_assessment" id="summernote-33">
-                                    </textarea>
-                                    </div>
-                                </div>
-                                <div class="col-md-12 mb-3 environmental_health">
-                                    <div class="group-input">
-                                        <label for="productionfeedback">Environment, Health & Safety Feedback</label>
-                                        <textarea class="" name="Health_Safety_feedback" id="summernote-34">
-                                    </textarea>
-                                    </div>
-                                </div>
-                                <div class="col-lg-12 environmental_health">
-                                    <div class="group-input">
-                                        <label for="Audit Attachments"> Environment, Health & Safety Attachments</label>
-                                        <div><small class="text-primary">Please Attach all relevant or supporting
-                                                documents</small></div>
-                                        <div class="file-attachment-field">
-                                            <div class="file-attachment-list" id="Environment_Health_Safety_attachment">
-                                            </div>
-                                            <div class="add-btn">
-                                                <div>Add</div>
-                                                <input type="file" id="myfile"
-                                                    name="Environment_Health_Safety_attachment[]"
-                                                    oninput="addMultipleFiles(this, 'Environment_Health_Safety_attachment')"
-                                                    multiple>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="col-md-6 mb-3 environmental_health">
-                                    <div class="group-input">
-                                        <label for="productionfeedback">Environment, Health & Safety Review Completed
-                                            By</label>
-                                        <input type="text" name="Environment_Health_Safety_by"
-                                            id="Environment_Health_Safety_by" disabled>
-
-                                    </div>
-                                </div>
-                                <div class="col-lg-6 new-date-data-field environmental_health">
-                                    <div class="group-input input-date">
-                                        <label for="Safety Review Completed On">Environment, Health & Safety Review
-                                            Completed On</label>
-                                        <div class="calenderauditee">
-                                            <input type="text" id="Environment_Health_Safety_on" readonly
-                                                placeholder="DD-MMM-YYYY" />
-                                            <input type="date" name="Environment_Health_Safety_on"
-                                                min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input"
-                                                oninput="handleDateInput(this, 'Environment_Health_Safety_on')" />
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <script>
-                                    $(document).ready(function() {
-                                        $('.human_resources').hide();
-
-                                        $('[name="Human_Resource_review"]').change(function() {
-                                            if ($(this).val() === 'yes') {
-                                                $('.human_resources').show();
-                                                $('.human_resources span').show();
-                                            } else {
-                                                $('.human_resources').hide();
-                                                $('.human_resources span').hide();
-                                            }
-                                        });
-                                    });
-                                </script>
-                                <div class="sub-head">
-                                    Human Resource & Administration
-                                </div>
-                                <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="Administration Review Required">Human Resource & Administration Review
-                                            Required ?</label>
-                                        <select name="Human_Resource_review" id="Human_Resource_review" disabled>
-                                            <option value="0">-- Select --</option>
-                                            <option value="yes">Yes</option>
-                                            <option value="no">No</option>
-                                            <option value="na">NA</option>
-
-                                        </select>
-
-                                    </div>
-                                </div>
-                                @php
-                                    $division = DB::table('q_m_s_divisions')
-                                        ->where('name', Helpers::getDivisionName(session()->get('division')))
-                                        ->first();
-                                    $userRoles = DB::table('user_roles')
-                                        ->where(['q_m_s_roles_id' => 31, 'q_m_s_divisions_id' => $division->id])
-                                        ->get();
-                                    $userRoleIds = $userRoles->pluck('user_id')->toArray();
-                                    $users = DB::table('users')->whereIn('id', $userRoleIds)->get(); // Fetch user data based on user IDs
-                                @endphp
-                                <div class="col-lg-6 human_resources" >
-                                    <div class="group-input">
-                                        <label for="Administration Person"> Human Resource & Administration Person</label>
-                                        <select name="Human_Resource_person" id="Human_Resource_person">
-                                            <option value="0">-- Select --</option>
-                                            @foreach ($users as $user)
-                                                <option value="{{ $user->id }}">{{ $user->name }}</option>
-                                            @endforeach
-
-
-                                        </select>
-
-                                    </div>
-                                </div>
-                                <div class="col-md-12 mb-3 human_resources">
-                                    <div class="group-input">
-                                        <label for="Impact Assessment9">Impact Assessment (By Human Resource &
-                                            Administration )</label>
-                                        <textarea class="" name="Human_Resource_assessment" id="summernote-35">
-                                    </textarea>
-                                    </div>
-                                </div>
-                                <div class="col-md-12 mb-3 human_resources">
-                                    <div class="group-input">
-                                        <label for="productionfeedback">Human Resource & Administration Feedback</label>
-                                        <textarea class="" name="Human_Resource_feedback" id="summernote-36">
-                                    </textarea>
-                                    </div>
-                                </div>
-                                <div class="col-lg-12 human_resources">
-                                    <div class="group-input">
-                                        <label for="Audit Attachments"> Human Resource & Administration
-                                            Attachments</label>
-                                        <div><small class="text-primary">Please Attach all relevant or supporting
-                                                documents</small></div>
-                                        <div class="file-attachment-field">
-                                            <div class="file-attachment-list" id="Human_Resource_attachment"></div>
-                                            <div class="add-btn">
-                                                <div>Add</div>
-                                                <input type="file" id="myfile"
-                                                    name="Human_Resource_attachment[]"
-                                                    oninput="addMultipleFiles(this, 'Human_Resource_attachment')"
-                                                    multiple>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-md-6 mb-3 human_resources">
-                                    <div class="group-input">
-                                        <label for="Administration Review Completed By"> Human Resource & Administration
-                                            Review Completed By</label>
-                                        <input type="text" name="Human_Resource_by" id="Human_Resource_by"
-                                            disabled>
-
-                                    </div>
-                                </div>
-                                <div class="col-lg-6 new-date-data-field human_resources">
-                                    <div class="group-input input-date">
-                                        <label for="Administration Review Completed On">Human Resource & Administration
-                                            Review Completed On</label>
-                                        <div class="calenderauditee">
-                                            <input type="text" id="Human_Resource_on" readonly
-                                                placeholder="DD-MMM-YYYY" />
-                                            <input type="date" name="Human_Resource_on"
-                                                min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input"
-                                                oninput="handleDateInput(this, 'Human_Resource_on')" />
-                                        </div>
-                                    </div>
-                                </div>
-                                <script>
-                                    $(document).ready(function() {
-                                        $('.information_technology').hide();
-
-                                        $('[name="Information_Technology_review"]').change(function() {
-                                            if ($(this).val() === 'yes') {
-                                                $('.information_technology').show();
-                                                $('.information_technology span').show();
-                                            } else {
-                                                $('.information_technology').hide();
-                                                $('.information_technology span').hide();
-                                            }
-                                        });
-                                    });
-                                </script>
-                                <div class="sub-head">
-                                    Information Technology
-                                </div>
-                                <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="Information Technology Review Required"> Information Technology Review
-                                            Required ?</label>
-                                        <select name=" Information_Technology_review"
-                                            id=" Information_Technology_review" disabled>
-                                            <option value="0">-- Select --</option>
-                                            <option value="yes">Yes</option>
-                                            <option value="no">No</option>
-                                            <option value="na">NA</option>
-
-                                        </select>
-
-                                    </div>
-                                </div>
-                                @php
-                                    $division = DB::table('q_m_s_divisions')
-                                        ->where('name', Helpers::getDivisionName(session()->get('division')))
-                                        ->first();
-                                    $userRoles = DB::table('user_roles')
-                                        ->where(['q_m_s_roles_id' => 32, 'q_m_s_divisions_id' => $division->id])
-                                        ->get();
-                                    $userRoleIds = $userRoles->pluck('user_id')->toArray();
-                                    $users = DB::table('users')->whereIn('id', $userRoleIds)->get(); // Fetch user data based on user IDs
-                                @endphp
-                                <div class="col-lg-6 information_technology">
-                                    <div class="group-input">
-                                        <label for="Information Technology Person"> Information Technology Person</label>
-                                        <select name=" Information_Technology_person"
-                                            id=" Information_Technology_person">
-                                            <option value="0">-- Select --</option>
-                                            @foreach ($users as $user)
-                                                <option value="{{ $user->id }}">{{ $user->name }}</option>
-                                            @endforeach
-                                        </select>
-
-                                    </div>
-                                </div>
-                                <div class="col-md-12 mb-3 information_technology">
-                                    <div class="group-input">
-                                        <label for="Impact Assessment10">Impact Assessment (By Information
-                                            Technology)</label>
-                                        <textarea class="" name="Information_Technology_assessment" id="summernote-37">
-                                    </textarea>
-                                    </div>
-                                </div>
-                                <div class="col-md-12 mb-3 information_technology">
-                                    <div class="group-input">
-                                        <label for="Information Technology Feedback"> Information Technology
-                                            Feedback</label>
-                                        <textarea class="" name="Information_Technology_feedback" id="summernote-38">
-                                    </textarea>
-                                    </div>
-                                </div>
-                                <div class="col-lg-12 information_technology">
-                                    <div class="group-input">
-                                        <label for="Audit Attachments"> Information Technology Attachments</label>
-                                        <div><small class="text-primary">Please Attach all relevant or supporting
-                                                documents</small></div>
-                                        <div class="file-attachment-field">
-                                            <div class="file-attachment-list" id="Information_Technology_attachment">
-                                            </div>
-                                            <div class="add-btn">
-                                                <div>Add</div>
-                                                <input type="file" id="myfile"
-                                                    name="Information_Technology_attachment[]"
-                                                    oninput="addMultipleFiles(this, 'Information_Technology_attachment')"
-                                                    multiple>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-md-6 mb-3 information_technology">
-                                    <div class="group-input">
-                                        <label for="Information Technology Review Completed By"> Information Technology
-                                            Review Completed By</label>
-                                        <input type="text" name="Information_Technology_by" disabled>
-
-                                    </div>
-                                </div>
-                                <div class="col-lg-6 new-date-data-field information_technology">
-                                    <div class="group-input input-date">
-                                        <label for="Information Technology Review Completed On">Information Technology
-                                            Review Completed On</label>
-                                        <div class="calenderauditee">
-                                            <input type="text" id="Information_Technology_on" readonly
-                                                placeholder="DD-MMM-YYYY" />
-                                            <input type="date" name="Information_Technology_on"
-                                                min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input"
-                                                oninput="handleDateInput(this, 'Information_Technology_on')" />
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <script>
-                                    $(document).ready(function() {
-                                        $('.project_management').hide();
-
-                                        $('[name="Project_management_review"]').change(function() {
-                                            if ($(this).val() === 'yes') {
-                                                $('.project_management').show();
-                                                $('.project_management span').show();
-                                            } else {
-                                                $('.project_management').hide();
-                                                $('.project_management span').hide();
-                                            }
-                                        });
-                                    });
-                                </script>
-                                <div class="sub-head">
-                                    Project Management
-                                </div>
-                                <div class="col-lg-6 project_management">
-                                    <div class="group-input">
-                                        <label for="Project management Review Required"> Project management Review
-                                            Required ?</label>
-                                        <select name="Project_management_review" id="Project_management_review" disabled>
-                                            <option value="0">-- Select --</option>
-                                            <option value="yes">Yes</option>
-                                            <option value="no">No</option>
-                                            <option value="na">NA</option>
-
-                                        </select>
-
-                                    </div>
-                                </div>
-                                @php
-                                    $division = DB::table('q_m_s_divisions')
-                                        ->where('name', Helpers::getDivisionName(session()->get('division')))
-                                        ->first();
-                                    $userRoles = DB::table('user_roles')
-                                        ->where(['q_m_s_roles_id' => 33, 'q_m_s_divisions_id' => $division->id])
-                                        ->get();
-                                    $userRoleIds = $userRoles->pluck('user_id')->toArray();
-                                    $users = DB::table('users')->whereIn('id', $userRoleIds)->get(); // Fetch user data based on user IDs
-                                @endphp
-                                <div class="col-lg-6 project_management">
-                                    <div class="group-input">
-                                        <label for="Project management Person"> Project management Person</label>
-                                        <select name="Project_management_person" id="Project_management_person">
-                                            <option value="0">-- Select --</option>
-                                            @foreach ($users as $user)
-                                                <option value="{{ $user->id }}">{{ $user->name }}</option>
-                                            @endforeach
-
-
-                                        </select>
-
-                                    </div>
-                                </div>
-                                <div class="col-md-12 mb-3 project_management">
-                                    <div class="group-input">
-                                        <label for="Impact Assessment11">Impact Assessment (By Project management
-                                            )</label>
-                                        <textarea class="" name="Project_management_assessment" id="summernote-39">
-                                    </textarea>
-                                    </div>
-                                </div>
-                                <div class="col-md-12 mb-3 project_management">
-                                    <div class="group-input">
-                                        <label for="Project management Feedback"> Project management Feedback</label>
-                                        <textarea class="" name="Project_management_feedback" id="summernote-40">
-                                    </textarea>
-                                    </div>
-                                </div>
-                                <div class="col-lg-12 project_management">
-                                    <div class="group-input">
-                                        <label for="Audit Attachments"> Project management Attachments</label>
-                                        <div><small class="text-primary">Please Attach all relevant or supporting
-                                                documents</small></div>
-                                        <div class="file-attachment-field">
-                                            <div class="file-attachment-list" id="Project_management_attachment"></div>
-                                            <div class="add-btn">
-                                                <div>Add</div>
-                                                <input type="file" id="myfile"
-                                                    name="Project_management_attachment[]"
-                                                    oninput="addMultipleFiles(this, 'Project_management_attachment')"
-                                                    multiple>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="col-md-6 mb-3 project_management">
-                                    <div class="group-input">
-                                        <label for="Project management Review Completed By"> Project management Review
-                                            Completed By</label>
-                                        <input type="text" name="Project_management_by"id="Project_management_by"
-                                            disabled>
-
-                                    </div>
-                                </div>
-                                <div class="col-lg-6 new-date-data-field project_management">
-                                    <div class="group-input input-date">
-                                        <label for="Project management Review Completed On">Information Technology Review
-                                            Completed On</label>
-                                        <div class="calenderauditee">
-                                            <input type="text" id="Project_management_on" readonly
-                                                placeholder="DD-MMM-YYYY" />
-                                            <input type="date" name="Project_management_on"
-                                                min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input"
-                                                oninput="handleDateInput(this, 'Project_management_on')" />
-                                        </div>
-                                    </div>
-                                </div>
-                                <script>
-                                    $(document).ready(function() {
-                                        $('.other1_reviews').hide();
-
-                                        $('[name="Other1_review"]').change(function() {
-                                            if ($(this).val() === 'yes') {
-                                                $('.other1_reviews').show();
-                                                $('.other1_reviews span').show();
-                                            } else {
-                                                $('.other1_reviews').hide();
-                                                $('.other1_reviews span').hide();
-                                            }
-                                        });
-                                    });
-                                </script>
-                                <div class="sub-head">
-                                    Other's 1 ( Additional Person Review From Departments If Required)
-                                </div>
-                                <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="Customer notification"> Other's 1 Review Required ?</label>
-                                        <select name="Other1_review" id="Other1_review" disabled>
-                                            <option value="0">-- Select --</option>
-                                            <option value="yes">Yes</option>
-                                            <option value="no">No</option>
-                                            <option value="na">NA</option>
-
-                                        </select>
-
-                                    </div>
-                                </div>
-                                @php
-                                    $division = DB::table('q_m_s_divisions')
-                                        ->where('name', Helpers::getDivisionName(session()->get('division')))
-                                        ->first();
-                                    $userRoles = DB::table('user_roles')
-                                        ->where(['q_m_s_roles_id' => 34, 'q_m_s_divisions_id' => $division->id])
-                                        ->get();
-                                    $userRoleIds = $userRoles->pluck('user_id')->toArray();
-                                    $users = DB::table('users')->whereIn('id', $userRoleIds)->get(); // Fetch user data based on user IDs
-                                @endphp
-                                <div class="col-lg-6 other1_reviews">
-                                    <div class="group-input">
-                                        <label for="Customer notification"> Other's 1 Person</label>
-                                        <select name="Other1_person" id="Other1_person">
-                                            <option value="0">-- Select --</option>
-                                            @foreach ($users as $user)
-                                                <option value="{{ $user->id }}">{{ $user->name }}</option>
-                                            @endforeach
-
-                                        </select>
-
-                                    </div>
-                                </div>
-                                <div class="col-lg-12 other1_reviews">
-                                    <div class="group-input">
-                                        <label for="Customer notification"> Other's 1 Department</label>
-                                        <select name="Other1_Department_person" id="Other1_Department_person">
-                                            <option value="0">-- Select --</option>
-                                            <option value="Production">Production</option>
-                                            <option value="Warehouse">Warehouse</option>
-                                            <option value="Quality_Control">Quality Control</option>
-                                            <option value="Quality_Assurance">Quality Assurance</option>
-                                            <option value="Engineering">Engineering</option>
-                                            <option value="Analytical_Development_Laboratory">Analytical Development
-                                                Laboratory</option>
-                                            <option value="Process_Development_Lab">Process Development Laboratory / Kilo
-                                                Lab</option>
-                                            <option value="Technology transfer/Design">Technology Transfer/Design</option>
-                                            <option value="Environment, Health & Safety">Environment, Health & Safety
-                                            </option>
-                                            <option value="Human Resource & Administration">Human Resource &
-                                                Administration</option>
-                                            <option value="Information Technology">Information Technology</option>
-                                            <option value="Project management">Project management</option>
-
-
-
-                                        </select>
-
-                                    </div>
-                                </div>
-                                <div class="col-md-12 mb-3 other1_reviews">
-                                    <div class="group-input">
-                                        <label for="productionfeedback">Impact Assessment (By Other's 1)</label>
-                                        <textarea class="" name="Other1_assessment" id="summernote-41">
-                                        </textarea>
-                                    </div>
-                                </div>
-                                <div class="col-md-12 mb-3 other1_reviews">
-                                    <div class="group-input">
-                                        <label for="productionfeedback"> Other's 1 Feedback</label>
-                                        <textarea class="" name="Other1_feedback" id="summernote-42">
-                                        </textarea>
-                                    </div>
-                                </div>
-                                <div class="col-lg-12 other1_reviews">
-                                    <div class="group-input">
-                                        <label for="Audit Attachments"> Other's 1 Attachments</label>
-                                        <div><small class="text-primary">Please Attach all relevant or supporting
-                                                documents</small></div>
-                                        <div class="file-attachment-field">
-                                            <div class="file-attachment-list" id="Other1_attachment"></div>
-                                            <div class="add-btn">
-                                                <div>Add</div>
-                                                <input type="file" id="myfile" name="Other1_attachment[]"
-                                                    oninput="addMultipleFiles(this, 'Other1_attachment')" multiple>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-md-6 mb-3 other1_reviews">
-                                    <div class="group-input">
-                                        <label for="productionfeedback"> Other's 1 Review Completed By</label>
-                                        <input type="text" name="Other1_by" id="Other1_by" disabled>
-
-                                    </div>
-                                </div>
-                                <div class="col-lg-6 new-date-data-field other1_reviews">
-                                    <div class="group-input input-date">
-                                        <label for="Review Completed On1">Other's 1 Review Completed On</label>
-                                        <div class="calenderauditee">
-                                            <input type="text" id="Other1_on" name="Other1_on" readonly
-                                                placeholder="DD-MMM-YYYY" />
-                                        </div>
-                                    </div>
-                                </div>
-                                <script>
-                                    $(document).ready(function() {
-                                        $('.Other2_reviews').hide();
-
-                                        $('[name="Other2_review"]').change(function() {
-                                            if ($(this).val() === 'yes') {
-                                                $('.Other2_reviews').show();
-                                                $('.Other2_reviews span').show();
-                                            } else {
-                                                $('.Other2_reviews').hide();
-                                                $('.Other2_reviews span').hide();
-                                            }
-                                        });
-                                    });
-                                </script>
-                                <div class="sub-head">
-                                    Other's 2 ( Additional Person Review From Departments If Required)
-                                </div>
-                                <div class="col-lg-6 ">
-                                    <div class="group-input">
-                                        <label for="Customer notification"> Other's 2 Review Required ?</label>
-                                        <select name="Other2_review" id="Other2_review" disabled>
-                                            <option value="0">-- Select --</option>
-                                            <option value="yes">Yes</option>
-                                            <option value="no">No</option>
-                                            <option value="na">NA</option>
-
-                                        </select>
-
-                                    </div>
-                                </div>
-                                @php
-                                    $division = DB::table('q_m_s_divisions')
-                                        ->where('name', Helpers::getDivisionName(session()->get('division')))
-                                        ->first();
-                                    $userRoles = DB::table('user_roles')
-                                        ->where(['q_m_s_roles_id' => 35, 'q_m_s_divisions_id' => $division->id])
-                                        ->get();
-                                    $userRoleIds = $userRoles->pluck('user_id')->toArray();
-                                    $users = DB::table('users')->whereIn('id', $userRoleIds)->get(); // Fetch user data based on user IDs
-                                @endphp
-                                <div class="col-lg-6 Other2_reviews">
-                                    <div class="group-input">
-                                        <label for="Customer notification"> Other's 2 Person</label>
-                                        <select name="Other2_person" id="Other2_person">
-                                            <option value="0">-- Select --</option>
-                                            @foreach ($users as $user)
-                                                <option value="{{ $user->id }}">{{ $user->name }}</option>
-                                            @endforeach
-
-                                        </select>
-
-                                    </div>
-                                </div>
-                                <div class="col-lg-12 Other2_reviews">
-                                    <div class="group-input">
-                                        <label for="Customer notification"> Other's 2 Department</label>
-                                        <select name="Other2_Department_person" id="Other2_Department_person">
-                                            <option value="0">-- Select --</option>
-                                            <option value="Production">Production</option>
-                                            <option value="Warehouse">Warehouse</option>
-                                            <option value="Quality_Control">Quality Control</option>
-                                            <option value="Quality_Assurance">Quality Assurance</option>
-                                            <option value="Engineering">Engineering</option>
-                                            <option value="Analytical_Development_Laboratory">Analytical Development
-                                                Laboratory</option>
-                                            <option value="Process_Development_Lab">Process Development Laboratory / Kilo
-                                                Lab</option>
-                                            <option value="Technology transfer/Design">Technology Transfer/Design</option>
-                                            <option value="Environment, Health & Safety">Environment, Health & Safety
-                                            </option>
-                                            <option value="Human Resource & Administration">Human Resource &
-                                                Administration</option>
-                                            <option value="Information Technology">Information Technology</option>
-                                            <option value="Project management">Project management</option>
-
-
-
-                                        </select>
-
-                                    </div>
-                                </div>
-                                <div class="col-md-12 mb-3 Other2_reviews">
-                                    <div class="group-input">
-                                        <label for="Impact Assessment13">Impact Assessment (By Other's 2)</label>
-                                        <textarea class="" name="Other2_Assessment" id="summernote-43">
-                                        </textarea>
-                                    </div>
-                                </div>
-                                <div class="col-md-12 mb-3 Other2_reviews">
-                                    <div class="group-input">
-                                        <label for="Feedback2"> Other's 2 Feedback</label>
-                                        <textarea class="" name="Other2_feedback" id="summernote-44">
-                                        </textarea>
-                                    </div>
-                                </div>
-                                <div class="col-lg-12 Other2_reviews">
-                                    <div class="group-input">
-                                        <label for="Audit Attachments"> Other's 2 Attachments</label>
-                                        <div><small class="text-primary">Please Attach all relevant or supporting
-                                                documents</small></div>
-                                        <div class="file-attachment-field">
-                                            <div class="file-attachment-list" id="Other2_attachment"></div>
-                                            <div class="add-btn">
-                                                <div>Add</div>
-                                                <input type="file" id="myfile" name="Other2_attachment[]"
-                                                    oninput="addMultipleFiles(this, 'Other2_attachment')" multiple>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-md-6 mb-3 Other2_reviews">
-                                    <div class="group-input">
-                                        <label for="Review Completed By2"> Other's 2 Review Completed By</label>
-                                        <input type="text" name="Other2_by" disabled>
-
-                                    </div>
-                                </div>
-                                <div class="col-lg-6 new-date-data-field Other2_reviews">
-                                    <div class="group-input input-date">
-                                        <label for="Review Completed On2">Other's 2 Review Completed On</label>
-                                        <div class="calenderauditee">
-                                            <input type="text" id="Other2_on" name="Other2_on" readonly
-                                                placeholder="DD-MMM-YYYY" />
-                                            {{-- <input type="date"  name="Other2_on" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input"
-                                                    oninput="handleDateInput(this, 'Other2_on')" /> --}}
-                                        </div>
-                                    </div>
-                                </div>
-                                <script>
-                                    $(document).ready(function() {
-                                        $('.Other3_reviews').hide();
-
-                                        $('[name="Other3_review"]').change(function() {
-                                            if ($(this).val() === 'yes') {
-                                                $('.Other3_reviews').show();
-                                                $('.Other3_reviews span').show();
-                                            } else {
-                                                $('.Other3_reviews').hide();
-                                                $('.Other3_reviews span').hide();
-                                            }
-                                        });
-                                    });
-                                </script>
-                                <div class="sub-head">
-                                    Other's 3 ( Additional Person Review From Departments If Required)
-                                </div>
-                                <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="Customer notification"> Other's 3 Review Required ?</label>
-                                        <select name="Other3_review" id="Other3_review" disabled>
-                                            <option value="0">-- Select --</option>
-                                            <option value="yes">Yes</option>
-                                            <option value="no">No</option>
-                                            <option value="na">NA</option>
-
-                                        </select>
-
-                                    </div>
-                                </div>
-                                @php
-                                    $division = DB::table('q_m_s_divisions')
-                                        ->where('name', Helpers::getDivisionName(session()->get('division')))
-                                        ->first();
-                                    $userRoles = DB::table('user_roles')
-                                        ->where(['q_m_s_roles_id' => 36, 'q_m_s_divisions_id' => $division->id])
-                                        ->get();
-                                    $userRoleIds = $userRoles->pluck('user_id')->toArray();
-                                    $users = DB::table('users')->whereIn('id', $userRoleIds)->get(); // Fetch user data based on user IDs
-                                @endphp
-                                <div class="col-lg-6 Other3_reviews">
-                                    <div class="group-input">
-                                        <label for="Customer notification"> Other's 3 Person</label>
-                                        <select name="Other3_person" id="Other3_person">
-                                            <option value="0">-- Select --</option>
-                                            @foreach ($users as $user)
-                                                <option value="{{ $user->id }}">{{ $user->name }}</option>
-                                            @endforeach
-
-                                        </select>
-
-                                    </div>
-                                </div>
-                                <div class="col-lg-12 Other3_reviews ">
-                                    <div class="group-input">
-                                        <label for="Customer notification"> Other's 3 Department</label>
-                                        <select name="Other3_Department_person" id="Other3_Department_person">
-                                            <option value="0">-- Select --</option>
-                                            <option value="Production">Production</option>
-                                            <option value="Warehouse">Warehouse</option>
-                                            <option value="Quality_Control">Quality Control</option>
-                                            <option value="Quality_Assurance">Quality Assurance</option>
-                                            <option value="Engineering">Engineering</option>
-                                            <option value="Analytical_Development_Laboratory">Analytical Development
-                                                Laboratory</option>
-                                            <option value="Process_Development_Lab">Process Development Laboratory / Kilo
-                                                Lab</option>
-                                            <option value="Technology transfer/Design">Technology Transfer/Design</option>
-                                            <option value="Environment, Health & Safety">Environment, Health & Safety
-                                            </option>
-                                            <option value="Human Resource & Administration">Human Resource &
-                                                Administration</option>
-                                            <option value="Information Technology">Information Technology</option>
-                                            <option value="Project management">Project management</option>
-
-
-
-                                        </select>
-
-                                    </div>
-                                </div>
-                                <div class="col-md-12 mb-3 Other3_reviews">
-                                    <div class="group-input">
-                                        <label for="productionfeedback">Impact Assessment (By Other's 3)</label>
-                                        <textarea class="" name="Other3_Assessment" id="summernote-45">
-                                        </textarea>
-                                    </div>
-                                </div>
-                                <div class="col-md-12 mb-3 Other3_reviews">
-                                    <div class="group-input">
-                                        <label for="productionfeedback"> Other's 3 Feedback</label>
-                                        <textarea class="" name="Other3_feedback" id="summernote-46">
-                                        </textarea>
-                                    </div>
-                                </div>
-                                <div class="col-lg-12 Other3_reviews">
-                                    <div class="group-input">
-                                        <label for="Audit Attachments"> Other's 3 Attachments</label>
-                                        <div><small class="text-primary">Please Attach all relevant or supporting
-                                                documents</small></div>
-                                        <div class="file-attachment-field">
-                                            <div class="file-attachment-list" id="Other3_attachment"></div>
-                                            <div class="add-btn">
-                                                <div>Add</div>
-                                                <input type="file" id="myfile" name="Other3_attachment[]"
-                                                    oninput="addMultipleFiles(this, 'Other3_attachment')" multiple>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-md-6 mb-3 Other3_reviews">
-                                    <div class="group-input">
-                                        <label for="productionfeedback"> Other's 3 Review Completed By</label>
-                                        <input type="text" name="Other3_by" disabled>
-
-                                    </div>
-                                </div>
-                                <div class="col-lg-6 new-date-data-field Other3_reviews">
-                                    <div class="group-input input-date">
-                                        <label for="Review Completed On3">Other's 3 Review Completed On</label>
-                                        <div class="calenderauditee">
-                                            <input type="text" id="Other3_on" name="Other3_on" readonly
-                                                placeholder="DD-MMM-YYYY" />
-                                            {{-- <input type="date"  name="Other3_on" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input"
-                                                    oninput="handleDateInput(this, 'Other3_on')" /> --}}
-                                        </div>
-                                    </div>
-                                </div>
-                                <script>
-                                    $(document).ready(function() {
-                                        $('.Other4_reviews').hide();
-
-                                        $('[name="Other4_review"]').change(function() {
-                                            if ($(this).val() === 'yes') {
-                                                $('.Other4_reviews').show();
-                                                $('.Other4_reviews span').show();
-                                            } else {
-                                                $('.Other4_reviews').hide();
-                                                $('.Other4_reviews span').hide();
-                                            }
-                                        });
-                                    });
-                                </script>
-                                <div class="sub-head">
-                                    Other's 4 ( Additional Person Review From Departments If Required)
-                                </div>
-                                <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="review4"> Other's 4 Review Required ?</label>
-                                        <select name="Other4_review" id="Other4_review" disabled>
-                                            <option value="0">-- Select --</option>
-                                            <option value="yes">Yes</option>
-                                            <option value="no">No</option>
-                                            <option value="na">NA</option>
-
-                                        </select>
-
-                                    </div>
-                                </div>
-                                @php
-                                    $division = DB::table('q_m_s_divisions')
-                                        ->where('name', Helpers::getDivisionName(session()->get('division')))
-                                        ->first();
-                                    $userRoles = DB::table('user_roles')
-                                        ->where(['q_m_s_roles_id' => 37, 'q_m_s_divisions_id' => $division->id])
-                                        ->get();
-                                    $userRoleIds = $userRoles->pluck('user_id')->toArray();
-                                    $users = DB::table('users')->whereIn('id', $userRoleIds)->get(); // Fetch user data based on user IDs
-                                @endphp
-                                <div class="col-lg-6 Other4_reviews">
-                                    <div class="group-input">
-                                        <label for="Person4"> Other's 4 Person</label>
-                                        <select name="Other4_person" id="Other4_person">
-                                            <option value="0">-- Select --</option>
-                                            @foreach ($users as $user)
-                                                <option value="{{ $user->id }}">{{ $user->name }}</option>
-                                            @endforeach
-
-                                        </select>
-
-                                    </div>
-                                </div>
-                                <div class="col-lg-12 Other4_reviews">
-                                    <div class="group-input">
-                                        <label for="Department4"> Other's 4 Department</label>
-                                        <select name="Other4_Department_person" id="Other4_Department_person">
-                                            <option value="0">-- Select --</option>
-                                            <option value="Production">Production</option>
-                                            <option value="Warehouse">Warehouse</option>
-                                            <option value="Quality_Control">Quality Control</option>
-                                            <option value="Quality_Assurance">Quality Assurance</option>
-                                            <option value="Engineering">Engineering</option>
-                                            <option value="Analytical_Development_Laboratory">Analytical Development
-                                                Laboratory</option>
-                                            <option value="Process_Development_Lab">Process Development Laboratory / Kilo
-                                                Lab</option>
-                                            <option value="Technology transfer/Design">Technology Transfer/Design</option>
-                                            <option value="Environment, Health & Safety">Environment, Health & Safety
-                                            </option>
-                                            <option value="Human Resource & Administration">Human Resource &
-                                                Administration</option>
-                                            <option value="Information Technology">Information Technology</option>
-                                            <option value="Project management">Project management</option>
-
-
-
-                                        </select>
-
-                                    </div>
-                                </div>
-                                <div class="col-md-12 mb-3 Other4_reviews">
-                                    <div class="group-input">
-                                        <label for="Impact Assessment15">Impact Assessment (By Other's 4)</label>
-                                        <textarea class="" name="Other4_Assessment" id="summernote-47">
-                                        </textarea>
-                                    </div>
-                                </div>
-                                <div class="col-md-12 mb-3 Other4_reviews">
-                                    <div class="group-input">
-                                        <label for="feedback4"> Other's 4 Feedback</label>
-                                        <textarea class="" name="Other4_feedback" id="summernote-48">
-                                        </textarea>
-                                    </div>
-                                </div>
-                                <div class="col-lg-12 Other4_reviews">
-                                    <div class="group-input">
-                                        <label for="Audit Attachments"> Other's 4 Attachments</label>
-                                        <div><small class="text-primary">Please Attach all relevant or supporting
-                                                documents</small></div>
-                                        <div class="file-attachment-field">
-                                            <div class="file-attachment-list" id="Other4_attachment"></div>
-                                            <div class="add-btn">
-                                                <div>Add</div>
-                                                <input type="file" id="myfile" name="Other4_attachment[]"
-                                                    oninput="addMultipleFiles(this, 'Other4_attachment')" multiple>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-md-6 mb-3 Other4_reviews">
-                                    <div class="group-input">
-                                        <label for="Review Completed By4"> Other's 4 Review Completed By</label>
-                                        <input type="text" name="Other4_by" disabled>
-
-                                    </div>
-                                </div>
-                                <div class="col-lg-6 new-date-data-field Other4_reviews">
-                                    <div class="group-input input-date">
-                                        <label for="Review Completed On4">Other's 4 Review Completed On</label>
-                                        <div class="calenderauditee">
-                                            <input type="text" id="Other4_on" name="Other4_on" readonly
-                                                placeholder="DD-MMM-YYYY" />
-                                            {{-- <input type="date"  name="Other4_on" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input"
-                                                    oninput="handleDateInput(this, 'Other4_on')" /> --}}
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <script>
-                                    $(document).ready(function() {
-                                        $('.Other5_reviews').hide();
-
-                                        $('[name="Other5_review"]').change(function() {
-                                            if ($(this).val() === 'yes') {
-                                                $('.Other5_reviews').show();
-                                                $('.Other5_reviews span').show();
-                                            } else {
-                                                $('.Other5_reviews').hide();
-                                                $('.Other5_reviews span').hide();
-                                            }
-                                        });
-                                    });
-                                </script>
-                                <div class="sub-head">
-                                    Other's 5 ( Additional Person Review From Departments If Required)
-                                </div>
-                                <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="review5"> Other's 5 Review Required ?</label>
-                                        <select name="Other5_review" id="Other5_review" disabled>
-                                            <option value="0">-- Select --</option>
-                                            <option value="yes">Yes</option>
-                                            <option value="no">No</option>
-                                            <option value="na">NA</option>
-
-                                        </select>
-
-                                    </div>
-                                </div>
-                                @php
-                                    $division = DB::table('q_m_s_divisions')
-                                        ->where('name', Helpers::getDivisionName(session()->get('division')))
-                                        ->first();
-                                    $userRoles = DB::table('user_roles')
-                                        ->where(['q_m_s_roles_id' => 38, 'q_m_s_divisions_id' => $division->id])
-                                        ->get();
-                                    $userRoleIds = $userRoles->pluck('user_id')->toArray();
-                                    $users = DB::table('users')->whereIn('id', $userRoleIds)->get(); // Fetch user data based on user IDs
-                                @endphp
-                                <div class="col-lg-6 Other5_reviews">
-                                    <div class="group-input">
-                                        <label for="Person5">Other's 5 Person</label>
-                                        <select name="Other5_person" id="Other5_person">
-                                            <option value="0">-- Select --</option>
-                                            @foreach ($users as $user)
-                                                <option value="{{ $user->id }}">{{ $user->name }}</option>
-                                            @endforeach
-
-                                        </select>
-
-                                    </div>
-                                </div>
-                                <div class="col-lg-12 Other5_reviews">
-                                    <div class="group-input">
-                                        <label for="Department5"> Other's 5 Department</label>
-                                        <select name="Other5_Department_person" id="Other5_Department_person">
-                                            <option value="0">-- Select --</option>
-                                            <option value="Production">Production</option>
-                                            <option value="Warehouse">Warehouse</option>
-                                            <option value="Quality_Control">Quality Control</option>
-                                            <option value="Quality_Assurance">Quality Assurance</option>
-                                            <option value="Engineering">Engineering</option>
-                                            <option value="Analytical_Development_Laboratory">Analytical Development
-                                                Laboratory</option>
-                                            <option value="Process_Development_Lab">Process Development Laboratory / Kilo
-                                                Lab</option>
-                                            <option value="Technology transfer/Design">Technology Transfer/Design</option>
-                                            <option value="Environment, Health & Safety">Environment, Health & Safety
-                                            </option>
-                                            <option value="Human Resource & Administration">Human Resource &
-                                                Administration</option>
-                                            <option value="Information Technology">Information Technology</option>
-                                            <option value="Project management">Project management</option>
-
-
-
-                                        </select>
-
-                                    </div>
-                                </div>
-                                <div class="col-md-12 mb-3 Other5_reviews">
-                                    <div class="group-input">
-                                        <label for="productionfeedback">Impact Assessment (By Other's 5)</label>
-                                        <textarea class="" name="Other5_Assessment" id="summernote-49">
-                                        </textarea>
-                                    </div>
-                                </div>
-                                <div class="col-md-12 mb-3 Other5_reviews">
-                                    <div class="group-input">
-                                        <label for="productionfeedback"> Other's 5 Feedback</label>
-                                        <textarea class="" name="Other5_feedback" id="summernote-50">
-                                        </textarea>
-                                    </div>
-                                </div>
-                                <div class="col-lg-12 Other5_reviews">
-                                    <div class="group-input">
-                                        <label for="Audit Attachments"> Other's 5 Attachments</label>
-                                        <div><small class="text-primary">Please Attach all relevant or supporting
-                                                documents</small></div>
-                                        <div class="file-attachment-field">
-                                            <div class="file-attachment-list" id="Other5_attachment"></div>
-                                            <div class="add-btn">
-                                                <div>Add</div>
-                                                <input type="file" id="myfile" name="Other5_attachment[]"
-                                                    oninput="addMultipleFiles(this, 'Other5_attachment')" multiple>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-md-6 mb-3 Other5_reviews">
-                                    <div class="group-input">
-                                        <label for="Review Completed By5"> Other's 5 Review Completed By</label>
-                                        <input type="text" name="Other5_by" disabled>
-
-                                    </div>
-                                </div>
-                                <div class="col-lg-6 new-date-data-field Other5_reviews">
-                                    <div class="group-input input-date">
-                                        <label for="Review Completed On5">Other's 5 Review Completed On</label>
-                                        <div class="calenderauditee">
-                                            <input type="text" id="Other5_on" name="Other5_on" readonly
-                                                placeholder="DD-MMM-YYYY" />
-                                            {{-- <input type="date"  name="Other5_on" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input"
-                                                    oninput="handleDateInput(this, 'Other5_on')" /> --}}
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="button-block">
-                                <button type="submit" id="ChangesaveButton" style=" justify-content: center; width: 4rem; margin-left: 1px;" class="saveButton">Save</button>
-                                <a href="/rcms/qms-dashboard" style=" justify-content: center; width: 4rem; margin-left: 1px;">
-                                    <button type="button"  class="backButton">Back</button>
-                                </a>
-                                <button type="button" style=" justify-content: center; width: 4rem; margin-left: 1px;" id="ChangeNextButton" class="nextButton"
-                                    onclick="nextStep()">Next</button>
-                                <button type="button" style=" justify-content: center; width: 4rem; margin-left: 1px;"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white">
-                                        Exit </a> </button>
-                            </div>
-
-                        </div>
-                    </div>
+        
+           
     </div>
     </form>
 
@@ -5211,7 +5703,7 @@
 
     <script>
         VirtualSelect.init({
-            ele: '#related_records, #cft_reviewer'
+            ele: '#related_records, #cft_reviewer, #risk_assessment_related_record'
         });
 
         function openCity(evt, cityName) {
@@ -5382,5 +5874,32 @@
             var textlen = maxLength - $(this).val().length;
             $('#rchars').text(textlen);
         });
+    </script>
+                                        <script>
+                                        $(document).ready(function() {
+                                            // Event listener for the remove file button
+                                            $(document).on('click', '.remove-file', function() {
+                                                $(this).closest('.file-container').remove();
+                                            });
+                                        });
+                                    </script>
+                                    
+    <script>
+
+        document.addEventListener('DOMContentLoaded', function() {
+        const removeButtons = document.querySelectorAll('.remove-file');
+
+        removeButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                const fileName = this.getAttribute('data-file-name');
+                const fileContainer = this.parentElement;
+
+                // Hide the file container
+                if (fileContainer) {
+                    fileContainer.style.display = 'none';
+                }
+            });
+        });
+    });
     </script>
 @endsection

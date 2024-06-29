@@ -60,15 +60,20 @@ class EffectivenessCheckController extends Controller
 
     public function store(Request $request)
     {
+        // dd($request->all());
 
         $openState = new EffectivenessCheck();
         // $openState->form_type = "effectiveness-check";
         $openState->is_parent = "No";
-        $openState->parent_id = $request->cc_id;
         $openState->division_id = $request->division_id;
         $openState->intiation_date = $request->intiation_date;
         $openState->initiator_id = Auth::user()->id;
-        $openState->parent_record = CC::where('id', $request->cc_id)->value('id');
+        // $openState->parent_record = CC::where('id', $request->cc_id)->value('id');
+        
+        $openState->parent_record = $request->parent_record;
+        $openState->parent_type = $request->parent_type;
+        $openState->parent_id = $request->parent_id;
+
         $openState->record = DB::table('record_numbers')->value('counter') + 1;
         $openState->originator = CC::where('id', $request->cc_id)->value('initiator_id');
         $openState->assign_to = $request->assign_to;
@@ -145,8 +150,8 @@ class EffectivenessCheckController extends Controller
             }
         }
 
-        $openState->refer_record = json_encode($files);
-    }
+            $openState->refer_record = json_encode($files);
+        }
         $openState->Comments = $request->Comments;
         $openState->status = "Opened";
         $openState->stage = 1;

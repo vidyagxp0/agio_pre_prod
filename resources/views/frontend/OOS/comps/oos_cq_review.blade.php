@@ -13,49 +13,7 @@
                         </textarea>
                 </div>
             </div>
-            <div class="col-lg-6">
-                <div class="group-input">
-                    <label for="Report Attachments">CAPA Required?</label>
-                    <select name="capa_required_ocqr">
-                        <option value="0" {{ $data->capa_required_ocqr == '0' ? 'selected' : '' }}>Enter Your
-                            Selection Here</option>
-                        <option value="Yes" {{ $data->capa_required_ocqr == 'Yes' ? 'selected' : '' }}>Yes</option>
-                        <option value="No" {{ $data->capa_required_ocqr == 'No' ? 'selected' : '' }}>No</option>
-                    </select>
-                </div>
-            </div>
-
-
-            <div class="col-lg-6">
-                <div class="group-input">
-                    <label for="Reference Recores">Reference of CAPA </label>
-                    <input type="text" name="reference_of_capa_ocqr" value="{{$data->reference_of_capa_ocqr}}">
-                </div>
-            </div>
-
-
-            <div class="col-lg-6">
-                <div class="group-input">
-                    <label for="Auditee">Action Plan Requirement?</label>
-                    <select multiple name="action_plan_requirement_ocqr" id="auditee">
-                        <option value="0" {{ $data->action_plan_requirement_ocqr == '0' ? 'selected' : '' }}>Enter
-                            Your Selection Here</option>
-                        <option value="Yes" {{ $data->action_plan_requirement_ocqr == 'Yes' ? 'selected' : '' }}>Yes
-                        </option>
-                        <option value="No" {{ $data->action_plan_requirement_ocqr == 'No' ? 'selected' : '' }}>No
-                        </option>
-
-                    </select>
-                </div>
-            </div>
-
-            <div class="col-lg-6">
-                <div class="group-input">
-                    <label for="Audit Attachments">Ref Action Plan</label>
-                    <input type="text" name="ref_action_plan_ocqr" value="{{ $data->ref_action_plan_ocqr ?? '' }}">
-                </div>
-            </div>
-
+            
             <div class="col-12">
                 <div class="group-input">
                     <label for="Audit Attachments"> CQ Attachment</label>
@@ -63,7 +21,7 @@
                         Please Attach all relevant or supporting documents
                     </small>
                     <div class="file-attachment-field">
-                        <div class="file-attachment-list" id="file_attach">
+                        <div class="file-attachment-list" id="cq_attachment_ocqr">
 
                             @if ($data->cq_attachment_ocqr)
                             @foreach ($data->cq_attachment_ocqr as $file)
@@ -82,7 +40,7 @@
                         <div class="add-btn">
                             <div>Add</div>
                             <input type="file" id="myfile" name="cq_attachment_ocqr[]"
-                                oninput="addMultipleFiles(this, 'file_attach')" multiple>
+                                oninput="addMultipleFiles(this, 'cq_attachment_ocqr')" multiple>
                         </div>
                     </div>
 
