@@ -185,9 +185,6 @@ Route::group(['prefix' => 'rcms'], function () {
             Route::post('child_management_Review/{id}', [ManagementReviewController::class, 'child_management_Review'])->name('childmanagementReview');
             Route::get('internalSingleReport/{id}', [InternalauditController::class, 'singleReport'])->name('internalSingleReport');
             Route::get('internalauditReport/{id}', [InternalauditController::class, 'auditReport'])->name('internalauditReport');
-            Route::get('oos_micro/audit_report/{id}', [OOSMicroController::class, 'auditReport'])->name('audit_report');
-            Route::get('oos_micro/single_report/{id}', [OOSMicroController::class, 'singleReport'])->name('oos_micro/single_report');
-            Route::post('oos_micro/child/{id}', [OOSMicroController::class, 'child'])->name('oos_micro/child');
             Route::post('errata/stages/{id}',[ErrataController::class, 'stageChange'])->name('errata.stage');
             Route::post('errata/stagesreject/{id}',[ErrataController::class, 'stageReject'])->name('errata.stagereject');
             Route::get('errata_audit/{id}', [ErrataController::class, 'auditTrailPdf'])->name('errataaudit.pdf');
@@ -299,13 +296,6 @@ Route::group(['prefix' => 'rcms'], function () {
 
             Route::get('OOCSingleReport/{id}',[OOCController::class, 'singleReports']);
 
-
-
-
-
-
-
-
             /**
              * OOT
              */
@@ -313,6 +303,7 @@ Route::group(['prefix' => 'rcms'], function () {
                 Route::get('/', [OOTController::class, 'index'])->name('index');
                 Route::post('/ootstore', [OOTController::class, 'store'])->name('ootstore');
             });
+
 
             /**
              * OOS
@@ -337,6 +328,35 @@ Route::group(['prefix' => 'rcms'], function () {
                 Route::get('single_report/{id}', [OOSController::class, 'singleReport'])->name('single_report');
     
                 });
+
+                /** 
+                 * oos micro
+                 */
+
+
+                Route::group(['prefix' => 'oos_micro', 'as' => 'oos_micro.'], function() {
+
+                    Route::get('/', [OOSMicroController::class, 'index'])->name('index');
+                    Route::post('/store', [OOSMicroController::class, 'store'])->name('store');
+                    Route::get('edit/{id}',[OOSMicroController::class, 'edit'])->name('edit');
+                    Route::post('update/{id}',[OOSMicroController::class, 'update'])->name('update');
+                    Route::post('sendstage/{id}',[OOSMicroController::class,'send_stage'])->name('send_stage');
+                    Route::post('requestmoreinfo_back_stage/{id}',[OOSMicroController::class,'requestmoreinfo_back_stage'])->name('requestmoreinfo_back_stage');
+                    Route::post('child/{id}', [OOSMicroController::class, 'child'])->name('child');
+                    Route::post('assignable_send_stage/{id}',[OOSMicroController::class,'assignable_send_stage'])->name('assignable_send_stage');
+                    Route::post('cancel_stage/{id}', [OOSMicroController::class, 'cancel_stage'])->name('cancel_stage');;
+                    Route::post('thirdStage/{id}', [OOSMicroController::class, 'stageChange'])->name('thirdStage');
+                    Route::post('reject_stage/{id}', [OOSMicroController::class, 'reject_stage'])->name('reject_stage');
+                    
+                    Route::get('AuditTrial/{id}', [OOSMicroController::class, 'AuditTrial'])->name('audit_trial');
+                    Route::get('auditDetails/{id}', [OOSMicroController::class, 'auditDetails'])->name('audit_details');
+                    Route::get('audit_report/{id}', [OOSMicroController::class, 'auditReport'])->name('audit_report');
+                    Route::get('single_report/{id}', [OOSMicroController::class, 'singleReport'])->name('single_report');
+           
+
+                    
+                    });
+    
 
             /**
              * market coplaint

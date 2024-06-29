@@ -21,7 +21,7 @@
             $userRoles = DB::table('user_roles')->where(['user_id' => Auth::user()->id, 'q_m_s_divisions_id' => $micro_data->division_id])->get();
             $userRoleIds = $userRoles->pluck('q_m_s_roles_id')->toArray();
             @endphp
-                 <button class="button_theme1"> <a class="text-white" href="{{ route('audit_trial', $micro_data->id) }}"> Audit Trail </a> </button>
+                 <button class="button_theme1"> <a class="text-white" href="{{ route('oos_micro.audit_trial', $micro_data->id) }}"> Audit Trail </a> </button>
 
             @if ($micro_data->stage == 1 && (in_array(3, $userRoleIds) || in_array(18, $userRoleIds)))
                 <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">Submit</button>
@@ -93,7 +93,7 @@
             <h4 class="modal-title">E-Signature</h4>
             <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
             </div>
-            <form action="{{ route('send_stage', $micro_data->id) }}" method="POST">
+            <form action="{{ route('oos_micro.send_stage', $micro_data->id) }}" method="POST">
             @csrf
             <!-- Modal body -->
             <div class="modal-body">
@@ -134,7 +134,7 @@
             <h4 class="modal-title">E-Signature</h4>
             <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
             </div>
-            <form action="{{ route('requestmoreinfo_back_stage', $micro_data->id) }}" method="POST">
+            <form action="{{ route('oos_micro.requestmoreinfo_back_stage', $micro_data->id) }}" method="POST">
             @csrf
             <!-- Modal body -->
             <div class="modal-body">
@@ -175,7 +175,7 @@
             <h4 class="modal-title">E-Signature</h4>
             <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
             </div>
-            <form action="{{ route('assignable_send_stage', $micro_data->id) }}" method="POST">
+            <form action="{{ route('oos_micro.assignable_send_stage', $micro_data->id) }}" method="POST">
             @csrf
             <!-- Modal body -->
             <div class="modal-body">
@@ -217,7 +217,7 @@
                 <h4 class="modal-title">E-Signature</h4>
                 <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
             </div>
-            <form action="{{ route('cancel_stage', $micro_data->id) }}" method="POST">
+            <form action="{{ route('oos_micro.cancel_stage', $micro_data->id) }}" method="POST">
                 @csrf
                 <!-- Modal body -->
                 <div class="modal-body">
@@ -255,7 +255,7 @@
             <div class="modal-header">
                 <h4 class="modal-title">Child</h4>
             </div>
-            <form action="{{ route('oos_micro/child', $micro_data->id) }}" method="POST">
+            <form action="{{ route('oos_micro.child', $micro_data->id) }}" method="POST">
                 @csrf
                 <!-- Modal body -->
                 <div class="modal-body">

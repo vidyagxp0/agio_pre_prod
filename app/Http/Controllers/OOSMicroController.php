@@ -44,7 +44,7 @@ class OOSMicroController extends Controller
                 $record_number = '0001';
             }
         }
-        
+
         $currentDate = Carbon::now();
         $formattedDate = $currentDate->addDays(30);
         $due_date= $formattedDate->format('Y-m-d');
@@ -54,7 +54,6 @@ class OOSMicroController extends Controller
 
      public function store(Request $request){
         $micro = $request->all();
-
         $file_input_names = [
             'initial_attachment_gi',
             'file_attachments_pli',
@@ -1893,25 +1892,24 @@ if($lastDocument->$key != $request->$key){
             $parent_id = $id;
             $actionchild->save();
 
-            return view('frontend.forms.action-item', compact('parent_short_description', 'parent_initiator_id', 'parent_intiation_date', 'parent_name', 'parent_division_id', 'parent_record', 'record_number', 'due_date', 'parent_id', 'parent_type'));
+            return view('frontend.action-item.action-item', compact('parent_short_description', 'parent_initiator_id', 'parent_intiation_date', 'parent_name', 'parent_division_id',
+             'parent_record', 'record_number', 'due_date', 'parent_id', 'parent_type', 'old_record'));
         }
         else {
             $parent_name = "Root";
             $Rootchild = OOS_MICRO::find($id);
             $Rootchild->Rootchild = $record_number;
             $Rootchild->save();
-            return view('frontend.forms.root-cause-analysis', compact('parent_id', 'parent_record','parent_type', 'record_number', 'due_date', 'parent_short_description', 'parent_initiator_id', 'parent_intiation_date', 'parent_name', 'parent_division_id', 'parent_record', ));
+            return view('frontend.forms.root-cause-analysis', compact('parent_id', 'parent_record','parent_type', 'record_number', 'due_date', 'parent_short_description', 'parent_initiator_id', 'parent_intiation_date', 'parent_name', 'parent_division_id', 'parent_record'));
         }
     }
 // ================= close workflow ===================
     public function AuditTrial($id)
     {
         $audit = OOSmicroAuditTrail::where('oos_micro_id', $id)->orderByDesc('id')->paginate(5);
-
         $today = Carbon::now()->format('d-m-y');
         $document = OOS_MICRO::where('id', $id)->first();
         $document->initiator = User::where('id', $document->initiator_id)->value('name');
-        // dd();
         return view('frontend.OOS_Micro.comps_micro.audit-trial', compact('audit', 'document', 'today'));
     }
 
