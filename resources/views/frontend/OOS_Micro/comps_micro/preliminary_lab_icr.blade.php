@@ -243,7 +243,7 @@
                                                         style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                                         <select name="response" id="response"
                                                             style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                            <option value="Yes">Select an Option</option>
+                                                            <option value="">Select an Option</option>
                                                             <option value="Yes">Yes</option>
                                                             <option value="No">No</option>
                                                             <option value="N/A">N/A</option>
@@ -267,7 +267,7 @@
                                                         style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                                         <select name="response" id="response"
                                                             style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                            <option value="Yes">Select an Option</option>
+                                                            <option value="">Select an Option</option>
                                                             <option value="Yes">Yes</option>
                                                             <option value="No">No</option>
                                                             <option value="N/A">N/A</option>
@@ -292,7 +292,7 @@
                                                         style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                                         <select name="response" id="response"
                                                             style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                            <option value="Yes">Select an Option</option>
+                                                            <option value="">Select an Option</option>
                                                             <option value="Yes">Yes</option>
                                                             <option value="No">No</option>
                                                             <option value="N/A">N/A</option>
@@ -318,7 +318,7 @@
                                                         style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                                         <select name="response" id="response"
                                                             style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                            <option value="Yes">Select an Option</option>
+                                                            <option value="">Select an Option</option>
                                                             <option value="Yes">Yes</option>
                                                             <option value="No">No</option>
                                                             <option value="N/A">N/A</option>
@@ -342,7 +342,7 @@
                                                         style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                                         <select name="response" id="response"
                                                             style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                            <option value="Yes">Select an Option</option>
+                                                            <option value="">Select an Option</option>
                                                             <option value="Yes">Yes</option>
                                                             <option value="No">No</option>
                                                             <option value="N/A">N/A</option>
@@ -366,7 +366,7 @@
                                                         style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                                         <select name="response" id="response"
                                                             style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                            <option value="Yes">Select an Option</option>
+                                                            <option value="">Select an Option</option>
                                                             <option value="Yes">Yes</option>
                                                             <option value="No">No</option>
                                                             <option value="N/A">N/A</option>
@@ -392,7 +392,7 @@
                                                         style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                                         <select name="response" id="response"
                                                             style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                            <option value="Yes">Select an Option</option>
+                                                            <option value="">Select an Option</option>
                                                             <option value="Yes">Yes</option>
                                                             <option value="No">No</option>
                                                             <option value="N/A">N/A</option>
@@ -416,7 +416,7 @@
                                                         style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                                         <select name="response" id="response"
                                                             style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                            <option value="Yes">Select an Option</option>
+                                                            <option value="">Select an Option</option>
                                                             <option value="Yes">Yes</option>
                                                             <option value="No">No</option>
                                                             <option value="N/A">N/A</option>
@@ -441,7 +441,7 @@
                                                         style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                                         <select name="response" id="response"
                                                             style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                            <option value="Yes">Select an Option</option>
+                                                            <option value="">Select an Option</option>
                                                             <option value="Yes">Yes</option>
                                                             <option value="No">No</option>
                                                             <option value="N/A">N/A</option>
@@ -466,7 +466,7 @@
                                                         style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                                         <select name="response" id="response"
                                                             style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                            <option value="Yes">Select an Option</option>
+                                                            <option value="">Select an Option</option>
                                                             <option value="Yes">Yes</option>
                                                             <option value="No">No</option>
                                                             <option value="N/A">N/A</option>
@@ -492,7 +492,7 @@
                                                         style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                                         <select name="response" id="response"
                                                             style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                            <option value="Yes">Select an Option</option>
+                                                            <option value="">Select an Option</option>
                                                             <option value="Yes">Yes</option>
                                                             <option value="No">No</option>
                                                             <option value="N/A">N/A</option>
@@ -515,7 +515,7 @@
                                                         style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                                         <select name="response" id="response"
                                                             style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                            <option value="Yes">Select an Option</option>
+                                                            <option value="">Select an Option</option>
                                                             <option value="Yes">Yes</option>
                                                             <option value="No">No</option>
                                                             <option value="N/A">N/A</option>
@@ -540,7 +540,7 @@
                                                         style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                                         <select name="response" id="response"
                                                             style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                            <option value="Yes">Select an Option</option>
+                                                            <option value="">Select an Option</option>
                                                             <option value="Yes">Yes</option>
                                                             <option value="No">No</option>
                                                             <option value="N/A">N/A</option>
@@ -563,7 +563,7 @@
                                                         style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                                         <select name="response" id="response"
                                                             style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                            <option value="Yes">Select an Option</option>
+                                                            <option value="">Select an Option</option>
                                                             <option value="Yes">Yes</option>
                                                             <option value="No">No</option>
                                                             <option value="N/A">N/A</option>
@@ -586,7 +586,7 @@
                                                         style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                                         <select name="response" id="response"
                                                             style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                            <option value="Yes">Select an Option</option>
+                                                            <option value="">Select an Option</option>
                                                             <option value="Yes">Yes</option>
                                                             <option value="No">No</option>
                                                             <option value="N/A">N/A</option>
@@ -610,7 +610,7 @@
                                                         style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                                         <select name="response" id="response"
                                                             style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                            <option value="Yes">Select an Option</option>
+                                                            <option value="">Select an Option</option>
                                                             <option value="Yes">Yes</option>
                                                             <option value="No">No</option>
                                                             <option value="N/A">N/A</option>
@@ -633,7 +633,7 @@
                                                         style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                                         <select name="response" id="response"
                                                             style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                            <option value="Yes">Select an Option</option>
+                                                            <option value="">Select an Option</option>
                                                             <option value="Yes">Yes</option>
                                                             <option value="No">No</option>
                                                             <option value="N/A">N/A</option>
@@ -656,7 +656,7 @@
                                                         style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                                         <select name="response" id="response"
                                                             style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                            <option value="Yes">Select an Option</option>
+                                                            <option value="">Select an Option</option>
                                                             <option value="Yes">Yes</option>
                                                             <option value="No">No</option>
                                                             <option value="N/A">N/A</option>
@@ -679,7 +679,7 @@
                                                         style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                                         <select name="response" id="response"
                                                             style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                            <option value="Yes">Select an Option</option>
+                                                            <option value="">Select an Option</option>
                                                             <option value="Yes">Yes</option>
                                                             <option value="No">No</option>
                                                             <option value="N/A">N/A</option>
@@ -702,7 +702,7 @@
                                                         style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                                         <select name="response" id="response"
                                                             style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                            <option value="Yes">Select an Option</option>
+                                                            <option value="">Select an Option</option>
                                                             <option value="Yes">Yes</option>
                                                             <option value="No">No</option>
                                                             <option value="N/A">N/A</option>
@@ -725,7 +725,7 @@
                                                         style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                                         <select name="response" id="response"
                                                             style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                            <option value="Yes">Select an Option</option>
+                                                            <option value="">Select an Option</option>
                                                             <option value="Yes">Yes</option>
                                                             <option value="No">No</option>
                                                             <option value="N/A">N/A</option>
@@ -747,7 +747,7 @@
                                                         style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                                         <select name="response" id="response"
                                                             style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                            <option value="Yes">Select an Option</option>
+                                                            <option value="">Select an Option</option>
                                                             <option value="Yes">Yes</option>
                                                             <option value="No">No</option>
                                                             <option value="N/A">N/A</option>
@@ -769,7 +769,7 @@
                                                         style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                                         <select name="response" id="response"
                                                             style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                            <option value="Yes">Select an Option</option>
+                                                            <option value="">Select an Option</option>
                                                             <option value="Yes">Yes</option>
                                                             <option value="No">No</option>
                                                             <option value="N/A">N/A</option>
@@ -792,7 +792,7 @@
                                                         style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                                         <select name="response" id="response"
                                                             style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                            <option value="Yes">Select an Option</option>
+                                                            <option value="">Select an Option</option>
                                                             <option value="Yes">Yes</option>
                                                             <option value="No">No</option>
                                                             <option value="N/A">N/A</option>
@@ -813,7 +813,7 @@
                                                         style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                                         <select name="response" id="response"
                                                             style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                            <option value="Yes">Select an Option</option>
+                                                            <option value="">Select an Option</option>
                                                             <option value="Yes">Yes</option>
                                                             <option value="No">No</option>
                                                             <option value="N/A">N/A</option>
@@ -835,7 +835,7 @@
                                                         style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                                         <select name="response" id="response"
                                                             style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                            <option value="Yes">Select an Option</option>
+                                                            <option value="">Select an Option</option>
                                                             <option value="Yes">Yes</option>
                                                             <option value="No">No</option>
                                                             <option value="N/A">N/A</option>
@@ -1056,16 +1056,16 @@
                     <table class="table table-bordered" id="oos_capa_details" style="width: 100%;">
                         <thead>
                             <tr>
-                                <th style="width: 4%">Row#</th>
-                                <th style="width: 8%">OOS Number</th>
-                                <th style="width: 14%"> OOS Reported Date</th>
-                                <th style="width: 12%">Description of OOS</th>
-                                <th style="width: 12%">Previous OOS Root Cause</th>
-                                <th style="width: 12%"> CAPA</th>
-                                <th style="width: 14% pt-3">Closure Date of CAPA</th>
-                                <th style="width: 12%">CAPA Requirement</th>
-                                <th style="width: 10%">Reference CAPA Number</th>
-                                <th style="widht: 4%">Action</th>
+                            <th style="width: 4%">Row#</th>
+                            <th style="width: 8%">OOS Number</th>
+                            <th style="width: 10%">Description of OOS</th>
+                            <th style="width: 10%">Previous OOS Root Cause</th>
+                            <th style="width: 8%"> CAPA</th>
+                            <th style="width: 13%"> OOS Reported Date</th>
+                            <th style="width: 13%"> Closure Date of CAPA</th>
+                            <th style="width: 10%">CAPA Requirement</th>
+                            <th style="width: 8%">Reference CAPA Number</th>
+                            <th style="width: 4%">Action</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -1074,6 +1074,9 @@
                                     <tr>
                                         <td><input disabled type="text" name="oos_capa[{{ $loop->index }}][serial]" value="{{ $loop->index + 1 }}"></td>
                                         <td><input type="text" id="info_oos_number" name="oos_capa[{{ $loop->index }}][info_oos_number]" value="{{ Helpers::getArrayKey($oos_capa, 'info_oos_number') }}"></td>
+                                        <td><input type="text" name="oos_capa[{{ $loop->index }}][info_oos_description]" value="{{ Helpers::getArrayKey($oos_capa, 'info_oos_description') }}"></td>
+                                        <td><input type="text" name="oos_capa[{{ $loop->index }}][info_oos_previous_root_cause]" value="{{ Helpers::getArrayKey($oos_capa, 'info_oos_previous_root_cause') }}"></td>
+                                        <td><input type="text" name="oos_capa[{{ $loop->index }}][info_oos_capa]" value="{{ Helpers::getArrayKey($oos_capa, 'info_oos_capa') }}"></td>
                                         <td>
                                         <div class="col-lg-6 new-date-data-field">
                                             <div class="group-input input-date">
@@ -1086,9 +1089,6 @@
                                             </div>
                                         </div>
                                         </td>
-                                        <td><input type="text" name="oos_capa[{{ $loop->index }}][info_oos_description]" value="{{ Helpers::getArrayKey($oos_capa, 'info_oos_description') }}"></td>
-                                        <td><input type="text" name="oos_capa[{{ $loop->index }}][info_oos_previous_root_cause]" value="{{ Helpers::getArrayKey($oos_capa, 'info_oos_previous_root_cause') }}"></td>
-                                        <td><input type="text" name="oos_capa[{{ $loop->index }}][info_oos_capa]" value="{{ Helpers::getArrayKey($oos_capa, 'info_oos_capa') }}"></td>
                                         <td>
                                         <div class="col-lg-6 new-date-data-field">
                                             <div class="group-input input-date">
@@ -1113,22 +1113,6 @@
                                     </tr>
                                @endforeach
                            @endif
-                            
-
-                            {{-- <td><input disabled type="text" name="serial[]" value="1"></td>
-                            <td><input type="text" name="Number[]"></td>
-                            <td><input type="text" name="Name[]"></td>
-                            <td><input type="text" name="Remarks[]"></td>
-                            <td><input type="text" name="Number[]"></td>
-                            <td><input type="text" name="Name[]"></td>
-                            <td><input type="text" name="Remarks[]"></td>
-                            <td><select name="CAPARequirement[]">
-                                    <option>Yes</option>
-                                    <option>No</option>
-                                </select></td>
-                            <td><input type="text" name="Name[]"></td> --}}
-
-
                         </tbody>
 
                     </table>

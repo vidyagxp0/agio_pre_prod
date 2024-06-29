@@ -481,22 +481,6 @@ Route::get('out_of_calibration_ooc', [OOCController::class, 'ooc']);
 // Route::get('oos_form', [OOSController::class, 'index'])->name('oos.index');
 // Route::get('oos_micro', [OOSMicroController::class, 'index'])->name('oos_micro.index');
 
-//============================================OOS MICRO===================================
-
-Route::get('oos_micro', [OOSMicroController::class, 'index'])->name('oos_micro.index');
-Route::post('oos_micro_store', [OOSMicroController::class, 'store'])->name('oos_micro.store');
-Route::get('oos_micro_edit/{id}',[OOSMicroController::class, 'edit'])->name('oos_micro.edit');
-Route::post('oos_micro_update/{id}',[OOSMicroController::class, 'update'])->name('oos_micro.update');
-
-Route::post('oos_micro/sendstage/{id}',[OOSMicroController::class,'send_stage'])->name('send_stage');
-Route::post('oos_micro/requestmoreinfo_back_stage/{id}',[OOSMicroController::class,'requestmoreinfo_back_stage'])->name('requestmoreinfo_back_stage');
-Route::post('oos_micro/assignable_send_stage/{id}',[OOSMicroController::class,'assignable_send_stage'])->name('assignable_send_stage');
-Route::post('oos_micro/cancel_stage/{id}', [OOSMicroController::class, 'cancel_stage'])->name('cancel_stage');;
-Route::post('oos_micro/thirdStage/{id}', [OOSMicroController::class, 'stageChange'])->name('thirdStage');
-Route::post('oos_micro/reject_stage/{id}', [OOSMicroController::class, 'reject_stage'])->name('reject_stage');
-
-Route::get('oos_micro/AuditTrial/{id}', [OOSMicroController::class, 'AuditTrial'])->name('audit_trial');
-Route::get('oos_micro/auditDetails/{id}', [OOSMicroController::class, 'auditDetails'])->name('audit_details');
 
 
 //============================================ OOS MICRO ROUTE CLOSE ===================================

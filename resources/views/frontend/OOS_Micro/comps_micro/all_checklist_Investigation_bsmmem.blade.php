@@ -697,7 +697,7 @@
                         <label for="Audit Attachments">If Yes, Provide attachment details</label>
 
                         <div class="file-attachment-field">
-                            <div class="file-attachment-list" id="file_attach">
+                            <div class="file-attachment-list" id="attachment_details_cibet">
                                 @if ($micro_data->attachment_details_cibet)
                                 @foreach ($micro_data->attachment_details_cibet as $file)
                                     <h6 type="button" class="file-container text-dark"
@@ -718,7 +718,7 @@
                             <div class="add-btn">
                                 <div>Add</div>
                                 <input type="file" id="myfile" name="attachment_details_cibet[]"
-                                    oninput="addMultipleFiles(this, 'file_attach')" multiple>
+                                    oninput="addMultipleFiles(this, 'attachment_details_cibet')" multiple>
                             </div>
                         </div>
 
@@ -1535,7 +1535,7 @@
                     <div class="group-input">
                         <label for="Audit Attachments">If Yes, Provide attachment details</label>
                         <div class="file-attachment-field">
-                            <div class="file-attachment-list" id="file_attach">
+                            <div class="file-attachment-list" id="attachment_details_cis">
                                 @if ($micro_data->attachment_details_cis)
                                 @foreach ($micro_data->attachment_details_cis as $file)
                                     <h6 type="button" class="file-container text-dark"
@@ -1556,7 +1556,7 @@
                             <div class="add-btn">
                                 <div>Add</div>
                                 <input type="file" id="myfile" name="attachment_details_cis[]"
-                                    oninput="addMultipleFiles(this, 'file_attach')" multiple>
+                                    oninput="addMultipleFiles(this, 'attachment_details_cis')" multiple>
                             </div>
                         </div>
 
@@ -2011,7 +2011,7 @@
                                                     style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                                     <select name="microbial_isolates_bioburden[0][response]" id="response"
                                                         style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                        <option value="Yes">Select an Option</option>
+                                                        <option value="">Select an Option</option>
                                                         <option value="Yes">Yes</option>
                                                         <option value="No">No</option>
                                                         <option value="N/A">N/A</option>
@@ -2038,11 +2038,11 @@
 
                                                     <div class="file-attachment-field">
                                                         <div style="width: 170px; height: 30px; border: 2px solid black; position: relative; top: 17px; left:27px; border-radius: 5px;"
-                                                        id="file_attach "></div>
+                                                        id="microbial_isolates_bioburden "></div>
                                                         <div class="add-btn" style="position:relative; left:23px; width: 75px; height: 43px; background-color:white;" >
                                                             <div>Add</div>
                                                             <input type="file" id="myfile" name="microbial_isolates_bioburden[1][attachment]"
-                                                                oninput="addMultipleFiles(this, 'file_attach')" multiple>
+                                                                oninput="addMultipleFiles(this, 'microbial_isolates_bioburden')" multiple>
                                                         </div>
                                                     </div>
 
@@ -2067,7 +2067,7 @@
                                                     style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                                     <select name="microbial_isolates_bioburden[2][response]" id="response"
                                                         style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                        <option value="Yes">Select an Option</option>
+                                                        <option value="">Select an Option</option>
                                                         <option value="Yes">Yes</option>
                                                         <option value="No">No</option>
                                                         <option value="N/A">N/A</option>
@@ -2093,7 +2093,7 @@
                                                     style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                                     <select name="microbial_isolates_bioburden[3][response]" id="response"
                                                         style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                        <option value="Yes">Select an Option</option>
+                                                        <option value="">Select an Option</option>
                                                         <option value="Yes">Yes</option>
                                                         <option value="No">No</option>
                                                         <option value="N/A">N/A</option>
@@ -2119,11 +2119,11 @@
 
                                                     <div class="file-attachment-field">
                                                         <div style="width: 170px; height: 30px; border: 2px solid black; position: relative; top: 17px; left:27px; border-radius: 5px;"
-                                                        id="file_attach "></div>
+                                                        id="microbial_isolates_bioburden "></div>
                                                         <div class="add-btn" style="position:relative; left:23px; width: 75px; height: 43px; background-color:white;" >
                                                             <div>Add</div>
                                                             <input type="file" id="myfile" name="microbial_isolates_bioburden[4][attachment]"
-                                                                oninput="addMultipleFiles(this, 'file_attach')" multiple>
+                                                                oninput="addMultipleFiles(this, 'microbial_isolates_bioburden')" multiple>
                                                         </div>
                                                     </div>
 
@@ -2148,7 +2148,7 @@
                                                     style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                                     <select name="microbial_isolates_bioburden[5][response]" id="response"
                                                         style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                        <option value="Yes">Select an Option</option>
+                                                        <option value="">Select an Option</option>
                                                         <option value="Yes">Yes</option>
                                                         <option value="No">No</option>
                                                         <option value="N/A">N/A</option>
@@ -2752,7 +2752,7 @@
                                     If Yes, attach details
                                 </small> --}}
                         <div class="file-attachment-field">
-                            <div class="file-attachment-list" id="file_attach">
+                            <div class="file-attachment-list" id="attachment_details_cimlbwt">
                                 @if ($micro_data->attachment_details_cimlbwt)
                                 @foreach ($micro_data->attachment_details_cimlbwt as $file)
                                     <h6 type="button" class="file-container text-dark"
@@ -2773,7 +2773,7 @@
                             <div class="add-btn">
                                 <div>Add</div>
                                 <input type="file" id="myfile" name="attachment_details_cimlbwt[]"
-                                    oninput="addMultipleFiles(this, 'file_attach')" multiple>
+                                    oninput="addMultipleFiles(this, 'attachment_details_cimlbwt')" multiple>
                             </div>
                         </div>
 
@@ -3935,7 +3935,7 @@
 
                         <div class="file-attachment-field">
 
-                            <div class="file-attachment-list" id="file_attach">
+                            <div class="file-attachment-list" id="attachment_details_cima">
                                 @if ($micro_data->attachment_details_cima)
                                 @foreach ($micro_data->attachment_details_cima as $file)
                                     <h6 type="button" class="file-container text-dark"
@@ -3960,7 +3960,7 @@
 
                                 <input type="file" id="myfile" name="attachment_details_cima[]"
 
-                                    oninput="addMultipleFiles(this, 'file_attach')" multiple/>
+                                    oninput="addMultipleFiles(this, 'attachment_details_cima')" multiple/>
 
                             </div>
 
@@ -5280,7 +5280,7 @@
 
                             <div class="file-attachment-field">
 
-                                <div class="file-attachment-list" id="file_attach">
+                                <div class="file-attachment-list" id="attachment_details_ciem">
                                     @if ($micro_data->attachment_details_ciem)
                                     @foreach ($micro_data->attachment_details_ciem as $file)
                                         <h6 type="button" class="file-container text-dark"
@@ -5305,7 +5305,7 @@
 
                                     <input type="file" id="myfile" name="attachment_details_ciem[]"
 
-                                        oninput="addMultipleFiles(this, 'file_attach')" multiple/>
+                                        oninput="addMultipleFiles(this, 'attachment_details_ciem')" multiple/>
 
                                 </div>
 
@@ -6130,7 +6130,7 @@
 
                                         <div class="file-attachment-field">
 
-                                            <div class="file-attachment-list" id="file_attach"></div>
+                                            <div class="file-attachment-list" id="attachment_details_cimst"></div>
 
                                             <div class="add-btn">
 
@@ -6138,7 +6138,7 @@
 
                                                 <input type="file" id="myfile" name="attachment_details_cimst[]"
 
-                                                    oninput="addMultipleFiles(this, 'file_attach')" multiple/>
+                                                    oninput="addMultipleFiles(this, 'attachment_details_cimst')" multiple/>
 
                                             </div>
 

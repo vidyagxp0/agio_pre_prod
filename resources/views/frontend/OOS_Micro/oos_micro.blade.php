@@ -15,83 +15,6 @@ $users = DB::table('users')
             display: none;
         }
     </style>
-
-
-    <!-- --------------------------------------button--------------------- -->
-
-    <script>
-        VirtualSelect.init({
-            ele: '#related_records, #hod'
-        });
-
-        function openCity(evt, cityName) {
-            var i, cctabcontent, cctablinks;
-            cctabcontent = document.getElementsByClassName("cctabcontent");
-            for (i = 0; i < cctabcontent.length; i++) {
-                cctabcontent[i].style.display = "none";
-            }
-            cctablinks = document.getElementsByClassName("cctablinks");
-            for (i = 0; i < cctablinks.length; i++) {
-                cctablinks[i].className = cctablinks[i].className.replace(" active", "");
-            }
-            document.getElementById(cityName).style.display = "block";
-            evt.currentTarget.className += " active";
-
-            // Find the index of the clicked tab button
-            const index = Array.from(cctablinks).findIndex(button => button === evt.currentTarget);
-
-            // Update the currentStep to the index of the clicked tab
-            currentStep = index;
-        }
-
-        const saveButtons = document.querySelectorAll(".saveButton");
-        const nextButtons = document.querySelectorAll(".nextButton");
-        const form = document.getElementById("step-form");
-        const stepButtons = document.querySelectorAll(".cctablinks");
-        const steps = document.querySelectorAll(".cctabcontent");
-        let currentStep = 0;
-
-        function nextStep() {
-            // Check if there is a next step
-            if (currentStep < steps.length - 1) {
-                // Hide current step
-                steps[currentStep].style.display = "none";
-
-                // Show next step
-                steps[currentStep + 1].style.display = "block";
-
-                // Add active class to next button
-                stepButtons[currentStep + 1].classList.add("active");
-
-                // Remove active class from current button
-                stepButtons[currentStep].classList.remove("active");
-
-                // Update current step
-                currentStep++;
-            }
-        }
-
-        function previousStep() {
-            // Check if there is a previous step
-            if (currentStep > 0) {
-                // Hide current step
-                steps[currentStep].style.display = "none";
-
-                // Show previous step
-                steps[currentStep - 1].style.display = "block";
-
-                // Add active class to previous button
-                stepButtons[currentStep - 1].classList.add("active");
-
-                // Remove active class from current button
-                stepButtons[currentStep].classList.remove("active");
-
-                // Update current step
-                currentStep--;
-            }
-        }
-    </script>
-
     <!-- -----------------------------grid-1----------------------------script -->
     <script>
         $(document).ready(function() {
@@ -201,13 +124,12 @@ $users = DB::table('users')
                             '<td><input type="text" name="oos_detail['+ serialNumber +'][oos_specification_limit]"></td>' +
                             '<td><input type="text" name="oos_detail['+ serialNumber +'][oos_details_obvious_error]"></td>' +
                             '<td><input type="file" name="oos_detail['+ serialNumber +'][oos_file_attachment]"></td>' +
-                            '<td><input type="text" name="oos_detail['+ serialNumber +'][oos_submit_by]"></td>' +
                             '<td>' +
                             '<div class="col-lg-6 new-date-data-field">' +
                             '<div class="group-input input-date">' +
                             '<div class="calenderauditee">' +
                             '<input type="text" readonly id="oos_submit_on' + serialNumber + '" placeholder="DD-MM-YYYY" />' +
-                            '<input type="date" name="oos_details[' + serialNumber + '][oos_submit_on]" value="" class="hide-input" oninput="handleDateInput(this, \'oos_submit_on' + serialNumber + '\')">' +
+                            '<input type="date" name="oos_detail[' + serialNumber + '][oos_submit_on]" value="" class="hide-input" oninput="handleDateInput(this, \'oos_submit_on' + serialNumber + '\')">' +
                             '</div>' +
                             '</div>' +
                             '</div>' +
@@ -238,23 +160,36 @@ $users = DB::table('users')
                 function generateTableRow(serialNumber) {
                     var html =
                         '<tr>' +
-                        '<td><input disabled type="text" name="oos_capa['+ serialNumber +'][serial]" value="' + serialNumber +
-                        '"></td>' +
-                        '<td><input type="text" name="oos_capa['+ serialNumber +'][info_oos_number]" value=""></td>' +
-                        '<td><input type="date" name="oos_capa['+ serialNumber +'][info_oos_reported_date]" value=""></td>' +
-                        '<td><input type="text" name="oos_capa['+ serialNumber +'][info_oos_description]" value=""></td>' +
-                        '<td><input type="text" name="oos_capa['+ serialNumber +'][info_oos_previous_root_cause]"value=""></td>' +
-                        '<td><input type="text" name="oos_capa['+ serialNumber +'][info_oos_capa]" value=""></td>' +
-                        '<td><input type="date" name="oos_capa['+ serialNumber +'][info_oos_closure_date]" value=""></td>' +
-                        '<td><select name="oos_capa['+ serialNumber +'][info_oos_capa_requirement]"><option value="">Select an Option</option><option value="yes">Yes</option><option value="No">No</option></select></td>' +
-                        '<td><input type="text" name="oos_capa['+ serialNumber +'][info_oos_capa_reference_number]" value=""></td>' +
+                        '<td><input disabled type="text" name="serial[]" value="' + serialNumber +'"></td>' +
+                        '<td><input type="text" name="oos_capa[' + serialNumber + '][info_oos_number]" value=""></td>' +
+                        '<td><input type="text" name="oos_capa[' + serialNumber + '][info_oos_description]" value=""></td>' +
+                        '<td><input type="text" name="oos_capa[' + serialNumber + '][info_oos_previous_root_cause]" value=""></td>' +
+                        '<td><input type="text" name="oos_capa[' + serialNumber + '][info_oos_capa]" value=""></td>' +
+                        '<td>' +
+                            '<div class="col-lg-6 new-date-data-field">' +
+                            '<div class="group-input input-date">' +
+                            '<div class="calenderauditee">' +
+                            '<input type="text" readonly id="info_oos_reported_date' + serialNumber + '" placeholder="DD-MM-YYYY" />' +
+                            '<input type="date" name="oos_capa[' + serialNumber + '][info_oos_reported_date]" value="" class="hide-input" oninput="handleDateInput(this, \'info_oos_reported_date' + serialNumber + '\')">' +
+                            '</div>' +
+                            '</div>' +
+                            '</div>' +
+                        '</td>' +
+                        '<td>' +
+                            '<div class="col-lg-6 new-date-data-field">' +
+                            '<div class="group-input input-date">' +
+                            '<div class="calenderauditee">' +
+                            '<input type="text" readonly id="info_oos_closure_date' + serialNumber + '" placeholder="DD-MM-YYYY" />' +
+                            '<input type="date" name="oos_capa[' + serialNumber + '][info_oos_closure_date]" value="" class="hide-input" oninput="handleDateInput(this, \'info_oos_closure_date' + serialNumber + '\')">' +
+                            '</div>' +
+                            '</div>' +
+                            '</div>' +
+                        '</td>' +
+                        '<td><select name="oos_capa['+ serialNumber +'][info_oos_capa_requirement]"><option vlaue="">--select--</option><option value="yes">Yes</option><option value="No">No</option></select></td>' +
+                        '<td><input type="text" name="oos_capa[' + serialNumber + '][info_oos_capa_reference_number]" value=""></td>' +
                         '<td><button type="text" class="removeRowBtn">Remove</button></td>' +
-                        '</tr>';
-                    // for (var i = 0; i < users.length; i++) {
-                    //     html += '<option value="' + users[i].id + '">' + users[i].name + '</option>';
-                    // }
 
-                    // html += '</select></td>' + 
+                        '</tr>';
                     return html;
                 }
 
@@ -363,7 +298,6 @@ $users = DB::table('users')
                 <button class="cctablinks" onclick="openCity(event, 'CCForm23')">Checklist - Investigation of MediaSuitability Test</button>
 
                 <button class="cctablinks" onclick="openCity(event, 'CCForm5')">Phase II Investigation</button>
-
                 <button class="cctablinks" onclick="openCity(event, 'CCForm6')">Phase II QC Review</button>
                 <button class="cctablinks" onclick="openCity(event, 'CCForm7')">Additional Testing Proposal </button>
                 <button class="cctablinks" onclick="openCity(event, 'CCForm8')">OOS Conclusion</button>
@@ -371,11 +305,7 @@ $users = DB::table('users')
                 <button class="cctablinks" onclick="openCity(event, 'CCForm10')">OOS CQ Review</button>
                 <button class="cctablinks" onclick="openCity(event, 'CCForm11')">Batch Disposition</button>
                 <button class="cctablinks" onclick="openCity(event, 'CCForm12')">Re-Open</button>
-                {{--<button class="cctablinks" onclick="openCity(event, 'CCForm13')">Under Addendum Approval</button>--}}
-                {{--<button class="cctablinks" onclick="openCity(event, 'CCForm14')">Under Addendum Execution</button>--}}
-                {{--<button class="cctablinks" onclick="openCity(event, 'CCForm15')">Under Addendum Review</button>--}}
-                {{--<button class="cctablinks" onclick="openCity(event, 'CCForm16')">Under Addendum Verification</button>--}}
-                {{--<button class="cctablinks" onclick="openCity(event, 'CCForm17')">Signature</button>--}}
+                <button class="cctablinks" onclick="openCity(event, 'CCForm17')">Signature</button>
 
             </div>
 
@@ -576,7 +506,7 @@ $users = DB::table('users')
                         </div>
                         <div class="col-md-6 new-date-data-field">
                             <div class="group-input input-date">
-                                <label for="due-date">Deviation Occured On</label>
+                                <label for="Deviation-Occurred On">Deviation Occured On</label>
                                 <div class="calenderauditee">                                    
                                     <input type="text"  id="deviation_occured_on_gi" readonly placeholder="DD-MM-YYYY" />
                                     <input type="date" name="deviation_occured_on_gi"    min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" value=""
@@ -827,7 +757,6 @@ $users = DB::table('users')
                                             <th style="width: 8%">Specification Limit</th>
                                             <th style="width: 8%">Details of Obvious Error</th>
                                             <th style="width: 16%">File Attachment</th>
-                                            <th style="width: 8%">Submit By</th>
                                             <th style="width: 16%">Submit On</th>
                                             <th style="width: 15%">Action</th>
                                         </tr>
@@ -841,7 +770,6 @@ $users = DB::table('users')
                                             <td><input type="text" name="oos_detail[0][oos_specification_limit]"></td>
                                             <td><input type="text" name="oos_detail[0][oos_details_obvious_error]"></td>
                                             <td><input type="file" name="oos_detail[0][oos_file_attachment]"></td>
-                                            <td><input type="text" name="oos_detail[0][oos_submit_by]"></td>
                                             <td>
                                                 <div class="col-lg-6 new-date-data-field">
                                                 <div class="group-input input-date">
@@ -863,7 +791,6 @@ $users = DB::table('users')
                         <!-- close grid -->
                         <div class="button-block">
                             <button type="submit" class="saveButton">Save</button>
-                            <!-- <button type="button" class="backButton" onclick="previousStep()">Back</button> -->
                             <button type="button" class="nextButton" onclick="nextStep()">Next</button>
                             <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white">
                                     Exit </a> </button>
@@ -871,8 +798,7 @@ $users = DB::table('users')
                     </div>
                 </div>
             </div>
-       <!-- CCForm2 -->
-     <!-- Preliminary Lab. Investigation -->
+           <!-- Preliminary Lab. Investigation -->
             <div id="CCForm2" class="inner-block cctabcontent">
                 <div class="inner-block-content">
                     <div class="sub-head">Preliminary Lab. Investigation </div>
@@ -1005,10 +931,10 @@ $users = DB::table('users')
                             Please Attach all relevant or supporting documents
                         </small>
                         <div class="file-attachment-field">
-                            <div class="file-attachment-list" id="file_attach"></div>
+                            <div class="file-attachment-list" id="file_attachments_pli"></div>
                             <div class="add-btn">
                                 <div>Add</div>
-                                <input type="file" id="myfile" name="file_attachments_pli[]" oninput="addMultipleFiles(this, 'file_attach')" multiple>
+                                <input type="file" id="myfile" name="file_attachments_pli[]" oninput="addMultipleFiles(this, 'file_attachments_pli')" multiple>
                             </div>
                         </div>
                     </div>
@@ -1107,7 +1033,7 @@ $users = DB::table('users')
                 </div>
 
             </div>
-            <!-- Preliminary Lab Inv. Conclusion -->
+           <!-- Preliminary Lab Inv. Conclusion -->
             <div id="CCForm3" class="inner-block cctabcontent">
                 <div class="inner-block-content">
                     <div class="sub-head">Investigation Conclusion</div>
@@ -1244,7 +1170,7 @@ $users = DB::table('users')
                     </div>
                 </div>
             </div>
-        <!-- Preliminary Lab Invst. Review--->
+           <!-- Preliminary Lab Invst. Review--->
             <div id="CCForm4" class="inner-block cctabcontent">
                 <div class="inner-block-content">
                     <div class="sub-head">Preliminary Lab Invstigation Review</div>
@@ -1279,13 +1205,13 @@ $users = DB::table('users')
                                         <tr>
                                             <th style="width: 4%">Row#</th>
                                             <th style="width: 8%">OOS Number</th>
-                                            <th style="width: 16%"> OOS Reported Date</th>
-                                            <th style="width: 12%">Description of OOS</th>
-                                            <th style="width: 8%">Previous OOS Root Cause</th>
+                                            <th style="width: 10%">Description of OOS</th>
+                                            <th style="width: 10%">Previous OOS Root Cause</th>
                                             <th style="width: 8%"> CAPA</th>
-                                            <th style="width: 16% pt-3">Closure Date of CAPA</th>
-                                            <th style="width: 16%">CAPA Requirement</th>
-                                            <th style="width: 16%">Reference CAPA Number</th>
+                                            <th style="width: 13%"> OOS Reported Date</th>
+                                            <th style="width: 13%"> Closure Date of CAPA</th>
+                                            <th style="width: 10%">CAPA Requirement</th>
+                                            <th style="width: 8%">Reference CAPA Number</th>
                                             <th style="width: 4%">Action</th>
                                         </tr>
                                     </thead>
@@ -1293,6 +1219,9 @@ $users = DB::table('users')
                                         <tr>
                                             <td><input disabled type="text" name="oos_capa[0][serial]" value="1"></td>
                                             <td><input type="text" id="info_oos_number" name="oos_capa[0][info_oos_number]" value=""></td>
+                                            <td><input type="text" name="oos_capa[0][info_oos_description]" value=""></td>
+                                            <td><input type="text" name="oos_capa[0][info_oos_previous_root_cause]"value=""></td>
+                                            <td><input type="text" name="oos_capa[0][info_oos_capa]" value=""></td>
                                             <td>
                                             <div class="col-lg-6 new-date-data-field">
                                                 <div class="group-input input-date">
@@ -1305,9 +1234,6 @@ $users = DB::table('users')
                                                 </div>
                                             </div>
                                             </td>
-                                            <td><input type="text" name="oos_capa[0][info_oos_description]" value=""></td>
-                                            <td><input type="text" name="oos_capa[0][info_oos_previous_root_cause]"value=""></td>
-                                            <td><input type="text" name="oos_capa[0][info_oos_capa]" value=""></td>
                                             <td>
                                                 <div class="col-lg-6 new-date-data-field">
                                                 <div class="group-input input-date">
@@ -1351,11 +1277,11 @@ $users = DB::table('users')
                                     Please Attach all relevant or supporting documents
                                 </small>
                                 <div class="file-attachment-field">
-                                    <div class="file-attachment-list" id="file_attach"></div>
+                                    <div class="file-attachment-list" id="supporting_attachments_plir"></div>
                                     <div class="add-btn">
                                         <div>Add</div>
                                         <input type="file" id="myfile" name="supporting_attachments_plir[]"
-                                            oninput="addMultipleFiles(this, 'file_attach')" multiple>
+                                            oninput="addMultipleFiles(this, 'supporting_attachments_plir')" multiple>
                                     </div>
                                 </div>
                             </div>
@@ -1402,6 +1328,7 @@ $users = DB::table('users')
                                 <label for="Auditee"> Manufacturing Invest. Type </label>
                                 <select multiple name="manufacturing_invest_type_piii[]" placeholder="Select Nature of Deviation"
                                     data-search="false" data-silent-initial-value-set="true" id="manufacturing_multi_select">
+                                    <option value="">Enter Your Selection Here</option>
                                     <option value="chemical">Chemical</option>
                                     <option value="microbiology">Microbiology</option>
                                 </select>
@@ -1421,6 +1348,7 @@ $users = DB::table('users')
                             <div class="group-input">
                                 <label for="Audit Attachments"> Re-sampling Required? </label>
                                 <select name="re_sampling_required_piii">
+                                    <option value="">Enter Your Selection Here</option>
                                     <option value="yes">Yes</option>
                                     <option value="no">No</option>
 
@@ -1449,6 +1377,7 @@ $users = DB::table('users')
                             <div class="group-input">
                                 <label for="Audit Attachments"> Hypo/Exp. Required</label>
                                 <select name="hypo_exp_required_piii">
+                                    <option value="">Enter Your Selection Here</option>
                                     <option value="yes">Yes</option>
                                     <option value="no">No</option>
 
@@ -1588,6 +1517,7 @@ $users = DB::table('users')
                             <div class="group-input">
                                 <label for="Cancelled By"> Root Casue Identified. </label>
                                 <select name="root_casue_identified_piiqcr">
+                                    <option value="">Enter Your Selection Here</option>
                                     <option value="yes">Yes</option>
                                     <option value="no">No</option>
 
@@ -1624,7 +1554,7 @@ $users = DB::table('users')
                             <div class="group-input">
                                 <label for="Description Deviation">Impact Assessment.</label>
                                 <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
-                                <textarea class="summernote" name="impact_assessment_piiqcr[]" id="summernote-1">
+                                <textarea class="summernote" name="impact_assessment_piiqcr" id="summernote-1">
                                         </textarea>
                             </div>
                         </div>
@@ -1632,6 +1562,7 @@ $users = DB::table('users')
                             <div class="group-input">
                                 <label for="Audit Mgr.more Info Reqd On">Recommended Action Required? </label>
                                 <select name="recommended_action_required_piiqcr">
+                                    <option value="">Enter Your Selection Here</option>    
                                     <option value="yes">Yes</option>
                                     <option value="no">No</option>
                                 </select>
@@ -1651,6 +1582,7 @@ $users = DB::table('users')
                             <div class="group-input">
                                 <label for="Audit Observation Submitted On">Investi. Required</label>
                                 <select name="investi_required_piiqcr">
+                                    <option value="">Enter Your Selection Here</option>
                                     <option value="yes">Yes</option>
                                     <option value="no">No</option>
                                 </select>
@@ -1740,9 +1672,9 @@ $users = DB::table('users')
                             <div class="group-input">
                                 <label for="Audit Attachments"> Any Other Actions Required</label>
                                 <select name="any_other_actions_required_atp">
-                                    <option value="">Yes</option>
-                                    <option value="">No</option>
-
+                                    <option value="">Enter Your Selection Here</option>
+                                    <option value="Yes">Yes</option>
+                                    <option value="No">No</option>
                                 </select>
                             </div>
                         </div>
@@ -1804,15 +1736,15 @@ $users = DB::table('users')
                         <!-- ---------------------------grid-1 -------------------------------- -->
                         <div class="group-input">
                         <label for="audit-agenda-grid">
-                            Summary of OOS Test Results
+                            Summary of OOS Test Results dsdsdsds
                             <button type="button" name="audit-agenda-grid" id="oos_conclusion">+</button>
                             <span class="text-primary" data-bs-toggle="modal"
                                 data-bs-target="#document-details-field-instruction-modal"
                                 style="font-size: 0.8rem; font-weight: 400; cursor: pointer;">
                                 (Launch Instruction)
                             </span>
+                            <div class="table-responsive">
                         </label>
-                        <div class="table-responsive">
                             <table class="table table-bordered" id="oos_conclusion_details" style="width: 100%;">
                                 <thead>
                                     <tr>
@@ -1848,9 +1780,9 @@ $users = DB::table('users')
                             <div class="group-input">
                                 <label for="Audit Attachments">Results to be Reported</label>
                                 <select name="results_to_be_reported_oosc">
+                                    <option value="">Enter Your Selection Here</option>
                                     <option value="initial">Initial</option>
                                     <option value="retested-result">Retested Result</option>
-
                                 </select>
                             </div>
                         </div>
@@ -1872,6 +1804,7 @@ $users = DB::table('users')
                             <div class="group-input">
                                 <label for="Reference Recores">OOS Stands </label>
                                 <select name="oos_stands_oosc">
+                                    <option value="">Enter Your Selection Here</option>
                                     <option value="valid">Valid</option>
                                     <option value="invalid">Invalid</option>
                                 </select>
@@ -1881,11 +1814,9 @@ $users = DB::table('users')
                             <div class="group-input">
                                 <label for="Audit Attachments">CAPA Req.</label>
                                 <select name="capa_req_oosc">
+                                    <option value="">Enter Your Selection Here</option>
                                     <option value="yes">Yes</option>
-                                    <option value="no">No</option>
-
-
-                                </select>
+                                    <option value="no">No</option>                                </select>
                             </div>
                         </div>
 
@@ -1911,10 +1842,9 @@ $users = DB::table('users')
                             <div class="group-input">
                                 <label for="Audit Attachments">Action Plan Req.</label>
                                 <select name="action_plan_req_oosc">
+                                    <option value="">Enter Your Selection Here</option>
                                     <option value="yes">Yes</option>
                                     <option value="no">No</option>
-
-
                                 </select>
                             </div>
                         </div>
@@ -2005,6 +1935,7 @@ $users = DB::table('users')
                                         <th style="width: 16%">Batch No.(s) / A.R. No. (s)</th>
                                         <th style="width: 16%">Any Other Information</th>
                                         <th style="width: 16%">Action Taken on Affec.batch</th>
+                                        <th> Action </th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -2013,6 +1944,7 @@ $users = DB::table('users')
                                     <td><input type="text" name="oos_conclusion_review[0][conclusion_review_batch_no]"></td>
                                     <td><input type="text" name="oos_conclusion_review[0][conclusion_review_any_other_information]"></td>
                                     <td><input type="text" name="oos_conclusion_review[0][conclusion_review_action_affecte_batch]"></td>
+                                    <td><button type="text" class="removeRowBtn">Remove</button></td>
                                 </tbody>
                             </table>
                         </div>
@@ -2025,20 +1957,13 @@ $users = DB::table('users')
                                         </textarea>
                             </div>
                         </div>
-
-
-
-
-
-
                         <div class="col-lg-6">
                             <div class="group-input">
                                 <label for="Audit Attachments">CAPA Req?</label>
                                 <select name="capa_req_ocr">
+                                    <option value="">Enter Your Selection Here</option>
                                     <option value="yes">Yes</option>
                                     <option value="no">No</option>
-
-
                                 </select>
                             </div>
                         </div>
@@ -2056,9 +1981,9 @@ $users = DB::table('users')
                             <div class="group-input">
                                 <label for="Report Attachments">Required Action Plan? </label>
                                 <select name="required_action_plan_ocr">
+                                    <option value="">Enter Your Selection Here</option>
                                     <option value="yes">Yes</option>
                                     <option value="no">No</option>
-
                                 </select>
                             </div>
                         </div>
@@ -2067,9 +1992,9 @@ $users = DB::table('users')
                             <div class="group-input">
                                 <label for="Reference Recores">Required Action Task?</label>
                                 <select name="required_action_task_ocr">
+                                    <option value="">Enter Your Selection Here</option>
                                     <option value="yes">Yes</option>
                                     <option value="no">No</option>
-
                                 </select>
                             </div>
                         </div>
@@ -2089,6 +2014,7 @@ $users = DB::table('users')
                             <div class="group-input">
                                 <label for="Audit Attachments">Risk Assessment Req?</label>
                                 <select name="risk_assessment_req_ocr">
+                                   <option value="">Enter Your Selection Here</option>
                                     <option value="yes">Yes</option>
                                     <option value="no">No</option>
 
@@ -2187,7 +2113,7 @@ $users = DB::table('users')
                             <div class="group-input">
                                 <label for="Auditee"> Action plan requirement ? </label>
                                 <select name="action_plan_requirement_OOS_CQ" data-search="false" data-silent-initial-value-set="true" id="auditee">
-                                    <option valu="">Enter Your Selection Here</option>
+                                    <option value="">Enter Your Selection Here</option>
                                     <option value="yes">Yes</option>
                                     <option value="no">No</option>
                                 </select>
@@ -2199,7 +2125,6 @@ $users = DB::table('users')
                                 <input type="num" name="ref_action_plan_OOS_CQ">
                             </div>
                         </div>
-
                         <div class="col-12">
                             <div class="group-input">
                                 <label for="Audit Attachments"> CQ Attachment</label>
@@ -2228,2336 +2153,1777 @@ $users = DB::table('users')
 
                 </div>
             </div>
-
-        <!-- Batch Disposition -->
-        <div id="CCForm11" class="inner-block cctabcontent">
-            <div class="inner-block-content">
-                <div class="sub-head">
-                    Batch Disposition
-                </div>
-                <div class="row">
-                    <div class="col-lg-6">
-                        <div class="group-input">
-                            <label for="Audit Attachments">OOS Category</label>
-                            <select name="oos_category_BI">
-                                <option value="">Enter Your Selection Here</option>
-                                <option value="analyst-error">Analyst Error</option>
-                                <option value="instrument-error">Instrument Error</option>
-                                <option value="procedure-error">Procedure Error</option>
-                                <option value="product-related-error">Product Related Error</option>
-                                <option value="material-related-error">Material Related Error</option>
-                                <option value="other-error">Other Error</option>
-
-                            </select>
-                        </div>
+            <!-- Batch Disposition -->
+            <div id="CCForm11" class="inner-block cctabcontent">
+                <div class="inner-block-content">
+                    <div class="sub-head">
+                        Batch Disposition
                     </div>
-                    <div class="col-lg-6">
-                        <div class="group-input">
-                            <label for="Reference Recores">Other's</label>
-                            <input type="string" name="others_BI">
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <div class="group-input">
+                                <label for="Audit Attachments">OOS Category</label>
+                                <select name="oos_category_BI">
+                                    <option value="">Enter Your Selection Here</option>
+                                    <option value="analyst-error">Analyst Error</option>
+                                    <option value="instrument-error">Instrument Error</option>
+                                    <option value="procedure-error">Procedure Error</option>
+                                    <option value="product-related-error">Product Related Error</option>
+                                    <option value="material-related-error">Material Related Error</option>
+                                    <option value="other-error">Other Error</option>
+
+                                </select>
+                            </div>
                         </div>
-                    </div>
-                    <!-- <div class="col-lg-6">
-                                                                <div class="group-input">
-                                                                    <label for="Report Attachments">Required Action Plan? </label>
-                                                                    <input type="num" name="num">
-                                                                </div>
-                                                            </div> -->
-
-                    <div class="col-12">
-                        <div class="group-input">
-                            <label for="Reference Recores">Material/Batch Release</label>
-                            <select name="material_batch_release_BI">
-                                <option value="">Enter Your Selection Here</option>
-                                <option value="to-be-release">To Be Release</option>
-                                <option value="to-be-rejected">To Be Rejected</option>
-                                <option value="other-action">Other Action (Specify)</option>
-
-                            </select>
+                        <div class="col-lg-6">
+                            <div class="group-input">
+                                <label for="Reference Recores">Other's</label>
+                                <input type="string" name="others_BI">
+                            </div>
                         </div>
-                    </div>
+                        <!-- <div class="col-lg-6">
+                                                                    <div class="group-input">
+                                                                        <label for="Report Attachments">Required Action Plan? </label>
+                                                                        <input type="num" name="num">
+                                                                    </div>
+                                                                </div> -->
 
-                    <div class="col-md-12 mb-4">
-                        <div class="group-input">
-                            <label for="Description Deviation">Other Action (Specify)</label>
-                            <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
-                            <textarea class="summernote" name="other_action_BI" id="summernote-1">
-                                    </textarea>
-                        </div>
-                    </div>
+                        <div class="col-12">
+                            <div class="group-input">
+                                <label for="Reference Recores">Material/Batch Release</label>
+                                <select name="material_batch_release_BI">
+                                    <option value="">Enter Your Selection Here</option>
+                                    <option value="to-be-release">To Be Release</option>
+                                    <option value="to-be-rejected">To Be Rejected</option>
+                                    <option value="other-action">Other Action (Specify)</option>
 
-                    <div class="col-lg-6">
-                        <div class="group-input">
-                            <label for="field_alert_reference_BI">Field alert reference</label>
-                            <select multiple id="reference_record" name="field_alert_reference_BI[]" id="">
-                                <option value="">--Select---</option>
-                                <option value="1">1</option>
-                                <option value="2">2</option>
-                            </select>
-                        </div>
-                    </div>
-
-                    <div class="sub-head">Assessment for batch disposition</div>
-
-                    <div class="col-md-12 mb-4">
-                        <div class="group-input">
-                            <label for="Description Deviation">Other Parameters Results</label>
-                            <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
-                            <textarea class="summernote" name="other_parameter_result_BI" id="summernote-1">
-                                    </textarea>
-                        </div>
-                    </div>
-
-
-
-                    <div class="col-md-12 mb-4">
-                        <div class="group-input">
-                            <label for="Description Deviation">Trend of Previous Batches</label>
-                            <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
-                            <textarea class="summernote" name="trend_of_previous_batches_BI" id="summernote-1">
-                                    </textarea>
+                                </select>
+                            </div>
                         </div>
 
-                    </div>
-                    <div class="col-md-12 mb-4">
-                        <div class="group-input">
-                            <label for="Description Deviation">Stability Data</label>
-                            <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
-                            <textarea class="summernote" name="stability_data_BI" id="summernote-1">
-                                    </textarea>
-                        </div>
-                    </div>
-                    <div class="col-md-12 mb-4">
-                        <div class="group-input">
-                            <label for="Description Deviation">Process Validation Data</label>
-                            <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
-                            <textarea class="summernote" name="process_validation_data_BI" id="summernote-1">
-                                    </textarea>
-                        </div>
-                    </div>
-                    <div class="col-md-12 mb-4">
-                        <div class="group-input">
-                            <label for="Description Deviation">Method Validation </label>
-                            <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
-                            <textarea class="summernote" name="method_validation_BI" id="summernote-1">
-                                    </textarea>
-                        </div>
-                    </div>
-                    <div class="col-md-12 mb-4">
-                        <div class="group-input">
-                            <label for="Description Deviation">Any Market Complaints </label>
-                            <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
-                            <textarea class="summernote" name="any_market_complaints_BI" id="summernote-1">
-                                    </textarea>
+                        <div class="col-md-12 mb-4">
+                            <div class="group-input">
+                                <label for="Description Deviation">Other Action (Specify)</label>
+                                <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
+                                <textarea class="summernote" name="other_action_BI" id="summernote-1">
+                                        </textarea>
+                            </div>
                         </div>
 
-                    </div>
-
-                    <div class="col-md-12 mb-4">
-                        <div class="group-input">
-                            <label for="Description Deviation">Statistical Evaluation </label>
-                            <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
-                            <textarea class="summernote" name="statistical_evaluation_BI" id="summernote-1">
-                                    </textarea>
+                        <div class="col-lg-6">
+                            <div class="group-input">
+                                <label for="field_alert_reference_BI">Field alert reference</label>
+                                <select multiple id="reference_record" name="field_alert_reference_BI[]" id="">
+                                    <option value="">--Select---</option>
+                                    <option value="1">1</option>
+                                    <option value="2">2</option>
+                                </select>
+                            </div>
                         </div>
 
-                    </div>
-                    <div class="col-md-12 mb-4">
-                        <div class="group-input">
-                            <label for="Description Deviation">Risk Analysis for Disposition </label>
-                            <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
-                            <textarea class="summernote" name="risk_analysis_for_disposition_BI" id="summernote-1">
-                                    </textarea>
+                        <div class="sub-head">Assessment for batch disposition</div>
+
+                        <div class="col-md-12 mb-4">
+                            <div class="group-input">
+                                <label for="Description Deviation">Other Parameters Results</label>
+                                <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
+                                <textarea class="summernote" name="other_parameter_result_BI" id="summernote-1">
+                                        </textarea>
+                            </div>
                         </div>
 
-                    </div>
-                    <div class="col-md-12 mb-4">
-                        <div class="group-input">
-                            <label for="Description Deviation">Conclusion </label>
-                            <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
-                            <textarea class="summernote" name="conclusion_BI" id="summernote-1">
-                                    </textarea>
+
+
+                        <div class="col-md-12 mb-4">
+                            <div class="group-input">
+                                <label for="Description Deviation">Trend of Previous Batches</label>
+                                <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
+                                <textarea class="summernote" name="trend_of_previous_batches_BI" id="summernote-1">
+                                        </textarea>
+                            </div>
+
+                        </div>
+                        <div class="col-md-12 mb-4">
+                            <div class="group-input">
+                                <label for="Description Deviation">Stability Data</label>
+                                <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
+                                <textarea class="summernote" name="stability_data_BI" id="summernote-1">
+                                        </textarea>
+                            </div>
+                        </div>
+                        <div class="col-md-12 mb-4">
+                            <div class="group-input">
+                                <label for="Description Deviation">Process Validation Data</label>
+                                <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
+                                <textarea class="summernote" name="process_validation_data_BI" id="summernote-1">
+                                        </textarea>
+                            </div>
+                        </div>
+                        <div class="col-md-12 mb-4">
+                            <div class="group-input">
+                                <label for="Description Deviation">Method Validation </label>
+                                <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
+                                <textarea class="summernote" name="method_validation_BI" id="summernote-1">
+                                        </textarea>
+                            </div>
+                        </div>
+                        <div class="col-md-12 mb-4">
+                            <div class="group-input">
+                                <label for="Description Deviation">Any Market Complaints </label>
+                                <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
+                                <textarea class="summernote" name="any_market_complaints_BI" id="summernote-1">
+                                        </textarea>
+                            </div>
+
                         </div>
 
-                    </div>
+                        <div class="col-md-12 mb-4">
+                            <div class="group-input">
+                                <label for="Description Deviation">Statistical Evaluation </label>
+                                <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
+                                <textarea class="summernote" name="statistical_evaluation_BI" id="summernote-1">
+                                        </textarea>
+                            </div>
 
-                    <div class="col-lg-6">
-                        <div class="group-input">
-                            <label for="Reference Recores">Phase-III Inves. Required?</label>
-                            <select name="phase_III_inves_required_BI">
-                                <option value="">Enter Your Selection Here</option>
-                                <option value="yes">Yes</option>
-                                <option value="no">No</option>
-
-
-                            </select>
                         </div>
-                    </div>
-                    <div class="col-lg-6">
-                        <div class="group-input">
-                            <label for="phase_III_inves_reference_BI">Phase-III Inves. Reference</label>
-                            <select multiple id="reference_record" name="phase_III_inves_reference_BI[]" id="">
-                                <option value="">--Select---</option>
-                                <option value="1">1</option>
-                                <option value="2">2</option>
-                            </select>
-                        </div>
-                    </div>
+                        <div class="col-md-12 mb-4">
+                            <div class="group-input">
+                                <label for="Description Deviation">Risk Analysis for Disposition </label>
+                                <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
+                                <textarea class="summernote" name="risk_analysis_for_disposition_BI" id="summernote-1">
+                                        </textarea>
+                            </div>
 
-                    <div class="col-md-12 mb-4">
-                        <div class="group-input">
-                            <label for="Description Deviation">Justify for Delay in Activity</label>
-                            <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
-                            <textarea class="summernote" name="justify_for_delay_BI" id="summernote-1">
-                                    </textarea>
+                        </div>
+                        <div class="col-md-12 mb-4">
+                            <div class="group-input">
+                                <label for="Description Deviation">Conclusion </label>
+                                <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
+                                <textarea class="summernote" name="conclusion_BI" id="summernote-1">
+                                        </textarea>
+                            </div>
+
                         </div>
 
-                    </div>
-                    <div class="col-12">
-                        <div class="group-input">
-                            <label for="Reference Recores">Disposition Attachment</label>
-                            <small class="text-primary">
-                                Please Attach all relevant or supporting documents
-                            </small>
-                            <div class="file-attachment-field">
-                                <div class="file-attachment-list" id="disposition_attachment_BI"></div>
-                                <div class="add-btn">
-                                    <div>Add</div>
-                                    <input type="file" id="myfile" name="disposition_attachment_BI[]"
-                                        oninput="addMultipleFiles(this, 'disposition_attachment_BI')" multiple>
+                        <div class="col-lg-6">
+                            <div class="group-input">
+                                <label for="Reference Recores">Phase-III Inves. Required?</label>
+                                <select name="phase_III_inves_required_BI">
+                                    <option value="">Enter Your Selection Here</option>
+                                    <option value="yes">Yes</option>
+                                    <option value="no">No</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="group-input">
+                                <label for="phase_III_inves_reference_BI">Phase-III Inves. Reference</label>
+                                <select multiple id="reference_record" name="phase_III_inves_reference_BI[]" id="">
+                                    <option value="">--Select---</option>
+                                    <option value="1">1</option>
+                                    <option value="2">2</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="col-md-12 mb-4">
+                            <div class="group-input">
+                                <label for="Description Deviation">Justify for Delay in Activity</label>
+                                <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
+                                <textarea class="summernote" name="justify_for_delay_BI" id="summernote-1">
+                                        </textarea>
+                            </div>
+
+                        </div>
+                        <div class="col-12">
+                            <div class="group-input">
+                                <label for="Reference Recores">Disposition Attachment</label>
+                                <small class="text-primary">
+                                    Please Attach all relevant or supporting documents
+                                </small>
+                                <div class="file-attachment-field">
+                                    <div class="file-attachment-list" id="disposition_attachment_BI"></div>
+                                    <div class="add-btn">
+                                        <div>Add</div>
+                                        <input type="file" id="myfile" name="disposition_attachment_BI[]"
+                                            oninput="addMultipleFiles(this, 'disposition_attachment_BI')" multiple>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="button-block">
-                        <button type="submit" id="ChangesaveButton" class="saveButton">Save</button>
-                        <button type="button" class="backButton" onclick="previousStep()">Back</button>
-                        <button type="button" id="ChangeNextButton" class="nextButton"
-                            onclick="nextStep()">Next</button>
-                        <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white">
-                                Exit </a> </button>
-                    </div>
-                </div>
-            </div>
-
-        </div>
-     <!-- Re-Open -->
-        <div id="CCForm12" class="inner-block cctabcontent">
-            <div class="inner-block-content">
-                <div class="sub-head">
-                    Reopen Request
-                </div>
-                <div class="row">
-                    <div class="col-md-12 mb-4">
-                        <div class="group-input">
-                            <label for="Description Deviation">Other Action (Specify)</label>
-                            <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
-                            <textarea class="summernote" name="reopen_request" id="summernote-1">
-                                    </textarea>
+                        <div class="button-block">
+                            <button type="submit" id="ChangesaveButton" class="saveButton">Save</button>
+                            <button type="button" class="backButton" onclick="previousStep()">Back</button>
+                            <button type="button" id="ChangeNextButton" class="nextButton"
+                                onclick="nextStep()">Next</button>
+                            <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white">
+                                    Exit </a> </button>
                         </div>
                     </div>
+                </div>
 
-                    <div class="col-12">
-                        <div class="group-input">
-                            <label for="Reference Recores">Reopen Attachment</label>
-                            <small class="text-primary">
-                                Please Attach all relevant or supporting documents
-                            </small>
-                            <div class="file-attachment-field">
-                                <div class="file-attachment-list" id="reopen_attachment"></div>
-                                <div class="add-btn">
-                                    <div>Add</div>
-                                    <input type="file" id="myfile" name="reopen_attachment[]"
-                                        oninput="addMultipleFiles(this, 'reopen_attachment')" multiple>
+            </div>
+            <!-- Re-Open -->
+            <div id="CCForm12" class="inner-block cctabcontent">
+                <div class="inner-block-content">
+                    <div class="sub-head">
+                        Reopen Request
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12 mb-4">
+                            <div class="group-input">
+                                <label for="Description Deviation">Other Action (Specify)</label>
+                                <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
+                                <textarea class="summernote" name="reopen_request" id="summernote-1">
+                                        </textarea>
+                            </div>
+                        </div>
+
+                        <div class="col-12">
+                            <div class="group-input">
+                                <label for="Reference Recores">Reopen Attachment</label>
+                                <small class="text-primary">
+                                    Please Attach all relevant or supporting documents
+                                </small>
+                                <div class="file-attachment-field">
+                                    <div class="file-attachment-list" id="reopen_attachment"></div>
+                                    <div class="add-btn">
+                                        <div>Add</div>
+                                        <input type="file" id="myfile" name="reopen_attachment[]"
+                                            oninput="addMultipleFiles(this, 'reopen_attachment')" multiple>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="button-block">
-                        <button type="submit" id="ChangesaveButton" class="saveButton">Save</button>
-                        <button type="button" class="backButton" onclick="previousStep()">Back</button>
-                        <button type="button" id="ChangeNextButton" class="nextButton"
-                            onclick="nextStep()">Next</button>
-                        <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white">
-                                Exit </a> </button>
-                    </div>
-                </div>
-            </div>
-
-        </div>
-    <!-- Under Addendum Approval -->
-        <div id="CCForm13" class="inner-block cctabcontent">
-            <div class="inner-block-content">
-                <div class="sub-head">
-                    Addendum Approval Comment
-                </div>
-                <div class="row">
-                    <div class="col-md-12 mb-4">
-                        <div class="group-input">
-                            <label for="Description Deviation">Reopen Approval Comments </label>
-                            <textarea class="summernote" name="reopen_approval_comments" id="summernote-1"></textarea>
+                        <div class="button-block">
+                            <button type="submit" id="ChangesaveButton" class="saveButton">Save</button>
+                            <button type="button" class="backButton" onclick="previousStep()">Back</button>
+                            <!-- <button type="button" id="ChangeNextButton" class="nextButton" onclick="nextStep()">Next</button> -->
+                            <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white">
+                                    Exit </a> </button>
                         </div>
-                    </div>
-                    <div class="col-12">
-                        <div class="group-input">
-                            <label for="Reference Recores">Addendum Attachment</label>
-                            <small class="text-primary">
-                                Please Attach all relevant or supporting documents
-                            </small>
-                            <div class="file-attachment-field">
-                                <div class="file-attachment-list" id="ua_approval_attachment"></div>
-                                <div class="add-btn">
-                                    <div>Add</div>
-                                    <input type="file" id="myfile" name="ua_approval_attachment[]"
-                                        oninput="addMultipleFiles(this, 'ua_approval_attachment')" multiple>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="button-block">
-                        <button type="submit" id="ChangesaveButton" class="saveButton">Save</button>
-                        <button type="button" class="backButton" onclick="previousStep()">Back</button>
-                        <button type="button" id="ChangeNextButton" class="nextButton"
-                            onclick="nextStep()">Next</button>
-                        <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white">
-                                Exit </a> </button>
-                    </div>
-                </div>
-            </div>
-
-        </div>
-
-    <!--Under Addendum Execution -->
-        <div id="CCForm14" class="inner-block cctabcontent">
-            <div class="inner-block-content">
-                <div class="sub-head">
-                    Addendum Execution Comment
-                </div>
-                <div class="row">
-
-                    <div class="col-md-12 mb-4">
-                        <div class="group-input">
-                            <label for="Description Deviation">Execution Comments</label>
-                            <textarea class="summernote" name="execution_comments" id="summernote-1"></textarea>
-                        </div>
-                    </div>
-
-                    <div class="col-lg-6">
-                        <div class="group-input">
-                            <label for="Reference Recores">Action Task Required?</label>
-                            <select name="action_task_required">
-                                <option>Enter Your Selection Here</option>
-                                <option>Yes</option>
-                                <option>No</option>
-                            </select>
-                        </div>
-                    </div>
-
-                    <div class="col-lg-6">
-                        <div class="group-input">
-                            <label for="action_task_reference_no">Action Task Reference No.</label>
-                            <select multiple id="reference_record" name="action_task_reference_no[]" id="">
-                                <option value="">--Select---</option>
-                                <option value="">1</option>
-                                <option value="">2</option>
-                            </select>
-                        </div>
-                    </div>
-
-                    <div class="col-lg-6">
-                        <div class="group-input">
-                            <label for="Reference Recores">Addi.Testing Req?</label>
-                            <select>
-                                <option>Enter Your Selection Here</option>
-                                <option>Yes</option>
-                                <option>No</option>
-                            </select>
-                        </div>
-                    </div>
-
-                    <div class="col-lg-6">
-                        <div class="group-input">
-                            <label for="Reference Recores">Addi.Testing Ref.</label>
-                            <select multiple id="reference_record" name="addi_testing_ref[]" id="">
-                                <option value="">--Select---</option>
-                                <option value="1">1</option>
-                                <option value="2">2</option>
-                            </select>
-                        </div>
-                    </div>
-
-                    <div class="col-lg-6">
-                        <div class="group-input">
-                            <label for="Reference Recores">Investigation Req.?</label>
-                            <select>
-                                <option>Enter Your Selection Here</option>
-                                <option>Yes</option>
-                                <option>No</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="col-lg-6">
-                        <div class="group-input">
-                            <label for="Reference Recores">Investigation Ref.</label>
-                            <select multiple id="reference_record" name="investigation_ref[]" id="">
-                                <option value="">--Select---</option>
-                                <option value="">1</option>
-                                <option value="">2</option>
-                            </select>
-                        </div>
-                    </div>
-
-                    <div class="col-lg-6">
-                        <div class="group-input">
-                            <label for="Reference Recores">Hypo-Exp Req?</label>
-                            <select>
-                                <option>Enter Your Selection Here</option>
-                                <option>Yes</option>
-                                <option>No</option>
-                            </select>
-                        </div>
-                    </div>
-
-                    <div class="col-lg-6">
-                        <div class="group-input">
-                            <label for="Reference Recores">Hypo-Exp Ref.</label>
-                            <select multiple id="reference_record" name="hypo_exp_ref[]" id="">
-                                <option value="">--Select---</option>
-                                <option value="">1</option>
-                                <option value="">2</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="col-12">
-                        <div class="group-input">
-                            <label for="Reference Recores">Addendum Attachments
-                            </label>
-                            <small class="text-primary">
-                                Please Attach all relevant or supporting documents
-                            </small>
-                            <div class="file-attachment-field">
-                                <div class="file-attachment-list" id="ua_Execution_attachments"></div>
-                                <div class="add-btn">
-                                    <div>Add</div>
-                                    <input type="file" id="myfile" name="ua_Execution_attachments[]"
-                                        oninput="addMultipleFiles(this, 'ua_Execution_attachments')" multiple>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="button-block">
-                        <button type="submit" id="ChangesaveButton" class="saveButton">Save</button>
-                        <button type="button" class="backButton" onclick="previousStep()">Back</button>
-                        <button type="button" id="ChangeNextButton" class="nextButton"
-                            onclick="nextStep()">Next</button>
-                        <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white">
-                                Exit </a> </button>
                     </div>
                 </div>
 
             </div>
-
-        </div>
-
-    <!-- Under Addendum Review-->
-        <div id="CCForm15" class="inner-block cctabcontent">
-            <div class="inner-block-content">
-                <div class="sub-head">
-                    Under Addendum Review
-                </div>
-                <div class="row">
-
-                    <div class="col-md-12 mb-4">
-                        <div class="group-input">
-                            <label for="Description Deviation">Addendum Review Comments</label>
-                            <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
-                            <textarea class="summernote" name="addendum_review_comments" id="summernote-1">
-                    </textarea>
-                        </div>
-                    </div>
-
-                    <div class="col-12">
-                        <div class="group-input">
-                            <label for="Reference Recores">Required Attachment</label>
-                            <small class="text-primary">
-                                Please Attach all relevant or supporting documents
-                            </small>
-                            <div class="file-attachment-field">
-                                <div class="file-attachment-list" id="uar_required_attachment"></div>
-                                <div class="add-btn">
-                                    <div>Add</div>
-                                    <input type="file" id="myfile" name="uar_required_attachment[]"
-                                        oninput="addMultipleFiles(this, 'uar_required_attachment')" multiple>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="button-block">
-                        <button type="submit" id="ChangesaveButton" class="saveButton">Save</button>
-                        <button type="button" class="backButton" onclick="previousStep()">Back</button>
-                        <button type="button" id="ChangeNextButton" class="nextButton"
-                            onclick="nextStep()">Next</button>
-                        <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white">
-                                Exit </a> </button>
-                    </div>
-
-                </div>
-
-            </div>
-
-        </div>
-
-    <!-- Under Addendum Verification -->
-        <div id="CCForm16" class="inner-block cctabcontent">
-            <div class="inner-block-content">
-                <div class="sub-head">
-                    Addendum Verification Comment
-                </div>
-                <div class="row">
-
-                    <div class="col-md-12 mb-4">
-                        <div class="group-input">
-                            <label for="Description Deviation">Verification Comments </label>
-                            <textarea class="summernote" name="verification_comments" id="summernote-1">
-                            </textarea>
-                        </div>
-                    </div>
-                    <div class="col-12">
-                        <div class="group-input">
-                            <label for="Reference Recores">Verification Attachment</label>
-                            <small class="text-primary">
-                                Please Attach all relevant or supporting documents
-                            </small>
-                            <div class="file-attachment-field">
-                                <div class="file-attachment-list" id="uav_verification_attachment"></div>
-                                <div class="add-btn">
-                                    <div>Add</div>
-                                    <input type="file" id="myfile" name="uav_verification_attachment[]"
-                                        oninput="addMultipleFiles(this, 'uav_verification_attachment')" multiple>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="button-block">
-                        <button type="submit" id="ChangesaveButton" class="saveButton">Save</button>
-                        <button type="button" class="backButton" onclick="previousStep()">Back</button>
-                        <button type="button" id="ChangeNextButton" class="nextButton"
-                            onclick="nextStep()">Next</button>
-                        <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white">
-                                Exit </a> </button>
-                    </div>
-
-                </div>
-            </div>
-        </div>
-
-        <!----- Signature ----->
-
-        <div id="CCForm17" class="inner-block cctabcontent">
-            <div class="inner-block-content">
-                <div class="sub-head">
-                    Activity Log
-                </div>
-                <div class="row">
-
-                    <div class="col-lg-6">
-                        <div class="group-input">
-                            <label for="Audit Agenda">Preliminary Lab Inves. Done By</label>
-                            <div class="static"></div>
-                        </div>
-                    </div>
-                    <div class="col-lg-6">
-                        <div class="group-input">
-                            <label for="Audit Agenda">Preliminary Lab Inves. Done On</label>
-                            <div class="Date"></div>
-                        </div>
-                    </div>
-
-
-                    <div class="col-lg-6">
-                        <div class="group-input">
-                            <label for="Audit Team">Pre. Lab Inv. Conclusion By</label>
-                            <div class="static"></div>
-
-                        </div>
-                    </div>
-
-                    <div class="col-lg-6">
-                        <div class="group-input">
-                            <label for="Audit Team">Pre. Lab Inv. Conclusion On</label>
-                            <div class="Date"></div>
-                        </div>
-                    </div>
-
-                    <div class="col-6">
-                        <div class="group-input">
-                            <label for="Audit Comments"> Pre.Lab Invest. Review By </label>
-                            <div class="static"></div>
-                        </div>
-                    </div>
-                    <div class="col-lg-6">
-                        <div class="group-input">
-                            <label for="Audit Attachments">Pre.Lab Invest. Review On</label>
-                            <div class="Date"></div>
-                        </div>
-                    </div>
-
-
-                    <div class="col-lg-6">
-                        <div class="group-input">
-                            <label for="Audit Attachments">Phase II Invest. Proposed By</label>
-                            <div class="static"></div>
-                        </div>
-                    </div>
-
-                    <div class="col-lg-6">
-                        <div class="group-input">
-                            <label for="Audit Attachments">Phase II Invest. Proposed On</label>
-                            <div class="Date"></div>
-                        </div>
-                    </div>
-
-                    <div class="col-lg-6">
-                        <div class="group-input">
-                            <label for="Audit Response Completed By"> Phase II QC Review Done By</label>
-                            <div class=" static"></div>
-
-                        </div>
-                    </div>
-                    <div class="col-lg-6">
-                        <div class="group-input">
-                            <label for="Audit Response Completed On">Phase II QC Review Done On</label>
-                            <div class="date"></div>
-
-                        </div>
-                    </div>
-
-                    <div class="col-lg-6">
-                        <div class="group-input">
-                            <label for="Audit Attachments">Additional Test Proposed By</label>
-                            <div class=" static"></div>
-                        </div>
-                    </div>
-
-                    <div class="col-lg-6">
-                        <div class="group-input">
-                            <label for="Audit Attachments">Additional Test Proposed On</label>
-                            <div class="date"></div>
-                        </div>
-                    </div>
-
-
-                    <div class="col-lg-6">
-                        <div class="group-input">
-                            <label for="Audit Attachments">OOS Conclusion Complete By</label>
-                            <div class=" static"></div>
-                        </div>
-                    </div>
-
-                    <div class="col-lg-6">
-                        <div class="group-input">
-                            <label for="Audit Attachments">OOS Conclusion Complete On</label>
-                            <div class="date"></div>
-                        </div>
-                    </div>
-
-
-                    <div class="col-lg-6">
-                        <div class="group-input">
-                            <label for="Audit Attachments">CQ Review Done By</label>
-                            <div class=" static"></div>
-                        </div>
-                    </div>
-
-                    <div class="col-lg-6">
-                        <div class="group-input">
-                            <label for="Audit Attachments">CQ Review Done On</label>
-                            <div class="date"></div>
-                        </div>
-                    </div>
-
-                    <div class="col-lg-6">
-                        <div class="group-input">
-                            <label for="Audit Attachments">Disposition Decision Done by</label>
-                            <div class=" static"></div>
-                        </div>
-                    </div>
-
-                    <div class="col-lg-6">
-                        <div class="group-input">
-                            <label for="Audit Attachments">Disposition Decision Done On</label>
-                            <div class="date"></div>
-                        </div>
-                    </div>
-
-
-                    <div class="col-lg-6">
-                        <div class="group-input">
-                            <label for="Reference Recores">Reopen Addendum Complete By
-
-                            </label>
-                            <div class=" static"></div>
-                        </div>
-                    </div>
-
-                    <div class="col-lg-6">
-                        <div class="group-input">
-                            <label for="Reference Recores">Reopen Addendum Complete on
-
-                            </label>
-                            <div class="date"></div>
-                        </div>
-                    </div>
-                    <div class="col-lg-6">
-                        <div class="group-input">
-                            <label for="Reference Recores">Addendum Approval Completed By
-
-                            </label>
-                            <div class=" static"></div>
-                        </div>
-                    </div>
-
-                    <div class="col-lg-6">
-                        <div class="group-input">
-                            <label for="Reference Recores">Reopen Addendum Complete on
-
-                            </label>
-                            <div class="date"></div>
-                        </div>
-                    </div>
-
-                    <div class="col-lg-6">
-                        <div class="group-input">
-                            <label for="Reference Recores">Addendum Execution Done By
-
-                            </label>
-                            <div class=" static"></div>
-                        </div>
-                    </div>
-
-                    <div class="col-lg-6">
-                        <div class="group-input">
-                            <label for="Reference Recores">Addendum Execution Done On
-
-                            </label>
-                            <div class="date"></div>
-                        </div>
-                    </div>
-
-                    <div class="col-lg-6">
-                        <div class="group-input">
-                            <label for="Reference Recores">Addendum Review Done By
-
-                            </label>
-                            <div class=" static"></div>
-                        </div>
-                    </div>
-
-                    <div class="col-lg-6">
-                        <div class="group-input">
-                            <label for="Reference Recores">Addendum Review Done On
-
-                            </label>
-                            <div class="date"></div>
-                        </div>
-                    </div>
-                    <div class="col-lg-6">
-                        <div class="group-input">
-                            <label for="Reference Recores">Verification Review Done By
-                            </label>
-                            <div class=" static"></div>
-                        </div>
-                    </div>
-
-                    <div class="col-lg-6">
-                        <div class="group-input">
-                            <label for="Reference Recores">Verification Review Done On
-
-                            </label>
-                            <div class="date"></div>
-                        </div>
-                    </div>
-                    <!-- ====================================================================== -->
-                    <div class="col-lg-6">
-                        <div class="group-input">
-                            <label for="submitted by">Submitted By :</label>
-                            <div class="static"></div>
-                        </div>
-                    </div>
-                    <div class="col-lg-6">
-                        <div class="group-input">
-                            <label for="submitted on">Submitted On :</label>
-                            <div class="Date"></div>
-                        </div>
-                    </div>
-                    <div class="col-lg-6">
-                        <div class="group-input">
-                            <label for="cancelled by">Cancelled By :</label>
-                            <div class="static"></div>
-                        </div>
-                    </div>
-                    <div class="col-lg-6">
-                        <div class="group-input">
-                            <label for="cancelled on">Cancelled On :</label>
-                            <div class="Date"></div>
-                        </div>
-                    </div>
-                    <div class="col-lg-6">
-                        <div class="group-input">
-                            <label for="More information required By">More information required By :</label>
-                            <div class="static"></div>
-                        </div>
-                    </div>
-                    <div class="col-lg-6">
-                        <div class="group-input">
-                            <label for="More information required On">More information required On :</label>
-                            <div class="Date"></div>
-                        </div>
-                    </div>
-                    <div class="col-lg-6">
-                        <div class="group-input">
-                            <label for="completed by">Completed By :</label>
-                            <div class="static"></div>
-                        </div>
-                    </div>
-                    <div class="col-lg-6">
-                        <div class="group-input">
-                            <label for="completed on">Completed On :</label>
-                            <div class="Date"></div>
-                        </div>
-                    </div>
-
-                </div>
-
-                <div class="button-block">
-                    <button type="submit" id="ChangesaveButton" class="saveButton">Save</button>
-                    <button type="button" class="backButton" onclick="previousStep()">Back</button>
-                    <button type="button" id="ChangeNextButton" class="nextButton"
-                        onclick="nextStep()">Next</button>
-                    <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white">
-                            Exit </a> </button>
-                </div>
-            </div>
-        </div>
-
-        <div id="CCForm18" class="inner-block cctabcontent">
-            <div class="inner-block-content">
-                <div class="sub-head"> Checklist for Analyst Training and Procedure </div>
-                        @php
-                        $check_analyst_training_procedures = [
-                        [
-                        'question' => "Is the analyst trained/qualified BET test procedure?",
-                        'is_sub_question' => false,
-                        'input_type' => 'text'
-                        ],
-                        [
-                        'question' => "Reference procedure number :-",
-                        'is_sub_question' => true,
-                        'input_type' => 'number'
-                        ],
-                        [
-                        'question' => "Effective date",
-                        'is_sub_question' => true,
-                        'input_type' => 'date'
-                        ],
-                        [
-                        'question' => "Date of qualification:",
-                        'is_sub_question' => true,
-                        'input_type' => 'date'
-                        ],
-                        [
-                        'question' => "Were appropriate precaution taken by the analyst throughout the test?",
-                        'is_sub_question' => false,
-                        'input_type' => 'text'
-                        ],
-                        [
-                        'question' => "Analyst interview record",
-                        'is_sub_question' => true,
-                        'input_type' => 'number'
-                        ],
-                        [
-                        'question' => "Was an analyst/sampling persons suffering from any ailment such as cough/cold or open wound or skin infections?",
-                        'is_sub_question' => false,
-                        'input_type' => 'text'
-                        ],
-                        [
-                        'question' => "Analyst interview record",
-                        'is_sub_question' => true,
-                        'input_type' => 'number'
-                        ],
-                        [
-                        'question' => "Was the correct procedure for the transfer of samples and accessories to sampling testing areas followed?",
-                        'is_sub_question' => false,
-                        'input_type' => 'text'
-                        ]
-                        ];
-
-                        @endphp
-                <div class="row">
-                    <div class="col-12">
-                        <div class="group-input">
-                            <div class="why-why-chart">
-                                <table class="table table-bordered">
-                                    <thead>
-                                        <tr>
-                                            <th style="width: 5%;">Sr.No.</th>
-                                            <th style="width: 40%;">Question</th>
-                                            <th style="width: 20%;">Response</th>
-                                            <th>Remarks</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        @php
-                                            $main_question_index = 1.0;
-                                            $sub_question_index = 0;
-                                        @endphp
-
-                                        @foreach ($check_analyst_training_procedures as $index => $review_item)
-                                        @php
-                                            if ($review_item['is_sub_question']) {
-                                                $sub_question_index++;
-                                            } else {
-                                                $sub_question_index = 0;
-                                                $main_question_index += 0.1;
-                                            }
-                                        @endphp
-                                        <tr>
-                                            <td class="flex text-center">{{ $review_item['is_sub_question'] ? $main_question_index .'.'. $sub_question_index : number_format($main_question_index, 1) }}</td>
-                                            <td>{{$review_item['question']}}</td>
-                                            <td>
-                                                <div style="display: flex; justify-content: space-around; align-items: center; margin: 5%; gap:5px">
-                                                    @if ($review_item['input_type'] == 'date')
-                                                    <input type="date" name="analyst_training_proce[{{$loop->index}}][response]"
-                                                        style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
-                                                    @elseif ($review_item['input_type'] == 'number')
-                                                    <input type="number" name="analyst_training_proce[{{$loop->index}}][response]"
-                                                        style="padding: 2px; width:90%; border: 1px solid black; background-color: #f0f0f0;">
-                                                    @else
-                                                    <select name="analyst_training_proce[{{$loop->index}}][response]"
-                                                            id="response"
-                                                            style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
-                                                        <option value="">Select an Option</option>
-                                                        <option value="Yes">Yes</option>
-                                                        <option value="No">No</option>
-                                                        <option value="N/A">N/A</option>
-                                                    </select>
-                                                    @endif
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <div style="margin: auto; display: flex; justify-content: center;">
-                                                    <textarea name="analyst_training_proce[{{$loop->index}}][remark]"
-                                                            style="border-radius: 7px; border: 1.5px solid black;"></textarea>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        @endforeach
-                                    </tbody>
-
-                                </table>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="inner-block-content">
-                <div class="sub-head">
-                    Checklist for Sample receiving & verification in lab : </div>
-                        @php
-                        $sample_receiving_verifications = [
-                            [
-                            'question' => "Was the sample container (Physical integrity) verified at the time of sample receipt?",
-                            'is_sub_question' => false,
-                            'input_type' => 'text'
-                            ],
-                            [
-                            'question' => "Were clean and dehydrogenated sampling accessories and glassware used for sampling?",
-                            'is_sub_question' => false,
-                            'input_type' => 'text'
-                            ],
-                            [
-                            'question' => "Was the correct quantity of the sample withdrawn?",
-                            'is_sub_question' => false,
-                            'input_type' => 'text'
-                            ],
-                            [
-                            'question' => "Was there any discrepancy observed during sampling?",
-                            'is_sub_question' => false,
-                            'input_type' => 'text'
-                            ],
-                            [
-                            'question' => "Was the sample container (Physical integrity) checked before testing?",
-                            'is_sub_question' => false,
-                            'input_type' => 'text'
-                            ]
-                            ];
-
-
-                        @endphp
-                <div class="row">
-                    <div class="col-12">
-                        <div class="group-input">
-                            <div class="why-why-chart">
-                                <table class="table table-bordered">
-                                    <thead>
-                                        <tr>
-                                            <th style="width: 5%;">Sr.No.</th>
-                                            <th style="width: 40%;">Question</th>
-                                            <th style="width: 20%;">Response</th>
-                                            <th>Remarks</th>
-                                        </tr>
-                                    </thead><tbody>
-                                        @php
-                                            $main_question_index = 2.0;
-                                            $sub_question_index = 0;
-                                        @endphp
-
-                                        @foreach ($sample_receiving_verifications as $index => $review_item)
-                                        @php
-                                            if ($review_item['is_sub_question']) {
-                                                $sub_question_index++;
-                                            } else {
-                                                $sub_question_index = 0;
-                                                $main_question_index += 0.1;
-                                            }
-                                        @endphp
-                                        <tr>
-                                            <td class="flex text-center">{{ $review_item['is_sub_question'] ? $main_question_index .'.'. $sub_question_index : number_format($main_question_index, 1) }}</td>
-                                            <td>{{$review_item['question']}}</td>
-                                            <td>
-                                                <div style="display: flex; justify-content: space-around; align-items: center; margin: 5%; gap:5px">
-                                                    @if ($review_item['input_type'] == 'date')
-                                                    <input type="date" name="sample_receiving_verification_lab[{{$loop->index}}][response]"
-                                                        style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
-                                                    @elseif ($review_item['input_type'] == 'number')
-                                                    <input type="number" name="sample_receiving_verification_lab[{{$loop->index}}][response]"
-                                                        style="padding: 2px; width:90%; border: 1px solid black; background-color: #f0f0f0;">
-                                                    @else
-                                                    <select name="sample_receiving_verification_lab[{{$loop->index}}][response]"
-                                                            id="response"
-                                                            style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
-                                                        <option value="">Select an Option</option>
-                                                        <option value="Yes">Yes</option>
-                                                        <option value="No">No</option>
-                                                        <option value="N/A">N/A</option>
-                                                    </select>
-                                                    @endif
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <div style="margin: auto; display: flex; justify-content: center;">
-                                                    <textarea name="sample_receiving_verification_lab[{{$loop->index}}][remark]"
-                                                            style="border-radius: 7px; border: 1.5px solid black;"></textarea>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        @endforeach
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="inner-block-content">
-                <div class="sub-head">
-                    Checklist for Method/Procedure used during analysis: </div>
-                    @php
-                    $method_procedure_used_during_anas = [
-                            [
-                            'question' => "Was correct applicable specification/Test procedure/MOA used for analysis?",
-                            'is_sub_question' => false,
-                            'input_type' => 'text'
-                            ],
-                            [
-                            'question' => "Verified specification/Test procedure/MOA No.",
-                            'is_sub_question' => true,
-                            'input_type' => 'number'
-                            ],
-                            [
-                            'question' => "Was the test procedure followed as per method validation?",
-                            'is_sub_question' => false,
-                            'input_type' => 'text'
-                            ],
-                            [
-                            'question' => "Was there any change in the validated change method? If yes, was test performed with the new validated method?",
-                            'is_sub_question' => false,
-                            'input_type' => 'text'
-                            ],
-                            [
-                            'question' => "Was BET reagents (Lysate, CSE, LRW and Buffer) procured from the approved vendor?",
-                            'is_sub_question' => false,
-                            'input_type' => 'text'
-                            ],
-                            [
-                            'question' => "Was lysate and CSE stored at the recommended temperature and duration? Storage condition:",
-                            'is_sub_question' => false,
-                            'input_type' => 'text'
-                            ],
-                            [
-                            'question' => "Were all product/reagents contact parts of BET testing (Tips/Accessories/Sample Container) depyrogenated?",
-                            'is_sub_question' => false,
-                            'input_type' => 'text'
-                            ],
-                            [
-                            'question' => "Assay tube/Batch No.",
-                            'is_sub_question' => false,
-                            'input_type' => 'number'
-                            ],
-                            [
-                            'question' => "Expiry date:",
-                            'is_sub_question' => true,
-                            'input_type' => 'date'
-                            ],
-                            [
-                            'question' => "Tip lot/Batch No.",
-                            'is_sub_question' => false,
-                            'input_type' => 'number'
-                            ],
-                            [
-                            'question' => "Expiry date:",
-                            'is_sub_question' => true,
-                            'input_type' => 'date'
-                            ],
-                            [
-                            'question' => "Was the test done at correct MVD as per validated method?",
-                            'is_sub_question' => false,
-                            'input_type' => 'text'
-                            ],
-                            [
-                            'question' => "Were calculations of MVD/Test dilution done correctly?",
-                            'is_sub_question' => true,
-                            'input_type' => 'text'
-                            ],
-                            [
-                            'question' => "Were correct dilutions prepared?",
-                            'is_sub_question' => true,
-                            'input_type' => 'text'
-                            ],
-                            [
-                            'question' => "Was labeled claim lysate sensitivity checked before the use of the lot?",
-                            'is_sub_question' => false,
-                            'input_type' => 'text'
-                            ],
-                            [
-                            'question' => "Were all reagents (LRW/CSE and Lysate) used in the test within the expiry?",
-                            'is_sub_question' => false,
-                            'input_type' => 'text'
-                            ],
-                            [
-                            'question' => "LRW expiry date?",
-                            'is_sub_question' => true,
-                            'input_type' => 'date'
-                            ],
-                            [
-                            'question' => "CSE expiry date?",
-                            'is_sub_question' => true,
-                            'input_type' => 'date'
-                            ],
-                            [
-                            'question' => "Lysate expiry date?",
-                            'is_sub_question' => true,
-                            'input_type' => 'date'
-                            ],
-                            [
-                            'question' => "Buffer expiry date?",
-                            'is_sub_question' => true,
-                            'input_type' => 'date'
-                            ],
-                            [
-                            'question' => "Was рН of the test sample/dilution verified?",
-                            'is_sub_question' => false,
-                            'input_type' => 'text'
-                            ],
-                            [
-                            'question' => "Were appropriate рН strip/measuring device used, which provides the least count measurement of test sample/dilution wherever applicable?",
-                            'is_sub_question' => false,
-                            'input_type' => 'text'
-                            ],
-                            [
-                            'question' => "Were proper incubation conditions followed?",
-                            'is_sub_question' => false,
-                            'input_type' => 'text'
-                            ],
-                            [
-                            'question' => "Was there any spillage that occurred during the vortexing of dilutions?",
-                            'is_sub_question' => false,
-                            'input_type' => 'text'
-                            ],
-                            [
-                            'question' => "Were the results of positive, negative, and test controls found satisfactory?",
-                            'is_sub_question' => false,
-                            'input_type' => 'text'
-                            ],
-                            [
-                            'question' => "Is the test incubator/heating block kept on a vibration-free surface?",
-                            'is_sub_question' => false,
-                            'input_type' => 'text'
-                            ],
-                            [
-                            'question' => "Were measures established and implemented to prevent contamination from personal material, material during testing reviewed and found satisfactory? List the measures:",
-                            'is_sub_question' => false,
-                            'input_type' => 'text'
-                            ]
-                            ];
-
-                        @endphp
-                <div class="row">
-                    <div class="col-12">
-                        <div class="group-input">
-                            <div class="why-why-chart">
-                                <table class="table table-bordered">
-                                    <thead>
-                                        <tr>
-                                            <th style="width: 5%;">Sr.No.</th>
-                                            <th style="width: 40%;">Question</th>
-                                            <th style="width: 20%;">Response</th>
-                                            <th>Remarks</th>
-                                        </tr>
-                                    </thead><tbody>
-                                        @php
-                                            $main_question_index = 3.0;
-                                            $sub_question_index = 0;
-                                        @endphp
-
-                                        @foreach ($method_procedure_used_during_anas as $index => $review_item)
-                                        @php
-                                            if ($review_item['is_sub_question']) {
-                                                $sub_question_index++;
-                                            } else {
-                                                $sub_question_index = 0;
-                                                $main_question_index += 0.1;
-                                            }
-                                        @endphp
-                                        <tr>
-                                            <td class="flex text-center">{{ $review_item['is_sub_question'] ? $main_question_index .'.'. $sub_question_index : number_format($main_question_index, 1) }}</td>
-                                            <td>{{$review_item['question']}}</td>
-                                            <td>
-                                                <div style="display: flex; justify-content: space-around; align-items: center; margin: 5%; gap:5px">
-                                                    @if ($review_item['input_type'] == 'date')
-                                                    <input type="date" name="method_procedure_used_during_analysis[{{$loop->index}}][response]"
-                                                        style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
-                                                    @elseif ($review_item['input_type'] == 'number')
-                                                    <input type="number" name="method_procedure_used_during_analysis[{{$loop->index}}][response]"
-                                                        style="padding: 2px; width:90%; border: 1px solid black; background-color: #f0f0f0;">
-                                                    @else
-                                                    <select name="method_procedure_used_during_analysis[{{$loop->index}}][response]"
-                                                            id="response"
-                                                            style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
-                                                        <option value="">Select an Option</option>
-                                                        <option value="Yes">Yes</option>
-                                                        <option value="No">No</option>
-                                                        <option value="N/A">N/A</option>
-                                                    </select>
-                                                    @endif
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <div style="margin: auto; display: flex; justify-content: center;">
-                                                    <textarea name="method_procedure_used_during_analysis[{{$loop->index}}][remark]"
-                                                            style="border-radius: 7px; border: 1.5px solid black;"></textarea>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        @endforeach
-                                    </tbody>
-
-                                </table>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="inner-block-content">
-                <div class="sub-head">
-                    Checklist for Instrument/Equipment Details:</div>
+            <div id="CCForm18" class="inner-block cctabcontent">
+                <div class="inner-block-content">
+                    <div class="sub-head"> Checklist for Analyst Training and Procedure </div>
                             @php
-                        $Instrument_Equipment_Details = [
+                            $check_analyst_training_procedures = [
                             [
-                            'question' => "Was the equipment used, calibrated/qualified and within the specified range?",
+                            'question' => "Is the analyst trained/qualified BET test procedure?",
                             'is_sub_question' => false,
                             'input_type' => 'text'
                             ],
                             [
-                            'question' => "Dry block /Heating block equipment ID:",
+                            'question' => "Reference procedure number :-",
                             'is_sub_question' => true,
                             'input_type' => 'number'
                             ],
                             [
-                            'question' => "Calibration date & Next due date:",
+                            'question' => "Effective date",
                             'is_sub_question' => true,
                             'input_type' => 'date'
                             ],
                             [
-                            'question' => "Pipettes ID:",
+                            'question' => "Date of qualification:",
+                            'is_sub_question' => true,
+                            'input_type' => 'date'
+                            ],
+                            [
+                            'question' => "Were appropriate precaution taken by the analyst throughout the test?",
                             'is_sub_question' => false,
+                            'input_type' => 'text'
+                            ],
+                            [
+                            'question' => "Analyst interview record",
+                            'is_sub_question' => true,
                             'input_type' => 'number'
                             ],
                             [
-                            'question' => "Calibration date and Next due date:",
-                            'is_sub_question' => true,
-                            'input_type' => 'date'
-                            ],
-                            [
-                            'question' => "Refrigerator (2-8̊ C) ID:",
-                            'is_sub_question' => false,
-                            'input_type' => ' number'
-                            ],
-                            [
-                            'question' => "Validation date and next due date:",
-                            'is_sub_question' => true,
-                            'input_type' => 'date'
-                            ],
-                            [
-                            'question' => "Dehydrogenation over ID:",
-                            'is_sub_question' => false,
-                            'input_type' => 'date'
-                            ],
-                            [
-                            'question' => "Validation date and next due date:",
-                            'is_sub_question' => true,
-                            'input_type' => 'date'
-                            ],
-                            [
-                            'question' => "Did the dehydrogenation cycle challenge with endotoxin and found satisfactory during validation?",
-                            'is_sub_question' => true,
-                            'input_type' => 'text'
-                            ],
-                            [
-                            'question' => "Was the depyrogenation done as per the validated load pattern?",
-                            'is_sub_question' => true,
-                            'input_type' => 'text'
-                            ],
-                            [
-                            'question' => "Was there any power failure noticed during the incubation of samples in the heating block?",
+                            'question' => "Was an analyst/sampling persons suffering from any ailment such as cough/cold or open wound or skin infections?",
                             'is_sub_question' => false,
                             'input_type' => 'text'
                             ],
                             [
-                            'question' => "Was assay tubes incubated in the dry block (time and temp) as specified in the procedure?",
-                            'is_sub_question' => false,
-                            'input_type' => 'text'
-                            ],
-                            [
-                            'question' => "Were any other samples tested along with this sample?",
-                            'is_sub_question' => false,
-                            'input_type' => 'text'
-                            ],
-                            [
-                            'question' => "If yes, were those sample’s results found satisfactory?",
+                            'question' => "Analyst interview record",
                             'is_sub_question' => true,
-                            'input_type' => 'text'
+                            'input_type' => 'number'
                             ],
                             [
-                            'question' => "Were any other samples analyzed at the same time on the same instruments?",
+                            'question' => "Was the correct procedure for the transfer of samples and accessories to sampling testing areas followed?",
                             'is_sub_question' => false,
-                            'input_type' => 'text'
-                            ],
-                            [
-                            'question' => "If yes, what were the results of other Batches?",
-                            'is_sub_question' => true,
                             'input_type' => 'text'
                             ]
                             ];
 
                             @endphp
-                <div class="row">
-                    <div class="col-12">
-                        <div class="group-input">
-                            <div class="why-why-chart">
-                                <table class="table table-bordered">
-                                    <thead>
-                                        <tr>
-                                            <th style="width: 5%;">Sr.No.</th>
-                                            <th style="width: 40%;">Question</th>
-                                            <th style="width: 20%;">Response</th>
-                                            <th>Remarks</th>
-                                        </tr>
-                                    </thead><tbody>
-                                        @php
-                                            $main_question_index = 4.0;
-                                            $sub_question_index = 0;
-                                        @endphp
-
-                                        @foreach ($Instrument_Equipment_Details as $index => $review_item)
-                                        @php
-                                            if ($review_item['is_sub_question']) {
-                                                $sub_question_index++;
-                                            } else {
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="group-input">
+                                <div class="why-why-chart">
+                                    <table class="table table-bordered">
+                                        <thead>
+                                            <tr>
+                                                <th style="width: 5%;">Sr.No.</th>
+                                                <th style="width: 40%;">Question</th>
+                                                <th style="width: 20%;">Response</th>
+                                                <th>Remarks</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @php
+                                                $main_question_index = 1.0;
                                                 $sub_question_index = 0;
-                                                $main_question_index += 0.1;
-                                            }
-                                        @endphp
-                                        <tr>
-                                            <td class="flex text-center">{{ $review_item['is_sub_question'] ? $main_question_index .'.'. $sub_question_index : number_format($main_question_index, 1) }}</td>
-                                            <td>{{$review_item['question']}}</td>
-                                            <td>
-                                                <div style="display: flex; justify-content: space-around; align-items: center; margin: 5%; gap:5px">
-                                                    @if ($review_item['input_type'] == 'date')
-                                                    <input type="date" name="Instrument_Equipment_Det[{{$loop->index}}][response]"
-                                                        style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
-                                                    @elseif ($review_item['input_type'] == 'number')
-                                                    <input type="number" name="Instrument_Equipment_Det[{{$loop->index}}][response]"
-                                                        style="padding: 2px; width:90%; border: 1px solid black; background-color: #f0f0f0;">
-                                                    @else
-                                                    <select name="Instrument_Equipment_Det[{{$loop->index}}][response]"
-                                                            id="response"
+                                            @endphp
+
+                                            @foreach ($check_analyst_training_procedures as $index => $review_item)
+                                            @php
+                                                if ($review_item['is_sub_question']) {
+                                                    $sub_question_index++;
+                                                } else {
+                                                    $sub_question_index = 0;
+                                                    $main_question_index += 0.1;
+                                                }
+                                            @endphp
+                                            <tr>
+                                                <td class="flex text-center">{{ $review_item['is_sub_question'] ? $main_question_index .'.'. $sub_question_index : number_format($main_question_index, 1) }}</td>
+                                                <td>{{$review_item['question']}}</td>
+                                                <td>
+                                                    <div style="display: flex; justify-content: space-around; align-items: center; margin: 5%; gap:5px">
+                                                        @if ($review_item['input_type'] == 'date')
+                                                        <input type="date" name="analyst_training_proce[{{$loop->index}}][response]"
                                                             style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
-                                                        <option value="">Select an Option</option>
-                                                        <option value="Yes">Yes</option>
-                                                        <option value="No">No</option>
-                                                        <option value="N/A">N/A</option>
-                                                    </select>
-                                                    @endif
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <div style="margin: auto; display: flex; justify-content: center;">
-                                                    <textarea name="Instrument_Equipment_Det[{{$loop->index}}][remark]"
-                                                            style="border-radius: 7px; border: 1.5px solid black;"></textarea>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        @endforeach
-                                    </tbody>
+                                                        @elseif ($review_item['input_type'] == 'number')
+                                                        <input type="number" name="analyst_training_proce[{{$loop->index}}][response]"
+                                                            style="padding: 2px; width:90%; border: 1px solid black; background-color: #f0f0f0;">
+                                                        @else
+                                                        <select name="analyst_training_proce[{{$loop->index}}][response]"
+                                                                id="response"
+                                                                style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
+                                                            <option value="">Select an Option</option>
+                                                            <option value="Yes">Yes</option>
+                                                            <option value="No">No</option>
+                                                            <option value="N/A">N/A</option>
+                                                        </select>
+                                                        @endif
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div style="margin: auto; display: flex; justify-content: center;">
+                                                        <textarea name="analyst_training_proce[{{$loop->index}}][remark]"
+                                                                style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            @endforeach
+                                        </tbody>
 
-                                </table>
+                                    </table>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
 
-            <div class="inner-block-content">
-                <div class="sub-head">
-                    Checklist for Results and Calculation : </div>
-                        @php
-                        $Results_and_Calculations = [
-                        [
-                        'question' => "Were results taken properly?",
-                        'is_sub_question' => false,
-                        'input_type' => 'text'
-                        ],
-                        [
-                        'question' => "Raw data checked By:",
-                        'is_sub_question' => false,
-                        'input_type' => 'number'
-                        ],
-                        [
-                        'question' => "Was formula dilution factor used for calculating the results correct?",
-                        'is_sub_question' => false,
-                        'input_type' => 'text'
-                        ]
-                        ];
-
-                @endphp
-                <div class="row">
-                    <div class="col-12">
-                        <div class="group-input">
-                            <div class="why-why-chart">
-                                <table class="table table-bordered">
-                                    <thead>
-                                        <tr>
-                                            <th style="width: 5%;">Sr.No.</th>
-                                            <th style="width: 40%;">Question</th>
-                                            <th style="width: 20%;">Response</th>
-                                            <th>Remarks</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        @php
-                                            $main_question_index = 5.0;
-                                            $sub_question_index = 0;
-                                        @endphp
-
-                                        @foreach ($Results_and_Calculations as $index => $review_item)
-                                        @php
-                                            if ($review_item['is_sub_question']) {
-                                                $sub_question_index++;
-                                            } else {
-                                                $sub_question_index = 0;
-                                                $main_question_index += 0.1;
-                                            }
-                                        @endphp
-                                        <tr>
-                                            <td class="flex text-center">{{ $review_item['is_sub_question'] ? $main_question_index .'.'. $sub_question_index : number_format($main_question_index, 1) }}</td>
-                                            <td>{{$review_item['question']}}</td>
-                                            <td>
-                                                <div style="display: flex; justify-content: space-around; align-items: center; margin: 5%; gap:5px">
-                                                    @if ($review_item['input_type'] == 'date')
-                                                    <input type="date" name="Results_and_Calculat[{{$loop->index}}][response]"
-                                                        style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
-                                                    @elseif ($review_item['input_type'] == 'number')
-                                                    <input type="number" name="Results_and_Calculat[{{$loop->index}}][response]"
-                                                        style="padding: 2px; width:90%; border: 1px solid black; background-color: #f0f0f0;">
-                                                    @else
-                                                    <select name="Results_and_Calculat[{{$loop->index}}][response]"
-                                                            id="response"
-                                                            style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
-                                                        <option value="">Select an Option</option>
-                                                        <option value="Yes">Yes</option>
-                                                        <option value="No">No</option>
-                                                        <option value="N/A">N/A</option>
-                                                    </select>
-                                                    @endif
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <div style="margin: auto; display: flex; justify-content: center;">
-                                                    <textarea name="Results_and_Calculat[{{$loop->index}}][remark]"
-                                                            style="border-radius: 7px; border: 1.5px solid black;"></textarea>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        @endforeach
-                                    </tbody>
-
-                                </table>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-12">
-                    <div class="group-input">
-                        <label for="Audit Attachments">If Yes, Provide attachment details</label>
-
-                        <div class="file-attachment-field">
-                            <div class="file-attachment-list" id="attachment_details_cibet"></div>
-                            <div class="add-btn">
-                                <div>Add</div>
-                                <input type="file" id="myfile" name="attachment_details_cibet[]"
-                                    oninput="addMultipleFiles(this, 'attachment_details_cibet')" multiple>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="button-block">
-                    <button type="submit" id="ChangesaveButton" class="saveButton">Save</button>
-                    <button type="button" class="backButton" onclick="previousStep()">Back</button>
-                    <button type="button" id="ChangeNextButton" class="nextButton"
-                        onclick="nextStep()">Next</button>
-                    <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white">
-                            Exit </a> </button>
-                </div>
-            </div>
-        </div>
-
-        <div id="CCForm19" class="inner-block cctabcontent">
-            <div class="inner-block-content">
-                <div class="sub-head"> Checklist for Review of Training records Analyst Involved in Testing </div>
+                <div class="inner-block-content">
+                    <div class="sub-head">
+                        Checklist for Sample receiving & verification in lab : </div>
                             @php
-                            $Training_records_Analyst_Involveds = [
+                            $sample_receiving_verifications = [
                                 [
-                                'question' => "Was analyst trained on testing procedure?",
+                                'question' => "Was the sample container (Physical integrity) verified at the time of sample receipt?",
                                 'is_sub_question' => false,
                                 'input_type' => 'text'
                                 ],
                                 [
-                                'question' => "Date of training:",
+                                'question' => "Were clean and dehydrogenated sampling accessories and glassware used for sampling?",
+                                'is_sub_question' => false,
+                                'input_type' => 'text'
+                                ],
+                                [
+                                'question' => "Was the correct quantity of the sample withdrawn?",
+                                'is_sub_question' => false,
+                                'input_type' => 'text'
+                                ],
+                                [
+                                'question' => "Was there any discrepancy observed during sampling?",
+                                'is_sub_question' => false,
+                                'input_type' => 'text'
+                                ],
+                                [
+                                'question' => "Was the sample container (Physical integrity) checked before testing?",
+                                'is_sub_question' => false,
+                                'input_type' => 'text'
+                                ]
+                                ];
+
+
+                            @endphp
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="group-input">
+                                <div class="why-why-chart">
+                                    <table class="table table-bordered">
+                                        <thead>
+                                            <tr>
+                                                <th style="width: 5%;">Sr.No.</th>
+                                                <th style="width: 40%;">Question</th>
+                                                <th style="width: 20%;">Response</th>
+                                                <th>Remarks</th>
+                                            </tr>
+                                        </thead><tbody>
+                                            @php
+                                                $main_question_index = 2.0;
+                                                $sub_question_index = 0;
+                                            @endphp
+
+                                            @foreach ($sample_receiving_verifications as $index => $review_item)
+                                            @php
+                                                if ($review_item['is_sub_question']) {
+                                                    $sub_question_index++;
+                                                } else {
+                                                    $sub_question_index = 0;
+                                                    $main_question_index += 0.1;
+                                                }
+                                            @endphp
+                                            <tr>
+                                                <td class="flex text-center">{{ $review_item['is_sub_question'] ? $main_question_index .'.'. $sub_question_index : number_format($main_question_index, 1) }}</td>
+                                                <td>{{$review_item['question']}}</td>
+                                                <td>
+                                                    <div style="display: flex; justify-content: space-around; align-items: center; margin: 5%; gap:5px">
+                                                        @if ($review_item['input_type'] == 'date')
+                                                        <input type="date" name="sample_receiving_verification_lab[{{$loop->index}}][response]"
+                                                            style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
+                                                        @elseif ($review_item['input_type'] == 'number')
+                                                        <input type="number" name="sample_receiving_verification_lab[{{$loop->index}}][response]"
+                                                            style="padding: 2px; width:90%; border: 1px solid black; background-color: #f0f0f0;">
+                                                        @else
+                                                        <select name="sample_receiving_verification_lab[{{$loop->index}}][response]"
+                                                                id="response"
+                                                                style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
+                                                            <option value="">Select an Option</option>
+                                                            <option value="Yes">Yes</option>
+                                                            <option value="No">No</option>
+                                                            <option value="N/A">N/A</option>
+                                                        </select>
+                                                        @endif
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div style="margin: auto; display: flex; justify-content: center;">
+                                                        <textarea name="sample_receiving_verification_lab[{{$loop->index}}][remark]"
+                                                                style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            @endforeach
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="inner-block-content">
+                    <div class="sub-head">
+                        Checklist for Method/Procedure used during analysis: </div>
+                        @php
+                        $method_procedure_used_during_anas = [
+                                [
+                                'question' => "Was correct applicable specification/Test procedure/MOA used for analysis?",
+                                'is_sub_question' => false,
+                                'input_type' => 'text'
+                                ],
+                                [
+                                'question' => "Verified specification/Test procedure/MOA No.",
+                                'is_sub_question' => true,
+                                'input_type' => 'number'
+                                ],
+                                [
+                                'question' => "Was the test procedure followed as per method validation?",
+                                'is_sub_question' => false,
+                                'input_type' => 'text'
+                                ],
+                                [
+                                'question' => "Was there any change in the validated change method? If yes, was test performed with the new validated method?",
+                                'is_sub_question' => false,
+                                'input_type' => 'text'
+                                ],
+                                [
+                                'question' => "Was BET reagents (Lysate, CSE, LRW and Buffer) procured from the approved vendor?",
+                                'is_sub_question' => false,
+                                'input_type' => 'text'
+                                ],
+                                [
+                                'question' => "Was lysate and CSE stored at the recommended temperature and duration? Storage condition:",
+                                'is_sub_question' => false,
+                                'input_type' => 'text'
+                                ],
+                                [
+                                'question' => "Were all product/reagents contact parts of BET testing (Tips/Accessories/Sample Container) depyrogenated?",
+                                'is_sub_question' => false,
+                                'input_type' => 'text'
+                                ],
+                                [
+                                'question' => "Assay tube/Batch No.",
+                                'is_sub_question' => false,
+                                'input_type' => 'number'
+                                ],
+                                [
+                                'question' => "Expiry date:",
                                 'is_sub_question' => true,
                                 'input_type' => 'date'
                                 ],
                                 [
-                                'question' => "Was the analyst qualified for testing?",
+                                'question' => "Tip lot/Batch No.",
                                 'is_sub_question' => false,
-                                'input_type' => 'text'
+                                'input_type' => 'number'
                                 ],
                                 [
-                                'question' => "Date of qualification:",
+                                'question' => "Expiry date:",
                                 'is_sub_question' => true,
                                 'input_type' => 'date'
                                 ],
                                 [
-                                'question' => "Were the personnel in perfect health without any open injury or infection?",
+                                'question' => "Was the test done at correct MVD as per validated method?",
                                 'is_sub_question' => false,
                                 'input_type' => 'text'
                                 ],
                                 [
-                                'question' => "Were the entry and exit procedures to the respective production area followed as per SOP?",
+                                'question' => "Were calculations of MVD/Test dilution done correctly?",
+                                'is_sub_question' => true,
+                                'input_type' => 'text'
+                                ],
+                                [
+                                'question' => "Were correct dilutions prepared?",
+                                'is_sub_question' => true,
+                                'input_type' => 'text'
+                                ],
+                                [
+                                'question' => "Was labeled claim lysate sensitivity checked before the use of the lot?",
+                                'is_sub_question' => false,
+                                'input_type' => 'text'
+                                ],
+                                [
+                                'question' => "Were all reagents (LRW/CSE and Lysate) used in the test within the expiry?",
+                                'is_sub_question' => false,
+                                'input_type' => 'text'
+                                ],
+                                [
+                                'question' => "LRW expiry date?",
+                                'is_sub_question' => true,
+                                'input_type' => 'date'
+                                ],
+                                [
+                                'question' => "CSE expiry date?",
+                                'is_sub_question' => true,
+                                'input_type' => 'date'
+                                ],
+                                [
+                                'question' => "Lysate expiry date?",
+                                'is_sub_question' => true,
+                                'input_type' => 'date'
+                                ],
+                                [
+                                'question' => "Buffer expiry date?",
+                                'is_sub_question' => true,
+                                'input_type' => 'date'
+                                ],
+                                [
+                                'question' => "Was рН of the test sample/dilution verified?",
+                                'is_sub_question' => false,
+                                'input_type' => 'text'
+                                ],
+                                [
+                                'question' => "Were appropriate рН strip/measuring device used, which provides the least count measurement of test sample/dilution wherever applicable?",
+                                'is_sub_question' => false,
+                                'input_type' => 'text'
+                                ],
+                                [
+                                'question' => "Were proper incubation conditions followed?",
+                                'is_sub_question' => false,
+                                'input_type' => 'text'
+                                ],
+                                [
+                                'question' => "Was there any spillage that occurred during the vortexing of dilutions?",
+                                'is_sub_question' => false,
+                                'input_type' => 'text'
+                                ],
+                                [
+                                'question' => "Were the results of positive, negative, and test controls found satisfactory?",
+                                'is_sub_question' => false,
+                                'input_type' => 'text'
+                                ],
+                                [
+                                'question' => "Is the test incubator/heating block kept on a vibration-free surface?",
+                                'is_sub_question' => false,
+                                'input_type' => 'text'
+                                ],
+                                [
+                                'question' => "Were measures established and implemented to prevent contamination from personal material, material during testing reviewed and found satisfactory? List the measures:",
                                 'is_sub_question' => false,
                                 'input_type' => 'text'
                                 ]
                                 ];
 
                             @endphp
-                <div class="row">
-                    <div class="col-12">
-                        <div class="group-input">
-                            <div class="why-why-chart">
-                                <table class="table table-bordered">
-                                    <thead>
-                                        <tr>
-                                            <th style="width: 5%;">Sr.No.</th>
-                                            <th style="width: 40%;">Question</th>
-                                            <th style="width: 20%;">Response</th>
-                                            <th>Remarks</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        @php
-                                            $main_question_index = 1.0;
-                                            $sub_question_index = 0;
-                                        @endphp
-
-                                        @foreach ($Training_records_Analyst_Involveds as $index => $review_item)
-                                        @php
-                                            if ($review_item['is_sub_question']) {
-                                                $sub_question_index++;
-                                            } else {
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="group-input">
+                                <div class="why-why-chart">
+                                    <table class="table table-bordered">
+                                        <thead>
+                                            <tr>
+                                                <th style="width: 5%;">Sr.No.</th>
+                                                <th style="width: 40%;">Question</th>
+                                                <th style="width: 20%;">Response</th>
+                                                <th>Remarks</th>
+                                            </tr>
+                                        </thead><tbody>
+                                            @php
+                                                $main_question_index = 3.0;
                                                 $sub_question_index = 0;
-                                                $main_question_index += 0.1;
-                                            }
-                                        @endphp
-                                        <tr>
-                                            <td class="flex text-center">{{ $review_item['is_sub_question'] ? $main_question_index .'.'. $sub_question_index : number_format($main_question_index, 1) }}</td>
-                                            <td>{{$review_item['question']}}</td>
-                                            <td>
-                                                <div style="display: flex; justify-content: space-around; align-items: center; margin: 5%; gap:5px">
-                                                    @if ($review_item['input_type'] == 'date')
-                                                    <input type="date" name="Training_records_Analyst_Involved[{{$loop->index}}][response]"
-                                                        style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
-                                                    @elseif ($review_item['input_type'] == 'number')
-                                                    <input type="number" name="Training_records_Analyst_Involved[{{$loop->index}}][response]"
-                                                        style="padding: 2px; width:90%; border: 1px solid black; background-color: #f0f0f0;">
-                                                    @else
-                                                    <select name="Training_records_Analyst_Involved[{{$loop->index}}][response]"
-                                                            id="response"
-                                                            style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
-                                                        <option value="">Select an Option</option>
-                                                        <option value="Yes">Yes</option>
-                                                        <option value="No">No</option>
-                                                        <option value="N/A">N/A</option>
-                                                    </select>
-                                                    @endif
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <div style="margin: auto; display: flex; justify-content: center;">
-                                                    <textarea name="Training_records_Analyst_Involved[{{$loop->index}}][remark]"
-                                                            style="border-radius: 7px; border: 1.5px solid black;"></textarea>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        @endforeach
-                                    </tbody>
+                                            @endphp
 
-                                </table>
+                                            @foreach ($method_procedure_used_during_anas as $index => $review_item)
+                                            @php
+                                                if ($review_item['is_sub_question']) {
+                                                    $sub_question_index++;
+                                                } else {
+                                                    $sub_question_index = 0;
+                                                    $main_question_index += 0.1;
+                                                }
+                                            @endphp
+                                            <tr>
+                                                <td class="flex text-center">{{ $review_item['is_sub_question'] ? $main_question_index .'.'. $sub_question_index : number_format($main_question_index, 1) }}</td>
+                                                <td>{{$review_item['question']}}</td>
+                                                <td>
+                                                    <div style="display: flex; justify-content: space-around; align-items: center; margin: 5%; gap:5px">
+                                                        @if ($review_item['input_type'] == 'date')
+                                                        <input type="date" name="method_procedure_used_during_analysis[{{$loop->index}}][response]"
+                                                            style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
+                                                        @elseif ($review_item['input_type'] == 'number')
+                                                        <input type="number" name="method_procedure_used_during_analysis[{{$loop->index}}][response]"
+                                                            style="padding: 2px; width:90%; border: 1px solid black; background-color: #f0f0f0;">
+                                                        @else
+                                                        <select name="method_procedure_used_during_analysis[{{$loop->index}}][response]"
+                                                                id="response"
+                                                                style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
+                                                            <option value="">Select an Option</option>
+                                                            <option value="Yes">Yes</option>
+                                                            <option value="No">No</option>
+                                                            <option value="N/A">N/A</option>
+                                                        </select>
+                                                        @endif
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div style="margin: auto; display: flex; justify-content: center;">
+                                                        <textarea name="method_procedure_used_during_analysis[{{$loop->index}}][remark]"
+                                                                style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            @endforeach
+                                        </tbody>
+
+                                    </table>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
 
-            <div class="inner-block-content">
-                <div class="sub-head">
-                    Checklist for Review of sample intactness before analysis ? </div>
-                    @php
-                    $sample_intactness_before_analysis = [
-                    [
-                    'question' => "Was intact samples/sample container received in lab?",
-                    'is_sub_question' => false,
-                    'input_type' => 'text'
-                    ],
-                    [
-                    'question' => "Was it verified by sample receipt persons at the time of receipt in lab?",
-                    'is_sub_question' => false,
-                    'input_type' => 'text'
-                    ],
-                    [
-                    'question' => "Was the sample collected in desired container and transported as per approved procedure?",
-                    'is_sub_question' => false,
-                    'input_type' => 'text'
-                    ],
-                    [
-                    'question' => "Was there any discrepancy observed during sampling?",
-                    'is_sub_question' => false,
-                    'input_type' => 'text'
-                    ],
-                    [
-                    'question' => "Any remark notified in sample request form?",
-                    'is_sub_question' => true,
-                    'input_type' => 'text'
-                    ],
-                    [
-                    'question' => "Were samples stored as per storage requirements specified in specification/SOP?",
-                    'is_sub_question' => false,
-                    'input_type' => 'text'
-                    ]
-                    ];
-
-                    @endphp
-                <div class="row">
-                    <div class="col-12">
-                        <div class="group-input">
-                            <div class="why-why-chart">
-                                <table class="table table-bordered">
-                                    <thead>
-                                        <tr>
-                                            <th style="width: 5%;">Sr.No.</th>
-                                            <th style="width: 40%;">Question</th>
-                                            <th style="width: 20%;">Response</th>
-                                            <th>Remarks</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        @php
-                                            $main_question_index = 2.0;
-                                            $sub_question_index = 0;
-                                        @endphp
-
-                                        @foreach ($sample_intactness_before_analysis as $index => $review_item)
-                                        @php
-                                            if ($review_item['is_sub_question']) {
-                                                $sub_question_index++;
-                                            } else {
-                                                $sub_question_index = 0;
-                                                $main_question_index += 0.1;
-                                            }
-                                        @endphp
-                                        <tr>
-                                            <td class="flex text-center">{{ $review_item['is_sub_question'] ? $main_question_index .'.'. $sub_question_index : number_format($main_question_index, 1) }}</td>
-                                            <td>{{$review_item['question']}}</td>
-                                            <td>
-                                                <div style="display: flex; justify-content: space-around; align-items: center; margin: 5%; gap:5px">
-                                                    @if ($review_item['input_type'] == 'date')
-                                                    <input type="date" name="sample_intactness_before_analysis[{{$loop->index}}][remark][response]"
-                                                        style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
-                                                    @elseif ($review_item['input_type'] == 'number')
-                                                    <input type="number" name="sample_intactness_before_analysis[{{$loop->index}}][remark][response]"
-                                                        style="padding: 2px; width:90%; border: 1px solid black; background-color: #f0f0f0;">
-                                                    @else
-                                                    <select name="sample_intactness_before_analysis[{{$loop->index}}][remark][response]"
-                                                            id="response"
-                                                            style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
-                                                        <option value="">Select an Option</option>
-                                                        <option value="Yes">Yes</option>
-                                                        <option value="No">No</option>
-                                                        <option value="N/A">N/A</option>
-                                                    </select>
-                                                    @endif
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <div style="margin: auto; display: flex; justify-content: center;">
-                                                    <textarea name="sample_intactness_before_analysis[{{$loop->index}}][remark]"
-                                                            style="border-radius: 7px; border: 1.5px solid black;"></textarea>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        @endforeach
-                                    </tbody>
-
-                                </table>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="inner-block-content">
-                <div class="sub-head">
-                    Review of test methods & Procedures </div>
+                <div class="inner-block-content">
+                    <div class="sub-head">
+                        Checklist for Instrument/Equipment Details:</div>
                                 @php
-                                $test_methods_Procedures = [
-                                    [
-                                    'question' => "Was correct applicable specification and method of analysis used for analysis?",
-                                    'is_sub_question' => false,
-                                    'input_type' => 'text'
-                                    ],
-                                    [
-                                    'question' => "MOA & specification number?",
-                                    'is_sub_question' => false,
-                                    'input_type' => 'number'
-                                    ],
-                                    [
-                                    'question' => "Were the results of the other samples analyzed on the same day/time satisfactory?",
-                                    'is_sub_question' => false,
-                                    'input_type' => 'text'
-                                    ],
-                                    [
-                                    'question' => "Were the samples tested transferred and incubated at desired temperature as per approved procedure?",
-                                    'is_sub_question' => false,
-                                    'input_type' => 'text'
-                                    ],
-                                    [
-                                    'question' => "Were the tested samples results observed within the valid time?",
-                                    'is_sub_question' => false,
-                                    'input_type' => 'text'
-                                    ]
-                                    ];
+                            $Instrument_Equipment_Details = [
+                                [
+                                'question' => "Was the equipment used, calibrated/qualified and within the specified range?",
+                                'is_sub_question' => false,
+                                'input_type' => 'text'
+                                ],
+                                [
+                                'question' => "Dry block /Heating block equipment ID:",
+                                'is_sub_question' => true,
+                                'input_type' => 'number'
+                                ],
+                                [
+                                'question' => "Calibration date & Next due date:",
+                                'is_sub_question' => true,
+                                'input_type' => 'date'
+                                ],
+                                [
+                                'question' => "Pipettes ID:",
+                                'is_sub_question' => false,
+                                'input_type' => 'number'
+                                ],
+                                [
+                                'question' => "Calibration date and Next due date:",
+                                'is_sub_question' => true,
+                                'input_type' => 'date'
+                                ],
+                                [
+                                'question' => "Refrigerator (2-8̊ C) ID:",
+                                'is_sub_question' => false,
+                                'input_type' => ' number'
+                                ],
+                                [
+                                'question' => "Validation date and next due date:",
+                                'is_sub_question' => true,
+                                'input_type' => 'date'
+                                ],
+                                [
+                                'question' => "Dehydrogenation over ID:",
+                                'is_sub_question' => false,
+                                'input_type' => 'date'
+                                ],
+                                [
+                                'question' => "Validation date and next due date:",
+                                'is_sub_question' => true,
+                                'input_type' => 'date'
+                                ],
+                                [
+                                'question' => "Did the dehydrogenation cycle challenge with endotoxin and found satisfactory during validation?",
+                                'is_sub_question' => true,
+                                'input_type' => 'text'
+                                ],
+                                [
+                                'question' => "Was the depyrogenation done as per the validated load pattern?",
+                                'is_sub_question' => true,
+                                'input_type' => 'text'
+                                ],
+                                [
+                                'question' => "Was there any power failure noticed during the incubation of samples in the heating block?",
+                                'is_sub_question' => false,
+                                'input_type' => 'text'
+                                ],
+                                [
+                                'question' => "Was assay tubes incubated in the dry block (time and temp) as specified in the procedure?",
+                                'is_sub_question' => false,
+                                'input_type' => 'text'
+                                ],
+                                [
+                                'question' => "Were any other samples tested along with this sample?",
+                                'is_sub_question' => false,
+                                'input_type' => 'text'
+                                ],
+                                [
+                                'question' => "If yes, were those sample’s results found satisfactory?",
+                                'is_sub_question' => true,
+                                'input_type' => 'text'
+                                ],
+                                [
+                                'question' => "Were any other samples analyzed at the same time on the same instruments?",
+                                'is_sub_question' => false,
+                                'input_type' => 'text'
+                                ],
+                                [
+                                'question' => "If yes, what were the results of other Batches?",
+                                'is_sub_question' => true,
+                                'input_type' => 'text'
+                                ]
+                                ];
 
                                 @endphp
-                <div class="row">
-                    <div class="col-12">
-                        <div class="group-input">
-                            <div class="why-why-chart">
-                                <table class="table table-bordered">
-                                    <thead>
-                                        <tr>
-                                            <th style="width: 5%;">Sr.No.</th>
-                                            <th style="width: 40%;">Question</th>
-                                            <th style="width: 20%;">Response</th>
-                                            <th>Remarks</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        @php
-                                            $main_question_index = 3.0;
-                                            $sub_question_index = 0;
-                                        @endphp
-
-                                        @foreach ($test_methods_Procedures as $index => $review_item)
-                                        @php
-                                            if ($review_item['is_sub_question']) {
-                                                $sub_question_index++;
-                                            } else {
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="group-input">
+                                <div class="why-why-chart">
+                                    <table class="table table-bordered">
+                                        <thead>
+                                            <tr>
+                                                <th style="width: 5%;">Sr.No.</th>
+                                                <th style="width: 40%;">Question</th>
+                                                <th style="width: 20%;">Response</th>
+                                                <th>Remarks</th>
+                                            </tr>
+                                        </thead><tbody>
+                                            @php
+                                                $main_question_index = 4.0;
                                                 $sub_question_index = 0;
-                                                $main_question_index += 0.1;
-                                            }
-                                        @endphp
-                                        <tr>
-                                            <td class="flex text-center">{{ $review_item['is_sub_question'] ? $main_question_index .'.'. $sub_question_index : number_format($main_question_index, 1) }}</td>
-                                            <td>{{$review_item['question']}}</td>
-                                            <td>
-                                                <div style="display: flex; justify-content: space-around; align-items: center; margin: 5%; gap:5px">
-                                                    @if ($review_item['input_type'] == 'date')
-                                                    <input type="date" name="test_methods_Procedure[{{$loop->index}}][response]"
-                                                        style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
-                                                    @elseif ($review_item['input_type'] == 'number')
-                                                    <input type="number" name="test_methods_Procedure[{{$loop->index}}][response]"
-                                                        style="padding: 2px; width:90%; border: 1px solid black; background-color: #f0f0f0;">
-                                                    @else
-                                                    <select name="test_methods_Procedure[{{$loop->index}}][response]"
-                                                            id="response"
-                                                            style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
-                                                        <option value="">Select an Option</option>
-                                                        <option value="Yes">Yes</option>
-                                                        <option value="No">No</option>
-                                                        <option value="N/A">N/A</option>
-                                                    </select>
-                                                    @endif
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <div style="margin: auto; display: flex; justify-content: center;">
-                                                    <textarea name="test_methods_Procedure[{{$loop->index}}][remark]"
-                                                            style="border-radius: 7px; border: 1.5px solid black;"></textarea>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        @endforeach
-                                    </tbody>
+                                            @endphp
 
-                                </table>
+                                            @foreach ($Instrument_Equipment_Details as $index => $review_item)
+                                            @php
+                                                if ($review_item['is_sub_question']) {
+                                                    $sub_question_index++;
+                                                } else {
+                                                    $sub_question_index = 0;
+                                                    $main_question_index += 0.1;
+                                                }
+                                            @endphp
+                                            <tr>
+                                                <td class="flex text-center">{{ $review_item['is_sub_question'] ? $main_question_index .'.'. $sub_question_index : number_format($main_question_index, 1) }}</td>
+                                                <td>{{$review_item['question']}}</td>
+                                                <td>
+                                                    <div style="display: flex; justify-content: space-around; align-items: center; margin: 5%; gap:5px">
+                                                        @if ($review_item['input_type'] == 'date')
+                                                        <input type="date" name="Instrument_Equipment_Det[{{$loop->index}}][response]"
+                                                            style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
+                                                        @elseif ($review_item['input_type'] == 'number')
+                                                        <input type="number" name="Instrument_Equipment_Det[{{$loop->index}}][response]"
+                                                            style="padding: 2px; width:90%; border: 1px solid black; background-color: #f0f0f0;">
+                                                        @else
+                                                        <select name="Instrument_Equipment_Det[{{$loop->index}}][response]"
+                                                                id="response"
+                                                                style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
+                                                            <option value="">Select an Option</option>
+                                                            <option value="Yes">Yes</option>
+                                                            <option value="No">No</option>
+                                                            <option value="N/A">N/A</option>
+                                                        </select>
+                                                        @endif
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div style="margin: auto; display: flex; justify-content: center;">
+                                                        <textarea name="Instrument_Equipment_Det[{{$loop->index}}][remark]"
+                                                                style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            @endforeach
+                                        </tbody>
+
+                                    </table>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
 
-            <div class="inner-block-content">
-                <div class="sub-head">
-                    Review of Media, Buffer, Standards preparation & test accessories </div>
+                <div class="inner-block-content">
+                    <div class="sub-head">
+                        Checklist for Results and Calculation : </div>
                             @php
-                            $Review_of_Media_Buffer_Standards_prepar = [
+                            $Results_and_Calculations = [
                             [
-                            'question' => "Name of the media used in the analysis:",
+                            'question' => "Were results taken properly?",
+                            'is_sub_question' => false,
+                            'input_type' => 'text'
+                            ],
+                            [
+                            'question' => "Raw data checked By:",
                             'is_sub_question' => false,
                             'input_type' => 'number'
                             ],
                             [
-                            'question' => "Did the COA of the media review and found satisfactory?",
-                            'is_sub_question' => true,
-                            'input_type' => 'number'
-                            ],
-                            [
-                            'question' => "Date of media preparation:",
-                            'is_sub_question' => true,
-                            'input_type' => 'date'
-                            ],
-                            [
-                            'question' => "Lot No.",
-                            'is_sub_question' => true,
-                            'input_type' => 'number'
-                            ],
-                            [
-                            'question' => "Use before date:",
-                            'is_sub_question' => true,
-                            'input_type' => 'date'
-                            ],
-                            [
-                            'question' => "Was the media sterilization and sanitization cycle found satisfactory?",
-                            'is_sub_question' => true,
-                            'input_type' => 'text'
-                            ],
-                            [
-                            'question' => "Validated load pattern references documents No.",
-                            'is_sub_question' => true,
-                            'input_type' => 'number'
-                            ],
-                            [
-                            'question' => "Was any contamination observed in test media/diluents?",
-                            'is_sub_question' => true,
-                            'input_type' => 'text'
-                            ],
-                            [
-                            'question' => "Was appropriate and cleaned and sterilized glassware used for testing?",
-                            'is_sub_question' => true,
-                            'input_type' => 'text'
-                            ],
-                            [
-                            'question' => "Are the negative controls still confirming?",
-                            'is_sub_question' => true,
-                            'input_type' => 'text'
-                            ],
-                            [
-                            'question' => "Is the growth promotion test for the media confirming?",
+                            'question' => "Was formula dilution factor used for calculating the results correct?",
                             'is_sub_question' => false,
                             'input_type' => 'text'
                             ]
                             ];
 
-                            @endphp
-                <div class="row">
-                    <div class="col-12">
-                        <div class="group-input">
-                            <div class="why-why-chart">
-                                <table class="table table-bordered">
-                                    <thead>
-                                        <tr>
-                                            <th style="width: 5%;">Sr.No.</th>
-                                            <th style="width: 40%;">Question</th>
-                                            <th style="width: 20%;">Response</th>
-                                            <th>Remarks</th>
-                                        </tr>
-                                    </thead><tbody>
-                                        @php
-                                            $main_question_index = 4.0;
-                                            $sub_question_index = 0;
-                                        @endphp
-
-                                        @foreach ($Review_of_Media_Buffer_Standards_prepar as $index => $review_item)
-                                        @php
-                                            if ($review_item['is_sub_question']) {
-                                                $sub_question_index++;
-                                            } else {
+                    @endphp
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="group-input">
+                                <div class="why-why-chart">
+                                    <table class="table table-bordered">
+                                        <thead>
+                                            <tr>
+                                                <th style="width: 5%;">Sr.No.</th>
+                                                <th style="width: 40%;">Question</th>
+                                                <th style="width: 20%;">Response</th>
+                                                <th>Remarks</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @php
+                                                $main_question_index = 5.0;
                                                 $sub_question_index = 0;
-                                                $main_question_index += 0.1;
-                                            }
-                                        @endphp
-                                        <tr>
-                                            <td class="flex text-center">{{ $review_item['is_sub_question'] ? $main_question_index .'.'. $sub_question_index : number_format($main_question_index, 1) }}</td>
-                                            <td>{{$review_item['question']}}</td>
-                                            <td>
-                                                <div style="display: flex; justify-content: space-around; align-items: center; margin: 5%; gap:5px">
-                                                    @if ($review_item['input_type'] == 'date')
-                                                    <input type="date" name="Review_of_Media_Buffer_Standards_prep[{{$loop->index}}][response]"
-                                                        style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
-                                                    @elseif ($review_item['input_type'] == 'number')
-                                                    <input type="number" name="Review_of_Media_Buffer_Standards_prep[{{$loop->index}}][response]"
-                                                        style="padding: 2px; width:90%; border: 1px solid black; background-color: #f0f0f0;">
-                                                    @else
-                                                    <select name="Review_of_Media_Buffer_Standards_prep[{{$loop->index}}][response]"
-                                                            id="response"
-                                                            style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
-                                                        <option value="">Select an Option</option>
-                                                        <option value="Yes">Yes</option>
-                                                        <option value="No">No</option>
-                                                        <option value="N/A">N/A</option>
-                                                    </select>
-                                                    @endif
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <div style="margin: auto; display: flex; justify-content: center;">
-                                                    <textarea name="Review_of_Media_Buffer_Standards_prep[{{$loop->index}}][remark]"
-                                                            style="border-radius: 7px; border: 1.5px solid black;"></textarea>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        @endforeach
-                                    </tbody>
+                                            @endphp
 
-                                </table>
+                                            @foreach ($Results_and_Calculations as $index => $review_item)
+                                            @php
+                                                if ($review_item['is_sub_question']) {
+                                                    $sub_question_index++;
+                                                } else {
+                                                    $sub_question_index = 0;
+                                                    $main_question_index += 0.1;
+                                                }
+                                            @endphp
+                                            <tr>
+                                                <td class="flex text-center">{{ $review_item['is_sub_question'] ? $main_question_index .'.'. $sub_question_index : number_format($main_question_index, 1) }}</td>
+                                                <td>{{$review_item['question']}}</td>
+                                                <td>
+                                                    <div style="display: flex; justify-content: space-around; align-items: center; margin: 5%; gap:5px">
+                                                        @if ($review_item['input_type'] == 'date')
+                                                        <input type="date" name="Results_and_Calculat[{{$loop->index}}][response]"
+                                                            style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
+                                                        @elseif ($review_item['input_type'] == 'number')
+                                                        <input type="number" name="Results_and_Calculat[{{$loop->index}}][response]"
+                                                            style="padding: 2px; width:90%; border: 1px solid black; background-color: #f0f0f0;">
+                                                        @else
+                                                        <select name="Results_and_Calculat[{{$loop->index}}][response]"
+                                                                id="response"
+                                                                style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
+                                                            <option value="">Select an Option</option>
+                                                            <option value="Yes">Yes</option>
+                                                            <option value="No">No</option>
+                                                            <option value="N/A">N/A</option>
+                                                        </select>
+                                                        @endif
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div style="margin: auto; display: flex; justify-content: center;">
+                                                        <textarea name="Results_and_Calculat[{{$loop->index}}][remark]"
+                                                                style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            @endforeach
+                                        </tbody>
+
+                                    </table>
+                                </div>
                             </div>
                         </div>
                     </div>
+                    <div class="col-lg-12">
+                        <div class="group-input">
+                            <label for="Audit Attachments">If Yes, Provide attachment details</label>
+
+                            <div class="file-attachment-field">
+                                <div class="file-attachment-list" id="attachment_details_cibet"></div>
+                                <div class="add-btn">
+                                    <div>Add</div>
+                                    <input type="file" id="myfile" name="attachment_details_cibet[]"
+                                        oninput="addMultipleFiles(this, 'attachment_details_cibet')" multiple>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="button-block">
+                        <button type="submit" id="ChangesaveButton" class="saveButton">Save</button>
+                        <button type="button" class="backButton" onclick="previousStep()">Back</button>
+                        <button type="button" id="ChangeNextButton" class="nextButton"
+                            onclick="nextStep()">Next</button>
+                        <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white">
+                                Exit </a> </button>
+                    </div>
                 </div>
             </div>
-            <div class="inner-block-content">
-                <div class="sub-head">
-                    Checklist for Review of Media, Buffer, Standards preparation & test accessories </div>
+            
+            <div id="CCForm19" class="inner-block cctabcontent">
+                <div class="inner-block-content">
+                    <div class="sub-head"> Checklist for Review of Training records Analyst Involved in Testing </div>
                                 @php
-                                $Checklist_for_Revi_of_Media_Buffer_Stand_preps = [
+                                $Training_records_Analyst_Involveds = [
                                     [
-                                    'question' => "Were the environmental conditions during testing as per the conditions specified?",
+                                    'question' => "Was analyst trained on testing procedure?",
                                     'is_sub_question' => false,
                                     'input_type' => 'text'
                                     ],
                                     [
-                                    'question' => "Was the Temperature of the area within the limit?",
+                                    'question' => "Date of training:",
                                     'is_sub_question' => true,
+                                    'input_type' => 'date'
+                                    ],
+                                    [
+                                    'question' => "Was the analyst qualified for testing?",
+                                    'is_sub_question' => false,
                                     'input_type' => 'text'
                                     ],
                                     [
-                                    'question' => "Pressure differentials of the area within the limit?",
+                                    'question' => "Date of qualification:",
                                     'is_sub_question' => true,
+                                    'input_type' => 'date'
+                                    ],
+                                    [
+                                    'question' => "Were the personnel in perfect health without any open injury or infection?",
+                                    'is_sub_question' => false,
                                     'input_type' => 'text'
                                     ],
                                     [
-                                    'question' => "Were the other types of monitoring results confirming?",
-                                    'is_sub_question' => true,
-                                    'input_type' => 'text'
-                                    ],
-                                    [
-                                    'question' => "Are the under test environmental monitoring samples confirming?",
-                                    'is_sub_question' => true,
-                                    'input_type' => 'text'
-                                    ],
-                                    [
-                                    'question' => "Were the entry and exit procedures to the clean room / controlled rooms followed as per SOP? (by all personnel)",
-                                    'is_sub_question' => true,
-                                    'input_type' => 'text'
-                                    ],
-                                    [
-                                    'question' => "Was the HEPA filter integrity of the area found satisfactory?",
-                                    'is_sub_question' => true,
+                                    'question' => "Were the entry and exit procedures to the respective production area followed as per SOP?",
+                                    'is_sub_question' => false,
                                     'input_type' => 'text'
                                     ]
                                     ];
 
                                 @endphp
-                <div class="row">
-                    <div class="col-12">
-                        <div class="group-input">
-                            <div class="why-why-chart">
-                                <table class="table table-bordered">
-                                    <thead>
-                                        <tr>
-                                            <th style="width: 5%;">Sr.No.</th>
-                                            <th style="width: 40%;">Question</th>
-                                            <th style="width: 20%;">Response</th>
-                                            <th>Remarks</th>
-                                        </tr>
-                                    </thead><tbody>
-                                        @php
-                                            $main_question_index = 5.0;
-                                            $sub_question_index = 0;
-                                        @endphp
-
-                                        @foreach ($Checklist_for_Revi_of_Media_Buffer_Stand_preps as $index => $review_item)
-                                        @php
-                                            if ($review_item['is_sub_question']) {
-                                                $sub_question_index++;
-                                            } else {
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="group-input">
+                                <div class="why-why-chart">
+                                    <table class="table table-bordered">
+                                        <thead>
+                                            <tr>
+                                                <th style="width: 5%;">Sr.No.</th>
+                                                <th style="width: 40%;">Question</th>
+                                                <th style="width: 20%;">Response</th>
+                                                <th>Remarks</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @php
+                                                $main_question_index = 1.0;
                                                 $sub_question_index = 0;
-                                                $main_question_index += 0.1;
-                                            }
-                                        @endphp
-                                        <tr>
-                                            <td class="flex text-center">{{ $review_item['is_sub_question'] ? $main_question_index .'.'. $sub_question_index : number_format($main_question_index, 1) }}</td>
-                                            <td>{{$review_item['question']}}</td>
-                                            <td>
-                                                <div style="display: flex; justify-content: space-around; align-items: center; margin: 5%; gap:5px">
-                                                    @if ($review_item['input_type'] == 'date')
-                                                    <input type="date" name="Checklist_for_Revi_of_Media_Buffer_Stand_prep[{{$loop->index}}][response]"
-                                                        style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
-                                                    @elseif ($review_item['input_type'] == 'number')
-                                                    <input type="number" name="Checklist_for_Revi_of_Media_Buffer_Stand_prep[{{$loop->index}}][response]"
-                                                        style="padding: 2px; width:90%; border: 1px solid black; background-color: #f0f0f0;">
-                                                    @else
-                                                    <select name="Checklist_for_Revi_of_Media_Buffer_Stand_prep[{{$loop->index}}][response]"
-                                                            id="response"
-                                                            style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
-                                                        <option value="">Select an Option</option>
-                                                        <option value="Yes">Yes</option>
-                                                        <option value="No">No</option>
-                                                        <option value="N/A">N/A</option>
-                                                    </select>
-                                                    @endif
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <div style="margin: auto; display: flex; justify-content: center;">
-                                                    <textarea name="Checklist_for_Revi_of_Media_Buffer_Stand_prep[{{$loop->index}}][remark]"
-                                                            style="border-radius: 7px; border: 1.5px solid black;"></textarea>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        @endforeach
-                                    </tbody>
+                                            @endphp
 
-                                </table>
+                                            @foreach ($Training_records_Analyst_Involveds as $index => $review_item)
+                                            @php
+                                                if ($review_item['is_sub_question']) {
+                                                    $sub_question_index++;
+                                                } else {
+                                                    $sub_question_index = 0;
+                                                    $main_question_index += 0.1;
+                                                }
+                                            @endphp
+                                            <tr>
+                                                <td class="flex text-center">{{ $review_item['is_sub_question'] ? $main_question_index .'.'. $sub_question_index : number_format($main_question_index, 1) }}</td>
+                                                <td>{{$review_item['question']}}</td>
+                                                <td>
+                                                    <div style="display: flex; justify-content: space-around; align-items: center; margin: 5%; gap:5px">
+                                                        @if ($review_item['input_type'] == 'date')
+                                                        <input type="date" name="Training_records_Analyst_Involved[{{$loop->index}}][response]"
+                                                            style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
+                                                        @elseif ($review_item['input_type'] == 'number')
+                                                        <input type="number" name="Training_records_Analyst_Involved[{{$loop->index}}][response]"
+                                                            style="padding: 2px; width:90%; border: 1px solid black; background-color: #f0f0f0;">
+                                                        @else
+                                                        <select name="Training_records_Analyst_Involved[{{$loop->index}}][response]"
+                                                                id="response"
+                                                                style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
+                                                            <option value="">Select an Option</option>
+                                                            <option value="Yes">Yes</option>
+                                                            <option value="No">No</option>
+                                                            <option value="N/A">N/A</option>
+                                                        </select>
+                                                        @endif
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div style="margin: auto; display: flex; justify-content: center;">
+                                                        <textarea name="Training_records_Analyst_Involved[{{$loop->index}}][remark]"
+                                                                style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            @endforeach
+                                        </tbody>
+
+                                    </table>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
+
+                <div class="inner-block-content">
+                    <div class="sub-head">
+                        Checklist for Review of sample intactness before analysis ? </div>
+                        @php
+                        $sample_intactness_before_analysis = [
+                        [
+                        'question' => "Was intact samples/sample container received in lab?",
+                        'is_sub_question' => false,
+                        'input_type' => 'text'
+                        ],
+                        [
+                        'question' => "Was it verified by sample receipt persons at the time of receipt in lab?",
+                        'is_sub_question' => false,
+                        'input_type' => 'text'
+                        ],
+                        [
+                        'question' => "Was the sample collected in desired container and transported as per approved procedure?",
+                        'is_sub_question' => false,
+                        'input_type' => 'text'
+                        ],
+                        [
+                        'question' => "Was there any discrepancy observed during sampling?",
+                        'is_sub_question' => false,
+                        'input_type' => 'text'
+                        ],
+                        [
+                        'question' => "Any remark notified in sample request form?",
+                        'is_sub_question' => true,
+                        'input_type' => 'text'
+                        ],
+                        [
+                        'question' => "Were samples stored as per storage requirements specified in specification/SOP?",
+                        'is_sub_question' => false,
+                        'input_type' => 'text'
+                        ]
+                        ];
+
+                        @endphp
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="group-input">
+                                <div class="why-why-chart">
+                                    <table class="table table-bordered">
+                                        <thead>
+                                            <tr>
+                                                <th style="width: 5%;">Sr.No.</th>
+                                                <th style="width: 40%;">Question</th>
+                                                <th style="width: 20%;">Response</th>
+                                                <th>Remarks</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @php
+                                                $main_question_index = 2.0;
+                                                $sub_question_index = 0;
+                                            @endphp
+
+                                            @foreach ($sample_intactness_before_analysis as $index => $review_item)
+                                            @php
+                                                if ($review_item['is_sub_question']) {
+                                                    $sub_question_index++;
+                                                } else {
+                                                    $sub_question_index = 0;
+                                                    $main_question_index += 0.1;
+                                                }
+                                            @endphp
+                                            <tr>
+                                                <td class="flex text-center">{{ $review_item['is_sub_question'] ? $main_question_index .'.'. $sub_question_index : number_format($main_question_index, 1) }}</td>
+                                                <td>{{$review_item['question']}}</td>
+                                                <td>
+                                                    <div style="display: flex; justify-content: space-around; align-items: center; margin: 5%; gap:5px">
+                                                        @if ($review_item['input_type'] == 'date')
+                                                        <input type="date" name="sample_intactness_before_analysis[{{$loop->index}}][remark][response]"
+                                                            style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
+                                                        @elseif ($review_item['input_type'] == 'number')
+                                                        <input type="number" name="sample_intactness_before_analysis[{{$loop->index}}][remark][response]"
+                                                            style="padding: 2px; width:90%; border: 1px solid black; background-color: #f0f0f0;">
+                                                        @else
+                                                        <select name="sample_intactness_before_analysis[{{$loop->index}}][remark][response]"
+                                                                id="response"
+                                                                style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
+                                                            <option value="">Select an Option</option>
+                                                            <option value="Yes">Yes</option>
+                                                            <option value="No">No</option>
+                                                            <option value="N/A">N/A</option>
+                                                        </select>
+                                                        @endif
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div style="margin: auto; display: flex; justify-content: center;">
+                                                        <textarea name="sample_intactness_before_analysis[{{$loop->index}}][remark]"
+                                                                style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            @endforeach
+                                        </tbody>
+
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="inner-block-content">
+                    <div class="sub-head">
+                        Review of test methods & Procedures </div>
+                                    @php
+                                    $test_methods_Procedures = [
+                                        [
+                                        'question' => "Was correct applicable specification and method of analysis used for analysis?",
+                                        'is_sub_question' => false,
+                                        'input_type' => 'text'
+                                        ],
+                                        [
+                                        'question' => "MOA & specification number?",
+                                        'is_sub_question' => false,
+                                        'input_type' => 'number'
+                                        ],
+                                        [
+                                        'question' => "Were the results of the other samples analyzed on the same day/time satisfactory?",
+                                        'is_sub_question' => false,
+                                        'input_type' => 'text'
+                                        ],
+                                        [
+                                        'question' => "Were the samples tested transferred and incubated at desired temperature as per approved procedure?",
+                                        'is_sub_question' => false,
+                                        'input_type' => 'text'
+                                        ],
+                                        [
+                                        'question' => "Were the tested samples results observed within the valid time?",
+                                        'is_sub_question' => false,
+                                        'input_type' => 'text'
+                                        ]
+                                        ];
+
+                                    @endphp
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="group-input">
+                                <div class="why-why-chart">
+                                    <table class="table table-bordered">
+                                        <thead>
+                                            <tr>
+                                                <th style="width: 5%;">Sr.No.</th>
+                                                <th style="width: 40%;">Question</th>
+                                                <th style="width: 20%;">Response</th>
+                                                <th>Remarks</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @php
+                                                $main_question_index = 3.0;
+                                                $sub_question_index = 0;
+                                            @endphp
+
+                                            @foreach ($test_methods_Procedures as $index => $review_item)
+                                            @php
+                                                if ($review_item['is_sub_question']) {
+                                                    $sub_question_index++;
+                                                } else {
+                                                    $sub_question_index = 0;
+                                                    $main_question_index += 0.1;
+                                                }
+                                            @endphp
+                                            <tr>
+                                                <td class="flex text-center">{{ $review_item['is_sub_question'] ? $main_question_index .'.'. $sub_question_index : number_format($main_question_index, 1) }}</td>
+                                                <td>{{$review_item['question']}}</td>
+                                                <td>
+                                                    <div style="display: flex; justify-content: space-around; align-items: center; margin: 5%; gap:5px">
+                                                        @if ($review_item['input_type'] == 'date')
+                                                        <input type="date" name="test_methods_Procedure[{{$loop->index}}][response]"
+                                                            style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
+                                                        @elseif ($review_item['input_type'] == 'number')
+                                                        <input type="number" name="test_methods_Procedure[{{$loop->index}}][response]"
+                                                            style="padding: 2px; width:90%; border: 1px solid black; background-color: #f0f0f0;">
+                                                        @else
+                                                        <select name="test_methods_Procedure[{{$loop->index}}][response]"
+                                                                id="response"
+                                                                style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
+                                                            <option value="">Select an Option</option>
+                                                            <option value="Yes">Yes</option>
+                                                            <option value="No">No</option>
+                                                            <option value="N/A">N/A</option>
+                                                        </select>
+                                                        @endif
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div style="margin: auto; display: flex; justify-content: center;">
+                                                        <textarea name="test_methods_Procedure[{{$loop->index}}][remark]"
+                                                                style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            @endforeach
+                                        </tbody>
+
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="inner-block-content">
+                    <div class="sub-head">
+                        Review of Media, Buffer, Standards preparation & test accessories </div>
+                                @php
+                                $Review_of_Media_Buffer_Standards_prepar = [
+                                [
+                                'question' => "Name of the media used in the analysis:",
+                                'is_sub_question' => false,
+                                'input_type' => 'number'
+                                ],
+                                [
+                                'question' => "Did the COA of the media review and found satisfactory?",
+                                'is_sub_question' => true,
+                                'input_type' => 'number'
+                                ],
+                                [
+                                'question' => "Date of media preparation:",
+                                'is_sub_question' => true,
+                                'input_type' => 'date'
+                                ],
+                                [
+                                'question' => "Lot No.",
+                                'is_sub_question' => true,
+                                'input_type' => 'number'
+                                ],
+                                [
+                                'question' => "Use before date:",
+                                'is_sub_question' => true,
+                                'input_type' => 'date'
+                                ],
+                                [
+                                'question' => "Was the media sterilization and sanitization cycle found satisfactory?",
+                                'is_sub_question' => true,
+                                'input_type' => 'text'
+                                ],
+                                [
+                                'question' => "Validated load pattern references documents No.",
+                                'is_sub_question' => true,
+                                'input_type' => 'number'
+                                ],
+                                [
+                                'question' => "Was any contamination observed in test media/diluents?",
+                                'is_sub_question' => true,
+                                'input_type' => 'text'
+                                ],
+                                [
+                                'question' => "Was appropriate and cleaned and sterilized glassware used for testing?",
+                                'is_sub_question' => true,
+                                'input_type' => 'text'
+                                ],
+                                [
+                                'question' => "Are the negative controls still confirming?",
+                                'is_sub_question' => true,
+                                'input_type' => 'text'
+                                ],
+                                [
+                                'question' => "Is the growth promotion test for the media confirming?",
+                                'is_sub_question' => false,
+                                'input_type' => 'text'
+                                ]
+                                ];
+
+                                @endphp
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="group-input">
+                                <div class="why-why-chart">
+                                    <table class="table table-bordered">
+                                        <thead>
+                                            <tr>
+                                                <th style="width: 5%;">Sr.No.</th>
+                                                <th style="width: 40%;">Question</th>
+                                                <th style="width: 20%;">Response</th>
+                                                <th>Remarks</th>
+                                            </tr>
+                                        </thead><tbody>
+                                            @php
+                                                $main_question_index = 4.0;
+                                                $sub_question_index = 0;
+                                            @endphp
+
+                                            @foreach ($Review_of_Media_Buffer_Standards_prepar as $index => $review_item)
+                                            @php
+                                                if ($review_item['is_sub_question']) {
+                                                    $sub_question_index++;
+                                                } else {
+                                                    $sub_question_index = 0;
+                                                    $main_question_index += 0.1;
+                                                }
+                                            @endphp
+                                            <tr>
+                                                <td class="flex text-center">{{ $review_item['is_sub_question'] ? $main_question_index .'.'. $sub_question_index : number_format($main_question_index, 1) }}</td>
+                                                <td>{{$review_item['question']}}</td>
+                                                <td>
+                                                    <div style="display: flex; justify-content: space-around; align-items: center; margin: 5%; gap:5px">
+                                                        @if ($review_item['input_type'] == 'date')
+                                                        <input type="date" name="Review_of_Media_Buffer_Standards_prep[{{$loop->index}}][response]"
+                                                            style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
+                                                        @elseif ($review_item['input_type'] == 'number')
+                                                        <input type="number" name="Review_of_Media_Buffer_Standards_prep[{{$loop->index}}][response]"
+                                                            style="padding: 2px; width:90%; border: 1px solid black; background-color: #f0f0f0;">
+                                                        @else
+                                                        <select name="Review_of_Media_Buffer_Standards_prep[{{$loop->index}}][response]"
+                                                                id="response"
+                                                                style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
+                                                            <option value="">Select an Option</option>
+                                                            <option value="Yes">Yes</option>
+                                                            <option value="No">No</option>
+                                                            <option value="N/A">N/A</option>
+                                                        </select>
+                                                        @endif
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div style="margin: auto; display: flex; justify-content: center;">
+                                                        <textarea name="Review_of_Media_Buffer_Standards_prep[{{$loop->index}}][remark]"
+                                                                style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            @endforeach
+                                        </tbody>
+
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="inner-block-content">
+                    <div class="sub-head">
+                        Checklist for Review of Media, Buffer, Standards preparation & test accessories </div>
+                                    @php
+                                    $Checklist_for_Revi_of_Media_Buffer_Stand_preps = [
+                                        [
+                                        'question' => "Were the environmental conditions during testing as per the conditions specified?",
+                                        'is_sub_question' => false,
+                                        'input_type' => 'text'
+                                        ],
+                                        [
+                                        'question' => "Was the Temperature of the area within the limit?",
+                                        'is_sub_question' => true,
+                                        'input_type' => 'text'
+                                        ],
+                                        [
+                                        'question' => "Pressure differentials of the area within the limit?",
+                                        'is_sub_question' => true,
+                                        'input_type' => 'text'
+                                        ],
+                                        [
+                                        'question' => "Were the other types of monitoring results confirming?",
+                                        'is_sub_question' => true,
+                                        'input_type' => 'text'
+                                        ],
+                                        [
+                                        'question' => "Are the under test environmental monitoring samples confirming?",
+                                        'is_sub_question' => true,
+                                        'input_type' => 'text'
+                                        ],
+                                        [
+                                        'question' => "Were the entry and exit procedures to the clean room / controlled rooms followed as per SOP? (by all personnel)",
+                                        'is_sub_question' => true,
+                                        'input_type' => 'text'
+                                        ],
+                                        [
+                                        'question' => "Was the HEPA filter integrity of the area found satisfactory?",
+                                        'is_sub_question' => true,
+                                        'input_type' => 'text'
+                                        ]
+                                        ];
+
+                                    @endphp
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="group-input">
+                                <div class="why-why-chart">
+                                    <table class="table table-bordered">
+                                        <thead>
+                                            <tr>
+                                                <th style="width: 5%;">Sr.No.</th>
+                                                <th style="width: 40%;">Question</th>
+                                                <th style="width: 20%;">Response</th>
+                                                <th>Remarks</th>
+                                            </tr>
+                                        </thead><tbody>
+                                            @php
+                                                $main_question_index = 5.0;
+                                                $sub_question_index = 0;
+                                            @endphp
+
+                                            @foreach ($Checklist_for_Revi_of_Media_Buffer_Stand_preps as $index => $review_item)
+                                            @php
+                                                if ($review_item['is_sub_question']) {
+                                                    $sub_question_index++;
+                                                } else {
+                                                    $sub_question_index = 0;
+                                                    $main_question_index += 0.1;
+                                                }
+                                            @endphp
+                                            <tr>
+                                                <td class="flex text-center">{{ $review_item['is_sub_question'] ? $main_question_index .'.'. $sub_question_index : number_format($main_question_index, 1) }}</td>
+                                                <td>{{$review_item['question']}}</td>
+                                                <td>
+                                                    <div style="display: flex; justify-content: space-around; align-items: center; margin: 5%; gap:5px">
+                                                        @if ($review_item['input_type'] == 'date')
+                                                        <input type="date" name="Checklist_for_Revi_of_Media_Buffer_Stand_prep[{{$loop->index}}][response]"
+                                                            style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
+                                                        @elseif ($review_item['input_type'] == 'number')
+                                                        <input type="number" name="Checklist_for_Revi_of_Media_Buffer_Stand_prep[{{$loop->index}}][response]"
+                                                            style="padding: 2px; width:90%; border: 1px solid black; background-color: #f0f0f0;">
+                                                        @else
+                                                        <select name="Checklist_for_Revi_of_Media_Buffer_Stand_prep[{{$loop->index}}][response]"
+                                                                id="response"
+                                                                style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
+                                                            <option value="">Select an Option</option>
+                                                            <option value="Yes">Yes</option>
+                                                            <option value="No">No</option>
+                                                            <option value="N/A">N/A</option>
+                                                        </select>
+                                                        @endif
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div style="margin: auto; display: flex; justify-content: center;">
+                                                        <textarea name="Checklist_for_Revi_of_Media_Buffer_Stand_prep[{{$loop->index}}][remark]"
+                                                                style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            @endforeach
+                                        </tbody>
+
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="inner-block-content">
+                    <div class="sub-head">
+                        Checklist for Disinfectant Details: </div>
+                        @php
+                        $check_for_disinfectant_details = [
+                        [
+                        'question' => "Was the area disinfection done as per schedule?",
+                        'is_sub_question' => false,
+                        'input_type' => 'text'
+                        ],
+                        [
+                        'question' => "Is the disinfectant used approved?",
+                        'is_sub_question' => true,
+                        'input_type' => 'number'
+                        ],
+                        [
+                        'question' => "Is the concentration in which disinfectant used certified for efficacy?",
+                        'is_sub_question' => true,
+                        'input_type' => 'text'
+                        ],
+                        [
+                        'question' => "Name of the disinfectant used?",
+                        'is_sub_question' => true,
+                        'input_type' => 'text'
+                        ],
+                        [
+                        'question' => "Was the disinfectant prepared correctly?",
+                        'is_sub_question' => true,
+                        'input_type' => 'text'
+                        ],
+                        [
+                        'question' => "Was cleaning done during operations?",
+                        'is_sub_question' => true,
+                        'input_type' => 'text'
+                        ],
+                        [
+                        'question' => "Was area fumigation done as per schedule?",
+                        'is_sub_question' => true,
+                        'input_type' => 'text'
+                        ],
+                        [
+                        'question' => "Was the concentration in which fumigant used correct?",
+                        'is_sub_question' => true,
+                        'input_type' => 'text'
+                        ],
+                        [
+                        'question' => "Were there any spillages in the area?",
+                        'is_sub_question' => true,
+                        'input_type' => 'text'
+                        ]
+                        ];
+
+                        @endphp
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="group-input">
+                                <div class="why-why-chart">
+                                    <table class="table table-bordered">
+                                        <thead>
+                                            <tr>
+                                                <th style="width: 5%;">Sr.No.</th>
+                                                <th style="width: 40%;">Question</th>
+                                                <th style="width: 20%;">Response</th>
+                                                <th>Remarks</th>
+                                            </tr>
+                                        </thead><tbody>
+                                            @php
+                                                $main_question_index = 6.0;
+                                                $sub_question_index = 0;
+                                            @endphp
+
+                                            @foreach ($check_for_disinfectant_details as $index => $review_item)
+                                            @php
+                                                if ($review_item['is_sub_question']) {
+                                                    $sub_question_index++;
+                                                } else {
+                                                    $sub_question_index = 0;
+                                                    $main_question_index += 0.1;
+                                                }
+                                            @endphp
+                                            <tr>
+                                                <td class="flex text-center">{{ $review_item['is_sub_question'] ? $main_question_index .'.'. $sub_question_index : number_format($main_question_index, 1) }}</td>
+                                                <td>{{$review_item['question']}}</td>
+                                                <td>
+                                                    <div style="display: flex; justify-content: space-around; align-items: center; margin: 5%; gap:5px">
+                                                        @if ($review_item['input_type'] == 'date')
+                                                        <input type="date" name="ccheck_for_disinfectant_detail[{{$loop->index}}][response]"
+                                                            style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
+                                                        @elseif ($review_item['input_type'] == 'number')
+                                                        <input type="number" name="ccheck_for_disinfectant_detail[{{$loop->index}}][response]"
+                                                            style="padding: 2px; width:90%; border: 1px solid black; background-color: #f0f0f0;">
+                                                        @else
+                                                        <select name="ccheck_for_disinfectant_detail[{{$loop->index}}][response]"
+                                                                id="response"
+                                                                style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
+                                                            <option value="">Select an Option</option>
+                                                            <option value="Yes">Yes</option>
+                                                            <option value="No">No</option>
+                                                            <option value="N/A">N/A</option>
+                                                        </select>
+                                                        @endif
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div style="margin: auto; display: flex; justify-content: center;">
+                                                        <textarea name="check_for_disinfectant_detail[{{$loop->index}}][remark]"
+                                                                style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            @endforeach
+                                        </tbody>
+
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="inner-block-content">
+                    <div class="sub-head">
+                        Checklist for Review of instrument/equipment </div>
+                        @php
+                        $Checklist_for_Review_of_instrument_equips = [
+                        [
+                        'question' => "Was there any malfunctioning of autoclave observed? Verify the qualification and requalification of steam sterilizer?",
+                        'is_sub_question' => false,
+                        'input_type' => 'text'
+                        ],
+                        [
+                        'question' => "Autoclave ID No:",
+                        'is_sub_question' => true,
+                        'input_type' => 'number'
+                        ],
+                        [
+                        'question' => "Qualification date and Next due date:",
+                        'is_sub_question' => true,
+                        'input_type' => 'date'
+                        ],
+                        [
+                        'question' => "Was there any power supply failure noted during analysis?",
+                        'is_sub_question' => false,
+                        'input_type' => 'text'
+                        ],
+                        [
+                        'question' => "Was incubators used is qualified Incubators ID:",
+                        'is_sub_question' => false,
+                        'input_type' => 'text'
+                        ],
+                        [
+                        'question' => "Qualification date and Next due date:",
+                        'is_sub_question' => true,
+                        'input_type' => 'date'
+                        ],
+                        [
+                        'question' => "Any events associated with incubators, when the samples under incubation.",
+                        'is_sub_question' => true,
+                        'input_type' => 'text'
+                        ],
+                        [
+                        'question' => "Was any breakdown/maintenance observed in any instrument/equipment/system, which may cause this failure?",
+                        'is_sub_question' => true,
+                        'input_type' => 'text'
+                        ]
+                        ];
+
+                        @endphp
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="group-input">
+                                <div class="why-why-chart">
+                                    <table class="table table-bordered">
+                                        <thead>
+                                            <tr>
+                                                <th style="width: 5%;">Sr.No.</th>
+                                                <th style="width: 40%;">Question</th>
+                                                <th style="width: 20%;">Response</th>
+                                                <th>Remarks</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @php
+                                                $main_question_index = 7.0;
+                                                $sub_question_index = 0;
+                                            @endphp
+
+                                            @foreach ($Checklist_for_Review_of_instrument_equips as $index => $review_item)
+                                            @php
+                                                if ($review_item['is_sub_question']) {
+                                                    $sub_question_index++;
+                                                } else {
+                                                    $sub_question_index = 0;
+                                                    $main_question_index += 0.1;
+                                                }
+                                            @endphp
+                                            <tr>
+                                                <td class="flex text-center">{{ $review_item['is_sub_question'] ? $main_question_index .'.'. $sub_question_index : number_format($main_question_index, 1) }}</td>
+                                                <td>{{$review_item['question']}}</td>
+                                                <td>
+                                                    <div style="display: flex; justify-content: space-around; align-items: center; margin: 5%; gap:5px">
+                                                        @if ($review_item['input_type'] == 'date')
+                                                        <input type="date" name="Checklist_for_Review_of_instrument_equip[{{$loop->index}}][response]"
+                                                            style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
+                                                        @elseif ($review_item['input_type'] == 'number')
+                                                        <input type="number" name="Checklist_for_Review_of_instrument_equip[{{$loop->index}}][response]"
+                                                            style="padding: 2px; width:90%; border: 1px solid black; background-color: #f0f0f0;">
+                                                        @else
+                                                        <select name="Checklist_for_Review_of_instrument_equip[{{$loop->index}}][response]"
+                                                                id="response"
+                                                                style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
+                                                            <option value="">Select an Option</option>
+                                                            <option value="Yes">Yes</option>
+                                                            <option value="No">No</option>
+                                                            <option value="N/A">N/A</option>
+                                                        </select>
+                                                        @endif
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div style="margin: auto; display: flex; justify-content: center;">
+                                                        <textarea name="Checklist_for_Review_of_instrument_equip[{{$loop->index}}][remark]"
+                                                                style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            @endforeach
+                                        </tbody>
+
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-12">
+                        <div class="group-input">
+                            <label for="Audit Attachments">If Yes, Provide attachment details</label>
+                            {{-- <small class="text-primary">
+                                        If Yes, attach details
+                                    </small> --}}
+                            <div class="file-attachment-field">
+                                <div class="file-attachment-list" id="attachment_details_cis"></div>
+                                <div class="add-btn">
+                                    <div>Add</div>
+                                    <input type="file" id="myfile" name="attachment_details_cis[]"
+                                        oninput="addMultipleFiles(this, 'attachment_details_cis')" multiple>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="button-block">
+                        <button type="submit" id="ChangesaveButton" class="saveButton">Save</button>
+                        <button type="button" class="backButton" onclick="previousStep()">Back</button>
+                        <button type="button" id="ChangeNextButton" class="nextButton"
+                            onclick="nextStep()">Next</button>
+                        <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white">
+                                Exit </a> </button>
+                    </div>
+                </div>
+
 
             </div>
-            <div class="inner-block-content">
-                <div class="sub-head">
-                    Checklist for Disinfectant Details: </div>
-                    @php
-                    $check_for_disinfectant_details = [
-                    [
-                    'question' => "Was the area disinfection done as per schedule?",
-                    'is_sub_question' => false,
-                    'input_type' => 'text'
-                    ],
-                    [
-                    'question' => "Is the disinfectant used approved?",
-                    'is_sub_question' => true,
-                    'input_type' => 'number'
-                    ],
-                    [
-                    'question' => "Is the concentration in which disinfectant used certified for efficacy?",
-                    'is_sub_question' => true,
-                    'input_type' => 'text'
-                    ],
-                    [
-                    'question' => "Name of the disinfectant used?",
-                    'is_sub_question' => true,
-                    'input_type' => 'text'
-                    ],
-                    [
-                    'question' => "Was the disinfectant prepared correctly?",
-                    'is_sub_question' => true,
-                    'input_type' => 'text'
-                    ],
-                    [
-                    'question' => "Was cleaning done during operations?",
-                    'is_sub_question' => true,
-                    'input_type' => 'text'
-                    ],
-                    [
-                    'question' => "Was area fumigation done as per schedule?",
-                    'is_sub_question' => true,
-                    'input_type' => 'text'
-                    ],
-                    [
-                    'question' => "Was the concentration in which fumigant used correct?",
-                    'is_sub_question' => true,
-                    'input_type' => 'text'
-                    ],
-                    [
-                    'question' => "Were there any spillages in the area?",
-                    'is_sub_question' => true,
-                    'input_type' => 'text'
-                    ]
-                    ];
-
-                    @endphp
-                <div class="row">
-                    <div class="col-12">
-                        <div class="group-input">
-                            <div class="why-why-chart">
-                                <table class="table table-bordered">
-                                    <thead>
-                                        <tr>
-                                            <th style="width: 5%;">Sr.No.</th>
-                                            <th style="width: 40%;">Question</th>
-                                            <th style="width: 20%;">Response</th>
-                                            <th>Remarks</th>
-                                        </tr>
-                                    </thead><tbody>
-                                        @php
-                                            $main_question_index = 6.0;
-                                            $sub_question_index = 0;
-                                        @endphp
-
-                                        @foreach ($check_for_disinfectant_details as $index => $review_item)
-                                        @php
-                                            if ($review_item['is_sub_question']) {
-                                                $sub_question_index++;
-                                            } else {
-                                                $sub_question_index = 0;
-                                                $main_question_index += 0.1;
-                                            }
-                                        @endphp
-                                        <tr>
-                                            <td class="flex text-center">{{ $review_item['is_sub_question'] ? $main_question_index .'.'. $sub_question_index : number_format($main_question_index, 1) }}</td>
-                                            <td>{{$review_item['question']}}</td>
-                                            <td>
-                                                <div style="display: flex; justify-content: space-around; align-items: center; margin: 5%; gap:5px">
-                                                    @if ($review_item['input_type'] == 'date')
-                                                    <input type="date" name="ccheck_for_disinfectant_detail[{{$loop->index}}][response]"
-                                                        style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
-                                                    @elseif ($review_item['input_type'] == 'number')
-                                                    <input type="number" name="ccheck_for_disinfectant_detail[{{$loop->index}}][response]"
-                                                        style="padding: 2px; width:90%; border: 1px solid black; background-color: #f0f0f0;">
-                                                    @else
-                                                    <select name="ccheck_for_disinfectant_detail[{{$loop->index}}][response]"
-                                                            id="response"
-                                                            style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
-                                                        <option value="">Select an Option</option>
-                                                        <option value="Yes">Yes</option>
-                                                        <option value="No">No</option>
-                                                        <option value="N/A">N/A</option>
-                                                    </select>
-                                                    @endif
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <div style="margin: auto; display: flex; justify-content: center;">
-                                                    <textarea name="check_for_disinfectant_detail[{{$loop->index}}][remark]"
-                                                            style="border-radius: 7px; border: 1.5px solid black;"></textarea>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        @endforeach
-                                    </tbody>
-
-                                </table>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="inner-block-content">
-                <div class="sub-head">
-                    Checklist for Review of instrument/equipment </div>
-                    @php
-                    $Checklist_for_Review_of_instrument_equips = [
-                    [
-                    'question' => "Was there any malfunctioning of autoclave observed? Verify the qualification and requalification of steam sterilizer?",
-                    'is_sub_question' => false,
-                    'input_type' => 'text'
-                    ],
-                    [
-                    'question' => "Autoclave ID No:",
-                    'is_sub_question' => true,
-                    'input_type' => 'number'
-                    ],
-                    [
-                    'question' => "Qualification date and Next due date:",
-                    'is_sub_question' => true,
-                    'input_type' => 'date'
-                    ],
-                    [
-                    'question' => "Was there any power supply failure noted during analysis?",
-                    'is_sub_question' => false,
-                    'input_type' => 'text'
-                    ],
-                    [
-                    'question' => "Was incubators used is qualified Incubators ID:",
-                    'is_sub_question' => false,
-                    'input_type' => 'text'
-                    ],
-                    [
-                    'question' => "Qualification date and Next due date:",
-                    'is_sub_question' => true,
-                    'input_type' => 'date'
-                    ],
-                    [
-                    'question' => "Any events associated with incubators, when the samples under incubation.",
-                    'is_sub_question' => true,
-                    'input_type' => 'text'
-                    ],
-                    [
-                    'question' => "Was any breakdown/maintenance observed in any instrument/equipment/system, which may cause this failure?",
-                    'is_sub_question' => true,
-                    'input_type' => 'text'
-                    ]
-                    ];
-
-                    @endphp
-                <div class="row">
-                    <div class="col-12">
-                        <div class="group-input">
-                            <div class="why-why-chart">
-                                <table class="table table-bordered">
-                                    <thead>
-                                        <tr>
-                                            <th style="width: 5%;">Sr.No.</th>
-                                            <th style="width: 40%;">Question</th>
-                                            <th style="width: 20%;">Response</th>
-                                            <th>Remarks</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        @php
-                                            $main_question_index = 7.0;
-                                            $sub_question_index = 0;
-                                        @endphp
-
-                                        @foreach ($Checklist_for_Review_of_instrument_equips as $index => $review_item)
-                                        @php
-                                            if ($review_item['is_sub_question']) {
-                                                $sub_question_index++;
-                                            } else {
-                                                $sub_question_index = 0;
-                                                $main_question_index += 0.1;
-                                            }
-                                        @endphp
-                                        <tr>
-                                            <td class="flex text-center">{{ $review_item['is_sub_question'] ? $main_question_index .'.'. $sub_question_index : number_format($main_question_index, 1) }}</td>
-                                            <td>{{$review_item['question']}}</td>
-                                            <td>
-                                                <div style="display: flex; justify-content: space-around; align-items: center; margin: 5%; gap:5px">
-                                                    @if ($review_item['input_type'] == 'date')
-                                                    <input type="date" name="Checklist_for_Review_of_instrument_equip[{{$loop->index}}][response]"
-                                                        style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
-                                                    @elseif ($review_item['input_type'] == 'number')
-                                                    <input type="number" name="Checklist_for_Review_of_instrument_equip[{{$loop->index}}][response]"
-                                                        style="padding: 2px; width:90%; border: 1px solid black; background-color: #f0f0f0;">
-                                                    @else
-                                                    <select name="Checklist_for_Review_of_instrument_equip[{{$loop->index}}][response]"
-                                                            id="response"
-                                                            style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
-                                                        <option value="">Select an Option</option>
-                                                        <option value="Yes">Yes</option>
-                                                        <option value="No">No</option>
-                                                        <option value="N/A">N/A</option>
-                                                    </select>
-                                                    @endif
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <div style="margin: auto; display: flex; justify-content: center;">
-                                                    <textarea name="Checklist_for_Review_of_instrument_equip[{{$loop->index}}][remark]"
-                                                            style="border-radius: 7px; border: 1.5px solid black;"></textarea>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        @endforeach
-                                    </tbody>
-
-                                </table>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-12">
-                    <div class="group-input">
-                        <label for="Audit Attachments">If Yes, Provide attachment details</label>
-                        {{-- <small class="text-primary">
-                                    If Yes, attach details
-                                </small> --}}
-                        <div class="file-attachment-field">
-                            <div class="file-attachment-list" id="attachment_details_cis"></div>
-                            <div class="add-btn">
-                                <div>Add</div>
-                                <input type="file" id="myfile" name="attachment_details_cis[]"
-                                    oninput="addMultipleFiles(this, 'attachment_details_cis')" multiple>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="button-block">
-                    <button type="submit" id="ChangesaveButton" class="saveButton">Save</button>
-                    <button type="button" class="backButton" onclick="previousStep()">Back</button>
-                    <button type="button" id="ChangeNextButton" class="nextButton"
-                        onclick="nextStep()">Next</button>
-                    <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white">
-                            Exit </a> </button>
-                </div>
-            </div>
-
-
-        </div>
 
         <div id="CCForm20" class="inner-block cctabcontent">
                         <div class="inner-block-content">
@@ -4794,7 +4160,7 @@ $users = DB::table('users')
                                                                 <input type="number" name="Checklist_for_Review_of_sampling_and_Transport[{{$loop->index}}][response]"
                                                                     style="padding: 2px; width:90%; border: 1px solid black; background-color: #f0f0f0;">
                                                                 @else
-                                                                <select name=" Checklist_for_Review_of_sampling_and_Transport[{{$loop->index}}][response]"
+                                                                <select name="Checklist_for_Review_of_sampling_and_Transport[{{$loop->index}}][response]"
                                                                         id="response"
                                                                         style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
                                                                     <option value="">Select an Option</option>
@@ -5023,11 +4389,11 @@ $users = DB::table('users')
 
                                                                 <div class="file-attachment-field">
                                                                     <div style="width: 170px; height: 30px; border: 2px solid black; position: relative; top: 17px; left:27px; border-radius: 5px;"
-                                                                    id="file_attach "></div>
+                                                                    id="microbial_isolates_bioburden "></div>
                                                                     <div class="add-btn" style="position:relative; left:23px; width: 75px; height: 43px; background-color:white;" >
                                                                         <div>Add</div>
                                                                         <input type="file" id="myfile" name="microbial_isolates_bioburden[1][attachment]"
-                                                                            oninput="addMultipleFiles(this, 'file_attach')" multiple>
+                                                                            oninput="addMultipleFiles(this, 'microbial_isolates_bioburden')" multiple>
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -5049,7 +4415,7 @@ $users = DB::table('users')
                                                                 style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                                                 <select name="microbial_isolates_bioburden[2][response]" id="response"
                                                                     style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                                    <option value="Yes">Select an Option</option>
+                                                                    <option value="">Select an Option</option>
                                                                     <option value="Yes">Yes</option>
                                                                     <option value="No">No</option>
                                                                     <option value="N/A">N/A</option>
@@ -5075,7 +4441,7 @@ $users = DB::table('users')
                                                                 style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                                                 <select name="microbial_isolates_bioburden[3][response]" id="response"
                                                                     style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                                    <option value="Yes">Select an Option</option>
+                                                                    <option value="">Select an Option</option>
                                                                     <option value="Yes">Yes</option>
                                                                     <option value="No">No</option>
                                                                     <option value="N/A">N/A</option>
@@ -5127,7 +4493,7 @@ $users = DB::table('users')
                                                                 style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                                                 <select name="microbial_isolates_bioburden[5][response]" id="response"
                                                                     style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                                    <option value="Yes">Select an Option</option>
+                                                                    <option value="">Select an Option</option>
                                                                     <option value="Yes">Yes</option>
                                                                     <option value="No">No</option>
                                                                     <option value="N/A">N/A</option>
@@ -5450,7 +4816,7 @@ $users = DB::table('users')
                                                                 style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                                                 <select name="Checklist_Review_Environment_condition_in_test[{{$loop->index}}][response]" id="response"
                                                                     style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                                    <option value="Yes">Select an Option</option>
+                                                                    <option value="">Select an Option</option>
                                                                     <option value="Yes">Yes</option>
                                                                     <option value="No">No</option>
                                                                     <option value="N/A">N/A</option>
@@ -5692,7 +5058,7 @@ $users = DB::table('users')
                                                                 style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                                                 <select name="disinfectant_details_of_bioburden_and_water_test[{{$loop->index}}][response]" id="response"
                                                                     style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                                    <option value="Yes">Select an Option</option>
+                                                                    <option value="">Select an Option</option>
                                                                     <option value="Yes">Yes</option>
                                                                     <option value="No">No</option>
                                                                     <option value="N/A">N/A</option>
@@ -5744,7 +5110,7 @@ $users = DB::table('users')
                             </div>
                         </div>
 
-    <div id="CCForm21" class="inner-block cctabcontent">
+        <div id="CCForm21" class="inner-block cctabcontent">
 
             <div class="inner-block-content">
 
@@ -5755,22 +5121,22 @@ $users = DB::table('users')
                 </div>
                     @php
                     $training_records_analyst_involvedIn_testing_microbial_asssays = [
-    [
-        'question' => "Was analyst trained on testing procedure?",
-        'is_sub_question' => false,
-        'input_type' => 'text'
-    ],
-    [
-        'question' => "Was the analyst qualified for testing?",
-        'is_sub_question' => false,
-        'input_type' => 'text'
-    ],
-    [
-        'question' => "Date of qualification:",
-        'is_sub_question' => true,
-        'input_type' => 'date'
-    ]
-    ];
+                    [
+                        'question' => "Was analyst trained on testing procedure?",
+                        'is_sub_question' => false,
+                        'input_type' => 'text'
+                    ],
+                    [
+                        'question' => "Was the analyst qualified for testing?",
+                        'is_sub_question' => false,
+                        'input_type' => 'text'
+                    ],
+                    [
+                        'question' => "Date of qualification:",
+                        'is_sub_question' => true,
+                        'input_type' => 'date'
+                    ]
+                    ];
 
                     @endphp
         <div class="row">
@@ -6418,14 +5784,13 @@ $users = DB::table('users')
                                                         style="padding: 2px; width:90%; border: 1px solid black; background-color: #f0f0f0;">
                                                     @else
                                                     <select name="CR_of_microbial_cultures_inoculation_IMAs[{{ $index }}][response]"
-                                                                                                id="response"
-                                                                                                style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
-                                                                                            <option value="">Select an Option</option>
-                                                                                            <option value="Yes">Yes</option>
-                                                                                            <option value="No">No</option>
-                                                                                            <option value="N/A">N/A</option>
-                                                                                        </select>
-
+                                                            id="response"
+                                                            style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
+                                                        <option value="">Select an Option</option>
+                                                        <option value="Yes">Yes</option>
+                                                        <option value="No">No</option>
+                                                        <option value="N/A">N/A</option>
+                                                    </select>
                                                     @endif
                                                 </div>
                                             </td>
@@ -6438,9 +5803,7 @@ $users = DB::table('users')
                                         </tr>
                                         @endforeach
                                     </tbody>
-
                                 </table>
-
                             </div>
 
                         </div>
@@ -6870,13 +6233,8 @@ $users = DB::table('users')
                     <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"> Exit </a> </button>
 
                 </div>
-
             </div>
-
         </div>
-
-
-
         <div id="CCForm22" class="inner-block cctabcontent">
             <div class="inner-block-content">
                 <div class="sub-head">
@@ -8135,12 +7493,10 @@ $users = DB::table('users')
                         <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white">
                                 Exit </a> </button>
                     </div>
-                </div>
             </div>
         </div>
-
-
-        <div id="CCForm23" class="inner-block cctabcontent">
+    </div>
+    <div id="CCForm23" class="inner-block cctabcontent">
             <div class="inner-block-content">
                 <div class="sub-head">
                     Checklist for Analyst training & Procedure
@@ -8924,11 +8280,11 @@ $users = DB::table('users')
                                     <div class="group-input">
                                         <label for="Audit Attachments">If Yes, Provide attachment details</label>
                                         <div class="file-attachment-field">
-                                            <div class="file-attachment-list" id="file_attach"></div>
+                                            <div class="file-attachment-list" id="attachment_details_cimst"></div>
                                                 <div class="add-btn">
                                                 <div>Add</div>
                                                 <input type="file" id="myfile" name="attachment_details_cimst[]"
-                                                    oninput="addMultipleFiles(this, 'file_attach')" multiple/>
+                                                    oninput="addMultipleFiles(this, 'attachment_details_cimst')" multiple/>
                                             </div>
                                         </div>
                                     </div>
@@ -8943,10 +8299,292 @@ $users = DB::table('users')
                         onclick="nextStep()">Next</button>
                         <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white">Exit </a> </button>
                     </div>
-
                 </div>
             </div>
-        </div>
+            </div>
+            <!----- Signature ----->
+            <div id="CCForm17" class="inner-block cctabcontent">
+                <div class="inner-block-content">
+                    <div class="sub-head">
+                        Activity Log
+                    </div>
+                    <div class="row">
+
+                        <div class="col-lg-6">
+                            <div class="group-input">
+                                <label for="Audit Agenda">Preliminary Lab Inves. Done By</label>
+                                <div class="static"></div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="group-input">
+                                <label for="Audit Agenda">Preliminary Lab Inves. Done On</label>
+                                <div class="Date"></div>
+                            </div>
+                        </div>
+
+
+                        <div class="col-lg-6">
+                            <div class="group-input">
+                                <label for="Audit Team">Pre. Lab Inv. Conclusion By</label>
+                                <div class="static"></div>
+
+                            </div>
+                        </div>
+
+                        <div class="col-lg-6">
+                            <div class="group-input">
+                                <label for="Audit Team">Pre. Lab Inv. Conclusion On</label>
+                                <div class="Date"></div>
+                            </div>
+                        </div>
+
+                        <div class="col-6">
+                            <div class="group-input">
+                                <label for="Audit Comments"> Pre.Lab Invest. Review By </label>
+                                <div class="static"></div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="group-input">
+                                <label for="Audit Attachments">Pre.Lab Invest. Review On</label>
+                                <div class="Date"></div>
+                            </div>
+                        </div>
+
+
+                        <div class="col-lg-6">
+                            <div class="group-input">
+                                <label for="Audit Attachments">Phase II Invest. Proposed By</label>
+                                <div class="static"></div>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-6">
+                            <div class="group-input">
+                                <label for="Audit Attachments">Phase II Invest. Proposed On</label>
+                                <div class="Date"></div>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-6">
+                            <div class="group-input">
+                                <label for="Audit Response Completed By"> Phase II QC Review Done By</label>
+                                <div class=" static"></div>
+
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="group-input">
+                                <label for="Audit Response Completed On">Phase II QC Review Done On</label>
+                                <div class="date"></div>
+
+                            </div>
+                        </div>
+
+                        <div class="col-lg-6">
+                            <div class="group-input">
+                                <label for="Audit Attachments">Additional Test Proposed By</label>
+                                <div class=" static"></div>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-6">
+                            <div class="group-input">
+                                <label for="Audit Attachments">Additional Test Proposed On</label>
+                                <div class="date"></div>
+                            </div>
+                        </div>
+
+
+                        <div class="col-lg-6">
+                            <div class="group-input">
+                                <label for="Audit Attachments">OOS Conclusion Complete By</label>
+                                <div class=" static"></div>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-6">
+                            <div class="group-input">
+                                <label for="Audit Attachments">OOS Conclusion Complete On</label>
+                                <div class="date"></div>
+                            </div>
+                        </div>
+
+
+                        <div class="col-lg-6">
+                            <div class="group-input">
+                                <label for="Audit Attachments">CQ Review Done By</label>
+                                <div class=" static"></div>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-6">
+                            <div class="group-input">
+                                <label for="Audit Attachments">CQ Review Done On</label>
+                                <div class="date"></div>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-6">
+                            <div class="group-input">
+                                <label for="Audit Attachments">Disposition Decision Done by</label>
+                                <div class=" static"></div>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-6">
+                            <div class="group-input">
+                                <label for="Audit Attachments">Disposition Decision Done On</label>
+                                <div class="date"></div>
+                            </div>
+                        </div>
+
+
+                        <div class="col-lg-6">
+                            <div class="group-input">
+                                <label for="Reference Recores">Reopen Addendum Complete By
+
+                                </label>
+                                <div class=" static"></div>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-6">
+                            <div class="group-input">
+                                <label for="Reference Recores">Reopen Addendum Complete on
+
+                                </label>
+                                <div class="date"></div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="group-input">
+                                <label for="Reference Recores">Addendum Approval Completed By
+
+                                </label>
+                                <div class=" static"></div>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-6">
+                            <div class="group-input">
+                                <label for="Reference Recores">Reopen Addendum Complete on
+
+                                </label>
+                                <div class="date"></div>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-6">
+                            <div class="group-input">
+                                <label for="Reference Recores">Addendum Execution Done By
+
+                                </label>
+                                <div class=" static"></div>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-6">
+                            <div class="group-input">
+                                <label for="Reference Recores">Addendum Execution Done On
+
+                                </label>
+                                <div class="date"></div>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-6">
+                            <div class="group-input">
+                                <label for="Reference Recores">Addendum Review Done By
+
+                                </label>
+                                <div class=" static"></div>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-6">
+                            <div class="group-input">
+                                <label for="Reference Recores">Addendum Review Done On
+
+                                </label>
+                                <div class="date"></div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="group-input">
+                                <label for="Reference Recores">Verification Review Done By
+                                </label>
+                                <div class=" static"></div>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-6">
+                            <div class="group-input">
+                                <label for="Reference Recores">Verification Review Done On
+
+                                </label>
+                                <div class="date"></div>
+                            </div>
+                        </div>
+                        <!-- ====================================================================== -->
+                        <div class="col-lg-6">
+                            <div class="group-input">
+                                <label for="submitted by">Submitted By :</label>
+                                <div class="static"></div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="group-input">
+                                <label for="submitted on">Submitted On :</label>
+                                <div class="Date"></div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="group-input">
+                                <label for="cancelled by">Cancelled By :</label>
+                                <div class="static"></div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="group-input">
+                                <label for="cancelled on">Cancelled On :</label>
+                                <div class="Date"></div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="group-input">
+                                <label for="More information required By">More information required By :</label>
+                                <div class="static"></div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="group-input">
+                                <label for="More information required On">More information required On :</label>
+                                <div class="Date"></div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="group-input">
+                                <label for="completed by">Completed By :</label>
+                                <div class="static"></div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="group-input">
+                                <label for="completed on">Completed On :</label>
+                                <div class="Date"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="button-block">
+                        <button type="submit" id="ChangesaveButton" class="saveButton">Save</button>
+                        <button type="button" class="backButton" onclick="previousStep()">Back</button>
+                        <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white">
+                                Exit </a> </button>
+                    </div>
+                </div>
+            </div>
       </form>
     </div>
 </div>
@@ -8998,18 +8636,21 @@ $users = DB::table('users')
             let referenceContainer = document.querySelector('.reference-data');
             referenceContainer.parentNode.insertBefore(newReference, referenceContainer.nextSibling);
         }
-    </script>
-    <script>
-        document.getElementById('initiator_group').addEventListener('change', function() {
-            var selectedValue = this.value;
-            document.getElementById('initiator_group_code').value = selectedValue;
-        });
-        document.getElementById("dynamicSelectType").addEventListener("change", function() {
-            var selectedRoute = this.value;
-            window.location.href = selectedRoute; // Redirect to the selected route
-        });
-    </script>
-    <script>
+</script>
+
+<script>
+    document.getElementById('initiator_group').addEventListener('change', function() {
+        var selectedValue = this.value;
+        document.getElementById('initiator_group_code').value = selectedValue;
+    });
+    document.getElementById("dynamicSelectType").addEventListener("change", function() {
+        var selectedRoute = this.value;
+        window.location.href = selectedRoute; // Redirect to the selected route
+    });
+</script>
+
+<!-- --------------------------------------button--------------------- -->
+<script>
         VirtualSelect.init({
             ele: '#facility_name, #group_name, #auditee, #audit_team'
         });
@@ -9027,18 +8668,90 @@ $users = DB::table('users')
             document.getElementById(cityName).style.display = "block";
             evt.currentTarget.className += " active";
         }
-    </script>
-    
-    <script>
-        var maxLength = 255;
-        $('#docname').keyup(function() {
-            var textlen = maxLength - $(this).val().length;
-            $('#rchars').text(textlen);
+</script>
+<script>
+        VirtualSelect.init({
+            ele: '#related_records, #hod'
         });
-    </script>
-    <script>
-        $(document).on('click', '.removeRowBtn', function() {
-            $(this).closest('tr').remove();
-        })
-    </script>
+
+        function openCity(evt, cityName) {
+            var i, cctabcontent, cctablinks;
+            cctabcontent = document.getElementsByClassName("cctabcontent");
+            for (i = 0; i < cctabcontent.length; i++) {
+                cctabcontent[i].style.display = "none";
+            }
+            cctablinks = document.getElementsByClassName("cctablinks");
+            for (i = 0; i < cctablinks.length; i++) {
+                cctablinks[i].className = cctablinks[i].className.replace(" active", "");
+            }
+            document.getElementById(cityName).style.display = "block";
+            evt.currentTarget.className += " active";
+
+            // Find the index of the clicked tab button
+            const index = Array.from(cctablinks).findIndex(button => button === evt.currentTarget);
+
+            // Update the currentStep to the index of the clicked tab
+            currentStep = index;
+        }
+
+        const saveButtons = document.querySelectorAll(".saveButton");
+        const nextButtons = document.querySelectorAll(".nextButton");
+        const form = document.getElementById("step-form");
+        const stepButtons = document.querySelectorAll(".cctablinks");
+        const steps = document.querySelectorAll(".cctabcontent");
+        let currentStep = 0;
+
+        function nextStep() {
+            // Check if there is a next step
+            if (currentStep < steps.length - 1) {
+                // Hide current step
+                steps[currentStep].style.display = "none";
+
+                // Show next step
+                steps[currentStep + 1].style.display = "block";
+
+                // Add active class to next button
+                stepButtons[currentStep + 1].classList.add("active");
+
+                // Remove active class from current button
+                stepButtons[currentStep].classList.remove("active");
+
+                // Update current step
+                currentStep++;
+            }
+        }
+
+        function previousStep() {
+            // Check if there is a previous step
+            if (currentStep > 0) {
+                // Hide current step
+                steps[currentStep].style.display = "none";
+
+                // Show previous step
+                steps[currentStep - 1].style.display = "block";
+
+                // Add active class to previous button
+                stepButtons[currentStep - 1].classList.add("active");
+
+                // Remove active class from current button
+                stepButtons[currentStep].classList.remove("active");
+
+                // Update current step
+                currentStep--;
+            }
+        }
+</script>
+
+<script>
+    var maxLength = 255;
+    $('#docname').keyup(function() {
+        var textlen = maxLength - $(this).val().length;
+        $('#rchars').text(textlen);
+    });
+</script>
+<script>
+    $(document).on('click', '.removeRowBtn', function() {
+        $(this).closest('tr').remove();
+    })
+</script>
 @endsection

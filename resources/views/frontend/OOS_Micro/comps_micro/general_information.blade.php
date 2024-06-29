@@ -21,7 +21,7 @@
     <div class="group-input">
         <label for="Initiator"> Record Number </label>
             <input disabled type="text" name="record_number"
-            value="{{ Helpers::getDivisionName($micro_data->division_id) }}/OOS Chemical/{{ Helpers::year($micro_data->created_at) }}/{{ $micro_data->record_number ? str_pad($micro_data->record_number, 4, "0", STR_PAD_LEFT ) : '1' }}">
+            value="{{ Helpers::getDivisionName($micro_data->division_id) }}/OOS Micro/{{ Helpers::year($micro_data->created_at) }}/{{ $micro_data->record_number ? str_pad($micro_data->record_number, 4, "0", STR_PAD_LEFT ) : '1' }}">
     </div>
 </div>
 <div class="col-lg-6">
@@ -161,8 +161,8 @@
             <div class="col-lg-6 new-date-data-field">
                 <div class="group-input input-date">
                     <label for="Deviation Occurred On"> Deviation Occurred On </label>
-                    <div><small class="text-primary">If revising Due Date, kindly mention revision
-                            reason in "Due Date Extension Justification" data field.</small></div>
+                    <div><small class="text-primary">If revising Deviation Occurred On, kindly mention revision
+                            reason in "Deviation Occurred On Extension Justification" data field.</small></div>
                     <div class="calenderauditee">
                         <input type="text" id="deviation_occured_on_gi" readonly value="{{ Helpers::getdateFormat($micro_data['deviation_occured_on_gi'] ?? '') }}" placeholder="DD-MM-YYYY" />
                         <input type="date" name="deviation_occured_on_gi"
@@ -439,7 +439,6 @@
                                 <th style="width: 10%">Details of Obvious Error</th>
                                 <th style="width: 14%">File Attachment</th>
                                 <th style="width: 16%">Submit On</th>
-                                <th style="width: 8%">Submit By</th>
                                 <th style="width: 5%"> Action</th>
                             </tr>
                         </thead>
@@ -465,7 +464,6 @@
                                             </div>
                                           </div>
                                        </td>
-                                       <td><input type="text" name="oos_detail[{{ $loop->index }}][oos_submit_by]" value="{{ Helpers::getArrayKey($oos_detail, 'oos_submit_by') }}"></td>
                                        <td><button type="text" class="removeRowBtn">Remove</button></td>
                                     </tr>
                                 @endforeach

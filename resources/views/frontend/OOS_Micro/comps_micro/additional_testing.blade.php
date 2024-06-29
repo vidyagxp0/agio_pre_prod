@@ -1,4 +1,3 @@
-<!--Additional Testing Proposal  -->
 <div id="CCForm7" class="inner-block cctabcontent">
             <div class="inner-block-content">
                 <div class="sub-head">
@@ -22,7 +21,6 @@
                             </select>
                         </div>
                     </div>
-
                     <div class="col-lg-6">
                         <div class="group-input">
                             <label for="Reference Recores">Additional Test Reference.
@@ -38,9 +36,9 @@
                         <div class="group-input">
                             <label for="Audit Attachments"> Any Other Actions Required</label>
                             <select name="any_other_actions_required_atp">
+                                <option value="">Enter Your Selection Here</option>
                                 <option value="yes" @if ($micro_data->any_other_actions_required_atp == 'yes') selected @endif>Yes</option>
                                 <option value="no" @if ($micro_data->any_other_actions_required_atp == 'no') selected @endif>No</option>
-
                             </select>
                         </div>
                     </div>
@@ -77,7 +75,6 @@
                                                     style="color:red; font-size:20px;"></i></a>
                                         </h6>
                                     @endforeach
-
                                     @endif
                                 </div>
                                 <div class="add-btn">
@@ -86,10 +83,8 @@
                                         oninput="addMultipleFiles(this, 'additional_testing_attachment_atp')" multiple>
                                 </div>
                             </div>
-
                         </div>
                     </div>
-
                     <div class="button-block">
                         <button type="submit" id="ChangesaveButton" class="saveButton">Save</button>
                         <button type="button" class="backButton" onclick="previousStep()">Back</button>

@@ -65,7 +65,7 @@
                         <div class="group-input">
                             <label for="Audit Attachments">Results to be Reported</label>
                             <select name="results_to_be_reported_oosc">
-                                <option>Select Option</option>
+                                <option value="">Enter Your Selection Here</option>
                                 <option value="initial" @if ($micro_data->results_to_be_reported_oosc == 'initial') selected @endif>Initial</option>
                                 <option value="retested-result" @if ($micro_data->results_to_be_reported_oosc == 'retested-result') selected @endif>Retested Result</option>
                             </select>
@@ -88,7 +88,7 @@
                         <div class="group-input">
                             <label for="Reference Recores">OOS Stands </label>
                             <select name="oos_stands_oosc">
-                                <option> Select 
+                                <option value="">Enter Your Selection Here</option>
                                 <option value="valid" @if ($micro_data->oos_stands_oosc == 'valid') selected @endif>Valid</option>
                                 <option value="invalid" @if ($micro_data->oos_stands_oosc == 'invalid') selected @endif>Invalid</option>
                             </select>
@@ -98,7 +98,7 @@
                         <div class="group-input">
                             <label for="Audit Attachments">CAPA Req.</label>
                             <select name="capa_req_oosc">
-                                <option value="">--Select Option---</option>
+                                <option value="">Enter Your Selection Here</option>
                                 <option value="yes" @if ($micro_data->capa_req_oosc == 'yes') selected @endif>Yes</option>
                                 <option value="no" @if ($micro_data->capa_req_oosc == 'no') selected @endif>No</option>
                             </select>
@@ -125,7 +125,7 @@
                         <div class="group-input">
                             <label for="Audit Attachments">Action Plan Req.</label>
                             <select name="action_plan_req_oosc">
-                                <option value="">--Select Option---</option>
+                                <option value="">Enter Your Selection Here</option>
                                 <option value="yes" @if ($micro_data->action_plan_req_oosc == 'yes') selected @endif>Yes</option>
                                 <option value="no" @if ($micro_data->action_plan_req_oosc == 'no') selected @endif>No</option>
                             </select>
@@ -261,7 +261,7 @@
                         <div class="group-input">
                             <label for="Audit Attachments">CAPA Req?</label>
                             <select name="capa_req_ocr">
-                               <option value="">--Select Option---</option>
+                                <option value="">Enter Your Selection Here</option>
                                 <option value="yes" @if ($micro_data->capa_req_ocr == 'yes') selected @endif>Yes</option>
                                 <option value="no" @if ($micro_data->capa_req_ocr == 'no') selected @endif>No</option>
                             </select>
@@ -281,7 +281,7 @@
                         <div class="group-input">
                             <label for="Report Attachments">Required Action Plan? </label>
                             <select name="required_action_plan_ocr">
-                                <option value="">--Select Option---</option>
+                               <option value="">Enter Your Selection Here</option>
                                 <option value="yes" @if ($micro_data->required_action_plan_ocr == 'yes') selected @endif>Yes</option>
                                 <option value="no" @if ($micro_data->required_action_plan_ocr == 'no') selected @endif>No</option>
                             </select>
@@ -291,7 +291,7 @@
                         <div class="group-input">
                             <label for="Reference Recores">Required Action Task?</label>
                             <select name="required_action_task_ocr">
-                                <option value="">--Select Option---</option>
+                                <option value="">Enter Your Selection Here</option>
                                 <option value="yes" @if ($micro_data->required_action_task_ocr == 'yes') selected @endif>Yes</option>
                                 <option value="no" @if ($micro_data->required_action_task_ocr == 'yes') selected @endif>No</option>
                             </select>
@@ -311,7 +311,7 @@
                         <div class="group-input">
                             <label for="Audit Attachments">Risk Assessment Req?</label>
                             <select name="risk_assessment_req_ocr">
-                                <option value="">--Select Option---</option>
+                               <option value="">Enter Your Selection Here</option>
                                 <option value="yes" @if ($micro_data->risk_assessment_req_ocr == 'yes') selected @endif>Yes</option>
                                 <option value="no" @if ($micro_data->risk_assessment_req_ocr == 'no') selected @endif>No</option>
                             </select>
@@ -415,12 +415,12 @@
             <div class="col-lg-6">
                 <div class="group-input">
                     <label for="Auditee"> Action plan requirement ? </label>
-                    <select multiple name="action_plan_requirement_OOS_CQ" placeholder="Select Nature of Deviation"
+                    <select name="action_plan_requirement_OOS_CQ" 
                         data-search="false" data-silent-initial-value-set="true" id="auditee">
                         <option value="">Enter Your Selection Here</option>
-                        <option value="1" {{ (!empty($micro_data->action_plan_requirement_OOS_CQ) && in_array('1', explode(',', $micro_data->action_plan_requirement_OOS_CQ[0]))) ? 'selected' : '' }}>1</option>
-                        <option value="2" {{ (!empty($micro_data->action_plan_requirement_OOS_CQ) && in_array('2', explode(',', $micro_data->action_plan_requirement_OOS_CQ[0]))) ? 'selected' : '' }}>2</option>
-                    </select>
+                        <option value="yes" @if ($micro_data->action_plan_requirement_OOS_CQ == 'yes') selected @endif>Yes</option>
+                        <option value="no" @if ($micro_data->action_plan_requirement_OOS_CQ == 'no') selected @endif>No</option>
+                   </select>
                 </div>
             </div>
             <div class="col-lg-6">

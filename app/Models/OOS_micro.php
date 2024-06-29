@@ -201,7 +201,6 @@ class OOS_micro extends Model
         'phase_i_investigation_ref_pli' =>'array',
         're_sampling_ref_no_piii' => 'array',
         'hypo_exp_reference_piii' => 'array',
-        'impact_assessment_piiqcr' => 'array',
         'recommended_action_reference_piiqcr' => 'array',
         'invest_ref_piiqcr' => 'array',
         'additional_test_reference_atp' => 'array',

@@ -52,8 +52,9 @@
                 <div class="group-input">
                     <label for="Audit Attachments"> Re-sampling Required? </label>
                     <select name="re_sampling_required_piii">
-                        <option value="yes" @if ($micro_data->re_sampling_required_piii == 'yes') selected @endif>Yes</option>
-                        <option value="no" @if ($micro_data->re_sampling_required_piii == 'no') selected @endif>No</option>
+                         <option value="">Enter Your Selection Here</option>
+                         <option value="yes" @if ($micro_data->re_sampling_required_piii == 'yes') selected @endif>Yes</option>
+                         <option value="no" @if ($micro_data->re_sampling_required_piii == 'no') selected @endif>No</option>
 
                     </select>
                 </div>
@@ -80,6 +81,7 @@
                 <div class="group-input">
                     <label for="Audit Attachments"> Hypo/Exp. Required</label>
                     <select name="hypo_exp_required_piii">
+                        <option value="">Enter Your Selection Here</option>
                         <option value="yes" @if ($micro_data->hypo_exp_required_piii == 'yes') selected @endif>Yes</option>
                         <option value="no" @if ($micro_data->hypo_exp_required_piii == 'no') selected @endif>No</option>
                     </select>
@@ -272,7 +274,7 @@ $phase_II_OOS_investigations = [
                     <div class="col-md-12 mb-4">
                         <div class="group-input">
                             <label for="Description Deviation">Impact Assessment.</label>
-                                <textarea class="summernote" name="impact_assessment_piiqc" id="summernote-1">{{ $micro_data->impact_assessment_piiqc }}
+                                <textarea class="summernote" name="impact_assessment_piiqcr" id="summernote-1">{{ $micro_data->impact_assessment_piiqc }}
                                 </textarea>
                         </div>
                     </div>
@@ -280,7 +282,7 @@ $phase_II_OOS_investigations = [
                         <div class="group-input">
                             <label for="Audit Mgr.more Info Reqd On">Recommended Action Required? </label>
                             <select name="recommended_action_required_piiqcr">
-                                <option> Select Option </option>
+                                <option value="">Enter Your Selection Here</option>
                                 <option value="yes" @if ($micro_data->recommended_action_required_piiqcr == 'yes') selected @endif>yes</option>
                                 <option value="No" @if ($micro_data->recommended_action_required_piiqcr == 'No') selected @endif>No</option>
                             </select>

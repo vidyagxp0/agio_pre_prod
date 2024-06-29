@@ -1,4 +1,3 @@
-<!-- Re-Open -->
 <div id="CCForm12" class="inner-block cctabcontent">
     <div class="inner-block-content">
         <div class="sub-head">
