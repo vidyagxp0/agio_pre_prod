@@ -204,30 +204,33 @@ class CapaController extends Controller
         $capa->save();
 
         $data1 = new CapaGrid();
-        $data1->capa_id = $capa->id;
-        $data1->type = "Product_Details";
-        if (!empty($request->product_name)) {
-            $data1->product_name = serialize($request->product_name);
-        }
-        if (!empty($request->product_batch_no)) {
-            $data1->batch_no = serialize($request->product_batch_no);
-        }
-        if (!empty($request->mfg_date)) {
-            $data1->mfg_date = serialize($request->mfg_date);
-        }
-        if (!empty($request->product_batch_desposition)) {
-            $data1->batch_desposition = serialize($request->product_batch_desposition);
-        }
-        if (!empty($request->expiry_date)) {
-            $data1->expiry_date = serialize($request->expiry_date);
-        }
-        if (!empty($request->product_remark)) {
-            $data1->remark = serialize($request->product_remark);
-        }
-        if (!empty($request->product_batch_status)) {
-            $data1->batch_status = serialize($request->product_batch_status);
-        }
+    $data1->capa_id = $capa->id;
+    $data1->type = "Product_Details";
+    
+    if (!empty($request->material_name)) {
+        $data1->product_name = serialize($request->material_name);
+    }
+    if (!empty($request->material_batch_no)) {
+        $data1->batch_no = serialize($request->material_batch_no);
+    }
+    if (!empty($request->material_mfg_date)) {
+        $data1->mfg_date = serialize($request->material_mfg_date);
+    }
+    if (!empty($request->material_batch_desposition)) {
+        $data1->batch_desposition = serialize($request->material_batch_desposition);
+    }
+    if (!empty($request->material_expiry_date)) {
+        $data1->expiry_date = serialize($request->material_expiry_date);
+    }
+    if (!empty($request->material_remark)) {
+        $data1->remark = serialize($request->material_remark);
+    }
+    if (!empty($request->material_batch_status)) {
+        $data1->batch_status = serialize($request->material_batch_status);
+    }
+    // dd($request->all());
         $data1->save();
+
 
         $data2 = new CapaGrid();
         $data2->capa_id = $capa->id;
@@ -2163,8 +2166,14 @@ class CapaController extends Controller
             $parent_name = "CAPA";
 
             return view('frontend.action-item.action-item', compact('old_record','parent_short_description', 'parent_initiator_id', 'parent_intiation_date', 'parent_name', 'parent_division_id', 'parent_record', 'record', 'due_date', 'parent_id', 'parent_type'));
-        } else {
-            return view('frontend.forms.effectiveness-check', compact('old_record','parent_short_description', 'parent_initiator_id', 'parent_intiation_date', 'parent_division_id', 'parent_record', 'record', 'due_date', 'parent_id', 'parent_type'));
+        } 
+        // else {
+        //     return view('frontend.forms.effectiveness-checkkjkjk', compact('old_record','parent_short_description', 'parent_initiator_id', 'parent_intiation_date', 'parent_division_id', 'parent_record', 'record', 'due_date', 'parent_id', 'parent_type'));
+        // }
+        if ($request->child_type == "rca") {
+            // $cc->originator = User::where('id', $cc->initiator_id)->value('name');
+            return view('frontend.forms.root-cause-analysis', compact('record', 'due_date', 'parent_id','old_record', 'parent_type','parent_intiation_date','parent_record','parent_initiator_id','cft'));
+    
         }
     }
 

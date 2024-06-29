@@ -234,7 +234,8 @@
                                                 {{-- <input disabled type="text" name="record"
                                                     value="{{ $data->record }}"> --}}
                                                     <input disabled type="text" name="record" id="record"
-                                                    value="{{ $data->initiator_group_code}}/CP/{{ Helpers::year($data->created_at) }}/{{ $data->record }}">
+                                                    value="{{Helpers::getDivisionName(session()->get('division'))}}/capa/{{ date('y') }}/{{ $data->record }}">
+                                                    
             
                                             </div>
                                         </div>
@@ -690,16 +691,21 @@
                                                 </table>
                                             </div>
                                         </div> --}}
+                                        
+
+
+
+                                        {{-- new added product table --}}
                                         <div class="col-12 sub-head">
-                                        Product Material Details
+                                            Product Material Details
                                         </div>
                                         <div class="col-12">
                                             <div class="group-input">
                                                 <label for="Material Details">
-                                                    Product Material Details<button type="button" name="ann" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : ''}}
-                                                    id="material">+</button>
+                                                    Product Material Details
+                                                    <button type="button" name="ann" id="material">+</button>
                                                 </label>
-                                                <table class="table table-bordered" id="material_details">
+                                                <table class="table table-bordered" id="productmaterial">
                                                     <thead>
                                                         <tr>
                                                             <th>Row #</th>
@@ -710,94 +716,160 @@
                                                             <th>Product Batch Disposition Decision</th>
                                                             <th>Product Remark</th>
                                                             <th>Product Batch Status</th>
+                                                            <th>Action</th>
                                                         </tr>
                                                     </thead>
                                                     <tbody>
-                                                        @if ($data2->material_name)
-                                                        @foreach (unserialize($data2->material_name) as $key => $temps)
-                                                        <tr>
-                                                            <td><input type="text" name="serial_number[]"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : ''}}
-                                                                    value="{{ $key + 1 }}"></td>
-                                                            <!-- {{-- <td><input type="text" name="product_name[]"
-                                                                    value="{{ unserialize($data2->material_name)[$key] ? unserialize($data2->material_name)[$key] : '' }}">
-                                                            </td> --}} -->
-                                                            <td><input type="text" name="material_name[]"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : ''}}
-                                                                value="{{ unserialize($data2->material_name)[$key] ? unserialize($data2->material_name)[$key] : '' }}">
-                                                        </td>
-                                                            <td><input type="text" name="material_batch_no[]"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : ''}}
-                                                                    value="{{ unserialize($data2->material_batch_no)[$key] ? unserialize($data2->material_batch_no)[$key] : '' }}">
-                                                            </td>
-                                                            <!-- {{-- <td><input type="text" name="material_mfg_date[]"
-                                                                    value="{{ unserialize($data2->material_mfg_date)[$key] ? unserialize($data2->material_mfg_date)[$key] : '' }}">
-                                                            </td>
-                                                            <td><input type="text" name="material_expiry_date[]"
-                                                                    value="{{ unserialize($data2->material_expiry_date)[$key] ? unserialize($data2->material_expiry_date)[$key] : '' }}">
-                                                            </td> --}} -->
-                                                            <!-- <td><div class="group-input new-date-data-field mb-0">
-                                                                <div class="input-date "><div
-                                                                 class="calenderauditee">
-                                                                <input type="text" id="material_mfg_date' + serialNumber +'" readonly placeholder="DD-MMM-YYYY" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : ''}}  value="{{ Helpers::getdateFormat(unserialize($data2->material_mfg_date)[$key]) }}" />
-                                                                <input type="date" name="material_mfg_date[]" value="{{ Helpers::getdateFormat(unserialize($data2->material_mfg_date)[$key]) }}" class="hide-input"
-                                                                oninput="handleDateInput(this, `material_mfg_date' + serialNumber +'`)" /></div></div></div></td> -->
-
-                                                                <td><div class="group-input new-date-data-field mb-0">
-                                                                <div class="input-date ">
-                                                              <div class="calenderauditee">
-                                                                <input type="text"   id="material_mfg_date{{$key}}" readonly placeholder="DD-MMM-YYYY" value="{{ Helpers::getdateFormat(unserialize($data2->material_mfg_date)[$key]) }}"/>
-                                                                <input type="date"  id="material_mfg_date{{$key}}_checkdate" value="{{unserialize($data2->material_mfg_date)[$key]}}"  name="material_mfg_date[]"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} value="{{ Helpers::getdateFormat(unserialize($data2->material_mfg_date)[$key]) }}
-                                                                "class="hide-input"
-                                                                oninput="handleDateInput(this, `material_mfg_date{{$key}}`);checkDate('material_mfg_date{{$key}}_checkdate','material_expiry_date{{$key}}_checkdate')"  /></div></div></div></td>
-
-                                                                <!-- <td><div class="group-input new-date-data-field mb-0">
-                                                                    <div class="input-date "><div
-                                                                     class="calenderauditee">
-                                                                    <input type="text" id="material_expiry_date' + serialNumber +'" readonly placeholder="DD-MMM-YYYY" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : ''}}  value="{{ Helpers::getdateFormat(unserialize($data2->material_expiry_date)[$key]) }}" />
-                                                                    <input type="date" name="material_expiry_date[]" value="{{ Helpers::getdateFormat(unserialize($data2->material_expiry_date)[$key]) }}" class="hide-input"
-                                                                    oninput="handleDateInput(this, `material_expiry_date' + serialNumber +'`)" /></div></div></div></td> -->
-                                                                    <td><div class="group-input new-date-data-field mb-0">
-                                                                <div class="input-date ">
-                                                                    <div class="calenderauditee">
-                                                                <input type="text"   id="material_expiry_date{{$key}}" readonly placeholder="DD-MMM-YYYY" value="{{ Helpers::getdateFormat(unserialize($data2->material_expiry_date)[$key]) }}" />
-                                                                <input type="date" id="material_expiry_date{{$key}}_checkdate" value="{{unserialize($data2->material_mfg_date)[$key]}}"  name="material_expiry_date[]"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} value="{{ Helpers::getdateFormat(unserialize($data2->material_expiry_date)[$key]) }}"class="hide-input"
-                                                                oninput="handleDateInput(this, `material_expiry_date{{$key}}`);checkDate('material_mfg_date{{$key}}_checkdate','material_expiry_date{{$key}}_checkdate')"  /></div></div></div></td>
-
-                                                            <td><input type="text" name="material_batch_desposition[]"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : ''}}
-                                                                    value="{{ unserialize($data2->material_batch_desposition)[$key] ? unserialize($data2->material_batch_desposition)[$key] : '' }}">
-                                                            </td>
-                                                             <td><input type="text" name="material_remark[]" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : ''}}
-                                                                    value="{{ unserialize($data2->material_remark)[$key] ? unserialize($data2->material_remark)[$key] : '' }}">
-                                                            </td>
-                                                             <!-- <td><input type="text" id="batch_status" name="material_batch_status[]"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : ''}}
-                                                                    value="{{ unserialize($data2->material_batch_status)[$key] ? unserialize($data2->material_batch_status)[$key] : '' }}">
-                                                            </td>  -->
-                                                            <!-- <td>
-                                                               <select id="batch_status"
-                                                                   name="material_batch_status[]"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}
-
-                                                               <option value="">-- Select value --</option>
-                                                                  <option value="Hold">Hold</option>
-                                                                  <option value="Release">Release</option>
-                                                                <option value="quarantine">Quarantine</option>
-                                                                value="{{ unserialize($data2->material_batch_status)[$key] ? unserialize($data2->material_batch_status)[$key] : '' }}" >
-                                                            </select>
-                                                        </td> -->
-                                                        <td>
-                                                            <select id="batch_status" name="material_batch_status[]"{{ $data->stage == 0 || $data->stage == 6 ? ' disabled' : '' }}>
-                                                                <option value="">-- Select value --</option>
-                                                                <option value="Hold"{{ isset(unserialize($data2->material_batch_status)[$key]) && unserialize($data2->material_batch_status)[$key] == 'Hold' ? ' selected' : '' }}>Hold</option>
-                                                                <option value="Release"{{ isset(unserialize($data2->material_batch_status)[$key]) && unserialize($data2->material_batch_status)[$key] == 'Release' ? ' selected' : '' }}>Release</option>
-                                                                <option value="quarantine"{{ isset(unserialize($data2->material_batch_status)[$key]) && unserialize($data2->material_batch_status)[$key] == 'quarantine' ? ' selected' : '' }}>Quarantine</option>
-                                                            </select>
-                                                        </td>
-
-                                                        </tr>
-                                                    @endforeach
-                                                        @endif
-
+                                                        @if (!empty($data2->material_name))
+                                                                @foreach (unserialize($data2->material_name) as $key => $material_name)
+                                                                    <tr>
+                                                                        <td><input disabled type="text" name="serial_number[]" value="{{ $key + 1 }}"></td>
+                                                                        {{-- <td><input type="text" name="material_name[]" value="{{ $material_name }}"></td> --}}
+                                                                        <td>
+                                                                            <select name="material_name[]" class="material_name">
+                                                                                <option value="">-- Select value --</option>
+                                                                                <option value="PLACEBEFOREBIMATOPROSTOPH.SOLO.01%W/" {{ $material_name == 'PLACEBEFOREBIMATOPROSTOPH.SOLO.01%W/' ? 'selected' : '' }}>PLACEBEFOREBIMATOPROSTOPH.SOLO.01%W/</option>
+                                                                                <option value="BIMATOPROSTANDTIMOLOLMALEATEEDSOLUTION" {{ $material_name == 'BIMATOPROSTANDTIMOLOLMALEATEEDSOLUTION' ? 'selected' : '' }}>BIMATOPROSTANDTIMOLOLMALEATEEDSOLUTION</option>
+                                                                                <option value="CAFFEINECITRATEORALSOLUTION USP 60MG/3ML" {{ $material_name == 'CAFFEINECITRATEORALSOLUTION USP 60MG/3ML' ? 'selected' : '' }}>CAFFEINECITRATEORALSOLUTION USP 60MG/3ML</option>
+                                                                                <option value="BRIMONIDINE TART. OPH SOL 0.1%W/V (CB)" {{ $material_name == 'BRIMONIDINE TART. OPH SOL 0.1%W/V (CB)' ? 'selected' : '' }}>BRIMONIDINE TART. OPH SOL 0.1%W/V (CB)</option>
+                                                                                <option value="DORZOLAMIDEPFREE20MG/MLEDSOLSINGLEDOSECO" {{ $material_name == 'DORZOLAMIDEPFREE20MG/MLEDSOLSINGLEDOSECO' ? 'selected' : '' }}>DORZOLAMIDEPFREE20MG/MLEDSOLSINGLEDOSECO</option>
+                                                                            </select>
+                                                                        </td>
+                                                                        {{-- <td><input type="text" name="material_batch_no[]" value="{{ unserialize($data2->material_batch_no)[$key] ?? '' }}"></td> --}}
+                                                                        <td>
+                                                                            <select name="material_batch_no[]" class="batch_no">
+                                                                                <option value="">select value</option>
+                                                                                <option value="DCAU0030" {{ unserialize($data2->material_batch_no)[$key] == 'DCAU0030' ? 'selected' : '' }}>DCAU0030</option>
+                                                                                <option value="BDZH0007" {{ unserialize($data2->material_batch_no)[$key] == 'BDZH0007' ? 'selected' : '' }}>BDZH0007</option>
+                                                                                <option value="BDZH0006" {{ unserialize($data2->material_batch_no)[$key] == 'BDZH0006' ? 'selected' : '' }}>BDZH0006</option>
+                                                                                <option value="BJJH0004A" {{ unserialize($data2->material_batch_no)[$key] == 'BJJH0004A' ? 'selected' : '' }}>BJJH0004A</option>
+                                                                                <option value="DCAU0036" {{ unserialize($data2->material_batch_no)[$key] == 'DCAU0036' ? 'selected' : '' }}>DCAU0036</option>
+                                                                            </select>
+                                                                        </td>
+                                                                        <td><input type="month" name="material_mfg_date[]" value="{{ unserialize($data2->material_mfg_date)[$key] ?? '' }}"></td>
+                                                                        <td><input type="month" name="material_expiry_date[]" value="{{ unserialize($data2->material_expiry_date)[$key] ?? '' }}"></td>
+                                                                        <td><input type="text" name="material_batch_desposition[]" value="{{ unserialize($data2->material_batch_desposition)[$key] ?? '' }}"></td>
+                                                                        <td><input type="text" name="material_remark[]" value="{{ unserialize($data2->material_remark)[$key] ?? '' }}"></td>
+                                                                        {{-- <td><input type="text" name="material_batch_status[]" value="{{ unserialize($data2->material_batch_status)[$key] ?? '' }}"></td> --}}
+                                                                        <td>
+                                                                            <select name="material_batch_status[]" class="batch_status">
+                                                                                <option value="">-- Select value --</option>
+                                                                                <option value="Hold" {{ unserialize($data2->material_batch_status)[$key] == 'Hold' ? 'selected' : '' }}>Hold</option>
+                                                                                <option value="Release" {{ unserialize($data2->material_batch_status)[$key] == 'Release' ? 'selected' : '' }}>Release</option>
+                                                                                <option value="quarantine" {{ unserialize($data2->material_batch_status)[$key] == 'quarantine' ? 'selected' : '' }}>Quarantine</option>
+                                                                            </select>
+                                                                        </td>
+                                                                        <td><button type="button" class="removeRowBtn">Remove</button></td>
+                                                                    </tr>
+                                                                @endforeach
+                                                            @endif
                                                     </tbody>
                                                 </table>
                                             </div>
                                         </div>
+                                        <script>
+                                            $(document).ready(function () {
+                                                $('#material').click(function (e) {
+                                                    e.preventDefault();
+                                        
+                                                    // Clone the first row
+                                                    var newRow = $('#productmaterial tbody tr:first').clone();
+                                        
+                                                    // Update the serial number
+                                                    var lastSerialNumber = parseInt($('#productmaterial tbody tr:last input[name="serial_number[]"]').val());
+                                                    newRow.find('input[name="serial_number[]"]').val(lastSerialNumber + 1);
+                                        
+                                                    // Clear inputs in the new row
+                                                    newRow.find('input[name="material_name[]"]').val('');
+                                                    newRow.find('input[name="material_batch_no[]"]').val('');
+                                                    newRow.find('input[name="material_mfg_date[]"]').val('');
+                                                    newRow.find('input[name="material_expiry_date[]"]').val('');
+                                                    newRow.find('input[name="material_batch_desposition[]"]').val('');
+                                                    newRow.find('input[name="material_remark[]"]').val('');
+                                                    newRow.find('input[name="material_batch_status[]"]').val('');
+                                        
+                                                    // Append the new row to the table body
+                                                    $('#productmaterial tbody').append(newRow);
+                                                });
+                                        
+                                                // Remove row functionality
+                                                $(document).on('click', '.removeRowBtn', function() {
+                                                    $(this).closest('tr').remove();
+                                        
+                                                    // Update serial numbers after removing a row
+                                                    $('#productmaterial tbody tr').each(function(index) {
+                                                        $(this).find('input[name="serial_number[]"]').val(index + 1);
+                                                    });
+                                                });
+                                            });
+                                        </script>
+                                        
+                                        {{-- new added product table --}}
+
+                                    
+                                        {{-- <script>
+                                            $(document).ready(function() {
+                                                $('#add-row-btn').click(function() {
+                                                    addRow('root-cause-first-table');
+                                                });
+                                    
+                                                $(document).on('click', '.removeRowBtn', function() {
+                                                    $(this).closest('tr').remove();
+                                                    updateSerialNumbers();
+                                                });
+                                    
+                                                updateSerialNumbers();
+                                            });
+                                    
+                                            function addRow(tableId) {
+                                                var table = document.getElementById(tableId);
+                                                var tbody = table.getElementsByTagName('tbody')[0];
+                                                var currentRowCount = tbody.rows.length;
+                                    
+                                                var newRow = tbody.insertRow(currentRowCount);
+                                    
+                                                var cell1 = newRow.insertCell(0);
+                                                cell1.innerHTML = '<input disabled type="text" name="serial_number[]" value="' + (currentRowCount + 1) + '">';
+                                    
+                                                var cell2 = newRow.insertCell(1);
+                                                cell2.innerHTML = '<input type="text" name="material_name[]">';
+                                    
+                                                var cell3 = newRow.insertCell(2);
+                                                cell3.innerHTML = '<input type="text" name="material_batch_no[]">';
+                                    
+                                                var cell4 = newRow.insertCell(3);
+                                                cell4.innerHTML = '<input type="text" name="material_mfg_date[]">';
+                                    
+                                                var cell5 = newRow.insertCell(4);
+                                                cell5.innerHTML = '<input type="text" name="material_expiry_date[]">';
+                                    
+                                                var cell6 = newRow.insertCell(5);
+                                                cell6.innerHTML = '<input type="text" name="material_batch_desposition[]">';
+                                    
+                                                var cell7 = newRow.insertCell(6);
+                                                cell7.innerHTML = '<input type="text" name="material_remark[]">';
+                                    
+                                                var cell8 = newRow.insertCell(7);
+                                                cell8.innerHTML = '<input type="text" name="material_batch_status[]">';
+                                    
+                                                var cell9 = newRow.insertCell(8);
+                                                cell9.innerHTML = '<button type="button" class="removeRowBtn">Remove</button>';
+                                    
+                                                updateSerialNumbers();
+                                            }
+                                    
+                                            function updateSerialNumbers() {
+                                                var table = document.getElementById('root-cause-first-table').getElementsByTagName('tbody')[0];
+                                                for (var i = 0; i < table.rows.length; i++) {
+                                                    table.rows[i].cells[0].getElementsByTagName('input')[0].value = i + 1;
+                                                }
+                                            }
+                                        </script> --}}
+                                        
+                                        
+                                        
+                                        
+                                        
                                         <div class="col-12 sub-head">
                                             Equipment/Instruments Details
                                         </div>
@@ -815,6 +887,8 @@
                                                             <th>Equipment/Instruments Name</th>
                                                             <th>Equipment/Instruments ID</th>
                                                             <th>Equipment/Instruments Comments</th>
+                                                            <th>Action</th>
+
                                                         </tr>
                                                     </thead>
                                                     <tbody>
@@ -833,6 +907,8 @@
                                                             <td><input type="text" name="equipment_comments[]"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : ''}}
                                                                     value="{{ unserialize($data3->equipment_comments)[$key] ? unserialize($data3->equipment_comments)[$key] : '' }}">
                                                             </td>
+                                                            <td><button type="button" class="removeRowBtn">Remove</button></td>
+
                                                         </tr>
                                                     @endforeach
                                                         @endif

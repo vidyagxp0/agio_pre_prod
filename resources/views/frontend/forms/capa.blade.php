@@ -27,48 +27,7 @@
             }
         }
     </script>
-    <!-- <script>
-        $(document).ready(function() {
-            $('#material').click(function(e) {
-                function generateTableRow(serialNumber) {
-                    var users = @json($users);
-                    console.log(users);
-                    var html =
-                        '<tr>' +
-                        '<td><input disabled type="text" name="serial_number[]" value="' + serialNumber +
-                        '"></td>' +
-                        '<td><input type="text" name="material_name[]"></td>' +
-                        '<td><input type="text" name="material_batch_no[]"></td>' +
-
-                        '<td><div class="group-input new-date-data-field mb-0"><div class="input-date "><div class="calenderauditee"> <input type="text" id="material_mfg_date' + serialNumber +'" readonly placeholder="DD-MMM-YYYY" /><input type="date" name="material_mfg_date[]" id="material_mfg_date' + serialNumber +'_checkdate"  class="hide-input" oninput="handleDateInput(this, `material_mfg_date' + serialNumber +'`);checkDate(`material_mfg_date1' + serialNumber +'_checkdate`,`material_expiry_date' + serialNumber +'_checkdate`)" /></div></div></div></td>' +
-
-
-                        '<td><div class="group-input new-date-data-field mb-0"><div class="input-date "><div class="calenderauditee"> <input type="text" id="material_expiry_date' + serialNumber +'" readonly placeholder="DD-MMM-YYYY" /><input type="date" name="material_expiry_date[]" id="material_expiry_date'+ serialNumber +'_checkdate" class="hide-input" oninput="handleDateInput(this, `material_expiry_date' + serialNumber +'`);checkDate(`material_mfg_date' + serialNumber +'_checkdate`,`material_expiry_date' + serialNumber +'_checkdate`)" /></div></div></div></td>' +
-
-                        '<td><input type="text" name="material_batch_desposition[]"></td>' +
-                        '<td><input type="text" name="material_remark[]"></td>' +
-                        '<td><select name="material_batch_status[]">' +
-                        '<option value="">Select a value</option>';
-
-                    for (var i = 0; i < users.length; i++) {
-                        html += '<option value="' + users[i].id + '">' + users[i].name + '</option>';
-                    }
-
-                    html += '</select></td>' +
-
-
-                        '</tr>';
-
-                    return html;
-                }
-
-                var tableBody = $('#material tbody');
-                var rowCount = tableBody.children('tr').length;
-                var newRow = generateTableRow(rowCount + 1);
-                tableBody.append(newRow);
-            });
-        });
-    </script> -->
+    
 
     <div class="form-field-head">
 
@@ -136,7 +95,7 @@
                                         {{-- <input disabled type="text" name="record" value=""> --}}
                                         {{-- <input disabled type="text" name="record" value=" {{ Helpers::getDivisionName(session()->get('division')) }}/LI/{{ date('Y') }}/{{ $record}}"> --}}
                                         <input disabled type="text" name="record" id="record" 
-                                        value="{{ Helpers::getDivisionName(session()->get('division')) }}/---/capa/{{ date('y') }}/{{ $record }}">
+                                        value="{{ Helpers::getDivisionName(session()->get('division')) }}/capa/{{ date('y') }}/{{ $record }}">
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
@@ -593,9 +552,10 @@
                             <div class="col-12">
                                 <div class="group-input">
                                     <label for="Material Details">
-                                        Product Material Details<button type="button" name="ann" id="material">+</button>
+                                        Product Material Details
+                                        <button type="button" name="ann" id="material">+</button>
                                     </label>
-                                    <table class="table table-bordered" id="material_details">
+                                    <table class="table table-bordered" id="productmaterial">
                                         <thead>
                                             <tr>
                                                 <th>Row #</th>
@@ -609,31 +569,20 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-
-                                        </tbody>
-                                        <tbody>
-                                                <td><input disabled type="text" name="serial_number[]" value="1">
-                                                </td>
-                                                <td> <select name="material_name[]" id="material_name">
-                                                        <option value="">-- Select value --</option>
-                                                        <option value="PLACEBEFOREBIMATOPROSTOPH.SOLO.01%W/">
-                                                            PLACEBEFOREBIMATOPROSTOPH.SOLO.01%W/
-                                                        </option>
-                                                        <option value="BIMATOPROSTANDTIMOLOLMALEATEEDSOLUTION">
-                                                            BIMATOPROSTANDTIMOLOLMALEATEEDSOLUTION
-                                                        </option>
-                                                        <option value="CAFFEINECITRATEORALSOLUTION USP 60MG/3ML">
-                                                            CAFFEINECITRATEORALSOLUTION USP 60MG/3ML
-                                                        </option>
-                                                        <option value="BRIMONIDINE TART. OPH SOL 0.1%W/V (CB)">BRIMONIDINE
-                                                            TART. OPH SOL 0.1%W/V (CB)
-                                                        </option>
-                                                        <option value="DORZOLAMIDEPFREE20MG/MLEDSOLSINGLEDOSECO">
-                                                            DORZOLAMIDEPFREE20MG/MLEDSOLSINGLEDOSECO
-                                                        </option>
-                                                    </select></td>
+                                            <tr>
+                                                <td><input disabled type="text" name="serial_number[]" value="1"></td>
                                                 <td>
-                                                    <select name="material_batch_no[]" id="batch_no">
+                                                    <select name="material_name[]" class="material_name">
+                                                        <option value="">-- Select value --</option>
+                                                        <option value="PLACEBEFOREBIMATOPROSTOPH.SOLO.01%W/">PLACEBEFOREBIMATOPROSTOPH.SOLO.01%W/</option>
+                                                        <option value="BIMATOPROSTANDTIMOLOLMALEATEEDSOLUTION">BIMATOPROSTANDTIMOLOLMALEATEEDSOLUTION</option>
+                                                        <option value="CAFFEINECITRATEORALSOLUTION USP 60MG/3ML">CAFFEINECITRATEORALSOLUTION USP 60MG/3ML</option>
+                                                        <option value="BRIMONIDINE TART. OPH SOL 0.1%W/V (CB)">BRIMONIDINE TART. OPH SOL 0.1%W/V (CB)</option>
+                                                        <option value="DORZOLAMIDEPFREE20MG/MLEDSOLSINGLEDOSECO">DORZOLAMIDEPFREE20MG/MLEDSOLSINGLEDOSECO</option>
+                                                    </select>
+                                                </td>
+                                                <td>
+                                                    <select name="material_batch_no[]" class="batch_no">
                                                         <option value="">select value</option>
                                                         <option value="DCAU0030">DCAU0030</option>
                                                         <option value="BDZH0007">BDZH0007</option>
@@ -642,45 +591,59 @@
                                                         <option value="DCAU0036">DCAU0036</option>
                                                     </select>
                                                 </td>
-                                                <!-- <td><input type="date" name="material_mfg_date[]"></td>
-                                                <td><input type="date" name="material_expiry_date[]"></td> -->
                                                 <td>
-                                                    <div class="group-input new-date-data-field mb-0">
-                                                        <div class="input-date ">
-                                                            <div class="calenderauditee">
-                                                                <input type="text"  class="test" id="material_mfg_date" readonly placeholder="DD-MMM-YYYY" />
-                                                                <input type="date"   id="material_mfg_date_checkdate" name="material_mfg_date[]" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"class="hide-input"
-                                                                oninput="handleDateInput(this, `material_mfg_date`);checkDate('material_mfg_date_checkdate','material_expiry_date_checkdate')" />
-                                                            </div>
-                                                        </div>
-                                                    </div>
+                                                    <input type="month" name="material_mfg_date[]" class="material_mfg_date" />
                                                 </td>
                                                 <td>
-                                                    <div class="group-input new-date-data-field mb-0">
-                                                        <div class="input-date ">
-                                                            <div  class="calenderauditee">
-                                                                <input type="text"  class="test" id="material_expiry_date" readonly placeholder="DD-MMM-YYYY" />
-                                                                <input type="date" id="material_expiry_date_checkdate"name="material_expiry_date[]" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input"
-                                                                 oninput="handleDateInput(this, `material_expiry_date`);checkDate('material_mfg_date_checkdate','material_expiry_date_checkdate')" />
-                                                            </div>
-                                                        </div>
-                                                    </div>
+                                                    <input type="month" name="material_expiry_date[]" class="material_expiry_date" />
                                                 </td>
-
                                                 <td><input type="text" name="material_batch_desposition[]"></td>
                                                 <td><input type="text" name="material_remark[]"></td>
                                                 <td>
-                                                    <select name="material_batch_status[]" id="batch_status">
+                                                    <select name="material_batch_status[]" class="batch_status">
                                                         <option value="">-- Select value --</option>
                                                         <option value="Hold">Hold</option>
                                                         <option value="Release">Release</option>
                                                         <option value="quarantine">Quarantine</option>
                                                     </select>
                                                 </td>
-                                            </tbody>
-                                        </table>
-                                    </div>
+                                            </tr>
+                                        </tbody>
+                                    </table>
                                 </div>
+                            </div>
+                            
+                            <script>
+                                $(document).ready(function () {
+                                    $('#material').click(function (e) {
+                                        e.preventDefault();
+                                        
+                                        // Clone the first row
+                                        var newRow = $('#productmaterial tbody tr:first').clone();
+                                        
+                                        // Update the serial number
+                                        var lastSerialNumber = parseInt($('#productmaterial tbody tr:last input[name="serial_number[]"]').val());
+                                        newRow.find('input[name="serial_number[]"]').val(lastSerialNumber + 1);
+                                        
+                                        // Clear inputs in the new row
+                                        newRow.find('select.material_name').val('');
+                                        newRow.find('select.batch_no').val('');
+                                        newRow.find('input.material_mfg_date').val('');
+                                        newRow.find('input.material_expiry_date').val('');
+                                        newRow.find('input[name="material_batch_desposition[]"]').val('');
+                                        newRow.find('input[name="material_remark[]"]').val('');
+                                        newRow.find('select.batch_status').val('');
+                                        
+                                        // Append the new row to the table body
+                                        $('#productmaterial tbody').append(newRow);
+                                    });
+                                });
+                            </script>
+                            
+                            
+
+                            
+                            
                                 <div class="col-12 sub-head">
                                     Equipment/Instruments Details
                                 </div>

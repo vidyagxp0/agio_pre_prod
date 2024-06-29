@@ -200,8 +200,8 @@
                             <div style="margin-bottom: 5px;  font-weight: bold;"> Originator
                                 :{{ $document->initiator ? $document->initiator : '' }}</div>
                             <div style="margin-bottom: 5px; font-weight: bold;">Short Description :
-                                {{ $document->description_gi }}</div>
-                            <div style="margin-bottom: 5px;  font-weight: bold;">Due Date : {{ $document->due_date_gi }}</div>
+                                {{ $document->short_description }}</div>
+                            <div style="margin-bottom: 5px;  font-weight: bold;">Due Date : {{ $document->due_date }}</div>
 
                         </div>
         </div>
