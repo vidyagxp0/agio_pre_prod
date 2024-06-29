@@ -39,6 +39,7 @@ use App\Http\Controllers\tms\QuestionBankController;
 use App\Http\Controllers\tms\QuestionController;
 use App\Http\Controllers\tms\QuizeController;
 use App\Http\Controllers\tms\TrainerController;
+use App\Http\Controllers\FieldVisitController;
 use App\Http\Controllers\rcms\OOTController;
 use App\Imports\DocumentsImport;
 use Illuminate\Support\Facades\Route;
@@ -509,4 +510,10 @@ Route::post('extension_send_stage/{id}', [ExtensionNewController::class, 'sendst
 
 
 //=====================================================================
-// >>>>>>> B-backup
+//======================field-visit===================
+// Route::view('field_visit','frontend.field-visit.field_visit_new');
+Route::get('field_visit', [FieldVisitController::class, 'index']);
+Route::post('field_visit_store', [FieldVisitController::class, 'store'])->name('field_visit_store');
+Route::put('field_visit_update/{id}', [FieldVisitController::class, 'update'])->name('field_visit_update');
+Route::get('field_visit_show/{id}', [FieldVisitController::class, 'show'])->name('field_visit_show');
+
