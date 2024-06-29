@@ -679,6 +679,9 @@
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                 Initiator Updated Complete
                             </button>
+                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal">
+                                Child
+                            </button>
                         @elseif($data->stage == 8 && (in_array(39, $userRoleIds) || in_array(18, $userRoleIds)))
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#sendToInitiator">
                                 Send to Opened
@@ -1965,49 +1968,54 @@
                                                         does not require completion</small></div>
                                                 <textarea class="tiny" name="HOD_Remarks" id="summernote-4" required>{{ $data->HOD_Remarks }}</textarea>
                                             </div>
-                                        @else
-                                            <div class="group-input">
-                                                <label for="HOD Remarks">HOD Remarks</label>
-                                                <div><small class="text-primary">Please insert "NA" in the data field if it
-                                                        does not require completion</small></div>
-                                                <textarea readonly class="tiny" name="HOD_Remarks" id="summernote-4">{{ $data->HOD_Remarks }}</textarea>
-                                            </div>
+                                            @else
+                                            
+                                        <div class="row">
+                                    <div class="sub-head">
+                                        HOD Review
+                                    </div>
+                                    <div class="group-input">
+                                        <label for="HOD Remarks">HOD Remarks</label>
+                                        <div><small class="text-primary">Please insert "NA" in the data field if it
+                                            does not require completion</small></div>
+                                            <textarea readonly class="tiny" name="HOD_Remarks" id="summernote-4">{{ $data->HOD_Remarks }}</textarea>
+                                        </div>
                                         @endif
                                         @error('HOD_Remarks')
-                                            <div class="text-danger">{{ $message }}</div>
+                                        <div class="text-danger">{{ $message }}</div>
                                         @enderror
                                     </div>
                                     <div class="col-12">
                                         @if ($data->stage == 2)
-                                            <div class="group-input">
-                                                <label for="Inv Attachments">HOD Attachments</label>
-                                                <div><small class="text-primary">Please Attach all relevant or supporting
-                                                        documents</small></div>
+                                        <div class="group-input">
+                                            <label for="Inv Attachments">HOD Attachments</label>
+                                            <div><small class="text-primary">Please Attach all relevant or supporting
+                                                documents</small></div>
                                                 <div class="file-attachment-field">
                                                     <div disabled class="file-attachment-list" id="Audit_file">
                                                         @if ($data->Audit_file)
-                                                            @foreach (json_decode($data->Audit_file) as $file)
-                                                                <h6 class="file-container text-dark"
-                                                                    style="background-color: rgb(243, 242, 240);">
-                                                                    <b>{{ $file }}</b>
-                                                                    <a href="{{ asset('upload/' . $file) }}"
-                                                                        target="_blank"><i class="fa fa-eye text-primary"
-                                                                            style="font-size:20px; margin-right:-10px;"></i></a>
-                                                                    <a class="remove-file"
-                                                                        data-file-name="{{ $file }}"><i
-                                                                            class="fa-solid fa-circle-xmark"
-                                                                            style="color:red; font-size:20px;"></i></a>
-                                                                </h6>
-                                                            @endforeach
-                                                        @endif
-                                                    </div>
-                                                    <div class="add-btn">
-                                                        <div>Add</div>
-                                                        <input
-                                                            {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}
-                                                            type="file" id="HOD_Attachments"
-                                                            name="Audit_file[]"{{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
-                                                            oninput="addMultipleFiles(this, 'Audit_file')" multiple>
+                                                        @foreach (json_decode($data->Audit_file) as $file)
+                                                        <h6 class="file-container text-dark"
+                                                        style="background-color: rgb(243, 242, 240);">
+                                                        <b>{{ $file }}</b>
+                                                        <a href="{{ asset('upload/' . $file) }}"
+                                                        target="_blank"><i class="fa fa-eye text-primary"
+                                                        style="font-size:20px; margin-right:-10px;"></i></a>
+                                                        <a class="remove-file"
+                                                        data-file-name="{{ $file }}"><i
+                                                        class="fa-solid fa-circle-xmark"
+                                                        style="color:red; font-size:20px;"></i></a>
+                                                    </h6>
+                                                    @endforeach
+                                                    @endif
+                                                </div>
+                                                <div class="add-btn">
+                                                    <div>Add</div>
+                                                    <input
+                                                    {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}
+                                                    type="file" id="HOD_Attachments"
+                                                    name="Audit_file[]"{{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
+                                                    oninput="addMultipleFiles(this, 'Audit_file')" multiple>
                                                     </div>
                                                 </div>
                                             </div>
@@ -2015,37 +2023,96 @@
                                             <div class="group-input">
                                                 <label for="Inv Attachments">HOD Attachments</label>
                                                 <div><small class="text-primary">Please Attach all relevant or supporting
-                                                        documents</small></div>
+                                                    documents</small></div>
                                                 <div class="file-attachment-field">
                                                     <div disabled class="file-attachment-list" id="Audit_file">
                                                         @if ($data->Audit_file)
-                                                            @foreach (json_decode($data->Audit_file) as $file)
-                                                                <h6 class="file-container text-dark"
-                                                                    style="background-color: rgb(243, 242, 240);">
-                                                                    <b>{{ $file }}</b>
-                                                                    <a href="{{ asset('upload/' . $file) }}"
-                                                                        target="_blank"><i class="fa fa-eye text-primary"
-                                                                            style="font-size:20px; margin-right:-10px;"></i></a>
-                                                                    <a class="remove-file"
-                                                                        data-file-name="{{ $file }}"><i
-                                                                            class="fa-solid fa-circle-xmark"
-                                                                            style="color:red; font-size:20px;"></i></a>
-                                                                </h6>
-                                                            @endforeach
-                                                        @endif
-                                                    </div>
-                                                    <div class="add-btn">
-                                                        <div>Add</div>
-                                                        <input disabled
-                                                            {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}
-                                                            type="file" id="HOD_Attachments"
-                                                            name="Audit_file[]"{{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
-                                                            oninput="addMultipleFiles(this, 'Audit_file')" multiple>
-                                                    </div>
+                                                        @foreach (json_decode($data->Audit_file) as $file)
+                                                        <h6 class="file-container text-dark"
+                                                        style="background-color: rgb(243, 242, 240);">
+                                                        <b>{{ $file }}</b>
+                                                        <a href="{{ asset('upload/' . $file) }}"
+                                                        target="_blank"><i class="fa fa-eye text-primary"
+                                                        style="font-size:20px; margin-right:-10px;"></i></a>
+                                                        <a class="remove-file"
+                                                        data-file-name="{{ $file }}"><i
+                                                        class="fa-solid fa-circle-xmark"
+                                                        style="color:red; font-size:20px;"></i></a>
+                                                    </h6>
+                                                    @endforeach
+                                                    @endif
+                                                </div>
+                                                <div class="add-btn">
+                                                    <div>Add</div>
+                                                    <input disabled
+                                                    {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}
+                                                    type="file" id="HOD_Attachments"
+                                                    name="Audit_file[]"{{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
+                                                    oninput="addMultipleFiles(this, 'Audit_file')" multiple>
                                                 </div>
                                             </div>
+                                        </div>
                                         @endif
                                     </div>
+                                </div>
+                                    
+                                    
+                                    
+                                    <div class="row">
+                                <div class="sub-head">
+                                    Risk Assessment
+                                </div>
+                                <div class="group-input">
+                                <div>       
+                                <label for="Initial Impact Assessment">Initial Impact Assessment</label>
+                                            <textarea  class="tiny" name="Initial_Impact_Assessment" >{{$data->Initial_Impact_Assessment}}</textarea>
+                                        </div>
+                                        <div>
+                                            <label for="Probable root cause">Probable root cause</label>
+                                            <textarea class="tiny" name="Probable_root_cause" >{{$data->Probable_root_cause}}</textarea>
+                                        </div>
+                                        <div>
+                                            <label for="Initial Risk Assessment">Initial Risk Assessment</label>
+                                            <textarea class="tiny" name="Initial_Risk_Assessment" >{{$data->Initial_Risk_Assessment}}</textarea>
+                                        </div>
+                                        <div class="col-12">
+                                        <div class="col-lg-12">
+                                    
+                                        <div class="group-input">
+                                        <label for="Assessment Attachments">Assessment Attachment</label>
+                                        <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
+                                        <!-- {{-- <input type="file" id="myfile" name="attachments_assessment" {{ $data->stage == 0 || $data->stage == 8 ? "disabled" : "" }}
+                                            value="{{ $data->attachments_assessment }}"> --}} -->
+                                            <div class="file-attachment-field">
+                                                <div class="file-attachment-list" id="attachments_assessment">
+                                                    @if ($data->attachments_assessment)
+                                                    @foreach (json_decode($data->attachments_assessment) as $file)
+                                                        <h6 type="button" class="file-container text-dark"
+                                                            style="background-color: rgb(243, 242, 240);">
+                                                            <b>{{ $file }}</b>
+                                                            <a href="{{ asset('upload/' . $file) }}"
+                                                                target="_blank"><i class="fa fa-eye text-primary"
+                                                                    style="font-size:20px; margin-right:-10px;"></i></a>
+                                                            <a type="button" class="remove-file"
+                                                                data-file-name="{{ $file }}"><i
+                                                                    class="fa-solid fa-circle-xmark"
+                                                                    style="color:red; font-size:20px;"></i></a>
+                                                        </h6>
+                                                    @endforeach
+                                                @endif
+                                                </div>
+                                                <div class="add-btn">
+                                                    <div>Add</div>
+                                                    <input {{ $data->stage == 0 || $data->stage == 8 ? "disabled" : "" }} type="file" id="attachments_assessment" name="attachments_assessment[]"
+                                                        oninput="addMultipleFiles(this, 'attachments_assessment')" multiple>
+                                                </div>
+                                            </div>
+                                    </div>
+                                </div>
+                                </div>
+
+                                
+                                        </div></div>
 
                                     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
                                     <script>
@@ -2365,7 +2432,25 @@
                                     </div>
                                 </div> -->
 
-                                <div class="col-lg-6">
+                                <!-- <div class="col-lg-6">
+                                        <div class="group-input">
+                                            <label for="Capa Required">CAPA Required? <span
+                                                    class="text-danger">*</span></label>
+                                            <select
+                                                name="capa_required"{{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
+                                                id="capa_required" value="{{ $data->capa_required }}">
+                                                <option value="select">-- Select --</option>
+                                                <option @if ($data->capa_required == 'yes') selected @endif value='yes'>
+                                                    Yes</option>
+                                                <option @if ($data->capa_required == 'no') selected @endif value='no'>
+                                                    No</option>
+                                            </select>
+                                            @error('capa_required')
+                                                <div class="text-danger">{{ $message }}</div>
+                                            @enderror
+                                        </div>
+                                    </div> -->
+                                    <div class="col-lg-6">
                                         <div class="group-input">
                                             <label for="Capa Required">CAPA Required? <span
                                                     class="text-danger">*</span></label>
@@ -2547,11 +2632,11 @@
                                                     @endif
                                                 </div>
                                                 <div class="col-md-12">
-                                        <div class="group-input">
+                                        <!-- <div class="group-input">
                                             <label for="CancellationQA">QA Initial Remarks <span
                                                     class="text-danger">*</span></label>
                                             <textarea name="CancellationQA"{{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }} id="summernote-6">{{ $data->CancellationQA }}</textarea>
-                                        </div>
+                                        </div> -->
                                     </div>
 
                                                 <div class="add-btn">
@@ -10016,13 +10101,13 @@
                         <textarea class="tiny" name="Description_of_Discrepancy" id="Description_of_Discrepancy" value="">{{$data->Description_of_Discrepancy}}</textarea>
                     </div>
                 </div>
-                <div class="col-md-12 mb-3">
+                <!-- <div class="col-md-12 mb-3">
                     <div class="group-input">
                         <label for="Root_Cause">Root Cause</label>
                         <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
                         <textarea class="tiny" name="capa_root_cause" id="capa_root_cause">{{ $data->capa_root_cause }}</textarea>
                     </div>
-                </div>
+                </div> -->
                 <div class="col-md-12 mb-3">
                     <div class="group-input">
                         <label for="Immediate_Action_Take">Immediate Action Taken (If Applicable)</label>
@@ -12718,8 +12803,12 @@
                                 </label>
                                 <br>
                                 <label for="major">
-                                    <input type="radio" name="child_type" id="major" value="extension">
+                                    <input type="radio" name="child_type" id="majorr" value="extension">
                                     Extension
+                                </label>
+                                <label for="major">
+                                    <input type="radio" name="child_type" id="majorr" value="capa">
+                                    CAPA
                                 </label>
                             @endif
 
@@ -12733,6 +12822,25 @@
                                     <input type="radio" name="child_type" id="major" value="extension">
                                     Extension
                                 </label>
+                                <label for="major">
+                                    <input type="radio" name="child_type" id="major" value="rca">
+                                    RCA
+                                </label>
+                            @endif
+                            @if ($data->stage == 7)
+                                <label for="major">
+                                    <input type="radio" name="child_type" id="major" value="capa">
+                                    CAPA
+                                </label>
+                                <!-- <br>
+                                <label for="major">
+                                    <input type="radio" name="child_type" id="major" value="extension">
+                                    Extension
+                                </label>
+                                <label for="major">
+                                    <input type="radio" name="child_type" id="major" value="rca">
+                                    RCA
+                                </label> -->
                             @endif
                         </div>
 

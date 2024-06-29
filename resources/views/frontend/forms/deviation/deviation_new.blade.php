@@ -1573,7 +1573,7 @@
                         <div class="inner-block-content">
                             <div class="row">
 
-
+                                    <div class="sub-head">HOD Review</div>
                                 <div class="col-md-12 mb-3">
                                     <div class="group-input">
                                         <label for="HOD Remarks">HOD Remarks</label>
@@ -1599,7 +1599,43 @@
                                 </div>
 
 
+                                <div class="row">
+                                <div class="sub-head">
+                                    Risk Assessment
+                                </div>
+                                <div class="group-input">
+                                <div>       
+                                <label for="Initial Impact Assessment">Initial Impact Assessment</label>
+                                            <textarea class="tiny" name="Initial_Impact_Assessment" id="summernote-4"></textarea>
+                                        </div>
+                                        <div>
+                                            <label for="Probable root cause">Probable root cause</label>
+                                            <textarea class="tiny" name="Probable_root_cause" id="summernote-4"></textarea>
+                                        </div>
+                                        <div>
+                                            <label for="Initial Risk Assessment">Initial Risk Assessment</label>
+                                            <textarea class="tiny" name="Initial_Risk_Assessment" id="summernote-4"></textarea>
+                                        </div>
+                                        <div class="col-12">
+                                    <div class="group-input">
+                                        <label for="attachments_assessment">Assessment Attachment</label>
+                                        <!-- <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div> -->
+                                       
+                                        <div class="file-attachment-field">
+                                            <div class="file-attachment-list" id="attachments_assessment"></div>
+                                            <div class="add-btn">
+                                                <div>Add</div>
+                                                <input type="file" id="attachments_assessment" name="attachments_assessment[]"
+                                                    oninput="addMultipleFiles(this, 'attachments_assessment')" multiple>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                        </div>
+
+
                             </div>
+                                </div>
                             <div class="button-block">
                                 <button type="submit" style=" justify-content: center; width: 4rem; margin-left: 1px;" class="saveButton">Save </button>
                                 <a href="/rcms/qms-dashboard" style=" justify-content: center; width: 4rem; margin-left: 1px;">
@@ -1613,10 +1649,6 @@
                                         data-bs-target="#launch_extension">
                                         Launch Extension
                                     </a> -->
-                                    {{-- <a type="button" class="button  launch_extension" data-bs-toggle="modal"
-                                        data-bs-target="#effectivenss_extension">
-                                        Launch Effectiveness Check
-                                    </a> --}}
                             </div>
                         </div>
                     </div>
@@ -2037,7 +2069,7 @@
                                 $('#customers').prop('required', true);
                             }
                         });
-                    </script> --}}
+                    </script> 
                     <!-- CFT -->
                     <div id="CCForm7" class="inner-block cctabcontent">
                         <div class="inner-block-content">

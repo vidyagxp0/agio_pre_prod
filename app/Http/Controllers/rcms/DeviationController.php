@@ -81,7 +81,6 @@ class DeviationController extends Controller
         // }
         $initiationDate = $request->intiation_date;
         $deviationCategory = $request->Deviation_category;
-          // Determine the number of days based on deviation category
             $days = 0;
             switch ($deviationCategory) {
                 case 'minor':
@@ -107,6 +106,10 @@ class DeviationController extends Controller
         # -------------new-----------
         //  $deviation->record_number = $request->record_number;
         $deviation->division_id = $request->division_id;
+        $deviation->Initial_Risk_Assessment = $request->Initial_Risk_Assessment;
+        $deviation->Probable_root_cause = $request->Probable_root_cause;
+        $deviation->Initial_Impact_Assessment = $request->Initial_Impact_Assessment;
+        // dd($deviation);
         $deviation->assign_to = $request->assign_to;
         $deviation->Facility = $request->Facility;
         $deviation->due_date = $request->due_date;
@@ -333,6 +336,19 @@ class DeviationController extends Controller
 
 
             $deviation->Audit_file = json_encode($files);
+        }
+        if (!empty ($request->attachments_assessment)) {
+            $files = [];
+            if ($request->hasfile('attachments_assessment')) {
+                foreach ($request->file('attachments_assessment') as $file) {
+                    $name = $request->name . 'attachments_assessment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $file->move('upload/', $name);
+                    $files[] = $name;
+                }
+            }
+
+
+            $deviation->attachments_assessment = json_encode($files);
         }
         if (!empty ($request->initial_file)) {
             $files = [];
@@ -1180,6 +1196,9 @@ class DeviationController extends Controller
         $deviation->how = $request->how;
         $deviation->how_much = $request->how_much;
         $deviation->Detail_Of_Root_Cause=$request->Detail_Of_Root_Cause;
+        $deviation->Initial_Risk_Assessment=$request->Initial_Risk_Assessment;
+        $deviation->Probable_root_cause = $request->Probable_root_cause;
+        $deviation->Initial_Impact_Assessment = $request->Initial_Impact_Assessment;
 
 
         if ($request->Deviation_category == 'major' || $request->Deviation_category == 'critical')
@@ -1653,6 +1672,20 @@ class DeviationController extends Controller
 
 
                 $Cft->production_attachment = json_encode($files);
+            }
+
+            if (!empty ($request->attachments_assessment)) {
+                $files = [];
+                if ($request->hasfile('attachments_assessment')) {
+                    foreach ($request->file('attachments_assessment') as $file) {
+                        $name = $request->name . 'attachments_assessment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                        $file->move('upload/', $name);
+                        $files[] = $name;
+                    }
+                }
+
+
+                $Cft->attachments_assessment = json_encode($files);
             }
             if (!empty ($request->Warehouse_attachment)) {
                 $files = [];

@@ -118,6 +118,10 @@ return new class extends Migration
             $table->string('rejected_on')->nullable();
             $table->string('rejected_by')->nullable();
             //$table->string('production_byy')->nullable();
+            $table->longtext('Initial_Risk_Assessment')->nullable();
+            $table->longtext('Probable_root_cause')->nullable();
+            $table->longtext('Initial_Impact_Assessment')->nullable();
+            $table->longtext('attachments_assessment')->nullable();
             $table->string('status')->nullable();
             $table->integer('stage')->nullable();
 
