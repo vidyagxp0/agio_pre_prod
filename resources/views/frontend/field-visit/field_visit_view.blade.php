@@ -9,7 +9,36 @@
             display: none;
         }
     </style>
+<style>
+    .progress-bars div {
+        flex: 1 1 auto;
+        border: 1px solid grey;
+        padding: 5px;
+        text-align: center;
+        position: relative;
+        /* border-right: none; */
+        background: white;
+    }
 
+    .state-block {
+        padding: 20px;
+        margin-bottom: 20px;
+    }
+
+    .progress-bars div.active {
+        background: green;
+        font-weight: bold;
+    }
+
+    #change-control-fields>div>div.inner-block.state-block>div.status>div.progress-bars.d-flex>div:nth-child(1) {
+        border-radius: 20px 0px 0px 20px;
+    }
+
+    #change-control-fields>div>div.inner-block.state-block>div.status>div.progress-bars.d-flex>div:nth-child(3) {
+        border-radius: 0px 20px 20px 0px;
+
+    }
+</style>
     <div class="form-field-head">
         {{-- <div class="pr-id">
             New Child
@@ -27,7 +56,87 @@
     {{-- ! ========================================= --}}
     <div id="change-control-fields">
         <div class="container-fluid">
+            <div class="inner-block state-block">
+                <div class="d-flex justify-content-between align-items-center">
+                    <div class="main-head">Record Workflow </div>
+                    @php
+                        $userRoles = DB::table('user_roles')->where(['user_id' => Auth::user()->id, 'q_m_s_divisions_id' => $data->division_code])->get();
+                        $userRoleIds = $userRoles->pluck('q_m_s_roles_id')->toArray();
+                    @endphp
+                    <div class="d-flex" style="gap:20px;">
+                        {{-- <button class="button_theme1" onclick="window.print();return false;"
+                            class="new-doc-btn">Print</button> --}}
+                        <button class="button_theme1"> <a class="text-white"
+                                href="{{ url('rcms/audit_trailNew' , $data->id) }}"> Audit Trail </a> </button>
 
+                        @if ($data->stage == 1 && (in_array(3, $userRoleIds) || in_array(18, $userRoleIds)))
+                        <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
+                            Submit
+                        </button>
+                            
+                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#cancel-modal">
+                                Cancel
+                            </button>
+                           
+                        @elseif($data->stage == 2 && (in_array(10, $userRoleIds) || in_array(18, $userRoleIds) || in_array(13, $userRoleIds)))
+                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
+                              Review Completed
+                            </button>
+                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#more-info-required-modal">
+                                More Info Required
+                            </button>
+                      
+
+                            
+                            {{-- <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#more-info-required-modal">
+                                More Info Required
+                            </button> --}}
+
+                            
+                            {{-- <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#more-info-required-modal">
+                                More Info Required
+                            </button> --}}
+                        @endif
+                         <a class="text-white" href="{{ url('rcms/qms-dashboard') }}"><button class="button_theme1"> Exit
+                        </button>  </a> 
+
+
+                    </div>
+
+                </div>
+                <div class="status">
+                    <div class="head">Current Status</div>
+                    {{-- ------------------------------By nilesh-------------------------------- --}}
+                    @if ($data->stage == 0)
+                        <div class="progress-bars">
+                            <div class="bg-danger">Closed-Cancelled</div>
+                        </div>
+                    @else
+                        <div class="progress-bars d-flex">
+                            @if ($data->stage >= 1)
+                                <div class="active">Opened</div>
+                            @else
+                                <div class="">Opened</div>
+                            @endif
+
+                            @if ($data->stage >= 2)
+                                <div class="active">Pending Review</div>
+                            @else
+                                <div class="">Pending Review</div>
+                            @endif
+                            @if ($data->stage >= 3)
+                                <div class="bg-danger">Closed - Done</div>
+                            @else
+                                <div class="">Closed - Done</div>
+                            @endif
+                        </div>
+                    @endif
+
+
+                </div>
+                {{-- @endif --}}
+                {{-- ---------------------------------------------------------------------------------------- --}}
+            </div>
             <!-- Tab links -->
             <div class="cctab">
                 <button class="cctablinks active" onclick="openCity(event, 'CCForm1')">General Information</button>
@@ -223,11 +332,11 @@
                                 <button type="button" class="backButton" onclick="previousStep()">Back</button>
                                 <button type="button" class="nextButton" onclick="nextStep()">Next</button>
 
-                                {{-- <div class="col-12"> --}}
+                                {{-- <div class="col-12">
                                     <button type="button"> <a class="text-white"
                                             href="{{ url('rcms/qms-dashboard') }}">Exit
                                         </a> </button>
-                                </div>
+                                </div> --}}
                             </div>
                         </div>
                     </div>
@@ -1704,8 +1813,8 @@
                             </div>
                         </div>
                     </div>
-                </div>
-{{--
+                {{-- </div> --}}
+
                 <div id="CCForm9" class="inner-block cctabcontent">
                     <div class="inner-block-content">
                         <div class="row">
@@ -1736,7 +1845,7 @@
                             </div>
                         </div>
                     </div>
-                </div> --}}
+                </div> 
 
             </form>
 
@@ -1752,7 +1861,144 @@
             display: block;
         }
     </style>
+ <div class="modal fade" id="signature-modal">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">E-Signature</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <form action="{{ route('field_visit_stage', $data->id) }}" method="POST"
+                id="signatureModalForm">
+                @csrf
+                <div class="modal-body">
+                    <div class="mb-3 text-justify">
+                        Please select a meaning and a outcome for this task and enter your username
+                        and password for this task. You are performing an electronic signature,
+                        which is legally binding equivalent of a hand written signature.
+                    </div>
+                    <div class="group-input">
+                        <label for="username">Username <span class="text-danger">*</span></label>
+                        <input type="text" name="username" required>
+                    </div>
+                    <div class="group-input">
+                        <label for="password">Password <span class="text-danger">*</span></label>
+                        <input type="password" name="password" required>
+                    </div>
+                    <div class="group-input">
+                        <label for="comment">Comment</label>
+                        <input type="comment" name="comment">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="signatureModalButton">
+                        <div class="spinner-border spinner-border-sm signatureModalSpinner" style="display: none"
+                            role="status">
+                            <span class="sr-only">Loading...</span>
+                        </div>
+                        Submit
+                    </button>
+                    <button type="button" data-bs-dismiss="modal">Close</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
 
+<div class="modal fade" id="more-info-required-modal">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <h4 class="modal-title">E-Signature</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+
+            <form action="{{ route('field_visit_reject', $data->id) }}" method="POST">
+                @csrf
+                <!-- Modal body -->
+                <div class="modal-body">
+                    <div class="mb-3 text-justify">
+                        Please select a meaning and a outcome for this task and enter your username
+                        and password for this task. You are performing an electronic signature,
+                        which is legally binding equivalent of a hand written signature.
+                    </div>
+                    <div class="group-input">
+                        <label for="username">Username <span class="text-danger">*</span></label>
+                        <input type="text" name="username" required>
+                    </div>
+                    <div class="group-input">
+                        <label for="password">Password <span class="text-danger">*</span></label>
+                        <input type="password" name="password" required>
+                    </div>
+                    <div class="group-input">
+                        <label for="comment">Comment <span class="text-danger">*</span></label>
+                        <input type="comment" name="comment" required>
+                    </div>
+                </div>
+
+                <!-- Modal footer -->
+                <!-- <div class="modal-footer">
+                        <button type="submit" data-bs-dismiss="modal">Submit</button>
+                        <button>Close</button>
+                    </div> -->
+                <div class="modal-footer">
+                    <button type="submit">
+                        Submit
+                    </button>
+                    <button type="button" data-bs-dismiss="modal">Close</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="cancel-modal">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <h4 class="modal-title">E-Signature</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+
+            <form action="{{ route('field_visit_cancel', $data->id) }}" method="POST">
+                @csrf
+                <!-- Modal body -->
+                <div class="modal-body">
+                    <div class="mb-3 text-justify">
+                        Please select a meaning and a outcome for this task and enter your username
+                        and password for this task. You are performing an electronic signature,
+                        which is legally binding equivalent of a hand written signature.
+                    </div>
+                    <div class="group-input">
+                        <label for="username">Username <span class="text-danger">*</span></label>
+                        <input type="text" name="username" required>
+                    </div>
+                    <div class="group-input">
+                        <label for="password">Password <span class="text-danger">*</span></label>
+                        <input type="password" name="password" required>
+                    </div>
+                    <div class="group-input">
+                        <label for="comment">Comment <span class="text-danger">*</span></label>
+                        <input type="comment" name="comment" required>
+                    </div>
+                </div>
+
+                <!-- Modal footer -->
+                <!-- <div class="modal-footer">
+                        <button type="submit" data-bs-dismiss="modal">Submit</button>
+                        <button>Close</button>
+                    </div> -->
+                <div class="modal-footer">
+                    <button type="submit">Submit</button>
+                    <button type="button" data-bs-dismiss="modal">Close</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
     <script>
         VirtualSelect.init({
             ele: '#related_records, #hod'

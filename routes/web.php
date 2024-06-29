@@ -516,4 +516,9 @@ Route::get('field_visit', [FieldVisitController::class, 'index']);
 Route::post('field_visit_store', [FieldVisitController::class, 'store'])->name('field_visit_store');
 Route::put('field_visit_update/{id}', [FieldVisitController::class, 'update'])->name('field_visit_update');
 Route::get('field_visit_show/{id}', [FieldVisitController::class, 'show'])->name('field_visit_show');
+Route::post('field_visit_stage/{id}', [FieldVisitController::class, 'sendstage'])->name('field_visit_stage');
+Route::post('field_visit_reject/{id}', [FieldVisitController::class, 'moreinforeject'])->name('field_visit_reject');
+Route::post('field_visit_cancel/{id}', [FieldVisitController::class, 'closecancel'])->name('field_visit_cancel');
+
+
 

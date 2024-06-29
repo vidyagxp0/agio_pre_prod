@@ -16,7 +16,7 @@
         /* 120deg, #87b2f8 0%, #a1c4fd 100%); middle */  
         /* 120deg, #2c73e6d1 0%, #2d72d899 100%); bottom */
         body {
-           background-image:linear-gradient(120deg, #a1c4fd 0%, #c2e9fb 100%);
+           background-image:linear-gradient(120deg, #ea8900d8 0%, #ff9c4594 100%);
             margin: 0;
             padding: 0;
             width: 100vw;

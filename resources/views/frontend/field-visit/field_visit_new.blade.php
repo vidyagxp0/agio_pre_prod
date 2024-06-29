@@ -65,11 +65,11 @@
 
                                 <div class="col-lg-6">
                                     <div class="group-input">
-                                        <label for="Division Code">Site/Location Code</label>
-                                        <input readonly type="text" name="division_code"
+                                        <label for="Division Code"><b>Site/Location Code</b></label>
+                                        <input disabled type="text" name="site_location"   id="site_location" 
                                             value="{{ Helpers::getDivisionName(session()->get('division')) }}">
-                                        <input type="hidden" name="division_id" value="{{ session()->get('division') }}">
-                                        {{-- <div class="static">QMS-North America</div> --}}
+                                        <input type="hidden" name="division_code"  id="division_code" value="{{ session()->get('division') }}">
+                                        {{-- <div class="static">{{ Helpers::getDivisionName(session()->get('division')) }}</div> --}}
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
