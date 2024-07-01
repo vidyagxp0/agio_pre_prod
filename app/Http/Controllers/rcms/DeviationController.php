@@ -52,7 +52,7 @@ class DeviationController extends Controller
 
     public function store(Request $request)
     {
-        // dd($request->all());
+
         $form_progress = null;
 
         if ($request->form_name == 'general')
@@ -1182,6 +1182,21 @@ class DeviationController extends Controller
 
     public function update(Request $request, $id)
     {
+        $initiationDate = $request->intiation_date;
+        $deviationCategory = $request->Deviation_category;
+            $days = 0;
+            switch ($deviationCategory) {
+                case 'minor':
+                    $days = 15;
+                    break;
+                case 'major':
+                    $days = 30;
+                    break;
+                case 'critical':
+                    $days = 30;
+                    break;
+            }
+              
         $form_progress = null;
 
         $lastDeviation = deviation::find($id);
@@ -1195,6 +1210,11 @@ class DeviationController extends Controller
         $deviation->who = $request->who;
         $deviation->how = $request->how;
         $deviation->how_much = $request->how_much;
+        $deviation->due_date = $request->due_date;
+        $deviation->intiation_date = $initiationDate;
+        $deviation->Deviation_category = $deviationCategory;
+        // dd($deviation->due_date);
+        $deviation->days = $days;
         $deviation->Detail_Of_Root_Cause=$request->Detail_Of_Root_Cause;
         $deviation->Initial_Risk_Assessment=$request->Initial_Risk_Assessment;
         $deviation->Probable_root_cause = $request->Probable_root_cause;
@@ -1328,7 +1348,7 @@ class DeviationController extends Controller
         if ($request->form_name == 'qa')
         {
             $validator = Validator::make($request->all(), [
-                'Deviation_category' => 'required|not_in:0',
+                // 'Deviation_category' => 'required|not_in:0',
                 'Justification_for_categorization' => 'required',
                 'QAInitialRemark' => 'required',
 

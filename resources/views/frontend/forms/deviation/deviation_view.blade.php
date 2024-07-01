@@ -901,12 +901,14 @@
                                     <div class="col-lg-6">
                                         <div class="group-input">
                                             <label for="record_number"><b>Record Number</b></label>
-                                            @if ($data->stage >= 3)
+                                            <!-- @if ($data->stage >= 3)
                                                 <input disabled type="text"
                                                     value="{{ Helpers::getDivisionName($data->division_id) }}/DEV/{{ date('Y') }}/{{ str_pad($data->record, 4, '0', STR_PAD_LEFT) }}">
                                             @else
                                                 <input disabled type="text" name="record">
-                                            @endif
+                                            @endif -->
+                                            <input disabled type="text"
+                                            value="{{ Helpers::getDivisionName($data->division_id) }}/DEV/{{ date('Y') }}/{{ str_pad($data->record, 4, '0', STR_PAD_LEFT) }}">                                            
                                         </div>
                                     </div>
 
@@ -936,29 +938,22 @@
                                         <div class="group-input">
                                             <label for="Date of Initiation"><b>Date of Initiation</b></label>
                                             <input readonly type="text" value="{{ date('d-M-Y') }}"
-                                                name="intiation_date" id="initiation_date"
+                                                name="intiation_date" id="intiation_date"
                                                 style="background-color: light-dark(rgba(239, 239, 239, 0.3), rgba(59, 59, 59, 0.3))">
                                             <input type="hidden" value="{{ date('Y-m-d') }}"
                                                 name="initiation_date_hidden">
                                         </div>
                                     </div>
 
+             
                                     <div class="col-lg-12 new-date-data-field">
-                                        <div class="group-input input-date">
-                                            <label for="Due Date">Due Date</label>
-                                            <!-- <div><small class="text-primary">If revising Due Date, kindly mention revision
-                                                    reason in "Due Date Extension Justification" data field.</small></div> -->
-                                            <!-- <div class="calenderauditee"> -->
-                                                <!-- <input readonly type="text"
-                                                    value="{{ Helpers::getdateFormat($data->due_date) }}"
-                                                    name="due_date" /> -->
-                                                <!-- <input type="date" name="due_date"
-                                                    min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input"
-                                                    oninput="handleDateInput(this, 'due_date')" /> -->
-                                            <!-- </div> -->
-                                             <input type="text" name="due_date" readonly value="{{$data->due_date}}">
-                                        </div>
-                                    </div>
+    <div class="group-input input-date">
+        <label for="Due Date">Due Date</label>
+        <input type="text" id="due_date" name="due_date" readonly value="{{ old('due_date', \Carbon\Carbon::parse($data->due_date)->format('d-M-Y')) }}">
+    </div>
+</div>
+
+            
 
                                     <script>
                                         // Format the due date to DD-MM-YYYY
@@ -2158,84 +2153,81 @@
                         </div>
 
                         <script>
-                            // handleInvestigationRequiredChange();
+    // Function to handle the change of deviation category
+    function handleDeviationCategoryChange() {
+        const deviationCategory = document.getElementById('Deviation_category').value;
+        const initiateDate = new Date(); // Assuming today's date is the initiate date
+        let dueDate = new Date(initiateDate);
+
+        switch(deviationCategory) {
+            case 'minor':
+                dueDate.setDate(dueDate.getDate() + 15);
+                break;
+            case 'major':
+                dueDate.setDate(dueDate.getDate() + 30);
+                break;
+            case 'critical':
+                dueDate.setDate(dueDate.getDate() + 30);
+                break;
+            default:
+                dueDate = '';
+        }
+
+        if (dueDate) {
+            const options = { day: '2-digit', month: 'short', year: 'numeric' };
+            const formattedDueDate = dueDate.toLocaleDateString('en-GB', options).replace(/\s/g, '-');
+
+            document.getElementById('due_date').value = formattedDueDate;
+        } else {
+            document.getElementById('due_date').value = '';
+        }
+    }
+
+    document.addEventListener('DOMContentLoaded', function() {
+        handleDeviationCategoryChange();
+    });
+
+    document.getElementById('Deviation_category').addEventListener('change', handleDeviationCategoryChange);
+</script>
+
+                       <script>
+                          $(document).ready(function() {
+    // Handle Deviation Category change
+    $('#Deviation_category').change(function() {
+        handleDeviationCategoryChange();
+    });
+
+    // Handle change for Investigation Required
+    $('#Investigation_required').change(function() {
+        toggleFieldVisibility('#Investigation_required', '#Investigations_details');
+    });
+
+    // Handle change for Customer Notification
+    $('#Customer_notification').change(function() {
+        toggleFieldVisibility('#Customer_notification', '#customer_option');
+    });
+
+    // Initial call to set visibility on page load
+    toggleFieldVisibility('#Investigation_required', '#Investigations_details');
+    toggleFieldVisibility('#Customer_notification', '#customer_option');
+    toggleButtonVisibility();
+});
+
+// Function to handle Deviation Category change
 
 
-                            // function handleInvestigationRequiredChange() {
-                            //     var investigationSelect = document.getElementById("Investigation_required");
-                            //     var investigationButton = document.getElementById("Investigation_button");
+// Function to show or hide fields based on values
+function toggleFieldVisibility(selectId, fieldId) {
+    var selectedValue = $(selectId).val();
+    if (selectedValue === 'yes') {
+        $(fieldId).show();
+        $(fieldId).find('textarea').prop('required', true);
+    } else {
+        $(fieldId).hide();
+        $(fieldId).find('textarea').prop('required', false);
+    }
+}
 
-                            //     // Get the selected value of the Investigation Required dropdown
-                            //     var investigationRequired = investigationSelect.value;
-
-                            //     // Check if Investigation Required is "Yes"
-                            //     if (investigationRequired === "yes") {
-                            //         // Show the Investigation button
-                            //         investigationButton.style.display = "display";
-                            //     } else {
-                            //         // Hide the Investigation button
-                            //         investigationButton.style.display = "none";
-                            //     }
-                            // }
-
-                            // Call the function initially to set the initial visibility of the button
-
-
-
-
-                            // Function to handle the change event of the Initial Deviation Category dropdown
-                            function handleDeviationCategoryChange() {
-                                var selectElement = document.getElementById("Deviation_category");
-                                var selectedOption = selectElement.options[selectElement.selectedIndex].value;
-
-                                // var investigationSelect = document.getElementById("Investigation_required");
-
-                                // var investigationButton = document.getElementById("Investigation_button");
-
-                                // var selectedOptn = investigationSelect.options[investigationSelect.selectedIndex].value;
-
-
-                                //   if(selectedOptn=== "yes"){
-
-                                //     document.getElementById("Investigation_button").style.display = "block";
-
-                                //     }
-                                //     else{
-                                //     document.getElementById("Investigation_button").style.display = "none";
-
-
-                                //     }
-
-                                // Get the selected values
-                                // var investigationRequired = investigationSelect.value;
-
-                                // Check if the selected option is "Major" or "Critical"
-                                if (selectedOption === "major" || selectedOption === "critical") {
-                                    // If "Major" or "Critical" is selected, set default value to "yes" for all Investigation, CAPA, and QRM fields
-                                    document.getElementById("Investigation_required").value = "yes";
-                                    document.getElementById("capa_required").value = "yes";
-                                    document.getElementById("qrm_required").value = "yes";
-
-                                    // Show the Investigation, CAPA, and QRM buttons
-                                    document.getElementById("Investigation_button").style.display = "block";
-                                    document.getElementById("CAPA_button").style.display = "block";
-                                    document.getElementById("QRM_button").style.display = "block";
-                                } else {
-                                    // If any other option is selected, set default value to "select" for all Investigation, CAPA, and QRM fields
-                                    document.getElementById("Investigation_required").value = "select";
-                                    document.getElementById("capa_required").value = "select";
-                                    document.getElementById("qrm_required").value = "select";
-
-                                    // Hide the Investigation, CAPA, and QRM buttons
-                                    document.getElementById("Investigation_button").style.display = "none";
-                                    document.getElementById("CAPA_button").style.display = "none";
-                                    document.getElementById("QRM_button").style.display = "none";
-
-
-
-                                }
-
-                            }
                         </script>
 
                         <script>
@@ -2390,7 +2382,7 @@
                                                     <select id="Deviation_category"
                                                         name="Deviation_category"{{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
                                                         value="{{ $data->Deviation_category }}"
-                                                        onchange="handleDeviationCategoryChange()" required>
+                                                        onchange="handleDeviationCategoryChange()">
                                                         <option value="0">-- Select --</option>
                                                         <option @if ($data->Deviation_category == 'minor') selected @endif
                                                             value="minor">Minor</option>
@@ -2650,15 +2642,14 @@
                                     </div>
                             </div>
                         @else
-                            <div class="row">
-                                <div style="margin-bottom: 0px;" class="col-lg-12 new-date-data-field ">
+                        <div style="margin-bottom: 0px;" class="col-lg-12 new-date-data-field ">
                                     <div class="group-input input-date">
                                         @if ($data->stage == 3)
                                             <label for="Deviation category">Initial Deviation category <span
                                                     class="text-danger">*</span></label>
                                             <select disabled id="Deviation_category"
                                                 name="Deviation_category"{{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
-                                                value="{{ $data->Deviation_category }}">
+                                                value="{{ $data->Deviation_category }}" onchange="calculateDueDate()">
                                                 <option value="0">-- Select --</option>
                                                 <option @if ($data->Deviation_category == 'minor') selected @endif value="minor">
                                                     Minor</option>
@@ -2687,123 +2678,7 @@
                                             <div class="text-danger">{{ $message }}</div>
                                         @enderror
                                     </div>
-                                </div>
-                                <div class="col-md-12">
-                                    <div class="group-input">
-                                        <label for="Justification for  categorization">Justification for
-                                            categorization</label>
-                                        <div><small class="text-primary">Please insert "NA" in the data field if it does
-                                                not require completion</small></div>
-                                        <textarea disabled class="tiny"
-                                            name="Justification_for_categorization"{{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
-                                            id="summernote-5">{{ $data->Justification_for_categorization }}</textarea>
-                                    </div>
-                                    @error('Justification_for_categorization')
-                                        <div class="text-danger">{{ $message }}</div>
-                                    @enderror
-                                </div>
-
-                                <div class="col-lg-12">
-                                    <div class="group-input">
-                                        <label for="Investigation required">Investigation Required?</label>
-                                        <select disabled name="Investigation_required" id="Investigation_required"
-                                            value="{{ $data->Investigation_required }}">
-                                            <option value="0">-- Select --</option>
-                                            <option @if ($data->Investigation_required == 'yes') selected @endif value='yes'>Yes
-                                            </option>
-                                            <option @if ($data->Investigation_required == 'no') selected @endif value='no'>No
-                                            </option>
-                                        </select>
-                                        @error('Investigation_required')
-                                            <div class="text-danger">{{ $message }}</div>
-                                        @enderror
-                                    </div>
-                                </div>
-                                <div class="col-md-12">
-                                    <div class="group-input">
-                                        <label for="Investigation Details">Investigation Details <span
-                                                id="asteriskInviinvestication" style="display: none"
-                                                class="text-danger">*</span></label>
-                                        <div><small class="text-primary">Please insert "NA" in the data field if it does
-                                                not require completion</small></div>
-                                        <textarea disabled class="summernote Investigation_Details"
-                                            name="Investigation_Details"{{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
-                                            class="Investigation_Details" id="summernote-6">{{ $data->Investigation_Details }}</textarea>
-                                        @error('Investigation_Details')
-                                            <div class="text-danger">{{ $message }}</div>
-                                        @enderror
-                                        <script>
-                                            document.addEventListener('DOMContentLoaded', function() {
-                                                var selectField = document.getElementById('Investigation_required');
-                                                var inputsToToggle = [];
-
-                                                // Add elements with class 'facility-name' to inputsToToggle
-                                                // var facilityNameInputs = document.getElementsByClassName('Investigation_Details');
-                                                // for (var i = 0; i < facilityNameInputs.length; i++) {
-                                                //     inputsToToggle.push(facilityNameInputs[i]);
-                                                // }
-
-
-                                                selectField.addEventListener('change', function() {
-                                                    var isRequired = this.value === 'yes';
-
-                                                    // inputsToToggle.forEach(function (input) {
-                                                    //     input.required = isRequired;
-                                                    //     console.log(input.required, isRequired, 'input req');
-                                                    // });
-
-                                                    // Show or hide the asterisk icon based on the selected value
-                                                    var asteriskIcon = document.getElementById('asteriskInviinvestication');
-                                                    asteriskIcon.style.display = isRequired ? 'inline' : 'none';
-                                                });
-                                            });
-                                        </script>
-                                    </div>
-                                </div>
-
-                                <div class="col-md-12">
-                                    <div class="group-input">
-                                        <label for="QAInitialRemark">QA Initial Remarks</label>
-                                        <div><small class="text-primary">Please insert "NA" in the data field if it does
-                                                not require completion</small></div>
-                                        <textarea readonly class="tiny"
-                                            name="QAInitialRemark"{{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }} id="summernote-6">{{ $data->QAInitialRemark }}</textarea>
-                                    </div>
-                                </div>
-                                <div class="col-12">
-                                    <div class="group-input">
-                                        <label for="QA Initial Attachments">QA Initial Attachments</label>
-                                        <div><small class="text-primary">Please Attach all relevant or supporting
-                                                documents</small></div>
-                                        <div class="file-attachment-field">
-                                            <div disabled class="file-attachment-list" id="Initial_attachment">
-                                                @if ($data->Initial_attachment)
-                                                    @foreach (json_decode($data->Initial_attachment) as $file)
-                                                        <h6 type="button" class="file-container text-dark"
-                                                            style="background-color: rgb(243, 242, 240);">
-                                                            <b>{{ $file }}</b>
-                                                            <a href="{{ asset('upload/' . $file) }}" target="_blank"><i
-                                                                    class="fa fa-eye text-primary"
-                                                                    style="font-size:20px; margin-right:-10px;"></i></a>
-                                                            <a type="button" class="remove-file"
-                                                                data-file-name="{{ $file }}"><i
-                                                                    class="fa-solid fa-circle-xmark"
-                                                                    style="color:red; font-size:20px;"></i></a>
-                                                        </h6>
-                                                    @endforeach
-                                                @endif
-                                            </div>
-                                            <div class="add-btn">
-                                                <div>Add</div>
-                                                <input disabled type="file" id="myfile"
-                                                    name="Initial_attachment[]"{{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
-                                                    oninput="addMultipleFiles(this, 'Initial_attachment')" multiple>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            @endif
+                                </div> @endif
 
                             <div class="button-block">
                                 <button style=" justify-content: center; width: 4rem; margin-left: 1px;;" type="submit"{{ $data->stage == 0 || $data->stage == 7 || $data->stage == 9 ? 'disabled' : '' }}
@@ -2832,6 +2707,47 @@
                             </div>
                         </div>
                     </div>
+                    <script>
+    function calculateDueDate() {
+        const initiationDateInput = document.getElementById('intiation_date');
+        const deviationCategorySelect = document.getElementById('Deviation_category');
+        const dueDateInput = document.getElementById('due_date');
+
+        if (initiationDateInput.value && deviationCategorySelect.value) {
+            const initiationDate = new Date(initiationDateInput.value);
+            let dueDate = new Date(initiationDate);
+
+            switch (deviationCategorySelect.value) {
+                case 'minor':
+                    dueDate.setDate(dueDate.getDate() + 15);
+                    break;
+                case 'major':
+                    dueDate.setDate(dueDate.getDate() + 30);
+                    break;
+                case 'critical':
+                    dueDate.setDate(dueDate.getDate() + 30);
+                    break;
+                default:
+                    dueDate = null;
+                    break;
+            }
+
+            if (dueDate) {
+                const day = String(dueDate.getDate()).padStart(2, '0');
+                const monthNames = [
+                    'January', 'February', 'March', 'April', 'May', 'June',
+                    'July', 'August', 'September', 'October', 'November', 'December'
+                ];
+                const month = monthNames[dueDate.getMonth()];
+                const year = dueDate.getFullYear();
+                dueDateInput.value = `${day}-${month}-${year}`;
+            }
+        }
+    }
+
+    document.getElementById('intiation_date').addEventListener('change', calculateDueDate);
+    document.getElementById('Deviation_category').addEventListener('change', calculateDueDate);
+</script>
                     <script>
                         var checkValue = false;
                         $(document).ready(function() {
@@ -9410,14 +9326,14 @@
                         <div class="col-lg-6">
                             <div class="group-input">
                                 <label for="Proposed Due Date">Proposed Due Date</label>
-                                <input name="qrm_proposed_due_date" id="qrm_proposed_due_date" value="{{ Helpers::getdateFormat($qrmExtension->qrm_proposed_due_date) }}" disabled>
+                                <input type="date" name="qrm_proposed_due_date" id="qrm_proposed_due_date" value="{{ Helpers::getdateFormat($qrmExtension->qrm_proposed_due_date) }}">
                             </div>
                         </div>
                     @else
                         <div class="col-lg-6">
                             <div class="group-input">
                                 <label for="Proposed Due Date">Proposed Due Date</label>
-                                <input name="qrm_proposed_due_date" id="qrm_proposed_due_date" disabled>
+                                <input type="date" name="qrm_proposed_due_date" id="qrm_proposed_due_date">
                             </div>
                         </div>
                     @endif
@@ -9956,14 +9872,14 @@
                     <div class="col-lg-6">
                         <div class="group-input">
                             <label for="capa_proposed_due_date"><b>Proposed Due Date</b></label>
-                            <input disabled type="text" name="capa_proposed_due_date" id="capa_proposed_due_date" value="{{ Helpers::getdateFormat($capaExtension->capa_proposed_due_date) }}">
+                            <input  type="date" name="capa_proposed_due_date" id="capa_proposed_due_date" value="{{ Helpers::getdateFormat($capaExtension->capa_proposed_due_date) }}">
                         </div>
                     </div>
                 @else
                     <div class="col-lg-6">
                         <div class="group-input">
                             <label for="capa_proposed_due_date"><b>Proposed Due Date</b></label>
-                            <input disabled type="text" name="capa_proposed_due_date" id="capa_proposed_due_date" >
+                            <input type="date" name="capa_proposed_due_date" id="capa_proposed_due_date" >
                         </div>
                     </div>
                 @endif
@@ -11021,7 +10937,7 @@
                             <div class="group-input input-date">
                                 <label for="qrm_proposed_due_date">Proposed Due Date (Quality Risk Management)</label>
                                 <div class="calenderauditee">
-                                    <input type="text" id="qrm_proposed_due_date" name="qrm_proposed_due_date" value="{{Helpers::getdateFormat($qrmExtension->qrm_proposed_due_date)}}" disabled placeholder="DD-MMM-YYYY" />
+                                    <input type="date" id="qrm_proposed_due_date" name="qrm_proposed_due_date" value="{{Helpers::getdateFormat($qrmExtension->qrm_proposed_due_date)}}" disabled placeholder="DD-MMM-YYYY" />
                                 </div>
                             </div>
                         </div>
@@ -11030,7 +10946,7 @@
                             <div class="group-input input-date">
                                 <label for="qrm_proposed_due_date">Proposed Due Date (Quality Risk Management)</label>
                                 <div class="calenderauditee">
-                                    <input type="text" id="qrm_proposed_due_date" name="qrm_proposed_due_date" disabled placeholder="DD-MMM-YYYY" />
+                                    <input type="date" id="qrm_proposed_due_date" name="qrm_proposed_due_date"  placeholder="DD-MMM-YYYY" />
                                 </div>
                             </div>
                         </div>
