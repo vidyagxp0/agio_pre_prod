@@ -20,6 +20,10 @@
         </div>
     </div>
 
+    @php
+    $users = DB::table('users')->get();
+@endphp
+
 
 
     {{-- ! ========================================= --}}
@@ -1032,7 +1036,7 @@
                             <div class="group-input">
                                 <label for="audit-agenda-grid">
                                     Details
-                                    <button type="button" name="details" id="Details-add">+</button>
+                                    <button type="button" name="details" id="Details1-add">+</button>
                                     <span class="text-primary" data-bs-toggle="modal"
                                         data-bs-target="#observation-field-instruction-modal"
                                         style="font-size: 0.8rem; font-weight: 400; cursor: pointer;">
@@ -1040,7 +1044,7 @@
                                     </span>
                                 </label>
                                 <div class="table-responsive">
-                                    <table class="table table-bordered" id="Details-table">
+                                    <table class="table table-bordered" id="Details1-table">
                                         <thead>
                                             <tr>
                                                 <th style="width: 2%">Row#</th>
@@ -1051,9 +1055,9 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <td><input disabled type="text" name="details[0][serial]"
+                                            <td><input disabled type="text" name="details1[0][row]"
                                                     value="1"></td>
-                                            <td><select type="text" name="details[0][ListOfImpactingDocument]">
+                                            <td><select type="text" name="details1[0][category]">
                                             <option value="">--Select Category--</option>
                                             <option value="SINGLE KURTA">SINGLE KURTA</option>
                                             <option value="KURTA SETS">KURTA SETS</option>
@@ -1076,14 +1080,14 @@
                                             <option value="NIGHT SUITS">NIGHT SUITS</option>
                                             <option value="BELTS & WALLETS">BELTS & WALLETS</option>
                                             </select></td>
-                                            <td><select type="text" name="details[0][ListOfImpactingDocument]">
+                                            <td><select type="text" name="details1[0][price]">
                                                     <option value="">--Select Price--</option>
                                                     <option value="BELOW 500">BELOW 500</option>
                                                     <option value="500-2000">500-2000</option>
                                                     <option value="2100-5000">2100-5000</option>
                                                     <option value="5100-7000">5100-7000</option>
                                                     <option value="7100-9000">7100-9000</option>
-                                                    <option value="BOTTOMS">9100-15000</option>
+                                                    <option value="9100-15000">9100-15000</option>
                                                     <option value="15100 & ABOVE">15100 & ABOVE</option>
                                                     <option value="N/A">N/A</option>
                                                 </select>
@@ -1136,7 +1140,7 @@
                             <div class="group-input">
                                 <label for="audit-agenda-grid">
                                     Details
-                                    <button type="button" name="details" id="Details-add">+</button>
+                                    <button type="button" name="details2" id="Details2-add">+</button>
                                     <span class="text-primary" data-bs-toggle="modal"
                                         data-bs-target="#observation-field-instruction-modal"
                                         style="font-size: 0.8rem; font-weight: 400; cursor: pointer;">
@@ -1144,7 +1148,7 @@
                                     </span>
                                 </label>
                                 <div class="table-responsive">
-                                    <table class="table table-bordered" id="Details-table">
+                                    <table class="table table-bordered" id="Details2-table">
                                         <thead>
                                             <tr>
                                                 <th style="width: 2%">Row#</th>
@@ -1155,9 +1159,9 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <td><input disabled type="text" name="details[0][serial]"
+                                            <td><input disabled type="text" name="details2[0][row]"
                                                     value="1"></td>
-                                            <td><select type="text" name="details[0][ListOfImpactingDocument]">
+                                            <td><select type="text" name="details2[0][styles]">
                                             <option value="">--Select Category--</option>
                                             <option value="CASUAL WEAR">CASUAL WEAR</option>
                                             <option value="TRADITIONAL/CONTEMPORARY WEAR">TRADITIONAL/CONTEMPORARY WEAR</option>
@@ -1166,11 +1170,11 @@
                                             <option value="INDO-WESTERN WEAR">INDO-WESTERN WEAR</option>
                                             <option value="DESIGNER/OCCASION WEAR">DESIGNER/OCCASION WEAR</option>
                                             </select></td>
-                                            <td><select type="text" name="details[0][ListOfImpactingDocument]">
+                                            <td><select type="text" name="details2[0][category]">
                                                     <option value="">--Select Price--</option>
                                                     <option value="TOP/TUNICS/SHIRTS">TOP/TUNICS/SHIRTS</option>
                                                     <option value="SKIRT/LEHENGA">SKIRT/LEHENGA</option>
-                                                    <option value="SHIRTS / TUNICS">2100-5000</option>
+                                                    <option value="SHIRTS / TUNICS">SHIRTS / TUNICS</option>
                                                     <option value="DRESSES/GOWNS">DRESSES/GOWNS</option>
                                                     <option value="PALAZZO/PANTS/SHARARA/LEGGINGS">PALAZZO/PANTS/SHARARA/LEGGINGS</option>
                                                     <option value="KURTIS/KURTA">KURTIS/KURTA</option>
@@ -1826,19 +1830,51 @@
     </script>
 
     <script>
+
         $(document).ready(function() {
-            $('#Details-add').click(function(e) {
+            $('#Details1-add').click(function(e) {
+
+                e.preventDefault();
+
                 function generateTableRow(serialNumber) {
-                    var html = '';
-                    html += '<tr>' +
+                    var html = '<tr>' +
                         '<td><input disabled type="text" name="serial[]" value="' + serialNumber +
                         '"></td>' +
-                        '<td><input type="text" name="details[' + serialNumber +
-                        '][ListOfImpactingDocument]"></td>' +
-                        '<td><input type="text" name="details[' + serialNumber + '][PreparedBy]"></td>' +
-                        '<td><input type="text" name="details[' + serialNumber + '][CheckedBy]"></td>' +
-                        '<td><input type="text" name="details[' + serialNumber + '][ApprovedBy]"></td>' +
-                        '<td><button type="text" class="removeRowBtn" >Remove</button></td>' +
+                        '   <td><select type="text" name="details1[' + serialNumber + '][category]">'+
+                                            '<option value="">--Select Category--</option>'+
+                                            '<option value="SINGLE KURTA">SINGLE KURTA</option>'+
+                                            '<option value="KURTA SETS">KURTA SETS</option>'+
+                                            '<option value="SHIRTS / TUNICS">SHIRTS / TUNICS</option>'+
+                                            '<option value="SHORT DRESSES">SHORT DRESSES</option>'+
+                                            '<option value="LONG DRESSES">LONG DRESSES</option>'+
+                                            '<option value="BOTTOMS">BOTTOMS</option>'+
+                                            '<option value="INDO-WESTERN CO-ORD SET">INDO-WESTERN CO-ORD SET</option>'+
+                                            '<option value="JUMPSUIT">JUMPSUIT</option>'+
+                                            '<option value="DUPATTAS">DUPATTAS</option>'+
+                                            '<option value="LEHENGA">LEHENGA</option>'+
+                                            '<option value="SAREE">SAREE</option>'+
+                                            '<option value="JACKETS & SHRUGS">JACKETS & SHRUGS</option>'+
+                                            '<option value="DRESS MATERIAL">DRESS MATERIAL</option>'+
+                                            '<option value="FOOTWEAR">FOOTWEAR</option>'+
+                                            '<option value="JEWELLRY">JEWELLRY</option>'+
+                                            '<option value="HANDBAGS">HANDBAGS</option>'+
+                                            '<option value="FRAGRANCES">FRAGRANCES</option>'+
+                                            '<option value="SHAWL/ STOLE / SCARVES">SHAWL/ STOLE / SCARVES</option>'+
+                                            '<option value="NIGHT SUITS">NIGHT SUITS</option>'+
+                                            '<option value="BELTS & WALLETS">BELTS & WALLETS</option>'+
+                                            '</select></td>' +
+                                            '<td><select type="text" name="details1[' + serialNumber + '][price]">'+
+                                                    '<option value="">--Select Price--</option>'+
+                                                    '<option value="BELOW 500">BELOW 500</option>'+
+                                                    '<option value="500-2000">500-2000</option>'+
+                                                    '<option value="2100-5000">2100-5000</option>'+
+                                                    '<option value="5100-7000">5100-7000</option>'+
+                                                    '<option value="7100-9000">7100-9000</option>'+
+                                                    '<option value="9100-15000">9100-15000</option>'+
+                                                    '<option value="15100 & ABOVE">15100 & ABOVE</option>'+
+                                                    '<option value="N/A">N/A</option>'+
+                                                '</select></td>' +
+                                            '<td><button type="text" class="removeRowBtn" >Remove</button></td>' +
                         '</tr>';
 
                     // for (var i = 0; i < users.length; i++) {
@@ -1847,18 +1883,76 @@
 
                     // html += '</select></td>' +
 
-                    '</tr>';
 
                     return html;
                 }
 
-                var tableBody = $('#Details-table tbody');
+                var tableBody = $('#Details1-table tbody');
                 var rowCount = tableBody.children('tr').length;
                 var newRow = generateTableRow(rowCount + 1);
                 tableBody.append(newRow);
             });
         });
     </script>
+
+
+<script>
+    $(document).ready(function() {
+        $('#Details2-add').click(function(e) {
+            function generateTableRow(serialNumber) {
+                var html = '';
+                html += '<tr>' +
+                    '<td><input disabled type="text" name="serial[]" value="' + serialNumber +
+                    '"></td>' +
+                    '   <td><select type="text" name="details2[' + serialNumber + '][category]">'+
+                                        '<option value="">--Select Category--</option>'+
+                                        '<option value="CASUAL WEAR">CASUAL WEAR</option>'+
+                                        '<option value="TRADITIONAL/CONTEMPORARY WEAR">TRADITIONAL/CONTEMPORARY WEAR</option>'+
+                                        '<option value="ETHNIC WEAR">ETHNIC WEAR</option>'+
+                                        '<option value="WESTERN WEAR">WESTERN WEAR</option>'+
+                                        '<option value="INDO-WESTERN WEAR">INDO-WESTERN WEAR</option>'+
+                                        '<option value="BOTTOMS">BOTTOMS</option>'+
+                                        '<option value="INDO-WESTERN CO-ORD SET">INDO-WESTERN CO-ORD SET</option>'+
+                                        '<option value="DESIGNER/OCCASION WEAR">DESIGNER/OCCASION WEAR</option>'+
+                                        '</select></td>' +
+                                        '<td><select type="text" name="details2[' + serialNumber + '][price]">'+
+                                                '<option value="">--Select Price--</option>'+
+                                                '<option value="TOP/TUNICS/SHIRTS">TOP/TUNICS/SHIRTS</option>'+
+                                                '<option value="SKIRT/LEHENGA">SKIRT/LEHENGA</option>'+
+                                                '<option value="SHIRTS / TUNICS">SHIRTS / TUNICS</option>'+
+                                                '<option value="DRESSES/GOWNS">DRESSES/GOWNS</option>'+
+                                                '<option value="PALAZZO/PANTS/SHARARA/LEGGINGS">PALAZZO/PANTS/SHARARA/LEGGINGS</option>'+
+                                                '<option value="KURTIS/KURTA">KURTIS/KURTA</option>'+
+                                                '<option value="CO-ORD SETS">CO-ORD SETS</option>'+
+                                                '<option value="SAREE">SAREE</option>'+
+                                                '<option value="JUMPSUIT">JUMPSUIT</option>'+
+                                                '<option value="DUPATTA/SCARF/SHAWL">DUPATTA/SCARF/SHAWL</option>'+
+                                                '<option value="DRESS MATERIAL">DRESS MATERIAL</option>'+
+                                                '<option value="OTHER">OTHER</option>'+
+                                                '<option value="N/A">N/A</option>'+
+
+                                            '</select></td>' +
+                                        '<td><button type="text" class="removeRowBtn" >Remove</button></td>' +
+                    '</tr>';
+
+                // for (var i = 0; i < users.length; i++) {
+                //     html += '<option value="' + users[i].id + '">' + users[i].name + '</option>';
+                // }
+
+                // html += '</select></td>' +
+
+                '</tr>';
+
+                return html;
+            }
+
+            var tableBody = $('#Details2-table tbody');
+            var rowCount = tableBody.children('tr').length;
+            var newRow = generateTableRow(rowCount + 1);
+            tableBody.append(newRow);
+        });
+    });
+</script>
 
     <script>
         $(document).on('click', '.removeRowBtn', function() {

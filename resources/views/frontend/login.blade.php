@@ -13,7 +13,7 @@
         * {
             font-family: 'Noto Sans', serif;
         }
-        /* 120deg, #87b2f8 0%, #a1c4fd 100%); middle */  
+        /* 120deg, #87b2f8 0%, #a1c4fd 100%); middle */
         /* 120deg, #2c73e6d1 0%, #2d72d899 100%); bottom */
         body {
            background-image:linear-gradient(120deg, #a1c4fd 0%, #c2e9fb 100%);
@@ -179,7 +179,7 @@
             /* background: #162e67; */
             color: rgb(40, 38, 38);
         }
-
+        /* 120deg, #ea8900 0%, #ff9c4594 100%) orange color */
         #rcms_login_block input[type="submit"] {
             display: block;
             text-align: center;
@@ -187,7 +187,7 @@
             padding: 10px;
             /* background: linear-gradient(180deg, rgba(255, 255, 255, .15) 0%, rgba(255, 255, 255, 0) 100%), #bec0c2; */
             /* color: black; */
-            background-image: linear-gradient(120deg, #ea8900 0%, #ff9c4594 100%);
+            background-image: linear-gradient(120deg, #1a3f7a 0%, #57bdec 100%);
             /* linear-gradient(120deg, #ea8900 0%, #ff9c4594 100%) */
     color: white;
             margin-left: auto;
@@ -199,11 +199,15 @@
             cursor: pointer;
         }
         #rcms_login_block input[type="submit"]:hover {
-           letter-spacing: 2px; 
+           letter-spacing: 2px;
         }
         .black-placeholder::placeholder {
         color: black;
         opacity: 1; /* Necessary to ensure the color is not translucent */
+    }
+    .main-block {
+        box-shadow: 0px 0px 5px 2px #1b1b1f47;
+    border-radius: 16px
     }
     </style>
 </head>
@@ -232,11 +236,11 @@
 
 
                     </div>
-                    
+
                 </div>
                 <div style="padding: 24px; margin-top: 34px;" class="">
                     <div class="head">
-                        WELCOME To VIDYAGxP
+                        Welcome To Field Visit Survey
                     </div>
                     <form action="{{ url('rcms_check') }}" method="POST">
                         @csrf
@@ -244,7 +248,7 @@
                             <label for="username"><i class="fa-solid fa-envelope"></i></label>
                             <input type="text" name="email" placeholder="Enter Your E-Mail" class="black-placeholder">
                         </div>
-                       
+
                         <div class="group-input">
                             <label for="password"><i class="fa-solid fa-lock"></i></label>
                             <input type="password" name="password" placeholder="Enter Your Password" class="black-placeholder">
@@ -619,14 +623,14 @@
 
                     // Unselect all
                     $('select[name=timezone]').find('option').attr('selected', false)
-                    
+
                     $('select[name=timezone]').find(`option[value="${timeZone}"]`).attr('selected', true)
 
                 } catch (err) {
                     console.log('Cannot getTimeZone', err.message)
                 }
             }
-            
+
             await getTimeZone();
         }
     </script>

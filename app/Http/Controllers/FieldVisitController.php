@@ -3,9 +3,12 @@
 namespace App\Http\Controllers;
 use App\Models\FieldVisit;
 use App\Models\RecordNumber;
-
-
+use App\Models\FieldVisitGrid;
+use Carbon\Carbon;
+use Helpers;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 
 class FieldVisitController extends Controller
 {
@@ -20,6 +23,8 @@ class FieldVisitController extends Controller
 
     public function store(Request $request){
         $data = new FieldVisit();
+        $data->stage = "1";
+        $data->status = "Opened";
         $data->record = $request->record;
         $data->division_code = $request->division_code;
         $data->initiator = $request->initiator;
@@ -106,17 +111,40 @@ class FieldVisitController extends Controller
         $data->comments_on_hte_overall_store = $request->comments_on_hte_overall_store;
         $data->save();
 
+        //=========================================grid============================================
+
+        $fieldvisit_id = $data->id;
+        $newDataGridFiledVisit = FieldVisitGrid::where(['fv_id' => $fieldvisit_id, 'identifier' => 'details1'])->firstOrCreate();
+        $newDataGridFiledVisit->fv_id = $fieldvisit_id;
+        $newDataGridFiledVisit->identifier = 'details1';
+        $newDataGridFiledVisit->data = $request->details1;
+        $newDataGridFiledVisit->save();
+
+        $fieldvisit_id = $data->id;
+        $newDataGridFiledVisit = FieldVisitGrid::where(['fv_id' => $fieldvisit_id, 'identifier' => 'details2'])->firstOrCreate();
+        $newDataGridFiledVisit->fv_id = $fieldvisit_id;
+        $newDataGridFiledVisit->identifier = 'details2';
+        $newDataGridFiledVisit->data = $request->details2;
+        $newDataGridFiledVisit->save();
+
+        //=========================================================================================
+
         return back();
     }
 
     public function show($id){
         $data = FieldVisit::find($id);
-         return view('frontend.field-visit.field_visit_view',compact('data'));
+        $fieldvisit_id = $data->id;
+        $grid_Data = FieldVisitGrid::where(['fv_id' => $fieldvisit_id, 'identifier' => 'details1'])->first();
+        $grid_Data2 = FieldVisitGrid::where(['fv_id' => $fieldvisit_id, 'identifier' => 'details2'])->first();
+         return view('frontend.field-visit.field_visit_view',compact('data','grid_Data','grid_Data2'));
     }
 
 
     public function update(Request $request, $id){
+
         $data = FieldVisit::find($id);
+// dd($data);
         $data->date = $request->date;
         $data->time = $request->time;
         $data->brand_name = $request->brand_name;
@@ -199,7 +227,288 @@ class FieldVisitController extends Controller
         $data->comments_on_hte_overall_store = $request->comments_on_hte_overall_store;
         $data->update();
 
+                //=========================================grid============================================
+
+                $fieldvisit_id = $data->id;
+                $newDataGridFiledVisit = FieldVisitGrid::where(['fv_id' => $fieldvisit_id, 'identifier' => 'details1'])->firstOrCreate();
+                $newDataGridFiledVisit->fv_id = $fieldvisit_id;
+                $newDataGridFiledVisit->identifier = 'details1';
+                $newDataGridFiledVisit->data = $request->details1;
+                $newDataGridFiledVisit->save();
+
+                $fieldvisit_id = $data->id;
+                $newDataGridFiledVisit = FieldVisitGrid::where(['fv_id' => $fieldvisit_id, 'identifier' => 'details2'])->firstOrCreate();
+                $newDataGridFiledVisit->fv_id = $fieldvisit_id;
+                $newDataGridFiledVisit->identifier = 'details2';
+                $newDataGridFiledVisit->data = $request->details2;
+                $newDataGridFiledVisit->save();
+
+                //=========================================================================================
+
+
         return back();
+    }
+
+    public function sendstage(Request $request,$id){
+        try {
+            if ($request->username == Auth::user()->email && Hash::check($request->password, Auth::user()->password)) {
+                $data = FieldVisit::find($id);
+                // dd($data);
+                $lastDocument = FieldVisit::find($id);
+
+                if ($data->stage == 1) {
+
+                    $data->stage = "2";
+                    $data->status = "Pending Review";
+                    $data->submit_by = Auth::user()->name;
+                    $data->submit_on = Carbon::now()->format('d-M-Y');
+                    $data->submit_comment = $request->comment;
+
+                    // $history = new dataAuditTrail();
+                    // $history->data_id = $id;
+                    // $history->activity_type = 'Activity Log';
+                    // $history->previous = "";
+                    // $history->action='Submit';
+                    // $history->current = $data->submit_by;
+                    // $history->comment = $request->comment;
+                    // $history->user_id = Auth::user()->id;
+                    // $history->user_name = Auth::user()->name;
+                    // $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                    // $history->origin_state = $lastDocument->status;
+                    // $history->change_to =   "HOD Review";
+                    // $history->change_from = $lastDocument->status;
+                    // $history->stage = 'Plan Proposed';
+                    // $history->save();
+
+
+                    // $list = Helpers::getHodUserList();
+                    // foreach ($list as $u) {
+                    //     if ($u->q_m_s_divisions_id == $data->division_id) {
+                    //         $email = Helpers::getInitiatorEmail($u->user_id);
+                    //         if ($email !== null) {
+
+                    //             try {
+                    //                 Mail::send(
+                    //                     'mail.view-mail',
+                    //                     ['data' => $data],
+                    //                     function ($message) use ($email) {
+                    //                         $message->to($email)
+                    //                             ->subject("Activity Performed By " . Auth::user()->name);
+                    //                     }
+                    //                 );
+                    //             } catch (\Exception $e) {
+                    //                 //log error
+                    //             }
+                    //         }
+                    //     }
+                    // }
+
+                    // $list = Helpers::getHeadoperationsUserList();
+                    // foreach ($list as $u) {
+                    //     if ($u->q_m_s_divisions_id == $data->division_id) {
+                    //         $email = Helpers::getInitiatorEmail($u->user_id);
+                    //         if ($email !== null) {
+
+                    //             Mail::send(
+                    //                 'mail.Categorymail',
+                    //                 ['data' => $data],
+                    //                 function ($message) use ($email) {
+                    //                     $message->to($email)
+                    //                         ->subject("Activity Performed By " . Auth::user()->name);
+                    //                 }
+                    //             );
+                    //         }
+                    //     }
+                    // }
+                    // dd($data);
+                    $data->update();
+                    return back();
+                }
+                if ($data->stage == 2) {
+                    $data->stage = "3";
+                    $data->status = "Close Done";
+                    $data->pending_review_by = Auth::user()->name;
+                    $data->pending_review_on = Carbon::now()->format('d-M-Y');
+                    $data->pending_review_comment = $request->comment;
+
+                    // $history = new dataAuditTrail();
+                    // $history->data_id = $id;
+                    // $history->activity_type = 'Activity Log';
+                    // $history->previous = "";
+                    // $history->current = $data->HOD_Review_Complete_By;
+                    // $history->comment = $request->comment;
+                    // $history->action= 'HOD Review Complete';
+                    // $history->user_id = Auth::user()->id;
+                    // $history->user_name = Auth::user()->name;
+                    // $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                    // $history->origin_state = $lastDocument->status;
+                    // $history->change_to =   "QA Initial Review";
+                    // $history->change_from = $lastDocument->status;
+                    // $history->stage = 'Plan Approved';
+                    // $history->save();
+
+                    // dd($history->action);
+                    // $list = Helpers::getQAUserList();
+                    // foreach ($list as $u) {
+                    //     if ($u->q_m_s_divisions_id == $data->division_id) {
+                    //         $email = Helpers::getInitiatorEmail($u->user_id);
+                    //         if ($email !== null) {
+                    //             try {
+                    //                 Mail::send(
+                    //                     'mail.view-mail',
+                    //                     ['data' => $data],
+                    //                     function ($message) use ($email) {
+                    //                         $message->to($email)
+                    //                             ->subject("Activity Performed By " . Auth::user()->name);
+                    //                     }
+                    //                 );
+                    //             } catch (\Exception $e) {
+                    //                 //log error
+                    //             }
+                    //         }
+                    //     }
+                    // }
+
+
+                    $data->update();
+                    toastr()->success('Document Sent');
+                    return back();
+                }
+
+
+            } else {
+                toastr()->error('E-signature Not match');
+                return back();
+            }
+        } catch (\Throwable $th) {
+            return response()->json([
+                'success' => false,
+                'message' => $th->getMessage()
+            ], 500);
+        }
+    }
+    public function moreinforeject(Request $request, $id)
+    {
+
+        if ($request->username == Auth::user()->email && Hash::check($request->password, Auth::user()->password)) {
+            // return $request;
+            $data = FieldVisit::find($id);
+            $lastDocument = FieldVisit::find($id);
+            $list = Helpers::getInitiatorUserList();
+
+
+            if ($data->stage == 2) {
+
+                $data->stage = "1";
+                $data->status = "Opened";
+                $data->review_completed_more_info_by = Auth::user()->name;
+                $data->review_completed_more_info_on = Carbon::now()->format('d-M-Y');
+                $data->review_completed_more_info_comment = $request->comment;
+
+                $data->update();
+                // $history = new dataHistory();
+                // $history->type = "data";
+                // $history->doc_id = $id;
+                // $history->user_id = Auth::user()->id;
+                // $history->user_name = Auth::user()->name;
+                // $history->stage_id = $data->stage;
+                // $history->status = "Opened";
+                // foreach ($list as $u) {
+                //     if ($u->q_m_s_divisions_id == $data->division_id) {
+                //         $email = Helpers::getInitiatorEmail($u->user_id);
+                //         if ($email !== null) {
+
+                //             try {
+                //                 Mail::send(
+                //                     'mail.view-mail',
+                //                     ['data' => $data],
+                //                     function ($message) use ($email) {
+                //                         $message->to($email)
+                //                             ->subject("Activity Performed By " . Auth::user()->name);
+                //                     }
+                //                 );
+                //             } catch (\Exception $e) {
+                //                 //log error
+                //             }
+                //         }
+                //     }
+                // }
+                // $history->save();
+
+                toastr()->success('Document Sent');
+                return back();
+            }
+
+
+
+
+
+        } else {
+            toastr()->error('E-signature Not match');
+            return back();
+        }
+    }
+
+    public function closecancel(Request $request, $id)
+    {
+
+        if ($request->username == Auth::user()->email && Hash::check($request->password, Auth::user()->password)) {
+            // return $request;
+            $data = FieldVisit::find($id);
+            $lastDocument = FieldVisit::find($id);
+            $list = Helpers::getInitiatorUserList();
+
+
+            if ($data->stage == 1) {
+
+                $data->stage = "0";
+                $data->status = "Opened";
+                $data->close_cancel_by = Auth::user()->name;
+                $data->close_cancel_on = Carbon::now()->format('d-M-Y');
+                $data->close_cancel_comment = $request->comment;
+
+                $data->update();
+                // $history = new dataHistory();
+                // $history->type = "data";
+                // $history->doc_id = $id;
+                // $history->user_id = Auth::user()->id;
+                // $history->user_name = Auth::user()->name;
+                // $history->stage_id = $data->stage;
+                // $history->status = "Opened";
+                // foreach ($list as $u) {
+                //     if ($u->q_m_s_divisions_id == $data->division_id) {
+                //         $email = Helpers::getInitiatorEmail($u->user_id);
+                //         if ($email !== null) {
+
+                //             try {
+                //                 Mail::send(
+                //                     'mail.view-mail',
+                //                     ['data' => $data],
+                //                     function ($message) use ($email) {
+                //                         $message->to($email)
+                //                             ->subject("Activity Performed By " . Auth::user()->name);
+                //                     }
+                //                 );
+                //             } catch (\Exception $e) {
+                //                 //log error
+                //             }
+                //         }
+                //     }
+                // }
+                // $history->save();
+
+                toastr()->success('Document Sent');
+                return back();
+            }
+
+
+
+
+
+        } else {
+            toastr()->error('E-signature Not match');
+            return back();
+        }
     }
 
 }
