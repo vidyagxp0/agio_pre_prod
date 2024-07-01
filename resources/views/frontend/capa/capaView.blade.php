@@ -771,14 +771,14 @@
                                             $(document).ready(function () {
                                                 $('#material').click(function (e) {
                                                     e.preventDefault();
-                                        
+                                                    
                                                     // Clone the first row
                                                     var newRow = $('#productmaterial tbody tr:first').clone();
-                                        
+                                                    
                                                     // Update the serial number
                                                     var lastSerialNumber = parseInt($('#productmaterial tbody tr:last input[name="serial_number[]"]').val());
                                                     newRow.find('input[name="serial_number[]"]').val(lastSerialNumber + 1);
-                                        
+                                                    
                                                     // Clear inputs in the new row
                                                     newRow.find('input[name="material_name[]"]').val('');
                                                     newRow.find('input[name="material_batch_no[]"]').val('');
@@ -787,15 +787,18 @@
                                                     newRow.find('input[name="material_batch_desposition[]"]').val('');
                                                     newRow.find('input[name="material_remark[]"]').val('');
                                                     newRow.find('input[name="material_batch_status[]"]').val('');
-                                        
+                                                    
+                                                    // Clear selected options in the new row
+                                                    newRow.find('select').prop('selectedIndex', 0);
+                                                    
                                                     // Append the new row to the table body
                                                     $('#productmaterial tbody').append(newRow);
                                                 });
-                                        
+                                                
                                                 // Remove row functionality
                                                 $(document).on('click', '.removeRowBtn', function() {
                                                     $(this).closest('tr').remove();
-                                        
+                                                    
                                                     // Update serial numbers after removing a row
                                                     $('#productmaterial tbody tr').each(function(index) {
                                                         $(this).find('input[name="serial_number[]"]').val(index + 1);
@@ -803,6 +806,7 @@
                                                 });
                                             });
                                         </script>
+                                        
                                         
                                         {{-- new added product table --}}
 
@@ -877,10 +881,10 @@
                                             <div class="group-input">
                                                 <label for="Material Details">
                                                     Equipment/Instruments Details<button type="button" name="ann"
-                                                    id="equipment"
+                                                    id="equipment_add"
                                                         {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>+</button>
                                                 </label>
-                                                <table class="table table-bordered" id="equipment_details">
+                                                <table class="table table-bordered" id="equi_details">
                                                     <thead>
                                                         <tr>
                                                             <th>Row #</th>
@@ -918,6 +922,40 @@
                                                 </table>
                                             </div>
                                         </div>
+                                        <script>
+                                            $(document).ready(function () {
+                                                $('#equipment_add').click(function (e) {
+                                                    e.preventDefault();
+                                                    
+                                                    // Clone the first row
+                                                    var newRow = $('#equi_details tbody tr:first').clone();
+                                                    
+                                                    // Update the serial number
+                                                    var lastSerialNumber = parseInt($('#equi_details tbody tr:last input[name="serial_number[]"]').val());
+                                                    newRow.find('input[name="serial_number[]"]').val(lastSerialNumber + 1);
+                                                    
+                                                    // Clear inputs in the new row
+                                                    newRow.find('input[name="equipment[]"]').val('');
+                                                    newRow.find('input[name="equipment_instruments[]"]').val('');
+                                                    newRow.find('input[name="equipment_comments[]"]').val('');
+                                                    
+                                                    // Append the new row to the table body
+                                                    $('#equi_details tbody').append(newRow);
+                                                });
+                                                
+                                                // Remove row functionality
+                                                $(document).on('click', '.removeRowBtn', function() {
+                                                    $(this).closest('tr').remove();
+                                                    
+                                                    // Update serial numbers after removing a row
+                                                    $('#equi_details tbody tr').each(function(index) {
+                                                        $(this).find('input[name="serial_number[]"]').val(index + 1);
+                                                    });
+                                                });
+                                            });
+                                        </script>
+                                        
+
                                         <div class="col-12 sub-head">
                                             Other type CAPA Details
                                         </div>
