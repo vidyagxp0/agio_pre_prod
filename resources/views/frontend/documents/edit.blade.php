@@ -249,77 +249,29 @@
                     @endif
                     @endforeach --}}
                 </div>
-                @if (Auth::user()->role != 3 && $document->stage < 8) <-- Add Comment -->
-                    <div class="comment">
-                        <div>
-                            <p class="timestamp" style="color: blue">Modify by {{ Auth::user()->name }}
-                                at {{ date('d-M-Y h:i:s') }}</p>
-
-                            <input class="input-field" type="text" name="sop_type_comment">
-                        </div>
-                        <div class="button">Add Comment</div>
-                    </div>
-                    @endif
-            </div>
-            <div class="col-md-4 new-date-data-field">
-                <div class="group-input input-date">
-                    <label for="due-date">Due Date</label>
-                    <div><small class="text-primary">Kindly Fill Target Date of Completion</small>
-                    </div>
-                    <div class="calenderauditee">
-                        <input type="text" id="due_dateDoc" value="{{ $document->due_dateDoc }}" placeholder="DD-MMM-YYYY" />
-                        <input type="date" name="due_dateDoc" value="{{ $document->due_dateDoc ? Carbon\Carbon::parse($document->due_dateDoc)->format('Y-m-d') : ''  }}" readonly {{Helpers::isRevised($document->stage)}} class="hide-input" style="position: absolute; top: 0; left: 0; opacity: 0;" min="{{ Carbon\Carbon::today()->format('Y-m-d') }}" oninput="handleDateInput(this, 'due_dateDoc')" />
-                    </div>
-                    @foreach ($history as $tempHistory)
-                    @if (
-                    $tempHistory->activity_type == 'Due Date' &&
-                    !empty($tempHistory->comment) &&
-                    $tempHistory->user_id == Auth::user()->id)
-                    @php
-                    $users_name = DB::table('users')
-                    ->where('id', $tempHistory->user_id)
-                    ->value('name');
-                    @endphp
-                    <p style="color: blue">Modify by {{ $users_name }} at
-                        {{ $tempHistory->created_at }}
-                    </p>
-                    <input class="input-field" style="background: #ffff0061;
-                                    color: black;" type="text" value="{{ $tempHistory->comment }}" disabled>
-                    @endif
-                    @endforeach
-                </div>
-                <p id="due_dateDocError" style="color:red">**Due Date is required</p>
-
-                @if (Auth::user()->role != 3 && $document->stage < 8) {{-- Add Comment  --}} <div class="comment">
+                @if (Auth::user()->role != 3 && $document->stage < 8) Add Comment <div class="comment">
                     <div>
-                        <p class="timestamp" style="color: blue">Modify by {{ Auth::user()->name }} at
-                            {{ date('d-M-Y h:i:s') }}
-                        </p>
+                        <p class="timestamp" style="color: blue">Modify by {{ Auth::user()->name }}
+                            at {{ date('d-M-Y h:i:s') }}</p>
 
-                        <input class="input-field" type="text" name="due_date_comment">
+                        <input class="input-field" type="text" name="sop_type_comment">
                     </div>
-
                     <div class="button">Add Comment</div>
             </div>
             @endif
-
     </div>
-    <div class="col-md-8">
-        <div class="group-input">
-            <label for="notify_to">Notify To</label>
-            <select multiple name="notify_to[]" placeholder="Select Persons" data-search="false" data-silent-initial-value-set="true" id="notify_to" {{Helpers::isRevised($document->stage)}}>
-                @php
-                $notify_user_id = explode(',', $document->notify_to);
-                @endphp
-                @foreach ($users as $data)
-                <option value="{{ $data->id }}" {{ in_array($data->id, $notify_user_id) ? 'selected' : '' }}>{{ $data->name }}
-                    {{-- ({{ $data->role }}) --}}
-                </option>
-                @endforeach
-            </select>
+    <div class="col-md-4 new-date-data-field">
+        <div class="group-input input-date">
+            <label for="due-date">Due Date</label>
+            <div><small class="text-primary">Kindly Fill Target Date of Completion</small>
+            </div>
+            <div class="calenderauditee">
+                <input type="text" id="due_dateDoc" value="{{ $document->due_dateDoc }}" placeholder="DD-MMM-YYYY" />
+                <input type="date" name="due_dateDoc" value="{{ $document->due_dateDoc ? Carbon\Carbon::parse($document->due_dateDoc)->format('Y-m-d') : ''  }}" readonly {{Helpers::isRevised($document->stage)}} class="hide-input" style="position: absolute; top: 0; left: 0; opacity: 0;" min="{{ Carbon\Carbon::today()->format('Y-m-d') }}" oninput="handleDateInput(this, 'due_dateDoc')" />
+            </div>
             @foreach ($history as $tempHistory)
             @if (
-            $tempHistory->activity_type == 'Notify To' &&
+            $tempHistory->activity_type == 'Due Date' &&
             !empty($tempHistory->comment) &&
             $tempHistory->user_id == Auth::user()->id)
             @php
@@ -335,17 +287,64 @@
             @endif
             @endforeach
         </div>
+        <p id="due_dateDocError" style="color:red">**Due Date is required</p>
 
         @if (Auth::user()->role != 3 && $document->stage < 8) {{-- Add Comment  --}} <div class="comment">
             <div>
-                <p class="timestamp" style="color: blue">Modify by {{ Auth::user()->name }}
-                    at {{ date('d-M-Y h:i:s') }}</p>
+                <p class="timestamp" style="color: blue">Modify by {{ Auth::user()->name }} at
+                    {{ date('d-M-Y h:i:s') }}
+                </p>
 
-                <input class="input-field" type="text" name="notify_to_comment">
+                <input class="input-field" type="text" name="due_date_comment">
             </div>
+
             <div class="button">Add Comment</div>
     </div>
     @endif
+
+</div>
+<div class="col-md-8">
+    <div class="group-input">
+        <label for="notify_to">Notify To</label>
+        <select multiple name="notify_to[]" placeholder="Select Persons" data-search="false" data-silent-initial-value-set="true" id="notify_to" {{Helpers::isRevised($document->stage)}}>
+            @php
+            $notify_user_id = explode(',', $document->notify_to);
+            @endphp
+            @foreach ($users as $data)
+            <option value="{{ $data->id }}" {{ in_array($data->id, $notify_user_id) ? 'selected' : '' }}>{{ $data->name }}
+                {{-- ({{ $data->role }}) --}}
+            </option>
+            @endforeach
+        </select>
+        @foreach ($history as $tempHistory)
+        @if (
+        $tempHistory->activity_type == 'Notify To' &&
+        !empty($tempHistory->comment) &&
+        $tempHistory->user_id == Auth::user()->id)
+        @php
+        $users_name = DB::table('users')
+        ->where('id', $tempHistory->user_id)
+        ->value('name');
+        @endphp
+        <p style="color: blue">Modify by {{ $users_name }} at
+            {{ $tempHistory->created_at }}
+        </p>
+        <input class="input-field" style="background: #ffff0061;
+                                    color: black;" type="text" value="{{ $tempHistory->comment }}" disabled>
+        @endif
+        @endforeach
+    </div>
+
+    @if (Auth::user()->role != 3 && $document->stage < 8) {{-- Add Comment  --}} <div class="comment">
+        <div>
+            <p class="timestamp" style="color: blue">Modify by {{ Auth::user()->name }}
+                at {{ date('d-M-Y h:i:s') }}</p>
+
+            <input class="input-field" type="text" name="notify_to_comment">
+        </div>
+        <div class="button">Add Comment</div>
+</div>
+@endif
 
 </div>
 <!-- <div class="col-md-12">
@@ -1402,7 +1401,7 @@
 
                             <input class="input-field" type="text" name="revision_type_comment">
                         </div>
-                        <div class="button">Add Comment</div>
+                        <!-- <div class="button">Add Comment</div> -->
                 </div>
                 @endif
 
@@ -1436,7 +1435,7 @@
 
                             <input class="input-field" type="text" name="revision_summary_comment">
                         </div>
-                        <div class="button">Add Comment</div>
+                        <!-- <div class="button">Add Comment</div> -->
                 </div>
                 @endif
 

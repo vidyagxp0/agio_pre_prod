@@ -861,6 +861,32 @@
                 </div>
             </div>
 
+            <!-- <div class="col-md-12 mb-3">
+                <div class="group-input">
+                    <label for="procedure" id="newreport">
+                    Procedure<button type="button" id="reportingbtadd" name="button">+</button>
+                    </label>
+                    <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
+
+                    <div id="reportingdiv">
+                        <div class="singleReportingBlock">
+                            <div class="row">
+                                <div class="col-sm-10">
+                                    <textarea name="procedure[]" class=""></textarea>
+                                </div>
+                                <div class="col-sm-1">
+                                    <button class="btn btn-dark subReportingAdd">+</button>
+                                </div>
+                                <div class="col-sm-1">
+                                    <button class="btn btn-danger removeAllBlocks">Remove</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div> -->
+
 
 
             <div class="col-md-12">

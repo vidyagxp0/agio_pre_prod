@@ -442,7 +442,7 @@
 <body>
 
     <header class="">
-        <table class="border" style="height: 130px;">
+        <table class="border" style="height: 80px;">
             <tbody>
                 <tr>
                     <td class="logo w-20">
@@ -450,20 +450,23 @@
 
                         <img src="https://navin.mydemosoftware.com/public/user/images/logo.png" alt="..." style="margin-top: 0.5rem; margin-bottom: 1rem;">
                     </td>
-                    <td class="title w-60" style="height: 150px; padding: 0px;  margin: 0px; border-left: 1px solid rgb(104, 104, 104); border-right: 1px solid rgb(104, 104, 104);">
-                        <p style="margin-top: -0.1rem; border-bottom: 1px solid rgb(104, 104, 104);">{{ config('site.pdf_title') }}</p>
-                        <br>
+                    <td class="title w-60" style="height: 100px; padding: 0px;  margin: 0px; border-left: 1px solid rgb(104, 104, 104); border-right: 1px solid rgb(104, 104, 104);">
+                        <p style="margin-top: -0.1rem; border-bottom: 0px solid rgb(104, 104, 104);">{{ config('site.pdf_title') }}</p>
+                        <hr style="border: 0; border-top: 1px solid rgb(104, 104, 104); margin: 0;">
                         <p style="margin-top: -2rem; margin-bottom: 0px;">
                             {{ $data->document_name }}
                         </p>
                     </td>
+
                     <td class="logo w-20">
-                        <img src="{{ asset('user/images/agio.jpg') }}" style="max-height: 60px; max-width: 40px;">
+                        <!-- <img src="{{ asset('user/images/agio.jpg') }}" style="max-height: 55px; max-width: 40px;"> -->
+                        <img src="http://127.0.0.1:8000/user/images/agio.jpg" style="max-height: 55px; max-width: 40px;">
+
                     </td>
                 </tr>
             </tbody>
         </table>
-        <table class="border border-top-none p-10">
+        <table class="border border-top-none p-8">
             <tbody>
                 <tr>
                     <td class="doc-num w-30">
@@ -495,24 +498,32 @@
             </tbody>
         </table>
 
-        <table class="border border-top-none p-10">
+        <table class="border border-top-none p-8">
             <tbody>
                 <tr>
-                    <td class="w-50">
-                        Effective Date :{{($data->effective_date)}}
-
-                    </td>
-                    <td class="w-50">
-                        Next Review Date :{{$data->next_review_date}}
+                    <td class="doc-num w-60">
+                        Address : 82, M.I.D.C, Bhosari, Maharashtra 411026
                     </td>
                     <!-- <td class="w-60">
                         Address : 82, M.I.D.C, Bhosari, Maharashtra 411026
                     </td> -->
                 </tr>
-                <td>Address</td>
             </tbody>
         </table>
 
+        <table class="border border-top-none p-7">
+            <tbody>
+                <tr>
+                    <td class="doc-num w-50">
+                        Effective Date : {{($data->effective_date)}}
+
+                    </td>
+                    <td class="doc-num w-50">
+                        Next Review Date : {{$data->next_review_date}}
+                    </td>
+                </tr>
+            </tbody>
+        </table>
     </header>
     <footer class="footer">
         <table class="border p-20">
@@ -542,9 +553,9 @@
         </table>
     </footer>
 
-    <section class="main-section" id="pdf-page" style="margin-top: 6rem;">
+    <section class="main-section" id="pdf-page" style="margin-top: 15px;">
         <section style="page-break-after: never;">
-            <div class="other-container" style="margin-bottom: 15px;">
+            <div class="other-container" style="margin-bottom: 10px;">
                 <table>
                     <thead>
                         <tr>
@@ -604,7 +615,7 @@
                 </div>
             </div>
 
-            <table class="mb-20">
+            <table class="mb-15">
                 <tbody>
                     <tr>
                         <th class="w-5 vertical-baseline">3.</th>
@@ -651,7 +662,7 @@
                 </div>
             </div>
 
-            <table class="mb-20">
+            <table class="mb-15">
                 <tbody>
                     <tr>
                         <th class="w-5 vertical-baseline">4.</th>
@@ -699,7 +710,7 @@
             </div>
 
             {{-- REFERENCES START --}}
-            <table class="mb-20">
+            <table class="mb-15">
                 <tbody>
                     <tr>
                         <th class="w-5 vertical-baseline">5.</th>
@@ -742,7 +753,7 @@
             </div>
             {{-- REFERENCES END --}}
 
-            <table class="mb-20">
+            <table class="mb-15">
                 <tbody>
                     <tr>
                         <th class="w-5 vertical-baseline">6.</th>
@@ -788,7 +799,7 @@
             </div>
 
             {{-- DEFINITIONS START --}}
-            <table class="mb-20">
+            <table class="mb-15">
                 <tbody>
                     <tr>
                         <th class="w-5 vertical-baseline">7.</th>
@@ -836,7 +847,7 @@
             {{-- DEFINITIONS END --}}
 
             {{-- MATERIALS AND EQUIPMENTS START --}}
-            <table class="mb-20">
+            <table class="mb-15">
                 <tbody>
                     <tr>
                         <th class="w-5 vertical-baseline">8.</th>
@@ -925,7 +936,7 @@
                 {{-- PROCEDURE END --}}
 
                 {{-- REPORTING START --}}
-                <table class="mb-20 ">
+                <table class="mb-15 ">
                     <tbody>
                         <tr>
                             <th class="w-5 vertical-baseline">10.</th>
@@ -971,7 +982,7 @@
 
 
                 {{-- ANNEXSURE START --}}
-                <table class="mb-20">
+                <table class="mb-15">
                     <tbody>
                         <tr>
                             <th class="w-5 vertical-baseline">11.</th>
