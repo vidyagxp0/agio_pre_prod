@@ -586,7 +586,7 @@ class CapaController extends Controller
         if (!empty($capa->capa_related_record)) {
             $history = new CapaAuditTrial();
             $history->capa_id = $capa->id;
-            $history->activity_type = 'CAPA Related Records';
+            $history->activity_type = 'Reference Records';
             $history->previous = "Null";
             $history->current = $capa->capa_related_record;
             $history->comment = "NA";
@@ -678,6 +678,54 @@ class CapaController extends Controller
             $history->activity_type = 'CAPA QA Comments';
             $history->previous = "Null";
             $history->current = $capa->capa_qa_comments;
+            $history->comment = "NA";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $capa->status;
+             $history->change_to = "Opened";
+            $history->change_from = "Initiator";
+            $history->action_name = "store";
+            $history->save();
+        }
+        if (!empty($capa->hod_attachment)) {
+            $history = new CapaAuditTrial();
+            $history->capa_id = $capa->id;
+            $history->activity_type = 'CAPA QA Comments';
+            $history->previous = "Null";
+            $history->current = $capa->hod_attachment;
+            $history->comment = "NA";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $capa->status;
+             $history->change_to = "Opened";
+            $history->change_from = "Initiator";
+            $history->action_name = "store";
+            $history->save();
+        }
+        if (!empty($capa->qa_attachment)) {
+            $history = new CapaAuditTrial();
+            $history->capa_id = $capa->id;
+            $history->activity_type = 'CAPA QA Comments';
+            $history->previous = "Null";
+            $history->current = $capa->qa_attachment;
+            $history->comment = "NA";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $capa->status;
+             $history->change_to = "Opened";
+            $history->change_from = "Initiator";
+            $history->action_name = "store";
+            $history->save();
+        }
+        if (!empty($capa->capafileattachement)) {
+            $history = new CapaAuditTrial();
+            $history->capa_id = $capa->id;
+            $history->activity_type = 'CAPA QA Comments';
+            $history->previous = "Null";
+            $history->current = $capa->capafileattachement;
             $history->comment = "NA";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -881,7 +929,7 @@ class CapaController extends Controller
         if (!empty($capa->qa_review)) {
             $history = new CapaAuditTrial();
             $history->capa_id = $capa->id;
-            $history->activity_type = 'QA Review & Closure';
+            $history->activity_type = 'QA Head Review & Closure';
             $history->previous = "Null";
             $history->current = $capa->qa_review;
             $history->comment = "NA";
@@ -1403,7 +1451,7 @@ class CapaController extends Controller
 
             $history = new CapaAuditTrial();
             $history->capa_id = $id;
-            $history->activity_type = 'CAPA Related Records';
+            $history->activity_type = 'Reference Records';
             $history->previous = $lastDocument->capa_related_record;
             $history->current = $capa->capa_related_record;
             $history->comment = $request->capa_related_record_comment;
@@ -1714,7 +1762,7 @@ class CapaController extends Controller
 
             $history = new CapaAuditTrial();
             $history->capa_id = $id;
-            $history->activity_type = 'QA Review & Closure';
+            $history->activity_type = 'QA Head Review & Closure';
             $history->previous = $lastDocument->qa_review;
             $history->current = $capa->qa_review;
             $history->comment = $request->qa_review_comment;
@@ -1813,7 +1861,57 @@ class CapaController extends Controller
                 $history->action_name = "Update";
             $history->save();
         }
+        if ($lastDocument->hod_attachment != $capa->hod_attachment) {
 
+            $history = new CapaAuditTrial();
+            $history->capa_id = $id; 
+            $history->activity_type = 'HODknkjn Attachment';
+            $history->previous = $lastDocument->hod_attachment;
+            $history->current = $capa->hod_attachment;
+            $history->comment = $request->hod_attachment_comment;
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+             $history->change_to = $lastDocument;
+                $history->change_from = $capa->status;
+                $history->action_name = "Update";
+            $history->save();
+        }
+        if ($lastDocument->qa_attachment != $capa->qa_attachment) {
+
+            $history = new CapaAuditTrial();
+            $history->capa_id = $id; 
+            $history->activity_type = 'QA Attachment';
+            $history->previous = $lastDocument->qa_attachment;
+            $history->current = $capa->qa_attachment;
+            $history->comment = $request->qa_attachment_comment;
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+             $history->change_to = "Not Applicable";
+                $history->change_from = $capa->status;
+                $history->action_name = "Update";
+            $history->save();
+        }
+        if ($lastDocument->capafileattachement != $capa->capafileattachement) {
+
+            $history = new CapaAuditTrial();
+            $history->capa_id = $id; 
+            $history->activity_type = 'Capa Attachment';
+            $history->previous = $lastDocument->capafileattachement;
+            $history->current = $capa->capafileattachement;
+            $history->comment = $request->capafileattachement_comment;
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+             $history->change_to = "Not Applicable";
+                $history->change_from = $capa->status;
+                $history->action_name = "Update";
+            $history->save();
+        }
         if ($lastDocument->initiated_through_req != $capa->initiated_through_req) {
 
             $history = new CapaAuditTrial();

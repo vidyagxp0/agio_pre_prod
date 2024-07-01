@@ -1756,7 +1756,7 @@
                                     <div class="row">
                                         <div class="col-12">
                                             <div class="group-input">
-                                                <label for="QA Review & Closure">QA Review & Closure</label>
+                                                <label for="QA Review & Closure">QA Head Review & Closure</label>
                                                 <textarea name="qa_review" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>{{ $data->qa_review }}</textarea>
                                             </div>
                                         </div>

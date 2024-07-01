@@ -707,7 +707,8 @@
                                 <div class="col-12">
                                     <div class="group-input">
                                         <label for="Details">Details</label>
-                                        <input type="text" name="details_new">
+                                        {{-- <input type="text" name="details_new"> --}}
+                                        <textarea name="details_new" ></textarea>
                                     </div>
                                 </div>
                                
@@ -729,7 +730,7 @@
         <div class="row">
             <div class="col-12">
                 <div class="group-input">
-                    <label for="QA Review & Closure">HOD Remark</label>
+                    <label for="QA Head Review & Closure">HOD Remark</label>
                     <textarea name="hod_remarks"></textarea>
                 </div>
             </div>
