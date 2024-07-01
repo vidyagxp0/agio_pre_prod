@@ -816,16 +816,16 @@
             </div>
             <div class="col-12">
                 <div class="group-input">
-                    <label for="Closure Attachments">Qa Attachment</label>
+                    <label for="Closure Attachments">QA Attachment</label>
                     <div><small class="text-primary">Please Attach all relevant or supporting
                             documents</small></div>
                     {{-- <input multiple type="file" id="myfile" name="closure_attachment[]"> --}}
                     <div class="file-attachment-field">
-                        <div class="file-attachment-list" id="closure_attachment"></div>
+                        <div class="file-attachment-list" id="qa_attachment"></div>
                         <div class="add-btn">
                             <div>Add</div>
                             <input type="file" id="myfile" name="qa_attachment[]"
-                                oninput="addMultipleFiles(this, 'closure_attachment')" multiple>
+                                oninput="addMultipleFiles(this, 'qa_attachment')" multiple>
                         </div>
                     </div>
                 </div>
@@ -941,11 +941,11 @@
                                             documents</small></div>
                                     {{-- <input multiple type="file" id="myfile" name="closure_attachment[]"> --}}
                                     <div class="file-attachment-field">
-                                        <div class="file-attachment-list" id="closure_attachment"></div>
+                                        <div class="file-attachment-list" id="capafileattachement"></div>
                                         <div class="add-btn">
                                             <div>Add</div>
                                             <input type="file" id="qafile" name="capafileattachement[]"
-                                                oninput="addMultipleFiles(this, 'closure_attachment')" multiple>
+                                                oninput="addMultipleFiles(this, 'capafileattachement')" multiple>
                                         </div>
                                     </div>
                                 </div>

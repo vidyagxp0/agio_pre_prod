@@ -2326,7 +2326,8 @@ class CapaController extends Controller
         if(!empty($changeControl->cft)) $cft = explode(',', $changeControl->cft);
         // return $capa_data;
         if ($request->child_type == "Change_control") {
-            return view('frontend.change-control.new-change-control', compact('cft','pre','hod','parent_short_description', 'parent_initiator_id', 'parent_intiation_date', 'parent_division_id', 'parent_record', 'record', 'due_date', 'parent_id', 'parent_type'));
+            $record_number = $record;
+            return view('frontend.change-control.new-change-control', compact('cft','pre','hod','parent_short_description', 'parent_initiator_id', 'parent_intiation_date', 'parent_division_id', 'parent_record', 'record_number', 'due_date', 'parent_id', 'parent_type'));
         }
         if ($request->child_type == "extension") {
             $parent_due_date = "";
@@ -2338,7 +2339,8 @@ class CapaController extends Controller
 
             $record = ((RecordNumber::first()->value('counter')) + 1);
             $record = str_pad($record, 4, '0', STR_PAD_LEFT);
-            return view('frontend.forms.extension', compact('parent_id', 'parent_name', 'record', 'parent_due_date'));
+            $record_number = $record;
+            return view('frontend.forms.extension', compact('parent_id', 'parent_name', 'record_number', 'parent_due_date'));
         }
         $old_record = Capa::select('id', 'division_id', 'record')->get();
         if ($request->child_type == "Action_Item") {
@@ -2351,7 +2353,8 @@ class CapaController extends Controller
         // }
         if ($request->child_type == "rca") {
             // $cc->originator = User::where('id', $cc->initiator_id)->value('name');
-            return view('frontend.forms.root-cause-analysis', compact('record', 'due_date', 'parent_id','old_record', 'parent_type','parent_intiation_date','parent_record','parent_initiator_id','cft'));
+            $record_number = $record;
+            return view('frontend.forms.root-cause-analysis', compact('record_number', 'due_date', 'parent_id','old_record', 'parent_type','parent_intiation_date','parent_record','parent_initiator_id','cft'));
     
         }
     }
@@ -2363,7 +2366,8 @@ class CapaController extends Controller
         $currentDate = Carbon::now();
         $formattedDate = $currentDate->addDays(30);
         $due_date= $formattedDate->format('Y-m-d');
-        return view("frontend.forms.effectiveness-check", compact('due_date', 'record'));
+        $record_number = $record;
+        return view("frontend.forms.effectiveness-check", compact('due_date', 'record_number'));
     }
 
 
