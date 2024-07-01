@@ -45,7 +45,7 @@ Route::group(['prefix' => 'rcms'], function () {
     Route::get('/logout', [UserLoginController::class, 'rcmslogout'])->name('rcms.logout');
 
     Route::get('/qms-logs/{slug}', [LogController::class, 'index'])->name('rcms.logs.show');
-    
+
 
 
     Route::middleware(['rcms'])->group(
@@ -246,7 +246,7 @@ Route::group(['prefix' => 'rcms'], function () {
             Route::post('nonConformaceQaMoreInfo/{id}', [NonConformaceController::class, 'failure_inv_qa_more_info'])->name('nonConformaceQaMoreInfo');
 
             Route::get('non-conformance-audit-trail/{id}', [NonConformaceController::class, 'NonConformaceAuditTrail'])->name('non-conformance-audit-trail');
-            Route::get('non-conformance-audit-pdf/{id}', [NonConformaceController::class, 'NonConformaceAuditTrailPdf'])->name('non-conformance-audit-pdf');
+            Route::get('non-conformance-audit-pdf/{id}', [NonConformaceController::class, 'NonConformanceAuditTrailPdf'])->name('non-conformance-audit-pdf');
             Route::get('non-conformance-single-report/{id}', [NonConformaceController::class, 'singleReport'])->name('non-conformance-single-report');
 
             Route::post('launch-extension-non-conformance/{id}', [NonConformaceController::class, 'launchExtensionDeviation'])->name('launch-extension-non-conformance');
@@ -329,7 +329,7 @@ Route::group(['prefix' => 'rcms'], function () {
                 Route::post('/oosstore', [OOSController::class, 'store'])->name('oosstore');
                 Route::get('oos_view/{id}', [OOSController::class, 'show'])->name('oos_view');
                 Route::post('oosupdate/{id}', [OOSController::class, 'update'])->name('oosupdate');
-    
+
                 Route::post('sendstage/{id}',[OOSController::class,'send_stage'])->name('send_stage');
                 Route::post('requestmoreinfo_back_stage/{id}',[OOSController::class,'requestmoreinfo_back_stage'])->name('requestmoreinfo_back_stage');
                 Route::post('assignable_send_stage/{id}',[OOSController::class,'assignable_send_stage'])->name('assignable_send_stage');
@@ -337,15 +337,15 @@ Route::group(['prefix' => 'rcms'], function () {
                 Route::post('thirdStage/{id}', [OOSController::class, 'stageChange'])->name('thirdStage');
                 Route::post('reject_stage/{id}', [OOSController::class, 'reject_stage'])->name('reject_stage');
                 Route::post('capa_child/{id}', [CapaController::class, 'child_change_control'])->name('capa_child_changecontrol');
-                
+
                 Route::get('AuditTrial/{id}', [OOSController::class, 'AuditTrial'])->name('audit_trial');
                 Route::get('auditDetails/{id}', [OOSController::class, 'auditDetails'])->name('audit_details');
                 Route::get('audit_report/{id}', [OOSController::class, 'auditReport'])->name('audit_report');
                 Route::get('single_report/{id}', [OOSController::class, 'singleReport'])->name('single_report');
-    
+
             });
 
-            /** 
+            /**
              * oos micro
              */
 
@@ -362,12 +362,12 @@ Route::group(['prefix' => 'rcms'], function () {
                     Route::post('cancel_stage/{id}', [OOSMicroController::class, 'cancel_stage'])->name('cancel_stage');;
                     Route::post('thirdStage/{id}', [OOSMicroController::class, 'stageChange'])->name('thirdStage');
                     Route::post('reject_stage/{id}', [OOSMicroController::class, 'reject_stage'])->name('reject_stage');
-                    
+
                     Route::get('AuditTrial/{id}', [OOSMicroController::class, 'AuditTrial'])->name('audit_trial');
                     Route::get('auditDetails/{id}', [OOSMicroController::class, 'auditDetails'])->name('audit_details');
                     Route::get('audit_report/{id}', [OOSMicroController::class, 'auditReport'])->name('audit_report');
                     Route::get('single_report/{id}', [OOSMicroController::class, 'singleReport'])->name('single_report');
-                    
+
             });
 
             /**
@@ -398,7 +398,7 @@ Route::group(['prefix' => 'rcms'], function () {
 
             /********************* Incident Routes Starts *******************/
 
-            Route::get('incident', [IncidentController::class, 'index'])->name('incident');    
+            Route::get('incident', [IncidentController::class, 'index'])->name('incident');
             Route::post('incident-store', [IncidentController::class, 'store'])->name('incident-store');
             Route::get('incident-show/{id}', [IncidentController::class, 'incidentShow'])->name('incident-show');
             Route::post('incident-update/{id}', [IncidentController::class, 'update'])->name('incident-update');

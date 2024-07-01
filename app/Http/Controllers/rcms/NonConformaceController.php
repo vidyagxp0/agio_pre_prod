@@ -664,7 +664,6 @@ class NonConformaceController extends Controller
                 }
             }
 
-
             $Cft->Quality_Control_attachment = json_encode($files);
         }
         if (!empty ($request->Quality_Assurance_attachment)) {
@@ -676,7 +675,6 @@ class NonConformaceController extends Controller
                     $files[] = $name;
                 }
             }
-
 
             $Cft->Quality_Assurance_attachment = json_encode($files);
         }
@@ -690,7 +688,6 @@ class NonConformaceController extends Controller
                 }
             }
 
-
             $Cft->Engineering_attachment = json_encode($files);
         }
         if (!empty ($request->Analytical_Development_attachment)) {
@@ -702,7 +699,6 @@ class NonConformaceController extends Controller
                     $files[] = $name;
                 }
             }
-
 
             $Cft->Analytical_Development_attachment = json_encode($files);
         }
@@ -814,7 +810,6 @@ class NonConformaceController extends Controller
                     $files[] = $name;
                 }
             }
-
 
             $Cft->Other3_attachment = json_encode($files);
         }
@@ -1123,6 +1118,7 @@ class NonConformaceController extends Controller
 
 
         $grid_data_qrms = NonConformanceGridModes::where(['non_conformances_id' => $id, 'identifier' => 'failure_mode_qrms'])->first();
+
         $grid_data_matrix_qrms = NonConformanceGridModes::where(['non_conformances_id' => $id, 'identifier' => 'matrix_qrms'])->first();
 
         $capaExtension = NonConformanceLunchExtension::where(['non_conformances_id' => $id, "extension_identifier" => "Capa"])->first();
@@ -1444,12 +1440,12 @@ class NonConformaceController extends Controller
         $NonConformance->Occurrence = $request->Occurrence ? $request->Occurrence : $NonConformance->Occurrence;
         $NonConformance->detection = $request->detection ? $request->detection: $NonConformance->detection;
 
-        $newDataGridqrms = NonConformanceGridModes::where(['non_conformances_id' => $id, 'identifier' =>
-        'failure_mode_qrms'])->firstOrCreate();
+        $newDataGridqrms = NonConformanceGridModes::where(['non_conformances_id' => $id, 'identifier' => 'failure_mode_qrms'])->firstOrCreate();
         $newDataGridqrms->non_conformances_id = $id;
         $newDataGridqrms->identifier = 'failure_mode_qrms';
         $newDataGridqrms->data = $request->failure_mode_qrms;
         $newDataGridqrms->save();
+
 
         $matrixDataGridqrms = NonConformanceGridModes::where(['non_conformances_id' => $id, 'identifier' => 'matrix_qrms'])->firstOrCreate();
         $matrixDataGridqrms->non_conformances_id = $id;
@@ -2103,8 +2099,6 @@ class NonConformaceController extends Controller
         }
 
         if($NonConformance->stage > 0){
-
-
             //investiocation dynamic
             $NonConformance->Discription_Event = $request->Discription_Event;
             $NonConformance->objective = $request->objective;
@@ -2221,7 +2215,7 @@ class NonConformaceController extends Controller
             $history = new NonConformanceAuditTrails;
             $history->non_conformances_id = $id;
             $history->activity_type = 'Short Description';
-             $history->previous = $lastNonConformance->short_description;
+            $history->previous = $lastNonConformance->short_description;
             $history->current = $NonConformance->short_description;
             $history->comment = $NonConformance->submit_comment;
             $history->user_id = Auth::user()->id;
@@ -2798,7 +2792,6 @@ class NonConformaceController extends Controller
 
     public function nonConformaceReject(Request $request, $id)
     {
-
         if ($request->username == Auth::user()->email && Hash::check($request->password, Auth::user()->password)) {
             // return $request;
             $NonConformance = NonConformance::find($id);
@@ -3033,8 +3026,6 @@ class NonConformaceController extends Controller
         if ($request->username == Auth::user()->email && Hash::check($request->password, Auth::user()->password)) {
             $NonConformance = NonConformance::find($id);
             $lastDocument = NonConformance::find($id);
-
-
             $NonConformance->stage = "0";
             $NonConformance->status = "Closed-Cancelled";
             $NonConformance->cancelled_by = Auth::user()->name;
@@ -4463,7 +4454,9 @@ class NonConformaceController extends Controller
         }
     }
 
-    public function NonConformanceAuditTrails($id)
+
+
+    public function NonConformaceAuditTrail($id)
     {
         $audit = NonConformanceAuditTrails::where('non_conformances_id', $id)->orderByDesc('id')->paginate(5);
         $today = Carbon::now()->format('d-m-y');
