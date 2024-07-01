@@ -619,16 +619,19 @@
                                         </div> --}}
 
                                         <div class="col-12 sub-head">
-                                            Other type Details
+                                            Investigation & Root Cause Analysis Summary 
                                         </div>
                                         <div class="col-12">
                                             <div class="group-input">
                                                 <label for="Details">Investigation </label>
-                                                <input type="text" name="investigation" value="{{ $data->investigation }}">
+                                                {{-- <input type="text" name="investigation" value="{{ $data->investigation }}"> --}}
+                                                <textarea name="investigation" >{{ $data->investigation }}</textarea>
                                             </div>
                                             <div class="group-input">
                                                 <label for="Details">Root Cause Analysis  </label>
-                                                <input type="text" name="rcadetails" value="{{ $data->rcadetails }}">
+                                                {{-- <input type="text" name="rcadetails" value="{{ $data->rcadetails }}"> --}}
+                                                <textarea name="rcadetails" >{{ $data->rcadetails }}</textarea>
+
                                             </div>
                                         </div>
 
@@ -995,9 +998,11 @@
                                         <div class="col-12">
                                             <div class="group-input">
                                                 <label for="Details">Details</label>
-                                                <input type="text" name="details_new"
+                                                {{-- <input type="text" name="details_new"
                                                     {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}
-                                                    value="{{ $data->details_new }}">
+                                                    value="{{ $data->details_new }}"> --}}
+                                                    <textarea name="details_new" >{{ $data->details_new }}</textarea>
+
                                             </div>
                                         </div>
                                       

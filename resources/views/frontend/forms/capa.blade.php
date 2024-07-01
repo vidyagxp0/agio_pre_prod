@@ -438,11 +438,14 @@
                                 <div class="col-12">
                                     <div class="group-input">
                                         <label for="Details">Investigation </label>
-                                        <input type="text" name="investigation">
+                                        {{-- <input type="text" name="investigation"> --}}
+                                    <textarea name="investigation" ></textarea>
                                     </div>
                                     <div class="group-input">
                                         <label for="Details">Root Cause Analysis  </label>
-                                        <input type="text" name="rcadetails">
+                                        {{-- <input type="text" name="rcadetails"> --}}
+                                    <textarea name="rcadetails" ></textarea>
+
                                     </div>
                                 </div>
                               
