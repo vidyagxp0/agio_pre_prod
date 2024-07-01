@@ -51,9 +51,9 @@
             <div class="cctab">
                 <button class="cctablinks active" onclick="openCity(event, 'CCForm1')">General Information</button>
                 <button class="cctablinks" onclick="openCity(event, 'CCForm2')">Equipment/Material Info</button>
-                {{-- <button class="cctablinks" onclick="openCity(event, 'CCForm3')">Project/Study</button> --}}
+                <button class="cctablinks" onclick="openCity(event, 'CCForm11')">HOD Review</button>
+                <button class="cctablinks" onclick="openCity(event, 'CCForm12')">QA Review</button>
                 <button class="cctablinks" onclick="openCity(event, 'CCForm4')">CAPA Details</button>
-                {{-- <button class="cctablinks" onclick="openCity(event, 'CCForm5')">Additional Information</button> --}}
                 {{-- <button class="cctablinks" onclick="openCity(event, 'CCForm6')">Group Comments</button> --}}
                 <button class="cctablinks" onclick="openCity(event, 'CCForm7')">CAPA Closure</button>
                 <button class="cctablinks" onclick="openCity(event, 'CCForm8')">Activity Log</button>
@@ -431,12 +431,21 @@
                                         </div>
                                     </div>
                                 </div>
+
+                                <div class="col-12 sub-head">
+                                    Other type Details
+                                </div>
                                 <div class="col-12">
                                     <div class="group-input">
-                                        <label for="Comments"> CAPA QA Review </label>
-                                        <textarea name="capa_qa_comments"></textarea>
+                                        <label for="Details">Investigation </label>
+                                        <input type="text" name="investigation">
+                                    </div>
+                                    <div class="group-input">
+                                        <label for="Details">Root Cause Analysis  </label>
+                                        <input type="text" name="rcadetails">
                                     </div>
                                 </div>
+                              
                             </div>
                             <div class="button-block">
                                 <button type="submit" id="ChangesaveButton" class="saveButton">Save</button>
@@ -546,6 +555,20 @@
                                 </table>
                             </div>
                             {{-- </div> --}}
+                            <div class="col-12">
+                                <div class="group-input">
+                                    <label for="severity-level">Severity Level</label>
+                                    <span class="text-primary">Severity levels in a QMS record gauge issue seriousness,
+                                        guiding priority for corrective actions. Ranging from low to high, they ensure
+                                        quality standards and mitigate critical risks.</span>
+                                    <select name="severity_level_form">
+                                        <option value="0">-- Select --</option>
+                                        <option value="minor">Minor</option>
+                                        <option value="major">Major</option>
+                                        <option value="critical">Critical</option>
+                                    </select>
+                                </div>
+                            </div>
                             <div class="col-12 sub-head">
                                 Product Material Details
                             </div>
@@ -684,26 +707,8 @@
                                         <input type="text" name="details_new">
                                     </div>
                                 </div>
-                                <div class="col-12">
-                                    <div class="group-input">
-                                        <label for="severity-level">Severity Level</label>
-                                        <span class="text-primary">Severity levels in a QMS record gauge issue seriousness,
-                                            guiding priority for corrective actions. Ranging from low to high, they ensure
-                                            quality standards and mitigate critical risks.</span>
-                                        <select name="severity_level_form">
-                                            <option value="0">-- Select --</option>
-                                            <option value="minor">Minor</option>
-                                            <option value="major">Major</option>
-                                            <option value="critical">Critical</option>
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="col-12">
-                                    <div class="group-input">
-                                        <label for="Comments"> CAPA QA Review </label>
-                                        <textarea name="capa_qa_comments2"></textarea>
-                                    </div>
-                                </div>
+                               
+                                
                             </div>
                             <div class="button-block">
                                 <button type="submit" class="saveButton">Save</button>
@@ -714,72 +719,180 @@
                         </div>
                     </div>
                 </div>
+{{-- ===========================================HOd reviwe tab ============= tab --}}
+
+<div id="CCForm11" class="inner-block cctabcontent">
+    <div class="inner-block-content">
+        <div class="row">
+            <div class="col-12">
+                <div class="group-input">
+                    <label for="QA Review & Closure">HOD Remark</label>
+                    <textarea name="hod_remarks"></textarea>
+                </div>
+            </div>
+            <div class="col-12">
+                <div class="group-input">
+                    <label for="Closure Attachments">HOD Attachment</label>
+                    <div><small class="text-primary">Please Attach all relevant or supporting
+                            documents</small></div>
+                    {{-- <input multiple type="file" id="myfile" name="closure_attachment[]"> --}}
+                    <div class="file-attachment-field">
+                        <div class="file-attachment-list" id="closure_attachment"></div>
+                        <div class="add-btn">
+                            <div>Add</div>
+                            <input type="file" id="hodfile" name="hod_attachment[]"
+                                oninput="addMultipleFiles(this, 'closure_attachment')" multiple>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- <div class="col-12 sub-head">
+                Effectiveness Check Details
+            </div> -->
+            <!-- <div class="col-12">
+                <div class="group-input">
+                    <label for="Effectiveness Check Required">Effectiveness Check
+                        Required?</label>
+                    <select name="effect_check" onChange="setCurrentDate(this.value)">
+                        <option value="">Enter Your Selection Here</option>
+                        <option value="yes">Yes</option>
+                        <option value="no">No</option>
+                    </select>
+                </div>
+            </div> -->
+            <!-- <div class="col-6 new-date-data-field">
+                <div class="group-input input-date">
+                    <label for="EffectCheck Creation Date">Effectiveness Check Creation Date</label>
+                    {{-- <input type="date" name="effect_check_date"> --}}
+                    <div class="calenderauditee">
+                        <input type="text" name="effect_check_date" id="effect_check_date" readonly
+                            placeholder="DD-MMM-YYYY" />
+                        <input type="date" name="effect_check_date" class="hide-input"
+                            oninput="handleDateInput(this, 'effect_check_date')" />
+                    </div>
+                </div>
+            </div> -->
+            <!-- <div class="col-6">
+                <div class="group-input">
+                    <label for="Effectiveness_checker">Effectiveness Checker</label>
+                    <select id="select-state" placeholder="Select..." name="Effectiveness_checker">
+                        <option value="">Select a person</option>
+                        @foreach ($users as $value)
+                            <option value="{{ $value->id }}">{{ $value->name }}</option>
+                        @endforeach
+                    </select>
+                </div>
+            </div> -->
+            <!-- <div class="col-12">
+                <div class="group-input">
+                    <label for="effective_check_plan">Effectiveness Check Plan</label>
+                    <textarea name="effective_check_plan"></textarea>
+                </div>
+            </div> -->
+           
+          
+        </div>
+        <div class="button-block">
+            <button type="submit" class="saveButton">Save</button>
+            <!-- <button type="button" class="backButton" onclick="previousStep()">Back</button>
+            <button type="button" class="nextButton" onclick="nextStep()">Next</button> -->
+            <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"> Exit </a> </button>
+        </div>
+    </div>
+</div>
+
+
+
+{{-- ==========================QA review tab ================ --}}
+
+<div id="CCForm12" class="inner-block cctabcontent">
+    <div class="inner-block-content">
+        <div class="row">
+            <div class="col-12">
+                <div class="group-input">
+                    <label for="Comments"> CAPA QA Review </label>
+                    <textarea name="capa_qa_comments"></textarea>
+                </div>
+            </div>
+            <div class="col-12">
+                <div class="group-input">
+                    <label for="Closure Attachments">Qa Attachment</label>
+                    <div><small class="text-primary">Please Attach all relevant or supporting
+                            documents</small></div>
+                    {{-- <input multiple type="file" id="myfile" name="closure_attachment[]"> --}}
+                    <div class="file-attachment-field">
+                        <div class="file-attachment-list" id="closure_attachment"></div>
+                        <div class="add-btn">
+                            <div>Add</div>
+                            <input type="file" id="myfile" name="qa_attachment[]"
+                                oninput="addMultipleFiles(this, 'closure_attachment')" multiple>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- <div class="col-12 sub-head">
+                Effectiveness Check Details
+            </div> -->
+            <!-- <div class="col-12">
+                <div class="group-input">
+                    <label for="Effectiveness Check Required">Effectiveness Check
+                        Required?</label>
+                    <select name="effect_check" onChange="setCurrentDate(this.value)">
+                        <option value="">Enter Your Selection Here</option>
+                        <option value="yes">Yes</option>
+                        <option value="no">No</option>
+                    </select>
+                </div>
+            </div> -->
+            <!-- <div class="col-6 new-date-data-field">
+                <div class="group-input input-date">
+                    <label for="EffectCheck Creation Date">Effectiveness Check Creation Date</label>
+                    {{-- <input type="date" name="effect_check_date"> --}}
+                    <div class="calenderauditee">
+                        <input type="text" name="effect_check_date" id="effect_check_date" readonly
+                            placeholder="DD-MMM-YYYY" />
+                        <input type="date" name="effect_check_date" class="hide-input"
+                            oninput="handleDateInput(this, 'effect_check_date')" />
+                    </div>
+                </div>
+            </div> -->
+            <!-- <div class="col-6">
+                <div class="group-input">
+                    <label for="Effectiveness_checker">Effectiveness Checker</label>
+                    <select id="select-state" placeholder="Select..." name="Effectiveness_checker">
+                        <option value="">Select a person</option>
+                        @foreach ($users as $value)
+                            <option value="{{ $value->id }}">{{ $value->name }}</option>
+                        @endforeach
+                    </select>
+                </div>
+            </div> -->
+            <!-- <div class="col-12">
+                <div class="group-input">
+                    <label for="effective_check_plan">Effectiveness Check Plan</label>
+                    <textarea name="effective_check_plan"></textarea>
+                </div>
+            </div> -->
+           
+          
+        </div>
+        <div class="button-block">
+            <button type="submit" class="saveButton">Save</button>
+            <!-- <button type="button" class="backButton" onclick="previousStep()">Back</button>
+            <button type="button" class="nextButton" onclick="nextStep()">Next</button> -->
+            <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"> Exit </a> </button>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
 
                 <!-- Project Study content****************************** -->
-                <div id="CCForm3" class="inner-block cctabcontent">
-                    <div class="inner-block-content">
-                        <div class="row">
-                            <div class="col-lg-6">
-                                <div class="group-input">
-                                    <label for="Project Datails Application">Project Datails Application</label>
-                                    <select name="project_details_application">
-                                        <option value="">Enter Your Selection Here</option>
-                                        <option value="yes">Yes</option>
-                                        <option value="no">No</option>
-                                    </select>
-                                </div>
-                            </div>
-
-                                <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="Protocol/Study Number">Initiator Group</label>
-                                        <select name="project_initiator_group">
-                                            <option value="">Enter Your Selection Here</option>
-                                            <option value="yes">Yes</option>
-                                            <option value="no">No</option>
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="Site Number">Site Number</label>
-                                        <input type="text" name="site_number">
-                                    </div>
-                                </div>
-                                <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="Subject Number">Subject Number</label>
-                                        <input type="text" name="subject_number">
-                                    </div>
-                                </div>
-                                <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="Subject Initials">Subject Initials</label>
-                                        <input type="text" name="subject_initials">
-                                    </div>
-                                </div>
-                                <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="Sponsor">Sponsor</label>
-                                        <input type="text" name="sponsor">
-                                    </div>
-                                </div>
-                                 <div class="col-12">
-                                    <div class="group-input">
-                                        <label for="General Deviation">General Deviation</label>
-                                        <textarea name="general_deviation"></textarea>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="button-block">
-                                <button type="submit" class="saveButton">Save</button>
-                                {{-- <button type="button" class="backButton" onclick="previousStep()">Back</button>
-                                <button type="button" class="nextButton" onclick="nextStep()">Next</button> --}}
-                            <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"> Exit
-                                </a> </button>
-                        </div>
-                    </div>
-                </div>
+                
 
                 <!-- CAPA Details content ****************************-->
                 <div id="CCForm4" class="inner-block cctabcontent">
@@ -814,12 +927,30 @@
                                     <textarea name="preventive_action"></textarea>
                                 </div>
                             </div>
-                            <div class="col-12">
+                            {{-- <div class="col-12">
                                 <div class="group-input">
                                     <label for="Supervisor Review Comments">QA Review Comments</label>
                                     <textarea name="supervisor_review_comments"></textarea>
                                 </div>
+                            </div> --}}
+
+                            <div class="col-12">
+                                <div class="group-input">
+                                    <label for="Closure Attachments">File Attachment</label>
+                                    <div><small class="text-primary">Please Attach all relevant or supporting
+                                            documents</small></div>
+                                    {{-- <input multiple type="file" id="myfile" name="closure_attachment[]"> --}}
+                                    <div class="file-attachment-field">
+                                        <div class="file-attachment-list" id="closure_attachment"></div>
+                                        <div class="add-btn">
+                                            <div>Add</div>
+                                            <input type="file" id="qafile" name="capafileattachement[]"
+                                                oninput="addMultipleFiles(this, 'closure_attachment')" multiple>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
+
                         </div>
                         <div class="button-block">
                             <button type="submit" class="saveButton">Save</button>
@@ -1077,7 +1208,7 @@
                             <div class="row">
                                 <div class="col-12">
                                     <div class="group-input">
-                                        <label for="QA Review & Closure">HOD Review & Closure</label>
+                                        <label for="QA Review & Closure">QA Review & Closure</label>
                                         <textarea name="qa_review"></textarea>
                                     </div>
                                 </div>

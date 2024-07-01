@@ -326,6 +326,12 @@
                         <th class="w-20">  CAPA QA Comments  </th>
                         <td class="w-80">@if($data->capa_qa_comments){{ $data->capa_qa_comments }}@else Not Applicable @endif </td>
                     </tr>
+                    <tr>
+                        <th class="w-50">  Investigation  </th>
+                        <td class="w-80">@if($data->investigation){{ $data->investigation }}@else Not Applicable @endif </td>
+                        <th class="w-50">  Root Cause Analysis  </th>
+                        <td class="w-80">@if($data->rcadetails){{ $data->rcadetails }}@else Not Applicable @endif </td>
+                    </tr>
                    
                       
                 </table>
@@ -371,19 +377,19 @@
           
             <div class="block">
                 <div class="block-head">
-                    Material Details
+                   Product Material Details
                 </div>
                 <div class="border-table">
                     <table>
                         <tr class="table_bg">
                         <th class="w-20">SR no.</th>
-                            <th class="w-20">Material Name</th>
-                            <th class="w-20">Batch Number</th>
-                            <th class="w-20">Date Of Manufacturing</th>
-                            <th class="w-20">Date Of Expiry</th>
-                            <th class="w-20">Batch Disposition</th>
-                            <th class="w-20">Remark</th>
-                            <th class="w-20">Batch Status</th>
+                            <th class="w-20">Product Material Name</th>
+                            <th class="w-20">Product Batch Number</th>
+                            <th class="w-20">Product Date Of Manufacturing</th>
+                            <th class="w-20">Product Date Of Expiry</th>
+                            <th class="w-20">Product Batch Disposition</th>
+                            <th class="w-20">Product Remark</th>
+                            <th class="w-20">Product Batch Status</th>
                         </tr>
                         @if($data->Material_Details->material_name)
                         @foreach (unserialize($data->Material_Details->material_name) as $key => $dataDemo)
@@ -417,7 +423,7 @@
                 <div class="block-head">
                     Equipment/Instruments Details
                 </div>
-                <div class="border-table">
+                <div>
                     <table>
                         <tr class="table_bg">
                             <th class="w-25">SR no.</th>
@@ -448,7 +454,42 @@
                 </div>
             </div>
                     
+            <div class="block">
+                <div class="block-head">
+                   HOD Review
+                </div>
+                <div>
+                   <table>
+                    <tr>  
+                        <th class="w-20">HOD Remark</th>
+                        <td class="w-80">@if($data->hod_remarks){{ $data->hod_remarks }}@else Not Applicable @endif</td>
+                    </tr>
+                    <tr>  
+                        <th class="w-20">HOD Attachment</th>
+                        <td class="w-80">@if($data->hod_attachment){{ $data->hod_attachment }}@else Not Applicable @endif</td>
+                    </tr>
+                   </table>
 
+                </div>
+            </div>
+            <div class="block">
+                <div class="block-head">
+                  Qa Review
+                </div>
+                <div>
+                    <table>
+                        <tr>  
+                            <th class="w-20">CAPA QA Review</th>
+                            <td class="w-80">@if($data->capa_qa_comments){{ $data->capa_qa_comments }}@else Not Applicable @endif</td>
+                        </tr>
+                        <tr>  
+                            <th class="w-20">QA Attachment</th>
+                            <td class="w-80">@if($data->qa_attachment){{ $data->qa_attachment }}@else Not Applicable @endif</td>
+                        </tr>
+                    </table>
+
+                </div>
+            </div>
                    
 
             <br>
@@ -462,13 +503,13 @@
                 <td class="w-80">@if($data->details_new){{ $data->details_new }}@else Not Applicable @endif </td>
             </tr>
                   
-                <tr>
+                {{-- <tr>
                     <th class="w-20">  CAPA QA Comments  </th>
                 <td class="w-80">
                     @if($data->capa_qa_comments){{ $data->capa_qa_comments }}@else Not Applicable @endif
                 </td>
                  
-                </tr>
+                </tr> --}}
                    
                        
                 
@@ -492,6 +533,8 @@
                    </tr>
                 </table>
             </div>
+           
+                    
                     {{-- <tr>
                         <th class="w-20">Closure Attachment</th>
                         <td class="w-80">@if($data->closure_attachment)<a href="{{asset('upload/document/',$data->closure_attachment)}}">{{ $data->closure_attachment }}</a>@else Not Applicable @endif</td>
