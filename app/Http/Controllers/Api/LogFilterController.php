@@ -12,6 +12,7 @@ use App\Models\OOS_micro;
 use App\Models\RiskManagement;
 use App\Models\OutOfCalibration;
 use App\Models\LabIncident;
+use App\Models\NonConformance;
 use App\Models\InternalAudit;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
@@ -870,6 +871,87 @@ public function OOT_Filter(Request $request)
     }
 
     return response()->json($res);
+}
+
+public function nonconformance_filter(Request $request)
+{
+    $res = [
+        'status' => 'ok',
+        'message' => 'success',
+        'body' => []
+    ];
+
+    try {
+
+
+        $query = NonConformance::query();
+
+        if ($request->department_non)
+        {
+            $query->where('Initiator_Group', $request->department_non);
+        }
+        if($request->division_non)
+        {
+            $query->where('division_id',$request->division_non);
+        }
+
+        if ($request->period_non) {
+            $currentDate = Carbon::now();
+            switch ($request->period_non) {
+                case 'Yearly':
+                    $startDate = $currentDate->startOfYear();
+                    break;
+                case 'Quarterly':
+                    $startDate = $currentDate->firstOfQuarter();
+                    break;
+                case 'Monthly':
+                    $startDate = $currentDate->startOfMonth();
+                    break;
+                default:
+                    $startDate = null;
+                    break;
+            }
+            if ($startDate) {
+                $query->whereDate('intiation_date', '>=', $startDate);
+            }
+        }
+
+        if ($request->dateFrom_non) {
+
+            $datefrom = Carbon::parse($request->dateFrom_non)->startOfDay();
+
+            $query->whereDate('intiation_date', '>=', $datefrom);
+        }
+
+        if ($request->dateTo) {
+
+            $dateo = Carbon::parse($request->dateTo_non)->endOfDay();
+
+            $query->whereDate('intiation_date', '<=', $dateo);
+        }
+        if($request->TypeOFDocument)
+        {
+            $query->where('type_incidence_ia',$request->TypeOFDocument);
+        }
+
+
+        $nonconformance = $query->get();
+
+        $htmlData = view('frontend.forms.Logs.filterData.nonconformancedata', compact('nonconformance'))->render();
+
+
+        $res['body'] = $htmlData;
+
+
+    } catch (\Exception $e) {
+        $res['status'] = 'error';
+        $res['message'] = $e->getMessage();
+
+    }
+
+
+    return response()->json($res);
+
 }
 
 

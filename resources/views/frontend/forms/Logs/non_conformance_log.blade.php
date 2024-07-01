@@ -29,6 +29,37 @@
             gap: 16px;
             margin-left: 13px
         }
+        .active{
+            width: 100%;
+    text-align: center;
+    color: grey;
+
+        }
+        <style>
+.process-groups {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px; /* Adjust the spacing as needed */
+}
+
+.process-groups > div {
+    flex: 1;
+    text-align: center; 
+    background-color: white;/* Center align text in each div */
+}
+
+.process-groups .scope-bar {
+    display: flex;
+    justify-content: flex-start;
+}
+
+.process-groups .scope-bar .print-btn {
+    margin-left: 5px;
+    
+}
+</style>
+
     </style>
     <style>
         .filter-bar {
@@ -57,72 +88,134 @@
             overflow: scroll
         }
     </style>
-    <div id="rcms-desktop">
+    <style>
+.mt-1 {
+    margin-top: 1rem;
+}
 
-        <div class="process-groups">
-            <div class="active" onclick="openTab('internal-audit', this)">Non Conformance Log </div>
-        </div>
+.mb-2 {
+    margin-bottom: 2rem;
+}
+
+.bg-white {
+    background-color: white;
+}
+
+.d-flex {
+    display: flex;
+}
+
+.flex-wrap {
+    flex-wrap: wrap;
+}
+
+.align-items-center {
+    align-items: center;
+}
+
+.flex-grow-2 {
+    flex: 2;
+}
+
+.filter-bar {
+    width: 100%;
+}
+
+.filter-item {
+    flex: 1;
+    min-width: 150px;
+    margin: 5px;
+}
+
+.form-control {
+    width: 100%;
+}
+
+@media (max-width: 768px) {
+    .filter-item {
+        flex: 1 1 100%;
+        margin: 5px 0;
+    }
+}
+</style>
+
+    <div id="rcms-desktop">
+    <div class="process-groups">
+    <div class="scope-bar">
+        <button class="print-btn btn btn-primary">Print</button>
+    </div>
+    <div class="active" onclick="openTab('internal-audit', this)">Non Conformance Log</div>
+    <div class="third-div">Third Div Content</div>
+</div>
+
+
         <div class="main-content">
             <div class="container-fluid">
                 <div class="process-tables-list">
                     <div class="process-table active" id="internal-audit">
-                        <div class="mt-1 mb-2 bg-white " style="height: 65px">
-                            <div class="d-flex align-items-center">
-                                <div class="scope-bar ml-3">
-                                    <button style="width: 70px;margin-left:5px"
-                                        class="print-btn btn btn-primary">Print</button>
-                                </div>
-                                <div class="flex-grow-2" style="margin-left:-50px; margin-bottom:12px">
-                                    <div class="filter-bar d-flex justify-content-between">
-                                        <div class="filter-item">
-                                            <label for="process">Department</label>
-                                            <select class="custom-select" id="process">
-                                                <option value="all">All Records</option>
+                    <div class="mt-1 mb-2 bg-white" style="height: auto; padding: 10px;">
+    <div class="d-flex flex-wrap align-items-center">
+        <div class="flex-grow-2">
+            <div class="filter-bar d-flex flex-wrap justify-content-between">
+                <div class="filter-item" style="flex: 1; min-width: 150px; margin: 5px;">
+                    <label for="process">Department</label>
+                    <select name="Initiator_Group" id="initiator_group" class="form-control" required>
+                        <option value="">-- Select --</option>
+                        <option value="CQA" @if (old('Initiator_Group') == 'CQA') selected @endif>Corporate Quality Assurance</option>
+                        <option value="QAB" @if (old('Initiator_Group') == 'QAB') selected @endif>Quality Assurance Biopharma</option>
+                        <option value="CQC" @if (old('Initiator_Group') == 'CQC') selected @endif>Central Quality Control</option>
+                        <option value="MANU" @if (old('Initiator_Group') == 'MANU') selected @endif>Manufacturing</option>
+                        <option value="PSG" @if (old('Initiator_Group') == 'PSG') selected @endif>Plasma Sourcing Group</option>
+                        <option value="CS" @if (old('Initiator_Group') == 'CS') selected @endif>Central Stores</option>
+                        <option value="ITG" @if (old('Initiator_Group') == 'ITG') selected @endif>Information Technology Group</option>
+                        <option value="MM" @if (old('Initiator_Group') == 'MM') selected @endif>Molecular Medicine</option>
+                        <option value="CL" @if (old('Initiator_Group') == 'CL') selected @endif>Central Laboratory</option>
+                        <option value="TT" @if (old('Initiator_Group') == 'TT') selected @endif>Tech team</option>
+                        <option value="QA" @if (old('Initiator_Group') == 'QA') selected @endif>Quality Assurance</option>
+                        <option value="QM" @if (old('Initiator_Group') == 'QM') selected @endif>Quality Management</option>
+                        <option value="IA" @if (old('Initiator_Group') == 'IA') selected @endif>IT Administration</option>
+                        <option value="ACC" @if (old('Initiator_Group') == 'ACC') selected @endif>Accounting</option>
+                        <option value="LOG" @if (old('Initiator_Group') == 'LOG') selected @endif>Logistics</option>
+                        <option value="SM" @if (old('Initiator_Group') == 'SM') selected @endif>Senior Management</option>
+                        <option value="BA" @if (old('Initiator_Group') == 'BA') selected @endif>Business Administration</option>
+                    </select>
+                </div>
+                <div class="filter-item" style="flex: 1; min-width: 150px; margin: 5px;">
+                    <label for="criteria">Division</label>
+                    <select class="form-control" id="criteria">
+                        <option value="all">All Records</option>
+                        <option value="1">Corporate</option>
+                        <option value="2">Plant</option>
+                    </select>
+                </div>
+                <div class="filter-item" style="flex: 1; min-width: 150px; margin: 5px;">
+                    <label for="division">Date From</label>
+                    <input type="date" class="form-control" id="date_from_nonconformanc">
+                </div>
+                <div class="filter-item" style="flex: 1; min-width: 150px; margin: 5px;">
+                    <label for="originator">Date To</label>
+                    <input type="date" class="form-control" id="date_to_nonconformance">
+                </div> 
+                <div class="filter-item" style="flex: 1; min-width: 150px; margin: 5px;">
+                    <label for="originator">Type of Document</label>
+                    <select class="form-control" id="originator_nonconformance">
+                        <option value="all">All Records</option>
+                    </select>
+                </div>
+                <div class="filter-item" style="flex: 1; min-width: 150px; margin: 5px;">
+                    <label for="datewise">Select Period</label>
+                    <select class="form-control" id="datewise_nonconformance">
+                        <option value="all">Select</option>
+                        <option value="all">Yearly</option>
+                        <option value="all">Quarterly</option>
+                        <option value="all">Monthly</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
-                                            </select>
-                                        </div>
-                                        <div class="filter-item">
-                                            <label for="criteria">Division</label>
-                                            <select class="custom-select" id="criteria">
-                                                <option value="all">All Records</option>
-
-                                            </select>
-                                        </div>
-                                        <div class="filter-item">
-                                            <label for="division">Date From</label>
-                                            <select class="custom-select" id="division">
-                                                <option value="all">All Records</option>
-
-                                            </select>
-                                        </div>
-                                        <div class="filter-item">
-                                            <label for="originator">Date To</label>
-                                            <select class="custom-select" id="originator">
-                                                <option value="all">All Records</option>
-
-                                            </select>
-                                        </div> 
-                                        <div class="filter-item">
-                                            <label for="originator">Type of Document</label>
-                                            <select class="custom-select" id="originator">
-                                                <option value="all">All Records</option>
-
-                                            </select>
-                                        </div>
-                                        <div class="filter-item">
-                                            <label for="datewise">Select Period</label>
-                                            <select class="custom-select" id="datewise">
-                                                <option value="all">Select</option>
-                                                <option value="all">Yearly</option>
-                                                <option value="all">Quarterly</option>
-                                                <option value="all">Mothly</option>
-
-                                            </select>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
 
                         <div class="table-block">
                             <div class="table-responsive" style="height: 300px">
@@ -145,28 +238,17 @@
                                         </tr>
                                     </thead>
 
-                                    <tbody>
-                                        @foreach ($nonconformance as $logs)
-                                            
-                                        <tr>
-                                            
-                                            <td>{{$loop->index+1}}</td>
-                                            <td><td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            
-                                        </tr>
+                                    <tbody id="#tableData">
+
+                                            @include('frontend.forms.Logs.filterData.nonconformancedata')
                                         
-                                        @endforeach
                                     </tbody>
                                 </table>
+                                <div  style="margin-top: 10px; display: flex;  justify-content: center;">
+                                    <div class="spinner-border text-primary" role="status" id="spinner">
+                                        <span class="sr-only">Loading...</span>
+                                    </div>
+                                </div>
                             </div>
                         </div>
 
@@ -178,10 +260,84 @@
     </div>
 
     </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.7.2/axios.min.js" integrity="sha512-JSCFHhKDilTRRXe9ak/FJ28dcpOJxzQaCd3Xg8MyF6XFjODhy/YMCM8HW0TFDckNHWUewW+kfvhin43hKtJxAw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
     <script>
         VirtualSelect.init({
             ele: '#Facility, #Group, #Audit, #Auditee ,#capa_related_record ,#classRoom_training'
         });
+
+
+
+        $('#spinner').hide();
+        
+        const filterData = {
+            department_non: null,
+            division_non: null,
+    period_non: null,
+    dateFrom_non: null,
+    dateTo_non: null,
+    TypeOfDocument:null
+
+}
+
+$('#initiator_group').change(function() {
+    filterData.department_non = $(this).val();
+    filterRecords()
+});
+
+ // Division ID change event
+
+  $('#criteria').change(function() {
+    filterData.division_non = $(this).val();
+    filterRecords();
+ });
+
+ $('#date_from_nonconformanc').change(function() {
+        filterData.dateFrom_non = $(this).val();
+        // console.log('Date From changed:', filterData.dateFrom);
+        filterRecords();
+    });
+
+    $('#date_to_nonconformance').change(function() {
+        filterData.dateTo_non = $(this).val();
+        // console.log('Date To changed:', filterData.dateTo);
+        filterRecords();
+    });
+    $('#originator_nonconformance').change(function() {
+    filterData.TypeOFDocument = $(this).val();
+    filterRecords();
+ });
+
+ 
+ 
+
+ $('#datewise_nonconformance').change(function() {
+filterData.period = $(this).val();
+filterRecords();
+});
+async function filterRecords()
+{
+    $('#tableData').html('');
+    $('#spinner').show();
+    
+    try {
+
+
+        const postUrl = "{{ route('api.nonconformance.filter') }}";
+
+        const res = await axios.post(postUrl, filterData);
+
+        if (res.data.status == 'ok') {
+            $('#tableData').html(res.data.body);
+        }
+
+    } catch (err) {
+        console.log('Error in filterRecords', err.message);
+    }
+    
+    $('#spinner').hide();
+}
+
     </script>
 @endsection

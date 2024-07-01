@@ -11,6 +11,7 @@ use App\Models\FailureInvestigation;
 use App\Models\lab_incidents_grid;
 use App\Models\MarketComplaintGrids;
 use App\Models\LabIncident;
+use App\Models\NonConformance;
 use App\Models\Ootc;
 use App\Models\MarketComplaint;
 use App\Models\OutOfCalibration;
@@ -127,9 +128,13 @@ class LogController extends Controller
 
                 return view('frontend.forms.logs.Internal_audit_Log',compact('internal_audi'));
 
-            default:
+                case 'non-conformance':
+            $nonconform = NonConformance::get();
+                return view('frontend.forms.Logs.non_conformance_log',compact('nonconform'));
+                
             return $slug;
-
+            
+                default:
                 break;
         }
     }

@@ -23,5 +23,8 @@ class NonConformance extends Model
     {
         return $this->belongsTo(User::class, 'initiator_id');
     }
+    // public function division(){
+    //     return $this->belongTo(::class,'initiator_id');
+    // }
 }
 
