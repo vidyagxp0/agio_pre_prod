@@ -6703,7 +6703,7 @@ class CCController extends Controller
                 toastr()->success('Pending CFT Review');
                 return back();
             }
-            if ($failureInvestigation->stage == 5) {
+            if ($changeControl->stage == 5) {
                 $IsCFTRequired = ChangeControlCftResponse::withoutTrashed()->where(['is_required' => 1, 'cc_id' => $id])->latest()->first();
                 $cftUsers = DB::table('cc_cfts')->where(['cc_id' => $id])->first();
 
@@ -6847,13 +6847,13 @@ class CCController extends Controller
                     $history->save();
                     // $list = Helpers::getQAUserList();
                     // foreach ($list as $u) {
-                    //     if ($u->q_m_s_divisions_id == $failureInvestigation->division_id) {
+                    //     if ($u->q_m_s_divisions_id == $changeControl->division_id) {
                     //         $email = Helpers::getInitiatorEmail($u->user_id);
                     //         if ($email !== null) {
                     //             try {
                     //                 Mail::send(
                     //                     'mail.view-mail',
-                    //                     ['data' => $failureInvestigation],
+                    //                     ['data' => $changeControl],
                     //                     function ($message) use ($email) {
                     //                         $message->to($email)
                     //                             ->subject("Activity Performed By " . Auth::user()->name);
@@ -7756,6 +7756,7 @@ class CCController extends Controller
         $parent_name = "CC";
         $parent_type = "CC";
         $record_number = ((RecordNumber::first()->value('counter')) + 1);
+        $record = str_pad($record_number, 4, '0', STR_PAD_LEFT);
         $record_number = str_pad($record_number, 4, '0', STR_PAD_LEFT);
         $currentDate = Carbon::now();
         $formattedDate = $currentDate->addDays(30);
@@ -7781,7 +7782,7 @@ class CCController extends Controller
         }
         if ($request->revision == "Capa") {
             $cc->originator = User::where('id', $cc->initiator_id)->value('name');
-            return view('frontend.forms.capa', compact('parent_record','parent_id','parent_type', 'parent_name', 'record_number', 'cc', 'parent_data', 'parent_data1', 'parent_short_description', 'parent_initiator_id', 'parent_intiation_date', 'parent_division_id', 'due_date', 'old_record'));
+            return view('frontend.forms.capa', compact('parent_record','parent_id','record','parent_type', 'parent_name', 'record_number', 'cc', 'parent_data', 'parent_data1', 'parent_short_description', 'parent_initiator_id', 'parent_intiation_date', 'parent_division_id', 'due_date', 'old_record'));
         }
         if ($request->revision == "Extension") {
             $cc->originator = User::where('id', $cc->initiator_id)->value('name');

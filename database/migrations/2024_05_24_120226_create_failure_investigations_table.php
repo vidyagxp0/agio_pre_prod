@@ -122,7 +122,7 @@ return new class extends Migration
             $table->string('qrm_required')->nullable();
 
             $table->longText('Conclusion')->nullable();
-            $table->lognText('Identified_Risk')->nullable();
+            $table->longText('Identified_Risk')->nullable();
             $table->string('severity_rate')->nullable();
             $table->string('Occurrence')->nullable();
             $table->string('detection')->nullable();
