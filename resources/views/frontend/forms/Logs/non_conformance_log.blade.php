@@ -161,23 +161,23 @@
                     <label for="process">Department</label>
                     <select name="Initiator_Group" id="initiator_group" class="form-control" required>
                         <option value="">-- Select --</option>
-                        <option value="CQA" @if (old('Initiator_Group') == 'CQA') selected @endif>Corporate Quality Assurance</option>
-                        <option value="QAB" @if (old('Initiator_Group') == 'QAB') selected @endif>Quality Assurance Biopharma</option>
-                        <option value="CQC" @if (old('Initiator_Group') == 'CQC') selected @endif>Central Quality Control</option>
-                        <option value="MANU" @if (old('Initiator_Group') == 'MANU') selected @endif>Manufacturing</option>
-                        <option value="PSG" @if (old('Initiator_Group') == 'PSG') selected @endif>Plasma Sourcing Group</option>
-                        <option value="CS" @if (old('Initiator_Group') == 'CS') selected @endif>Central Stores</option>
-                        <option value="ITG" @if (old('Initiator_Group') == 'ITG') selected @endif>Information Technology Group</option>
-                        <option value="MM" @if (old('Initiator_Group') == 'MM') selected @endif>Molecular Medicine</option>
-                        <option value="CL" @if (old('Initiator_Group') == 'CL') selected @endif>Central Laboratory</option>
-                        <option value="TT" @if (old('Initiator_Group') == 'TT') selected @endif>Tech team</option>
-                        <option value="QA" @if (old('Initiator_Group') == 'QA') selected @endif>Quality Assurance</option>
-                        <option value="QM" @if (old('Initiator_Group') == 'QM') selected @endif>Quality Management</option>
-                        <option value="IA" @if (old('Initiator_Group') == 'IA') selected @endif>IT Administration</option>
-                        <option value="ACC" @if (old('Initiator_Group') == 'ACC') selected @endif>Accounting</option>
-                        <option value="LOG" @if (old('Initiator_Group') == 'LOG') selected @endif>Logistics</option>
-                        <option value="SM" @if (old('Initiator_Group') == 'SM') selected @endif>Senior Management</option>
-                        <option value="BA" @if (old('Initiator_Group') == 'BA') selected @endif>Business Administration</option>
+                        <option value="CQA">Corporate Quality Assurance</option>
+                        <option value="QAB">Quality Assurance Biopharma</option>
+                        <option value="CQC">Central Quality Control</option>
+                        <option value="MANU">Manufacturing</option>
+                        <option value="PSG">Plasma Sourcing Group</option>
+                        <option value="CS" >Central Stores</option>
+                        <option value="ITG" >Information Technology Group</option>
+                        <option value="MM" >Molecular Medicine</option>
+                        <option value="CL" >Central Laboratory</option>
+                        <option value="TT" >Tech team</option>
+                        <option value="QA" >Quality Assurance</option>
+                        <option value="QM" >Quality Management</option>
+                        <option value="IA" >IT Administration</option>
+                        <option value="ACC">Accounting</option>
+                        <option value="LOG">Logistics</option>
+                        <option value="SM" >Senior Management</option>
+                        <option value="BA" >Business Administration</option>
                     </select>
                 </div>
                 <div class="filter-item" style="flex: 1; min-width: 150px; margin: 5px;">
@@ -240,7 +240,7 @@
 
                                     <tbody id="#tableData">
 
-                                            @include('frontend.forms.Logs.filterData.nonconformancedata')
+                                            @include('frontend.forms.Logs.filterData.nonconformancedata');
                                         
                                     </tbody>
                                 </table>
@@ -272,8 +272,8 @@
         $('#spinner').hide();
         
         const filterData = {
-            department_non: null,
-            division_non: null,
+    department_non: null,
+    division_non: null,
     period_non: null,
     dateFrom_non: null,
     dateTo_non: null,

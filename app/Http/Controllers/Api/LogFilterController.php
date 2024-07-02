@@ -882,19 +882,14 @@ public function nonconformance_filter(Request $request)
     ];
 
     try {
-
-
         $query = NonConformance::query();
 
-        if ($request->department_non)
-        {
+        if ($request->department_non) {
             $query->where('Initiator_Group', $request->department_non);
         }
-        if($request->division_non)
-        {
-            $query->where('division_id',$request->division_non);
+        if ($request->division_non) {
+            $query->where('division_id', $request->division_non);
         }
-
         if ($request->period_non) {
             $currentDate = Carbon::now();
             switch ($request->period_non) {
@@ -915,44 +910,37 @@ public function nonconformance_filter(Request $request)
                 $query->whereDate('intiation_date', '>=', $startDate);
             }
         }
-
         if ($request->dateFrom_non) {
-
             $datefrom = Carbon::parse($request->dateFrom_non)->startOfDay();
-
             $query->whereDate('intiation_date', '>=', $datefrom);
         }
-
-        if ($request->dateTo) {
-
-            $dateo = Carbon::parse($request->dateTo_non)->endOfDay();
-
-            $query->whereDate('intiation_date', '<=', $dateo);
+        if ($request->dateTo_non) {
+            $dateto = Carbon::parse($request->dateTo_non)->endOfDay();
+            $query->whereDate('intiation_date', '<=', $dateto);
         }
-        if($request->TypeOFDocument)
-        {
-            $query->where('type_incidence_ia',$request->TypeOFDocument);
+        if ($request->TypeOfDocument) {
+            $query->where('type_incidence_ia', $request->TypeOfDocument);
         }
-
 
         $nonconformance = $query->get();
-
         $htmlData = view('frontend.forms.Logs.filterData.nonconformancedata', compact('nonconformance'))->render();
 
-
         $res['body'] = $htmlData;
-
 
     } catch (\Exception $e) {
         $res['status'] = 'error';
         $res['message'] = $e->getMessage();
-
     }
 
-
     return response()->json($res);
-
 }
+
+public function showNonConformanceLog()
+{
+    $noncf = NonConformance::all();
+    return view('frontend.forms.Logs.non_conformance_log', compact('noncf'));
+}
+
 
 
 

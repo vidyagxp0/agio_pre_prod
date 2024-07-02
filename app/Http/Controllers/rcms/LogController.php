@@ -129,10 +129,11 @@ class LogController extends Controller
                 return view('frontend.forms.logs.Internal_audit_Log',compact('internal_audi'));
 
                 case 'non-conformance':
-            $nonconform = NonConformance::get();
-                return view('frontend.forms.Logs.non_conformance_log',compact('nonconform'));
+            $nonconformance = NonConformance::get();
+            // dd($nonconformance);
+                return view('frontend.forms.Logs.non_conformance_log',compact('nonconformance'));
                 
-            return $slug;
+            // return $slug;
             
                 default:
                 break;
