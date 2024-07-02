@@ -8,8 +8,9 @@
                     <div class="col-md-12 mb-4">
                         <div class="group-input">
                             <label for="Description Deviation">Conclusion Comments</label>
-                            <textarea class="summernote" name="conclusion_comments_oosc" id="summernote-1">{{ $micro_data->conclusion_comments_oosc }}
-                                    </textarea>
+                            <textarea class="summernote" name="conclusion_comments_oosc" 
+                            id="summernote-1" {{Helpers::isOOSMicro($micro_data->stage)}} >{{ $micro_data->conclusion_comments_oosc }}
+                            </textarea>
                         </div>
                     </div>
                      <!-- ---------------------------grid-1 -------------------------------- -->
@@ -40,24 +41,24 @@
                                 @if (!empty($oos_conclusions) && is_array($oos_conclusions->data))
                                     @foreach ($oos_conclusions->data as $oos_conclusion)
                                         <tr>
-                                            <td><input disabled type="text" name="oos_conclusion[{{ $loop->index }}][serial]" value="{{ $loop->index + 1 }}"></td>
-                                            <td><input type="text" name="oos_conclusion[{{ $loop->index }}][summary_results_analysis_detials]" value="{{ Helpers::getArrayKey($oos_conclusion, 'summary_results_analysis_detials') }}"></td>
-                                            <td><input type="text" name="oos_conclusion[{{ $loop->index }}][summary_results_hypothesis_experimentation_test_pr_no]" value="{{ Helpers::getArrayKey($oos_conclusion, 'summary_results_hypothesis_experimentation_test_pr_no') }}"></td>
-                                            <td><input type="text" name="oos_conclusion[{{ $loop->index }}][summary_results]" value="{{ Helpers::getArrayKey($oos_conclusion, 'summary_results') }}"></td>
-                                            <td><input type="text" name="oos_conclusion[{{ $loop->index }}][summary_results_analyst_name]" value="{{ Helpers::getArrayKey($oos_conclusion, 'summary_results_analyst_name') }}"></td>
-                                            <td><input type="text" name="oos_conclusion[{{ $loop->index }}][summary_results_remarks]" value="{{ Helpers::getArrayKey($oos_conclusion, 'summary_results_remarks') }}"></td>
-                                            <td><button type="text" class="removeRowBtn">Remove</button></td>
+                                            <td><input  disabled type="text" name="oos_conclusion[{{ $loop->index }}][serial]" value="{{ $loop->index + 1 }}"></td>
+                                            <td><input {{Helpers::isOOSMicro($micro_data->stage)}} type="text" name="oos_conclusion[{{ $loop->index }}][summary_results_analysis_detials]" value="{{ Helpers::getArrayKey($oos_conclusion, 'summary_results_analysis_detials') }}"></td>
+                                            <td><input {{Helpers::isOOSMicro($micro_data->stage)}} type="text" name="oos_conclusion[{{ $loop->index }}][summary_results_hypothesis_experimentation_test_pr_no]" value="{{ Helpers::getArrayKey($oos_conclusion, 'summary_results_hypothesis_experimentation_test_pr_no') }}"></td>
+                                            <td><input {{Helpers::isOOSMicro($micro_data->stage)}} type="text" name="oos_conclusion[{{ $loop->index }}][summary_results]" value="{{ Helpers::getArrayKey($oos_conclusion, 'summary_results') }}"></td>
+                                            <td><input {{Helpers::isOOSMicro($micro_data->stage)}} type="text" name="oos_conclusion[{{ $loop->index }}][summary_results_analyst_name]" value="{{ Helpers::getArrayKey($oos_conclusion, 'summary_results_analyst_name') }}"></td>
+                                            <td><input {{Helpers::isOOSMicro($micro_data->stage)}} type="text" name="oos_conclusion[{{ $loop->index }}][summary_results_remarks]" value="{{ Helpers::getArrayKey($oos_conclusion, 'summary_results_remarks') }}"></td>
+                                            <td><button {{Helpers::isOOSMicro($micro_data->stage)}} type="text" class="removeRowBtn">Remove</button></td>
                                         </tr>
                                     @endforeach
                                 @else
                                     <tr>
                                         <td><input disabled type="text" name="oos_conclusion[0][serial]" value="1"></td>
-                                        <td><input type="text" name="oos_conclusion[0][summary_results_analysis_detials]"></td>
-                                        <td><input type="text" name="oos_conclusion[0][summary_results_hypothesis_experimentation_test_pr_no]"></td>
-                                        <td><input type="text" name="oos_conclusion[0][summary_results]"></td>
-                                        <td><input type="text" name="oos_conclusion[0][summary_results_analyst_name]"></td>
-                                        <td><input type="text" name="oos_conclusion[0][summary_results_remarks]"></td> 
-                                        <td><button type="text" class="removeRowBtn">Remove</button></td>
+                                        <td><input {{Helpers::isOOSMicro($micro_data->stage)}} type="text" name="oos_conclusion[0][summary_results_analysis_detials]"></td>
+                                        <td><input  {{Helpers::isOOSMicro($micro_data->stage)}} type="text" name="oos_conclusion[0][summary_results_hypothesis_experimentation_test_pr_no]"></td>
+                                        <td><input {{Helpers::isOOSMicro($micro_data->stage)}} type="text" name="oos_conclusion[0][summary_results]"></td>
+                                        <td><input {{Helpers::isOOSMicro($micro_data->stage)}} type="text" name="oos_conclusion[0][summary_results_analyst_name]"></td>
+                                        <td><input {{Helpers::isOOSMicro($micro_data->stage)}} type="text" name="oos_conclusion[0][summary_results_remarks]"></td> 
+                                        <td><button {{Helpers::isOOSMicro($micro_data->stage)}} type="text" class="removeRowBtn">Remove</button></td>
                                     </tr>
                                 @endif
                                 </tbody>
@@ -67,13 +68,14 @@
                     <div class="col-lg-6">
                         <div class="group-input">
                             <label for="Report Attachments">Specification Limit </label>
-                            <input type="text" name="specification_limit_oosc" value="{{ $micro_data->specification_limit_oosc }}">
+                            <input type="text" name="specification_limit_oosc"
+                             value="{{ $micro_data->specification_limit_oosc }}" {{Helpers::isOOSMicro($micro_data->stage)}}>
                         </div>
                     </div>
                     <div class="col-lg-6">
                         <div class="group-input">
                             <label for="Audit Attachments">Results to be Reported</label>
-                            <select name="results_to_be_reported_oosc">
+                            <select name="results_to_be_reported_oosc" {{Helpers::isOOSMicro($micro_data->stage)}}>
                                 <option value="">Enter Your Selection Here</option>
                                 <option value="initial" @if ($micro_data->results_to_be_reported_oosc == 'initial') selected @endif>Initial</option>
                                 <option value="retested-result" @if ($micro_data->results_to_be_reported_oosc == 'retested-result') selected @endif>Retested Result</option>
@@ -83,20 +85,22 @@
                     <div class="col-lg-6">
                         <div class="group-input">
                             <label for="Reference Recores">Final Reportable Results</label>
-                            <input type="text" name="final_reportable_results_oosc" value="{{ $micro_data->final_reportable_results_oosc }}">
+                            <input type="text" name="final_reportable_results_oosc" 
+                            value="{{ $micro_data->final_reportable_results_oosc }}" {{Helpers::isOOSMicro($micro_data->stage)}}>
                         </div>
                     </div>
                     <div class="col-md-12 mb-4">
                         <div class="group-input">
                             <label for="Description Deviation">Justifi. for Averaging Results</label>
-                            <textarea class="summernote" name="justifi_for_averaging_results_oosc" id="summernote-1">{{ $micro_data->justifi_for_averaging_results_oosc }}
+                            <textarea class="summernote" name="justifi_for_averaging_results_oosc" id="summernote-1"
+                             {{Helpers::isOOSMicro($micro_data->stage)}}>{{ $micro_data->justifi_for_averaging_results_oosc }}
                             </textarea>
                         </div>
                     </div>
                     <div class="col-lg-6">
                         <div class="group-input">
                             <label for="Reference Recores">OOS Stands </label>
-                            <select name="oos_stands_oosc">
+                            <select name="oos_stands_oosc" {{Helpers::isOOSMicro($micro_data->stage)}}>
                                 <option value="">Enter Your Selection Here</option>
                                 <option value="valid" @if ($micro_data->oos_stands_oosc == 'valid') selected @endif>Valid</option>
                                 <option value="invalid" @if ($micro_data->oos_stands_oosc == 'invalid') selected @endif>Invalid</option>
@@ -106,7 +110,7 @@
                     <div class="col-lg-6">
                         <div class="group-input">
                             <label for="Audit Attachments">CAPA Req.</label>
-                            <select name="capa_req_oosc">
+                            <select name="capa_req_oosc" {{Helpers::isOOSMicro($micro_data->stage)}}>
                                 <option value="">Enter Your Selection Here</option>
                                 <option value="yes" @if ($micro_data->capa_req_oosc == 'yes') selected @endif>Yes</option>
                                 <option value="no" @if ($micro_data->capa_req_oosc == 'no') selected @endif>No</option>
@@ -116,7 +120,7 @@
                     <div class="col-lg-6">
                         <div class="group-input">
                             <label for="Reference Recores">CAPA Ref No.</label>
-                            <select multiple id="reference_record" name="capa_ref_no_oosc[]" id="">
+                            <select multiple id="reference_record" name="capa_ref_no_oosc[]" id="" {{Helpers::isOOSMicro($micro_data->stage)}}>
                                 <option value="">--Select Option---</option>
                                 <option value="1" {{ (!empty($micro_data->capa_ref_no_oosc) && in_array('1', explode(',', $micro_data->capa_ref_no_oosc[0]))) ? 'selected' : '' }}>1</option>
                                 <option value="2" {{ (!empty($micro_data->capa_ref_no_oosc) && in_array('2', explode(',', $micro_data->capa_ref_no_oosc[0]))) ? 'selected' : '' }}>2</option>
@@ -126,14 +130,15 @@
                     <div class="col-md-12 mb-4">
                         <div class="group-input">
                             <label for="Description Deviation">Justify if CAPA not required</label>
-                            <textarea class="summernote" name="justify_if_capa_not_required_oosc" id="summernote-1">{{ $micro_data->justify_if_capa_not_required_oosc }}
+                            <textarea class="summernote" name="justify_if_capa_not_required_oosc" id="summernote-1"
+                             {{Helpers::isOOSMicro($micro_data->stage)}}>{{ $micro_data->justify_if_capa_not_required_oosc }}
                             </textarea>
                         </div>
                     </div>
                     <div class="col-lg-6">
                         <div class="group-input">
                             <label for="Audit Attachments">Action Plan Req.</label>
-                            <select name="action_plan_req_oosc">
+                            <select name="action_plan_req_oosc" {{Helpers::isOOSMicro($micro_data->stage)}}>
                                 <option value="">Enter Your Selection Here</option>
                                 <option value="yes" @if ($micro_data->action_plan_req_oosc == 'yes') selected @endif>Yes</option>
                                 <option value="no" @if ($micro_data->action_plan_req_oosc == 'no') selected @endif>No</option>
@@ -143,7 +148,7 @@
                     <div class="col-lg-6">
                         <div class="group-input">
                             <label for="Reference Recores">Action Plan Ref.</label>
-                            <select multiple id="reference_record" name="action_plan_ref_oosc[]" id="">
+                            <select multiple id="reference_record" name="action_plan_ref_oosc[]" id="" {{Helpers::isOOSMicro($micro_data->stage)}}>
                                 <option value="">--Select---</option>
                                 <option value="1" {{ (!empty($micro_data->action_plan_ref_oosc) && in_array('1', explode(',', $micro_data->action_plan_ref_oosc[0]))) ? 'selected' : '' }}>1</option>
                                 <option value="2" {{ (!empty($micro_data->action_plan_ref_oosc) && in_array('2', explode(',', $micro_data->action_plan_ref_oosc[0]))) ? 'selected' : '' }}>2</option>
@@ -153,7 +158,8 @@
                     <div class="col-md-12 mb-4">
                         <div class="group-input">
                             <label for="Description Deviation">Justification for Delay</label>
-                           <textarea class="summernote" name="justification_for_delay_oosc" id="summernote-1">{{ $micro_data->justification_for_delay_oosc }}
+                           <textarea class="summernote" name="justification_for_delay_oosc" id="summernote-1"
+                            {{Helpers::isOOSMicro($micro_data->stage)}}>{{ $micro_data->justification_for_delay_oosc }}
                             </textarea>
                         </div>
                     </div>
@@ -183,17 +189,23 @@
                                 </div>
                                 <div class="add-btn">
                                     <div>Add</div>
-                                    <input type="file" id="myfile" name="attachments_if_any_oosc[]"
+                                    <input {{Helpers::isOOSMicro($micro_data->stage)}} type="file" id="myfile" name="attachments_if_any_oosc[]"
                                         oninput="addMultipleFiles(this, 'attachments_if_any_oosc')" multiple>
                                 </div>
                             </div>
                         </div>
                     </div>
                     <div class="button-block">
+                        @if ($micro_data->stage == 0  || $micro_data->stage >= 14)
+                            <div class="progress-bars">
+                                    <div class="bg-danger">Workflow is already Closed-Done</div>
+                                </div>
+                        @else
                         <button type="submit" id="ChangesaveButton" class="saveButton">Save</button>
                         <button type="button" class="backButton" onclick="previousStep()">Back</button>
                         <button type="button" id="ChangeNextButton" class="nextButton"
                             onclick="nextStep()">Next</button>
+                        @endif
                         <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white">
                                 Exit </a> </button>
                     </div>
@@ -212,7 +224,8 @@
                     <div class="col-md-12 mb-4">
                         <div class="group-input">
                             <label for="Description Deviation">Conclusion Review Comments</label>
-                            <textarea class="summernote" name="conclusion_review_comments_ocr" id="summernote-1">{{ $micro_data->conclusion_review_comments_ocr }}
+                            <textarea class="summernote" name="conclusion_review_comments_ocr" 
+                            id="summernote-1" {{Helpers::isOOSMicro($micro_data->stage)}} >{{ $micro_data->conclusion_review_comments_ocr }}
                              </textarea>
                         </div>
                     </div>
@@ -270,14 +283,15 @@
                     <div class="col-md-12 mb-4">
                         <div class="group-input">
                             <label for="Description Deviation">Action Taken on Affec.batch</label>
-                            <textarea class="summernote" name="action_taken_on_affec_batch_ocr" id="summernote-1">{{ $micro_data->action_taken_on_affec_batch_ocr }}
+                            <textarea class="summernote" name="action_taken_on_affec_batch_ocr" id="summernote-1"
+                             {{Helpers::isOOSMicro($micro_data->stage)}}>{{ $micro_data->action_taken_on_affec_batch_ocr }}
                             </textarea>
                         </div>
                     </div>
                     <div class="col-lg-6">
                         <div class="group-input">
                             <label for="Audit Attachments">CAPA Req?</label>
-                            <select name="capa_req_ocr">
+                            <select name="capa_req_ocr" {{Helpers::isOOSMicro($micro_data->stage)}}>
                                 <option value="">Enter Your Selection Here</option>
                                 <option value="yes" @if ($micro_data->capa_req_ocr == 'yes') selected @endif>Yes</option>
                                 <option value="no" @if ($micro_data->capa_req_ocr == 'no') selected @endif>No</option>
@@ -287,7 +301,7 @@
                     <div class="col-lg-6">
                         <div class="group-input">
                             <label for="Reference Recores">CAPA Refer.</label>
-                            <select multiple id="reference_record" name="capa_refer_ocr[]" id="">
+                            <select multiple id="reference_record" name="capa_refer_ocr[]" id="" {{Helpers::isOOSMicro($micro_data->stage)}}>
                                 <option value="">--Select---</option>
                                 <option value="1" {{ (!empty($micro_data->capa_refer_ocr) && in_array('1', explode(',', $micro_data->capa_refer_ocr[0]))) ? 'selected' : '' }}>1</option>
                                 <option value="2" {{ (!empty($micro_data->capa_refer_ocr) && in_array('2', explode(',', $micro_data->capa_refer_ocr[0]))) ? 'selected' : '' }}>2</option>
@@ -297,7 +311,7 @@
                     <div class="col-lg-6">
                         <div class="group-input">
                             <label for="Report Attachments">Required Action Plan? </label>
-                            <select name="required_action_plan_ocr">
+                            <select name="required_action_plan_ocr" {{Helpers::isOOSMicro($micro_data->stage)}}>
                                <option value="">Enter Your Selection Here</option>
                                 <option value="yes" @if ($micro_data->required_action_plan_ocr == 'yes') selected @endif>Yes</option>
                                 <option value="no" @if ($micro_data->required_action_plan_ocr == 'no') selected @endif>No</option>
@@ -307,7 +321,7 @@
                     <div class="col-lg-6">
                         <div class="group-input">
                             <label for="Reference Recores">Required Action Task?</label>
-                            <select name="required_action_task_ocr">
+                            <select name="required_action_task_ocr" {{Helpers::isOOSMicro($micro_data->stage)}}>
                                 <option value="">Enter Your Selection Here</option>
                                 <option value="yes" @if ($micro_data->required_action_task_ocr == 'yes') selected @endif>Yes</option>
                                 <option value="no" @if ($micro_data->required_action_task_ocr == 'yes') selected @endif>No</option>
@@ -317,7 +331,7 @@
                     <div class="col-lg-6">
                         <div class="group-input">
                             <label for="Reference Recores">Action Task Reference.</label>
-                            <select multiple id="reference_record" name="action_task_reference_ocr[]" id="">
+                            <select multiple id="reference_record" name="action_task_reference_ocr[]" id="" {{Helpers::isOOSMicro($micro_data->stage)}}>
                                 <option value="">--Select---</option>
                                 <option value="1" {{ (!empty($micro_data->action_task_reference_ocr) && in_array('1', explode(',', $micro_data->action_task_reference_ocr[0]))) ? 'selected' : '' }}>1</option>
                                 <option value="2" {{ (!empty($micro_data->action_task_reference_ocr) && in_array('2', explode(',', $micro_data->action_task_reference_ocr[0]))) ? 'selected' : '' }}>2</option>
@@ -337,7 +351,7 @@
                     <div class="col-lg-6">
                         <div class="group-input">
                             <label for="Reference Recores">Risk Assessment Ref.</label>
-                            <select multiple id="reference_record" name="risk_assessment_ref_ocr[]" id="">
+                            <select multiple id="reference_record" name="risk_assessment_ref_ocr[]" id="" {{Helpers::isOOSMicro($micro_data->stage)}}>
                                 <option value="">--Select---</option>
                                 <option value="1" {{ (!empty($micro_data->risk_assessment_ref_ocr) && in_array('1', explode(',', $micro_data->risk_assessment_ref_ocr[0]))) ? 'selected' : '' }}>1</option>
                                 <option value="2" {{ (!empty($micro_data->risk_assessment_ref_ocr) && in_array('2', explode(',', $micro_data->risk_assessment_ref_ocr[0]))) ? 'selected' : '' }}>2</option>
@@ -347,7 +361,8 @@
                     <div class="col-md-12 mb-4">
                         <div class="group-input">
                             <label for="Description Deviation">Justify if No Risk Assessment</label>
-                            <textarea class="summernote" name="justify_if_no_risk_assessment_ocr" id="summernote-1">{{ $micro_data->justify_if_no_risk_assessment_ocr }}
+                            <textarea class="summernote" name="justify_if_no_risk_assessment_ocr" id="summernote-1" 
+                            {{Helpers::isOOSMicro($micro_data->stage)}}>{{ $micro_data->justify_if_no_risk_assessment_ocr }}
                             </textarea>
                         </div>
                     </div>
@@ -391,10 +406,16 @@
                         </div>
                     </div>
                     <div class="button-block">
+                        @if ($micro_data->stage == 0  || $micro_data->stage >= 14)
+                            <div class="progress-bars">
+                                    <div class="bg-danger">Workflow is already Closed-Done</div>
+                                </div>
+                        @else
                         <button type="submit" id="ChangesaveButton" class="saveButton">Save</button>
                         <button type="button" class="backButton" onclick="previousStep()">Back</button>
                         <button type="button" id="ChangeNextButton" class="nextButton"
                             onclick="nextStep()">Next</button>
+                        @endif
                         <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white">
                                 Exit </a> </button>
                     </div>
@@ -409,14 +430,14 @@
             <div class="col-md-12 mb-4">
                 <div class="group-input">
                     <label for="Description Deviation">CQ Review comments</label>
-                    <textarea class="summernote" name="cq_review_comments_OOS_CQ" id="summernote-1">{{ $micro_data->cq_review_comments_OOS_CQ }}
-                            </textarea>
+                    <textarea class="summernote" name="cq_review_comments_OOS_CQ" id="summernote-1" {{Helpers::isOOSMicro($micro_data->stage)}}>{{ $micro_data->cq_review_comments_OOS_CQ }}
+                    </textarea>
                 </div>
             </div>
             <div class="col-lg-6">
                 <div class="group-input">
                     <label for="Report Attachments"> CAPA Required ?</label>
-                    <select name="capa_required_OOS_CQ">
+                    <select name="capa_required_OOS_CQ" {{Helpers::isOOSMicro($micro_data->stage)}}>
                         <option value="">Enter Your Selection Here</option>
                         <option value="yes" @if ($micro_data->capa_required_OOS_CQ == 'yes') selected @endif>Yes</option>
                         <option value="no" @if ($micro_data->capa_required_OOS_CQ == 'no') selected @endif>No</option>
@@ -433,7 +454,7 @@
                 <div class="group-input">
                     <label for="Auditee"> Action plan requirement ? </label>
                     <select name="action_plan_requirement_OOS_CQ" 
-                        data-search="false" data-silent-initial-value-set="true" id="auditee">
+                        data-search="false" data-silent-initial-value-set="true" id="auditee" {{Helpers::isOOSMicro($micro_data->stage)}}>
                         <option value="">Enter Your Selection Here</option>
                         <option value="yes" @if ($micro_data->action_plan_requirement_OOS_CQ == 'yes') selected @endif>Yes</option>
                         <option value="no" @if ($micro_data->action_plan_requirement_OOS_CQ == 'no') selected @endif>No</option>
@@ -477,10 +498,16 @@
                 </div>
             </div>
             <div class="button-block">
-                <button type="submit" id="ChangesaveButton" class="saveButton">Save</button>
-                <button type="button" class="backButton" onclick="previousStep()">Back</button>
-                <button type="button" id="ChangeNextButton" class="nextButton"
-                    onclick="nextStep()">Next</button>
+            @if ($micro_data->stage == 0  || $micro_data->stage >= 14)
+                <div class="progress-bars">
+                        <div class="bg-danger">Workflow is already Closed-Done</div>
+                    </div>
+            @else
+            <button type="submit" id="ChangesaveButton" class="saveButton">Save</button>
+            <button type="button" class="backButton" onclick="previousStep()">Back</button>
+            <button type="button" id="ChangeNextButton" class="nextButton"
+                onclick="nextStep()">Next</button>
+            @endif
                 <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white">
                         Exit </a> </button>
             </div>

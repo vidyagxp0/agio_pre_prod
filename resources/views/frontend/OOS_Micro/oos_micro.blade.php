@@ -54,7 +54,7 @@ $users = DB::table('users')
                         '<td><input type="text" name="info_product_material[' + serialNumber + '][info_process_sample_stage]" value=""></td>' +
                         '<td><select name="info_product_material[' + serialNumber + '][info_packing_material_type]"><option value="">--Select--</option><option value="Primary">Primary</option><option value="Secondary">Secondary</option><option value="Tertiary">Tertiary</option><option value="Not Applicable">Not Applicable</option></select></td>' +
                         '<td><select name="info_product_material[' + serialNumber + '][info_stability_for]"><option value="">--Select--</option><option vlaue="Submission">Submission</option><option vlaue="Commercial">Commercial</option><option vlaue="Pack Evaluation">Pack Evaluation</option><option vlaue="Not Applicable">Not Applicable</option></select></td>' +
-                        '<td><button type="text" class="removeRowBtn">Remove</button></td>' +
+                        '<td><button type="text" class="removeRowBtn"> Remove </button></td>' +
 
                     '</tr>';
                     for (var i = 0; i < users.length; i++) {
@@ -92,7 +92,7 @@ $users = DB::table('users')
                             '<td><input type="text" name="details_stability[ '+ serialNumber + '][stability_study_pack_details]"></td>'+
                             '<td><input type="text" name="details_stability[ '+ serialNumber + '][stability_study_specification_no]"></td>'+
                             '<td><input type="text" name="details_stability[ '+ serialNumber + '][stability_study_sample_description]"></td>'+
-                            '<td><button type="text" class="removeRowBtn">Remove</button></td>' +
+                            '<td><button type="text" class="removeRowBtn"> Remove </button></td>' +
                         '</tr>';
                     // for (var i = 0; i < users.length; i++) {
                     //     html += '<option value="' + users[i].id + '">' + users[i].name + '</option>';
@@ -330,6 +330,8 @@ $users = DB::table('users')
                         <div class="col-lg-6">
                             <div class="group-input">
                                 <label for="Record Number"> Record Number </label>
+                                <input type="hidden" name="record"
+                            value="{{ $record_number }}">
                                 <input disabled type="text" name="record"
                             value="{{ Helpers::getDivisionName(session()->get('division')) }}/OOS Micro /{{ date('Y') }}/{{ $record_number }}">
                         </div>
@@ -357,7 +359,6 @@ $users = DB::table('users')
                                 <label for="intiation-date"> Date Of Initiation<span class="text-danger"></span></label>
                                 <input type="hidden" value="{{ date('Y-m-d') }}" name="intiation_date_gi">
                                 <input readonly type="text" value="{{ date('d-M-Y') }}" name="intiation_date_gi">
-                    
                             </div>
                         </div>
                         <div class="col-lg-6 new-date-data-field">
@@ -367,13 +368,12 @@ $users = DB::table('users')
                                         reason in "Due Date Extension Justification" data field.</small></div>
                                 <div class="calenderauditee">
                                     <input type="text" id="due_date_gi" readonly placeholder="DD-MM-YYYY" />
-                                    <input type="date" name="due_date_gi"
-                                        min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input"
-                                        oninput="handleDateInput(this, 'due_date_gi')" />
+                                    <input type="date" name="due_date_gi" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
+                                     class="hide-input" oninput="handleDateInput(this, 'due_date_gi')" />
+                                    
                                 </div>
                             </div>
                         </div>
-                        
                         <div class="col-lg-6">
                             <div class="group-input">
                                 <label for="Short Description">Short Description
@@ -629,7 +629,7 @@ $users = DB::table('users')
                                             <th style="width: 10%"> In- Process Sample Stage.</th>
                                             <th style="width: 12% pt-3">Packing Material Type</th>
                                             <th style="width: 16% pt-2"> Stability for</th>
-                                            <th style="width: 15%">Action</th>
+                                            <th style="width: 15%"> Action </th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -715,7 +715,7 @@ $users = DB::table('users')
                                             <th style="width: 16%">Pack Details (if any)</th>
                                             <th style="width: 16%">Specification No.</th>
                                             <th style="width: 16%">Sample Description</th>
-                                            <th style="width: 15%">Action</th>
+                                            <th style="width: 15%"> Action </th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -758,7 +758,7 @@ $users = DB::table('users')
                                             <th style="width: 8%">Details of Obvious Error</th>
                                             <th style="width: 16%">File Attachment</th>
                                             <th style="width: 16%">Submit On</th>
-                                            <th style="width: 15%">Action</th>
+                                            <th style="width: 15%">Action </th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -1212,7 +1212,7 @@ $users = DB::table('users')
                                             <th style="width: 13%"> Closure Date of CAPA</th>
                                             <th style="width: 10%">CAPA Requirement</th>
                                             <th style="width: 8%">Reference CAPA Number</th>
-                                            <th style="width: 4%">Action</th>
+                                            <th style="width: 4%"> Action </th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -1252,7 +1252,7 @@ $users = DB::table('users')
                                                     <option value="No">No</option>
                                                 </select></td>
                                             <td><input type="text" name="oos_capa[0][info_oos_capa_reference_number]" value=""></td> 
-                                            <td><button type="text" class="removeRowBtn">Remove</button></td>
+                                            <td><button type="text" class="removeRowBtn">Remove</button></td><td><button type="text" class="removeRowBtn">Remove</button></td>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -1736,7 +1736,7 @@ $users = DB::table('users')
                         <!-- ---------------------------grid-1 -------------------------------- -->
                         <div class="group-input">
                         <label for="audit-agenda-grid">
-                            Summary of OOS Test Results dsdsdsds
+                            Summary of OOS Test Results
                             <button type="button" name="audit-agenda-grid" id="oos_conclusion">+</button>
                             <span class="text-primary" data-bs-toggle="modal"
                                 data-bs-target="#document-details-field-instruction-modal"
@@ -1754,8 +1754,7 @@ $users = DB::table('users')
                                         <th style="width: 16%">Results</th>
                                         <th style="width: 16%">Analyst Name.</th>
                                         <th style="width: 16%">Remarks</th>
-                                        <th style="width: 16%">Action</th>
-                                        
+                                        <th style="width: 6%"> Action </th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -1765,7 +1764,7 @@ $users = DB::table('users')
                                     <td><input type="text" name="oos_conclusion[0][summary_results]"></td>
                                     <td><input type="text" name="oos_conclusion[0][summary_results_analyst_name]"></td>
                                     <td><input type="text" name="oos_conclusion[0][summary_results_remarks]"></td> 
-                                    <td><button type="text" class="removeRowBtn">Remove</button></td>
+                                    <td><button type="text" class="removeRowBtn"> Remove </button> </td>
                                 </tbody>
                             </table>
                             </div>

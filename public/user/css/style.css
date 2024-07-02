@@ -4236,9 +4236,9 @@ section#pdf-page .watermark {
 }
 
 #change-control-fields .inner-block .group-input label button {
-    width: 25px;
+    /* width: 25px;
     height: 25px;
-    border-radius: 50%;
+    border-radius: 50%; */
     text-align: center;
     line-height: 19px;
     margin-left: 10px;

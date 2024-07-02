@@ -727,10 +727,16 @@
 
 
                 <div class="button-block">
+                @if ($micro_data->stage == 0  || $micro_data->stage >= 14)
+                        <div class="progress-bars">
+                                <div class="bg-danger">Workflow is already Closed-Done</div>
+                            </div>
+                    @else
                     <button type="submit" id="ChangesaveButton" class="saveButton">Save</button>
                     <button type="button" class="backButton" onclick="previousStep()">Back</button>
                     <button type="button" id="ChangeNextButton" class="nextButton"
                         onclick="nextStep()">Next</button>
+                    @endif
                     <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white">
                             Exit </a> </button>
                 </div>
@@ -1563,10 +1569,16 @@
                     </div>
                 </div>
                 <div class="button-block">
+                @if ($micro_data->stage == 0  || $micro_data->stage >= 14)
+                        <div class="progress-bars">
+                                <div class="bg-danger">Workflow is already Closed-Done</div>
+                            </div>
+                    @else
                     <button type="submit" id="ChangesaveButton" class="saveButton">Save</button>
                     <button type="button" class="backButton" onclick="previousStep()">Back</button>
                     <button type="button" id="ChangeNextButton" class="nextButton"
                         onclick="nextStep()">Next</button>
+                    @endif
                     <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white">
                             Exit </a> </button>
                 </div>
@@ -2782,10 +2794,16 @@
 
 
                 <div class="button-block">
+                   @if ($micro_data->stage == 0  || $micro_data->stage >= 14)
+                        <div class="progress-bars">
+                                <div class="bg-danger">Workflow is already Closed-Done</div>
+                            </div>
+                    @else
                     <button type="submit" id="ChangesaveButton" class="saveButton">Save</button>
                     <button type="button" class="backButton" onclick="previousStep()">Back</button>
                     <button type="button" id="ChangeNextButton" class="nextButton"
                         onclick="nextStep()">Next</button>
+                    @endif
                     <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white">
                             Exit </a> </button>
                 </div>
@@ -3986,14 +4004,16 @@
 
                 <div class="button-block">
 
+                   @if ($micro_data->stage == 0  || $micro_data->stage >= 14)
+                        <div class="progress-bars">
+                                <div class="bg-danger">Workflow is already Closed-Done</div>
+                            </div>
+                    @else
                     <button type="submit" id="ChangesaveButton" class="saveButton">Save</button>
-
                     <button type="button" class="backButton" onclick="previousStep()">Back</button>
-
                     <button type="button" id="ChangeNextButton" class="nextButton"
-
                         onclick="nextStep()">Next</button>
-
+                    @endif
                     <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white">
 
                             Exit </a> </button>
@@ -5317,10 +5337,17 @@
 
                     </div>
                     <div class="button-block">
-                        <button type="submit" id="ChangesaveButton" class="saveButton">Save</button>
-                        <button type="button" class="backButton" onclick="previousStep()">Back</button>
-                        <button type="button" id="ChangeNextButton" class="nextButton" onclick="nextStep()">Next</button>
-                        <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white">
+                    @if ($micro_data->stage == 0  || $micro_data->stage >= 14)
+                        <div class="progress-bars">
+                                <div class="bg-danger">Workflow is already Closed-Done</div>
+                            </div>
+                    @else
+                    <button type="submit" id="ChangesaveButton" class="saveButton">Save</button>
+                    <button type="button" class="backButton" onclick="previousStep()">Back</button>
+                    <button type="button" id="ChangeNextButton" class="nextButton"
+                        onclick="nextStep()">Next</button>
+                    @endif
+                    <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white">
                                 Exit </a> </button>
                     </div>
                 </div>
@@ -5650,7 +5677,7 @@
                                             <td>
                                                 <div style="margin: auto; display: flex; justify-content: center;">
                                                     <textarea name="checklist_for_Culture_verification_CIMT[{{$index}}][remark]"
-                                                              style="border-radius: 7px; border: 1.5px solid black;">{{ Helpers::getMicroGridData($micro_data, '$checklist_for_Culture_verification_CIMTs', true, 'remark', true, $index) ?? '' }}</textarea>
+                                                            style="border-radius: 7px; border: 1.5px solid black;">{{ Helpers::getMicroGridData($micro_data, '$checklist_for_Culture_verification_CIMTs', true, 'remark', true, $index) ?? '' }}</textarea>
                                                 </div>
                                             </td>
                                         </tr>
@@ -6152,10 +6179,16 @@
                     </div>
 
         <div class="button-block">
-            <button type="submit" id="ChangesaveButton" class="saveButton">Save</button>
-            <button type="button" class="backButton" onclick="previousStep()">Back</button>
-            <button type="button" id="ChangeNextButton" class="nextButton"
+        @if ($micro_data->stage == 0  || $micro_data->stage >= 14)
+            <div class="progress-bars">
+                    <div class="bg-danger">Workflow is already Closed-Done</div>
+                </div>
+        @else
+        <button type="submit" id="ChangesaveButton" class="saveButton">Save</button>
+        <button type="button" class="backButton" onclick="previousStep()">Back</button>
+        <button type="button" id="ChangeNextButton" class="nextButton"
             onclick="nextStep()">Next</button>
+        @endif
             <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white">Exit </a> </button>
         </div>
         </div>

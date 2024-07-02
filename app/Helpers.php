@@ -86,6 +86,15 @@ class Helpers
         }
          
     }
+    public static function isOOSMicro($micro_data)
+    {   
+        if($micro_data == 0 || $micro_data  >= 14){
+            return 'disabled';
+        }else{
+            return  '';
+        }
+         
+    }
     // public static function getHodUserList(){
 
     //     return $hodUserList = DB::table('user_roles')->where(['q_m_s_roles_id' =>'4'])->get();

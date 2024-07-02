@@ -11,7 +11,7 @@
                                     <div class="group-input">
                                         <!-- <label for="Description Deviation">Description of Deviation</label> -->
                                         <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
-                                        <textarea class="summernote" name="comments_pli" id="summernote-1">{{ $micro_data->comments_pli }}
+                                        <textarea class="summernote" name="comments_pli" id="summernote-1" {{Helpers::isOOSMicro($micro_data->stage)}}>{{ $micro_data->comments_pli }}
                                     </textarea>
                                     </div>
                                 </div>
@@ -20,7 +20,7 @@
                         <div class="col-lg-6">
                             <div class="group-input">
                                 <label for="Audit Schedule End Date"> Field Alert Required</label>
-                                <select name="field_alert_required_pli">
+                                <select name="field_alert_required_pli" {{Helpers::isOOSMicro($micro_data->stage)}}>
                                     <option>Enter Your Selection Here</option>
                                     <option value="yes" @if ($micro_data->field_alert_required_pli == 'yes') selected @endif>Yes</option>
                                     <option value="no" @if ($micro_data->field_alert_required_pli == 'no') selected @endif>No</option>
@@ -30,7 +30,7 @@
                         <div class="col-lg-6">
                             <div class="group-input">
                                 <label for="Reference Records">Field Alert Ref.No.</label>
-                                <select multiple id="reference_record" name="field_alert_ref_no_pli[]">
+                                <select {{Helpers::isOOSMicro($micro_data->stage)}} multiple id="reference_record" name="field_alert_ref_no_pli[]">
                                     <option value="1" {{ (!empty($micro_data->field_alert_ref_no_pli) && in_array('1', explode(',', $micro_data->field_alert_ref_no_pli[0]))) ? 'selected' : '' }}>1</option>
                                     <option value="2" {{ (!empty($micro_data->field_alert_ref_no_pli) && in_array('2', explode(',', $micro_data->field_alert_ref_no_pli[0]))) ? 'selected' : '' }}>2</option>    
                                     
@@ -41,14 +41,14 @@
                         <div class="col-md-12 mb-4">
                             <div class="group-input">
                                 <label for="Description Deviation">Justify if no Field Alert</label>
-                                <textarea class="summernote" name="justify_if_no_field_alert_pli" id="summernote-1">{{ $micro_data->justify_if_no_field_alert_pli }}
+                                <textarea  {{Helpers::isOOSMicro($micro_data->stage)}} class="summernote" name="justify_if_no_field_alert_pli" id="summernote-1">{{ $micro_data->justify_if_no_field_alert_pli }}
                                 </textarea>
                             </div>
                         </div>
                         <div class="col-lg-6">
                             <div class="group-input">
                                 <label for="Product/Material Name"> Verification Analysis Required</label>
-                                <select name="verification_analysis_required_pli">
+                                <select name="verification_analysis_required_pli" {{Helpers::isOOSMicro($micro_data->stage)}}>
                                     <option>Enter Your Selection Here</option>
                                     <option value="yes" @if ($micro_data->verification_analysis_required_pli == 'yes') selected @endif>Yes</option>
                                     <option value="no" @if ($micro_data->verification_analysis_required_pli == 'no') selected @endif>No</option>
@@ -58,7 +58,7 @@
                         <div class="col-lg-6">
                             <div class="group-input">
                                 <label for="Reference Recores">Verification Analysis Ref.</label>
-                                <select multiple id="reference_record" name="verification_analysis_ref_pli[]" id="">
+                                <select multiple id="reference_record" name="verification_analysis_ref_pli[]" id="" {{Helpers::isOOSMicro($micro_data->stage)}}>
                                     <option value="1" {{ (!empty($micro_data->verification_analysis_ref_pli) && in_array('1', explode(',', $micro_data->verification_analysis_ref_pli[0]))) ? 'selected' : '' }}>1</option>
                                     <option value="2" {{ (!empty($micro_data->verification_analysis_ref_pli) && in_array('2', explode(',', $micro_data->verification_analysis_ref_pli[0]))) ? 'selected' : '' }}>2</option>    
                                 </select>
@@ -68,7 +68,7 @@
                         <div class="col-lg-6">
                             <div class="group-input">
                                 <label for="Product/Material Name">Analyst Interview Req.</label>
-                                <select name="analyst_interview_req_pli">
+                                <select name="analyst_interview_req_pli" {{Helpers::isOOSMicro($micro_data->stage)}}>
                                     <option>Enter Your Selection Here</option>
                                     <option value="yes" @if ($micro_data->analyst_interview_req_pli == 'yes') selected @endif>Yes</option>
                                     <option value="no" @if ($micro_data->analyst_interview_req_pli == 'no') selected @endif>No</option>
@@ -78,7 +78,7 @@
                         <div class="col-lg-6">
                             <div class="group-input">
                                 <label for="Reference Recores">Analyst Interview Ref.</label>
-                                <select multiple id="reference_record" name="analyst_interview_ref_pli[]">
+                                <select multiple id="reference_record" name="analyst_interview_ref_pli[]" {{Helpers::isOOSMicro($micro_data->stage)}}>
                                     <option value="">--Select---</option>
                                     <option value="1" {{ (!empty($micro_data->analyst_interview_ref_pli) && in_array('1', explode(',', $micro_data->analyst_interview_ref_pli[0]))) ? 'selected' : '' }}>1</option>
                                     <option value="2" {{ (!empty($micro_data->analyst_interview_ref_pli) && in_array('2', explode(',', $micro_data->analyst_interview_ref_pli[0]))) ? 'selected' : '' }}>2</option>    
@@ -92,7 +92,8 @@
 
                                 <!-- <label for="Description Deviation">Description of Deviation</label> -->
                                 <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
-                                <textarea class="summernote" name="justify_if_no_analyst_int_pli" id="summernote-1">{{ $micro_data->justify_if_no_analyst_int_pli }}
+                                <textarea class="summernote" name="justify_if_no_analyst_int_pli" id="summernote-1" 
+                                {{Helpers::isOOSMicro($micro_data->stage)}}>{{ $micro_data->justify_if_no_analyst_int_pli }}
                                     </textarea>
 
                             </div>
@@ -100,7 +101,7 @@
                         <div class="col-lg-6">
                             <div class="group-input">
                                 <label for="Product/Material Name">Phase I Investigation Required</label>
-                                <select name="phase_i_investigation_required_pli">
+                                <select name="phase_i_investigation_required_pli" {{Helpers::isOOSMicro($micro_data->stage)}}>
                                     <option>Enter Your Selection Here</option>
                                     <option value="yes" @if ($micro_data->phase_i_investigation_required_pli == 'yes') selected @endif>Yes</option>
                                     <option value="no" @if ($micro_data->phase_i_investigation_required_pli == 'no') selected @endif>No</option>
@@ -110,7 +111,7 @@
                         <div class="col-lg-6">
                             <div class="group-input">
                                 <label for="Product/Material Name">Phase I Investigation</label>
-                                <select name="phase_i_investigation_pli">
+                                <select name="phase_i_investigation_pli" {{Helpers::isOOSMicro($micro_data->stage)}}>
                                     <option value="">Enter Your Selection Here</option>
                                     <option value="phase-I-micro" @if ($micro_data->phase_i_investigation_pli == 'phase-I-micro') selected @endif>Phase I Micro</option>
                                     <option value="phase-I-chemical" @if ($micro_data->phase_i_investigation_pli == 'phase-I-chemical') selected @endif>Phase I Chemical</option>
@@ -123,7 +124,7 @@
                         <div class="col-lg-6">
                             <div class="group-input">
                                 <label for="Reference Recores">Phase I Investigation Ref.</label>
-                                <select multiple id="reference_record" name="phase_i_investigation_ref_pli[]" id="">
+                                <select multiple id="reference_record" name="phase_i_investigation_ref_pli[]" id="" {{Helpers::isOOSMicro($micro_data->stage)}}>
                                     <option value="">--Select---</option>
                                     <option value="1" {{ (!empty($micro_data->phase_i_investigation_ref_pli) && in_array('1', explode(',', $micro_data->phase_i_investigation_ref_pli[0]))) ? 'selected' : '' }}>1</option>
                                     <option value="2" {{ (!empty($micro_data->phase_i_investigation_ref_pli) && in_array('2', explode(',', $micro_data->phase_i_investigation_ref_pli[0]))) ? 'selected' : '' }}>2</option>    
@@ -158,7 +159,7 @@
                                     <div class="add-btn">
                                         <div>Add</div>
                                         <input type="file" id="myfile" name="file_attachments_pli[]"
-                                            oninput="addMultipleFiles(this, 'file_attach')" multiple>
+                                            oninput="addMultipleFiles(this, 'file_attach')" multiple {{Helpers::isOOSMicro($micro_data->stage)}}>
                                     </div>
                                 </div>
 
@@ -216,7 +217,7 @@
                                                 <td>{{$phase_I_investigation}}</td>
                                                 <td>
                                                     <div style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                        <select name="phase_IB_investigation[{{$loop->index}}][response]" id="response"
+                                                        <select {{Helpers::isOOSMicro($micro_data->stage)}} name="phase_IB_investigation[{{$loop->index}}][response]" id="response"
                                                             style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                             <option value="">Select an Option</option>
                                                             <option value="Yes" {{ Helpers::getMicroGridData($micro_data, 'phase_IB_investigation', true, 'response', true, $loop->index) == 'Yes' ? 'selected' : '' }}>Yes</option>
@@ -227,7 +228,7 @@
                                                 </td>
                                                 <td style="vertical-align: middle;">
                                                     <div style="margin: auto; display: flex; justify-content: center;">
-                                                        <textarea name="phase_IB_investigation[{{$loop->index}}][remark]" style="border-radius: 7px; border: 1.5px solid black;">
+                                                        <textarea {{Helpers::isOOSMicro($micro_data->stage)}} name="phase_IB_investigation[{{$loop->index}}][remark]" style="border-radius: 7px; border: 1.5px solid black;">
                                                             {{ Helpers::getMicroGridData($micro_data, 'phase_IB_investigation', true, 'remark', true, $loop->index) }}
                                                         </textarea>
                                                     </div>
@@ -241,7 +242,7 @@
                                                 <td>
                                                     <div
                                                         style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                        <select name="response" id="response"
+                                                        <select {{Helpers::isOOSMicro($micro_data->stage)}} name="response" id="response"
                                                             style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                             <option value="">Select an Option</option>
                                                             <option value="Yes">Yes</option>
@@ -254,7 +255,7 @@
 
                                                 <td style="vertical-align: middle;">
                                                     <div style="margin: auto; display: flex; justify-content: center;">
-                                                        <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                        <textarea  {{Helpers::isOOSMicro($micro_data->stage)}} name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                     </div>
                                                 </td>
 
@@ -265,7 +266,7 @@
                                                 <td>
                                                     <div
                                                         style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                        <select name="response" id="response"
+                                                        <select {{Helpers::isOOSMicro($micro_data->stage)}} name="response" id="response"
                                                             style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                             <option value="">Select an Option</option>
                                                             <option value="Yes">Yes</option>
@@ -278,7 +279,7 @@
 
                                                 <td style="vertical-align: middle;">
                                                     <div style="margin: auto; display: flex; justify-content: center;">
-                                                        <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                        <textarea  {{Helpers::isOOSMicro($micro_data->stage)}} name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                     </div>
                                                 </td>
                                             </tr>
@@ -290,7 +291,7 @@
                                                 <td>
                                                     <div
                                                         style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                        <select name="response" id="response"
+                                                        <select {{Helpers::isOOSMicro($micro_data->stage)}} name="response" id="response"
                                                             style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                             <option value="">Select an Option</option>
                                                             <option value="Yes">Yes</option>
@@ -303,7 +304,7 @@
 
                                                 <td style="vertical-align: middle;">
                                                     <div style="margin: auto; display: flex; justify-content: center;">
-                                                        <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                        <textarea {{Helpers::isOOSMicro($micro_data->stage)}} name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                     </div>
                                                 </td>
 
@@ -316,7 +317,7 @@
                                                 <td>
                                                     <div
                                                         style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                        <select name="response" id="response"
+                                                        <select name="response" {{Helpers::isOOSMicro($micro_data->stage)}} id="response"
                                                             style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                             <option value="">Select an Option</option>
                                                             <option value="Yes">Yes</option>
@@ -329,7 +330,8 @@
 
                                                 <td style="vertical-align: middle;">
                                                     <div style="margin: auto; display: flex; justify-content: center;">
-                                                        <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                        <textarea name="what_will_not_be" 
+                                                        style="border-radius: 7px; border: 1.5px solid black;"  {{Helpers::isOOSMicro($micro_data->stage)}}></textarea>
                                                     </div>
                                                 </td>
 
@@ -340,7 +342,7 @@
                                                 <td>
                                                     <div
                                                         style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                        <select name="response" id="response"
+                                                        <select name="response" {{Helpers::isOOSMicro($micro_data->stage)}} id="response"
                                                             style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                             <option value="">Select an Option</option>
                                                             <option value="Yes">Yes</option>
@@ -353,7 +355,7 @@
 
                                                 <td style="vertical-align: middle;">
                                                     <div style="margin: auto; display: flex; justify-content: center;">
-                                                        <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                        <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"  {{Helpers::isOOSMicro($micro_data->stage)}}></textarea>
                                                     </div>
                                                 </td>
 
@@ -364,7 +366,7 @@
                                                 <td>
                                                     <div
                                                         style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                        <select name="response" id="response"
+                                                        <select name="response" {{Helpers::isOOSMicro($micro_data->stage)}} id="response"
                                                             style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                             <option value="">Select an Option</option>
                                                             <option value="Yes">Yes</option>
@@ -377,7 +379,7 @@
 
                                                 <td style="vertical-align: middle;">
                                                     <div style="margin: auto; display: flex; justify-content: center;">
-                                                        <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                        <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"  {{Helpers::isOOSMicro($micro_data->stage)}}></textarea>
                                                     </div>
                                                 </td>
 
@@ -390,7 +392,7 @@
                                                 <td>
                                                     <div
                                                         style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                        <select name="response" id="response"
+                                                        <select name="response" {{Helpers::isOOSMicro($micro_data->stage)}} id="response"
                                                             style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                             <option value="">Select an Option</option>
                                                             <option value="Yes">Yes</option>
@@ -403,7 +405,7 @@
 
                                                 <td style="vertical-align: middle;">
                                                     <div style="margin: auto; display: flex; justify-content: center;">
-                                                        <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                        <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"  {{Helpers::isOOSMicro($micro_data->stage)}}></textarea>
                                                     </div>
                                                 </td>
 
@@ -414,7 +416,7 @@
                                                 <td>
                                                     <div
                                                         style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                        <select name="response" id="response"
+                                                        <select name="response" {{Helpers::isOOSMicro($micro_data->stage)}} id="response"
                                                             style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                             <option value="">Select an Option</option>
                                                             <option value="Yes">Yes</option>
@@ -427,7 +429,7 @@
 
                                                 <td style="vertical-align: middle;">
                                                     <div style="margin: auto; display: flex; justify-content: center;">
-                                                        <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                        <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"  {{Helpers::isOOSMicro($micro_data->stage)}}></textarea>
                                                     </div>
                                                 </td>
 
@@ -439,7 +441,7 @@
                                                 <td>
                                                     <div
                                                         style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                        <select name="response" id="response"
+                                                        <select name="response" {{Helpers::isOOSMicro($micro_data->stage)}} id="response"
                                                             style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                             <option value="">Select an Option</option>
                                                             <option value="Yes">Yes</option>
@@ -452,7 +454,7 @@
 
                                                 <td style="vertical-align: middle;">
                                                     <div style="margin: auto; display: flex; justify-content: center;">
-                                                        <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                        <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"  {{Helpers::isOOSMicro($micro_data->stage)}}></textarea>
                                                     </div>
                                                 </td>
 
@@ -464,7 +466,7 @@
                                                 <td>
                                                     <div
                                                         style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                        <select name="response" id="response"
+                                                        <select name="response" {{Helpers::isOOSMicro($micro_data->stage)}} id="response"
                                                             style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                             <option value="">Select an Option</option>
                                                             <option value="Yes">Yes</option>
@@ -477,7 +479,7 @@
 
                                                 <td style="vertical-align: middle;">
                                                     <div style="margin: auto; display: flex; justify-content: center;">
-                                                        <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                        <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"  {{Helpers::isOOSMicro($micro_data->stage)}}></textarea>
                                                     </div>
                                                 </td>
 
@@ -490,7 +492,7 @@
                                                 <td>
                                                     <div
                                                         style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                        <select name="response" id="response"
+                                                        <select name="response" {{Helpers::isOOSMicro($micro_data->stage)}} id="response"
                                                             style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                             <option value="">Select an Option</option>
                                                             <option value="Yes">Yes</option>
@@ -501,7 +503,7 @@
                                                 </td>
                                                 <td style="vertical-align: middle;">
                                                     <div style="margin: auto; display: flex; justify-content: center;">
-                                                        <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                        <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"  {{Helpers::isOOSMicro($micro_data->stage)}}></textarea>
                                                     </div>
                                                 </td>
 
@@ -513,7 +515,7 @@
                                                 <td>
                                                     <div
                                                         style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                        <select name="response" id="response"
+                                                        <select name="response" {{Helpers::isOOSMicro($micro_data->stage)}} id="response"
                                                             style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                             <option value="">Select an Option</option>
                                                             <option value="Yes">Yes</option>
@@ -524,7 +526,7 @@
                                                 </td>
                                                 <td style="vertical-align: middle;">
                                                     <div style="margin: auto; display: flex; justify-content: center;">
-                                                        <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                        <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"  {{Helpers::isOOSMicro($micro_data->stage)}}></textarea>
                                                     </div>
                                                 </td>
 
@@ -538,7 +540,7 @@
                                                 <td>
                                                     <div
                                                         style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                        <select name="response" id="response"
+                                                        <select name="response"  {{Helpers::isOOSMicro($micro_data->stage)}}id="response"
                                                             style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                             <option value="">Select an Option</option>
                                                             <option value="Yes">Yes</option>
@@ -549,7 +551,7 @@
                                                 </td>
                                                 <td style="vertical-align: middle;">
                                                     <div style="margin: auto; display: flex; justify-content: center;">
-                                                        <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                        <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"  {{Helpers::isOOSMicro($micro_data->stage)}}></textarea>
                                                     </div>
                                                 </td>
 
@@ -561,7 +563,7 @@
                                                 <td>
                                                     <div
                                                         style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                        <select name="response" id="response"
+                                                        <select name="response" {{Helpers::isOOSMicro($micro_data->stage)}} id="response"
                                                             style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                             <option value="">Select an Option</option>
                                                             <option value="Yes">Yes</option>
@@ -572,7 +574,7 @@
                                                 </td>
                                                 <td style="vertical-align: middle;">
                                                     <div style="margin: auto; display: flex; justify-content: center;">
-                                                        <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                        <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"  {{Helpers::isOOSMicro($micro_data->stage)}}></textarea>
                                                     </div>
                                                 </td>
 
@@ -584,7 +586,7 @@
                                                 <td>
                                                     <div
                                                         style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                        <select name="response" id="response"
+                                                        <select name="response" {{Helpers::isOOSMicro($micro_data->stage)}} id="response"
                                                             style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                             <option value="">Select an Option</option>
                                                             <option value="Yes">Yes</option>
@@ -595,7 +597,7 @@
                                                 </td>
                                                 <td style="vertical-align: middle;">
                                                     <div style="margin: auto; display: flex; justify-content: center;">
-                                                        <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                        <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"  {{Helpers::isOOSMicro($micro_data->stage)}}></textarea>
                                                     </div>
                                                 </td>
 
@@ -608,7 +610,7 @@
                                                 <td>
                                                     <div
                                                         style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                        <select name="response" id="response"
+                                                        <select name="response" {{Helpers::isOOSMicro($micro_data->stage)}} id="response"
                                                             style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                             <option value="">Select an Option</option>
                                                             <option value="Yes">Yes</option>
@@ -619,7 +621,7 @@
                                                 </td>
                                                 <td style="vertical-align: middle;">
                                                     <div style="margin: auto; display: flex; justify-content: center;">
-                                                        <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                        <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"  {{Helpers::isOOSMicro($micro_data->stage)}}></textarea>
                                                     </div>
                                                 </td>
 
@@ -631,7 +633,7 @@
                                                 <td>
                                                     <div
                                                         style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                        <select name="response" id="response"
+                                                        <select name="response" {{Helpers::isOOSMicro($micro_data->stage)}} id="response"
                                                             style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                             <option value="">Select an Option</option>
                                                             <option value="Yes">Yes</option>
@@ -642,7 +644,7 @@
                                                 </td>
                                                 <td style="vertical-align: middle;">
                                                     <div style="margin: auto; display: flex; justify-content: center;">
-                                                        <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                        <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"  {{Helpers::isOOSMicro($micro_data->stage)}}></textarea>
                                                     </div>
                                                 </td>
 
@@ -654,7 +656,7 @@
                                                 <td>
                                                     <div
                                                         style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                        <select name="response" id="response"
+                                                        <select name="response" {{Helpers::isOOSMicro($micro_data->stage)}} id="response"
                                                             style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                             <option value="">Select an Option</option>
                                                             <option value="Yes">Yes</option>
@@ -665,7 +667,7 @@
                                                 </td>
                                                 <td style="vertical-align: middle;">
                                                     <div style="margin: auto; display: flex; justify-content: center;">
-                                                        <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                        <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"  {{Helpers::isOOSMicro($micro_data->stage)}}></textarea>
                                                     </div>
                                                 </td>
 
@@ -677,7 +679,7 @@
                                                 <td>
                                                     <div
                                                         style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                        <select name="response" id="response"
+                                                        <select name="response"  {{Helpers::isOOSMicro($micro_data->stage)}}id="response"
                                                             style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                             <option value="">Select an Option</option>
                                                             <option value="Yes">Yes</option>
@@ -688,7 +690,7 @@
                                                 </td>
                                                 <td style="vertical-align: middle;">
                                                     <div style="margin: auto; display: flex; justify-content: center;">
-                                                        <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                        <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"  {{Helpers::isOOSMicro($micro_data->stage)}}></textarea>
                                                     </div>
                                                 </td>
 
@@ -700,7 +702,7 @@
                                                 <td>
                                                     <div
                                                         style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                        <select name="response" id="response"
+                                                        <select name="response" {{Helpers::isOOSMicro($micro_data->stage)}} id="response"
                                                             style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                             <option value="">Select an Option</option>
                                                             <option value="Yes">Yes</option>
@@ -711,7 +713,7 @@
                                                 </td>
                                                 <td style="vertical-align: middle;">
                                                     <div style="margin: auto; display: flex; justify-content: center;">
-                                                        <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                        <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"  {{Helpers::isOOSMicro($micro_data->stage)}}></textarea>
                                                     </div>
                                                 </td>
 
@@ -723,7 +725,7 @@
                                                 <td>
                                                     <div
                                                         style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                        <select name="response" id="response"
+                                                        <select name="response" {{Helpers::isOOSMicro($micro_data->stage)}} id="response"
                                                             style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                             <option value="">Select an Option</option>
                                                             <option value="Yes">Yes</option>
@@ -734,7 +736,7 @@
                                                 </td>
                                                 <td style="vertical-align: middle;">
                                                     <div style="margin: auto; display: flex; justify-content: center;">
-                                                        <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                        <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;" {{Helpers::isOOSMicro($micro_data->stage)}}></textarea>
                                                     </div>
                                                 </td>
 
@@ -745,7 +747,7 @@
                                                 <td>
                                                     <div
                                                         style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                        <select name="response" id="response"
+                                                        <select name="response" {{Helpers::isOOSMicro($micro_data->stage)}} id="response"
                                                             style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                             <option value="">Select an Option</option>
                                                             <option value="Yes">Yes</option>
@@ -756,7 +758,7 @@
                                                 </td>
                                                 <td style="vertical-align: middle;">
                                                     <div style="margin: auto; display: flex; justify-content: center;">
-                                                        <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                        <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"  {{Helpers::isOOSMicro($micro_data->stage)}}></textarea>
                                                     </div>
                                                 </td>
 
@@ -767,7 +769,7 @@
                                                 <td>
                                                     <div
                                                         style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                        <select name="response" id="response"
+                                                        <select name="response" {{Helpers::isOOSMicro($micro_data->stage)}} id="response"
                                                             style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                             <option value="">Select an Option</option>
                                                             <option value="Yes">Yes</option>
@@ -778,7 +780,7 @@
                                                 </td>
                                                 <td style="vertical-align: middle;">
                                                     <div style="margin: auto; display: flex; justify-content: center;">
-                                                        <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                        <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"  {{Helpers::isOOSMicro($micro_data->stage)}}></textarea>
                                                     </div>
                                                 </td>
 
@@ -790,7 +792,7 @@
                                                 <td>
                                                     <div
                                                         style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                        <select name="response" id="response"
+                                                        <select name="response" {{Helpers::isOOSMicro($micro_data->stage)}} id="response"
                                                             style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                             <option value="">Select an Option</option>
                                                             <option value="Yes">Yes</option>
@@ -801,7 +803,7 @@
                                                 </td>
                                                 <td style="vertical-align: middle;">
                                                     <div style="margin: auto; display: flex; justify-content: center;">
-                                                        <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                        <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"  {{Helpers::isOOSMicro($micro_data->stage)}}></textarea>
                                                     </div>
                                                 </td>
                                             </tr>
@@ -811,7 +813,7 @@
                                                 <td>
                                                     <div
                                                         style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                        <select name="response" id="response"
+                                                        <select name="response" {{Helpers::isOOSMicro($micro_data->stage)}} id="response"
                                                             style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                             <option value="">Select an Option</option>
                                                             <option value="Yes">Yes</option>
@@ -822,7 +824,7 @@
                                                 </td>
                                                 <td style="vertical-align: middle;">
                                                     <div style="margin: auto; display: flex; justify-content: center;">
-                                                        <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                        <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"  {{Helpers::isOOSMicro($micro_data->stage)}}></textarea>
                                                     </div>
                                                 </td>
 
@@ -833,7 +835,7 @@
                                                 <td>
                                                     <div
                                                         style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                        <select name="response" id="response"
+                                                        <select name="response" {{Helpers::isOOSMicro($micro_data->stage)}} id="response"
                                                             style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                             <option value="">Select an Option</option>
                                                             <option value="Yes">Yes</option>
@@ -844,7 +846,7 @@
                                                 </td>
                                                 <td style="vertical-align: middle;">
                                                     <div style="margin: auto; display: flex; justify-content: center;">
-                                                        <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                        <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"  {{Helpers::isOOSMicro($micro_data->stage)}}></textarea>
                                                     </div>
                                                 </td>
                                             </tr>--}}
@@ -855,10 +857,16 @@
                             </div>
                         </div>
                         <div class="button-block">
-                            <button type="submit" id="ChangesaveButton" class="saveButton">Save</button>
-                            <button type="button" class="backButton" onclick="previousStep()">Back</button>
-                            <button type="button" id="ChangeNextButton" class="nextButton"
-                                onclick="nextStep()">Next</button>
+                        @if ($micro_data->stage == 0  || $micro_data->stage >= 14)
+                        <div class="progress-bars">
+                                <div class="bg-danger">Workflow is already Closed-Done</div>
+                            </div>
+                        @else
+                        <button type="submit" id="ChangesaveButton" class="saveButton">Save</button>
+                        <button type="button" class="backButton" onclick="previousStep()">Back</button>
+                        <button type="button" id="ChangeNextButton" class="nextButton"
+                            onclick="nextStep()">Next</button>
+                        @endif
                             <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white">
                                     Exit </a> </button>
                         </div>
@@ -875,7 +883,7 @@
                 <div class="group-input">
                     <label for="Description Deviation">Summary of Prelim.Investigation.</label>
                     <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
-                    <textarea class="summernote" name="summary_of_prelim_investiga_plic" id="summernote-1">{{ $micro_data->summary_of_prelim_investiga_plic }}
+                    <textarea class="summernote" name="summary_of_prelim_investiga_plic" id="summernote-1"  {{Helpers::isOOSMicro($micro_data->stage)}}>{{ $micro_data->summary_of_prelim_investiga_plic }}
                         </textarea>
                 </div>
             </div>
@@ -884,7 +892,7 @@
                 <div class="group-input">
                     <label for="Lead Auditor">Root Cause Identified</label>
                     <!-- <div class="text-primary">Please Choose the relevent units</div> -->
-                    <select name="root_cause_identified_plic">
+                    <select name="root_cause_identified_plic" {{Helpers::isOOSMicro($micro_data->stage)}}>
                         <option value="">Enter Your Selection Here</option>
                         <option value="yes" @if ($micro_data->root_cause_identified_plic == 'yes') selected @endif>Yes</option>
                         <option value="no" @if ($micro_data->root_cause_identified_plic == 'no') selected @endif>No</option>
@@ -894,7 +902,7 @@
             <div class="col-lg-6">
                 <div class="group-input">
                     <label for="Audit Team"> OOS Category-Root Cause Ident.</label>
-                    <select name="oos_category_root_cause_ident_plic">
+                    <select name="oos_category_root_cause_ident_plic" {{Helpers::isOOSMicro($micro_data->stage)}}>
                         <option value="">Enter Your Selection Here</option>
                         <option value="analyst-error" @if ($micro_data->oos_category_root_cause_ident_plic == 'analyst-error') selected @endif>Analyst Error</option>
                         <option value="instrument-error" @if ($micro_data->oos_category_root_cause_ident_plic == 'instrument-error') selected @endif>Instrument Error</option>
@@ -908,7 +916,7 @@
                 <div class="group-input">
                     <label for="Description Deviation">OOS Category (Others)</label>
                     <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
-                    <textarea class="summernote" name="oos_category_others_plic" id="summernote-1">{{ $micro_data->oos_category_others_plic }}
+                    <textarea class="summernote" name="oos_category_others_plic" id="summernote-1"  {{Helpers::isOOSMicro($micro_data->stage)}}>{{ $micro_data->oos_category_others_plic }}
                         </textarea>
                 </div>
             </div>
@@ -916,7 +924,7 @@
                 <div class="group-input">
                     <label for="Description Deviation">Root Cause Details</label>
                     <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
-                    <textarea class="summernote" name="root_cause_details_plic" id="summernote-1">{{ $micro_data->root_cause_details_plic }}
+                    <textarea class="summernote" name="root_cause_details_plic" id="summernote-1"  {{Helpers::isOOSMicro($micro_data->stage)}}>{{ $micro_data->root_cause_details_plic }}
                         </textarea>
                 </div>
             </div>
@@ -924,7 +932,7 @@
                 <div class="group-input">
                     <label for="Description Deviation">OOS Category-Root Cause Ident.</label>
                     <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
-                    <textarea class="summernote" name="oos_category_root_cause_plic" id="summernote-1">{{ $micro_data->oos_category_root_cause_plic }}
+                    <textarea class="summernote" name="oos_category_root_cause_plic" id="summernote-1"  {{Helpers::isOOSMicro($micro_data->stage)}}>{{ $micro_data->oos_category_root_cause_plic }}
                         </textarea>
                 </div>
             </div>
@@ -932,7 +940,7 @@
             <div class="col-lg-6">
                 <div class="group-input">
                     <label for="Product/Material Name">Recommended Actions Required?</label>
-                    <select name="recommended_actions_required_plic">
+                    <select name="recommended_actions_required_plic" {{Helpers::isOOSMicro($micro_data->stage)}}>
                         <option value="">Enter Your Selection Here</option>
                         <option value="yes" @if ($micro_data->recommended_actions_required_plic == 'yes') selected @endif>Yes</option>
                         <option value="no" @if ($micro_data->recommended_actions_required_plic == 'no') selected @endif>No</option>
@@ -943,7 +951,7 @@
                 <div class="group-input">
                     <label for="Reference Recores">Recommended Actions Reference
                     </label>
-                    <select multiple id="reference_record" name="recommended_actions_reference_plic[]" id="">
+                    <select multiple id="reference_record" {{Helpers::isOOSMicro($micro_data->stage)}} name="recommended_actions_reference_plic[]" id="">
                         <option value="">--Select---</option>
                         <option value="1" {{ (!empty($micro_data->recommended_actions_reference_plic) && in_array('1', explode(',', $micro_data->recommended_actions_reference_plic[0]))) ? 'selected' : '' }}>1</option>
                         <option value="2" {{ (!empty($micro_data->recommended_actions_reference_plic) && in_array('2', explode(',', $micro_data->recommended_actions_reference_plic[0]))) ? 'selected' : '' }}>2</option>
@@ -953,7 +961,7 @@
             <div class="col-lg-6">
                 <div class="group-input">
                     <label for="Product/Material Name">CAPA Required</label>
-                    <select name="capa_required_plic">
+                    <select name="capa_required_plic" {{Helpers::isOOSMicro($micro_data->stage)}}>
                         <option value="">Enter Your Selection Here</option>
                         <option value="yes" @if ($micro_data->capa_required_plic == 'yes') selected @endif>Yes</option>
                         <option value="no" @if ($micro_data->capa_required_plic == 'no') selected @endif>No</option>
@@ -963,7 +971,7 @@
             <div class="col-lg-6">
                 <div class="group-input">
                     <label for="Audit Agenda">Reference CAPA No.</label>
-                    <input type="num" name="reference_capa_no_plic" value="{{ $micro_data->reference_capa_no_plic }}">
+                    <input  {{Helpers::isOOSMicro($micro_data->stage)}} type="text" name="reference_capa_no_plic" value="{{ $micro_data->reference_capa_no_plic }}">
                 </div>
             </div>
 
@@ -971,7 +979,7 @@
                 <div class="group-input">
                     <label for="Description Deviation">Delay Justification for P.I.</label>
                     <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
-                    <textarea class="summernote" name="delay_justification_for_pi_plic" id="summernote-1">{{ $micro_data->delay_justification_for_pi_plic }}
+                    <textarea class="summernote" name="delay_justification_for_pi_plic" id="summernote-1"  {{Helpers::isOOSMicro($micro_data->stage)}}>{{ $micro_data->delay_justification_for_pi_plic }}
                         </textarea>
                 </div>
             </div>
@@ -1003,7 +1011,7 @@
                         </div>
                         <div class="add-btn">
                             <div>Add</div>
-                            <input type="file" id="myfile" name="supporting_attachment_plic[]"
+                            <input   {{Helpers::isOOSMicro($micro_data->stage)}} type="file" id="myfile" name="supporting_attachment_plic[]"
                                 oninput="addMultipleFiles(this, 'supporting_attachment_plic')" multiple>
                         </div>
                     </div>
@@ -1014,10 +1022,16 @@
 
 
             <div class="button-block">
-                <button type="submit" id="ChangesaveButton" class="saveButton">Save</button>
-                <button type="button" class="backButton" onclick="previousStep()">Back</button>
-                <button type="button" id="ChangeNextButton" class="nextButton"
-                    onclick="nextStep()">Next</button>
+            @if ($micro_data->stage == 0  || $micro_data->stage >= 14)
+                        <div class="progress-bars">
+                                <div class="bg-danger">Workflow is already Closed-Done</div>
+                            </div>
+            @else
+            <button type="submit" id="ChangesaveButton" class="saveButton">Save</button>
+            <button type="button" class="backButton" onclick="previousStep()">Back</button>
+            <button type="button" id="ChangeNextButton" class="nextButton"
+                onclick="nextStep()">Next</button>
+            @endif
                 <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white">
                         Exit </a> </button>
             </div>
@@ -1034,7 +1048,7 @@
                 <div class="group-input">
                     <label for="Description Deviation">Review Comments</label>
                     <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
-                    <textarea class="summernote" name="review_comments_plir" id="summernote-1">{{ $micro_data->review_comments_plir }}
+                    <textarea class="summernote" name="review_comments_plir" id="summernote-1"  {{Helpers::isOOSMicro($micro_data->stage)}}>{{ $micro_data->review_comments_plir }}
                     </textarea>
                 </div>
             </div>
@@ -1072,18 +1086,18 @@
                            @if ($oos_capas)
                                @foreach ($oos_capas->data as $oos_capa)
                                     <tr>
-                                        <td><input disabled type="text" name="oos_capa[{{ $loop->index }}][serial]" value="{{ $loop->index + 1 }}"></td>
-                                        <td><input type="text" id="info_oos_number" name="oos_capa[{{ $loop->index }}][info_oos_number]" value="{{ Helpers::getArrayKey($oos_capa, 'info_oos_number') }}"></td>
-                                        <td><input type="text" name="oos_capa[{{ $loop->index }}][info_oos_description]" value="{{ Helpers::getArrayKey($oos_capa, 'info_oos_description') }}"></td>
-                                        <td><input type="text" name="oos_capa[{{ $loop->index }}][info_oos_previous_root_cause]" value="{{ Helpers::getArrayKey($oos_capa, 'info_oos_previous_root_cause') }}"></td>
-                                        <td><input type="text" name="oos_capa[{{ $loop->index }}][info_oos_capa]" value="{{ Helpers::getArrayKey($oos_capa, 'info_oos_capa') }}"></td>
+                                        <td><input  {{Helpers::isOOSMicro($micro_data->stage)}} disabled type="text" name="oos_capa[{{ $loop->index }}][serial]" value="{{ $loop->index + 1 }}"></td>
+                                        <td><input  {{Helpers::isOOSMicro($micro_data->stage)}} type="text" id="info_oos_number" name="oos_capa[{{ $loop->index }}][info_oos_number]" value="{{ Helpers::getArrayKey($oos_capa, 'info_oos_number') }}"></td>
+                                        <td><input  {{Helpers::isOOSMicro($micro_data->stage)}} type="text" name="oos_capa[{{ $loop->index }}][info_oos_description]" value="{{ Helpers::getArrayKey($oos_capa, 'info_oos_description') }}"></td>
+                                        <td><input  {{Helpers::isOOSMicro($micro_data->stage)}} type="text" name="oos_capa[{{ $loop->index }}][info_oos_previous_root_cause]" value="{{ Helpers::getArrayKey($oos_capa, 'info_oos_previous_root_cause') }}"></td>
+                                        <td><input  {{Helpers::isOOSMicro($micro_data->stage)}} type="text" name="oos_capa[{{ $loop->index }}][info_oos_capa]" value="{{ Helpers::getArrayKey($oos_capa, 'info_oos_capa') }}"></td>
                                         <td>
                                         <div class="col-lg-6 new-date-data-field">
                                             <div class="group-input input-date">
                                                 <div class="calenderauditee">
-                                                    <input type="text" name="oos_capa[{{ $loop->index }}][info_oos_reported_date]" value="{{ Helpers::getdateFormat($oos_capa['info_oos_reported_date'] ?? '') }}"
+                                                    <input  {{Helpers::isOOSMicro($micro_data->stage)}} type="text" name="oos_capa[{{ $loop->index }}][info_oos_reported_date]" value="{{ Helpers::getdateFormat($oos_capa['info_oos_reported_date'] ?? '') }}"
                                                      id="info_oos_reported_date_{{ $loop->index }}" placeholder="DD-MM-YYYY" />
-                                                    <input type="date" name="oos_capa[{{ $loop->index }}][info_oos_reported_date]" value="{{ $oos_capa['info_oos_reported_date'] ?? '' }}" 
+                                                    <input  {{Helpers::isOOSMicro($micro_data->stage)}} type="date" name="oos_capa[{{ $loop->index }}][info_oos_reported_date]" value="{{ $oos_capa['info_oos_reported_date'] ?? '' }}" 
                                                     class="hide-input" oninput="handleDateInput(this, 'info_oos_reported_date_{{ $loop->index }}')">
                                                 </div>
                                             </div>
@@ -1095,20 +1109,20 @@
                                                 <div class="calenderauditee">
                                                     <input type="text" name="oos_capa[{{ $loop->index }}][info_oos_closure_date]" value="{{ Helpers::getdateFormat($oos_capa['info_oos_closure_date'] ?? '') }}"
                                                        id="info_oos_closure_date_{{ $loop->index }}"  placeholder="DD-MM-YYYY" />
-                                                    <input type="date" name="oos_capa[{{ $loop->index }}][info_oos_closure_date]" value="{{ $oos_capa['info_oos_closure_date'] ?? '' }}" 
+                                                    <input  {{Helpers::isOOSMicro($micro_data->stage)}} type="date" name="oos_capa[{{ $loop->index }}][info_oos_closure_date]" value="{{ $oos_capa['info_oos_closure_date'] ?? '' }}" 
                                                     class="hide-input" oninput="handleDateInput(this, 'info_oos_closure_date_{{ $loop->index }}')">
                                                 </div>
                                             </div>
                                         </div>
                                         </td>
                                         <td>
-                                            <select name="oos_capa[{{ $loop->index }}][info_oos_capa_requirement]">
+                                            <select {{Helpers::isOOSMicro($micro_data->stage)}} name="oos_capa[{{ $loop->index }}][info_oos_capa_requirement]">
                                                 <option vlaue="">--select--</option>
                                                 <option value="yes" {{ Helpers::getArrayKey($oos_capa, 'info_oos_capa_requirement') == 'yes' ? 'selected' : '' }}>Yes</option>
                                                 <option value="No" {{ Helpers::getArrayKey($oos_capa, 'info_oos_capa_requirement') == 'No' ? 'selected' : '' }}>No</option>
                                             </select>
                                         </td>
-                                        <td><input type="text" name="oos_capa[{{ $loop->index }}][info_oos_capa_reference_number]" value="{{ Helpers::getArrayKey($oos_capa, 'info_oos_capa_reference_number') }}"></td> 
+                                        <td><input   {{Helpers::isOOSMicro($micro_data->stage)}}type="text" name="oos_capa[{{ $loop->index }}][info_oos_capa_reference_number]" value="{{ Helpers::getArrayKey($oos_capa, 'info_oos_capa_reference_number') }}"></td> 
                                         <td><button type="text" class="removeRowBtn">Remove</button></td>
                                     </tr>
                                @endforeach
@@ -1121,7 +1135,7 @@
             <div class="col-lg-6">
                 <div class="group-input">
                     <label for="Audit Start Date"> Phase II Inv. Required?</label>
-                    <select name="phase_ii_inv_required_plir">
+                    <select name="phase_ii_inv_required_plir" {{Helpers::isOOSMicro($micro_data->stage)}}>
                         <option value="">Enter Your Selection Here</option>
                         <option value="yes" @if ($micro_data->phase_ii_inv_required_plir == 'yes') selected @endif>Yes</option>
                         <option value="no" @if ($micro_data->phase_ii_inv_required_plir == 'no') selected @endif>No</option>
@@ -1154,17 +1168,23 @@
                         </div>
                         <div class="add-btn">
                             <div>Add</div>
-                            <input type="file" id="myfile" name="supporting_attachments_plir[]"
+                            <input  {{Helpers::isOOSMicro($micro_data->stage)}} type="file" id="myfile" name="supporting_attachments_plir[]"
                                 oninput="addMultipleFiles(this, 'supporting_attachments_plir')" multiple>
                         </div>
                     </div>
                 </div>
             </div>
             <div class="button-block">
-                <button type="submit" id="ChangesaveButton" class="saveButton">Save</button>
-                <button type="button" class="backButton" onclick="previousStep()">Back</button>
-                <button type="button" id="ChangeNextButton" class="nextButton"
-                    onclick="nextStep()">Next</button>
+            @if ($micro_data->stage == 0  || $micro_data->stage >= 14)
+                <div class="progress-bars">
+                        <div class="bg-danger">Workflow is already Closed-Done</div>
+                    </div>
+            @else
+            <button type="submit" id="ChangesaveButton" class="saveButton">Save</button>
+            <button type="button" class="backButton" onclick="previousStep()">Back</button>
+            <button type="button" id="ChangeNextButton" class="nextButton"
+                onclick="nextStep()">Next</button>
+            @endif
                 <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white">
                         Exit </a> </button>
             </div>

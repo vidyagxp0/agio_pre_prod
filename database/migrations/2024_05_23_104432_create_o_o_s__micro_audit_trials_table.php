@@ -18,7 +18,7 @@ return new class extends Migration
                 $table->string('OOS_micro_id');
                 $table->string('activity_type')->nullable();
                 $table->string('previous')->nullable();
-                $table->string('current')->nullable();
+                $table->longtext('current')->nullable();
                 $table->string('comment')->nullable();
                 $table->string('user_id')->nullable();
                 $table->string('user_name')->nullable();
