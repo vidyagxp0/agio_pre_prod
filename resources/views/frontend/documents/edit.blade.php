@@ -224,12 +224,14 @@
                 <div class="group-input">
                     <label for="sop_type">SOP Type</label>
 
-                    <select name="sop_type" required>
-                        <option value="" disabled selected {{ $document->sop_type == '' ? 'selected' : '' }}>Enter your selection</option>
+                    <select name="sop_type" id="sop_type" required onchange="updateSopTypeShort()">
+                        <option value="" disabled {{ $document->sop_type == '' ? 'selected' : '' }}>Enter your selection</option>
                         <option value="SOP (Standard Operating procedure)" {{ $document->sop_type == 'SOP (Standard Operating procedure)' ? 'selected' : '' }}>SOP (Standard Operating procedure)</option>
                         <option value="EOP (Equipment Operating procedure)" {{ $document->sop_type == 'EOP (Equipment Operating procedure)' ? 'selected' : '' }}>EOP (Equipment Operating procedure)</option>
                         <option value="IOP (Instrument Operating Procedure)" {{ $document->sop_type == 'IOP (Instrument Operating Procedure)' ? 'selected' : '' }}>IOP (Instrument Operating Procedure)</option>
                     </select>
+
+                    <!-- <input type="hidden" name="sop_type_short" id="sop_type_short" value="{{ $document->sop_type_short }}"> -->
 
                     {{-- @foreach ($history as $tempHistory)
                                     @if (
@@ -258,7 +260,30 @@
                     </div>
                     <div class="button">Add Comment</div>
             </div>
+            <input type="hidden" name="sop_type_short" id="sop_type_short" value="{{ $document->sop_type_short }}">
+
             @endif
+            <script>
+                function updateSopTypeShort() {
+                    const sopType = document.getElementById('sop_type').value;
+                    let shortName = '';
+                    if (sopType === 'SOP (Standard Operating procedure)') {
+                        shortName = 'SOP';
+                    } else if (sopType === 'EOP (Equipment Operating procedure)') {
+                        shortName = 'EOP';
+                    } else if (sopType === 'IOP (Instrument Operating Procedure)') {
+                        shortName = 'IOP';
+                    }
+                    document.getElementById('sop_type_short').value = shortName;
+                }
+                window.onload = function() {
+                    updateSopTypeShort();
+                }
+            </script>
+
+
+
+
     </div>
     <div class="col-md-4 new-date-data-field">
         <div class="group-input input-date">
@@ -378,7 +403,7 @@
 
         <input class="input-field" type="text" name="description_comment">
     </div>
-    <div class="button">Add Comment</div>
+    <!-- <div class="button">Add Comment</div> -->
     </div>
     @endif
 

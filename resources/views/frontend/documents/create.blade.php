@@ -177,7 +177,7 @@
                 <p id="short_descError" style="color:red">**Short description is required</p>
 
             </div>
-            <div class="col-md-12">
+            <!-- <div class="col-md-12">
                 <div class="group-input">
                     <label for="sop_type">SOP Type<span class="text-danger">*</span></label>
                     <select name="sop_type" required>
@@ -188,7 +188,39 @@
                     </select>
                 </div>
 
+            </div> -->
+
+
+            <div class="col-md-12">
+                <div class="group-input">
+                    <label for="sop_type">SOP Type<span class="text-danger">*</span></label>
+                    <select name="sop_type" id="sop_type" required onchange="updateSopTypeShort()">
+                        <option value="" disabled selected>Enter your selection</option>
+                        <option value="SOP (Standard Operating procedure)">SOP (Standard Operating procedure)</option>
+                        <option value="EOP (Equipment Operating procedure)">EOP (Equipment Operating procedure)</option>
+                        <option value="IOP (Instrument Operating Procedure)">IOP (Instrument Operating Procedure)</option>
+                    </select>
+                </div>
             </div>
+            <input type="hidden" name="sop_type_short" id="sop_type_short">
+
+            <script>
+                function updateSopTypeShort() {
+                    const sopType = document.getElementById('sop_type').value;
+                    let shortName = '';
+                    if (sopType === 'SOP (Standard Operating procedure)') {
+                        shortName = 'SOP';
+                    } else if (sopType === 'EOP (Equipment Operating procedure)') {
+                        shortName = 'EOP';
+                    } else if (sopType === 'IOP (Instrument Operating Procedure)') {
+                        shortName = 'IOP';
+                    }
+                    document.getElementById('sop_type_short').value = shortName;
+                }
+            </script>
+
+
+
 
             <div class="col-md-4 new-date-data-field">
                 <div class="group-input input-date">
@@ -276,6 +308,8 @@
             </div>
             <p id="depart-nameError" style="color:red">** Department is required</p>
         </div>
+
+
         {{-- <div class="col-md-6">
                                     <div class="group-input">
                                         <label for="depart-code">Department Code</label>

@@ -459,8 +459,8 @@
                     </td>
 
                     <td class="logo w-20">
-                        <!-- <img src="{{ asset('user/images/agio.jpg') }}" style="max-height: 55px; max-width: 40px;"> -->
-                        <img src="http://127.0.0.1:8000/user/images/agio.jpg" style="max-height: 55px; max-width: 40px;">
+                        <img src="{{ asset('user/images/agio.jpg') }}" style="max-height: 55px; max-width: 40px;">
+                        <!-- <img src="http://127.0.0.1:8000/user/images/agio.jpg" style="max-height: 55px; max-width: 40px;"> -->
 
                     </td>
                 </tr>
@@ -474,12 +474,12 @@
 
                     </td>
                     <td class="doc-num w-40">
-                        @php
+                        <!-- @php
                         $temp = DB::table('document_types')
                         ->where('name', $data->document_type_name)
                         ->value('typecode');
-                        @endphp
-                        @if($data->revised === 'Yes')
+                        @endphp -->
+                        <!-- @if($data->revised === 'Yes')
 
                         {{ Helpers::getDivisionName($data->division_id) }}
                         /@if($data->document_type_name){{ $temp }} /@endif{{ $data->year }}
@@ -489,10 +489,21 @@
                         {{ Helpers::getDivisionName($data->division_id) }}
                         /@if($data->document_type_name){{ $temp }} /@endif{{ $data->year }}
                         /000{{ $data->document_number }}/R{{$data->major}}.{{$data->minor}}
+                        @endif -->
+
+                        @if($data->revised === 'Yes')
+
+                        {{ Helpers::getSopTypeShortName($data->document_id) }}
+                        /@if($data->sop_type_short){{ $temp }} /@endif{{ $data->year }}
+                        /000{{ $data->document_number }}/R{{$data->major}}.{{$data->minor}}
+
+                        @else
+                        {{$data->sop_type_short}}/{{$data->department_id}}/000{{ $data->id }}/R{{$data->major}}.{{$data->minor}}
                         @endif
+
                     </td>
                     <td class="doc-num w-30">
-                        {{$data->department_id}}
+                        {{ Helpers::getFullDepartmentName($data->department_id) }}
                     </td>
                 </tr>
             </tbody>
@@ -529,7 +540,7 @@
         <table class="border p-20">
             <tbody>
                 <tr>
-                    <td class="text-left w-36">
+                    <td class="text-left w-30">
                         @php
                         $temp = DB::table('document_types')
                         ->where('name', $data->document_type_name)
@@ -541,12 +552,9 @@
                         /000{{ $data->document_number }}/R{{$data->major}}.{{$data->minor}}
 
                         @else
-                        {{ Helpers::getDivisionName($data->division_id) }}
-                        /@if($data->document_type_name){{ $temp }} /@endif{{ $data->year }}
-                        /000{{ $data->document_number }}/R{{$data->major}}.{{$data->minor}}
+                        {{$data->sop_type_short}}/{{$data->department_id}}/000{{ $data->id }}/R{{$data->major}}.{{$data->minor}}
                         @endif
-
-                    <td class="w-36">Printed On : {{ $time }}</td>
+                    <td class="w-42">Printed On : {{ $time }}</td>
                     <td class="text-right w-20"></td>
                 </tr>
             </tbody>
