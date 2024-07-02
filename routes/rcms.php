@@ -304,7 +304,7 @@ Route::group(['prefix' => 'rcms'], function () {
                 Route::post('/ootstore', [OOTController::class, 'store'])->name('ootstore');
             });
 
-
+            
             /**
              * OOS
              */

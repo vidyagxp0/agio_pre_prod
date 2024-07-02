@@ -1759,7 +1759,7 @@ $users = DB::table('users')
                                     </tr>
                                 </thead>
                                 <tbody>
-                                     <td><input disabled type="text" name="oos_conclusion[0][serial]" value="1"></td>
+                                    <td><input disabled type="text" name="oos_conclusion[0][serial]" value="1"></td>
                                     <td><input type="text" name="oos_conclusion[0][summary_results_analysis_detials]"></td>
                                     <td><input type="text" name="oos_conclusion[0][summary_results_hypothesis_experimentation_test_pr_no]"></td>
                                     <td><input type="text" name="oos_conclusion[0][summary_results]"></td>

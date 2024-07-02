@@ -5556,44 +5556,43 @@
                     Checklist for Culture verification ?
                 </div>
                     @php
-                     $checklist_for_Culture_verification_CIMTs = [
-    [
-        'question' => "Is culture COA checked?",
-        'is_sub_question' => false,
-        'input_type' => 'text'
-    ],
-    [
-        'question' => "Was the correct Inoculum used for GPT?",
-        'is_sub_question' => false,
-        'input_type' => 'text'
-    ],
-    [
-        'question' => "Was used culture within culture due date?",
-        'is_sub_question' => false,
-        'input_type' => 'text'
-    ],
-    [
-        'question' => "Date of culture dilution:",
-        'is_sub_question' => true,
-        'input_type' => 'date'
-    ],
-    [
-        'question' => "Due date of culture dilution:",
-        'is_sub_question' => true,
-        'input_type' => 'date'
-    ],
-    [
-        'question' => "Was the storage condition of culture is appropriate?",
-        'is_sub_question' => false,
-        'input_type' => 'text'
-    ],
-    [
-        'question' => "Was culture strength used within acceptance range?",
-        'is_sub_question' => false,
-        'input_type' => 'text'
-    ]
-];
-
+                    $checklist_for_Culture_verification_CIMTs = [
+                        [
+                            'question' => "Is culture COA checked?",
+                            'is_sub_question' => false,
+                            'input_type' => 'text'
+                        ],
+                        [
+                            'question' => "Was the correct Inoculum used for GPT?",
+                            'is_sub_question' => false,
+                            'input_type' => 'text'
+                        ],
+                        [
+                            'question' => "Was used culture within culture due date?",
+                            'is_sub_question' => false,
+                            'input_type' => 'text'
+                        ],
+                        [
+                            'question' => "Date of culture dilution:",
+                            'is_sub_question' => true,
+                            'input_type' => 'date'
+                        ],
+                        [
+                            'question' => "Due date of culture dilution:",
+                            'is_sub_question' => true,
+                            'input_type' => 'date'
+                        ],
+                        [
+                            'question' => "Was the storage condition of culture is appropriate?",
+                            'is_sub_question' => false,
+                            'input_type' => 'text'
+                        ],
+                        [
+                            'question' => "Was culture strength used within acceptance range?",
+                            'is_sub_question' => false,
+                            'input_type' => 'text'
+                        ]
+                    ];
                     @endphp
                 <div class="row">
                     <div class="col-12">
@@ -5629,21 +5628,21 @@
                                             <td>
                                                 <div style="display: flex; justify-content: space-around; align-items: center; margin: 5%; gap:5px">
                                                     @if ($review_item['input_type'] == 'date')
-                                                    <input type="date" name="checklist_for_Culture_verification_CIMT[{{$index}}][response]"
-                                                        value="{{ Helpers::getMicroGridData($micro_data, 'checklist_for_Culture_verification_CIMT', true, 'response', true, $index) ?? '' }}"
+                                                    <input type="date" name="checklist_for_Culture_verification_CIMTs[{{$index}}][response]"
+                                                        value="{{ Helpers::getMicroGridData($micro_data, 'checklist_for_Culture_verification_CIMTs', true, 'response', true, $index) ?? '' }}"
                                                         style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
                                                     @elseif ($review_item['input_type'] == 'number')
                                                     <input type="number" name="checklist_for_Culture_verification_CIMT[{{$index}}][response]"
-                                                        value="{{ Helpers::getMicroGridData($micro_data, 'checklist_for_Culture_verification_CIMT', true, 'response', true, $index) ?? '' }}"
+                                                        value="{{ Helpers::getMicroGridData($micro_data, 'checklist_for_Culture_verification_CIMTs', true, 'response', true, $index) ?? '' }}"
                                                         style="padding: 2px; width:90%; border: 1px solid black; background-color: #f0f0f0;">
                                                     @else
-                                                    <select name="checklist_for_Culture_verification_CIMT[{{$index}}][response]"
+                                                    <select name="checklist_for_Culture_verification_CIMTs[{{$index}}][response]"
                                                             id="response"
                                                             style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
                                                         <option value="">Select an Option</option>
-                                                        <option value="Yes" {{ Helpers::getMicroGridData($micro_data, 'checklist_for_Culture_verification_CIMT', true, 'response', true, $index) == 'Yes' ? 'selected' : '' }}>Yes</option>
-                                                        <option value="No" {{ Helpers::getMicroGridData($micro_data, 'checklist_for_Culture_verification_CIMT', true, 'response', true, $index) == 'No' ? 'selected' : '' }}>No</option>
-                                                        <option value="N/A" {{ Helpers::getMicroGridData($micro_data, 'checklist_for_Culture_verification_CIMT', true, 'response', true, $index) == 'N/A' ? 'selected' : '' }}>N/A</option>
+                                                        <option value="Yes" {{ Helpers::getMicroGridData($micro_data, '$checklist_for_Culture_verification_CIMTs', true, 'response', true, $index) == 'Yes' ? 'selected' : '' }}>Yes</option>
+                                                        <option value="No" {{ Helpers::getMicroGridData($micro_data, 'checklist_for_Culture_verification_CIMTs', true, 'response', true, $index) == 'No' ? 'selected' : '' }}>No</option>
+                                                        <option value="N/A" {{ Helpers::getMicroGridData($micro_data, 'checklist_for_Culture_verification_CIMTs', true, 'response', true, $index) == 'N/A' ? 'selected' : '' }}>N/A</option>
                                                     </select>
                                                     @endif
                                                 </div>
@@ -5651,14 +5650,13 @@
                                             <td>
                                                 <div style="margin: auto; display: flex; justify-content: center;">
                                                     <textarea name="checklist_for_Culture_verification_CIMT[{{$index}}][remark]"
-                                                              style="border-radius: 7px; border: 1.5px solid black;">{{ Helpers::getMicroGridData($micro_data, 'checklist_for_Culture_verification_CIMT', true, 'remark', true, $index) ?? '' }}</textarea>
+                                                              style="border-radius: 7px; border: 1.5px solid black;">{{ Helpers::getMicroGridData($micro_data, '$checklist_for_Culture_verification_CIMTs', true, 'remark', true, $index) ?? '' }}</textarea>
                                                 </div>
                                             </td>
                                         </tr>
                                         @endforeach
                                     </tbody>
-
-                                                                    </table>
+                                </table>
                             </div>
                         </div>
                     </div>
@@ -5916,7 +5914,7 @@
                                             <td>
                                                 <div style="margin: auto; display: flex; justify-content: center;">
                                                     <textarea name="checklist_for_intrument_equip_last_CIMT[{{$index}}][remark]"
-                                                              style="border-radius: 7px; border: 1.5px solid black;">{{ Helpers::getMicroGridData($micro_data, 'checklist_for_intrument_equip_last_CIMT', true, 'remark', true, $index) ?? '' }}</textarea>
+                                                              style="border-radius: 7px; border: 1.5px solid black;">{{ Helpers::getMicroGridData($micro_data, 'checklist_for_intrument_equip_last_CIMTs', true, 'remark', true, $index) ?? '' }}</textarea>
                                                 </div>
                                             </td>
                                         </tr>

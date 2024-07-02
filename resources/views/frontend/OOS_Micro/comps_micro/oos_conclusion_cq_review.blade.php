@@ -37,20 +37,29 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @if ($oos_conclusions)
-                                    
-                                        @foreach ($oos_conclusions->data as $oos_conclusion)
-                                            <tr>
-                                                <td><input disabled type="text" name="oos_conclusion[{{$loop->index }}][serial]" value="{{$loop->index + 1 }}"></td>
-                                                <td><input type="text" name="oos_conclusion[{{$loop->index }}][summary_results_analysis_detials]" value="{{ Helpers::getArrayKey($oos_conclusion, 'summary_results_analysis_detials') }}"></td>
-                                                <td><input type="text" name="oos_conclusion[{{$loop->index }}][summary_results_hypothesis_experimentation_test_pr_no]" value="{{ Helpers::getArrayKey($oos_conclusion, 'summary_results_hypothesis_experimentation_test_pr_no') }}"></td>
-                                                <td><input type="text" name="oos_conclusion[{{$loop->index }}][summary_results]" value="{{ Helpers::getArrayKey($oos_conclusion, 'summary_results') }}"></td>
-                                                <td><input type="text" name="oos_conclusion[{{$loop->index }}][summary_results_analyst_name]" value="{{ Helpers::getArrayKey($oos_conclusion, 'summary_results_analyst_name') }}"></td>
-                                                <td><input type="text" name="oos_conclusion[{{$loop->index }}][summary_results_remarks]" value="{{ Helpers::getArrayKey($oos_conclusion, 'summary_results_remarks') }}"></td> 
-                                                <td><button type="text" class="removeRowBtn">Remove</button></td>
-                                            </tr>  
-                                        @endforeach
-                                    @endif
+                                @if (!empty($oos_conclusions) && is_array($oos_conclusions->data))
+                                    @foreach ($oos_conclusions->data as $oos_conclusion)
+                                        <tr>
+                                            <td><input disabled type="text" name="oos_conclusion[{{ $loop->index }}][serial]" value="{{ $loop->index + 1 }}"></td>
+                                            <td><input type="text" name="oos_conclusion[{{ $loop->index }}][summary_results_analysis_detials]" value="{{ Helpers::getArrayKey($oos_conclusion, 'summary_results_analysis_detials') }}"></td>
+                                            <td><input type="text" name="oos_conclusion[{{ $loop->index }}][summary_results_hypothesis_experimentation_test_pr_no]" value="{{ Helpers::getArrayKey($oos_conclusion, 'summary_results_hypothesis_experimentation_test_pr_no') }}"></td>
+                                            <td><input type="text" name="oos_conclusion[{{ $loop->index }}][summary_results]" value="{{ Helpers::getArrayKey($oos_conclusion, 'summary_results') }}"></td>
+                                            <td><input type="text" name="oos_conclusion[{{ $loop->index }}][summary_results_analyst_name]" value="{{ Helpers::getArrayKey($oos_conclusion, 'summary_results_analyst_name') }}"></td>
+                                            <td><input type="text" name="oos_conclusion[{{ $loop->index }}][summary_results_remarks]" value="{{ Helpers::getArrayKey($oos_conclusion, 'summary_results_remarks') }}"></td>
+                                            <td><button type="text" class="removeRowBtn">Remove</button></td>
+                                        </tr>
+                                    @endforeach
+                                @else
+                                    <tr>
+                                        <td><input disabled type="text" name="oos_conclusion[0][serial]" value="1"></td>
+                                        <td><input type="text" name="oos_conclusion[0][summary_results_analysis_detials]"></td>
+                                        <td><input type="text" name="oos_conclusion[0][summary_results_hypothesis_experimentation_test_pr_no]"></td>
+                                        <td><input type="text" name="oos_conclusion[0][summary_results]"></td>
+                                        <td><input type="text" name="oos_conclusion[0][summary_results_analyst_name]"></td>
+                                        <td><input type="text" name="oos_conclusion[0][summary_results_remarks]"></td> 
+                                        <td><button type="text" class="removeRowBtn">Remove</button></td>
+                                    </tr>
+                                @endif
                                 </tbody>
                             </table>
                         </div>
@@ -221,33 +230,41 @@
                             </span>
                         </label>
                         <div class="table-responsive">
-                            <table class="table table-bordered" id="oosconclusion_review_details" style="width: 100%;">
-                                <thead>
-                                    <tr>
-                                        <th style="width: 4%">Row#</th>
-                                        <th style="width: 16%">Material/Product Name</th>
-                                        <th style="width: 16%">Batch No.(s) / A.R. No. (s)</th>
-                                        <th style="width: 16%">Any Other Information</th>
-                                        <th style="width: 16%">Action Taken on Affec.batch</th>
-                                        <th style="widht: 16%">Action </th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @if ($oos_conclusion_reviews)
-                                        @foreach ($oos_conclusion_reviews->data as $oos_conclusion_review)
-                                            <tr>
-                                                <td><input disabled type="text" name="oos_conclusion_review[{{ $loop->index }}][serial]" value="{{ $loop->index + 1 }}"></td>
-                                                <td><input type="text" name="oos_conclusion_review[{{ $loop->index }}][conclusion_review_product_name]" value="{{ Helpers::getArrayKey($oos_conclusion_review, 'conclusion_review_product_name') }}"></td>
-                                                <td><input type="text" name="oos_conclusion_review[{{ $loop->index }}][conclusion_review_batch_no]" value="{{ Helpers::getArrayKey($oos_conclusion_review, 'conclusion_review_batch_no') }}"></td>
-                                                <td><input type="text" name="oos_conclusion_review[{{ $loop->index }}][conclusion_review_any_other_information]" value="{{ Helpers::getArrayKey($oos_conclusion_review, 'conclusion_review_any_other_information') }}"></td>
-                                                <td><input type="text" name="oos_conclusion_review[{{ $loop->index }}][conclusion_review_action_affecte_batch]" value="{{ Helpers::getArrayKey($oos_conclusion_review, 'conclusion_review_action_affecte_batch') }}"></td>
-                                                <td><button type="text" class="removeRowBtn">Remove</button></td>
-                                            </tr>
-                                        @endforeach
-                                    @endif
-                                </tbody>
-
-                            </table>
+                        <table class="table table-bordered" id="oosconclusion_review_details" style="width: 100%;">
+                            <thead>
+                                <tr>
+                                    <th style="width: 4%">Row#</th>
+                                    <th style="width: 16%">Product Name</th>
+                                    <th style="width: 16%">Batch No.</th>
+                                    <th style="width: 16%">Other Information</th>
+                                    <th style="width: 16%">Action Affecte Batch</th>
+                                    <th style="width: 4%">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @if (!empty($oos_conclusion_reviews) && is_array($oos_conclusion_reviews->data))
+                                    @foreach ($oos_conclusion_reviews->data as $oos_conclusion_review)
+                                        <tr>
+                                            <td><input disabled type="text" name="oos_conclusion_review[{{ $loop->index }}][serial]" value="{{ $loop->index + 1 }}"></td>
+                                            <td><input type="text" name="oos_conclusion_review[{{ $loop->index }}][conclusion_review_product_name]" value="{{ Helpers::getArrayKey($oos_conclusion_review, 'conclusion_review_product_name') }}"></td>
+                                            <td><input type="text" name="oos_conclusion_review[{{ $loop->index }}][conclusion_review_batch_no]" value="{{ Helpers::getArrayKey($oos_conclusion_review, 'conclusion_review_batch_no') }}"></td>
+                                            <td><input type="text" name="oos_conclusion_review[{{ $loop->index }}][conclusion_review_any_other_information]" value="{{ Helpers::getArrayKey($oos_conclusion_review, 'conclusion_review_any_other_information') }}"></td>
+                                            <td><input type="text" name="oos_conclusion_review[{{ $loop->index }}][conclusion_review_action_affecte_batch]" value="{{ Helpers::getArrayKey($oos_conclusion_review, 'conclusion_review_action_affecte_batch') }}"></td>
+                                            <td><button type="text" class="removeRowBtn">Remove</button></td>
+                                        </tr>
+                                    @endforeach
+                                @else
+                                <tr>
+                                    <td><input disabled type="text" name="oos_conclusion_review[0][serial]" value="1"></td>
+                                    <td><input type="text" name="oos_conclusion_review[0][conclusion_review_product_name]"></td>
+                                    <td><input type="text" name="oos_conclusion_review[0][conclusion_review_batch_no]"></td>
+                                    <td><input type="text" name="oos_conclusion_review[0][conclusion_review_any_other_information]"></td>
+                                    <td><input type="text" name="oos_conclusion_review[0][conclusion_review_action_affecte_batch]"></td>
+                                    <td><button type="text" class="removeRowBtn">Remove</button></td>
+                                </tr>
+                                @endif
+                            </tbody>
+                        </table>
                         </div>
                     </div>
                     <div class="col-md-12 mb-4">
