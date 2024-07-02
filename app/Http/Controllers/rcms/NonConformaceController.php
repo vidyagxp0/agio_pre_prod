@@ -1117,9 +1117,12 @@ class NonConformaceController extends Controller
         $divisionName = DB::table('q_m_s_divisions')->where('id', $data->division_id)->value('name');
 
 
-        $grid_data_qrms = NonConformanceGridModes::where(['non_conformances_id' => $id, 'identifier' => 'failure_mode_qrms'])->first();
+        $json_data = NonConformanceGridModes::where(['non_conformances_id' => $id, 'identifier' => 'failure_mode_qrms'])->first();
+        $grid_data_qrms = json_decode($json_data->data, true);
+            // dd($grid_data_qrms);
 
-        $grid_data_matrix_qrms = NonConformanceGridModes::where(['non_conformances_id' => $id, 'identifier' => 'matrix_qrms'])->first();
+        $json_data = NonConformanceGridModes::where(['non_conformances_id' => $id, 'identifier' => 'matrix_qrms'])->first();
+        $grid_data_matrix_qrms = json_decode($json_data->data,true);
 
         $capaExtension = NonConformanceLunchExtension::where(['non_conformances_id' => $id, "extension_identifier" => "Capa"])->first();
         $qrmExtension = NonConformanceLunchExtension::where(['non_conformances_id' => $id, "extension_identifier" => "QRM"])->first();
@@ -1440,10 +1443,12 @@ class NonConformaceController extends Controller
         $NonConformance->Occurrence = $request->Occurrence ? $request->Occurrence : $NonConformance->Occurrence;
         $NonConformance->detection = $request->detection ? $request->detection: $NonConformance->detection;
 
+
         $newDataGridqrms = NonConformanceGridModes::where(['non_conformances_id' => $id, 'identifier' => 'failure_mode_qrms'])->firstOrCreate();
         $newDataGridqrms->non_conformances_id = $id;
         $newDataGridqrms->identifier = 'failure_mode_qrms';
         $newDataGridqrms->data = $request->failure_mode_qrms;
+        // dd($newDataGridqrms->data);
         $newDataGridqrms->save();
 
 
@@ -1452,6 +1457,7 @@ class NonConformaceController extends Controller
         $matrixDataGridqrms->identifier = 'matrix_qrms';
         $matrixDataGridqrms->data = $request->matrix_qrms;
         $matrixDataGridqrms->save();
+
 
         if ($NonConformance->stage < 6) {
             $NonConformance->CAPA_Rquired = $request->CAPA_Rquired;
@@ -4512,10 +4518,14 @@ class NonConformaceController extends Controller
             $grid_data = NonConformanceGrid::where('non_conformances_grid_id', $id)->where('type', "NonConformance")->first();
             $grid_data1 = NonConformanceGrid::where('non_conformances_grid_id', $id)->where('type', "Document")->first();
 
-            $investigation_data = NonConformanceGridDatas::where(['non_conformances_id' => $id, 'identifier' => 'TeamInvestigation'])->first();
+            $investigationTeam = NonConformanceGridDatas::where(['non_conformances_id' => $id, 'identifier' => 'TeamInvestigation'])->first();
+            $investigation_data = json_decode($investigationTeam->data, true);
 
-            $root_cause_data = NonConformanceGridDatas::where(['non_conformances_id' => $id, 'identifier' => 'RootCause'])->first();
-            $why_data = NonConformanceGridDatas::where(['non_conformances_id' => $id, 'identifier' => 'why'])->first();
+            $rootCause = NonConformanceGridDatas::where(['non_conformances_id' => $id, 'identifier' => 'RootCause'])->first();
+            $root_cause_data = json_decode($rootCause->data,true);
+
+            $whyData = NonConformanceGridDatas::where(['non_conformances_id' => $id, 'identifier' => 'why'])->first();
+            $why_data = json_decode($whyData->data,true);
 
             $capaExtension = NonConformanceLunchExtension::where(['non_conformances_id' => $id, "extension_identifier" => "Capa"])->first();
             $qrmExtension = NonConformanceLunchExtension::where(['non_conformances_id' => $id, "extension_identifier" => "QRM"])->first();

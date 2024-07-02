@@ -997,8 +997,8 @@
                                     <div class="col-lg-6">
                                         <div class="group-input">
                                             <label for="Date of Initiation"><b>Date of Initiation</b></label>
-                                            <input readonly type="text" value="{{ date('d-M-Y') }}" name="initiation_date" id="initiation_date" style="background-color: light-dark(rgba(239, 239, 239, 0.3), rgba(59, 59, 59, 0.3))">
-                                            <input type="hidden" value="{{ date('Y-m-d') }}" name="initiation_date_hidden">
+                                            <input readonly type="text"  value="{{ Helpers::getdateFormat($data->intiation_date) }}"  name="initiation_date" id="initiation_date"s>
+
                                         </div>
                                     </div>
 
@@ -3592,6 +3592,8 @@
                                 @php
                                     $userRoles = DB::table('user_roles')
                                         ->where(['q_m_s_roles_id' => 26, 'q_m_s_divisions_id' => $data->division_id])
+                                        ->select('user_id')
+                                        ->distinct()
                                         ->get();
                                     $userRoleIds = $userRoles->pluck('user_id')->toArray();
                                     $users = DB::table('users')->whereIn('id', $userRoleIds)->get(); // Fetch user data based on user IDs
@@ -3760,6 +3762,8 @@
                                 @php
                                     $userRoles = DB::table('user_roles')
                                         ->where(['q_m_s_roles_id' => 25, 'q_m_s_divisions_id' => $data->division_id])
+                                        ->select('user_id')
+                                        ->distinct()
                                         ->get();
                                     $userRoleIds = $userRoles->pluck('user_id')->toArray();
                                     $users = DB::table('users')->whereIn('id', $userRoleIds)->get(); // Fetch user data based on user IDs
@@ -3921,6 +3925,8 @@
                                 @php
                                     $userRoles = DB::table('user_roles')
                                         ->where(['q_m_s_roles_id' => 27, 'q_m_s_divisions_id' => $data->division_id])
+                                        ->select('user_id')
+                                        ->distinct()
                                         ->get();
                                     $userRoleIds = $userRoles->pluck('user_id')->toArray();
                                     $users = DB::table('users')->whereIn('id', $userRoleIds)->get(); // Fetch user data based on user IDs
@@ -4087,6 +4093,8 @@
                                 @php
                                     $userRoles = DB::table('user_roles')
                                         ->where(['q_m_s_roles_id' => 28, 'q_m_s_divisions_id' => $data->division_id])
+                                        ->select('user_id')
+                                        ->distinct()
                                         ->get();
                                     $userRoleIds = $userRoles->pluck('user_id')->toArray();
                                     $users = DB::table('users')->whereIn('id', $userRoleIds)->get(); // Fetch user data based on user IDs
@@ -6377,6 +6385,8 @@
                                 @php
                                     $userRoles = DB::table('user_roles')
                                         ->where(['q_m_s_divisions_id' => $data->division_id])
+                                        ->select('user_id')
+                                        ->distinct()
                                         ->get();
                                     $userRoleIds = $userRoles->pluck('user_id')->toArray();
                                     $users = DB::table('users')->whereIn('id', $userRoleIds)->get(); // Fetch user data based on user IDs
@@ -6575,7 +6585,10 @@
                                 @php
                                     $userRoles = DB::table('user_roles')
                                         ->where(['q_m_s_divisions_id' => $data->division_id])
+                                        ->select('user_id')
+                                        ->distinct()
                                         ->get();
+
                                     $userRoleIds = $userRoles->pluck('user_id')->toArray();
                                     $users = DB::table('users')->whereIn('id', $userRoleIds)->get(); // Fetch user data based on user IDs
                                 @endphp
@@ -6771,6 +6784,8 @@
                                 @php
                                     $userRoles = DB::table('user_roles')
                                         ->where(['q_m_s_divisions_id' => $data->division_id])
+                                        ->select('user_id')
+                                        ->distinct()
                                         ->get();
                                     $userRoleIds = $userRoles->pluck('user_id')->toArray();
                                     $users = DB::table('users')->whereIn('id', $userRoleIds)->get(); // Fetch user data based on user IDs
@@ -6969,6 +6984,8 @@
                                 @php
                                     $userRoles = DB::table('user_roles')
                                         ->where(['q_m_s_divisions_id' => $data->division_id])
+                                        ->select('user_id')
+                                        ->distinct()
                                         ->get();
                                     $userRoleIds = $userRoles->pluck('user_id')->toArray();
                                     $users = DB::table('users')->whereIn('id', $userRoleIds)->get(); // Fetch user data based on user IDs
@@ -7151,6 +7168,8 @@
                                 @php
                                     $userRoles = DB::table('user_roles')
                                         ->where(['q_m_s_divisions_id' => $data->division_id])
+                                        ->select('user_id')
+                                        ->distinct()
                                         ->get();
                                     $userRoleIds = $userRoles->pluck('user_id')->toArray();
                                     $users = DB::table('users')->whereIn('id', $userRoleIds)->get(); // Fetch user data based on user IDs
@@ -7298,6 +7317,8 @@
                                 @php
                                     $userRoles = DB::table('user_roles')
                                         ->where(['q_m_s_divisions_id' => $data->division_id])
+                                        ->select('user_id')
+                                        ->distinct()
                                         ->get();
                                     $userRoleIds = $userRoles->pluck('user_id')->toArray();
                                     $users = DB::table('users')->whereIn('id', $userRoleIds)->get(); // Fetch user data based on user IDs
@@ -7445,6 +7466,8 @@
                                 @php
                                     $userRoles = DB::table('user_roles')
                                         ->where(['q_m_s_divisions_id' => $data->division_id])
+                                        ->select('user_id')
+                                        ->distinct()
                                         ->get();
                                     $userRoleIds = $userRoles->pluck('user_id')->toArray();
                                     $users = DB::table('users')->whereIn('id', $userRoleIds)->get(); // Fetch user data based on user IDs
@@ -7589,6 +7612,8 @@
                                 @php
                                     $userRoles = DB::table('user_roles')
                                         ->where(['q_m_s_divisions_id' => $data->division_id])
+                                        ->select('user_id')
+                                        ->distinct()
                                         ->get();
                                     $userRoleIds = $userRoles->pluck('user_id')->toArray();
                                     $users = DB::table('users')->whereIn('id', $userRoleIds)->get(); // Fetch user data based on user IDs
@@ -7735,6 +7760,8 @@
                                 @php
                                     $userRoles = DB::table('user_roles')
                                         ->where(['q_m_s_divisions_id' => $data->division_id])
+                                        ->select('user_id')
+                                        ->distinct()
                                         ->get();
                                     $userRoleIds = $userRoles->pluck('user_id')->toArray();
                                     $users = DB::table('users')->whereIn('id', $userRoleIds)->get(); // Fetch user data based on user IDs
@@ -9461,8 +9488,8 @@
                                     </thead>
                                     <tbody>
 
-    @if ($grid_data_qrms && is_array($grid_data_qrms->data))
-        @foreach ($grid_data_qrms->data as $grid_data_qrms)
+    @if ($grid_data_qrms && is_array($grid_data_qrms))
+        @foreach ($grid_data_qrms as $grid_data_qrms)
             <tr>
 
                 <td><input disabled type="text"name="serial[]"
@@ -9831,8 +9858,8 @@
                                     </thead>
                                     <tbody>
 
-    @if ($grid_data_matrix_qrms && is_array($grid_data_matrix_qrms->data))
-        @foreach ($grid_data_matrix_qrms->data as $grid_data_matrix_qrms)
+    @if ($grid_data_matrix_qrms && is_array($grid_data_matrix_qrms))
+        @foreach ($grid_data_matrix_qrms as $grid_data_matrix_qrms)
             <tr>
 
                 <!-- <td> <input disabled type="text" name="matrix_qrms[{{ $loop->index }}][serial]" value="1">  </td> -->
@@ -9868,9 +9895,8 @@
             </tr>
         @endforeach
     @else
-        <td><input disabled type="text"name="serial[]"
-                {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }} value="{{ $key + 1 }}"></td>
-        <!-- <td><input disabled type="text" name="matrix_qrms[0][serial]" value=""></td> -->
+        {{-- <td><input disabled type="text"name="serial[]"
+                {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }} value="{{ $key + 1 }}"></td> --}}
 
         <td><input type="text" class="numberDetail" name="matrix_qrms[0][risk_Assesment]"></td>
         <td><input type="text" class="Document_Remarks" name="matrix_qrms[0][review_schedule]"></td>
@@ -12984,15 +13010,15 @@
                         </div>
                         <div class="group-input">
                             <label for="username">Username <span class="text-danger">*</span></label>
-                            <input type="text" name="username" required>
+                            <input type="text" class="form-control" name="username" required>
                         </div>
                         <div class="group-input">
                             <label for="password">Password <span class="text-danger">*</span></label>
-                            <input type="password" name="password" required>
+                            <input type="password"class="form-control" name="password" required>
                         </div>
                         <div class="group-input">
                             <label for="comment">Comment <span class="text-danger">*</span></label>
-                            <input type="comment" name="comment" required>
+                            <input type="comment"class="form-control" name="comment" required>
                         </div>
                     </div>
 
@@ -13030,15 +13056,15 @@
                         </div>
                         <div class="group-input">
                             <label for="username">Username <span class="text-danger">*</span></label>
-                            <input type="text" name="username" required>
+                            <input type="text" class="form-control" name="username" required>
                         </div>
                         <div class="group-input">
                             <label for="password">Password <span class="text-danger">*</span></label>
-                            <input type="password" name="password" required>
+                            <input type="password" class="form-control" name="password" required>
                         </div>
                         <div class="group-input">
                             <label for="comment">Comment <span class="text-danger">*</span></label>
-                            <input type="comment" name="comment" required>
+                            <input type="comment" class="form-control" name="comment" required>
                         </div>
                     </div>
 
@@ -13076,15 +13102,15 @@
                         </div>
                         <div class="group-input">
                             <label for="username">Username <span class="text-danger">*</span></label>
-                            <input type="text" name="username" required>
+                            <input type="text" class="form-control" name="username" required>
                         </div>
                         <div class="group-input">
                             <label for="password">Password <span class="text-danger">*</span></label>
-                            <input type="password" name="password" required>
+                            <input type="password" class="form-control" name="password" required>
                         </div>
                         <div class="group-input">
                             <label for="comment">Comment <span class="text-danger">*</span></label>
-                            <input type="comment" name="comment" required>
+                            <input type="comment" class="form-control" name="comment" required>
                         </div>
                     </div>
 
@@ -13121,15 +13147,15 @@
                         </div>
                         <div class="group-input">
                             <label for="username">Username <span class="text-danger">*</span></label>
-                            <input type="text" name="username" required>
+                            <input type="text" class="form-control" name="username" required>
                         </div>
                         <div class="group-input">
                             <label for="password">Password <span class="text-danger">*</span></label>
-                            <input type="password" name="password" required>
+                            <input type="password" class="form-control" name="password" required>
                         </div>
                         <div class="group-input">
                             <label for="comment">Comment</label>
-                            <input type="comment" name="comment">
+                            <input type="comment" class="form-control" name="comment">
                         </div>
                     </div>
                     <div class="modal-footer">
@@ -13165,15 +13191,15 @@
                         </div>
                         <div class="group-input">
                             <label for="username">Username <span class="text-danger">*</span></label>
-                            <input type="text" name="username" required>
+                            <input type="text" class="form-control" name="username" required>
                         </div>
                         <div class="group-input">
                             <label for="password">Password <span class="text-danger">*</span></label>
-                            <input type="password" name="password" required>
+                            <input type="password" class="form-control" name="password" required>
                         </div>
                         <div class="group-input">
                             <label for="comment">Comment</label>
-                            <input type="comment" name="comment">
+                            <input type="comment" class="form-control" name="comment">
                         </div>
                     </div>
                     <div class="modal-footer">

@@ -323,8 +323,6 @@
                         '<td><input type="text" name="IDnumber[]"></td>' +
                         '<td><input type="text" name="Remarks[]"></td>' +
                         '<td><button class="removeRowBtn">Remove</button></td>' +
-
-
                         '</tr>';
 
                     for (var i = 0; i < users.length; i++) {
@@ -359,8 +357,6 @@
                         '<td><input type="text" name="ReferenceDocumentName[]"></td>' +
                         '<td><input type="text" name="Document_Remarks[]"></td>' +
                         '<td><button class="removeRowBtn">Remove</button></td>' +
-
-
                         '</tr>';
 
                     for (var i = 0; i < users.length; i++) {
@@ -400,9 +396,6 @@
                         '<td> <select name="product_stage[]" id=""> <option value="">-- Select --</option> <option value="">1 <option value="">2</option> <option value="">3</option><option value="">4</option> <option value="">5</option><option value="">6</option> <option value="">7</option> <option value="">8</option><option value="">9</option><option value="">Final</option> </select></td>' +
                         '<td><input type="text" name="batch_no[]"></td>' +
                         '<td><button class="removeRowBtn">Remove</button></td>' +
-
-
-
                         '</tr>';
 
                     for (var i = 0; i < users.length; i++) {
@@ -443,7 +436,6 @@
                         '<td><input type="text" class="numberDetail" name="Responsibility[]"></td>' +
                         '<td><input type="text" class="Document_Remarks" name="Remarks[]"></td>' +
                         '<td><button type="text" class="removeRowBtn" ">Remove</button></td>' +
-
                         '</tr>';
 
                     for (var i = 0; i < users.length; i++) {
@@ -704,10 +696,10 @@
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Date of Initiation"><b>Date of Initiation</b></label>
-                                        <input readonly type="text" value="{{ date('d-M-Y') }}" name="initiation_date"
+                                        <input readonly type="text" value="{{ date('d-M-Y') }}" name="intiation_date"
                                             id="initiation_date"
                                             style="background-color: light-dark(rgba(239, 239, 239, 0.3), rgba(59, 59, 59, 0.3))">
-                                        <input type="hidden" value="{{ date('Y-m-d') }}" name="initiation_date_hidden">
+                                        <input type="hidden" value="{{ date('Y-m-d') }}" name="intiation_date_hidden">
                                     </div>
                                 </div>
 

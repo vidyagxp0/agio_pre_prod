@@ -1027,7 +1027,7 @@
                                                         </option>
                                                     </select>
                                                 </div>
-                                            
+
                                         @error('Initiator_Group')
                                             <div class="text-danger">{{ $message }}</div>
                                         @enderror
@@ -1831,7 +1831,7 @@
                                         @enderror
                                     </div>
                                         </div>
-                                
+
                                 <div class="col-md-4">
                                     <div class="group-input">
                                         <label for="search">
@@ -1863,9 +1863,9 @@
                                     </div>
                                 </div>
 
-                                            
 
-                                            
+
+
 
 
 
@@ -8167,7 +8167,7 @@
                 </div>
                 </div>
                 @else
-                
+
                 <div class="col-lg-6">
                 <div class="group-input">
                                 <label for="Proposed Due Date">Proposed Due Date</label>
@@ -8295,7 +8295,7 @@
 
 
 
-                            
+
 
 
                     <div class="col-12 sub-head"></div>
@@ -8757,7 +8757,7 @@
                         </div>
                     </div>
                 </div>
-                
+
                 <div class="sub-head">
                                     Root Cause
                                 </div>
@@ -9077,7 +9077,7 @@
                                     </div>
                                 </div>
                             </div>
-                            
+
                         <script>
                                 $(document).on('change', '.Root_Cause_Category_Select', function () {
 
@@ -9285,7 +9285,7 @@
                                                            <div class="col-md-12 mb-3">
                                     <div class="group-input">
                                         <label for="Detail Of Root Cause">Detail Of Root Cause</label>
-                                        
+
                                         <textarea class="" name="Detail_Of_Root_Cause" id="summernote-18">{{$data->Detail_Of_Root_Cause}}</textarea>
                                     </div>
                                 </div>

@@ -94,7 +94,7 @@ class DeviationController extends Controller
                     $days = 30;
                     break;
             }
-      
+
 
         $deviation = new Deviation();
         $deviation->form_type = "Deviation";
@@ -1249,7 +1249,7 @@ class DeviationController extends Controller
         $form_progress = null;
 
         $lastDeviation = deviation::find($id);
-        $deviation = deviation::find($id);        
+        $deviation = deviation::find($id);
         $lastCft = DeviationCft::where('deviation_id', $deviation->id)->first();
         $deviation->Delay_Justification = $request->Delay_Justification;
 
@@ -1269,7 +1269,7 @@ class DeviationController extends Controller
             $deviation->capa_required = "yes";
             $deviation->qrm_required = "yes";
         }
-        
+
 
         if ($request->Deviation_category == 'minor')
         {
@@ -1559,6 +1559,7 @@ class DeviationController extends Controller
         $newDataGridqrms->deviation_id = $id;
         $newDataGridqrms->identifier = 'failure_mode_qrms';
         $newDataGridqrms->data = $request->failure_mode_qrms;
+        dd($newDataGridqrms->data);
         $newDataGridqrms->save();
 
         $matrixDataGridqrms = DeviationGridQrms::where(['deviation_id' => $id, 'identifier' => 'matrix_qrms'])->firstOrCreate();
@@ -1612,7 +1613,7 @@ class DeviationController extends Controller
 
                 $Cft->Production_Table_Person = $request->Production_Table_Person == null ? $Cft->Production_Table_Person : $request->Production_Table_Person;
                 $Cft->Production_Table_Review = $request->Production_Table_Review == null ? $Cft->Production_Table_Review : $request->Production_Table_Review;
-                
+
                 $Cft->ProductionLiquid_Review = $request->ProductionLiquid_Review == null ? $Cft->ProductionLiquid_Review : $request->ProductionLiquid_Review;
                 $Cft->ProductionLiquid_person = $request->ProductionLiquid_person == null ? $Cft->ProductionLiquid_person : $request->ProductionLiquid_person;
 
@@ -1642,16 +1643,16 @@ class DeviationController extends Controller
 
                 $Cft->Engineering_review = $request->Engineering_review == null ? $Cft->Engineering_review : $request->Engineering_review;
                 $Cft->Engineering_person = $request->Engineering_person == null ? $Cft->Engineering_person : $request->Engineering_person;
-                
+
                 $Cft->Environment_Health_review = $request->Environment_Health_review == null ? $Cft->Environment_Health_review : $request->Environment_Health_review;
                 $Cft->Environment_Health_Safety_person = $request->Environment_Health_Safety_person == null ? $Cft->Environment_Health_Safety_person : $request->Environment_Health_Safety_person;
 
                 $Cft->Human_Resource_review = $request->Human_Resource_review == null ? $Cft->Human_Resource_review : $request->Human_Resource_review;
                 $Cft->Human_Resource_person = $request->Human_Resource_person == null ? $Cft->Human_Resource_person : $request->Human_Resource_person;
-                
+
                 $Cft->Information_Technology_review = $request->Information_Technology_review == null ? $Cft->Information_Technology_review : $request->Information_Technology_review;
                 $Cft->Information_Technology_person = $request->Information_Technology_person == null ? $Cft->Information_Technology_person : $request->Information_Technology_person;
-                
+
                 $Cft->Other1_review = $request->Other1_review  == null ? $Cft->Other1_review : $request->Other1_review;
                 $Cft->Other1_person = $request->Other1_person  == null ? $Cft->Other1_person : $request->Other1_person;
                 $Cft->Other1_Department_person = $request->Other1_Department_person  == null ? $Cft->Other1_Department_person : $request->Other1_Department_person;
@@ -1663,7 +1664,7 @@ class DeviationController extends Controller
                 $Cft->Other3_review = $request->Other3_review  == null ? $Cft->Other3_review : $request->Other3_review;
                 $Cft->Other3_person = $request->Other3_person  == null ? $Cft->Other3_person : $request->Other3_person;
                 $Cft->Other3_Department_person = $request->Other3_Department_person  == null ? $Cft->Other3_Department_person : $request->Other3_Department_person;
-                
+
                 $Cft->Other4_review = $request->Other4_review  == null ? $Cft->Other4_review : $request->Other4_review;
                 $Cft->Other4_person = $request->Other4_person  == null ? $Cft->Other4_person : $request->Other4_person;
                 $Cft->Other4_Department_person = $request->Other4_Department_person  == null ? $Cft->Other4_Department_person : $request->Other4_Department_person;
@@ -1712,7 +1713,7 @@ class DeviationController extends Controller
 
                 $Cft->Engineering_review = $request->Engineering_review;
                 $Cft->Engineering_person = $request->Engineering_person;
-                
+
                 $Cft->Environment_Health_review = $request->Environment_Health_review;
                 $Cft->Environment_Health_Safety_person = $request->Environment_Health_Safety_person;
 
@@ -1721,10 +1722,10 @@ class DeviationController extends Controller
 
                 $Cft->Project_management_review = $request->Project_management_review;
                 $Cft->Project_management_person = $request->Project_management_person;
-                
+
                 $Cft->Information_Technology_review = $request->Information_Technology_review;
                 $Cft->Information_Technology_person = $request->Information_Technology_person;
-                
+
                 $Cft->Other1_review = $request->Other1_review;
                 $Cft->Other1_person = $request->Other1_person;
                 $Cft->Other1_Department_person = $request->Other1_Department_person;
@@ -1777,13 +1778,13 @@ class DeviationController extends Controller
 
             $Cft->Quality_Control_assessment = $request->Quality_Control_assessment;
             $Cft->Quality_Control_feedback = $request->Quality_Control_feedback;
-            
+
             $Cft->QualityAssurance_assessment = $request->QualityAssurance_assessment;
             $Cft->QualityAssurance_feedback = $request->QualityAssurance_feedback;
 
             $Cft->Engineering_assessment = $request->Engineering_assessment;
             $Cft->Engineering_feedback = $request->Engineering_feedback;
-            
+
             $Cft->Health_Safety_assessment = $request->Health_Safety_assessment;
             $Cft->Health_Safety_feedback = $request->Health_Safety_feedback;
 
@@ -1792,7 +1793,7 @@ class DeviationController extends Controller
 
             $Cft->Information_Technology_assessment = $request->Information_Technology_assessment;
             $Cft->Information_Technology_feedback = $request->Information_Technology_feedback;
-            
+
             $Cft->Other1_assessment = $request->Other1_assessment;
             $Cft->Other1_feedback = $request->Other1_feedback;
 
@@ -1863,7 +1864,7 @@ class DeviationController extends Controller
                     }
                 }
                 $Cft->Production_Injection_Attachment = json_encode($files);
-            }            
+            }
             if (!empty ($request->Store_attachment)) {
                 $files = [];
                 if ($request->hasfile('Store_attachment')) {
@@ -1962,7 +1963,7 @@ class DeviationController extends Controller
                     }
                 }
                 $Cft->Environment_Health_Safety_attachment = json_encode($files);
-            }            
+            }
             if (!empty ($request->Information_Technology_attachment)) {
                 $files = [];
                 if ($request->hasfile('Information_Technology_attachment')) {
@@ -2040,7 +2041,7 @@ class DeviationController extends Controller
                     }
                 }
                 $Cft->Other5_attachment = json_encode($files);
-            }   
+            }
 
 
             $Cft->save();
@@ -3148,7 +3149,7 @@ class DeviationController extends Controller
             $history->save();
         }
 
-        
+
         /*************** Production Tablet ***************/
         if ($lastCft->Production_Table_Review != $request->Production_Table_Review && $request->Production_Table_Review != null) {
             $history = new DeviationAuditTrail;

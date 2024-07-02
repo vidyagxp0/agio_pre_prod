@@ -1120,8 +1120,12 @@ if ($incident->Initial_attachment) {
         // $why_data = IncidentGridData::where(['incident_id' => $id, 'identifier' => 'why'])->first();
         // $fishbone_data = IncidentGridData::where(['incident_id' => $id, 'identifier' => 'fishbone'])->first();
 
-        $grid_data_qrms = IncidentGridFailureMode::where(['incident_id' => $id, 'identifier' => 'failure_mode_qrms'])->first();
-        $grid_data_matrix_qrms = IncidentGridFailureMode::where(['incident_id' => $id, 'identifier' => 'matrix_qrms'])->first();
+        $jsonData = IncidentGridFailureMode::where(['incident_id' => $id, 'identifier' => 'failure_mode_qrms'])->first();
+        $grid_data_qrms = json_decode($jsonData->data, true);
+
+
+        $jsonData = IncidentGridFailureMode::where(['incident_id' => $id, 'identifier' => 'matrix_qrms'])->first();
+        $grid_data_matrix_qrms = json_decode($jsonData->data, true);
 
         $capaExtension = IncidentLaunchExtension::where(['incident_id' => $id, "extension_identifier" => "Capa"])->first();
         $qrmExtension = IncidentLaunchExtension::where(['incident_id' => $id, "extension_identifier" => "QRM"])->first();
@@ -4622,9 +4626,11 @@ if ($incident->Initial_attachment) {
             $qrmExtension = IncidentLaunchExtension::where(['incident_id' => $id, "extension_identifier" => "QRM"])->first();
             $investigationExtension = IncidentLaunchExtension::where(['incident_id' => $id, "extension_identifier" => "Investigation"])->first();
 
-            $grid_data_qrms = IncidentGridFailureMode::where(['incident_id' => $id, 'identifier' => 'failure_mode_qrms'])->first();
-            $grid_data_matrix_qrms = IncidentGridFailureMode::where(['incident_id' => $id, 'identifier' => 'matrix_qrms'])->first();
+            $json_decode = IncidentGridFailureMode::where(['incident_id' => $id, 'identifier' => 'failure_mode_qrms'])->first();
+            $grid_data_qrms =  json_decode($json_decode->data,true);
 
+            $json_decode = IncidentGridFailureMode::where(['incident_id' => $id, 'identifier' => 'matrix_qrms'])->first();
+            $grid_data_matrix_qrms = json_decode($json_decode->data,true);
             $pdf = App::make('dompdf.wrapper');
             $time = Carbon::now();
             $pdf = PDF::loadview('frontend.incident.single-report', compact('data','grid_data_qrms','grid_data_matrix_qrms','data1','capaExtension','qrmExtension','grid_data','grid_data1','investigation_data','root_cause_data','why_data','investigationExtension'))
