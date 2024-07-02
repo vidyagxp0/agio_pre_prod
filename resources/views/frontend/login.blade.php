@@ -108,10 +108,10 @@
 
         #rcms_login_block .login-form-block {
             width: 800px;
-    background: #eee;
-    border-radius: 20px;
-    background-size: cover;
-    background-position: center;
+            background: #eee;
+            border-radius: 20px;
+            background-size: cover;
+            background-position: center;
         }
 
         #rcms_login_block .login-form-block .top-block {
@@ -149,13 +149,13 @@
 
         #rcms_login_block .group-input {
             margin-bottom: 20px;
-    display: grid;
-    grid-template-columns: 70px 1fr;
-    align-items: center;
-    background: white;
-    border: 2px solid rgba(0, 0, 0, 0.5);
-    padding: 5px;
-    border-radius: 5px;
+            display: grid;
+            grid-template-columns: 70px 1fr;
+            align-items: center;
+            background: white;
+            border: 2px solid rgba(0, 0, 0, 0.5);
+            padding: 5px;
+            border-radius: 5px;
         }
 
         #rcms_login_block label {
@@ -189,7 +189,7 @@
             /* color: black; */
             background-image: linear-gradient(120deg, #ea8900 0%, #ff9c4594 100%);
             /* linear-gradient(120deg, #ea8900 0%, #ff9c4594 100%) */
-    color: white;
+            color: white;
             margin-left: auto;
             text-transform: uppercase;
             font-weight: bold;
@@ -226,8 +226,6 @@
                 <div class="top-block">
                     <div class="logo" style="display: flex">
     <img src="{{ asset('user/images/agio-removebg-preview.png') }}" alt="..." style="filter: none; scale: 1; max-width: 100px; margin: auto; margin-bottom: 33px;">
-
-
     <img  src="{{ asset('user/images/vidhyaGxp.png') }}" alt="..." style="filter: none; scale: 2; max-width: 100px; margin: auto">
 
 

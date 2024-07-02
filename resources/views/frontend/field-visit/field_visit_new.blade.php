@@ -95,8 +95,6 @@
                                         <input type="hidden" value="{{ date('Y-m-d') }}" name="date">
                                     </div>
                                 </div>
-
-
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Time">Time</label>
@@ -104,10 +102,6 @@
                                         {{-- <input type="hidden" value="{{ date('Y-m-d') }}" name="intiation_date"> --}}
                                     </div>
                                 </div>
-
-
-
-
                                 <div class="col-md-6">
                                     <div class="group-input">
                                         <label for="Brand Name">

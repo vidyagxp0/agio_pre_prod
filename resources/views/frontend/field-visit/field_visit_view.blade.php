@@ -73,36 +73,21 @@
                         <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                             Submit
                         </button>
-                            
-                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#cancel-modal">
-                                Cancel
-                            </button>
+                        <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#cancel-modal">
+                            Cancel
+                        </button>
                            
                         @elseif($data->stage == 2 && (in_array(10, $userRoleIds) || in_array(18, $userRoleIds) || in_array(13, $userRoleIds)))
-                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
-                              Review Completed
-                            </button>
-                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#more-info-required-modal">
-                                More Info Required
-                            </button>
-                      
-
-                            
-                            {{-- <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#more-info-required-modal">
-                                More Info Required
-                            </button> --}}
-
-                            
-                            {{-- <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#more-info-required-modal">
-                                More Info Required
-                            </button> --}}
+                        <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
+                            Review Completed
+                        </button>
+                        <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#more-info-required-modal">
+                            More Info Required
+                        </button>
                         @endif
                          <a class="text-white" href="{{ url('rcms/qms-dashboard') }}"><button class="button_theme1"> Exit
                         </button>  </a> 
-
-
                     </div>
-
                 </div>
                 <div class="status">
                     <div class="head">Current Status</div>
@@ -118,7 +103,6 @@
                             @else
                                 <div class="">Opened</div>
                             @endif
-
                             @if ($data->stage >= 2)
                                 <div class="active">Pending Review</div>
                             @else
@@ -131,8 +115,6 @@
                             @endif
                         </div>
                     @endif
-
-
                 </div>
                 {{-- @endif --}}
                 {{-- ---------------------------------------------------------------------------------------- --}}

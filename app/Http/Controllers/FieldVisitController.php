@@ -202,7 +202,6 @@ class FieldVisitController extends Controller
         $data->any_remarks_on_the_trail_room = $request->any_remarks_on_the_trail_room;
         $data->comments_on_hte_overall_store = $request->comments_on_hte_overall_store;
         $data->update();
-
         return back();
     }
     public function sendstage(Request $request,$id){
