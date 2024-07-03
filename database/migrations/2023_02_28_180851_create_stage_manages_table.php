@@ -15,10 +15,10 @@ return new class extends Migration
     {
         Schema::create('stage_manages', function (Blueprint $table) {
             $table->id();
-            $table->string('document_id');
-            $table->string('user_id');
+            $table->string('document_id')->nullable();
+            $table->string('user_id')->nullable();
             $table->string('role')->nullable();
-            $table->string('stage')->default(0);
+            $table->string('stage')->default(0)->nullable();
             $table->string('comment')->nullable();
             $table->softDeletes();
             $table->timestamps();

@@ -60,15 +60,20 @@ class EffectivenessCheckController extends Controller
 
     public function store(Request $request)
     {
+        // dd($request->all());
 
         $openState = new EffectivenessCheck();
         // $openState->form_type = "effectiveness-check";
         $openState->is_parent = "No";
-        $openState->parent_id = $request->cc_id;
         $openState->division_id = $request->division_id;
         $openState->intiation_date = $request->intiation_date;
         $openState->initiator_id = Auth::user()->id;
-        $openState->parent_record = CC::where('id', $request->cc_id)->value('id');
+        // $openState->parent_record = CC::where('id', $request->cc_id)->value('id');
+        
+        $openState->parent_record = $request->parent_record;
+        $openState->parent_type = $request->parent_type;
+        $openState->parent_id = $request->parent_id;
+
         $openState->record = DB::table('record_numbers')->value('counter') + 1;
         $openState->originator = CC::where('id', $request->cc_id)->value('initiator_id');
         $openState->assign_to = $request->assign_to;
@@ -145,8 +150,8 @@ class EffectivenessCheckController extends Controller
             }
         }
 
-        $openState->refer_record = json_encode($files);
-    }
+            $openState->refer_record = json_encode($files);
+        }
         $openState->Comments = $request->Comments;
         $openState->status = "Opened";
         $openState->stage = 1;
@@ -639,18 +644,18 @@ class EffectivenessCheckController extends Controller
                     $changeControl->status = 'Pending Effectiveness Check';
                     $changeControl->submit_by =  Auth::user()->name;
                     $changeControl->submit_on = Carbon::now()->format('d-M-Y');
-                            $history = new EffectivenessCheck();
-                            $history->parent_id = $id;
-                            $history->activity_type = 'Activity Log';
-                            $history->previous = "";
-                            $history->current = $changeControl->submit_by;
-                            $history->comment = $request->comment;
-                            $history->user_id = Auth::user()->id;
-                            $history->user_name = Auth::user()->name;
-                            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-                            $history->origin_state = $lastopenState->status;
-                            $history->step = 'Submit';
-                            $history->save();
+                            // $history = new EffectivenessCheck();
+                            // $history->parent_id = $id;
+                            // $history->activity_type = 'Activity Log';
+                            // $history->previous = "";
+                            // $history->current = $changeControl->submit_by;
+                            // $history->comment = $request->comment;
+                            // $history->user_id = Auth::user()->id;
+                            // $history->user_name = Auth::user()->name;
+                            // $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                            // $history->origin_state = $lastopenState->status;
+                            // $history->step = 'Submit';
+                            // $history->save();
                             
                 //     $list = Helpers:: getSupervisorUserList();
                 //     foreach ($list as $u) {
@@ -704,18 +709,18 @@ class EffectivenessCheckController extends Controller
                     $changeControl->status = 'QA Approval-Effective';
                     $changeControl->effective_by =  Auth::user()->name;
                     $changeControl->effective_on = Carbon::now()->format('d-M-Y');
-                            $history = new EffectivenessCheck();
-                            $history->parent_id = $id;
-                            $history->activity_type = 'Activity Log';
-                            $history->previous = "";
-                            $history->current = $changeControl->effective_by;
-                            $history->comment = $request->comment;
-                            $history->user_id = Auth::user()->id;
-                            $history->user_name = Auth::user()->name;
-                            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-                            $history->origin_state = $lastopenState->status;
-                            $history->step = 'Effective';
-                            $history->save();
+                            // $history = new EffectivenessCheck();
+                            // $history->parent_id = $id;
+                            // $history->activity_type = 'Activity Log';
+                            // $history->previous = "";
+                            // $history->current = $changeControl->effective_by;
+                            // $history->comment = $request->comment;
+                            // $history->user_id = Auth::user()->id;
+                            // $history->user_name = Auth::user()->name;
+                            // $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                            // $history->origin_state = $lastopenState->status;
+                            // $history->step = 'Effective';
+                            // $history->save();
                             
                 //     $list = Helpers:: getQAUserList();
                 //     foreach ($list as $u) {
@@ -754,18 +759,18 @@ class EffectivenessCheckController extends Controller
                 $changeControl->status = 'Closed – Effective';
                 $changeControl->effective_approval_complete_by =  Auth::user()->name;
                 $changeControl->effective_approval_complete_on = Carbon::now()->format('d-M-Y');
-                            $history = new EffectivenessCheck();
-                            $history->parent_id = $id;
-                            $history->activity_type = 'Activity Log';
-                            $history->previous = "";
-                            $history->current = $changeControl->effective_approval_complete_by;
-                            $history->comment = $request->comment;
-                            $history->user_id = Auth::user()->id;
-                            $history->user_name = Auth::user()->name;
-                            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-                            $history->origin_state = $lastopenState->status;
-                            $history->step = 'Effective Approval Complete';
-                            $history->save();
+                            // $history = new EffectivenessCheck();
+                            // $history->parent_id = $id;
+                            // $history->activity_type = 'Activity Log';
+                            // $history->previous = "";
+                            // $history->current = $changeControl->effective_approval_complete_by;
+                            // $history->comment = $request->comment;
+                            // $history->user_id = Auth::user()->id;
+                            // $history->user_name = Auth::user()->name;
+                            // $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                            // $history->origin_state = $lastopenState->status;
+                            // $history->step = 'Effective Approval Complete';
+                            // $history->save();
                 $changeControl->update();
                 $history = new CCStageHistory();
                 $history->type = "Effectiveness-Check";
@@ -796,18 +801,18 @@ class EffectivenessCheckController extends Controller
                 $changeControl->status = 'QA Approval-Not Effective';
                 $changeControl->not_effective_by =  Auth::user()->name;
                 $changeControl->not_effective_on = Carbon::now()->format('d-M-Y');
-                            $history = new EffectivenessCheck();
-                            $history->parent_id = $id;
-                            $history->activity_type = 'Activity Log';
-                            $history->previous = "";
-                            $history->current = $changeControl->not_effective_by;
-                            $history->comment = $request->comment;
-                            $history->user_id = Auth::user()->id;
-                            $history->user_name = Auth::user()->name;
-                            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-                            $history->origin_state = $lastopenState->status;
-                            $history->step = 'Not Effective';
-                            $history->save();
+                            // $history = new EffectivenessCheck();
+                            // $history->parent_id = $id;
+                            // $history->activity_type = 'Activity Log';
+                            // $history->previous = "";
+                            // $history->current = $changeControl->not_effective_by;
+                            // $history->comment = $request->comment;
+                            // $history->user_id = Auth::user()->id;
+                            // $history->user_name = Auth::user()->name;
+                            // $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                            // $history->origin_state = $lastopenState->status;
+                            // $history->step = 'Not Effective';
+                            // $history->save();
                             
                 //     $list = Helpers:: getQAUserList();
                 //     foreach ($list as $u) {

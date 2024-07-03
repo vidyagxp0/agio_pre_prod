@@ -186,7 +186,7 @@
                             ->get();
                         $userRoleIds = $userRoles->pluck('q_m_s_roles_id')->toArray();
                         $auditCollect = DB::table('audit_reviewers_details')
-                            ->where(['deviation_id' => $document->id, 'user_id' => Auth::user()->id])
+                            ->where(['doc_id' => $document->id, 'user_id' => Auth::user()->id])
                             ->latest()
                             ->first();
                     @endphp
@@ -207,7 +207,7 @@
                                 View
                             </button>
                             <button class="button_theme1"><a class="text-white"
-                                    href="{{ url('rcms/devshow/' . $document->id) }}"> Back
+                                    href="{{ url('rcms/CC/' . $document->id) }}"> Back
                                 </a>
                             </button>
                             <button class="button_theme1" onclick="window.print();">
@@ -234,7 +234,7 @@
 
                                 @php
                                     $reviewer = DB::table('audit_reviewers_details')
-                                        ->where(['deviation_id' => $document->id, 'type' => 'Change Control'])
+                                        ->where(['doc_id' => $document->id, 'type' => 'Change Control'])
                                         ->get();
                                 @endphp
                                 <!-- Customer grid view -->
@@ -331,7 +331,8 @@
 
                             <div> <strong>Record ID.</strong> {{ str_pad($document->record, 4, '0', STR_PAD_LEFT) }}</div>
                             <div style="margin-bottom: 5px;  font-weight: bold;"> Originator
-                                :{{ $document->record_initiator ? $document->record_initiator->name : '' }}</div>
+                                :{{ $document->originator ? $document->originator
+                                 : '' }}</div>
                             <div style="margin-bottom: 5px; font-weight: bold;">Short Description :
                                 {{ $document->short_description }}</div>
                             <div style="margin-bottom: 5px;  font-weight: bold;">Due Date : {{ $document->due_date }}</div>
@@ -375,7 +376,7 @@
                             <td>
                                 <div>
                                     <strong> Data Field Name :</strong><a
-                                        href="{{ url('DeviationAuditTrialDetails', $dataDemo->id) }}">{{ $dataDemo->activity_type ? $dataDemo->activity_type : 'Not Applicable' }}</a>
+                                        href="#">{{ $dataDemo->activity_type ? $dataDemo->activity_type : 'Not Applicable' }}</a>
                                 </div>
                                 <div style="margin-top: 5px;">
                                     @if($dataDemo->activity_type == "Activity Log")

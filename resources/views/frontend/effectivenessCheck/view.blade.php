@@ -20,19 +20,16 @@
     {{-- ======================================
                 CHANGE CONTROL VIEW
     ======================================= --}}
-    <!-- <div id="rcms_form-head">
-        <div class="container-fluid">
-            <div class="inner-block">
-                <div class="head">PR-0001</div>
-                <div class="slogan">
-                    <strong>Division / Project :</strong>
-                    QMS-EMEA / Change Control
-                </div>
-            </div>
-
+ 
+    <div class="form-field-head">
+        <div class="division-bar">
+            <!-- <strong>Site Division/Project</strong> :
+            {{ Helpers::getDivisionName(session()->get('division')) }} / Effectiveness-Check -->
+            <strong>Site Division/Project :</strong>
+            {{ Helpers::getDivisionName(session()->get('division')) }} / Effectiveness-Check
         </div>
-    </div> -->
-
+        
+    </div>
     <div id="change-control-view">
         <div class="container-fluid">
 
@@ -77,7 +74,7 @@
                                 More Information Required
                             </button>
                         @endif
-                        <button> <a class="text-white" href="{{ url('rcms/qms-dashboard') }}"> Exit </a> </button>
+                        <button class="button_theme1"> <a class="text-white" href="{{ url('rcms/qms-dashboard') }}"> Exit </a> </button>
                     </div>
 
                 </div>
@@ -134,11 +131,6 @@
                             @endif
                         @endif
 
-
-
-
-
-
                     </div>
                 </div>
             </div>
@@ -149,22 +141,7 @@
 
             @csrf
             @method('PUT')
-            <div class="form-field-head">
-                <div class="division-bar">
-                    <!-- <strong>Site Division/Project</strong> :
-                    QMS-North America / Effectiveness-Check -->
-                    <strong>Site Division/Project :</strong>
-                    {{ Helpers::getDivisionName(session()->get('division')) }} / Effectiveness-Check
-                </div>
-                <div class="button-bar">
-                    {{--  <button type="button">Cancel</button>
-                <button type="button">New</button>
-                <button type="button">Copy</button>
-                <button type="button">Child</button>
-                <button type="button">Check Spelling</button>
-                <button type="button">Change Project</button>  --}}
-                </div>
-            </div>
+          
             {{-- ======================================
                             DATA FIELDS
             ======================================= --}}
@@ -234,19 +211,51 @@
 
                                             </div>
                                         </div>
-                                        <div class="col-md-6">
-                                            <div class="group-input">
-                                                <label for="due-date">Due Date</label>
-                                                <div><small class="text-primary">If revising Due Date, kindly mention revision reason in "Due Date Extension Justification" data field.</small>
-                                        </div>
-                                                <input readonly type="text"
-                                                    value="{{ Helpers::getdateFormat($data->due_date) }}"
-                                                    name="due_date"{{ $data->stage == 0 || $data->stage == 6  ||  $data->stage == 4 ? 'disabled' : ''}}>
-                                                {{-- <input type="text" value="{{ $data->due_date }}" name="due_date"> --}}
-                                                {{-- <div class="static"> {{ $due_date }}</div> --}}
-
+                                        <?php
+                                        // Calculate the due date (30 days from the initiation date)
+                                        $initiationDate = date('Y-m-d'); // Current date as initiation date
+                                        $dueDate = date('Y-m-d', strtotime($initiationDate . '+30 days')); // Due date
+                                        ?>
+                                        <div class="col-lg-6 new-date-data-field">
+                                            <div class="group-input input-date">
+                                                <label for="Due Date">Due Date</label>
+                                                <div><small class="text-primary">If revising Due Date, kindly mention revision
+                                                        reason in "Due Date Extension Justification" data field.</small></div>
+                                                <div class="calenderauditee">
+                                                    <input type="text" id="due_date" disabled placeholder="DD-MM-YYYY" />
+                                                    <input type="date" name="due_date"
+                                                        min="{{ \Carbon\Carbon::now()->format('d-M-Y') }}" style="display: none" class="hide-input "
+                                                        oninput="handleDateInput(this, 'due_date')" />
+                                                </div>
                                             </div>
                                         </div>
+
+                                        <script>
+                                            // Format the due date to DD-MM-YYYY
+                                            // Your input date
+                                            var dueDate = "{{ $dueDate }}"; // Replace {{ $dueDate }} with your actual date variable
+        
+                                            // Create a Date object
+                                            var date = new Date(dueDate);
+        
+                                            // Array of month names
+                                            var monthNames = [
+                                                "Jan", "Feb", "Mar", "Apr", "May", "Jun",
+                                                "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"
+                                            ];
+        
+                                            // Extracting day, month, and year from the date
+                                            var day = date.getDate().toString().padStart(2, '0'); // Ensuring two digits
+                                            var monthIndex = date.getMonth();
+                                            var year = date.getFullYear();
+        
+                                            // Formatting the date in "dd-MMM-yyyy" format
+                                            var dueDateFormatted = `${day}-${monthNames[monthIndex]}-${year}`;
+        
+                                            // Set the formatted due date value to the input field
+                                            document.getElementById('due_date').value = dueDateFormatted;
+                                        </script>
+        
                                 <div class="col-12">
                                     <div class="group-input">
                                         <label for="Short Description">Short Description<span
@@ -1106,7 +1115,7 @@
                             </label>
                             <label for="minor">
                                 <input type="radio" name="revision" id="minor">
-                                Extention
+                                Extension
                             </label>
 
                             <label for="minor">

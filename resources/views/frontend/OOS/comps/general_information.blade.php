@@ -54,18 +54,19 @@
                     </div>
                 </div>
 
-            <div class="col-lg-6">
-                <div class="group-input">
-                    <label for="Initiator"> Due Date
-                    </label>
-
-                    <small class="text-primary">
-                        Please mention expected date of completion
-                    </small>
-                    <input type="date" name="due_date" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" 
-                    class="hide-input" oninput="handleDateInput(this, 'due_date')" value="{{ $data->due_date ?? '' }}"/>
+                <div class="col-lg-6 new-date-data-field">
+                <div class="group-input input-date">
+                    <label for="Date Due"> Due Date </label>
+                    <div><small class="text-primary">If revising Due Date, kindly mention revision
+                            reason in "Due Date Extension Justification" data field.</small></div>
+                    <div class="calenderauditee">
+                        <input type="text" id="due_date" readonly value="{{ Helpers::getdateFormat($data['due_date'] ?? '') }}" placeholder="DD-MM-YYYY" />
+                        <input type="date" name="due_date"
+                            min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input"
+                            oninput="handleDateInput(this, 'due_date')" />
+                    </div>
                 </div>
-            </div>
+            </div>                                                                                  
             <div class="col-lg-6">
                 <div class="group-input">
                     <label for="Short Description"> Severity Level</label>
@@ -80,12 +81,17 @@
                     </select>
                 </div>
             </div>
+            
             <div class="col-lg-6">
                 <div class="group-input">
-                    <label for="Initiator Group">Short Description</label>
-                    <textarea name="description_gi" required>{{ $data->description_gi }}</textarea>
+                    <label for="Short Description">Short Description
+                        <span class="text-danger">*</span></label>
+                        <span id="rchars">255</span>characters remaining
+                    <textarea id="docname"  name="description_gi" maxlength="255" required>{{ $data->description_gi }}</textarea>
                 </div>
             </div>
+            <p id="docnameError" style="color:red">**Short Description is required</p>
+                        
             <div class="col-lg-6">
                 <div class="group-input">
                     <label for="Short Description">Initiator Group <span
@@ -110,16 +116,14 @@
             <div class="col-lg-6">
                 <div class="group-input">
                     <label for="Initiator Group Code">If Others</label>
-                    <textarea type="if_others_gi"
-                        name="if_others_gi">{{ $data->if_others_gi }}</textarea>
+                    <textarea type="if_others_gi" name="if_others_gi">{{ $data->if_others_gi }}</textarea>
                 </div>
             </div>
             <div class="col-lg-6">
                 <div class="group-input">
                     <label for="Initiator Group Code">Is Repeat?</label>
-                    
                         <select name="is_repeat_gi">
-                        <option value="o" {{ $data->is_repeat_gi == 'o' ? 'selected' : '' }}>Enter Your
+                        <option value="" {{ $data->is_repeat_gi == 'o' ? 'selected' : '' }}>Enter Your
                             Selection Here</option>
                         <option value="yes" {{ $data->is_repeat_gi == 'yes' ? 'selected' : '' }}>yes</option>
                         <option value="No" {{ $data->is_repeat_gi == '2' ? 'selected' : '' }}>No</option>
@@ -129,8 +133,7 @@
             <div class="col-lg-6 mt-4">
                 <div class="group-input">
                     <label for="Initiator Group">Repeat Nature</label>
-                    <textarea type="text"
-                        name="repeat_nature_gi">{{ $data->repeat_nature_gi }}</textarea>
+                    <textarea type="text" name="repeat_nature_gi">{{ $data->repeat_nature_gi }}</textarea>
                 </div>
             </div>
             <div class="col-lg-6">
@@ -146,12 +149,17 @@
                     </select>
                 </div>
             </div>
-
-            <div class="col-lg-6">
-                <div class="group-input">
-                    <label for="Initiator Group">Deviation Occurred On</label>
-                    <input type="date" name="deviation_occured_on_gi"
-                        value="{{ $data->deviation_occured_on_gi }}">
+            <div class="col-lg-6 new-date-data-field">
+                <div class="group-input input-date">
+                    <label for="Deviation Occurred On"> Deviation Occurred On </label>
+                    <div><small class="text-primary">If revising Due Date, kindly mention revision
+                            reason in "Due Date Extension Justification" data field.</small></div>
+                    <div class="calenderauditee">
+                        <input type="text" id="deviation_occured_on_gi" readonly value="{{ Helpers::getdateFormat($data['deviation_occured_on_gi'] ?? '') }}" placeholder="DD-MM-YYYY" />
+                        <input type="date" name="deviation_occured_on_gi"
+                            min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input"
+                            oninput="handleDateInput(this, 'deviation_occured_on_gi')" />
+                    </div>
                 </div>
             </div>
             <div class="col-lg-6">
@@ -165,7 +173,6 @@
                         <div class="file-attachment-list" id="initial_attachment_gi">
                             @if ($data->initial_attachment_gi)
                             @foreach ($data->initial_attachment_gi as $file)
-                            
                             <h6 type="button" class="file-container text-dark"
                                 style="background-color: rgb(243, 242, 240);">
                                 <b>{{ $file }}</b>
@@ -178,8 +185,6 @@
                             </h6>
                             @endforeach
                             @endif
-
-
                         </div>
 
                         <div class="add-btn">
@@ -192,16 +197,23 @@
                 </div>
             </div>
             <div class="col-lg-6">
-
                 <div class="group-input">
                     <label for="Source Document Type">Source Document Type</label>
                     <select name="source_document_type_gi">
-                        <option value="0">Enter Your Selection Here</option>
-                        <option value="doc" {{ $data->source_document_type_gi == 'doc' ? 'selected' : ''
-                            }}>doc</option>
-                            <option value="pdf" {{ $data->source_document_type_gi == 'pdf' ? 'selected' : ''
-                            }}>pdf</option>
-                       </select>
+                        <option>Enter Your Selection Here</option>
+                        <option value="OOT"{{ $data->source_document_type_gi == 'OOT' ? 'selected' : ''
+                        }}>OOT</option>
+                        <option value="Lab Incident"{{ $data->source_document_type_gi == 'Lab Incident' ? 'selected' : ''
+                        }}>Lab Incident</option>
+                        <option value="Deviation"{{ $data->source_document_type_gi == 'Deviation' ? 'selected' : ''
+                        }}>Deviation</option>
+                        <option value="Product Non-conformance"{{ $data->source_document_type_gi == 'Product Non-conformance' ? 'selected' : ''
+                        }}>Product Non-conformance</option>
+                        <option value="Inspectional Observation"{{ $data->source_document_type_gi == 'Inspectional Observation' ? 'selected' : ''
+                        }}>Inspectional Observation</option>
+                        <option value="Others"{{ $data->source_document_type_gi == 'Others' ? 'selected' : ''
+                        }}>Others</option>
+                    </select>
                 </div>
             </div>
 
@@ -209,7 +221,7 @@
                 <div class="group-input">
                     <label for="Reference Recores">Reference System Document</label>
                     <select multiple id="reference_record" name="reference_system_document_gi[]" id="">
-                        <option value="o">Enter Your Selection Here</option>
+                        <option value="">Enter Your Selection Here</option>
                         <option value="1" {{ (!empty($data->reference_system_document_gi) && str_contains($data->reference_system_document_gi, 1)) ? 'selected' : '' }}>1</option>
                         <option value="2" {{ (!empty($data->reference_system_document_gi) && str_contains($data->reference_system_document_gi, 2)) ? 'selected' : '' }}>2</option>
                     </select>
@@ -220,24 +232,23 @@
                 <div class="group-input">
                     <label for="Tnitiaror Grouo">Sample Type</label>
                     <select name="sample_type_gi">
-                        <option value="0">Enter Your Selection Here</option>
-                        <option value="raw_material" {{ $data->sample_type_gi == 'raw_material' ?
+                        <option>Enter Your Selection Here</option>
+                        <option value="Raw Material"{{ $data->sample_type_gi == 'Raw Materia' ?
                             'selected' : '' }}>Raw Material</option>
-                        <option value="packing_material" {{ $data->sample_type_gi == 'packing_material'
-                            ? 'selected' : '' }}>Packing Material</option>
-                        <option value="finished_product" {{ $data->sample_type_gi == 'finished_product'
-                            ? 'selected' : '' }}>Finished Product</option>
-                        <option value="stability_sample" {{ $data->sample_type_gi == 'stability_sample'
-                            ? 'selected' : '' }}>Stability Sample</option>
-                        <option value="others" {{ $data->sample_type_gi == 'others' ? 'selected' : ''
-                            }}>Others</option>
+                        <option value="Packing Material"{{ $data->sample_type_gi == 'Packing Material' ?
+                            'selected' : '' }}>Packing Material</option>
+                        <option value="Finished Product"{{ $data->sample_type_gi == 'Finished Product' ?
+                            'selected' : '' }}>Finished Product</option>
+                        <option value="Satbility Sample"{{ $data->sample_type_gi == 'Satbility Sample' ?
+                            'selected' : '' }}>Satbility Sample</option>
+                        <option value="Others"{{ $data->sample_type_gi == 'Others' ?
+                            'selected' : '' }}>Others</option>
                     </select>
                 </div>
             </div>
             <div class="col-lg-6">
                 <div class="group-input">
-                    <label for="Short Description ">Product / Material Name</label>
-
+                    <label for="Short Description">Product / Material Name</label>
                     <input type="text" value="{{$data->product_material_name_gi}}"
                         name="product_material_name_gi">
                 </div>
@@ -264,7 +275,7 @@
             <div class="group-input">
                 <label for="audit-agenda-grid">
                     Info. On Product/ Material
-                    <button type="button" name="audit-agenda-grid" id="Info_Product_Material">+</button>
+                    <button type="button" name="audit-agenda-grid" id="info_product_material">+</button>
                     <span class="text-primary" data-bs-toggle="modal"
                         data-bs-target="#document-details-field-instruction-modal"
                         style="font-size: 0.8rem; font-weight: 400; cursor: pointer;">
@@ -272,7 +283,7 @@
                     </span>
                 </label>
                 <div class="table-responsive">
-                    <table class="table table-bordered" id="Info_Product_Material_details"
+                    <table class="table table-bordered" id="info_product_material_details"
                         style="width: 100%;">
                         <thead>
                             <tr>
@@ -288,6 +299,7 @@
                                 <th style="width: 10%"> In- Process Sample Stage.</th>
                                 <th style="width: 10% pt-3">Packing Material Type</th>
                                 <th style="width: 16% pt-2"> Stability for</th>
+                                <th style="width: 16% pt-2"> Action </th>
                             </tr>
                         </thead>
                         <tbody>
@@ -301,8 +313,10 @@
                                         <div class="col-lg-6 new-date-data-field">
                                             <div class="group-input input-date">
                                                 <div class="calenderauditee">
-                                                    <input type="text" id="info_mfg_date_{{ $loop->index }}" value="{{ Helpers::getdateFormat($info_product_material['info_expiry_date'] ?? '') }}" readonly placeholder="DD-MMM-YYYY" />
-                                                    <input type="date" name="info_product_material[{{ $loop->index }}][info_mfg_date]" value="{{ $info_product_material['info_mfg_date'] ?? '' }}" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input" oninput="handleDateInput(this, 'info_mfg_date_{{ $loop->index }}')">
+                                                    <input type="text" id="info_mfg_date_{{ $loop->index }}" readonly placeholder="DD-MM-YYYY" name="info_product_material[{{ $loop->index }}][info_mfg_date]"
+                                                     value="{{ Helpers::getdateFormat($info_product_material['info_mfg_date'] ?? '') }}"  />
+                                                    <input type="date" name="info_product_material[{{ $loop->index }}][info_mfg_date]" 
+                                                    value="{{$info_product_material['info_mfg_date']}}" class="hide-input" oninput="handleDateInput(this, 'info_mfg_date_{{ $loop->index }}')">
                                                 </div>
                                             </div>
                                         </div>
@@ -311,8 +325,9 @@
                                         <div class="col-lg-6 new-date-data-field">
                                             <div class="group-input input-date">
                                                 <div class="calenderauditee">
-                                                    <input type="text" id="info_expiry_date_{{ $loop->index }}" value="{{ Helpers::getdateFormat($info_product_material['info_expiry_date'] ?? '') }}" readonly placeholder="DD-MMM-YYYY" />
-                                                    <input type="date" name="info_product_material[{{ $loop->index }}][info_expiry_date]" value="{{ $info_product_material['info_expiry_date'] ?? '' }}" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input" oninput="handleDateInput(this, 'info_expiry_date_{{ $loop->index }}')">
+                                                    <input type="text" id="info_expiry_date_{{ $loop->index }}" value="{{ Helpers::getdateFormat($info_product_material['info_expiry_date'] ?? '') }}" readonly placeholder="DD-MM-YYYY" />
+                                                    <input type="date" name="info_product_material[{{ $loop->index }}][info_expiry_date]" 
+                                                    value="{{ $info_product_material['info_expiry_date'] ?? '' }}" class="hide-input" oninput="handleDateInput(this, 'info_expiry_date_{{ $loop->index }}')">
                                                 </div>
                                             </div>
                                         </div>
@@ -323,23 +338,24 @@
                                     <td><input type="text" name="info_product_material[{{ $loop->index }}][info_others_specify]" value="{{ $info_product_material['info_others_specify'] ?? '' }}"></td>
                                     <td><input type="text" name="info_product_material[{{ $loop->index }}][info_process_sample_stage]" value="{{ $info_product_material['info_process_sample_stage'] ?? '' }}"></td>
                                     <td>
-                                        <select name="info_product_material[{{ $loop->index }}][info_packing_material_type]">
-                                            <option value="">--Select--</option>
-                                            <option value="Primary" >Primary</option>
-                                            <option value="Secondary" >Secondary</option>
-                                            <option value="Tertiary" >Tertiary</option>
-                                            <option value="Not Applicable">Not Applicable</option>
-                                        </select>
-                                    </td>
+                                    <select class="facility-name" name="info_product_material[{{ $loop->index }}][info_packing_material_type]" id="facility_name">
+                                        <option value="">--Select--</option>
+                                        <option value="Primary" {{ $info_product_material['info_packing_material_type'] === 'Primary' ? 'selected' : '' }}>Primary</option>
+                                        <option value="Secondary" {{ $info_product_material['info_packing_material_type'] === 'Secondary' ? 'selected' : '' }}>Secondary</option>
+                                        <option value="Tertiary" {{ $info_product_material['info_packing_material_type'] === 'Tertiary' ? 'selected' : '' }}>Tertiary</option>
+                                        <option value="Not Applicable" {{ $info_product_material['info_packing_material_type'] === 'Not Applicable' ? 'selected' : '' }}>Not Applicable</option>
+                                    </select>
+                                   </td>
                                     <td>
-                                        <select name="info_product_material[{{ $loop->index }}][info_stability_for]">
+                                        <select class="facility-name" name="info_product_material[{{ $loop->index }}][info_stability_for]" id="info_product_material">
                                             <option value="">--Select--</option>
-                                            <option value="Submission">Submission</option>
-                                            <option value="Commercial">Commercial</option>
-                                            <option value="Pack Evaluation">Pack Evaluation</option>
-                                            <option value="Not Applicable">Not Applicable</option>
+                                            <option value="Submission" {{ $info_product_material['info_stability_for'] === 'Submission' ? 'selected' : '' }}>Submission</option>
+                                            <option value="Commercial" {{ $info_product_material['info_stability_for'] === 'Commercial' ? 'selected' : '' }}>Commercial</option>
+                                            <option value="Pack Evaluation" {{ $info_product_material['info_stability_for'] === 'Pack Evaluation' ? 'selected' : '' }}>Pack Evaluation</option>
+                                            <option value="Not Applicable" {{ $info_product_material['info_stability_for'] === 'Not Applicable' ? 'selected' : '' }}>Not Applicable</option>
                                         </select>
                                     </td>
+                                    <td><button type="text" class="removeRowBtn">Remove</button></td>
                                 </tr>
                             @endforeach
                         @endif
@@ -351,7 +367,7 @@
             <div class="group-input">
                 <label for="audit-agenda-grid">
                     Details of Stability Study
-                    <button type="button" name="audit-agenda-grid" id="Details_Stability">+</button>
+                    <button type="button" name="audit-agenda-grid" id="details_stability">+</button>
                     <span class="text-primary" data-bs-toggle="modal"
                         data-bs-target="#document-details-field-instruction-modal"
                         style="font-size: 0.8rem; font-weight: 400; cursor: pointer;">
@@ -359,8 +375,7 @@
                     </span>
                 </label>
                 <div class="table-responsive">
-                    <table class="table table-bordered" id="Details_Stability_details"
-                        style="width: 100%;">
+                    <table class="table table-bordered" id="details_stability_details" style="width: 100%;">
                         <thead>
                             <tr>
                                 <th style="width: 4%">Row#</th>
@@ -371,6 +386,7 @@
                                 <th style="width: 16%">Pack Details (if any)</th>
                                 <th style="width: 16%">Specification No.</th>
                                 <th style="width: 16%">Sample Description</th>
+                                <th style="width: 4%"> Action </th>
                             </tr>
                         </thead>
                         @if($details_stabilities && is_array($details_stabilities->data))
@@ -384,6 +400,7 @@
                                     <td><input type="text" name="details_stability[{{ $loop->index }}][stability_study_pack_details]" value="{{ Helpers::getArrayKey($details_stabilitie, 'stability_study_pack_details') }}"></td>
                                     <td><input type="text" name="details_stability[{{ $loop->index }}][stability_study_specification_no]" value="{{ Helpers::getArrayKey($details_stabilitie, 'stability_study_specification_no') }}"></td>
                                     <td><input type="text" name="details_stability[{{ $loop->index }}][stability_study_sample_description]" value="{{ Helpers::getArrayKey($details_stabilitie, 'stability_study_sample_description') }}"></td> 
+                                    <td><button type="text" class="removeRowBtn">Remove</button></td>
                                 </tr>
                             @endforeach
                         @endif
@@ -395,7 +412,7 @@
             <div class="group-input">
                 <label for="audit-agenda-grid">
                     OOS Details
-                    <button type="button" name="audit-agenda-grid" id="OOS_Details">+</button>
+                    <button type="button" name="audit-agenda-grid" id="oos_details">+</button>
                     <span class="text-primary" data-bs-toggle="modal"
                         data-bs-target="#document-details-field-instruction-modal"
                         style="font-size: 0.8rem; font-weight: 400; cursor: pointer;">
@@ -403,7 +420,7 @@
                     </span>
                 </label>
                 <div class="table-responsive">
-                    <table class="table table-bordered" id="OOS_Details_details" style="width: 100%;">
+                    <table class="table table-bordered" id="oos_details_details" style="width: 100%;">
                         <thead>
                             <tr>
                                 <th style="width: 4%">Row#</th>
@@ -411,10 +428,11 @@
                                 <th style="width: 8%">Test Name of OOS</th>
                                 <th style="width: 12%">Results Obtained</th>
                                 <th style="width: 16%">Specification Limit</th>
-                                <th style="width: 16%">Details of Obvious Error</th>
-                                <th style="width: 16%">File Attachment</th>
-                                <th style="width: 16%">Submit By</th>
+                                <th style="width: 10%">Details of Obvious Error</th>
+                                <th style="width: 14%">File Attachment</th>
                                 <th style="width: 16%">Submit On</th>
+                                <th style="width: 8%">Submit By</th>
+                                <th style="width: 5%"> Action</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -428,8 +446,19 @@
                                         <td><input type="text" name="oos_detail[{{ $loop->index }}][oos_specification_limit]" value="{{ Helpers::getArrayKey($oos_detail, 'oos_specification_limit') }}"></td>
                                         <td><input type="text" name="oos_detail[{{ $loop->index }}][oos_details_obvious_error]" value="{{ Helpers::getArrayKey($oos_detail, 'oos_details_obvious_error') }}"></td>
                                         <td><input type="file" name="oos_detail[{{ $loop->index }}][oos_file_attachment]"></td>
-                                        <td><input type="text" name="oos_detail[{{ $loop->index }}][oos_submit_by]" value="{{ Helpers::getArrayKey($oos_detail, 'oos_submit_by') }}"></td>
-                                        <td><input type="date" name="oos_detail[{{ $loop->index }}][oos_submit_on]" value="{{ Helpers::getArrayKey($oos_detail, 'oos_submit_on') }}"></td>
+                                        <td>
+                                          <div class="col-lg-6 new-date-data-field">
+                                            <div class="group-input input-date">
+                                                <div class="calenderauditee">
+                                                    <input type="text" id="oos_submit_on_{{ $loop->index }}" value="{{ Helpers::getdateFormat($oos_detail['oos_submit_on'] ?? '') }}" readonly placeholder="DD-MM-YYYY" />
+                                                    <input type="date" name="oos_detail[{{ $loop->index }}][oos_submit_on]" 
+                                                    value="{{ $oos_detail['oos_submit_on'] ?? '' }}"  class="hide-input" oninput="handleDateInput(this, 'oos_submit_on_{{ $loop->index }}')">
+                                                </div>
+                                            </div>
+                                          </div>
+                                       </td>
+                                       <td><input type="text" name="oos_detail[{{ $loop->index }}][oos_submit_by]" value="{{ Helpers::getArrayKey($oos_detail, 'oos_submit_by') }}"></td>
+                                       <td><button type="text" class="removeRowBtn">Remove</button></td>
                                     </tr>
                                 @endforeach
                             @endif
@@ -439,7 +468,6 @@
             </div>
             <div class="button-block">
                 <button type="submit" class="saveButton">Save</button>
-                <!-- <button type="button" class="backButton" onclick="previousStep()">Back</button> -->
                 <button type="button" class="nextButton" onclick="nextStep()">Next</button>
                 <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white">
                         Exit </a> </button>

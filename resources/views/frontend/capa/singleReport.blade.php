@@ -207,40 +207,91 @@
                     </tr>
                     <tr>
                         <th class="w-20">Initiator Group</th>
-                        <td class="w-30">@if($data->initiator_Group){{ $data->initiator_Group }} @else Not Applicable @endif</td>
+                        @php
+                        $departments = [
+                            'CQA' => 'Corporate Quality Assurance',
+                            'QAB' => 'Quality Assurance Biopharma',
+                            'CQC' => 'Central Quality Control',
+                            'PSG' => 'Plasma Sourcing Group',
+                            'CS' => 'Central Stores',
+                            'ITG' => 'Information Technology Group',
+                            'MM' => 'Molecular Medicine',
+                            'CL' => 'Central Laboratory',
+                            'TT' => 'Tech Team',
+                            'QA' => 'Quality Assurance',
+                            'QM' => 'Quality Management',
+                            'IA' => 'IT Administration',
+                            'ACC' => 'Accounting',
+                            'LOG' => 'Logistics',
+                            'SM' => 'Senior Management',
+                            'BA' => 'Business Administration',
+                        ];
+                    @endphp
+                        {{-- <td class="w-30">@if($data->initiator_Group){{ $data->initiator_Group }} @else Not Applicable @endif</td> --}}
+                        <td class="w-80">{{ $departments[$data->initiator_Group] ?? 'Unknown Department' }}</td>
+
                         <th class="w-20">Initiator Group Code</th>
                         <td class="w-80">{{ $data->initiator_group_code }}</td>
 
                      </tr>
+                     
+
+                    </table>
+                    <table>
+                     
+                     {{-- <h5>
+                        Short Description
+                     </h5>
+                    <div  style="font-size: 14px;">
+                        @if($data->short_description){{ $data->short_description }}@else Not Applicable @endif
+                    </div> --}}
                      <tr>
-                        <th class="w-20">Short Description</th>
-                        <td class="w-80">@if($data->short_description){{ $data->short_description }}@else Not Applicable @endif</td>
+                            <th class="w-20">Short Description</th>
+                           
+                            <td class="w-80">@if($data->short_description){{ $data->short_description }}@else Not Applicable @endif</td>
+                     </tr> 
+               
+                    </table>
+                      {{-- <tr>
+                            <th class="w-20">Short Description</th>
+                           
+                            <td class="w-80">@if($data->short_description){{ $data->short_description }}@else Not Applicable @endif</td>
+                       
+                      </tr>  --}}
+                      <table>
+                     <tr>
+                        {{-- <th class="w-20">Short Description</th>
+                        <td class="w-80">@if($data->short_description){{ $data->short_description }}@else Not Applicable @endif</td> --}}
                         <th class="w-20">Severity Level</th>
                         <td class="w-80">{{ $data->severity_level_form }}</td>
-
-
+                        <th class="w-20">Assigned To</th>
+                            <td class="w-30">@if($data->assign_to){{ Helpers::getInitiatorName($data->assign_to) }} @else Not Applicable @endif</td>
                     </tr>
+    
                     <tr>
-                    <th class="w-20">Assigned To</th>
-                        <td class="w-30">@if($data->assign_to){{ Helpers::getInitiatorName($data->assign_to) }} @else Not Applicable @endif</td>
+                    
                         <th class="w-20">Due Date</th>
                         <td class="w-80"> @if($data->due_date){{ $data->due_date }} @else Not Applicable @endif</td>
-
+                       <th class="w-20">Initiated Through</th>
+                        <td class="w-80">@if($data->initiated_through){{ $data->initiated_through }}@else Not Applicable @endif</td>
                     </tr>
-
+                </table>
+                    <table>
 
                     <tr>
-                        <th class="w-20">Initiated Through</th>
-                        <td class="w-80">@if($data->initiated_through){{ $data->initiated_through }}@else Not Applicable @endif</td>
-
                         <th class="w-20">Others</th>
                         <td class="w-80">@if($data->initiated_through_req){{ $data->initiated_through_req }}@else Not Applicable @endif</td>
                     </tr>
                     <tr>
-                        <th class="w-20">Repeat</th>
-                        <td class="w-80">@if($data->repeat){{ $data->repeat }}@else Not Applicable @endif</td>
                         <th class="w-20">Repeat Nature</th>
                         <td class="w-80">@if($data->repeat_nature){{ $data->repeat_nature }}@else Not Applicable @endif</td>
+                    </tr>
+                    </table>
+                    <table>
+                        <tr>
+                        <th class="w-20">Repeat</th>
+                        <td class="w-80">@if($data->repeat){{ $data->repeat }}@else Not Applicable @endif</td>
+                       
                     </tr>
                     <tr>
                         <th class="w-20">Problem Description</th>
@@ -255,22 +306,48 @@
                             <th class="w-20">Reference Records</th>
                             <td class="w-80">@if($data->capa_related_record){{ Helpers::getDivisionName($data->division_id) }}/CAPA/{{ date('Y') }}/{{ Helpers::recordFormat($data->record) }}@else Not Applicable @endif</td>
 
-                        </tr>
+                    </tr>
+                      </table>
+
+                      <h5>
+                        Initial Observation 
+                      </h5>
+                      <div style="font-size: 14px;">
+                        @if($data->initial_observation){{ $data->initial_observation}}@else Not Applicable @endif
+                      </div>
+                      <table>
+
                     <tr>
-                        <th class="w-20">Initial Observation</th>
-                        <td class="w-80">@if($data->initial_observation){{ $data->initial_observation}}@else Not Applicable @endif</td>
+                        
                         <th class="w-20">Interim Containnment</th>
                         <td class="w-80">@if($data->interim_containnment){{ $data->interim_containnment }}@else Not Applicable @endif</td>
                     </tr>
-                    <tr>
+                      </table>
+                    <h5>
+                        Containment Comments 
+                      </h5>
+                      <div style="font-size: 14px;">
+                        @if($data->capa_qa_comments){{ $data->capa_qa_comments }}@else Not Applicable @endif                     
+                     </div>
+
+                         <h5>
+                       CAPA QA Comments 
+                      </h5>
+                      <div style="font-size: 14px;">
+                         @if($data->capa_qa_comments){{ $data->capa_qa_comments }}@else Not Applicable @endif  
+                      </div>
+
+
+                    <table>
+                    {{-- <tr>
                         <th class="w-20">Containment Comments</th>
                         <td class="w-80">@if($data->containment_comments){{ $data->containment_comments }}@else Not Applicable @endif</td>
 
-                    </tr>
-                    <tr>
+                    </tr> --}}
+                    {{-- <tr>
                         <th class="w-20">CAPA QA Comments</th>
                         <td class="w-80">@if($data->capa_qa_comments){{ $data->capa_qa_comments }}@else Not Applicable @endif</td>
-                    </tr>
+                    </tr> --}}
                 <div class="block-head">
                        Capa Attachement
                     </div>
@@ -487,7 +564,7 @@
                     </table>
                 </div>
             </div>
-
+                    
 
             <!-- <div class="block">
                 <div class="head">
@@ -537,44 +614,45 @@
                   Other type CAPA Details
                 </div>
                 <table>
-                       <tr>
-                            <th class="w-20">Details</th>
-                            <td class="w-80">@if($data->details_new){{ $data->details_new }}@else Not Applicable @endif</td>
-                        </tr>
-                       <tr>
-                            <th class="w-20">CAPA QA Comments
-                            </th>
-                            <td class="w-80">@if($data->capa_qa_comments){{ $data->capa_qa_comments }}@else Not Applicable @endif</td>
-                        </tr>
+               <tr> 
+                <th class="w-20">  Details </th>
+                <td class="w-80">@if($data->details_new){{ $data->details_new }}@else Not Applicable @endif </td>
+            </tr>
+                  
                 <tr>
-                        <th class="w-20">CAPA Type</th>
-                        <td class="w-80">@if($data->capa_type){{ $data->capa_type }}@else Not Applicable @endif</td>
-                    </tr>
-                    <tr>
-                        <th class="w-20">Corrective Action</th>
-                        <td class="w-80">@if($data->corrective_action){{ $data->corrective_action }}@else Not Applicable @endif</td>
-                    </tr>
-                    <tr>
-                        <th class="w-20">Preventive Action</th>
-                        <td class="w-80">@if($data->preventive_action){{ $data->preventive_action }}@else Not Applicable @endif</td>
-
-                    </tr>
-                    <tr>
-                        <th class="w-20">Supervisor Review Comments
-                        </th>
-                        <td class="w-80">@if($data->supervisor_review_comments){{ $data->supervisor_review_comments }}@else Not Applicable @endif</td>
-                    </tr>
+                    <th class="w-20">  CAPA QA Comments  </th>
+                <td class="w-80">
+                    @if($data->capa_qa_comments){{ $data->capa_qa_comments }}@else Not Applicable @endif
+                </td>
+                 
+                </tr>
+                   
+                       
+                
 
                     <div class="block-head">
                        CAPA Closure
                     </div>
-                    <table>
-                     <tr>
+                  <tr>
+                      
+                    <th class="w-20">
+                        QA Review & Closure
+                       </th>
+                     <td class="w-80">
+                        @if($data->qa_review){{ $data->qa_review }}@else Not Applicable @endif      </td>     
+                  </tr>
+                     {{-- <tr>
                         <th class="w-20">QA Review & Closure</th>
                         <td class="w-80">@if($data->qa_review){{ $data->qa_review }}@else Not Applicable @endif</td>
-                        <th class="w-20">Due Date Extension Justification</th>
-                        <td class="w-80">@if($data->due_date_extension){{ $data->due_date_extension }}@else Not Applicable @endif</td>
+                       
+                   </tr> --}}
+               
+                   <tr>
+                    <th class="w-20">Due Date Extension Justification</th>
+                    <td class="w-80">@if($data->due_date_extension){{ $data->due_date_extension }}@else Not Applicable @endif</td>
                    </tr>
+                </table>
+            </div>
                     {{-- <tr>
                         <th class="w-20">Closure Attachment</th>
                         <td class="w-80">@if($data->closure_attachment)<a href="{{asset('upload/document/',$data->closure_attachment)}}">{{ $data->closure_attachment }}</a>@else Not Applicable @endif</td>
@@ -607,7 +685,7 @@
                      </table>
                    </div>
             </div>
-                    </table>
+        
                     </div>
                     </div>
 
@@ -618,9 +696,9 @@
                 </div>
                 <table>
                     <tr>
-                        <th class="w-20">Plan Proposed By
+                        <th class="w-30">Plan Proposed By
                         </th>
-                        <td class="w-30">{{ $data->plan_proposed_by }}</td>
+                        <td class="w-40">{{ $data->plan_proposed_by }}</td>
                         <th class="w-20">
                             Plan Proposed On</th>
                         <td class="w-30">{{ $data->plan_proposed_on }}</td>

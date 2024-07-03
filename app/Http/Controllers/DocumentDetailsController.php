@@ -106,6 +106,31 @@ class DocumentDetailsController extends Controller
           $stage->comment = $request->comment;
           $stage->save();
 
+          if ($request->stage_id == 'Close-by-HOD') {
+            $stage = new StageManage;
+            $stage->document_id = $request->document_id;
+            $stage->user_id = Auth::user()->id;
+            $stage->role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $stage->stage = 'Close-by-HOD';
+            $stage->comment = $request->comment;
+            $stage->save();
+
+            $history = new DocumentHistory();
+            $history->document_id = $request->document_id;
+            $history->activity_type = 'Close-by-HOD';
+            $history->previous = '';
+            $history->current = '';
+            $history->comment = $request->comment;
+            $history->action_name = 'Submit';
+            $history->change_from = 'In-HOD Review';
+            $history->change_to = 'Closed/Cancel';
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = 'In-HOD Review';
+            $history->save();
+          }
+
           if ($request->stage_id == 'HOD Review Complete') {
             $stage = new StageManage;
             $stage->document_id = $request->document_id;
@@ -493,6 +518,31 @@ class DocumentDetailsController extends Controller
         }
 
         if (Helpers::checkRoles(4) && in_array(Auth::user()->id, explode(",", $document->hods)) && ($document->stage == 2 || $document->stage == 3)) {
+          if ($request->stage_id == "Close-by-HOD") {
+              
+              $document->status = "Closed/Cancel";
+              $document->stage = 13;
+
+              $history = new DocumentHistory();
+              $history->document_id = $request->document_id;
+              $history->activity_type = 'Close-by-HOD';
+              $history->previous = '';
+              $history->current = '';
+              $history->comment = $request->comment;
+              $history->action_name = 'Submit';
+              $history->change_from = 'In-HOD Review';
+              $history->change_to = 'Closed/Cancel';
+              $history->user_id = Auth::user()->id;
+              $history->user_name = Auth::user()->name;
+              $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+              $history->origin_state = 'In-HOD Review';
+              $history->save();
+
+              $document->save();
+
+              return redirect()->back();
+          }
+
           if ($request->stage_id == "Cancel-by-HOD") {
             $document->status = "Draft";
             $document->stage = 1;
@@ -610,13 +660,13 @@ class DocumentDetailsController extends Controller
                 $document->update();
                 $history = new DocumentHistory();
                 $history->document_id = $request->document_id;
-                $history->activity_type = 'Send for Approver';
+                $history->activity_type = 'Send for Review';
                 $history->previous = '';
                 $history->current = '';
                 $history->comment = $request->comment;
                 $history->action_name = 'Submit'; 
-                $history->change_from = 'Reviewed';
-                $history->change_to = 'For-Approval';
+                $history->change_from = 'HOD-Review Complete';
+                $history->change_to = 'In-Review';
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -642,6 +692,24 @@ class DocumentDetailsController extends Controller
               }
             }
             if ($request->stage_id == 6) {
+              $document['stage'] = $request->stage_id;
+              $document['status'] = Stage::where('id', $request->stage_id)->value('name');
+              $document->update();
+              $history = new DocumentHistory();
+              $history->document_id = $request->document_id;
+              $history->activity_type = 'Send for Approver';
+              $history->previous = '';
+              $history->current = '';
+              $history->comment = $request->comment;
+              $history->action_name = 'Submit'; 
+              $history->change_from = 'Reviewed';
+              $history->change_to = 'For-Approval';
+              $history->user_id = Auth::user()->id;
+              $history->user_name = Auth::user()->name;
+              $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+              $history->origin_state = 'Reviewed';
+              $history->save();
+
               $traning = DocumentTraining::where('document_id', $document->id)->first();
               if ($traning){
                 $traning->trainer = User::find($traning->trainer);

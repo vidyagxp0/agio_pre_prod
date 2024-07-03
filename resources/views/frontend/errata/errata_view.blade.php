@@ -15,8 +15,7 @@
             New Child
         </div> --}}
         <div class="division-bar">
-            <strong>Site Division/Project</strong> :
-            / ERRATA
+            <strong>Site Division/Project</strong> : {{ Helpers::getDivisionName(session()->get('division')) }}/ERRATA
         </div>
     </div>
 
@@ -26,6 +25,7 @@
             flex: 1 1 auto;
             border: 1px solid grey;
             padding: 5px;
+            /* border-radius: 20px; */
             text-align: center;
             position: relative;
             /* border-right: none; */
@@ -92,7 +92,7 @@
                             </button>
                         @elseif($showdata->stage == 3 && (in_array(3, $userRoleIds) || in_array(18, $userRoleIds)))
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#more-info-required-modal">
-                                More Info Required
+                                Request More Info.
                             </button>
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#correction-modal">
                                 Correction Completed
@@ -103,7 +103,7 @@
                         @elseif($showdata->stage == 4 && (in_array([4, 14], $userRoleIds) || in_array(18, $userRoleIds)))
                             <button class="button_theme1" data-bs-toggle="modal"
                                 data-bs-target="#more-inform-required-modal">
-                                More Info Required
+                                Request More Info.
                             </button>
 
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#hod-rewieve-modal">
@@ -128,7 +128,7 @@
                     <div class="head">Current Status</div>
                     @if ($showdata->stage == 0)
                         <div class="progress-bars ">
-                            <div class="bg-danger">Closed-Cancelled</div>
+                            <div class="bg-danger" style="border-radius: 20px;">Closed-Cancelled</div>
                         </div>
                     @else
                         <div class="progress-bars d-flex" style="font-size: 15px;">
@@ -158,9 +158,9 @@
                                 <div class="">Pending QA Head Approval</div>
                             @endif
                             @if ($showdata->stage >= 6)
-                                <div class="bg-danger">Closed Done</div>
+                                <div class="bg-danger">Closed-Done</div>
                             @else
-                                <div class="">Closed Done</div>
+                                <div class="">Closed-Done</div>
                             @endif
                         </div>
                     @endif
@@ -188,11 +188,13 @@
                     <div id="CCForm1" class="inner-block cctabcontent">
                         <div class="inner-block-content">
                             <div class="row">
-                                <div class="sub-head">Parent Record Information</div>   
+                                <div class="sub-head">Parent Record Information</div>
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="RLS Record Number">Record Number</label>
-                                        <input disabled type="text" name="record">
+                                        <input disabled type="text" name="record_no"
+                                        value="{{  Helpers::getDivisionName(session()->get('division')) }}/ERRATA/{{ Helpers::year($showdata->created_at) }}/{{ str_pad($showdata->record, 4, '0', STR_PAD_LEFT) }}">
+                                        {{-- <input disabled type="text" name="record"> --}}
                                         {{-- value="{{ Helpers::getDivisionName(session()->get('division')) }}/ERRATA/{{ date('Y') }}/{{ $record }}"> --}}
                                         {{-- <div class="static">QMS-EMEA/CAPA/{{ date('Y') }}/{{ $record_number }}</div> --}}
                                     </div>
@@ -205,7 +207,7 @@
                                             value="{{ Helpers::getDivisionName(session()->get('division')) }}">
                                         <input type="hidden" name="division_id"
                                             value="{{ session()->get('division') }}">
-                                        {{-- <div class="static">QMS-North America</div> --}}
+                                        {{-- <div class="static">{{ Helpers::getDivisionName(session()->get('division')) }}</div> --}}
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
@@ -235,11 +237,15 @@
                                         </label>
                                         <select id="select-state" placeholder="Select..." name="initiated_by"
                                             {{ Helpers::disabledErrataFields($showdata->stage) }}>
-                                            <option value="{{ $showdata->initiated_by }}">
-                                                {{ $showdata->initiated_by }}</option>
-                                            {{-- <option value="Pankaj Jat">Pankaj Jat</option>
-                                            <option value="Gaurav">Gaurav</option>
-                                            <option value="Manish">Manish</option> --}}
+                                            <option value="">--Select--</option>
+                                            <option value="Recall "{{ $showdata->initiated_by == 'Recall' ? 'selected' : '' }}>Recall </option>
+                                            <option value="Return "{{ $showdata->initiated_by == 'Return' ? 'selected' : '' }}>Return </option>
+                                            <option value="Deviation"{{ $showdata->initiated_by == 'Deviation' ? 'selected' : '' }}>Deviation</option>
+                                            <option value="Complaint"{{ $showdata->initiated_by == 'Complaint' ? 'selected' : '' }}>Complaint</option>
+                                            <option value="Regulatory"{{ $showdata->initiated_by == 'Regulatory' ? 'selected' : '' }}>Regulatory</option>
+                                            <option value="Lab Incident"{{ $showdata->initiated_by == 'Lab Incident' ? 'selected' : '' }}>Lab Incident</option>
+                                            <option value="Improvement"{{ $showdata->initiated_by == 'Improvement' ? 'selected' : '' }}>Improvement</option>
+                                            <option value="Others"{{ $showdata->initiated_by == 'Others' ? 'selected' : '' }}>Others</option>
                                         </select>
                                     </div>
                                 </div>
@@ -252,53 +258,54 @@
                                         <select name="Department"
                                             {{ $showdata->stage == 0 || $showdata->stage == 6 ? 'disabled' : '' }}
                                             id="selectedOptions" {{ Helpers::disabledErrataFields($showdata->stage) }}>
-                                            <option value="CQA" @if ($showdata->Department == 'CQA') selected @endif>
+                                            <option value="">--Select--</option>
+                                            <option value="CQA" @if ($showdata->Department == 'Corporate Quality Assurance') selected @endif>
                                                 Corporate
                                                 Quality Assurance</option>
-                                            <option value="QAB" @if ($showdata->Department == 'QAB') selected @endif>
+                                            <option value="QAB" @if ($showdata->Department == 'Quality Assurance Biopharma') selected @endif>
                                                 Quality
                                                 Assurance Biopharma</option>
-                                            <option value="CQC" @if ($showdata->Department == 'CQC') selected @endif>
+                                            <option value="CQC" @if ($showdata->Department == 'Central Quality Control') selected @endif>
                                                 Central
                                                 Quality Control</option>
-                                            <option value="CQC" @if ($showdata->Department == 'CQC') selected @endif>
+                                            <option value="CQC" @if ($showdata->Department == 'Manufacturing') selected @endif>
                                                 Manufacturing
                                             </option>
-                                            <option value="PSG" @if ($showdata->Department == 'PSG') selected @endif>
+                                            <option value="PSG" @if ($showdata->Department == ' Plasma Sourcing Group') selected @endif>
                                                 Plasma
                                                 Sourcing Group</option>
-                                            <option value="CS" @if ($showdata->Department == 'CS') selected @endif>
+                                            <option value="CS" @if ($showdata->Department == 'Central Stores') selected @endif>
                                                 Central
                                                 Stores</option>
-                                            <option value="ITG" @if ($showdata->Department == 'ITG') selected @endif>
+                                            <option value="ITG" @if ($showdata->Department == 'Information Technology Group') selected @endif>
                                                 Information
                                                 Technology Group</option>
-                                            <option value="MM" @if ($showdata->Department == 'MM') selected @endif>
+                                            <option value="MM" @if ($showdata->Department == 'Molecular Medicine') selected @endif>
                                                 Molecular
                                                 Medicine</option>
-                                            <option value="CL" @if ($showdata->Department == 'CL') selected @endif>
+                                            <option value="CL" @if ($showdata->Department == 'Central Laboratory') selected @endif>
                                                 Central
                                                 Laboratory</option>
-                                            <option value="TT" @if ($showdata->Department == 'TT') selected @endif>Tech
+                                            <option value="TT" @if ($showdata->Department == 'Tech Team') selected @endif>Tech
                                                 Team</option>
-                                            <option value="QA" @if ($showdata->Department == 'QA') selected @endif>
+                                            <option value="QA" @if ($showdata->Department == 'Quality Assurance') selected @endif>
                                                 Quality
                                                 Assurance</option>
-                                            <option value="QM" @if ($showdata->Department == 'QM') selected @endif>
+                                            <option value="QM" @if ($showdata->Department == 'Quality Management') selected @endif>
                                                 Quality
                                                 Management</option>
-                                            <option value="IA" @if ($showdata->Department == 'IA') selected @endif>IT
+                                            <option value="IA" @if ($showdata->Department == 'IT Administration') selected @endif>IT
                                                 Administration</option>
-                                            <option value="ACC" @if ($showdata->Department == 'ACC') selected @endif>
+                                            <option value="ACC" @if ($showdata->Department == 'Accounting') selected @endif>
                                                 Accounting
                                             </option>
-                                            <option value="LOG" @if ($showdata->Department == 'LOG') selected @endif>
+                                            <option value="LOG" @if ($showdata->Department == 'Logistics') selected @endif>
                                                 Logistics
                                             </option>
-                                            <option value="SM" @if ($showdata->Department == 'SM') selected @endif>
+                                            <option value="SM" @if ($showdata->Department == 'Senior Management') selected @endif>
                                                 Senior
                                                 Management</option>
-                                            <option value="BA" @if ($showdata->Department == 'BA') selected @endif>
+                                            <option value="BA" @if ($showdata->Department == 'Business Administration') selected @endif>
                                                 Business
                                                 Administration</option>
 
@@ -307,7 +314,7 @@
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="group-input">
-                                        <label for="Initiator Group Code">Initiator Group Code</label>
+                                        <label for="Initiator Group Code">Department Code</label>
                                         <input readonly type="text"
                                             name="department_code"{{ $showdata->stage == 0 || $showdata->stage == 6 ? 'disabled' : '' }}
                                             value="{{ $showdata->department_code }}" id="initiator_group_code" readonly
@@ -351,11 +358,16 @@
                                         </label>
                                         <select id="select-state" placeholder="Select..." name="document_type"
                                             {{ Helpers::disabledErrataFields($showdata->stage) }}>
-                                            <option value="{{ $showdata->document_type }}">
-                                                {{ $showdata->document_type }}</option>
-                                            <option value="D01">D01</option>
-                                            <option value="D02">D02</option>
-                                            <option value="D03">D03</option>
+                                            <option value="">--Select--</option>
+                                            <option value="Procedure Document"@if ($showdata->document_type == 'Procedure Document') selected @endif>Procedure Document</option>
+                                            <option value="Work Instruction"@if ($showdata->document_type == 'Work Instruction') selected @endif>Work Instruction</option>
+                                            <option value="Form"@if ($showdata->document_type == 'Form') selected @endif>Form</option>
+                                            <option value="Template"@if ($showdata->document_type == 'Template') selected @endif>Template</option>
+                                            <option value="Policy Document"@if ($showdata->document_type == 'Policy Document') selected @endif>Policy Document</option>
+                                            <option value="Quality Record"@if ($showdata->document_type == 'Quality Record') selected @endif>Quality Record</option>
+                                            <option value="Specification Document"@if ($showdata->document_type == 'Specification Document') selected @endif>Specification Document</option>
+                                            <option value="Training Material"@if ($showdata->document_type == 'Training Material') selected @endif>Training Material</option>
+                                            <option value="Other"@if ($showdata->document_type == 'Other') selected @endif>Other</option>
                                         </select>
                                     </div>
                                 </div>
@@ -367,34 +379,27 @@
                                         characters remaining
                                         <input id="docname" type="text" name="short_description" maxlength="255"
                                             value="{{ $showdata->short_description }}"
-                                            {{ Helpers::disabledErrataFields($showdata->stage) }}>
+                                            {{ Helpers::disabledErrataFields($showdata->stage) }} required>
                                     </div>
                                 </div>
                                 @php
-                                    // Assume $showdata is the object containing reference_document array
-                                    // $showdata->reference_document = is_array($showdata->reference_document)
-                                    //     ? $showdata->reference_document
-                                    //     : explode(',', $showdata->reference_document);
-                                    // $divisionName = Helpers::getDivisionName(Auth::user()->id);
-                                    // $recordFormat = Helpers::recordFormat(Auth::user()->name);
-                                    // $referenceValue = "{$divisionName}/Errata/" . date('Y') . "/{$recordFormat}";
-
                                     $old_record = DB::table('erratas')->get();
                                     $reference_documents = is_array($showdata->reference_document)
                                         ? $showdata->reference_document
                                         : explode(',', $showdata->reference_document);
                                 @endphp
-
                                 <div class="">
                                     <div class="group-input">
                                         <label for="reference_record">Reference Documents</label>
                                         <select multiple id="reference_record" name="reference_document[]"
                                             {{ Helpers::disabledErrataFields($showdata->stage) }}>
                                             @foreach ($old_record as $new)
-                                                <option value="{{ $new->id }}"
-                                                    {{ in_array($new->id, $reference_documents) ? 'selected' : '' }}>
-                                                    {{ Helpers::getDivisionName($new->division_id) }}/ERRATA/{{ date('Y') }}/{{ $new->short_description }}
-                                                    {{-- to add record number{{ Helpers::recordFormat($new->record) }}/ --}}
+                                                @php
+                                                    $value = Helpers::getDivisionName($new->division_id) . '/ERRATA/' . date('Y') . '/' . str_pad($new->id, 4, '0', STR_PAD_LEFT);
+                                                    $selected = in_array($value, $reference_documents) ? 'selected' : '';
+                                                @endphp
+                                                <option value="{{ $value }}" {{ $selected }}>
+                                                    {{ $value }}
                                                 </option>
                                             @endforeach
 
@@ -432,13 +437,12 @@
                                         </label>
                                         <select id="select-state" placeholder="Select..." name="type_of_error"
                                             {{ Helpers::disabledErrataFields($showdata->stage) }}>
-                                            <option value="{{ $showdata->type_of_error }}">
-                                                {{ $showdata->type_of_error }}</option>
-                                            <option value="Typographical Error (TE)">Typographical Error (TE)
+                                            <option value="">--Select--</option>
+                                            <option value="Typographical Error (TE)" @if ($showdata->type_of_error == 'Typographical Error (TE)') selected @endif>Typographical Error (TE)
                                             </option>
-                                            <option value="Calculation Error (CE)">Calculation Error (CE)</option>
-                                            <option value="Grammatical Error (GE)">Grammatical Error (GE)</option>
-                                            <option value="Missing Word Error (ME)">Missing Word Error (ME)
+                                            <option value="Calculation Error (CE)" @if ($showdata->type_of_error == 'Calculation Error (CE)') selected @endif>Calculation Error (CE)</option>
+                                            <option value="Grammatical Error (GE)" @if ($showdata->type_of_error == 'Grammatical Error (GE)') selected @endif>Grammatical Error (GE)</option>
+                                            <option value="Missing Word Error (ME)" @if ($showdata->type_of_error == 'Missing Word Error (ME)') selected @endif>Missing Word Error (ME)
                                             </option>
                                         </select>
                                     </div>
@@ -508,17 +512,17 @@
                                     </div>
                                 </div>
 
-                                <div class="">
+                                {{-- <div class="">
                                     <div class="group-input">
                                         <label for="Date And Time of Correction"><b>Date And Time of Correction
                                             </b></label>
-                                        <input type="date" name="Date_and_time_of_correction"
+                                        <input type="datetime-local" name="Date_and_time_of_correction"
                                             value="{{ $showdata->Date_and_time_of_correction }}"
                                             {{ Helpers::disabledErrataFields($showdata->stage) }}>
 
                                     </div>
                                 </div> --}}
-                                <div class="new-date-data-field">
+                                {{-- <div class="new-date-data-field">
                                     <div class="group-input input-date">
                                         <label for="Errata_date">Date And Time of Correction</label>
                                         <div class="calenderauditee">
@@ -531,7 +535,48 @@
                                     @error('Errata_date')
                                         <div class="text-danger">{{ $message }}</div>
                                     @enderror
+                                </div> --}}
+
+                                <div class="new-date-data-field">
+                                    <div class="group-input input-date">
+                                        <label for="Errata_date">Date And Time of Correction</label>
+                                        <div class="calenderauditee">
+                                            <input type="text" id="displayErrataDate" name="Date_and_time_of_correction" readonly placeholder="DD-MM-YYYY HH:MM" value="{{ old('Date_and_time_of_correction', $showdata->Date_and_time_of_correction) }}"/>
+                                            <input type="datetime-local" id="Errata_date" name="Date_and_time_of_correction" onchange="updateDisplayDateTime(this)" class="hide-input" />
+                                        </div>
+                                    </div>
+                                    @error('Errata_date')
+                                        <div class="text-danger">{{ $message }}</div>
+                                    @enderror
                                 </div>
+
+                                <script>
+                                    function updateDisplayDateTime(input) {
+                                        const selectedDateTime = new Date(input.value);
+                                        const formattedDateTime = formatDate(selectedDateTime);
+                                        document.getElementById('displayErrataDate').value = formattedDateTime;
+                                    }
+
+                                    function formatDate(date) {
+                                        const day = String(date.getDate()).padStart(2, '0');
+                                        const monthIndex = date.getMonth();
+                                        const monthNames = ["Jan", "Feb", "March", "April", "May", "June",
+                                            "July", "Aug", "Sep", "Oct", "Nov", "Dec"];
+                                        const month = monthNames[monthIndex];
+                                        const year = date.getFullYear();
+                                        let hours = date.getHours();
+                                        let minutes = date.getMinutes();
+
+                                        hours = String(hours).padStart(2, '0');
+                                        minutes = String(minutes).padStart(2, '0');
+
+                                        const formattedDateTime = `${day}-${month}-${year} ${hours}:${minutes}`;
+
+                                        return formattedDateTime;
+                                    }
+                                </script>
+
+
 
 
 
@@ -539,7 +584,11 @@
 
                             </div>
                             <div class="button-block">
+                                @if ($showdata->stage >= 6)
+                                <button type="submit" class="saveButton" disabled>Save</button>
+                                @else
                                 <button type="submit" class="saveButton">Save</button>
+                                @endif
                                 <button type="button" class="nextButton" onclick="nextStep()">Next</button>
                                 <button type="button"> <a class="text-white" href="{{ url('rcms/qms-dashboard') }}">
                                         Exit </a> </button>
@@ -571,9 +620,8 @@
                                                         <h6 type="button" class="file-container text-dark"
                                                             style="background-color: rgba(255, 255, 255, 0);">
                                                             <b>{{ $file }}</b>
-                                                            <a href="{{ asset('upload/' . $file) }}" target="_blank"><i
-                                                                    class="fa fa-eye text-primary"
-                                                                    style="font-size:20px; margin-right:-10px;"></i></a>
+                                                            <a href="{{ asset('upload/' . $file) }}" target="_blank"><i class="fa fa-eye text-primary" style="font-size:20px; margin-right:-10px;"></i></a>
+                                                            <a type="button" class="remove-file" data-file-name="{{ $file }}"><i class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i></a>
                                                         </h6>
                                                     @endforeach
                                                 @endif
@@ -588,9 +636,83 @@
                                     </div>
                                 </div>
 
+                                {{-- <script>
+                                    document.addEventListener('DOMContentLoaded', function () {
+                                        const removeButtons = document.querySelectorAll('.remove-file');
+
+                                        removeButtons.forEach(button => {
+                                            button.addEventListener('click', function () {
+                                                const fileName = this.getAttribute('data-file-name');
+                                                const fileContainer = this.closest('.file-container');
+
+                                                // Hide the file container
+                                                if (fileContainer) {
+                                                    fileContainer.style.display = 'none';
+                                                }
+                                            });
+                                        });
+                                    });
+                                </script> --}}
+                                <script>
+                                    document.addEventListener('DOMContentLoaded', function () {
+                                        const removeButtons = document.querySelectorAll('.remove-file');
+
+                                        removeButtons.forEach(button => {
+                                            button.addEventListener('click', function () {
+                                                const fileName = this.getAttribute('data-file-name');
+                                                const fileContainer = this.closest('.file-container');
+
+                                                // Hide the file container
+                                                if (fileContainer) {
+                                                    fileContainer.style.display = 'none';
+                                                }
+                                            });
+                                        });
+                                    });
+
+                                    function addMultipleFiles(input, id) {
+                                        const fileListContainer = document.getElementById(id);
+                                        const files = input.files;
+
+                                        for (let i = 0; i < files.length; i++) {
+                                            const file = files[i];
+                                            const fileName = file.name;
+                                            const fileContainer = document.createElement('h6');
+                                            fileContainer.classList.add('file-container', 'text-dark');
+                                            fileContainer.style.backgroundColor = 'rgb(243, 242, 240)';
+
+                                            const fileText = document.createElement('b');
+                                            fileText.textContent = fileName;
+
+                                            const viewLink = document.createElement('a');
+                                            viewLink.href = '#'; // You might need to adjust this to handle local previews
+                                            viewLink.target = '_blank';
+                                            viewLink.innerHTML = '<i class="fa fa-eye text-primary" style="font-size:20px; margin-right:-10px;"></i>';
+
+                                            const removeLink = document.createElement('a');
+                                            removeLink.classList.add('remove-file');
+                                            removeLink.dataset.fileName = fileName;
+                                            removeLink.innerHTML = '<i class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i>';
+                                            removeLink.addEventListener('click', function () {
+                                                fileContainer.style.display = 'none';
+                                            });
+
+                                            fileContainer.appendChild(fileText);
+                                            fileContainer.appendChild(viewLink);
+                                            fileContainer.appendChild(removeLink);
+
+                                            fileListContainer.appendChild(fileContainer);
+                                        }
+                                    }
+                                </script>
+
 
                                 <div class="button-block">
+                                    @if ($showdata->stage >= 6)
+                                    <button type="submit" class="saveButton" disabled>Save</button>
+                                    @else
                                     <button type="submit" class="saveButton">Save</button>
+                                    @endif
                                     <button type="button" class="backButton" onclick="previousStep()">Back</button>
                                     <button type="button" class="nextButton" onclick="nextStep()">Next</button>
 
@@ -1848,9 +1970,8 @@
                                                         <h6 type="button" class="file-container text-dark"
                                                             style="background-color: rgba(255, 255, 255, 0);">
                                                             <b>{{ $file }}</b>
-                                                            <a href="{{ asset('upload/' . $file) }}" target="_blank"><i
-                                                                    class="fa fa-eye text-primary"
-                                                                    style="font-size:20px; margin-right:-10px;"></i></a>
+                                                            <a href="{{ asset('upload/' . $file) }}" target="_blank"><i class="fa fa-eye text-primary" style="font-size:20px; margin-right:-10px;"></i></a>
+                                                            <a type="button" class="remove-file" data-file-name="{{ $file }}"><i class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i></a>
                                                         </h6>
                                                     @endforeach
                                                 @endif
@@ -1867,7 +1988,11 @@
 
 
                                 <div class="button-block">
+                                    @if ($showdata->stage >= 6)
+                                    <button type="submit" class="saveButton" disabled>Save</button>
+                                    @else
                                     <button type="submit" class="saveButton">Save</button>
+                                    @endif
                                     <button type="button" class="backButton" onclick="previousStep()">Back</button>
                                     <button type="button" class="nextButton" onclick="nextStep()">Next</button>
 
@@ -1885,14 +2010,22 @@
                         <div class="inner-block-content">
                             <div class="row">
 
-                                <div class="col-6">
+                                <div class="col-12">
+                                    <div class="group-input">
+                                        <label class="mt-4" for="Audit Comments">Closure Comments</label>
+                                        <textarea class="summernote" name="Closure_Comments" id="summernote-16">{{$showdata->Closure_Comments}}</textarea>
+                                    </div>
+                                </div>
+
+
+                                {{-- <div class="col-6">
                                     <div class="group-input">
                                         <label class="" for="Closure Comments">Closure Comments</label>
                                         <input type="text" name="Closure_Comments"
                                             value="{{ $showdata->Closure_Comments }}"
                                             {{ Helpers::disabledErrataFields($showdata->stage) }} />
                                     </div>
-                                </div>
+                                </div> --}}
 
                                 <div class="col-md-6">
                                     <div class="group-input">
@@ -1902,10 +2035,9 @@
                                         <select id="select-state" placeholder="Select..."
                                             name="All_Impacting_Documents_Corrected"
                                             {{ Helpers::disabledErrataFields($showdata->stage) }}>
-                                            <option value="{{ $showdata->All_Impacting_Documents_Corrected }}">
-                                                {{ $showdata->All_Impacting_Documents_Corrected }}</option>
-                                            <option value="Yes">Yes</option>
-                                            <option value="No">No</option>
+                                            <option value="">--Select--</option>
+                                            <option value="Yes" @if ($showdata->All_Impacting_Documents_Corrected == 'Yes') selected @endif>Yes</option>
+                                            <option value="No" @if ($showdata->All_Impacting_Documents_Corrected == 'No') selected @endif>No</option>
                                         </select>
                                     </div>
                                 </div>
@@ -1918,7 +2050,35 @@
                                     </div>
                                 </div>
 
-                                <div class="col-12">
+                                <div class="col-lg-12">
+                                    <div class="group-input">
+                                        <label for="Initial Attachments">Closure Attachment</label>
+                                        <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
+                                        <div class="file-attachment-field">
+                                            <div class="file-attachment-list" id="Closure_Attachments">
+                                                @if ($showdata->Closure_Attachments)
+                                                    @foreach (json_decode($showdata->Closure_Attachments) as $file)
+                                                        <h6 type="button" class="file-container text-dark" style="background-color: rgb(243, 242, 240);">
+                                                            <b>{{ $file }}</b>
+                                                            <a href="{{ asset('upload/' . $file) }}" target="_blank">
+                                                                <i class="fa fa-eye text-primary" style="font-size:20px; margin-right:-10px;"></i>
+                                                            </a>
+                                                            <a type="button" class="remove-file" data-file-name="{{ $file }}">
+                                                                <i class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i>
+                                                            </a>
+                                                        </h6>
+                                                    @endforeach
+                                                @endif
+                                            </div>
+                                            <div class="add-btn">
+                                                <div>Add</div>
+                                                <input {{ $showdata->stage == 0 || $showdata->stage == 8 ? "disabled" : "" }} type="file" id="Closure_Attachments" name="Closure_Attachments[]" oninput="addMultipleFiles(this, 'Closure_Attachments')" multiple>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                {{-- <div class="col-12">
                                     <div class="group-input">
                                         <label for="Closure Attachments">Closure Attachments</label>
                                         <div><small class="text-primary">Please Attach all relevant or supporting
@@ -1931,9 +2091,8 @@
                                                         <h6 type="button" class="file-container text-dark"
                                                             style="background-color: rgba(255, 255, 255, 0);">
                                                             <b>{{ $file }}</b>
-                                                            <a href="{{ asset('upload/' . $file) }}" target="_blank"><i
-                                                                    class="fa fa-eye text-primary"
-                                                                    style="font-size:20px; margin-right:-10px;"></i></a>
+                                                            <a href="{{ asset('upload/' . $file) }}" target="_blank"><i class="fa fa-eye text-primary" style="font-size:20px; margin-right:-10px;"></i></a>
+                                                            <a type="button" class="remove-file" data-file-name="{{ $file }}"><i class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i></a>
                                                         </h6>
                                                     @endforeach
                                                 @endif
@@ -1946,13 +2105,17 @@
                                             </div>
                                         </div>
                                     </div>
-                                </div>
+                                </div> --}}
 
 
 
 
                                 <div class="button-block">
+                                    @if ($showdata->stage >= 6)
+                                    <button type="submit" class="saveButton" disabled>Save</button>
+                                    @else
                                     <button type="submit" class="saveButton">Save</button>
+                                    @endif
                                     <button type="button" class="backButton" onclick="previousStep()">Back</button>
                                     <button type="button" class="nextButton" onclick="nextStep()">Next</button>
 
@@ -2136,7 +2299,11 @@
 
 
                                 <div class="button-block">
+                                    @if ($showdata->stage >= 6)
+                                    <button type="submit" class="saveButton" disabled>Save</button>
+                                    @else
                                     <button type="submit" class="saveButton">Save</button>
+                                    @endif
                                     <button type="button" class="backButton" onclick="previousStep()">Back</button>
                                     <button type="button" class="nextButton" onclick="nextStep()">Next</button>
 
@@ -2179,8 +2346,8 @@
                             <input type="password" name="password" required>
                         </div>
                         <div class="group-input">
-                            <label for="comment">Comment<span class="text-danger">*</span></label>
-                            <input type="comment" name="comment" required>
+                            <label for="comment">Comment</label>
+                            <input type="comment" name="comment" >
                         </div>
                     </div>
 
@@ -2220,8 +2387,8 @@
                             <input class="input_width" type="password" name="password" required>
                         </div>
                         <div class="group-input">
-                            <label for="comment">Comment<span class="text-danger">*</span></label>
-                            <input class="input_width" type="comment" name="comment" required>
+                            <label for="comment">Comment</label>
+                            <input class="input_width" type="comment" name="comment">
                         </div>
                     </div>
 
@@ -2261,8 +2428,8 @@
                             <input class="input_width" type="password" name="password" required>
                         </div>
                         <div class="group-input">
-                            <label for="comment">Comment<span class="text-danger">*</span></label>
-                            <input class="input_width" type="comment" name="comment" required>
+                            <label for="comment">Comment</label>
+                            <input class="input_width" type="comment" name="comment">
                         </div>
                     </div>
 
@@ -2302,8 +2469,8 @@
                             <input class="input_width" type="password" name="password" required>
                         </div>
                         <div class="group-input">
-                            <label for="comment">Comment<span class="text-danger">*</span></label>
-                            <input class="input_width" type="comment" name="comment" required>
+                            <label for="comment">Comment</label>
+                            <input class="input_width" type="comment" name="comment">
                         </div>
                     </div>
 
@@ -2343,8 +2510,8 @@
                             <input class="input_width" type="password" name="password" required>
                         </div>
                         <div class="group-input">
-                            <label for="comment">Comment<span class="text-danger">*</span></label>
-                            <input class="input_width" type="comment" name="comment" required>
+                            <label for="comment">Comment</label>
+                            <input class="input_width" type="comment" name="comment">
                         </div>
                     </div>
 

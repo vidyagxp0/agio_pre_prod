@@ -116,7 +116,7 @@
                                     <label for="Division Code"><b>Site/Location Code</b></label>
                                     <input disabled type="text" name="division_code"
                                         value="{{ Helpers::getDivisionName($document->division_id) }}">
-                                    {{-- <div class="static">QMS-North America</div> --}}
+                                    {{-- <div class="static">{{ Helpers::getDivisionName(session()->get('division')) }}</div> --}}
                                 </div>
                             </div>
                             <div class="col-md-12">
@@ -229,22 +229,21 @@
                             <div class="col-12">
                                 <div class="group-input">
                                     <label for="sop_type">SOP Type</label>
-                                    <select name="sop_type" {{Helpers::isRevised($document->stage)}} >
-                                        <option  value="0">-- Select --</option>
-                                        <option @if ($document->sop_type =='Chemistry SOP') selected @endif
-                                            value="Chemistry SOP">Chemistry SOP</option>
-                                            <option @if ($document->sop_type =='Instrument SOP') selected @endif
-                                                value="Instrument SOP">Instrument SOP</option>
-                                                <option @if ($document->sop_type =='Analytical SOP') selected @endif
-                                                    value="Analytical SOP">Analytical SOP</option>
-                                                    <option @if ($document->sop_type =='Microbiology SOP') selected @endif
-                                                        value="Microbiology SOP">Microbiology SOP</option>
-                                                        <option @if ($document->sop_type =='Quality Policies') selected @endif
-                                                            value="Quality Policies">Quality Policies</option>
-                                                            <option @if ($document->sop_type =='Others') selected @endif
-                                                                value="Others">Others</option>
+                                    
+                                    <select name="sop_type" required>
+                                            <option value="" disabled selected {{ $document->sop_type == '' ? 'selected' : '' }}>Enter your selection</option>
+                                            <option 
+                                            value="SOP (Standard Operating procedure)" 
+                                            {{ $document->sop_type == 'SOP (Standard Operating procedure)' ? 'selected' : '' }}>SOP (Standard Operating procedure)</option>
+                                            <option 
+                                            value="EOP (Equipment Operating procedure)" 
+                                            {{ $document->sop_type == 'EOP (Equipment Operating procedure)' ? 'selected' : '' }}>EOP (Equipment Operating procedure)</option>
+                                            <option 
+                                            value="IOP (Instrument Operating Procedure)" 
+                                            {{ $document->sop_type == 'IOP (Instrument Operating Procedure)' ? 'selected' : '' }}>IOP (Instrument Operating Procedure)</option>
                                     </select>
-                                    @foreach ($history as $tempHistory)
+
+                                    {{-- @foreach ($history as $tempHistory)
                                     @if (
                                         $tempHistory->activity_type == 'SOP Type' &&
                                             !empty($tempHistory->comment)  &&
@@ -262,11 +261,11 @@
                                         color: black;"
                                             type="text" value="{{ $tempHistory->comment }}" disabled>
                                     @endif
-                                    @endforeach
+                                    @endforeach --}}
                                 </div>
                                 @if (Auth::user()->role != 3 && $document->stage < 8)
 
-                                {{-- Add Comment  --}}
+                                <-- Add Comment  -->
                                 <div class="comment">
                                     <div>
                                         <p class="timestamp" style="color: blue">Modify by {{ Auth::user()->name }}
@@ -276,7 +275,7 @@
                                     </div>
                                     <div class="button">Add Comment</div>
                                 </div>
-                            @endif   
+                            @endif
                             </div>
                             <div class="col-md-4 new-date-data-field">
                                 <div class="group-input input-date">
@@ -448,6 +447,14 @@
                                         
                                         {{-- {{ $document->division_name }} --}}
                                 </div>
+
+                            </div>
+                            
+                            <div class="col-md-6">
+                                <div class="group-input">
+                                    <label for="legacy_number">Legacy Document Number</label>
+                                    <input type="text" id="legacy_number" name="legacy_number" value="{{ $document->legacy_number }}" maxlength="255" {{ Helpers::isRevised($document->stage) }}>
+                                </div>
                             </div>
 
                             <div class="col-md-12">
@@ -505,66 +512,17 @@
                                 <div class="group-input">
                                     <label for="depart-name">Department Name</label>
                                     <select name="department_id" id="depart-name" {{Helpers::isRevised($document->stage)}} >
-                                        <option value="">Enter your Selection</option>
-                                            <option value="CQA"
-                                                @if ($document->department_id == 'CQA') selected @endif>Corporate
-                                                Quality Assurance</option>
-                                            <option value="QAB"
-                                                @if ($document->department_id == 'QAB') selected @endif>Quality
-                                                Assurance Biopharma</option>
-                                            <option value="CQC"
-                                                @if ($document->department_id == 'CQC') selected @endif>Central
-                                                Quality Control</option>
-                                            <option value="MANU"
-                                                @if ($document->department_id == 'MANU') selected @endif>Manufacturing
-                                            </option>
-                                            <option value="PSG"
-                                                @if ($document->department_id == 'PSG') selected @endif>Plasma
-                                                Sourcing Group</option>
-                                            <option value="CS"
-                                                @if ($document->department_id == 'CS') selected @endif>Central
-                                                Stores</option>
-                                            <option value="ITG"
-                                                @if ($document->department_id == 'ITG') selected @endif>Information
-                                                Technology Group</option>
-                                            <option value="MM"
-                                                @if ($document->department_id == 'MM') selected @endif>Molecular
-                                                Medicine</option>
-                                            <option value="CL"
-                                                @if ($document->department_id == 'CL') selected @endif>Central
-                                                Laboratory</option>
-                                            <option value="TT"
-                                                @if ($document->department_id == 'TT') selected @endif>Tech
-                                                Team</option>
-                                            <option value="QA"
-                                                @if ($document->department_id == 'QA') selected @endif>Quality
-                                                Assurance</option>
-                                            <option value="QM"
-                                                @if ($document->department_id == 'QM') selected @endif>Quality
-                                                Management</option>
-                                            <option value="IA"
-                                                @if ($document->department_id == 'IA') selected @endif>IT
-                                                Administration</option>
-                                            <option value="ACC"
-                                                @if ($document->department_id == 'ACC') selected @endif>Accounting
-                                            </option>
-                                            <option value="LOG"
-                                                @if ($document->department_id == 'LOG') selected @endif>Logistics
-                                            </option>
-                                            <option value="SM"
-                                                @if ($document->department_id == 'SM') selected @endif>Senior
-                                                Management</option>
-                                            <option value="BA"
-                                                @if ($document->department_id == 'BA') selected @endif>Business
-                                                Administration</option>
-                                            <option value="BA"
-                                                @if ($document->department_id == 'others') selected @endif>Others
-                                                </option>
-                                        @foreach ($departments as $department)
+                                        <option value="" disabled selected>Enter your Selection</option>
+                                        
+                                        @foreach (Helpers::getDepartments() as $code => $department)
+                                                <option value="{{ $code }}" @if ($document->department_id == $code ) selected @endif>{{ $department }}</option>
+                                        @endforeach
+
+                                        {{-- @foreach ($departments as $department)
                                             <option data-id="{{ $department->dc }}" value="{{ $department->id }}"
                                                 {{ $department->id == $document->department_id ? 'selected' : '' }}>
                                                 {{ $department->name }}</option>
-                                        @endforeach
+                                        @endforeach --}}
                                     </select>
                                     @foreach ($history as $tempHistory)
                                         @if (
@@ -622,7 +580,7 @@
 
                             <div class="col-6">
                                 <div class="group-input">
-                                    <label for="major">Major<span class="text-danger">*</span>
+                                    <label for="major">Document Version <small>(Major)</small><span class="text-danger">*</span>
                                         <span  class="text-primary" data-bs-toggle="modal"
                                         data-bs-target="#document-management-system-modal"
                                         style="font-size: 0.8rem; font-weight: 400;">
@@ -665,7 +623,7 @@
                             </div>
                             <div class="col-6">
                                 <div class="group-input">
-                                    <label for="minor">Minor<span class="text-danger">*</span> 
+                                    <label for="minor">Document Version <small>(Minor)</small><span class="text-danger">*</span> 
                                         <span  class="text-primary" data-bs-toggle="modal"
                                         data-bs-target="#document-management-system-modal-minor"
                                         style="font-size: 0.8rem; font-weight: 400;">
@@ -734,10 +692,9 @@
                                     <label for="doc-type">Document Type</label>
                                     <select name="document_type_id" id="doc-type" {{Helpers::isRevised($document->stage)}} >
                                         <option value="">Enter your Selection</option>
-                                        @foreach ($documentTypes as $type)
-                                            <option data-id="{{ $type->typecode }}" value="{{ $type->id }}"
-                                                {{ $type->id == $document->document_type_id ? 'selected' : '' }}>
-                                                {{ $type->name }}</option>
+                                        @foreach (Helpers::getDocumentTypes() as $code => $type)
+                                            <option data-id="{{ $code }}" value="{{ $code }}" {{ $code == $document->document_type_id ? 'selected' : '' }}>
+                                                {{ $type }}</option>
                                         @endforeach
                                     </select>
                                     @foreach ($history as $tempHistory)
@@ -780,13 +737,9 @@
                                 <div class="group-input">
                                     <label for="doc-code">Document Type Code</label>
                                     <div class="default-name"> <span id="document_type_code">
-                                            @if (!empty($documentTypes))
-                                                @foreach ($documentTypes as $type)
-                                                    {{ $document->document_type_id == $type->id ? $type->typecode : '' }}
-                                                @endforeach
-                                            @else
-                                                Not Selected
-                                            @endif
+                                            @foreach (Helpers::getDocumentTypes() as $code => $type)
+                                                {{ $code == $document->document_type_id ? $code : '' }}
+                                            @endforeach
 
                                         </span> </div>
 
@@ -1412,7 +1365,7 @@
 
                             </div>
 
-                            <div class="col-md-6">
+                            {{-- <div class="col-md-6">
                                 <div class="group-input">
                                     <label for="reviewers-group">Reviewers Group</label>
                                     <select id="choices-multiple-remove-button" name="reviewers_group[]" {{Helpers::isRevised($document->stage)}} 
@@ -1457,7 +1410,7 @@
                                 </div>
 
                                 @if (Auth::user()->role != 3 && $document->stage < 8)
-                                    {{-- Add Comment  --}}
+                                    <!-- Add Comment  -->
                                     <div class="comment">
                                         <div>
                                             <p class="timestamp" style="color: blue">Modify by {{ Auth::user()->name }}
@@ -1469,9 +1422,9 @@
                                     </div>
                                 @endif
 
-                            </div>
+                            </div> --}}
 
-                            <div class="col-md-6">
+                            {{-- <div class="col-md-6">
                                 <div class="group-input">
                                     <label for="approvers-group">Approvers Group</label>
                                     <select id="choices-multiple-remove-button" name="approver_group[]" {{Helpers::isRevised($document->stage)}} 
@@ -1517,7 +1470,7 @@
 
 
                                 @if (Auth::user()->role != 3 && $document->stage < 8)
-                                    {{-- Add Comment  --}}
+                                    <!-- Add Comment  -->
                                     <div class="comment">
                                         <div>
                                             <p class="timestamp" style="color: blue">Modify by {{ Auth::user()->name }}
@@ -1529,7 +1482,8 @@
                                     </div>
                                 @endif
 
-                            </div>
+                            </div> --}}
+                            
                             <div class="col-12">
                                 <div class="group-input">
                                     <label for="revision-type">Revision Type</label>
@@ -1787,7 +1741,7 @@
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="group-input">
-                                    <label for="purpose">Purpose</label>
+                                    <label for="purpose">Objective</label>
                                     <textarea name="purpose" {{Helpers::isRevised($document->stage)}}>{{ $document->document_content ? $document->document_content->purpose : '' }}</textarea>
                                     @foreach ($history as $tempHistory)
                                         @if ($tempHistory->activity_type == 'Purpose' && !empty($tempHistory->comment) )
@@ -1946,6 +1900,143 @@
 
                             <div class="col-md-12">
                                 <div class="group-input">
+                                    
+                                    <label for="accountability" id="accountability">
+                                        Accountability<button type="button" id="accountabilitybtnadd"
+                                            name="button">+</button>
+                                            <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
+                                    </label>
+                                    
+                                    <div id="accountabilitydiv">
+                                        
+                                        @if ($document->document_content && !empty($document->document_content->accountability))
+                                            @foreach (unserialize($document->document_content->accountability) as $key => $data)
+                                                <div class="{{  str_contains($key, 'sub') ? 'subSingleAccountabilityBlock' : 'singleAccountabilityBlock' }}">
+                                                    @if (str_contains($key, 'sub'))
+                                                        <div class="resrow row">
+                                                            <div class="col-6">
+                                                                <textarea name="accountability[{{ $key }}]" class="myclassname">{{ $data }}</textarea>
+                                                            </div>
+                                                            <div class="col-1">
+                                                                <button class="btn btn-danger abbreviationbtnRemove">Remove</button>
+                                                            </div>
+                                                        </div>
+                                                    @else 
+                                                        <div class="row">
+                                                            <div class="col-sm-10">
+                                                                <textarea name="accountability[]" class="myclassname" {{Helpers::isRevised($document->stage)}}>{{ $data }}</textarea>
+                                                            </div>
+                                                            <div class="col-sm-1">
+                                                                <button class="btn btn-dark subAccountabilityAdd">+</button>
+                                                            </div>
+                                                            <div class="col-sm-1">
+                                                                <button class="btn btn-danger removeAllBlocks">Remove</button>
+                                                            </div>
+                                                        </div>
+                                                    @endif
+                                                </div>
+                                            @endforeach
+                                        @endif
+                                    </div>
+
+                                </div>
+                            </div>
+
+                            <div class="col-md-12">
+                                <div class="group-input">
+
+                                    <label for="references" id="references">
+                                        References<button type="button" id="referencesbtadd" name="button" {{Helpers::isRevised($document->stage)}}>+</button>
+                                    </label>
+                                    <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
+                                    
+                                    <div id="referencesdiv">
+                                        @if ($document->document_content && !empty($document->document_content->references))
+                                            @foreach (unserialize($document->document_content->references) as $key => $data)
+                                                @if (!empty($data))
+                                                    <div class="{{  str_contains($key, 'sub') ? 'subSingleReferencesBlock' : 'singleReferencesBlock' }}">
+                                                        @if (str_contains($key, 'sub'))
+                                                            <div class="resrow row">
+                                                                <div class="col-6">
+                                                                    <textarea name="references[{{ $key }}]" class="myclassname">{{ $data }}</textarea>
+                                                                </div>
+                                                                <div class="col-1">
+                                                                    <button class="btn btn-danger abbreviationbtnRemove">Remove</button>
+                                                                </div>
+                                                            </div>
+                                                        @else    
+                                                            <div class="row">
+                                                                <div class="col-sm-10">
+                                                                    <textarea name="references[]" class="myclassname" {{Helpers::isRevised($document->stage)}}>{{ $data }}</textarea>
+                                                                </div>
+                                                                <div class="col-sm-1">
+                                                                    <button class="btn btn-dark subReferencesAdd">+</button>
+                                                                </div>
+                                                                <div class="col-sm-1">
+                                                                    <button class="btn btn-danger removeAllBlocks">Remove</button>
+                                                                </div>
+                                                            </div>
+                                                        @endif
+                                                    </div>
+                                                @endif
+                                            @endforeach
+                                        @else
+                                            <div class="singleReferencesBlock">
+                                                <div class="row">
+                                                    <div class="col-sm-10">
+                                                        <textarea name="references[]" class="myclassname"></textarea>
+                                                    </div>
+                                                    <div class="col-sm-1">
+                                                        <button class="btn btn-dark subReferencesAdd">+</button>
+                                                    </div>
+                                                    <div class="col-sm-1">
+                                                        <button class="btn btn-danger abbreviationbtnRemove">Remove</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        @endif
+
+                                    </div>
+                                    
+                                    @foreach ($history as $tempHistory)
+                                        @if ($tempHistory->activity_type == 'References' && !empty($tempHistory->comment) )
+                                            @php
+                                                $users_name = DB::table('users')
+                                                    ->where('id', $tempHistory->user_id)
+                                                    ->value('name');
+                                            @endphp
+                                            <p style="color: blue">Modify by {{ $users_name }} at
+                                                {{ $tempHistory->created_at }}
+                                            </p>
+                                            <input class="input-field"
+                                                style="background: #ffff0061;
+                                    color: black;"
+                                                type="text" value="{{ $tempHistory->comment }}" disabled>
+                                        @endif
+                                    @endforeach
+
+                                   
+                                    
+                                   
+                                </div>
+                            </div>
+
+                            @if (Auth::user()->role != 3 && $document->stage < 8)
+
+                                {{-- Add Comment  --}}
+                                <div class="comment">
+                                    <div>
+                                        <p class="timestamp" style="color: blue">Modify by {{ Auth::user()->name }} at
+                                            {{ date('d-M-Y h:i:s') }}</p>
+
+                                        <input class="input-field" type="text" name="references_comment">
+                                    </div>
+                                    <div class="button">Add Comment</div>
+                                </div>
+                            @endif
+
+                            <div class="col-md-12">
+                                <div class="group-input">
                                     <label for="abbreviation" id="abbreviation">
                                         Abbreviation<button type="button" id="abbreviationbtnadd"
                                             name="button" {{Helpers::isRevised($document->stage)}} >+</button>
@@ -2090,7 +2181,7 @@
                             <div class="col-md-12">
                                 <div class="group-input">
                                     <label for="reporting" id="newreport">
-                                        Materials and Equipments<button type="button" id="materialsbtadd"
+                                        General Instructions<button type="button" id="materialsbtadd"
                                             name="button" {{Helpers::isRevised($document->stage)}} >+</button>
                                     </label>
                                     <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
@@ -2178,58 +2269,6 @@
                                 </div>
                             @endif
 
-                            {{-- SAFETY & PRECATIONS START --}}
-                                <div class="col-md-12">
-                                    <div class="group-input">
-                                        <label for="procedure">Safety & Precautions</label>
-                                        <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
-                                        <textarea name="safety_precautions" class="summernote">{{ $document->document_content ? $document->document_content->safety_precautions : '' }}</textarea>
-                                        @foreach ($history as $tempHistory)
-                                            @if ($tempHistory->activity_type == 'safety_precautions' && !empty($tempHistory->comment) )
-                                                @php
-                                                    $users_name = DB::table('users')
-                                                        ->where('id', $tempHistory->user_id)
-                                                        ->value('name');
-                                                @endphp
-                                                <p style="color: blue">Modify by {{ $users_name }} at
-                                                    {{ $tempHistory->created_at }}
-                                                </p>
-                                                <input class="input-field"
-                                                    style="background: #ffff0061;
-                                        color: black;"
-                                                    type="text" value="{{ $tempHistory->comment }}" disabled>
-                                            @endif
-                                        @endforeach
-                                    </div>
-                                </div>
-
-                            @foreach ($history as $tempHistory)
-                                @if ($tempHistory->activity_type == 'Safety' && !empty($tempHistory->comment) )
-                                    @php
-                                        $users_name = DB::table('users')
-                                            ->where('id', $tempHistory->user_id)
-                                            ->value('name');
-                                    @endphp
-                                    <p style="color: blue">Modify by {{ $users_name }} at
-                                        {{ $tempHistory->created_at }}
-                                    </p>
-                                    <input class="input-field"
-                                        style="background: #ffff0061;
-                            color: black;"
-                                        type="text" value="{{ $tempHistory->comment }}" disabled>
-                                @endif
-                            @endforeach
-
-                            @if (Auth::user()->role != 3 && $document->stage < 8)
-
-                                <div class="comment">
-                                    <div>
-                                        <input class="input-field" type="text" name="safety_comment">
-                                    </div>
-                                    <div class="button">Add Comment</div>
-                                </div>
-                            @endif
-                            {{-- SAFETY & PRECATIONS END --}}
 
                             <div class="col-md-12">
                                 <div class="group-input">
@@ -2260,7 +2299,7 @@
                             <div class="col-md-12">
                                 <div class="group-input">
                                     <label for="reporting" id="newreport">
-                                        Reporting<button type="button" id="reportingbtadd" name="button" {{Helpers::isRevised($document->stage)}}>+</button>
+                                        Cross References<button type="button" id="reportingbtadd" name="button" {{Helpers::isRevised($document->stage)}}>+</button>
                                     </label>
                                     <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
 
@@ -2343,98 +2382,6 @@
                                 </div>
                             @endif
 
-                            <div class="col-md-12">
-                                <div class="group-input">
-
-                                    <label for="references" id="references">
-                                        References<button type="button" id="referencesbtadd" name="button" {{Helpers::isRevised($document->stage)}}>+</button>
-                                    </label>
-                                    <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
-                                    
-                                    <div id="referencesdiv">
-                                        @if ($document->document_content && !empty($document->document_content->references))
-                                            @foreach (unserialize($document->document_content->references) as $key => $data)
-                                                @if (!empty($data))
-                                                    <div class="{{  str_contains($key, 'sub') ? 'subSingleReferencesBlock' : 'singleReferencesBlock' }}">
-                                                        @if (str_contains($key, 'sub'))
-                                                            <div class="resrow row">
-                                                                <div class="col-6">
-                                                                    <textarea name="references[{{ $key }}]" class="myclassname">{{ $data }}</textarea>
-                                                                </div>
-                                                                <div class="col-1">
-                                                                    <button class="btn btn-danger abbreviationbtnRemove">Remove</button>
-                                                                </div>
-                                                            </div>
-                                                        @else    
-                                                            <div class="row">
-                                                                <div class="col-sm-10">
-                                                                    <textarea name="references[]" class="myclassname" {{Helpers::isRevised($document->stage)}}>{{ $data }}</textarea>
-                                                                </div>
-                                                                <div class="col-sm-1">
-                                                                    <button class="btn btn-dark subReferencesAdd">+</button>
-                                                                </div>
-                                                                <div class="col-sm-1">
-                                                                    <button class="btn btn-danger removeAllBlocks">Remove</button>
-                                                                </div>
-                                                            </div>
-                                                        @endif
-                                                    </div>
-                                                @endif
-                                            @endforeach
-                                        @else
-                                            <div class="singleReferencesBlock">
-                                                <div class="row">
-                                                    <div class="col-sm-10">
-                                                        <textarea name="references[]" class="myclassname"></textarea>
-                                                    </div>
-                                                    <div class="col-sm-1">
-                                                        <button class="btn btn-dark subReferencesAdd">+</button>
-                                                    </div>
-                                                    <div class="col-sm-1">
-                                                        <button class="btn btn-danger abbreviationbtnRemove">Remove</button>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        @endif
-
-                                    </div>
-                                    
-                                    @foreach ($history as $tempHistory)
-                                        @if ($tempHistory->activity_type == 'References' && !empty($tempHistory->comment) )
-                                            @php
-                                                $users_name = DB::table('users')
-                                                    ->where('id', $tempHistory->user_id)
-                                                    ->value('name');
-                                            @endphp
-                                            <p style="color: blue">Modify by {{ $users_name }} at
-                                                {{ $tempHistory->created_at }}
-                                            </p>
-                                            <input class="input-field"
-                                                style="background: #ffff0061;
-                                    color: black;"
-                                                type="text" value="{{ $tempHistory->comment }}" disabled>
-                                        @endif
-                                    @endforeach
-
-                                   
-                                    
-                                   
-                                </div>
-                            </div>
-
-                            @if (Auth::user()->role != 3 && $document->stage < 8)
-
-                                {{-- Add Comment  --}}
-                                <div class="comment">
-                                    <div>
-                                        <p class="timestamp" style="color: blue">Modify by {{ Auth::user()->name }} at
-                                            {{ date('d-M-Y h:i:s') }}</p>
-
-                                        <input class="input-field" type="text" name="references_comment">
-                                    </div>
-                                    <div class="button">Add Comment</div>
-                                </div>
-                            @endif
 
                             {{-- <div class="col-md-12">   --Aditya
                                 <div class="group-input">
@@ -2665,90 +2612,13 @@
                                 <textarea class="summernote" name="annexuredata[]">{{ $data }}</textarea>
                             @endforeach
                         @else
-                            <div class="group-input">
-                                <label for="annexure-1">Annexure</label>
-                                <textarea class="summernote" name="annexuredata[]" id="annexure-1"></textarea>
-                            </div>
-                            <div class="group-input">
-                                <label for="annexure-2">Annexure</label>
-                                <textarea class="summernote" name="annexuredata[]" id="annexure-2"></textarea>
-                            </div>
-                            <div class="group-input">
-                                <label for="annexure-3">Annexure</label>
-                                <textarea class="summernote" name="annexuredata[]" id="annexure-3"></textarea>
-                            </div>
-                            <div class="group-input">
-                                <label for="annexure-4">Annexure</label>
-                                <textarea class="summernote" name="annexuredata[]" id="annexure-4"></textarea>
-                            </div>
-                            <div class="group-input">
-                                <label for="annexure-5">Annexure</label>
-                                <textarea class="summernote" name="annexuredata[]" id="annexure-5"></textarea>
-                            </div>
-                            <div class="group-input">
-                                <label for="annexure-6">Annexure</label>
-                                <textarea class="summernote" name="annexuredata[]" id="annexure-6"></textarea>
-                            </div>
-                            <div class="group-input">
-                                <label for="annexure-7">Annexure</label>
-                                <textarea class="summernote" name="annexuredata[]" id="annexure-7"></textarea>
-                            </div>
-                            <div class="group-input">
-                                <label for="annexure-8">Annexure</label>
-                                <textarea class="summernote" name="annexuredata[]" id="annexure-8"></textarea>
-                            </div>
-                            <div class="group-input">
-                                <label for="annexure-9">Annexure</label>
-                                <textarea class="summernote" name="annexuredata[]" id="annexure-9"></textarea>
-                            </div>
-                            <div class="group-input">
-                                <label for="annexure-10">Annexure</label>
-                                <textarea class="summernote" name="annexuredata[]" id="annexure-10"></textarea>
-                            </div>
-                            <div class="group-input">
-                                <label for="annexure-11">Annexure</label>
-                                <textarea class="summernote" name="annexuredata[]" id="annexure-11"></textarea>
-                            </div>
-                            <div class="group-input">
-                                <label for="annexure-12">Annexure</label>
-                                <textarea class="summernote" name="annexuredata[]" id="annexure-12"></textarea>
-                            </div>
-                            <div class="group-input">
-                                <label for="annexure-13">Annexure</label>
-                                <textarea class="summernote" name="annexuredata[]" id="annexure-13"></textarea>
-                            </div>
-                            <div class="group-input">
-                                <label for="annexure-14">Annexure</label>
-                                <textarea class="summernote" name="annexuredata[]" id="annexure-14"></textarea>
-                            </div>
-                            <div class="group-input">
-                                <label for="annexure-15">Annexure</label>
-                                <textarea class="summernote" name="annexuredata[]" id="annexure-15"></textarea>
-                            </div>
-                            <div class="group-input">
-                                <label for="annexure-16">Annexure</label>
-                                <textarea class="summernote" name="annexuredata[]" id="annexure-16"></textarea>
-                            </div>
-                            <div class="group-input">
-                                <label for="annexure-17">Annexure</label>
-                                <textarea class="summernote" name="annexuredata[]" id="annexure-17"></textarea>
-                            </div>
-                            <div class="group-input">
-                                <label for="annexure-18">Annexure</label>
-                                <textarea class="summernote" name="annexuredata[]" id="annexure-18"></textarea>
-                            </div>
-                            <div class="group-input">
-                                <label for="annexure-19">Annexure</label>
-                                <textarea class="summernote" name="annexuredata[]" id="annexure-19"></textarea>
-                            </div>
-                            <div class="group-input">
-                                <label for="annexure-20">Annexure</label>
-                                <textarea class="summernote" name="annexuredata[]" id="annexure-20"></textarea>
-                            </div>
-
+                            @for ($i = 1; $i <= 30; $i++)
+                                <div class="group-input">
+                                    <label for="annexure-{{ $i }}">Annexure</label>
+                                    <textarea class="summernote" name="annexuredata[]" id="annexure-{{ $i }}"></textarea>
+                                </div>
+                            @endfor
                         @endif
-
-
                     </div>
                     <div class="button-block">
                         <button type="submit" name="submit" value="save" class="saveButton">Save</button>
@@ -3196,8 +3066,7 @@
                                         ->get();
 
                                 @endphp
-                                @foreach ($inreview as $temp)
-                                    <div class="name">{{ $temp->user_name }}</div>
+                                    <div class="name">{{ $document->originator ? $document->originator->name : 'null' }}</div>
 
                             </div>
                         </div>
@@ -3206,8 +3075,7 @@
                                 <div class="orig-head">
                                     Originated On 
                                 </div>
-                                <div class="name">{{ $temp->created_at }}</div>
-                                @endforeach
+                                <div class="name">{{ $document->created_at }}</div>
                             </div>
 
                         </div>
@@ -3269,6 +3137,38 @@
                                 @endforeach
                             </div>
                         </div> --}}
+                        <div class="col-md-6">
+                            <div class="review-names">
+                                <div class="orig-head">
+                                    HOD Review By
+                                </div>
+                                @php
+                                    $inhodreview = DB::table('stage_manages')
+                                        ->join('users', 'stage_manages.user_id', '=', 'users.id')
+                                        ->select('stage_manages.*', 'users.name as user_name')
+                                        ->where('document_id', $document->id)
+                                        ->where('stage', 'HOD Review-Submit')
+                                        ->where('deleted_at', null)
+                                        ->get();
+
+                                @endphp
+                                @foreach ($inhodreview as $temp)
+                                    <div class="name">{{ $temp->user_name }}</div>
+                                @endforeach
+
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="review-names">
+                                <div class="orig-head">
+                                    HOD Reviewed On
+                                </div>
+                                @foreach ($inhodreview as $temp)
+                                    <div class="name">{{ $temp->created_at }}</div>
+                                @endforeach
+                            </div>
+                        </div>
+
                         <div class="col-md-6">
                             <div class="review-names">
                                 <div class="orig-head">

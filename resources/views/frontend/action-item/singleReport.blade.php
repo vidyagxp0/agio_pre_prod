@@ -165,7 +165,7 @@
                 </td>
                 <td class="w-30">
                     <div class="logo">
-                        <img src="https://dms.mydemosoftware.com/user/images/logo.png" alt="" class="w-100">
+                        <img src="https://navin.mydemosoftware.com/public/user/images/logo.png" alt="" class="w-100" >
                     </div>
                 </td>
             </tr>
@@ -176,7 +176,7 @@
                     <strong> Action-Item No.</strong>
                 </td>
                 <td class="w-40">
-                   {{ Helpers::divisionNameForQMS($data->division_id) }}/{{ Helpers::year($data->created_at) }}/{{ str_pad($data->record, 4, '0', STR_PAD_LEFT) }}
+                   {{ Helpers::divisionNameForQMS($data->division_id) }}/AI/{{ Helpers::year($data->created_at) }}/{{ str_pad($data->record, 4, '0', STR_PAD_LEFT) }}
                 </td>
                 <td class="w-30">
                     <strong>Record No.</strong> {{ str_pad($data->record, 4, '0', STR_PAD_LEFT) }}
@@ -184,6 +184,22 @@
             </tr>
         </table>
     </header>
+    <footer>
+        <table>
+            <tr>
+                <td class="w-30">
+                    <strong>Printed On :</strong> {{ date('d-M-Y') }}
+                </td>
+                <td class="w-40">
+                    <strong>Printed By :</strong> {{ Auth::user()->name }}
+                </td>
+                {{-- <td class="w-30">
+                    <strong>Page :</strong> 1 of 1
+                </td> --}}
+            </tr>
+        </table>
+    </footer>
+
 
     <div class="inner-block">
         <div class="content-table">
@@ -213,12 +229,8 @@
                         <td class="w-80"> @if($data->due_date){{ Helpers::getdateFormat($data->due_date) }} @else Not Applicable @endif</td>
                        
                     </tr>
-                     <tr>
-                        <th class="w-20">Short Description</th>
-                        <td class="w-80">@if($data->short_description){{ $data->short_description }}@else Not Applicable @endif</td>
-                       
-
-                    </tr>
+                    
+                    
                     <tr>
                             <th class="w-20">Action Item Related Records</th>
                             <td class="w-80">@if($data->Reference_Recores1){{ Helpers::getDivisionName($data->division_id) }}/AI/{{ date('Y') }}/{{ Helpers::recordFormat($data->record) }}@else Not Applicable @endif</td>
@@ -227,48 +239,67 @@
                    <tr>
                         <th class="w-20">HOD Persons</th>
                         <td class="w-80">@if($data->hod_preson)  @foreach(explode(',',$data->hod_preson) as $hod) {{  Helpers::getInitiatorName($hod)  }} ,  @endforeach @else Not Applicable @endif</td>
-                    </tr>
-                  
-                   <tr>
-                        <th class="w-20">Description</th>
-                        <td class="w-80">@if($data->description){{ $data->description }}@else Not Applicable @endif</td>
-
-                    </tr>
-                   
-                    <tr>
                         <th class="w-20">Responsible Department</th>
                         <td class="w-80">@if($data->departments){{ $data->departments }}@else Not Applicable @endif</td>
 
                     </tr>
+                  
+                   
+                   
 
-                    
-    
-                       <div class="block-head">
+                </table>
+            <div class="block">
+                <table>
+                    <tr>
+                        <th class="w-20">Description</th>
+                        <td class="w-80">@if($data->description){{ $data->description }}@else Not Applicable @endif</td>
+                        
+
+            </tr>
+           
+            <tr>
+                <th class="w-20">Short Description</th>
+                <td class="w-80">@if($data->short_description){{ $data->short_description }}@else Not Applicable @endif</td>
+               
+
+            </tr>
+
+        </table>
+    </div>
+                    <div class="block-head">
                        File Attachments
                     </div>
-                      <div class="border-table">
+                    <div class="border-table">
                         <table>
                             <tr class="table_bg">
                                 <th class="w-20">S.N.</th>
-                                <th class="w-60">File </th>
+                                <th class="w-60">File</th>
                             </tr>
-                                @if($data->file_attach)
-                                @foreach(json_decode($data->file_attach) as $key => $file)
-                                    <tr>
-                                        <td class="w-20">{{ $key + 1 }}</td>
-                                        <td class="w-20"><a href="{{ asset('upload/' . $file) }}" target="_blank"><b>{{ $file }}</b></a> </td>
-                                    </tr>
-                                @endforeach
+                            @if($data->file_attach)
+                                @php $files = json_decode($data->file_attach); @endphp
+                                @if(count($files) > 0)
+                                    @foreach($files as $key => $file)
+                                        <tr>
+                                            <td class="w-20">{{ $key + 1 }}</td>
+                                            <td class="w-60"><a href="{{ asset('upload/' . $file) }}" target="_blank"><b>{{ $file }}</b></a></td>
+                                        </tr>
+                                    @endforeach
                                 @else
+                                    <tr>
+                                        <td class="w-20">1</td>
+                                        <td class="w-60">Not Applicable</td>
+                                    </tr>
+                                @endif
+                            @else
                                 <tr>
                                     <td class="w-20">1</td>
-                                    <td class="w-20">Not Applicable</td>
+                                    <td class="w-60">Not Applicable</td>
                                 </tr>
                             @endif
-
                         </table>
-                      </div>
-                </table>
+                    </div>
+                    
+                
             </div>
 
             <!-- <div class="block">
@@ -277,7 +308,7 @@
                     <table>
                         <tr>
                             <th class="w-20">CAPA Related Records</th>
-                            <td class="w-80">@if($data->capa_related_record){{ $data->capa_related_record }}@else Not Applicable @endif</td>
+                            {{-- <td class="w-80">@if($data->capa_related_record){{ $data->capa_related_record }}@else Not Applicable @endif</td> --}}
                         </tr>
                     
 
@@ -292,22 +323,31 @@
                     Post Completion
                     </div>
                     <table>
-                     <tr>
-                        <th class="w-20">Action Taken</th>
-                        <td class="w-80">@if($data->action_taken){{ $data->action_taken }}@else Not Applicable @endif</td>
-                       
-                     </tr>
-                   <tr>
-                        <th class="w-20">Action Start Date</th>
-                        <td class="w-80">@if($data->start_date){{ Helpers::getdateFormat($data->start_date) }}@else Not Applicable @endif</td>
-                        <th class="w-20">Actual End Date</th>
-                        <td class="w-80">@if($data->end_date){{ Helpers::getdateFormat($data->end_date) }}@else Not Applicable @endif</td>
-                   </tr>
-                   <tr>
-                        <th class="w-20">Comments</th>
-                        <td class="w-80">@if($data->comments){{ $data->comments }}@else Not Applicable @endif</td>
-                       
-                   </tr>
+                        <tr>
+                            <th class="w-20">Action Start Date</th>
+                            <td class="w-80">@if($data->start_date){{ Helpers::getdateFormat($data->start_date) }}@else Not Applicable @endif</td>
+                            <th class="w-20">Actual End Date</th>
+                            <td class="w-80">@if($data->end_date){{ Helpers::getdateFormat($data->end_date) }}@else Not Applicable @endif</td>
+                       </tr>
+                       <div class="block">
+
+                           <table>
+                               <tr>
+                                  <th class="w-20">Action Taken</th>
+                                  <td class="w-80">@if($data->action_taken){{ $data->action_taken }}@else Not Applicable @endif</td>
+                                 
+                               </tr>
+    
+                           </table>
+                     <table>
+    
+                         <tr>
+                              <th class="w-20">Comments</th>
+                              <td class="w-80">@if($data->comments){{ $data->comments }}@else Not Applicable @endif</td>
+                             
+                         </tr>
+                     </table>
+                       </div>
                    </table>
                      <div class="block-head">
                          Action Approval
@@ -381,22 +421,7 @@
         </div>
     </div>
 
-    <footer>
-        <table>
-            <tr>
-                <td class="w-30">
-                    <strong>Printed On :</strong> {{ date('d-M-Y') }}
-                </td>
-                <td class="w-40">
-                    <strong>Printed By :</strong> {{ Auth::user()->name }}
-                </td>
-                {{-- <td class="w-30">
-                    <strong>Page :</strong> 1 of 1
-                </td> --}}
-            </tr>
-        </table>
-    </footer>
-
+   
 </body>
 
 </html>

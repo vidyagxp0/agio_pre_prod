@@ -40,6 +40,14 @@
 
             <form action="{{ route('effectiveness.store') }}" method="post" , enctype="multipart/form-data">
                 @csrf
+
+                @if(!empty($parent_id))
+                    <input type="hidden" name="parent_id" value="{{ $parent_id }}">
+                    <input type="hidden" name="parent_type" value="{{ $parent_type }}">
+                    <input type="hidden" name="parent_record" value="{{ $parent_record }}">
+                @else 
+                    
+                @endif
                 <div id="step-form">
                     <div id="CCForm1" class="inner-block cctabcontent">
                         <div class="inner-block-content">
@@ -61,7 +69,7 @@
                                         <input disabled type="text" name="division_code"
                                             value="{{ Helpers::getDivisionName(session()->get('division')) }}">
                                         <input type="hidden" name="division_id" value="{{ session()->get('division') }}">
-                                        {{-- <div class="static">QMS-North America</div> --}}
+                                        {{-- <div class="static">{{ Helpers::getDivisionName(session()->get('division')) }}</div> --}}
                                     </div>
                                 </div>
                                 <div class="col-lg-6">

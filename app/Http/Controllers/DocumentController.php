@@ -126,9 +126,9 @@ class DocumentController extends Controller
     public function index(Request $request)
     {
         $query = Document::join('users', 'documents.originator_id', 'users.id')
-                    ->join('document_types', 'documents.document_type_id', 'document_types.id')
+                    // ->join('document_types', 'documents.document_type_id', 'document_types.id')
                     ->join('divisions', 'documents.division_id', 'divisions.id')
-                    ->select('documents.*', 'users.name as originator_name', 'document_types.name as document_type_name', 'divisions.name as division_name')
+                    ->select('documents.*', 'users.name as originator_name', 'divisions.name as division_name')
                     ->orderByDesc('documents.id');
 
         // Apply filters
@@ -161,6 +161,8 @@ class DocumentController extends Controller
         $OriValues = Document::withoutTrashed()->select('id', 'originator_id')->get();
         $OriTypeIds = $OriValues->pluck('originator_id')->unique()->toArray();
         $originator = User::whereIn('id', $OriTypeIds)->select('id', 'name')->get();
+
+        // return $documents;
 
         // $count = Document::where('documents.originator_id', Auth::user()->id)->count();
         // $documents = Document::join('users', 'documents.originator_id', 'users.id')->join('document_types', 'documents.document_type_id', 'document_types.id')
@@ -326,7 +328,7 @@ class DocumentController extends Controller
             $division->pname = Process::where('id', $division->process_id)->value('process_name');
             $process = QMSProcess::where([
                 'process_name' => 'New Document',
-                'division_id' => $division->id
+                'division_id' => $division->division_id
             ])->first();
         } else {
             return "Division not found";
@@ -452,6 +454,7 @@ class DocumentController extends Controller
        
             $document->record = DB::table('record_numbers')->value('counter') + 1;
             $document->originator_id = Auth::id();
+            $document->legacy_number = $request->legacy_number;
             $document->document_name = $request->document_name;
             $document->short_description = $request->short_desc;
             $document->description = $request->description;
@@ -616,6 +619,9 @@ class DocumentController extends Controller
             }
             if (! empty($request->responsibility)) {
                 $content->responsibility = serialize($request->responsibility);
+            }
+            if (! empty($request->accountability)) {
+                $content->accountability = serialize($request->accountability);
             }
             if (! empty($request->abbreviation)) {
                 $content->abbreviation = serialize($request->abbreviation);
@@ -804,6 +810,7 @@ class DocumentController extends Controller
                 $document->description = $request->description;
 
 
+                $document->legacy_number = $request->legacy_number;
                 $document->due_dateDoc = $request->due_dateDoc;
                 $document->sop_type = $request->sop_type;
                 $document->department_id = $request->department_id;
@@ -1328,6 +1335,7 @@ class DocumentController extends Controller
             $documentcontet->safety_precautions = $request->safety_precautions;
             
             $documentcontet->responsibility = $request->responsibility ? serialize($request->responsibility) : serialize([]);
+            $documentcontet->accountability = $request->accountability ? serialize($request->accountability) : serialize([]);
             $documentcontet->abbreviation = $request->abbreviation ? serialize($request->abbreviation) : serialize([]);
             $documentcontet->defination = $request->defination ? serialize($request->defination) : serialize([]);
             $documentcontet->reporting = $request->reporting ? serialize($request->reporting) : serialize([]);
@@ -1764,7 +1772,7 @@ class DocumentController extends Controller
         $canvas->page_text(
             $width / 4,
             $height / 2,
-            $data->status,
+            Helpers::getDocStatusByStage($data->stage),
             null,
             25,
             [0, 0, 0],
@@ -2059,6 +2067,7 @@ class DocumentController extends Controller
             $newdoc->revision_summary = $document->revision_summary;
             $newdoc->training_required = $document->training_required;
             $newdoc->trainer = $request->trainer;
+            $newdoc->hods = $document->hods;
             $newdoc->document_number = $document->document_number;
             $newdoc->comments = $request->comments;
             //$newdoc->purpose = $request->purpose;

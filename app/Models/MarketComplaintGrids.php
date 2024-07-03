@@ -22,7 +22,7 @@ protected $fillable = [
 
       public function MarketComplaint()
            {
-               return $this->belongsTo(LabIncident::class,'labincident_id ');
+               return $this->hasMany(MarketComplaint::class);
            }
        
 }

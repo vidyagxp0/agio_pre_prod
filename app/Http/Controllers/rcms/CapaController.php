@@ -32,30 +32,37 @@ class CapaController extends Controller
     public function capa()
     {
         $cft = [];
-        $old_record = Capa::select('id', 'division_id', 'record')->get();
-        $record_number = ((RecordNumber::first()->value('counter')) + 1);
-        $record_number = str_pad($record_number, 4, '0', STR_PAD_LEFT);
-
+        $old_records = Capa::select('id', 'division_id', 'record')->get();
+        // Record number ko pad karke 4 digits ka bana rahe hain
+        $record = ((RecordNumber::first()->value('counter')) + 1);
+        $record = str_pad($record, 4, '0', STR_PAD_LEFT);
+    
+        // Division ke hisaab se latest record check kar rahe hain
         $division = QMSDivision::where('name', Helpers::getDivisionName(session()->get('division')))->first();
-
+    
         if ($division) {
             $last_capa = Capa::where('division_id', $division->id)->latest()->first();
-
+    
             if ($last_capa) {
-                $record_number = $last_capa->record_number ? str_pad($last_capa->record_number->record_number + 1, 4, '0', STR_PAD_LEFT) : '0001';
+                // Agar last record hai to usko pad karke next record number bana rahe hain
+                $record_number = $last_capa->record ? str_pad($last_capa->record + 1, 4, '0', STR_PAD_LEFT) : '0001';
             } else {
                 $record_number = '0001';
             }
         }
-
+    
         $currentDate = Carbon::now();
         $formattedDate = $currentDate->addDays(30);
-        $due_date= $formattedDate->format('Y-m-d');
+        $due_date = $formattedDate->format('Y-m-d');
+    
         $changeControl = OpenStage::find(1);
-         if(!empty($changeControl->cft)) $cft = explode(',', $changeControl->cft);
-        return view("frontend.forms.capa", compact('due_date', 'record_number', 'old_record', 'cft'));
+        if (!empty($changeControl->cft)) {
+            $cft = explode(',', $changeControl->cft);
+        }
+    
+        return view("frontend.forms.capa", compact('due_date', 'record', 'old_records', 'cft'));
     }
-
+    
     public function capastore(Request $request)
     {
         // return $request;
@@ -293,6 +300,9 @@ class CapaController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $capa->status;
+            $history->change_to = "Opened";
+            $history->change_from = "Initiator";
+            $history->action_name = "store";
             $history->save();
         }
 
@@ -307,6 +317,9 @@ class CapaController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $capa->status;
+             $history->change_to = "Opened";
+            $history->change_from = "Initiator";
+            $history->action_name = "store";
             $history->save();
         }
 
@@ -321,6 +334,92 @@ class CapaController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $capa->status;
+             $history->change_to = "Opened";
+            $history->change_from = "Initiator";
+            $history->action_name = "store";
+            $history->save();
+        }
+        if (!empty($capa->severity_level_form)) {
+            $history = new CapaAuditTrial();
+            $history->capa_id = $capa->id;
+            $history->activity_type = 'Severity Level';
+            $history->previous = "Null";
+            $history->current = $capa->severity_level_form;
+            $history->comment = "NA";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $capa->status;
+             $history->change_to = "Opened";
+            $history->change_from = "Initiator";
+            $history->action_name = "store";
+            $history->save();
+        }
+        if (!empty($capa->initiated_through_req)) {
+            $history = new CapaAuditTrial();
+            $history->capa_id = $capa->id;
+            $history->activity_type = 'Others';
+            $history->previous = "Null";
+            $history->current = $capa->initiated_through_req;
+            $history->comment = "NA";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $capa->status;
+             $history->change_to = "Opened";
+            $history->change_from = "Initiator";
+            $history->action_name = "store";
+            $history->save();
+        }
+        if (!empty($capa->repeat)) {
+            $history = new CapaAuditTrial();
+            $history->capa_id = $capa->id;
+            $history->activity_type = 'Repeat';
+            $history->previous = "Null";
+            $history->current = $capa->repeat;
+            $history->comment = "NA";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $capa->status;
+             $history->change_to = "Opened";
+            $history->change_from = "Initiator";
+            $history->action_name = "store";
+            $history->save();
+        }
+
+        if (!empty($capa->repeat_nature)) {
+            $history = new CapaAuditTrial();
+            $history->capa_id = $capa->id;
+            $history->activity_type = 'Repeat Nature';
+            $history->previous = "Null";
+            $history->current = $capa->repeat_nature;
+            $history->comment = "NA";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $capa->status;
+             $history->change_to = "Opened";
+            $history->change_from = "Initiator";
+            $history->action_name = "store";
+            $history->save();
+        }
+
+
+        if (!empty($capa->initiated_through)) {
+            $history = new CapaAuditTrial();
+            $history->capa_id = $capa->id;
+            $history->activity_type = 'Initiated Through';
+            $history->previous = "Null";
+            $history->current = $capa->initiated_through;
+            $history->comment = "NA";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $capa->status;
+             $history->change_to = "Opened";
+            $history->change_from = "Initiator";
+            $history->action_name = "store";
             $history->save();
         }
 
@@ -335,6 +434,9 @@ class CapaController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $capa->status;
+             $history->change_to = "Opened";
+            $history->change_from = "Initiator";
+            $history->action_name = "store";
             $history->save();
         }
 
@@ -349,6 +451,9 @@ class CapaController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $capa->status;
+             $history->change_to = "Opened";
+            $history->change_from = "Initiator";
+            $history->action_name = "store";
             $history->save();
         }
 
@@ -391,6 +496,9 @@ class CapaController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $capa->status;
+             $history->change_to = "Opened";
+            $history->change_from = "Initiator";
+            $history->action_name = "store";
             $history->save();
         }
 
@@ -433,6 +541,9 @@ class CapaController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $capa->status;
+             $history->change_to = "Opened";
+            $history->change_from = "Initiator";
+            $history->action_name = "store";
             $history->save();
         }
 
@@ -474,6 +585,9 @@ class CapaController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $capa->status;
+             $history->change_to = "Opened";
+            $history->change_from = "Initiator";
+            $history->action_name = "store";
             $history->save();
         }
 
@@ -488,6 +602,9 @@ class CapaController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $capa->status;
+             $history->change_to = "Opened";
+            $history->change_from = "Initiator";
+            $history->action_name = "store";
             $history->save();
         }
 
@@ -516,6 +633,9 @@ class CapaController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $capa->status;
+             $history->change_to = "Opened";
+            $history->change_from = "Initiator";
+            $history->action_name = "store";
             $history->save();
         }
 
@@ -544,6 +664,9 @@ class CapaController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $capa->status;
+             $history->change_to = "Opened";
+            $history->change_from = "Initiator";
+            $history->action_name = "store";
             $history->save();
         }
 
@@ -558,6 +681,9 @@ class CapaController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $capa->status;
+             $history->change_to = "Opened";
+            $history->change_from = "Initiator";
+            $history->action_name = "store";
             $history->save();
         }
 
@@ -586,6 +712,9 @@ class CapaController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $capa->status;
+             $history->change_to = "Opened";
+            $history->change_from = "Initiator";
+            $history->action_name = "store";
             $history->save();
         }
 
@@ -614,6 +743,9 @@ class CapaController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $capa->status;
+             $history->change_to = "Opened";
+            $history->change_from = "Initiator";
+            $history->action_name = "store";
             $history->save();
         }
 
@@ -642,6 +774,9 @@ class CapaController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $capa->status;
+             $history->change_to = "Opened";
+            $history->change_from = "Initiator";
+            $history->action_name = "store";
             $history->save();
         }
 
@@ -656,6 +791,9 @@ class CapaController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $capa->status;
+            $history->change_to = "Opened";
+            $history->change_from = "Initiator";
+            $history->action_name = "store";
             $history->save();
         }
 
@@ -670,6 +808,9 @@ class CapaController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $capa->status;
+             $history->change_to = "Opened";
+            $history->change_from = "Initiator";
+            $history->action_name = "store";
             $history->save();
         }
 
@@ -684,6 +825,9 @@ class CapaController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $capa->status;
+             $history->change_to = "Opened";
+            $history->change_from = "Initiator";
+            $history->action_name = "store";
             $history->save();
         }
 
@@ -698,8 +842,60 @@ class CapaController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $capa->status;
+             $history->change_to = "Opened";
+            $history->change_from = "Initiator";
+            $history->action_name = "store";
             $history->save();
         }
+        if (!empty($capa->details_new)) {
+            $history = new CapaAuditTrial();
+            $history->capa_id = $capa->id;
+            $history->activity_type = 'Details';
+            $history->previous = "Null";
+            $history->current = $capa->details_new;
+            $history->comment = "NA";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $capa->status;
+             $history->change_to = "Opened";
+            $history->change_from = "Initiator";
+            $history->action_name = "store";
+            $history->save();
+        }
+        if (!empty($capa->capa_type)) {
+            $history = new CapaAuditTrial();
+            $history->capa_id = $capa->id;
+            $history->activity_type = 'Capa Type';
+            $history->previous = "Null";
+            $history->current = $capa->capa_type;
+            $history->comment = "NA";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $capa->status;
+             $history->change_to = "Opened";
+            $history->change_from = "Initiator";
+            $history->action_name = "store";
+            $history->save();
+        }
+        if (!empty($capa->capa_type)) {
+            $history = new CapaAuditTrial();
+            $history->capa_id = $capa->id;
+            $history->activity_type = 'Capa Type';
+            $history->previous = "Null";
+            $history->current = $capa->capa_type;
+            $history->comment = "NA";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $capa->status;
+             $history->change_to = "Opened";
+            $history->change_from = "Initiator";
+            $history->action_name = "store";
+            $history->save();
+        }
+
 
 
         DocumentService::update_qms_numbers();
@@ -781,17 +977,17 @@ class CapaController extends Controller
         $capa->bd_domestic= $request->bd_domestic;
         $capa->Bd_Person= $request->Bd_Person;
         $capa->Production_Person= $request->Production_Person;
-        // if (!empty($request->capa_attachment)) {
-        //     $files = [];
-        //     if ($request->hasfile('capa_attachment')) {
-        //         foreach ($request->file('capa_attachment') as $file) {
-        //             $name = $request->name . 'capa_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
-        //             $file->move('upload/', $name);
-        //             $files[] = $name;
-        //         }
-        //     }
-        //     $capa->capa_attachment = json_encode($files);
-        // }
+        if (!empty($request->capa_attachment)) {
+            $files = [];
+            if ($request->hasfile('capa_attachment')) {
+                foreach ($request->file('capa_attachment') as $file) {
+                    $name = $request->name . 'capa_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $file->move('upload/', $name);
+                    $files[] = $name;
+                }
+            }
+            $capa->capa_attachment = json_encode($files);
+        }
         if (!empty($request->closure_attachment)) {
             $files = [];
             if ($request->hasfile('closure_attachment')) {
@@ -909,6 +1105,9 @@ class CapaController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastDocument->status;
+             $history->change_to = "Not Applicable";
+                $history->change_from = $capa->status;
+                $history->action_name = "Update";
             $history->save();
         }
 
@@ -924,9 +1123,12 @@ class CapaController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastDocument->status;
+             $history->change_to = "Not Applicable";
+                $history->change_from = $capa->status;
+                $history->action_name = "Update";
             $history->save();
         }
-        if ($lastDocument->short_description != $capa->divishort_descriptionsion_code || !empty($request->short_description_comment)) {
+        if ($lastDocument->short_description != $capa->short_description || !empty($request->short_description_comment)) {
 
             $history = new CapaAuditTrial();
             $history->capa_id = $id;
@@ -938,8 +1140,31 @@ class CapaController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastDocument->status;
+             $history->change_to = "Not Applicable";
+                $history->change_from = $capa->status;
+                $history->action_name = "Update";
             $history->save();
         }
+        if ($lastDocument->initiated_through != $capa->initiated_through ) {
+
+            $history = new CapaAuditTrial();
+            $history->capa_id = $id;
+            $history->activity_type = 'initiated_through';
+            $history->previous = $lastDocument->initiated_through;
+            $history->current = $capa->initiated_through;
+            $history->comment = $request->initiated_through_comment;
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+             $history->change_to = "Not Applicable";
+                $history->change_from = $capa->status;
+                $history->action_name = "Update";
+            $history->save();
+        }
+
+
+
         if ($lastDocument->problem_description != $capa->problem_description || !empty($request->problem_description_comment)) {
 
             $history = new CapaAuditTrial();
@@ -952,6 +1177,9 @@ class CapaController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastDocument->status;
+             $history->change_to = "Not Applicable";
+                $history->change_from = $capa->status;
+                $history->action_name = "Update";
             $history->save();
         }
 
@@ -967,6 +1195,9 @@ class CapaController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastDocument->status;
+             $history->change_to = "Not Applicable";
+                $history->change_from = $capa->status;
+                $history->action_name = "Update";
             $history->save();
         }
         if ($lastDocument->capa_team != $capa->capa_team || !empty($request->capa_team_comment)) {
@@ -981,6 +1212,9 @@ class CapaController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastDocument->status;
+            $history->change_to = "Not Applicable";
+            $history->change_from = $capa->status;
+            $history->action_name = "Update";
             $history->save();
         }
         if ($lastDocument->capa_related_record!= $capa->capa_related_record || !empty($request->capa_related_record_comment)) {
@@ -995,6 +1229,9 @@ class CapaController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastDocument->status;
+             $history->change_to = "Not Applicable";
+                $history->change_from = $capa->status;
+                $history->action_name = "Update";
             $history->save();
         }
         // if ($lastDocument->reference_record != $capa->reference_record || !empty($request->reference_record_comment)) {
@@ -1023,6 +1260,9 @@ class CapaController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastDocument->status;
+             $history->change_to = "Not Applicable";
+                $history->change_from = $capa->status;
+                $history->action_name = "Update";
             $history->save();
         }
         if ($lastDocument->interim_containnment != $capa->interim_containnment || !empty($request->interim_containnment_comment)) {
@@ -1037,6 +1277,9 @@ class CapaController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastDocument->status;
+             $history->change_to = "Not Applicable";
+                $history->change_from = $capa->status;
+                $history->action_name = "Update";
             $history->save();
         }
         if ($lastDocument->containment_comments != $capa->containment_comments || !empty($request->containment_comments_comment)) {
@@ -1051,22 +1294,28 @@ class CapaController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastDocument->status;
+             $history->change_to = "Not Applicable";
+                $history->change_from = $capa->status;
+                $history->action_name = "Update";
             $history->save();
         }
-        // if ($lastDocument->capa_attachment != $capa->capa_attachment || !empty($request->capa_attachment_comment)) {
+        if ($lastDocument->capa_attachment != $capa->capa_attachment || !empty($request->capa_attachment_comment)) {
 
-        //     $history = new CapaAuditTrial();
-        //     $history->capa_id = $id;
-        //     $history->activity_type = 'CAPA Attachment';
-        //     $history->previous = $lastDocument->capa_attachment;
-        //     $history->current = $capa->capa_attachment;
-        //     $history->comment = $request->capa_attachment_comment;
-        //     $history->user_id = Auth::user()->id;
-        //     $history->user_name = Auth::user()->name;
-        //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-        //     $history->origin_state = $lastDocument->status;
-        //     $history->save();
-        // }
+            $history = new CapaAuditTrial();
+            $history->capa_id = $id;
+            $history->activity_type = 'CAPA Attachment';
+            $history->previous = $lastDocument->capa_attachment;
+            $history->current = $capa->capa_attachment;
+            $history->comment = $request->capa_attachment_comment;
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to = "Not Applicable";
+                $history->change_from = $capa->status;
+                $history->action_name = "Update";
+            $history->save();
+        }
         if ($lastDocument->capa_qa_comments!= $capa->capa_qa_comments|| !empty($request->capa_qa_comments_comment)) {
 
             $history = new CapaAuditTrial();
@@ -1079,6 +1328,9 @@ class CapaController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastDocument->status;
+             $history->change_to = "Not Applicable";
+                $history->change_from = $capa->status;
+                $history->action_name = "Update";
             $history->save();
         }
         if ($lastDocument->capa_qa_comments2 != $capa->capa_qa_comments2 || !empty($request->capa_qa_comments2_comment)) {
@@ -1093,6 +1345,9 @@ class CapaController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastDocument->status;
+             $history->change_to = "Not Applicable";
+                $history->change_from = $capa->status;
+                $history->action_name = "Update";
             $history->save();
         }
         // if ($lastDocument->details != $capa->details || !empty($request->details_comment)) {
@@ -1121,6 +1376,9 @@ class CapaController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastDocument->status;
+             $history->change_to = "Not Applicable";
+                $history->change_from = $capa->status;
+                $history->action_name = "Update";
             $history->save();
         }
         if ($lastDocument->project_initiator_group != $capa->project_initiator_group || !empty($request->project_initiator_group_comment)) {
@@ -1135,6 +1393,9 @@ class CapaController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastDocument->status;
+             $history->change_to = "Not Applicable";
+                $history->change_from = $capa->status;
+                $history->action_name = "Update";
             $history->save();
         }
         if ($lastDocument->site_number != $capa->site_number || !empty($request->site_number_comment)) {
@@ -1149,6 +1410,9 @@ class CapaController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastDocument->status;
+             $history->change_to = "Not Applicable";
+                $history->change_from = $capa->status;
+                $history->action_name = "Update";
             $history->save();
         }
         if ($lastDocument->subject_number != $capa->subject_number || !empty($request->subject_number_comment)) {
@@ -1177,6 +1441,9 @@ class CapaController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastDocument->status;
+             $history->change_to = "Not Applicable";
+                $history->change_from = $capa->status;
+                $history->action_name = "Update";
             $history->save();
         }
         if ($lastDocument->sponsor != $capa->sponsor || !empty($request->sponsor_comment)) {
@@ -1191,6 +1458,9 @@ class CapaController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastDocument->status;
+             $history->change_to = "Not Applicable";
+                $history->change_from = $capa->status;
+                $history->action_name = "Update";
             $history->save();
         }
         if ($lastDocument->general_deviation!= $capa->general_deviation||!empty($request->general_deviation_comment)) {
@@ -1205,6 +1475,9 @@ class CapaController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastDocument->status;
+             $history->change_to = "Not Applicable";
+                $history->change_from = $capa->status;
+                $history->action_name = "Update";
             $history->save();
         }
         if ($lastDocument->corrective_action != $capa->corrective_action || !empty($request->corrective_action_comment)) {
@@ -1233,6 +1506,9 @@ class CapaController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastDocument->status;
+             $history->change_to = "Not Applicable";
+                $history->change_from = $capa->status;
+                $history->action_name = "Update";
             $history->save();
         }
         if ($lastDocument->supervisor_review_comments != $capa->supervisor_review_comments || !empty($request->supervisor_review_comments_comment)) {
@@ -1247,6 +1523,9 @@ class CapaController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastDocument->status;
+             $history->change_to = "Not Applicable";
+                $history->change_from = $capa->status;
+                $history->action_name = "Update";
             $history->save();
         }
         if ($lastDocument->qa_review != $capa->qa_review || !empty($request->qa_review_comment)) {
@@ -1261,6 +1540,9 @@ class CapaController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastDocument->status;
+             $history->change_to = "Not Applicable";
+                $history->change_from = $capa->status;
+                $history->action_name = "Update";
             $history->save();
         }
         if ($lastDocument->effectiveness != $capa->effectiveness || !empty($request->effectiveness_comment)) {
@@ -1275,6 +1557,9 @@ class CapaController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastDocument->status;
+             $history->change_to = "Not Applicable";
+                $history->change_from = $capa->status;
+                $history->action_name = "Update";
             $history->save();
         }
         if ($lastDocument->effect_check_date != $capa->effect_check_date || !empty($request->effect_check_date_comment)) {
@@ -1289,6 +1574,79 @@ class CapaController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastDocument->status;
+             $history->change_to = "Not Applicable";
+                $history->change_from = $capa->status;
+                $history->action_name = "Update";
+            $history->save();
+        }
+
+        if ($lastDocument->severity_level_form != $capa->severity_level_form) {
+
+            $history = new CapaAuditTrial();
+            $history->capa_id = $id;
+            $history->activity_type = 'Severity Level';
+            $history->previous = $lastDocument->severity_level_form;
+            $history->current = $capa->severity_level_form;
+            $history->comment = $request->severity_level_form_comment;
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+             $history->change_to = "Not Applicable";
+                $history->change_from = $capa->status;
+                $history->action_name = "Update";
+            $history->save();
+        }
+        if ($lastDocument->repeat_nature != $capa->repeat_nature) {
+
+            $history = new CapaAuditTrial();
+            $history->capa_id = $id;
+            $history->activity_type = 'Repeat Nature';
+            $history->previous = $lastDocument->repeat_nature;
+            $history->current = $capa->repeat_nature;
+            $history->comment = $request->repeat_nature_comment;
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+             $history->change_to = "Not Applicable";
+                $history->change_from = $capa->status;
+                $history->action_name = "Update";
+            $history->save();
+        }
+        if ($lastDocument->repeat != $capa->repeat) {
+
+            $history = new CapaAuditTrial();
+            $history->capa_id = $id; 
+            $history->activity_type = 'Repeat';
+            $history->previous = $lastDocument->repeat;
+            $history->current = $capa->repeat;
+            $history->comment = $request->repeat_comment;
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+             $history->change_to = "Not Applicable";
+                $history->change_from = $capa->status;
+                $history->action_name = "Update";
+            $history->save();
+        }
+
+        if ($lastDocument->initiated_through_req != $capa->initiated_through_req) {
+
+            $history = new CapaAuditTrial();
+            $history->capa_id = $id;
+            $history->activity_type = 'Others';
+            $history->previous = $lastDocument->initiated_through_req;
+            $history->current = $capa->initiated_through_req;
+            $history->comment = $request->initiated_through_req_comment;
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+             $history->change_to = "Not Applicable";
+                $history->change_from = $capa->status;
+                $history->action_name = "Update";
             $history->save();
         }
         if ($lastDocument->closure_attachment != $capa->closure_attachment || !empty($request->closure_attachment_comment)) {
@@ -1303,6 +1661,9 @@ class CapaController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastDocument->status;
+             $history->change_to = "Not Applicable";
+                $history->change_from = $capa->status;
+                $history->action_name = "Update";
             $history->save();
         }
 
@@ -1331,7 +1692,7 @@ class CapaController extends Controller
         // dd( $MaterialsQueryData->json());
         // $EquipmentsQueryData = Http::get('http://103.167.99.37/LIMS_EL/WebServices.Query.EquipmentsQuery.lims');
         // dd( $EquipmentsQueryData->json());
-
+// dd($data);
         return view('frontend.capa.capaView', compact('data', 'data1', 'data2', 'data3', 'old_record','revised_date','cft' ));
     }
 
@@ -1358,6 +1719,9 @@ class CapaController extends Controller
                     $history->user_name = Auth::user()->name;
                     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                     $history->origin_state = $lastDocument->status;
+                   
+                     $history->change_to = "Opened";
+                    $history->change_from = $lastDocument->status;
                     $history->stage = 'Plan Proposed';
                     $history->save();
 
@@ -1399,6 +1763,8 @@ class CapaController extends Controller
                 $history->user_name = Auth::user()->name;
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 $history->origin_state = $lastDocument->status;
+                 $history->change_to = "Pending CAPA Plan";
+                    $history->change_from = $lastDocument->status;
                 $history->stage = 'Plan Approved';
                 $history->save();
 
@@ -1438,6 +1804,9 @@ class CapaController extends Controller
                     $history->user_name = Auth::user()->name;
                     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                     $history->origin_state = $lastDocument->status;
+                     $history->change_to = "CAPA In Progress
+";
+                    $history->change_from = $lastDocument->status;
                     $history->stage = 'Completed';
                     $history->save();
                 $capa->update();
@@ -1459,6 +1828,8 @@ class CapaController extends Controller
                         $history->user_name = Auth::user()->name;
                         $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                         $history->origin_state = $lastDocument->status;
+                         $history->change_to = "QA Review";
+                    $history->change_from = $lastDocument->status;
                         $history->stage = 'Approved';
                         $history->save();
                 $capa->update();
@@ -1481,6 +1852,8 @@ class CapaController extends Controller
                         $history->user_name = Auth::user()->name;
                         $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                         $history->origin_state = $lastDocument->status;
+                         $history->change_to = "Pending Actions Completion";
+                    $history->change_from = $lastDocument->status;
                         $history->stage = 'Completed';
                         $history->save();
                 $capa->update();
@@ -1725,7 +2098,7 @@ class CapaController extends Controller
 
     public function CapaAuditTrial($id)
     {
-        $audit = CapaAuditTrial::where('capa_id', $id)->orderByDESC('id')->get()->unique('activity_type');
+        $audit = CapaAuditTrial::where('capa_id', $id)->orderByDESC('id')->paginate();
         $today = Carbon::now()->format('d-m-y');
         $document = Capa::where('id', $id)->first();
         $document->initiator = User::where('id', $document->initiator_id)->value('name');
@@ -1754,8 +2127,8 @@ class CapaController extends Controller
         $cft =[];
         $parent_id = $id;
         $parent_type = "Audit_Program";
-        $record_number = ((RecordNumber::first()->value('counter')) + 1);
-        $record_number = str_pad($record_number, 4, '0', STR_PAD_LEFT);
+        $record = ((RecordNumber::first()->value('counter')) + 1);
+        $record = str_pad($record, 4, '0', STR_PAD_LEFT);
         $currentDate = Carbon::now();
         $formattedDate = $currentDate->addDays(30);
         $due_date= $formattedDate->format('d-M-Y');
@@ -1771,7 +2144,7 @@ class CapaController extends Controller
         if(!empty($changeControl->cft)) $cft = explode(',', $changeControl->cft);
         // return $capa_data;
         if ($request->child_type == "Change_control") {
-            return view('frontend.change-control.new-change-control', compact('cft','pre','hod','parent_short_description', 'parent_initiator_id', 'parent_intiation_date', 'parent_division_id', 'parent_record', 'record_number', 'due_date', 'parent_id', 'parent_type'));
+            return view('frontend.change-control.new-change-control', compact('cft','pre','hod','parent_short_description', 'parent_initiator_id', 'parent_intiation_date', 'parent_division_id', 'parent_record', 'record', 'due_date', 'parent_id', 'parent_type'));
         }
         if ($request->child_type == "extension") {
             $parent_due_date = "";
@@ -1781,35 +2154,36 @@ class CapaController extends Controller
                 $parent_due_date = $request->due_date;
             }
 
-            $record_number = ((RecordNumber::first()->value('counter')) + 1);
-            $record_number = str_pad($record_number, 4, '0', STR_PAD_LEFT);
-            return view('frontend.forms.extension', compact('parent_id', 'parent_name', 'record_number', 'parent_due_date'));
+            $record = ((RecordNumber::first()->value('counter')) + 1);
+            $record = str_pad($record, 4, '0', STR_PAD_LEFT);
+            return view('frontend.forms.extension', compact('parent_id', 'parent_name', 'record', 'parent_due_date'));
         }
         $old_record = Capa::select('id', 'division_id', 'record')->get();
         if ($request->child_type == "Action_Item") {
             $parent_name = "CAPA";
 
-            return view('frontend.forms.action-item', compact('old_record','parent_short_description', 'parent_initiator_id', 'parent_intiation_date', 'parent_name', 'parent_division_id', 'parent_record', 'record_number', 'due_date', 'parent_id', 'parent_type'));
+            return view('frontend.action-item.action-item', compact('old_record','parent_short_description', 'parent_initiator_id', 'parent_intiation_date', 'parent_name', 'parent_division_id', 'parent_record', 'record', 'due_date', 'parent_id', 'parent_type'));
         } else {
-            return view('frontend.forms.effectiveness-check', compact('old_record','parent_short_description', 'parent_initiator_id', 'parent_intiation_date', 'parent_division_id', 'parent_record', 'record_number', 'due_date', 'parent_id', 'parent_type'));
+            return view('frontend.forms.effectiveness-check', compact('old_record','parent_short_description', 'parent_initiator_id', 'parent_intiation_date', 'parent_division_id', 'parent_record', 'record', 'due_date', 'parent_id', 'parent_type'));
         }
     }
 
     public function effectiveness_check(Request $request, $id)
     {
-        $record_number = ((RecordNumber::first()->value('counter')) + 1);
-        $record_number = str_pad($record_number, 4, '0', STR_PAD_LEFT);
+        $record = ((RecordNumber::first()->value('counter')) + 1);
+        $record = str_pad($record, 4, '0', STR_PAD_LEFT);
         $currentDate = Carbon::now();
         $formattedDate = $currentDate->addDays(30);
         $due_date= $formattedDate->format('Y-m-d');
-        return view("frontend.forms.effectiveness-check", compact('due_date', 'record_number'));
+        return view("frontend.forms.effectiveness-check", compact('due_date', 'record'));
     }
 
 
     public static function singleReport($id)
     {
         $data = Capa::find($id);
-        if (!empty($data)) {
+        if (!empty($data))
+         {
             $data->Product_Details = CapaGrid::where('capa_id', $id)->where('type', "Product_Details")->first();
             $data->Instruments_Details = CapaGrid::where('capa_id', $id)->where('type', "Instruments_Details")->first();
             $data->Material_Details = CapaGrid::where('capa_id', $id)->where('type', "Material_Details")->first();
