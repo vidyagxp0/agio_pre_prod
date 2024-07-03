@@ -58,7 +58,6 @@ class OOSController extends Controller
     { 
         // dd($request->all());
         $res = Helpers::getDefaultResponse();
-
         try {
             
             $oos_record = OOSService::create_oss($request);
