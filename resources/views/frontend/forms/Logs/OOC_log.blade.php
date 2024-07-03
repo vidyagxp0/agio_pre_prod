@@ -76,36 +76,53 @@
                                     <div class="filter-bar d-flex justify-content-between">
                                         <div class="filter-item">
                                             <label for="process">Department</label>
-                                            <select class="custom-select" id="process">
-                                                <option value="all">All Records</option>
-
+                                            <select name="Initiator_Group" id="initiator_group" class="form-control">
+                                                {{-- <option value="all">All Records</option> --}}
+                                                <option value="">Enter Your Selection Here</option>
+                                                <option value="CQA">Corporate Quality Assurance</option>
+                                                <option value="QAB">Quality Assurance Biopharma</option>
+                                                <option value="CQC">Central Quality Control</option>
+                                                <option value="MANU">Manufacturing</option>
+                                                <option value="PSG">Plasma Sourcing Group</option>
+                                                <option value="CS">Central Stores</option>
+                                                <option value="ITG">Information Technology Group</option>
+                                                <option value="MM">Molecular Medicine</option>
+                                                <option value="CL">Central Laboratory</option>
+                                                <option value="TT">Tech team</option>
+                                                <option value="QA">Quality Assurance</option>
+                                                <option value="QM">Quality Management</option>
+                                                <option value="IA">IT Administration</option>
+                                                <option value="ACC">Accounting</option>
+                                                <option value="LOG">Logistics</option>
+                                                <option value="SM">Senior Management</option>
+                                                <option value="BA">Business Administration</option>
                                             </select>
                                         </div>
                                         <div class="filter-item">
                                             <label for="criteria">Division</label>
-                                            <select class="custom-select" id="criteria">
-                                                <option value="all">All Records</option>
+                                            <select class="custom-select" id="division_id">
+                                                <option value="Null">Select Records</option>
+                                                <option value="1">Corporate</option>
+                                                <option value="2">Plant</option>
 
                                             </select>
                                         </div>
                                         <div class="filter-item">
-                                            <label for="division">Date From</label>
-                                            <select class="custom-select" id="division">
-                                                <option value="all">All Records</option>
-
-                                            </select>
+                                            <label for="date_from">Date From</label>
+                                            <input type="date" class="custom-select" id="date_ooc_from_ooc">
                                         </div>
                                         <div class="filter-item">
-                                            <label for="originator">Date To</label>
-                                            <select class="custom-select" id="originator">
-                                                <option value="all">All Records</option>
+                                            <label for="date_to">Date To</label>
+                                            <input type="date" class="custom-select" id="date_ooc_to_ooc">
 
                                             </select>
                                         </div> 
                                         <div class="filter-item">
                                             <label for="originator">Equipment / Instrument</label>
-                                            <select class="custom-select" id="originator">
-                                                <option value="all">All Records</option>
+                                            <select class="custom-select" id="instrument_equipment">
+                                                <option value="Null">Select Records</option>
+                                                <option value="instrument_name">Instrument Name</option>
+                                                <option value="instrument_id">Instrument Id</option>
 
                                             </select>
                                         </div>
@@ -137,8 +154,8 @@
                                             <th>Originator</th>
                                             <th>Division</th>
                                             <th>Department</th>
-                                            <th>Action Taken </th>
-                                            <th>Calibration Required</th>
+                                            <th>Calibration Logged By </th>
+                                            <th>Calibration Logged On</th>
                                             <th>Due Date</th>
                                             <th>Date of Clouser</th>
                                             <th>Status</th>
@@ -147,26 +164,16 @@
                                         
                                     </thead>
 
-                                    <tbody>
-                                        <tr>
-
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-
-                                        </tr>
-
+                                   
+                                    <tbody id="tableData">
+                                        @include('frontend.forms.Logs.filterData.outofcalibration_data');
                                     </tbody>
                                 </table>
+                                <div class="d-flex justify-content-center" style="margin-top: 10px;">
+                                    <div class="spinner-border text-primary" role="status" id="spinner">
+                                        <span class="sr-only">Loading...</span>
+                                    </div>
+                                </div>
                             </div>
                         </div>
 
@@ -178,10 +185,90 @@
     </div>
 
     </div>
-
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.7.2/axios.min.js" integrity="sha512-JSCFHhKDilTRRXe9ak/FJ28dcpOJxzQaCd3Xg8MyF6XFjODhy/YMCM8HW0TFDckNHWUewW+kfvhin43hKtJxAw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script>
         VirtualSelect.init({
             ele: '#Facility, #Group, #Audit, #Auditee ,#capa_related_record ,#classRoom_training'
         });
+
+
+        
+        $('#spinner').hide();
+
+const filterData = {
+    department_outofcalibration: null,
+    div_id_outofcalibration: null,
+    period_outofcalibration: null,
+    date_OOC_from: null,
+    date_OOC_to: null
+    // date_OOC_to: null,
+
+
+}
+
+$('#initiator_group').change(function() {
+    filterData.department_outofcalibration = $(this).val();
+    filterRecords()
+});
+
+ // Division ID change event
+
+  $('#division_id').change(function() {
+    filterData.div_id_outofcalibration = $(this).val();
+    filterRecords();
+ });
+ $('#date_ooc_from_ooc, #date_ooc_to_ooc').change(function() {
+        filterData.date_OOC_from = $('#date_ooc_from_ooc').val();
+        filterData.date_OOC_to = $('#date_ooc_to_ooc').val();
+       
+        filterRecords();
+    });
+
+    
+
+
+ $('#datewise').change(function() {
+filterData.period_outofcalibration = $(this).val();
+filterRecords();
+});
+
+$('#instrument_equipment').change(function() {
+        filterData.instrument_equipment = $(this).val();
+        filterRecords();
+    });
+
+    $('#instrument_value').change(function() {
+        filterData.instrument_value = $(this).val();
+        filterRecords();
+    });
+
+
+
+
+
+
+async function filterRecords()
+{
+    $('#tableData').html('');
+    $('#spinner').show();
+    
+    try {
+
+
+        const postUrl = "{{ route('api.ooc.filter') }}";
+
+        const res = await axios.post(postUrl, filterData);
+
+        if (res.data.status == 'ok') {
+            $('#tableData').html(res.data.body);
+        }
+
+    } catch (err) {
+        console.log('Error in filterRecords', err.message);
+    }
+    
+    $('#spinner').hide();
+}
+
     </script>
 @endsection

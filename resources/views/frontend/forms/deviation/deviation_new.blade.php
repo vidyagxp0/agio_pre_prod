@@ -397,9 +397,11 @@
                         '<td><input disabled type="text" name="serial[]" value="' + serialNumber +
                         '"></td>' +
                         '<td><input type="text" name="product_name[]"></td>' +
-                        '<td> <select name="product_stage[]" id=""> <option value="">-- Select --</option> <option value="">1 <option value="">2</option> <option value="">3</option><option value="">4</option> <option value="">5</option><option value="">6</option> <option value="">7</option> <option value="">8</option><option value="">9</option><option value="">Final</option> </select></td>' +
+                        '<td> <input type="text" name="product_stage[]" id=""></td>' +
                         '<td><input type="text" name="batch_no[]"></td>' +
                         '<td><button class="removeRowBtn">Remove</button></td>' +
+                        // '<td> <input type="text" name="product_stage[]" id=""> <option value="">-- Select --</option> <option value="">1 <option value="">2</option> <option value="">3</option><option value="">4</option> <option value="">5</option><option value="">6</option> <option value="">7</option> <option value="">8</option><option value="">9</option><option value="">Final</option> </select></td>' +
+                        
 
 
 
@@ -431,33 +433,29 @@
 
     <script>
         $(document).ready(function() {
-            $('#investigation_Details').click(function(e) {
+            let investigationTeamIndex = 1;
+            $('#addInvestigationTeam').click(function(e) {
                 function generateTableRow(serialNumber) {
                     var users = @json($users);
+                    var userOptionsHtml = '';
+                    users.forEach(user => {
+                        userOptionsHtml = userOptionsHtml.concat(`<option value="${user.id}">${user.name}</option>`)
+                    });
 
                     var html =
                         '<tr>' +
-                        '<td><input disabled type="text" name="serial[]" value="' + serialNumber +
-                        '"></td>' +
-                        '<td> <select name="Investigation_team[]" id=""> <option value="">-- Select --</option><option value="">name</option> </select> </td>' +
-                        '<td><input type="text" class="numberDetail" name="Responsibility[]"></td>' +
-                        '<td><input type="text" class="Document_Remarks" name="Remarks[]"></td>' +
-                        '<td><button type="text" class="removeRowBtn" ">Remove</button></td>' +
-
+                        '<td><input disabled type="text" name="serial[]" value="' + serialNumber + '"></td>' +
+                        '<td> <select name="investigationTeam[' + investigationTeamIndex + '][teamMember]" > <option value="">-- Select --</option>'+ userOptionsHtml +' </select> </td>' +
+                        ' <td><input type="text" name="investigationTeam[' + investigationTeamIndex +'][responsibility]"></td>' +
+                        '<td><input type="text" name="investigationTeam[' + investigationTeamIndex + '][remarks]"></td>' +
+                        '<td><button type="text" class="removeRowBtn">Remove</button></td>' +
                         '</tr>';
+                    '</tr>';
 
-                    for (var i = 0; i < users.length; i++) {
-                        html += '<option value="' + users[i].id + '">' + users[i].name + '</option>';
-                    }
-
-                    html += '</select></td>' +
-
-                        '</tr>';
-
+                    docIndex++;
                     return html;
                 }
-
-                var tableBody = $('#investigation_Details_Details tbody');
+                var tableBody = $('#investigationDetailAddTable tbody');
                 var rowCount = tableBody.children('tr').length;
                 var newRow = generateTableRow(rowCount + 1);
                 tableBody.append(newRow);
@@ -466,35 +464,28 @@
     </script>
     <script>
         $(document).ready(function() {
-            $('#root_cause_Details').click(function(e) {
+            let rootCauseIndex = 1;
+            $('#rootCauseAdd').click(function(e) {
                 function generateTableRow(serialNumber) {
                     var users = @json($users);
 
                     var html =
                         '<tr>' +
-                        '<td><input disabled type="text" name="serial[]" value="' + serialNumber +
-                        '"></td>' +
-                        '<td> <select name="Root_Cause_Category[]" id=""> <option value="">-- Select --</option><option value="">name   </option> </select></td>' +
-                        '<td><select name="Root_Cause_Sub-Category[]" id=""><option value="">-- Select --</option><option value="">name</option>  </select></td>' +
-                        '<td><input type="text" class="Document_Remarks" name="ifother[]"></td>' +
-                        '<td><input type="text" class="Document_Remarks" name="Probability[]"></td>' +
-                        '<td><input type="text" class="Document_Remarks" name="remarks[]"></td>' +
+                        '<td><input disabled type="text" name="serial[]" value="' + serialNumber + '"></td>' +
+                        '<td> <select name="rootCauseData[' + rootCauseIndex + '][rootCauseCategory]" id=""> <option value="">-- Select --</option><option value="">name   </option> </select></td>' +
+                        '<td><select name="rootCauseData[' + rootCauseIndex + '][rooCauseSubCategory]" id=""><option value="">-- Select --</option><option value="">name</option>  </select></td>' +
+                        '<td><input type="text" class="Document_Remarks" name="rootCauseData[' + rootCauseIndex + '][ifOthers]"></td>' +
+                        '<td><input type="text" class="Document_Remarks" name="rootCauseData[' + rootCauseIndex + '][probability]"></td>' +
+                        '<td><input type="text" class="Document_Remarks" name="rootCauseData[' + rootCauseIndex + '][remarks]"></td>' +
                         '<td><button type="text" class="removeRowBtn" ">Remove</button></td>' +
 
                         '</tr>';
 
-                    for (var i = 0; i < users.length; i++) {
-                        html += '<option value="' + users[i].id + '">' + users[i].name + '</option>';
-                    }
-
-                    html += '</select></td>' +
-
-                        '</tr>';
-
+                    rootCauseIndex++;
                     return html;
                 }
 
-                var tableBody = $('#Root_cause_Details_Details tbody');
+                var tableBody = $('#rootCauseAddTable tbody');
                 var rowCount = tableBody.children('tr').length;
                 var newRow = generateTableRow(rowCount + 1);
                 tableBody.append(newRow);
@@ -538,6 +529,49 @@
             });
         });
     </script>
+<script>
+    function calculateDueDate() {
+        const initiationDateInput = document.getElementById('intiation_date');
+        const deviationCategorySelect = document.getElementById('Deviation_category');
+        const dueDateInput = document.getElementById('due_date');
+
+        if (initiationDateInput.value && deviationCategorySelect.value) {
+            const initiationDate = new Date(initiationDateInput.value);
+            let dueDate = new Date(initiationDate);
+
+            switch (deviationCategorySelect.value) {
+                case 'minor':
+                    dueDate.setDate(dueDate.getDate() + 15);
+                    break;
+                case 'major':
+                    dueDate.setDate(dueDate.getDate() + 30);
+                    break;
+                case 'critical':
+                    dueDate.setDate(dueDate.getDate() + 45);
+                    break;
+                default:
+                    dueDate = null;
+                    break;
+            }
+
+            if (dueDate) {
+                const day = String(dueDate.getDate()).padStart(2, '0');
+                const monthNames = [
+                    'January', 'February', 'March', 'April', 'May', 'June',
+                    'July', 'August', 'September', 'October', 'November', 'December'
+                ];
+                const month = monthNames[dueDate.getMonth()];
+                const year = dueDate.getFullYear();
+                dueDateInput.value = `${day}-${month}-${year}`;
+            }
+        }
+    }
+
+    document.getElementById('intiation_date').addEventListener('change', calculateDueDate);
+    document.getElementById('Deviation_category').addEventListener('change', calculateDueDate);
+</script>
+
+
 
     <div class="form-field-head">
 
@@ -601,8 +635,8 @@
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="RLS Record Number"><b>Record Number</b></label>
-                                        <input disabled type="text" name="record_number">
-                                        {{-- value="{{ Helpers::getDivisionName(session()->get('division')) }}/DEV/{{ date('Y') }}/{{ $record_number }}"> --}}
+                                        <input disabled type="text" name="record_number"  value="{{ Helpers::getDivisionName(session()->get('division')) }}/DEV/{{ date('Y') }}/{{ $record_number }}">
+                                        
                                         {{-- <div class="static">QMS-EMEA/CAPA/{{ date('Y') }}/{{ $record_number }}</div> --}}
                                     </div>
                                 </div>
@@ -612,7 +646,7 @@
                                         <input disabled type="text" name="division_code"
                                             value="{{ Helpers::getDivisionName(session()->get('division')) }}">
                                         <input type="hidden" name="division_id" value="{{ session()->get('division') }}">
-                                        {{-- <div class="static">QMS-North America</div> --}}
+                                        {{-- <div class="static">{{ Helpers::getDivisionName(session()->get('division')) }}</div> --}}
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
@@ -631,116 +665,109 @@
                                     $dueDate = date('Y-m-d', strtotime($initiationDate . '+30 days')); // Due date
                                 @endphp
 
+                                <!-- <div class="col-lg-6">
+                                    <div class="group-input">
+                                        <label for="Date of Initiation"><b>Date of Initiation</b></label>
+                                        <input type="date" id="intiation_date" name="intiation_date" required />
+                                         <input type="hidden" value="{{ date('Y-m-d') }}" name="intiation_date">
+                                    </div>
+                                </div> -->
+
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Date of Initiation"><b>Date of Initiation</b></label>
-                                        <input readonly type="text" value="{{ date('d-M-Y') }}" name="initiation_date"
-                                            id="initiation_date"
+                                        <input readonly type="text" value="{{ date('d-M-Y') }}" name="intiation_date"
+                                            id="intiation_date"
                                             style="background-color: light-dark(rgba(239, 239, 239, 0.3), rgba(59, 59, 59, 0.3))">
-                                        <input type="hidden" value="{{ date('Y-m-d') }}" name="initiation_date_hidden">
+                                        <input type="hidden" value="{{ date('Y-m-d') }}" name="intiation_date_hidden">
                                     </div>
                                 </div>
 
-                                <div class="col-lg-12 new-date-data-field">
-                                    <div class="group-input input-date">
-                                        <label for="Due Date">Due Date</label>
-                                        <div><small class="text-primary">If revising Due Date, kindly mention revision
-                                                reason in "Due Date Extension Justification" data field.</small></div>
-                                        <div class="calenderauditee">
-                                            <input type="text" id="due_date" readonly placeholder="DD-MM-YYYY" />
-                                            <input type="date" name="due_date"
-                                                min="{{ \Carbon\Carbon::now()->format('d-M-Y') }}" class="hide-input"
-                                                oninput="handleDateInput(this, 'due_date')" />
-                                        </div>
-                                    </div>
-                                </div>
 
-                                <script>
-                                    // Format the due date to DD-MM-YYYY
-                                    // Your input date
-                                    var dueDate = "{{ $dueDate }}"; // Replace {{ $dueDate }} with your actual date variable
+            <div class="col-lg-12 new-date-data-field">
+            <div class="group-input input-date">
+                        <label for="due_date">Due Date</label>
+                        <!-- <div><small class="text-primary">If revising Due Date, kindly mention revision reason in "Due Date Extension Justification" data field.</small></div> -->
+    <div class="calenderauditee">
+<input type="text" id="due_date" name="due_date" readonly placeholder="DDD-MMM-YYYY" />
+    </div>
+            </div>
+            </div>
+            <script>
+        function calculateDueDate() {
+            const initiationDateInput = document.getElementById('intiation_date');
+            const deviationCategorySelect = document.getElementById('Deviation_category');
+            const dueDateInput = document.getElementById('due_date');
 
-                                    // Create a Date object
-                                    var date = new Date(dueDate);
+            if (initiationDateInput.value && deviationCategorySelect.value) {
+                const initiationDate = new Date(initiationDateInput.value);
+                let dueDate = new Date(initiationDate);
 
-                                    // Array of month names
-                                    var monthNames = [
-                                        "Jan", "Feb", "Mar", "Apr", "May", "Jun",
-                                        "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"
-                                    ];
+                switch (deviationCategorySelect.value) {
+                    case 'minor':
+                        dueDate.setDate(dueDate.getDate() + 15);
+                        break;
+                    case 'major':
+                        dueDate.setDate(dueDate.getDate() + 30);
+                        break;
+                    case 'critical':
+                        dueDate.setDate(dueDate.getDate() + 30);
+                        break;
+                    default:
+                        dueDate = null;
+                        break;
+                }
 
-                                    // Extracting day, month, and year from the date
-                                    var day = date.getDate().toString().padStart(2, '0'); // Ensuring two digits
-                                    var monthIndex = date.getMonth();
-                                    var year = date.getFullYear();
+                if (dueDate) {
+                    const day = String(dueDate.getDate()).padStart(2, '0');
+                    const monthNames = [
+                        'January', 'February', 'March', 'April', 'May', 'June',
+                        'July', 'August', 'September', 'October', 'November', 'December'
+                    ];
+                    const month = monthNames[dueDate.getMonth()];
+                    const year = dueDate.getFullYear();
+                    dueDateInput.value = `${day}-${month}-${year}`;
+                }
+            }
+        }
 
-                                    // Formatting the date in "dd-MMM-yyyy" format
-                                    var dueDateFormatted = `${day}-${monthNames[monthIndex]}-${year}`;
+        document.getElementById('intiation_date').addEventListener('change', calculateDueDate);
+        document.getElementById('Deviation_category').addEventListener('change', calculateDueDate);
+    </script>
 
-                                    // Set the formatted due date value to the input field
-                                    document.getElementById('due_date').value = dueDateFormatted;
-                                </script>
 
-                                <div class="col-lg-12">
-                                    <div class="group-input">
-                                        <label for="Initiator Group"><b>Department</b><span
-                                                class="text-danger">*</span></label>
-                                        <select name="Initiator_Group" id="initiator_group" required>
-                                            <option value="">-- Select --</option>
-                                            <option value="CQA" @if (old('Initiator_Group') == 'CQA') selected @endif>
-                                                Corporate Quality Assurance</option>
-                                            <option value="QAB" @if (old('Initiator_Group') == 'QAB') selected @endif>
-                                                Quality
-                                                Assurance Biopharma</option>
-                                            <option value="CQC" @if (old('Initiator_Group') == 'CQC') selected @endif>
-                                                Central
-                                                Quality Control</option>
-                                            <option value="MANU" @if (old('Initiator_Group') == 'MANU') selected @endif>
-                                                Manufacturing</option>
-                                            <option value="PSG" @if (old('Initiator_Group') == 'PSG') selected @endif>Plasma
-                                                Sourcing Group</option>
-                                            <option value="CS" @if (old('Initiator_Group') == 'CS') selected @endif>
-                                                Central
-                                                Stores</option>
-                                            <option value="ITG" @if (old('Initiator_Group') == 'ITG') selected @endif>
-                                                Information Technology Group</option>
-                                            <option value="MM" @if (old('Initiator_Group') == 'MM') selected @endif>
-                                                Molecular Medicine</option>
-                                            <option value="CL" @if (old('Initiator_Group') == 'CL') selected @endif>
-                                                Central
-                                                Laboratory</option>
 
-                                            <option value="TT" @if (old('Initiator_Group') == 'TT') selected @endif>Tech
-                                                team</option>
-                                            <option value="QA" @if (old('Initiator_Group') == 'QA') selected @endif>
-                                                Quality Assurance</option>
-                                            <option value="QM" @if (old('Initiator_Group') == 'QM') selected @endif>
-                                                Quality Management</option>
-                                            <option value="IA" @if (old('Initiator_Group') == 'IA') selected @endif>IT
-                                                Administration</option>
-                                            <option value="ACC" @if (old('Initiator_Group') == 'ACC') selected @endif>
-                                                Accounting</option>
-                                            <option value="LOG" @if (old('Initiator_Group') == 'LOG') selected @endif>
-                                                Logistics</option>
-                                            <option value="SM" @if (old('Initiator_Group') == 'SM') selected @endif>
-                                                Senior Management</option>
-                                            <option value="BA" @if (old('Initiator_Group') == 'BA') selected @endif>
-                                                Business Administration</option>
-                                        </select>
-                                        @error('Initiator_Group')
-                                            <div class="text-danger">{{ $message }}</div>
-                                        @enderror
-                                    </div>
-                                </div>
-                                {{-- <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="Initiator Group Code">Department Code</label>
-                                        <input type="text" name="initiator_group_code" id="initiator_group_code"
-                                            value="" readonly>
-                                    </div>
-                                </div> --}}
 
-                                <div class="col-12">
+                                                <div class="col-lg-12">
+                                                <div class="group-input">
+                                                    <label for="initiator-group">Initiation Department<span class = "text-danger">*</span></label>
+                                                    <select name="Initiator_Group" id="initiator_group">
+                                                        <option value="NA">Select Department</option>
+                                                        <option value="CQA">Corporate Quality Assurance</option>
+                                                        <option value="QA">Quality Assurance</option>
+                                                        <option value="QC">Quality Control</option>
+                                                        <option value="QM">Quality Control (Microbiology department)</option>
+                                                        <option value="PG">Production General</option>
+                                                        <option value="PL">Production Liquid Orals</option>
+                                                        <option value="PT">Production Tablet and Powder</option>
+                                                        <option value="PE">Production External (Ointment, Gels, Creams and Liquid)</option>
+                                                        <option value="PC">Production Capsules</option>
+                                                        <option value="PI">Production Injectable</option>
+                                                        <option value="EN">Engineering</option>
+                                                        <option value="HR">Human Resource</option>
+                                                        <option value="ST">Store</option>
+                                                        <option value="IT">Electronic Data Processing</option>
+                                                        <option value="FD">Formulation  Development</option>
+                                                        <option value="AL">Analytical research and Development Laboratory</option>
+                                                        <option value="PD">Packaging Development</option>
+                                                        <option value="PU">Purchase Department</option>
+                                                        <option value="DC">Document Cell</option>
+                                                        <option value="RA">Regulatory Affairs</option>
+                                                        <option value="PV">Pharmacovigilance</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                               <div class="col-12">
                                     <div class="group-input">
                                         <label for="Short Description">Short Description<span
                                                 class="text-danger">*</span></label><span id="rchars">255</span>
@@ -831,15 +858,15 @@
                                 </div>
 
 
-                                <div class="col-lg-6 new-time-data-field">
-                                    <div class="group-input input-time">
-                                        <label for="deviation_time">Deviation Observed On (Time)</label>
-                                        <input type="text" name="deviation_time" id="deviation_time">
-                                    </div>
-                                    @error('Deviation_date')
-                                        <div class="text-danger">{{ $message }}</div>
-                                    @enderror
-                                </div>
+                                                <div class="col-lg-6 new-time-data-field">
+                        <div class="group-input input-time">
+                            <label for="deviation_time">Deviation Observed On (Time)</label>
+                            <input type="text" name="deviation_time" id="deviation_time">
+                        </div>
+                        @error('Deviation_date')
+                            <div class="text-danger">{{ $message }}</div>
+                        @enderror
+                    </div>
 
                                 <div class="col-lg-6 new-time-data-field">
                                     <div class="group-input input-time delayJustificationBlock">
@@ -855,8 +882,11 @@
                                     flatpickr("#deviation_time", {
                                         enableTime: true,
                                         noCalendar: true,
-                                        dateFormat: "H:i", // 24-hour format without AM/PM
+                                        dateFormat: "H:i", // 24-hour format with date and time
+                                        time_24hr: true, // Enable 24-hour time format
                                         minuteIncrement: 1 // Set minute increment to 1
+
+
 
                                     });
                                 </script>
@@ -933,6 +963,7 @@
                                             <option value="BMR/ECR Instruction">BMR/ECR Instruction</option>
                                             <option value="Water System">Water System</option>
                                             <option value="Anyother(specify)">Any other (specify) </option>
+                                            <option value="Process">Process</option>
                                         </select>
                                     </div>
                                 </div>
@@ -1046,7 +1077,7 @@
                                                     </select> </td>
                                                 <td><input type="text" name="IDnumber[]" class="id-number"></td>
                                                 <td><input type="text" name="Remarks[]" class="remarks"></td>
-                                                <td><input type="text" name="Action[]" class="action" readonly></td>
+                                                <td><button type="text" class="removeRowBtn" name="Action[]">Remove</button></td>
 
                                             </tbody>
 
@@ -1137,7 +1168,9 @@
                                                         name="ReferenceDocumentName[]"></td>
                                                 <td><input type="text" class="Document_Remarks"
                                                         name="Document_Remarks[]"></td>
-                                                <td><input type="text" class="" name="Action[]" readonly></td>
+                                                <td><button type="text" class="removeRowBtn" name="Action[]">Remove</button></td>
+
+
 
 
                                             </tbody>
@@ -1236,7 +1269,7 @@
                                                     </td>
                                                     <td>
 
-                                                        <select name="product_stage[]" id="product_stage"
+                                                        <!-- <select name="product_stage[]" id="product_stage"
                                                             class="productStage">
                                                             <option value="">-- Select --</option>
                                                             <option value="">1</option>
@@ -1249,12 +1282,15 @@
                                                             <option value="">8</option>
                                                             <option value="">9</option>
                                                             <option value="">Final</option>
-                                                        </select>
+                                                        </select> -->
+                                                       <input type="text" class="productStage" name="product_stage[]">
+
+                                                    </td>
                                                     </td>
                                                     <td><input type="text" class="productBatchNo" name="batch_no[]">
                                                     </td>
-                                                    <td><input type="text" class="Removebtn" name="Action[]" readonly>
-                                                    </td>
+                                                    <td><button type="text" class="removeRowBtn" name="Action[]">Remove</button></td>
+
 
 
                                                 </tbody>
@@ -1367,18 +1403,100 @@
                                         <textarea class="" id="Description_Deviation" name="Description_Deviation[]"></textarea>
                                     </div>
                                 </div> --}}
-                                <div class="col-md-12 mb-3">
+                                
+
+
+                                <!-- additional added -->
+                               <div class="col-md-12"> 
+                               <div class="group-input">
+                                            <label for="Description Deviation">Description of Deviation <span
+                                                    class="text-danger">*</span></label>
+                                        </div><table class="table table-bordered">
+      <thead class="table-light">
+        <tr>
+          <th scope="col" style="background-color: #0039bd85; width: 100px;">5W/2H</th>
+          <th scope="col" style="background-color: #0039bd85;">Remarks</th>
+        </tr>
+      </thead>
+      <tbody style=" border-radius: inherit; border: blanchedalmond;">
+        <tr>
+        <td style="background-color: #91b4f7;">What</td>
+        <td id="what-details"><textarea name="what" id="what_id" style="width:-webkit-fill-available;"></textarea></td>
+        </tr>
+        <tr>
+        <td style="background-color: #91b4f7;">Why</td>
+          <td id="why-details"><textarea name="why_why" id="why_id"  style="width:-webkit-fill-available;"></textarea></td>
+        </tr>
+        <tr>
+        <td style="background-color: #91b4f7; ">Where</td>
+          <td id="where-details"><textarea name="where_where" id="where_id"  style="width:-webkit-fill-available;"></textarea></td>
+        </tr>
+        <tr>
+        <td style="background-color: #91b4f7; ">When</td>
+          <td id="when-details"><textarea name="when_when" id="when_id"  style="width:-webkit-fill-available;"></textarea></td>
+        </tr>
+        <tr><td style="background-color: #91b4f7; ">Who</td>
+          <td id="who-details"><textarea name="who" id="who_id"  style="width:-webkit-fill-available;"></textarea></td>
+        </tr>
+        <tr><td style=" background-color: #91b4f7; ">How</td>
+          <td id="how-details"><textarea name="how" id="how_id"  style="width:-webkit-fill-available;"></textarea></td>
+        </tr>
+        <tr><td style="background-color: #91b4f7; ">How much</td>
+          <td id="how-much-details"><textarea name="how_much" id="how-much_id" style="width:-webkit-fill-available;"></textarea></td>
+        </tr>
+      </tbody>
+    </table>
+    </div>
+    <div class="col-md-6">
                                     <div class="group-input">
-                                        <label for="Description Deviation">Description of Deviation</label>
-                                        <div><small class="text-primary">Please insert "NA" in the data field if it does
-                                                not require completion</small></div>
-                                        <textarea class="tiny" name="Description_Deviation[]" id="summernote-1" required>
-                                    </textarea>
+                                        <label for="search">
+                                            HOD Person <span class="text-danger"></span>
+                                        </label>
+                                        <select id="select-state" placeholder="Select..." name="Hod_person_to">
+                                            <option value="">Select a value</option>
+                                            @foreach ($users as $data)
+                                                <option value="{{ $data->id }}">{{ $data->name }}</option>
+                                            @endforeach
+                                        </select>
+                                        @error('Hod_person_to')
+                                            <p class="text-danger">{{ $message }}</p>
+                                        @enderror
                                     </div>
-                                    @error('Description_Deviation[]')
-                                        <div class="text-danger">{{ $message }}</div>
-                                    @enderror
                                 </div>
+                                <div class="col-md-6">
+                                    <div class="group-input">
+                                        <label for="search">
+                                        Reviewer To <span class="text-danger"></span>
+                                        </label>
+                                        <select id="select-state" placeholder="Select..." name="Reviewer_to">
+                                            <option value="">Select a value</option>
+                                            @foreach ($users as $data)
+                                                <option value="{{ $data->id }}">{{ $data->name }}</option>
+                                            @endforeach
+                                        </select>
+                                        @error('Reviewer_to')
+                                            <p class="text-danger">{{ $message }}</p>
+                                        @enderror
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="group-input">
+                                        <label for="search">
+                                        Approver To <span class="text-danger"></span>
+                                        </label>
+                                        <select id="select-state" placeholder="Select..." name="Approver_to">
+                                            <option value="">Select a value</option>
+                                            @foreach ($users as $data)
+                                                <option value="{{ $data->id }}">{{ $data->name }}</option>
+                                            @endforeach
+                                        </select>
+                                        @error('Approver_to')
+                                            <p class="text-danger">{{ $message }}</p>
+                                        @enderror
+                                    </div>
+                                </div>
+                                <!-- additional added -->
+
 
                                 {{-- <div class="col-6">
                                 <div class="group-input">
@@ -1391,8 +1509,7 @@
                                         <label for="Immediate Action">Immediate Action (if any)</label>
                                         <div><small class="text-primary">Please insert "NA" in the data field if it does
                                                 not require completion</small></div>
-                                        <textarea class="tiny" name="Immediate_Action[]" id="summernote-2"required>
-                                    </textarea>
+                                        <textarea class="tiny" name="Immediate_Action[]" id="summernote-2"required></textarea>
                                     </div>
                                     @error('record')
                                         <div class="text-danger">{{ $message }}</div>
@@ -1409,8 +1526,7 @@
                                         <label for="Preliminary Impact">Preliminary Impact of Deviation </label>
                                         <div><small class="text-primary">Please insert "NA" in the data field if it does
                                                 not require completion</small></div>
-                                        <textarea class="tiny" name="Preliminary_Impact[]" id="summernote-3" required>
-                                    </textarea>
+                                        <textarea class="tiny" name="Preliminary_Impact[]" id="summernote-3" required></textarea>
                                     </div>
                                     @error('Preliminary_Impact')
                                         <div class="text-danger">{{ $message }}</div>
@@ -1464,8 +1580,7 @@
                                         <label for="HOD Remarks">HOD Remarks</label>
                                         <div><small class="text-primary">Please insert "NA" in the data field if it does
                                                 not require completion</small></div>
-                                        <textarea class="tiny" name="HOD_Remarks" id="summernote-4">
-                                    </textarea>
+                                        <textarea class="tiny" name="HOD_Remarks" id="summernote-4"></textarea>
                                     </div>
                                 </div>
                                 <div class="col-lg-12">
@@ -1597,19 +1712,18 @@
 
 
 
+<div style="margin-bottom: 0px;" class="col-lg-12 new-date-data-field">
+    <div class="group-input input-date">
+        <label for="Deviation_category">Initial Deviation Category</label>
+        <select name="Deviation_category" id="Deviation_category" onchange="calculateDueDate()" required>
+            <option value="0">-- Select -- </option>
+            <option value="minor">Minor</option>
+            <option value="major">Major</option>
+            <option value="critical">Critical</option>
+        </select>
+    </div>
+</div>
 
-                                <div style="margin-bottom: 0px;" class="col-lg-12 new-date-data-field ">
-                                    <div class="group-input input-date">
-                                        <label for="Deviation_category">Initial Deviation Category</label>
-                                        <select name="Deviation_category" id="Deviation_category" disabled
-                                            onchange="handleDeviationCategoryChange()">
-                                            <option value="0">-- Select -- </option>
-                                            <option value="minor">Minor </option>
-                                            <option value="major">Major </option>
-                                            <option value="critical">Critical </option>
-                                        </select>
-                                    </div>
-                                </div>
 
                                 <div class="col-lg-6">
                                     <div class="group-input">
@@ -1650,8 +1764,7 @@
                                             Categorization</label>
                                         <div><small class="text-primary">Please insert "NA" in the data field if it does
                                                 not require completion</small></div>
-                                        <textarea class="tiny" name="Justification_for_categorization" id="summernote-5">
-                                    </textarea>
+                                        <textarea class="tiny" name="Justification_for_categorization" id="summernote-5"></textarea>
                                     </div>
                                 </div>
 
@@ -1668,8 +1781,7 @@
                                                 class="text-danger">*</span></label>
                                         <div><small class="text-primary">Please insert "NA" in the data field if it does
                                                 not require completion</small></div>
-                                        <textarea class=" Investigation_Details" name="Investigation_Details" id="summernote-6">
-                                    </textarea>
+                                        <textarea class=" Investigation_Details" name="Investigation_Details" id="summernote-6"></textarea>
                                     </div>
                                 </div>
 
@@ -1678,8 +1790,7 @@
                                         <label for="QAInitialRemark">QA Initial Remarks</label>
                                         <div><small class="text-primary">Please insert "NA" in the data field if it does
                                                 not require completion</small></div>
-                                        <textarea class="tiny" name="QAInitialRemark" id="summernote-7">
-                                    </textarea>
+                                        <textarea class="tiny" name="QAInitialRemark" id="summernote-7"></textarea>
                                     </div>
                                 </div>
                                 <div class="col-lg-12">
@@ -1697,6 +1808,13 @@
                                         </div>
                                     </div>
                                 </div>
+                                <div class="col-md-12">
+                                        <div class="group-input">
+                                            <label for="CancellationQA">Cancellation <span
+                                                    class="text-danger">*</span></label>
+                                            <textarea name="CancellationQA" id="summernote-6"></textarea>
+                                        </div>
+                                    </div>
                             </div>
                             <div class="button-block">
                                 <button type="submit" style=" justify-content: center; width: 4rem; margin-left: 1px;" class="saveButton">Save</button>
@@ -1855,7 +1973,7 @@
                             $('#Customer_notification').change();
                         });
                     </script>
-                    {{-- <script>
+                     <script>
                         $(document).ready(function () {
                             // Event listener for Investigation_required dropdown
                             $('#Investigation_required').change(function () {
@@ -3959,7 +4077,7 @@
                                         <label for="audit-agenda-grid">
                                             Investigation team and Responsibilities
                                             <button type="button" name="audit-agenda-grid"
-                                                id="investigation_Details">+</button>
+                                                id="addInvestigationTeam">+</button>
                                             <span class="text-primary" data-bs-toggle="modal"
                                                 data-bs-target="#investigationn-team-responsibilities"
                                                 style="font-size: 0.8rem; font-weight: 400; cursor: pointer;">
@@ -3967,7 +4085,7 @@
                                             </span>
                                         </label>
                                         <div class="table-responsive">
-                                            <table class="table table-bordered" id="investigation_Details_Details"
+                                            <table class="table table-bordered" id="investigationDetailAddTable"
                                                 style="width: 100%;">
                                                 <thead>
                                                     <tr>
@@ -3976,33 +4094,31 @@
                                                         <th style="width: 16%">Responsibility</th>
                                                         <th style="width: 16%">Remarks</th>
                                                         <th style="width: 8%">Action</th>
-
-
-
                                                     </tr>
                                                 </thead>
                                                 <tbody>
-                                                    <td><input disabled type="text" name="serial[]" value="1">
-                                                    </td>
-                                                    <td> <select name="Investigation_team[]" id="">
+                                                    <td><input disabled type="text" name="investigationTeam[]" value="1"></td>
+                                                    <td>
+                                                        <select name="investigationTeam[0][teamMember]" id="">
                                                             <option value="">-- Select --</option>
-                                                            <option value="">name</option>
-                                                        </select> </td>
-                                                    <td><input type="text" class="numberDetail"
-                                                            name="Responsibility[]"></td>
-                                                    <td><input type="text" class="Document_Remarks"
-                                                            name="Remarks[]"></td>
-                                                    <td><input type="text" class="Action" name="Action[]"></td>
-
-
+                                                            @if(!empty($users))
+                                                                @foreach($users as $user)
+                                                                    <option value="{{ $user->id }}">{{ $user->name }}</option>
+                                                                @endforeach
+                                                            @endif
+                                                        </select>
+                                                    </td>
+                                                    <td><input type="text" class="numberDetail" name="investigationTeam[0][responsibility]"></td>
+                                                    <td><input type="text" class="Document_Remarks" name="investigationTeam[0][remarks]"></td>
+                                                    <!-- <td><input type="text" class="Action" name="Action[]"></td> -->
+                                                    <td><button type="text" class="removeRowBtn">Remove</button></td>
                                                 </tbody>
-
                                             </table>
                                         </div>
                                     </div>
                                     {{-- @error('Product_Batch')
-                                    <div class="text-danger">{{ $message  }}</div>
-                                @enderror --}}
+                                        <div class="text-danger">{{ $message  }}</div>
+                                    @enderror --}}
                                 </div>
 
                                 <div class="col-lg-12">
@@ -4025,150 +4141,8 @@
 
 
 
-                                <div class="col-lg-12">
-                                    <div class="group-input" id="documentsRowname">
-                                        <label for="audit-agenda-grid">
-                                            Root Cause
-                                            <button type="button" name="audit-agenda-grid"
-                                                id="root_cause_Details">+</button>
-                                            <span class="text-primary" data-bs-toggle="modal"
-                                                data-bs-target="#root-cause"
-                                                style="font-size: 0.8rem; font-weight: 400; cursor: pointer;">
-                                                (Launch Instruction)
-                                            </span>
-                                        </label>
-                                        <div class="table-responsive">
-                                            <table class="table table-bordered" id="Root_cause_Details_Details"
-                                                style="width: 100%;">
-                                                <thead>
-                                                    <tr>
-                                                        <th style="width: 4%">Row#</th>
-                                                        <th id="Root_Cause_Category" style="width: 12%">Root Cause
-                                                            Category</th>
-                                                        <th style="width: 16%" id="Root_Cause_Sub_Category">Root Cause
-                                                            Sub-Category</th>
-                                                        <th style="width: 16%">If Others</th>
-
-                                                        <th style="width: 16%"> Probability</th>
-                                                        <th style="width: 16%"> Remarks</th>
-
-                                                        <th style="width: 8%">Action</th>
-
-
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                    <td><input disabled type="text" name="serial[]" value="1">
-                                                    </td>
-                                                    {{-- <td> <select name="Root_Cause_Category[]" id=""> <option value="">-- Select --</option><option value="">name   </option> </select></td> --}}
-                                                    {{-- <td><select name="Root_Cause_Sub-Category[]" id=""><option value="">-- Select --</option><option value="">name</option>  </select></td> --}}
-                                                    <td>
-
-                                                        <select name="Root_Cause_Category[]"
-                                                            id="Root_Cause_Category_Select">
-                                                            <option value="">-- Select --</option>
-
-                                                            <option value="M-Machine(Equipment)">M-Machine(Equipment)
-                                                            </option>
-                                                            <option value="">M-Maintenance</option>
-                                                            <option value="">M-Man Power (physical work)</option>
-                                                            <option value="">M-Management</option>
-                                                            <option value="">M-Material (Raw,Consumables etc.)
-                                                            </option>
-                                                            <option value="">M-Method (Process/Inspection)</option>
-                                                            <option value="">M-Mother Nature (Environment)</option>
-                                                            <option value="">P-Place/Plant</option>
-                                                            <option value="">P-Policies</option>
-                                                            <option value="">P-Price </option>
-                                                            <option value="">P-Procedures</option>
-                                                            <option value="">P-Process </option>
-                                                            <option value="">P-Product</option>
-                                                            <option value="">S-Suppliers</option>
-                                                            <option value="">S-Surroundings</option>
-                                                            <option value="">S-Systems</option>
-
-                                                        </select>
-                                                    </td>
-                                                    <td> <select name="Root_Cause_Sub_Category[]"
-                                                            id="Root_Cause_Sub_Category_Select">
-                                                            <option value="">-- Select --</option>
-
-                                                            <option value="Poor_Maintenance_or_Design">Infrequent Audits
-                                                            </option>
-                                                            <option value="No_Preventive_Maintenance">No Preventive
-                                                                Maintenance </option>
-                                                            <option value="Other">Other</option>
-                                                            <option value="Poor_Maintenance_or_Design">Poor Maintenance or
-                                                                Design </option>
-                                                            <option value="Maintenance_Needs_Improvement">Maintenance
-                                                                Needs Improvement </option>
-                                                            <option value="Scheduling_Problem">Scheduling Problem
-                                                            </option>
-                                                            <option value="system_deficiency">System Deficiency </option>
-                                                            <option value="">Technical Error </option>
-                                                            <option value="">Tolerable Failure </option>
-                                                            <option value="">Calibration Issues </option>
-
-                                                            <option value="Infrequent_Audits">Infrequent Audits</option>
-                                                            <option value="No_Preventive_Maintenance">No Preventive
-                                                                Maintenance </option>
-                                                            <option value="Other">Other</option>
-                                                            <option value="Maintenance_Needs_Improvement">Maintenance
-                                                                Needs Improvement</option>
-                                                            <option value="">Scheduling Problem </option>
-                                                            <option value="">System Deficiency </option>
-                                                            <option value="">Technical Error </option>
-                                                            <option value="">Tolerable Failure </option>
-
-
-                                                            <option value="Failure_to_Follow_SOP">Failure to Follow SOP
-                                                            </option>
-                                                            <option value="Human_Machine_Interface">Human-Machine
-                                                                Interface</option>
-                                                            <option value="Misunderstood_Verbal_Communication">
-                                                                Misunderstood Verbal Communication </option>
-                                                            <option value="Other">Other</option>
-                                                            <option value="">Personnel Error</option>
-                                                            <option value="">Personnel not Qualified</option>
-                                                            <option value="">Practice Needed</option>
-                                                            <option value="">Teamwork Needs Improvement</option>
-                                                            <option value="">Attention</option>
-                                                            <option value="">Understanding</option>
-                                                            <option value="">Procedural</option>
-                                                            <option value="">Behavioral</option>
-                                                            <option value="">Skill</option>
-
-                                                            <option value="">Inattention to task</option>
-                                                            <option value="">Lack of Process</option>
-                                                            <option value="">Methods</option>
-                                                            <option value="">No or poor management involvement
-                                                            </option>
-                                                            <option value="">Other</option>
-                                                            <option value="">Personnel not Qualified</option>
-
-
-
-                                                        </select></td>
-                                                    <td><input type="text" class="Document_Remarks"
-                                                            name="ifother[]"></td>
-                                                    <td><input type="text" class="Document_Remarks"
-                                                            name="Probability[]"></td>
-                                                    <td><input type="text" class="Document_Remarks"
-                                                            name="remarks[]"></td>
-                                                    <td><input type="text" class="Removebtn" name="Action[]"></td>
-
-
-                                                </tbody>
-
-                                            </table>
-                                        </div>
-                                    </div>
-                                    {{-- @error('Product_Batch')
-                                <div class="text-danger">{{ $message  }}</div>
-                            @enderror --}}
-                                </div>
-
-
+                                
+                                
                                 <div class="col-12 sub-head"></div>
                                 <div class="col-12">
                                     <div class="group-input">
@@ -4325,7 +4299,7 @@
                                             // Populate options based on selected category
                                             if (selectedCategory === 'M-Machine(Equipment)') {
                                                 subCategorySelect.append(
-                                                '<option value="Infrequent_Audits">Infrequent Audits</option>');
+                                                    '<option value="Infrequent_Audits">Infrequent Audits</option>');
                                                 subCategorySelect.append(
                                                     '<option value="No_Preventive_Maintenance">No Preventive Maintenance</option>');
                                                 subCategorySelect.append('<option value="Other">Other</option>');
@@ -4338,115 +4312,115 @@
 
                                                 subCategorySelect.append(
                                                     '<option value="Poor_Maintenance_or_Design">Poor Maintenance or Design</option>'
-                                                    );
-
+                                                );
+                                                
+                                                subCategorySelect.append(
+                                                    '<option value="Poor_Maintenance_or_Design">Poor Maintenance or Design</option>'
+                                                );
+                                                
                                                 subCategorySelect.append(
                                                     '<option value="Poor_Maintenance_or_Design">Poor Maintenance or Design</option>'
                                                     );
-
                                                 subCategorySelect.append(
                                                     '<option value="Poor_Maintenance_or_Design">Poor Maintenance or Design</option>'
                                                     );
                                                 subCategorySelect.append(
                                                     '<option value="Poor_Maintenance_or_Design">Poor Maintenance or Design</option>'
-                                                    );
-                                                subCategorySelect.append(
-                                                    '<option value="Poor_Maintenance_or_Design">Poor Maintenance or Design</option>'
-                                                    );
-
+                                                );
+                                                
                                             } else if (selectedCategory === 'M-Maintenance') {
                                                 subCategorySelect.append(
-                                                '<option value="Infrequent_Audits">Infrequent Audits</option>');
-                                                subCategorySelect.append(
-                                                    '<option value="No_Preventive_Maintenance">No Preventive Maintenance</option>');
-                                                subCategorySelect.append('<option value="Other">Other</option>');
-                                                subCategorySelect.append(
-                                                    '<option value="Maintenance_Needs_Improvement">Maintenance Needs Improvement</option>'
-                                                    );
-                                            } else if (selectedCategory === 'M-Man Power (physical work)') {
-                                                subCategorySelect.append(
-                                                    '<option value="Failure_to_Follow_SOP">Failure to Follow SOP</option>');
+                                                    '<option value="Infrequent_Audits">Infrequent Audits</option>');
+                                                    subCategorySelect.append(
+                                                        '<option value="No_Preventive_Maintenance">No Preventive Maintenance</option>');
+                                                        subCategorySelect.append('<option value="Other">Other</option>');
+                                                        subCategorySelect.append(
+                                                            '<option value="Maintenance_Needs_Improvement">Maintenance Needs Improvement</option>'
+                                                        );
+                                                    } else if (selectedCategory === 'M-Man Power (physical work)') {
+                                                        subCategorySelect.append(
+                                                            '<option value="Failure_to_Follow_SOP">Failure to Follow SOP</option>');
                                                 subCategorySelect.append(
                                                     '<option value="Human_Machine_Interface">Human-Machine Interface</option>');
-                                                subCategorySelect.append(
-                                                    '<option value="Misunderstood_Verbal_Communication">Misunderstood Verbal Communication</option>'
+                                                    subCategorySelect.append(
+                                                        '<option value="Misunderstood_Verbal_Communication">Misunderstood Verbal Communication</option>'
                                                     );
-                                                subCategorySelect.append('<option value="Other">Other</option>');
-                                            }
+                                                    subCategorySelect.append('<option value="Other">Other</option>');
+                                                }
+                                            });
                                         });
-                                    });
-                                </script>
+                                        </script>
                                 <div class="col-12">
                                     <div class="group-input">
                                         <label for="why-why-chart">
                                             Category Of Human Error
                                             <span class="text-primary" data-bs-toggle="modal"
-                                                data-bs-target="#is_is_not-instruction-modal"
-                                                style="font-size: 0.8rem; font-weight: 400;">
-                                                (Launch Instruction)
-                                            </span>
-                                        </label>
-                                        <div class="why-why-chart">
-                                            <table class="table table-bordered">
-                                                <thead>
-                                                    <tr>
-                                                        <th style="width:7%;">Row #</th>
-                                                        <th style="width:15%;">Gap Category</th>
-
-                                                        <th>Issues</th>
-                                                        <th>Actions</th>
-                                                        <th>Remarks</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                    <tr>
-                                                        <td style="background: rgb(222 220 220 / 58%)">
-                                                            {{-- <input disabled type="text"  value=""> --}}
-                                                            1
-                                                        </td>
-                                                        <th style="background: ">Attention</th>
-                                                        <td style="background: rgb(222 220 220 / 58%)">
-                                                            <textarea name="attention_issues"></textarea>
-                                                        </td>
-                                                        <td>
-                                                            <textarea name="attention_actions"></textarea>
-                                                        </td>
-                                                        <td style="background: rgb(222 220 220 / 58%)">
-                                                            <textarea name="attention_remarks"></textarea>
-                                                        </td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td style="background: rgb(222 220 220 / 58%)">
-                                                            2
-                                                        </td>
-                                                        <th>Understanding</th>
-                                                        <td style="background: rgb(222 220 220 / 58%)">
-                                                            <textarea name="understanding_issues"></textarea>
-                                                        </td>
-                                                        <td>
-                                                            <textarea name="understanding_actions"></textarea>
-                                                        </td>
-                                                        <td style="background: rgb(222 220 220 / 58%)">
-                                                            <textarea name="understanding_remarks"></textarea>
-                                                        </td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td style="background: rgb(222 220 220 / 58%)">
-                                                            3
-                                                        </td>
-                                                        <th>Procedural</th>
-                                                        <td style="background: rgb(222 220 220 / 58%)">
-                                                            <textarea name="procedural_issues"></textarea>
-                                                        </td>
-                                                        <td>
-                                                            <textarea name="procedural_actions"></textarea>
-                                                        </td>
-                                                        <td style="background: rgb(222 220 220 / 58%)">
-                                                            <textarea name="procedural_remarks"></textarea>
-                                                        </td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td style="background: rgb(222 220 220 / 58%)">
+                                            data-bs-target="#is_is_not-instruction-modal"
+                                            style="font-size: 0.8rem; font-weight: 400;">
+                                            (Launch Instruction)
+                                        </span>
+                                    </label>
+                                    <div class="why-why-chart">
+                                        <table class="table table-bordered">
+                                            <thead>
+                                                <tr>
+                                                    <th style="width:7%;">Row #</th>
+                                                    <th style="width:15%;">Gap Category</th>
+                                                    
+                                                    <th>Issues</th>
+                                                    <th>Actions</th>
+                                                    <th>Remarks</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <td style="background: rgb(222 220 220 / 58%)">
+                                                        {{-- <input disabled type="text"  value=""> --}}
+                                                        1
+                                                    </td>
+                                                    <th style="background: ">Attention</th>
+                                                    <td style="background: rgb(222 220 220 / 58%)">
+                                                        <textarea name="attention_issues"></textarea>
+                                                    </td>
+                                                    <td>
+                                                        <textarea name="attention_actions"></textarea>
+                                                    </td>
+                                                    <td style="background: rgb(222 220 220 / 58%)">
+                                                        <textarea name="attention_remarks"></textarea>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td style="background: rgb(222 220 220 / 58%)">
+                                                        2
+                                                    </td>
+                                                    <th>Understanding</th>
+                                                    <td style="background: rgb(222 220 220 / 58%)">
+                                                        <textarea name="understanding_issues"></textarea>
+                                                    </td>
+                                                    <td>
+                                                        <textarea name="understanding_actions"></textarea>
+                                                    </td>
+                                                    <td style="background: rgb(222 220 220 / 58%)">
+                                                        <textarea name="understanding_remarks"></textarea>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td style="background: rgb(222 220 220 / 58%)">
+                                                        3
+                                                    </td>
+                                                    <th>Procedural</th>
+                                                    <td style="background: rgb(222 220 220 / 58%)">
+                                                        <textarea name="procedural_issues"></textarea>
+                                                    </td>
+                                                    <td>
+                                                        <textarea name="procedural_actions"></textarea>
+                                                    </td>
+                                                    <td style="background: rgb(222 220 220 / 58%)">
+                                                        <textarea name="procedural_remarks"></textarea>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td style="background: rgb(222 220 220 / 58%)">
                                                             4
                                                         </td>
                                                         <th>Behavioral</th>
@@ -4486,81 +4460,81 @@
                                         <label for="why-why-chart">
                                             Is/Is Not Analysis
                                             <span class="text-primary" data-bs-toggle="modal"
-                                                data-bs-target="#is_is_not-instruction-modal"
-                                                style="font-size: 0.8rem; font-weight: 400;">
-                                                (Launch Instruction)
-                                            </span>
-                                        </label>
-                                        <div class="why-why-chart">
-                                            <table class="table table-bordered">
-                                                <thead>
-                                                    <tr>
-                                                        <th>&nbsp;</th>
-                                                        <th>Will Be</th>
-                                                        <th>Will Not Be</th>
-                                                        <th>Rationale</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                    <tr>
-                                                        <th style="background: rgb(222 220 220 / 58%)">What</th>
-                                                        <td>
-                                                            <textarea name="what_will_be"></textarea>
-                                                        </td>
-                                                        <td>
-                                                            <textarea name="what_will_not_be"></textarea>
-                                                        </td>
-                                                        <td>
-                                                            <textarea name="what_rationable"></textarea>
-                                                        </td>
-                                                    </tr>
-                                                    <tr>
-                                                        <th style="background: rgb(222 220 220 / 58%)">Where</th>
-                                                        <td>
-                                                            <textarea name="where_will_be"></textarea>
-                                                        </td>
-                                                        <td>
-                                                            <textarea name="where_will_not_be"></textarea>
-                                                        </td>
-                                                        <td>
-                                                            <textarea name="where_rationable"></textarea>
-                                                        </td>
-                                                    </tr>
-                                                    <tr>
-                                                        <th style="background: rgb(222 220 220 / 58%)">When</th>
-                                                        <td>
-                                                            <textarea name="when_will_be"></textarea>
-                                                        </td>
-                                                        <td>
-                                                            <textarea name="when_will_not_be"></textarea>
-                                                        </td>
-                                                        <td>
-                                                            <textarea name="when_rationable"></textarea>
-                                                        </td>
-                                                    </tr>
-                                                    <tr>
-                                                        <th style="background:rgb(222 220 220 / 58%)">Coverage</th>
-                                                        <td>
-                                                            <textarea name="coverage_will_be"></textarea>
-                                                        </td>
-                                                        <td>
-                                                            <textarea name="coverage_will_not_be"></textarea>
-                                                        </td>
-                                                        <td>
-                                                            <textarea name="coverage_rationable"></textarea>
-                                                        </td>
-                                                    </tr>
-                                                    <tr>
-                                                        <th style="background:rgb(222 220 220 / 58%)">Who</th>
-                                                        <td>
-                                                            <textarea name="who_will_be"></textarea>
-                                                        </td>
-                                                        <td>
-                                                            <textarea name="who_will_not_be"></textarea>
-                                                        </td>
-                                                        <td>
-                                                            <textarea name="who_rationable"></textarea>
-                                                        </td>
+                                            data-bs-target="#is_is_not-instruction-modal"
+                                            style="font-size: 0.8rem; font-weight: 400;">
+                                            (Launch Instruction)
+                                        </span>
+                                    </label>
+                                    <div class="why-why-chart">
+                                        <table class="table table-bordered">
+                                            <thead>
+                                                <tr>
+                                                    <th>&nbsp;</th>
+                                                    <th>Will Be</th>
+                                                    <th>Will Not Be</th>
+                                                    <th>Rationale</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <th style="background: rgb(222 220 220 / 58%)">What</th>
+                                                    <td>
+                                                        <textarea name="what_will_be"></textarea>
+                                                    </td>
+                                                    <td>
+                                                        <textarea name="what_will_not_be"></textarea>
+                                                    </td>
+                                                    <td>
+                                                        <textarea name="what_rationable"></textarea>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <th style="background: rgb(222 220 220 / 58%)">Where</th>
+                                                    <td>
+                                                        <textarea name="where_will_be"></textarea>
+                                                    </td>
+                                                    <td>
+                                                        <textarea name="where_will_not_be"></textarea>
+                                                    </td>
+                                                    <td>
+                                                        <textarea name="where_rationable"></textarea>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <th style="background: rgb(222 220 220 / 58%)">When</th>
+                                                    <td>
+                                                        <textarea name="when_will_be"></textarea>
+                                                    </td>
+                                                    <td>
+                                                        <textarea name="when_will_not_be"></textarea>
+                                                    </td>
+                                                    <td>
+                                                        <textarea name="when_rationable"></textarea>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <th style="background:rgb(222 220 220 / 58%)">Coverage</th>
+                                                    <td>
+                                                        <textarea name="coverage_will_be"></textarea>
+                                                    </td>
+                                                    <td>
+                                                        <textarea name="coverage_will_not_be"></textarea>
+                                                    </td>
+                                                    <td>
+                                                        <textarea name="coverage_rationable"></textarea>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <th style="background:rgb(222 220 220 / 58%)">Who</th>
+                                                    <td>
+                                                        <textarea name="who_will_be"></textarea>
+                                                    </td>
+                                                    <td>
+                                                        <textarea name="who_will_not_be"></textarea>
+                                                    </td>
+                                                    <td>
+                                                        <textarea name="who_rationable"></textarea>
+                                                    </td>
                                                     </tr>
                                                 </tbody>
                                             </table>
@@ -4569,6 +4543,140 @@
                                 </div>
                             </div>
 
+                            <div class="sub-head">
+                                    Root Cause
+                                </div>
+                            <div class="col-lg-12">
+                                <div class="group-input" id="documentsRowname">
+                                    <label for="audit-agenda-grid">
+                                        Root Cause
+                                        <button type="button" name="audit-agenda-grid"
+                                            id="rootCauseAdd">+</button>
+                                        <span class="text-primary" data-bs-toggle="modal"
+                                            data-bs-target="#root-cause"
+                                            style="font-size: 0.8rem; font-weight: 400; cursor: pointer;">
+                                            (Launch Instruction)
+                                        </span>
+                                    </label>
+                                    <div class="table-responsive">
+                                        <table class="table table-bordered" id="rootCauseAddTable"
+                                            style="width: 100%;">
+                                            <thead>
+                                                <tr>
+                                                    <th style="width: 4%">Row#</th>
+                                                    <th id="Root_Cause_Category" style="width: 12%">Root Cause Category</th>
+                                                    <th style="width: 16%" id="Root_Cause_Sub_Category">Root Cause Sub-Category</th>
+                                                    <th style="width: 16%">If Others</th>
+                                                    <th style="width: 16%"> Probability</th>
+                                                    <th style="width: 16%"> Remarks</th>
+                                                    <th style="width: 8%">Action</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <td><input disabled type="text" name="serial[]" value="1"></td>
+                                                <td>
+                                                    <select name="rootCauseData[0][rootCauseCategory]" id="Root_Cause_Category_Select">
+                                                        <option value="">-- Select --</option>
+                                                        <option value="M-Machine(Equipment)">M-Machine(Equipment)</option>
+                                                        <option value="M-Maintenance">M-Maintenance</option>
+                                                        <option value="M-Man Power (physical work)">M-Man Power (physical work)</option>
+                                                        <option value="">M-Management</option>
+                                                        <option value="">M-Material (Raw,Consumables etc.)</option>
+                                                        <option value="">M-Method (Process/Inspection)</option>
+                                                        <option value="">M-Mother Nature (Environment)</option>
+                                                        <option value="">P-Place/Plant</option>
+                                                        <option value="">P-Policies</option>
+                                                        <option value="">P-Price </option>
+                                                        <option value="">P-Procedures</option>
+                                                        <option value="">P-Process </option>
+                                                        <option value="">P-Product</option>
+                                                        <option value="">S-Suppliers</option>
+                                                        <option value="">S-Surroundings</option>
+                                                        <option value="">S-Systems</option>
+                                                    </select>
+                                                </td>
+                                                <td>
+                                                    <select name="rootCauseData[0][rooCauseSubCategory]" id="Root_Cause_Sub_Category_Select">
+                                                        <option value="">-- Select --</option>
+
+                                                        <option value="Poor_Maintenance_or_Design">Infrequent Audits
+                                                        </option>
+                                                        <option value="No_Preventive_Maintenance">No Preventive
+                                                            Maintenance </option>
+                                                        <option value="Other">Other</option>
+                                                        <option value="Poor_Maintenance_or_Design">Poor Maintenance or
+                                                            Design </option>
+                                                        <option value="Maintenance_Needs_Improvement">Maintenance
+                                                            Needs Improvement </option>
+                                                        <option value="Scheduling_Problem">Scheduling Problem
+                                                        </option>
+                                                        <option value="system_deficiency">System Deficiency </option>
+                                                        <option value="">Technical Error </option>
+                                                        <option value="">Tolerable Failure </option>
+                                                        <option value="">Calibration Issues </option>
+
+                                                        <option value="Infrequent_Audits">Infrequent Audits</option>
+                                                        <option value="No_Preventive_Maintenance">No Preventive
+                                                            Maintenance </option>
+                                                        <option value="Other">Other</option>
+                                                        <option value="Maintenance_Needs_Improvement">Maintenance
+                                                            Needs Improvement</option>
+                                                        <option value="">Scheduling Problem </option>
+                                                        <option value="">System Deficiency </option>
+                                                        <option value="">Technical Error </option>
+                                                        <option value="">Tolerable Failure </option>
+
+
+                                                        <option value="Failure_to_Follow_SOP">Failure to Follow SOP
+                                                        </option>
+                                                        <option value="Human_Machine_Interface">Human-Machine
+                                                            Interface</option>
+                                                        <option value="Misunderstood_Verbal_Communication">
+                                                            Misunderstood Verbal Communication </option>
+                                                        <option value="Other">Other</option>
+                                                        <option value="">Personnel Error</option>
+                                                        <option value="">Personnel not Qualified</option>
+                                                        <option value="">Practice Needed</option>
+                                                        <option value="">Teamwork Needs Improvement</option>
+                                                        <option value="">Attention</option>
+                                                        <option value="">Understanding</option>
+                                                        <option value="">Procedural</option>
+                                                        <option value="">Behavioral</option>
+                                                        <option value="">Skill</option>
+
+                                                        <option value="">Inattention to task</option>
+                                                        <option value="">Lack of Process</option>
+                                                        <option value="">Methods</option>
+                                                        <option value="">No or poor management involvement
+                                                        </option>
+                                                        <option value="">Other</option>
+                                                        <option value="">Personnel not Qualified</option>
+                                                    </select>
+                                                </td>
+                                                <td>
+                                                    <input type="text" class="ifOthers" name="rootCauseData[0][ifOthers]">
+                                                </td>
+                                                <td>
+                                                    <input type="text" class="Document_Remarks" name="rootCauseData[0][probability]">
+                                                </td>
+                                                <td>
+                                                    <input type="text" class="Document_Remarks" name="rootCauseData[0][remarks]">
+                                                </td>
+                                                <td>
+                                                    <input type="text" class="Removebtn" name="Action[]">
+                                                </td>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-12 mb-3">
+                                    <div class="group-input">
+                                        <label for="Detail Of Root Cause">Detail Of Root Cause</label>
+                                        
+                                        <textarea class="" name="Detail_Of_Root_Cause" id="summernote-18"></textarea>
+                                    </div>
+                                </div>
                             <div class="button-block">
                                 <button type="submit" class="saveButton" style=" justify-content: center; width: 4rem; margin-left: 1px;">Save</button>
                                 <a href="/rcms/qms-dashboard" style=" justify-content: center; width: 4rem; margin-left: 1px;">
@@ -4868,8 +4976,8 @@
                                 <div style="margin-bottom: 0px;" class="col-lg-12 new-date-data-field ">
                                     <div class="group-input input-date">
                                         <label for="Deviation category">Source of CAPA</label>
-                                        <select name="Deviation_category" id="Deviation_category">
-                                            <option value="0">-- Select -- </option>
+                                            <select name="Deviation_category" id="Deviation_category">
+                                            <option value="NA">-- Select -- </option>
                                             <option value="Deviation">Deviation </option>
                                             <option value="OS/OT">OS/OT</option>
                                             <option value="Audit_Obs">Audit Observation </option>
@@ -5197,7 +5305,7 @@
                                 </div> --}}
                                 <div class="col-md-12 mb-3">
                                     <div class="group-input">
-                                        <label for="QA Feedbacks">Initiator Feedbacks</label>
+                                        <label for="QA Feedbacks">QA Evaluation</label>
                                         <div><small class="text-primary">Please insert "NA" in the data field if it does
                                                 not require completion</small></div>
                                         <textarea class="tiny" name="QA_Feedbacks" id="summernote-14">

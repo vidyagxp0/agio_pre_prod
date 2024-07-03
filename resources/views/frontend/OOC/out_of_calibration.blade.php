@@ -20,7 +20,8 @@ $users = DB::table('users')->get();
         </div> --}}
     <div class="division-bar">
         <strong>Site Division/Project</strong> :
-        / OOC_Out Of Calibration
+        {{ Helpers::getDivisionName(session()->get('division')) }}
+        / Out Of Calibration
     </div>
 </div>
 
@@ -187,12 +188,14 @@ $users = DB::table('users')->get();
                             {{-- @foreach ($record_number as $record) --}}
                             
                                 
-                            
+                            {{-- @php
+                                $division =  Helpers::getDivisionName(session()->get('division')) 
+                            @endphp --}}
                             <div class="col-lg-6">
                                 <div class="group-input">
                                     <label for="RLS Record Number"><b>Record Number</b></label>
-                                    <input disabled type="text" name="record_number" >
-                                    {{-- <input disabled type="text" name="record_number" value="{{ Helpers::getDivisionName(session()->get('division')) }}/LI/{{ date('Y') }}/{{ $record_number }}"> --}}
+                                    {{-- <input disabled type="number" name="record_number" value="" > --}}
+                                    <input disabled type="text" name="record_number" value="{{Helpers::getDivisionName(session()->get('division'))}}/{{ date('y') }}/OOC/{{$record_number}}">
                                   
                                 </div>
                             </div>
@@ -240,31 +243,44 @@ $users = DB::table('users')->get();
                             </div>
 
 
-                            <div class="col-lg-6">
+                            {{-- <div class="col-lg-6"> --}}
+                                <div class="col-lg-6">
+                                    <div class="group-input">
+                                        <label for="Initiator Group"><b>Initiator Group</b></label>
+                                        <select name="Initiator_Group" id="initiator_group">
+                                            <option value="">-- Select --</option>
+                                            <option value="CQA" @if(old('Initiator_Group') =="CQA") selected @endif>Corporate Quality Assurance</option>
+                                            <option value="QAB" @if(old('Initiator_Group') =="QAB") selected @endif>Quality Assurance Biopharma</option>
+                                            <option value="CQC" @if(old('Initiator_Group') =="CQA") selected @endif>Central Quality Control</option>
+                                            <option value="CQC" @if(old('Initiator_Group') =="MANU") selected @endif>Manufacturing</option>
+                                            <option value="PSG" @if(old('Initiator_Group') =="PSG") selected @endif>Plasma Sourcing Group</option>
+                                            <option value="CS"  @if(old('Initiator_Group') == "CS") selected @endif>Central Stores</option>
+                                            <option value="ITG" @if(old('Initiator_Group') =="ITG") selected @endif>Information Technology Group</option>
+                                            <option value="MM"  @if(old('Initiator_Group') == "MM") selected @endif>Molecular Medicine</option>
+                                            <option value="CL"  @if(old('Initiator_Group') == "CL") selected @endif>Central Laboratory</option>
+
+                                            <option value="TT"  @if(old('Initiator_Group') == "TT") selected @endif>Tech team</option>
+                                            <option value="QA"  @if(old('Initiator_Group') == "QA") selected @endif> Quality Assurance</option>
+                                            <option value="QM"  @if(old('Initiator_Group') == "QM") selected @endif>Quality Management</option>
+                                            <option value="IA"  @if(old('Initiator_Group') == "IA") selected @endif>IT Administration</option>
+                                            <option value="ACC"  @if(old('Initiator_Group') == "ACC") selected @endif>Accounting</option>
+                                            <option value="LOG"  @if(old('Initiator_Group') == "LOG") selected @endif>Logistics</option>
+                                            <option value="SM"  @if(old('Initiator_Group') == "SM") selected @endif>Senior Management</option>
+                                            <option value="BA"  @if(old('Initiator_Group') == "BA") selected @endif>Business Administration</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            {{-- </div> --}}
+                            <div class="col-md-12 mb-3">
                                 <div class="group-input">
-                                    <label for="Initiator Group"><b>Initiator Group</b></label>
-                                    <select name="Initiator_Group" id="initiator_group">
-                                        <option value="">-- Select --</option>
-                                        <option value="CQA">Corporate Quality Assurance</option>
-                                        <option value="QAB">Quality Assurance Biopharma</option>
-                                        <option value="CQC">Central Quality Control</option>
-                                        <option value="MANU">Manufacturing</option>
-                                        <option value="PSG">Plasma Sourcing Group</option>
-                                        <option value="CS">Central Stores</option>
-                                        <option value="ITG">Information Technology Group</option>
-                                        <option value="MM">Molecular Medicine</option>
-                                        <option value="CL">Central Laboratory</option>
-                                        <option value="TT">Tech team</option>
-                                        <option value="QA">Quality Assurance</option>
-                                        <option value="QM">Quality Management</option>
-                                        <option value="IA">IT Administration</option>
-                                        <option value="ACC">Accounting</option>
-                                        <option value="LOG">Logistics</option>
-                                        <option value="SM">Senior Management</option>
-                                        <option value="BA">Business Administration</option>
-                                    </select>
+                                    <label for="Description">Short Description <span class="text-danger">*</span></label>
+                                    <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
+                                    <input type="text" name="description_ooc" >
+                                    
                                 </div>
                             </div>
+
+                            
                             <div class="col-lg-12">
                                 <div class="group-input">
                                     <label for="Initiator Group Code">Initiator Group Code</label>
@@ -318,7 +334,7 @@ $users = DB::table('users')->get();
                                     <label for="Initiator Group">Initiated Through</label>
                                     <div><small class="text-primary">Please select related information</small></div>
                                     <select name="initiated_through" onchange="">
-                                        <option value="">-- select --</option>
+                                        <option value="0">-- select --</option>
                                         <option value="recall">Recall</option>
                                         <option value="return">Return</option>
                                         <option value="deviation">Deviation</option>
@@ -331,6 +347,8 @@ $users = DB::table('users')->get();
                                 </div>
                             </div>
 
+                            
+
                             <div class="col-md-12 mb-3">
                                 <div class="group-input">
                                     <label for="If Other">If Other</label>
@@ -339,10 +357,34 @@ $users = DB::table('users')->get();
                                     </textarea>
                                 </div>
                             </div>
+                            <div class="col-lg-12">
+                                <div class="group-input">
+                                    <label for="affected documents closed"><b>Affected Documents Closed</b></label>
+                                    <select name="affected_document_closure" id="affected_document_closure">
+                                        <option value="0">-- Select --</option>
+                                        <option value="Yes">Yes</option>
+                                        <option value="No">No</option>
+                                        <option value="NA">NA</option>
+                                      
+                                    </select>
+                                </div>
+                            </div>
 
                             <div class="col-lg-12">
                                 <div class="group-input">
-                                    <label for="Initiator Group">Is Repeat</label>
+                                    <label for="Is Repeat"><b>Is Repeat</b></label>
+                                    <select name="is_repeat_ooc" id="is_repeat_ooc">
+                                        <option value="0">-- Select --</option>
+                                        <option value="Yes">Yes</option>
+                                        <option value="No">No</option>
+                                        {{-- <option value="NA">NA</option> --}}
+                                      
+                                    </select>
+                                </div>
+                            </div>
+                            {{-- <div class="col-lg-12">
+                                <div class="group-input">
+                                    <label for="Initiator Group"></label>
                                     <select name="is_repeat_ooc" onchange="">
                                         <option value="0">-- select --</option>
                                         <option value="YES">Yes</option>
@@ -350,7 +392,7 @@ $users = DB::table('users')->get();
 
                                     </select>
                                 </div>
-                            </div>
+                            </div> --}}
 
                             
                             <div class="col-md-12 mb-3">
@@ -365,14 +407,7 @@ $users = DB::table('users')->get();
 
 
 
-                            <div class="col-md-12 mb-3">
-                                <div class="group-input">
-                                    <label for="Description">Description</label>
-                                    <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
-                                    <textarea class="summernote" name="description_ooc" id="summernote-1">
-                                    </textarea>
-                                </div>
-                            </div>
+                           
 
 
                             <div class="col-lg-12">
@@ -416,50 +451,129 @@ $users = DB::table('users')->get();
                                     <div class="calenderauditee">
                                         <input type="text" id="ooc_due_date" readonly
                                             placeholder="DD-MMM-YYYY"/>
-                                        <input type="date" name="ooc_due_date"  min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input" oninput="handleDateInput(this, 'ooc_due_date')"  />
+                                        <input type="date" name="ooc_due_date"   class="hide-input" oninput="handleDateInput(this, 'ooc_due_date')"  />
                                     </div>
                                     
                                 </div>
                             </div>
+{{-- grid added new --}}
+
+<div class="col-12">
+    <div class="group-input" id="IncidentRow">
+        <label for="root_cause">
+            Instrument Details
+            <button type="button" name="audit-incident-grid" id="IncidentAdd">+</button>
+            <span class="text-primary" data-bs-toggle="modal" data-bs-target="#observation-field-instruction-modal" style="font-size: 0.8rem; font-weight: 400; cursor: pointer;">
+                (Launch Instruction)
+            </span>
+        </label>
+        
+            <table class="table table-bordered" id="onservation-incident-table">
+                <thead>
+                    <tr>
+                        <th>Row #</th>
+                        <th>Instrument Name</th>
+                        <th>Instrument ID</th>
+                        <th>Remarks</th>
+                        <th>Calibration Parameter</th>
+                        <th>Acceptance Criteria</th>
+                        <th>Results</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @php
+                        $serialNumber =1;
+                    @endphp
+                    <tr>
+                    <td disabled >{{ $serialNumber++ }}</td>
+                    <td><input type="text" name="instrumentdetails[0][instrument_name]"></td>
+                    <td><input type="text" name="instrumentdetails[0][instrument_id]"></td>
+                    <td><input type="text" name="instrumentdetails[0][remarks]"></td>
+                    <td><input type="text" name="instrumentdetails[0][calibration]"></td>
+                    <td><input type="text" name="instrumentdetails[0][acceptancecriteria]"></td>
+                    <td><input type="text" name="instrumentdetails[0][results]"></td>
+                    </tr>
+                </tbody>
+            </table>
+        
+    </div>
+</div>
 
 
-                            <div class="col-12">
-                                <div class="group-input">
-                                    <label for="root_cause">
-                                        Instrument Details
-                                        <button type="button" onclick="add4Input('root-cause-first-table')">+</button>
-                                        <span class="text-primary" data-bs-toggle="modal" data-bs-target="#document-details-field-instruction-modal" style="font-size: 0.8rem; font-weight: 400; cursor: pointer;">
-                                            (Launch Instruction)
-                                        </span>
-                                    </label>
-                                    <div class="table-responsive">
-                                        <table class="table table-bordered" id="root-cause-first-table">
-                                            <thead>
-                                                <tr>
-                                                    <th>Row #</th>
-                                                    <th>Instrument Name</th>
-                                                    <th>Instrument ID</th>
-                                                    <th>Remarks</th>
-                                                    <th>Calibration Parameter</th>
-                                                    <th>Acceptance Criteria</th>
-                                                    <th>Results</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                <td><input disabled type="text" name="serial_number[]" value="1">
-                                                </td>
-                                                <td><input type="text" name="Instrument_Name[]"></td>
-                                                <td><input type="text" name="Instrument_ID[]"></td>
-                                                <td><input type="text" name="Remarks[]"></td>
-                                                <td><input type="text" name="Calibration_Parameter[]"></td>
-                                                <td><input type="text" name="Acceptance_Criteria[]"></td>
-                                                <td><input type="text" name="Results[]"></td>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        var selectField = document.getElementById('Facility_Equipment');
+        var inputsToToggle = [];
 
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                </div>
-                            </div>
+        // Add elements with class 'facility-name' to inputsToToggle
+        var facilityNameInputs = document.getElementsByClassName('facility-name');
+        for (var i = 0; i < facilityNameInputs.length; i++) {
+            inputsToToggle.push(facilityNameInputs[i]);
+        }
+
+        // Add elements with class 'id-number' to inputsToToggle
+        var idNumberInputs = document.getElementsByClassName('id-number');
+        for (var j = 0; j < idNumberInputs.length; j++) {
+            inputsToToggle.push(idNumberInputs[j]);
+        }
+
+        // Add elements with class 'remarks' to inputsToToggle
+        var remarksInputs = document.getElementsByClassName('remarks');
+        for (var k = 0; k < remarksInputs.length; k++) {
+            inputsToToggle.push(remarksInputs[k]);
+        }
+
+
+        selectField.addEventListener('change', function() {
+            var isRequired = this.value === 'yes';
+            console.log(this.value, isRequired, 'value');
+
+            inputsToToggle.forEach(function(input) {
+                input.required = isRequired;
+                console.log(input.required, isRequired, 'input req');
+            });
+
+            document.getElementById('facilityRow').style.display = isRequired ? 'block' : 'none';
+            // Show or hide the asterisk icon based on the selected value
+            var asteriskIcon = document.getElementById('asteriskInvi');
+            asteriskIcon.style.display = isRequired ? 'inline' : 'none';
+        });
+    });
+       </script>
+
+
+<script>
+$(document).ready(function() {
+    let investdetails = 1;
+    $('#IncidentAdd').click(function(e) {
+        function generateTableRow(serialNumber) {
+            var html =
+                '<tr>' +
+                '<td><input disabled type="text" value="' + serialNumber + '"></td>' +
+                '<td><input type="text" name="instrumentdetails[' + investdetails + '][instrument_name]" value=""></td>' +
+                '<td><input type="text" name="instrumentdetails[' + investdetails + '][instrument_id]" value=""></td>' +
+                '<td><input type="text" name="instrumentdetails[' + investdetails + '][remarks]" value=""></td>' +
+                '<td><input type="text" name="instrumentdetails[' + investdetails + '][calibration]" value=""></td>' +
+                '<td><input type="text" name="instrumentdetails[' + investdetails + '][acceptancecriteria]" value=""></td>' +
+                '<td><input type="text" name="instrumentdetails[' + investdetails + '][results]" value=""></td>' +
+                '</tr>';
+            investdetails++; // Increment the row number here
+            return html;
+        }
+
+        var tableBody = $('#onservation-incident-table tbody');
+        var rowCount = tableBody.children('tr').length;
+        var newRow = generateTableRow(rowCount + 1);
+        tableBody.append(newRow);
+    });
+});
+
+    </script>
+
+{{-- grid added new --}}
+
+
+
 
                             <div class="sub-head"> Delay Justfication for Reporting</div>
 
@@ -498,6 +612,7 @@ $users = DB::table('users')->get();
                             </div>
 
 
+                            
                             <div class="col-lg-12">
                                 <div class="group-input">
                                     <label for="Initial Attachments">HOD Attachement</label>
@@ -564,6 +679,24 @@ $users = DB::table('users')->get();
                     </div>
                 </div>
             </div>
+
+
+
+
+            @php
+                $oocevaluations = array(
+    "Status of calibration for other instrument(s) used for performing calibration of the referred instrument",
+    "Verification of calibration standards used Primary Standard: Physical appearance, validity, certificate. Secondary standard: Physical appearance, validity",
+    "Verification of dilution, calculation, weighing, Titer values and readings",
+    "Verification of glassware used",
+    "Verification of chromatograms/spectrums/other instrument",
+    "Adequacy of system suitability checks",
+    "Instrument Malfunction",
+    "Check for adherence to the calibration method",
+    "Previous History of instrument",
+    "Others"
+                )
+            @endphp
             <div id="CCForm3" class="inner-block cctabcontent">
                 <div class="inner-block-content">
                     <div class="row">
@@ -584,36 +717,45 @@ $users = DB::table('users')->get();
                                             </tr>
                                         </thead>
                                         <tbody>
+                                            @foreach ($oocevaluations as $item)
+                                                
                                             <tr>
-                                                <td></td>
-                                                <td style="background: #DCD8D8">Status of calibration for other instrument(s) used for performing calibration of the referred instrument</td>
+                                                <td>{{$loop->index+1}}</td>
+                                                {{-- <td >Status of calibration for other instrument(s) used for performing calibration of the referred instrument</td>
+                                                 --}}
+                                                 <td style="background: #DCD8D8">{{$item}}</td>
                                                 <td>
-                                                    <textarea name="what_will_be"></textarea>
+                                                    <textarea name="oocevoluation[{{$loop->index}}][response]"></textarea>
                                                 </td>
                                                 <td>
-                                                    <textarea name="what_will_not_be"></textarea>
+                                                    <textarea name="oocevoluation[{{$loop->index}}][remarks]"></textarea>
                                                 </td>
 
                                             </tr>
-                                            <tr>
+                                            @endforeach
+                                            {{-- @foreach ($oocevaluations as $item) --}}
+
+                                            {{-- <tr>
                                                 <td></td>
-                                                <td style="background: #DCD8D8">Verification of calibration standards used Primary Standard: Physical apperance, validity, certificate. Secondary standard: Physical appearance, validity</td>
-                                                <td>
-                                                    <textarea name="where_will_be"></textarea>
+                                                    <td style="background: #DCD8D8"></td>
+                                                    <td>
+                                                    <textarea name="where_will_be_qII"></textarea>
                                                 </td>
                                                 <td>
-                                                    <textarea name="where_will_not_be"></textarea>
+                                                    <textarea name="where_will_not_be_qII"></textarea>
                                                 </td>
 
-                                            </tr>
-                                            <tr>
+                                            </tr> --}}
+                                            {{-- @endforeach --}}
+
+                                            {{-- <tr>
                                                 <td></td>
                                                 <td style="background: #DCD8D8">Verification of dilution, calculation, weighing, Titer values and readings</td>
                                                 <td>
-                                                    <textarea name="when_will_be"></textarea>
+                                                    <textarea name="when_will_be_qIII"></textarea>
                                                 </td>
                                                 <td>
-                                                    <textarea name="when_will_not_be"></textarea>
+                                                    <textarea name="when_will_not_be_qIII"></textarea>
                                                 </td>
 
                                             </tr>
@@ -621,10 +763,10 @@ $users = DB::table('users')->get();
                                                 <td></td>
                                                 <td style="background: #DCD8D8">Verification of glassware used</td>
                                                 <td>
-                                                    <textarea name="coverage_will_be"></textarea>
+                                                    <textarea name="coverage_will_be_qIv"></textarea>
                                                 </td>
                                                 <td>
-                                                    <textarea name="coverage_will_not_be"></textarea>
+                                                    <textarea name="coverage_will_not_be_qIv"></textarea>
                                                 </td>
 
                                             </tr>
@@ -632,10 +774,10 @@ $users = DB::table('users')->get();
                                                 <td></td>
                                                 <td style="background: #DCD8D8">Verification of chromatograms/spectrums/other instrument</td>
                                                 <td>
-                                                    <textarea name="who_will_be"></textarea>
+                                                    <textarea name="who_will_be_qv"></textarea>
                                                 </td>
                                                 <td>
-                                                    <textarea name="who_will_not_be"></textarea>
+                                                    <textarea name="who_will_not_be_qv"></textarea>
                                                 </td>
 
                                             </tr>
@@ -643,10 +785,10 @@ $users = DB::table('users')->get();
                                                 <td></td>
                                                 <td style="background: #DCD8D8">Adequacy of system suitability checks</td>
                                                 <td>
-                                                    <textarea name="who_will_be"></textarea>
+                                                    <textarea name="who_will_be_vi"></textarea>
                                                 </td>
                                                 <td>
-                                                    <textarea name="who_will_not_be"></textarea>
+                                                    <textarea name="who_will_not_be_vi"></textarea>
                                                 </td>
 
                                             </tr>
@@ -654,10 +796,10 @@ $users = DB::table('users')->get();
                                                 <td></td>
                                                 <td style="background: #DCD8D8">Instrument Malfunction</td>
                                                 <td>
-                                                    <textarea name="who_will_be"></textarea>
+                                                    <textarea name="who_will_be_vii"></textarea>
                                                 </td>
                                                 <td>
-                                                    <textarea name="who_will_not_be"></textarea>
+                                                    <textarea name="who_will_not_be_vii"></textarea>
                                                 </td>
 
                                             </tr>
@@ -665,10 +807,10 @@ $users = DB::table('users')->get();
                                                 <td></td>
                                                 <td style="background: #DCD8D8">Check for adherence to the calibration method</td>
                                                 <td>
-                                                    <textarea name="who_will_be"></textarea>
+                                                    <textarea name="who_will_be_viii"></textarea>
                                                 </td>
                                                 <td>
-                                                    <textarea name="who_will_not_be"></textarea>
+                                                    <textarea name="who_will_not_be_viii"></textarea>
                                                 </td>
 
                                             </tr>
@@ -676,10 +818,10 @@ $users = DB::table('users')->get();
                                                 <td></td>
                                                 <td style="background: #DCD8D8">Previous History of instrument</td>
                                                 <td>
-                                                    <textarea name="who_will_be"></textarea>
+                                                    <textarea name="who_will_be_ix"></textarea>
                                                 </td>
                                                 <td>
-                                                    <textarea name="who_will_not_be"></textarea>
+                                                    <textarea name="who_will_not_be_ix"></textarea>
                                                 </td>
 
                                             </tr>
@@ -687,13 +829,14 @@ $users = DB::table('users')->get();
                                                 <td></td>
                                                 <td style="background: #DCD8D8">Others</td>
                                                 <td>
-                                                    <textarea name="who_will_be"></textarea>
+                                                    <textarea name="who_will_be_x"></textarea>
                                                 </td>
                                                 <td>
-                                                    <textarea name="who_will_not_be"></textarea>
+                                                    <textarea name="who_will_not_be_x"></textarea>
                                                 </td>
 
-                                            </tr>
+                                            </tr> --}}
+
                                         </tbody>
                                     </table>
                                 </div>
@@ -715,8 +858,9 @@ $users = DB::table('users')->get();
                             <div class="group-input">
                                 <label for="Initiator Group">Assignable root cause found?</label>
                                 <select name="is_repeat_assingable_ooc" onchange="">
-                                    <option value="YES">-- select --</option>
-                                    <option value="NO"></option>
+                                    <option value="NA">Select</option>
+                                    <option value="YES">YES</option>
+                                    <option value="NO">NO</option>
 
                                 </select>
                             </div>
@@ -852,7 +996,7 @@ $users = DB::table('users')->get();
 
                         <div class="col-lg-6">
                             <div class="group-input">
-                                <label for="Initiator Group">Initial OOC is Invalidated/Validated</label>
+                                <label for="Initiator Group">Invalidated & Validated</label>
                                 <select name="is_repeat_stae_ooc" onchange="">
                                     <option value="0">-- select --</option>
                                     <option value="Yes">Yes</option>
@@ -863,12 +1007,12 @@ $users = DB::table('users')->get();
                         </div>
 
 
-                        <div class="col-6">
+                        {{-- <div class="col-6">
                             <div class="group-input">
                                 <label for="qa_comments">Additinal Remarks (if any)</label>
                                 <textarea name="qa_comments_stage_ooc"></textarea>
                             </div>
-                        </div>
+                        </div> --}}
 
                         <div class="col-md-12 mb-3">
                             <div class="group-input">
@@ -903,7 +1047,7 @@ $users = DB::table('users')->get();
                             <div class="group-input">
                                 <label for="Initiator Group">Rectification by Service Engineer required</label>
                                 <select name="is_repeat_stageii_ooc" onchange="">
-                                    <option value="">-- select --</option>
+                                    <option value="NA">-- select --</option>
                                     <option value="YES">Yes</option>
                                     <option value="No">No</option>
 
@@ -915,7 +1059,7 @@ $users = DB::table('users')->get();
                             <div class="group-input">
                                 <label for="Initiator Group">Instrument is Out of Order</label>
                                 <select name="is_repeat_stage_instrument_ooc" onchange="">
-                                    <option value="">-- select --</option>
+                                    <option value="NA">-- select --</option>
                                     <option value="Yes">Yes</option>
                                     <option value="No">No</option>
                                 </select>
@@ -1043,8 +1187,8 @@ $users = DB::table('users')->get();
                                 <label for="Initiator Group">CAPA Type?</label>
                                 <select name="is_repeat_capas_ooc" onchange="">
                                     <option value="0">-- select --</option>
-                                    <option value="Yes"></option>
-                                    <option value="No"></option>
+                                    <option value="Yes">Yes</option>
+                                    <option value="No">No</option>
                                     
 
                                 </select>
@@ -1148,7 +1292,7 @@ $users = DB::table('users')->get();
                     </div>
                     <div class="row">
 
-                        <div class="col-6">
+                        <div class="col-12">
                             <div class="group-input">
                                 <label for="Short Description">Closure Comments
                                     <input id="docname" type="text" name="short_description_closure_ooc">
@@ -1160,16 +1304,21 @@ $users = DB::table('users')->get();
                                 <label for="Initial Attachments">Details of Equipment Rectification</label>
                                 <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
                                 {{-- <input type="file" id="myfile" name="Initial_Attachment"> --}}
+                                
                                 <div class="file-attachment-field">
-                                    <div class="file-attachment-list" id="initial_attachment_closure_ooc"></div>
+                                    <div class="file-attachment-list" id="initial_attachment_closuress_ooc"></div>
                                     <div class="add-btn">
                                         <div>Add</div>
-                                        <input type="file" id="initial_attachment_closure_ooc" name="initial_attachment_closure_ooc[]"
-                                            oninput="addMultipleFiles(this, 'initial_attachment_closure_ooc')" multiple>
+                                        <input type="file" id="initial_attachment_closuress_ooc" name="initial_attachment_closuress_ooc[]"
+                                            oninput="addMultipleFiles(this, 'initial_attachment_closuress_ooc')" multiple>
                                     </div>
                                 </div>
+                                
                             </div>
                         </div>
+                       
+                       
+                        
                         <div class="col-6">
                             <div class="group-input">
                                 <label for="Short Description">Document Code

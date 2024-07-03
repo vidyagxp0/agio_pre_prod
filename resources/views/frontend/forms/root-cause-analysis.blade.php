@@ -35,7 +35,7 @@
                 <button class="cctablinks active" onclick="openCity(event, 'CCForm1')">Investigation</button>
                 <button class="cctablinks" onclick="openCity(event, 'CCForm2')">Investigation & Root Cause</button>
                 <button class="cctablinks" onclick="openCity(event, 'CCForm4')">QA Review</button>
-                
+
                 <button class="cctablinks" onclick="openCity(event, 'CCForm3')">Signatures</button>
             </div>
 
@@ -50,8 +50,8 @@
 
                     <div id="CCForm1" class="inner-block cctabcontent">
                          <div class="inner-block-content">
-                            <div class="row"> 
-                      
+                            <div class="row">
+
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="RLS Record Number"><b>Record Number</b></label>
@@ -60,25 +60,25 @@
 
                                     </div>
                                 </div>
-                            
-                           
+
+
                         <div class="col-lg-6">
                             <div class="group-input">
                                 <label for="Division Code"><b>Site/Location Code </b></label>
                                 <input readonly type="text" name="division_code"
                                     value="{{ Helpers::getDivisionName(session()->get('division')) }}">
                                 <input type="hidden" name="division_id" value="{{ session()->get('division') }}">
-                                {{-- <div class="static">QMS-North America</div> --}}
+                                {{-- <div class="static">{{ Helpers::getDivisionName(session()->get('division')) }}</div> --}}
                             </div>
                         </div>
-                        
+
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="originator">Initiator</label>
                                         <input readonly  type="text" name="originator_id" value="{{ Auth::user()->name }}"  />
                                     </div>
                                 </div>
-                              
+
                                 {{-- <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="date-opened">Date Opened </label>
@@ -143,9 +143,9 @@
                                     <div class="group-input">
                                         <label for="Initiator Group Code">Initiator Group Code</label>
                                         <input type="text" name="initiator_group_code" id="initiator_group_code"
-                                              value="" > 
+                                              value="" >
                                     </div>
-                                </div> 
+                                </div>
                                 <div class="col-12">
                                     <div class="group-input">
                                         <label for="Short Description">Short Description<span
@@ -153,8 +153,8 @@
                                         characters remaining
                                         <input id="docname" type="text" name="short_description" maxlength="255" required>
                                     </div>
-                                </div>  
-                                
+                                </div>
+
                                 <div class="col-12">
                                     <div class="group-input">
                                         <label for="severity-level">Sevrity Level</label>
@@ -189,7 +189,7 @@
                                         <div><small class="text-primary">If revising Due Date, kindly mention revision reason in "Due Date Extension Justification" data field.</small></div>
                                         <div class="calenderauditee">
                                         <input type="text"  id="due_date"  readonly placeholder="DD-MMM-YYYY" />
-                                        <input type="date" name="due_date" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" 
+                                        <input type="date" name="due_date" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
                                         class="hide-input"
                                         oninput="handleDateInput(this, 'due_date')"/>
                                         </div>
@@ -200,7 +200,7 @@
                                             value="" name="due_date"> --}}
                                     </div>
                                 </div>
-                                
+
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Initiator Group">Initiated Through</label>
@@ -269,7 +269,7 @@
                                             <option value="5">Harsh Mishra</option>
                                         </select>
                                     </div> --}}
-                                {{-- </div> --}} 
+                                {{-- </div> --}}
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="department">Department(s)</label>
@@ -369,11 +369,12 @@
                                             <table class="table table-bordered" id="root-cause-first-table">
                                                 <thead>
                                                     <tr>
-                                                        <th>Row #</th>
+                                                        <th style="width:5%">Row #</th>
                                                         <th>Root Cause Category</th>
                                                         <th>Root Cause Sub-Category</th>
                                                         <th>Probability</th>
                                                         <th>Remarks</th>
+                                                        <th>Action</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
@@ -383,6 +384,7 @@
                                                     <td><input type="text" name="Root_Cause_Sub_Category[]"></td>
                                                     <td><input type="text" name="Probability[]"></td>
                                                     <td><input type="text" name="Remarks[]"></td>
+                                                    <td><button type="text" class="removeRowBtn">Remove</button></td>
                                                 </tbody>
                                             </table>
                                         </div>
@@ -423,7 +425,9 @@
                                                         <th>Risk Acceptance (Y/N)</th>
                                                         <th>Mitigation proposal (Mention either CAPA reference number, IQ,
                                                             OQ or
-                                                            PQ)</th>
+                                                            PQ)
+                                                        </th>
+                                                        <th>Action</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
@@ -854,7 +858,7 @@
                         </div>
                     </div>
                             </div>
-                    
+
                   <div id="CCForm3" class="inner-block cctabcontent">
                         <div class="inner-block-content">
                             <div class="row">
@@ -868,7 +872,7 @@
                                     <div class="group-input">
                                         <label for="completed_on">Completed On</label>
                                         <div class="Date"></div>
-                                </div>    
+                                </div>
                             </div>
                                     <div class="col-lg-6">
                                         <div class="group-input">
@@ -1031,6 +1035,108 @@
                 currentStep--;
             }
         }
+
+        function add4Input(tableId) {
+    var table = document.getElementById(tableId);
+    var currentRowCount = table.rows.length;
+    var newRow = table.insertRow(currentRowCount);
+    newRow.setAttribute("id", "row" + currentRowCount);
+    var cell1 = newRow.insertCell(0);
+    cell1.innerHTML = currentRowCount;
+
+    var cell2 = newRow.insertCell(1);
+    cell2.innerHTML = "<input type='text' name='Root_Cause_Category[]'>";
+
+    var cell3 = newRow.insertCell(2);
+    cell3.innerHTML = "<input type='text' name='Root_Cause_Sub_Category[]'>";
+
+    var cell4 = newRow.insertCell(3);
+    cell4.innerHTML = "<input type='text' name='Probability[]'>";
+
+    var cell5 = newRow.insertCell(4);
+    cell5.innerHTML = "<input type='text' name='Remarks[]'>";
+
+    let cell6 = newRow.insertCell(5);
+    cell6.innerHTML = "<button type='text' class='removeRowBtn' name='Action[]' readonly>Remove</button>";
+
+    for (var i = 1; i < currentRowCount; i++) {
+        var row = table.rows[i];
+        row.cells[0].innerHTML = i;
+    }
+}
+
+function addRootCauseAnalysisRiskAssessment(tableId) {
+    var table = document.getElementById(tableId);
+    var currentRowCount = table.rows.length;
+    var newRow = table.insertRow(currentRowCount);
+    newRow.setAttribute("id", "row" + currentRowCount);
+    var cell1 = newRow.insertCell(0);
+    cell1.innerHTML = currentRowCount;
+
+    var cell2 = newRow.insertCell(1);
+    cell2.innerHTML = "<input name='risk_factor[]' type='text'>";
+
+    var cell3 = newRow.insertCell(2);
+    cell3.innerHTML = "<input name='risk_element[]' type='text'>";
+
+    var cell4 = newRow.insertCell(3);
+    cell4.innerHTML = "<input name='problem_cause[]' type='text'>";
+
+    var cell5 = newRow.insertCell(4);
+    cell5.innerHTML = "<input name='existing_risk_control[]' type='text'>";
+
+    var cell6 = newRow.insertCell(5);
+    cell6.innerHTML =
+        "<select onchange='calculateInitialResult(this)' class='fieldR' name='initial_severity[]'><option value=''>-- Select --</option><option value='1'>1</option><option value='2'>2</option><option value='3'>3</option></select>";
+
+    var cell7 = newRow.insertCell(6);
+    cell7.innerHTML =
+        "<select onchange='calculateInitialResult(this)' class='fieldP' name='initial_probability[]'><option value=''>-- Select --</option><option value='1'>1</option><option value='2'>2</option><option value='3'>3</option></select>";
+
+    var cell8 = newRow.insertCell(7);
+    cell8.innerHTML =
+        "<select onchange='calculateInitialResult(this)' class='fieldN' name='initial_detectability[]'><option value=''>-- Select --</option><option value='1'>1</option><option value='2'>2</option><option value='3'>3</option></select>";
+
+    var cell9 = newRow.insertCell(8);
+    cell9.innerHTML = "<input name='initial_rpn[]' type='text' class='initial-rpn'  >";
+
+    var cell10 = newRow.insertCell(9);
+    cell10.innerHTML =
+        "<select name='risk_acceptance[]'><option value=''>-- Select --</option><option value='N'>N</option><option value='Y'>Y</option></select>";
+
+    var cell11 = newRow.insertCell(10);
+    cell11.innerHTML = "<input name='risk_control_measure[]' type='text'>";
+
+    var cell12 = newRow.insertCell(11);
+    cell12.innerHTML =
+        "<select onchange='calculateResidualResult(this)' class='residual-fieldR' name='residual_severity[]'><option value=''>-- Select --</option><option value='1'>1</option><option value='2'>2</option><option value='3'>3</option></select>";
+
+    var cell13 = newRow.insertCell(12);
+    cell13.innerHTML =
+        "<select onchange='calculateResidualResult(this)' class='residual-fieldP' name='residual_probability[]'><option value=''>-- Select --</option><option value='1'>1</option><option value='2'>2</option><option value='3'>3</option></select>";
+
+    var cell14 = newRow.insertCell(13);
+    cell14.innerHTML =
+        "<select onchange='calculateResidualResult(this)' class='residual-fieldN' name='residual_detectability[]'><option value=''>-- Select --</option><option value='1'>1</option><option value='2'>2</option><option value='3'>3</option></select>";
+
+    var cell15 = newRow.insertCell(14);
+    cell15.innerHTML = "<input name='residual_rpn[]' type='text' class='residual-rpn' >";
+
+    var cell16 = newRow.insertCell(15);
+    cell16.innerHTML =
+        "<select name='risk_acceptance2[]'><option value=''>-- Select --</option><option value='N'>N</option><option value='Y'>Y</option></select>";
+
+    var cell17 = newRow.insertCell(16);
+    cell17.innerHTML = "<input name='mitigation_proposal[]' type='text'>";
+
+    var cell18 = newRow.insertCell(17);
+    cell18.innerHTML = "<button type='text' class='removeRowBtn' name='Action[]' readonly>Remove</button>";
+
+    for (var i = 1; i < currentRowCount; i++) {
+        var row = table.rows[i];
+        row.cells[0].innerHTML = i;
+    }
+}
     </script>
 
     <script>
@@ -1141,7 +1247,7 @@
             var selectedValue = this.value;
             document.getElementById('initiator_group_code').value = selectedValue;
         });
-        
+
         function setCurrentDate(item){
             if(item == 'yes'){
                 $('#effect_check_date').val('{{ date('d-M-Y')}}');
@@ -1160,12 +1266,12 @@
                  <script>
                     document.addEventListener('DOMContentLoaded', function () {
                         const removeButtons = document.querySelectorAll('.remove-file');
-        
+
                         removeButtons.forEach(button => {
                             button.addEventListener('click', function () {
                                 const fileName = this.getAttribute('data-file-name');
                                 const fileContainer = this.closest('.file-container');
-        
+
                                 // Hide the file container
                                 if (fileContainer) {
                                     fileContainer.style.display = 'none';
@@ -1173,8 +1279,13 @@
                             });
                         });
                     });
-                </script> 
-               
+                </script>
+
+<script>
+    $(document).on('click', '.removeRowBtn', function() {
+        $(this).closest('tr').remove();
+    })
+</script>
      <script>
         var maxLength = 255;
         $('#docname').keyup(function() {

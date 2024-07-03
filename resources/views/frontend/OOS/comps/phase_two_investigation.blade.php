@@ -9,7 +9,6 @@
             <div class="col-md-12 mb-4">
                 <div class="group-input">
                     <label for="Description Deviation">QA Approver Comments</label>
-                    <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
                     <textarea class="summernote" name="qa_approver_comments_piii" id="summernote-1">
                     {{$data->qa_approver_comments_piii ? $data->qa_approver_comments_piii : ""}}</textarea>
                 </div>
@@ -33,10 +32,10 @@
                     <select  name="manufacturing_invest_type_piii" placeholder="Select Nature of Deviation"
                         data-search="false" data-silent-initial-value-set="true" id="auditee">
                         <option value="0">Enter Your Selection Here</option>
-                        <option value="1" {{ $data->root_casue_identified_piiqcr === '1' ? 'selected' :
-                                '' }}>Chemical</option>
-                        <option value="2" {{ $data->root_casue_identified_piiqcr === '2' ? 'selected' : ''
-                                }}>Microbiology</option>
+                        <option value="Chemical"{{ $data->manufacturing_invest_type_piii === 'Chemical' ? 'selected' :
+                            '' }}>Chemical</option>
+                        <option value="Microbiology"{{ $data->manufacturing_invest_type_piii === 'Microbiology' ? 'selected' :
+                            '' }}>Microbiology</option>
                     </select>
                 </div>
             </div>

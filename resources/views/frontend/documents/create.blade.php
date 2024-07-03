@@ -139,7 +139,7 @@
                                         <label for="Division Code"><b>Site/Location Code</b></label>
                                         <input readonly type="text" name="division_id" value="{{ Helpers::getDivisionName($_GET['id'])}}">
                                         <input type="hidden" name="division_id" value="{{$_GET['id']}}">
-                                        {{-- <div class="static">QMS-North America</div> --}}
+                                        {{-- <div class="static">{{ Helpers::getDivisionName(session()->get('division')) }}</div> --}}
                                         @else
                                         <label for="Division Code"><b>Site/Location Code </b></label>
                                         {{-- <input readonly type="text" name="division_id"
@@ -175,17 +175,12 @@
                                 <div class="col-md-12">
                                     <div class="group-input">
                                         <label for="sop_type">SOP Type<span class="text-danger">*</span></label>
-                                        <select name="sop_type">
-                                            <option>Enter Your Selection Here</option>
-                                            <option>Chemistry SOP</option>
-                                            <option>Instrument SOP</option>
-                                            <option>Analytical SOP</option>
-                                            <option> Microbiology SOP</option>
-                                            <option>Quality Policies</option>
-                                            {{-- <option>Wet Chemistry</option> --}}
-                                            <option>Others</option>
+                                        <select name="sop_type" required>
+                                            <option value="" disabled selected>Enter your selection</option>
+                                            <option value="SOP (Standard Operating procedure)">SOP (Standard Operating procedure)</option>
+                                            <option value="EOP (Equipment Operating procedure)">EOP (Equipment Operating procedure)</option>
+                                            <option value="IOP (Instrument Operating Procedure)">IOP (Instrument Operating Procedure)</option>
                                         </select>
-                                        {{-- <p id="sop_typeError" style="color:red">**SOP type is required</p> --}}
                                     </div>
 
                                 </div>
@@ -235,12 +230,20 @@
                         </div>
                         <div class="input-fields">
                             <div class="row">
-                                <div class="col-md-12">
+                                <div class="col-md-6">
                                     <div class="group-input">
                                         <label for="doc-num">Document Number</label>
                                         <div class="default-name">Not available</div>
                                     </div>
                                 </div>
+                                
+                                <div class="col-md-6">
+                                    <div class="group-input">
+                                        <label for="legacy_number">Legacy Document Number</label>
+                                        <input type="text" id="legacy_number" name="legacy_number" maxlength="255">
+                                    </div>
+                                </div>
+
                                 <div class="col-md-12">
                                     <div class="group-input">
                                         <label for="link-doc">Reference Record</label>
@@ -262,42 +265,9 @@
                                         <label for="depart-name">Department Name<span class="text-danger">*</span></label>
                                         <select name="department_id" id="depart-name" required>
                                             <option value="" selected>Enter your Selection</option>
-                                            <option value="CQA" @if (old('department_id') == 'CQA') selected @endif>
-                                                Corporate Quality Assurance</option>
-                                            <option value="QAB" @if (old('department_id') == 'QAB') selected @endif>Quality
-                                                Assurance Biopharma</option>
-                                            <option value="CQC" @if (old('department_id') == 'CQA') selected @endif>Central
-                                                Quality Control</option>
-                                            <option value="MANU" @if (old('department_id') == 'MANU') selected @endif>
-                                                Manufacturing</option>
-                                            <option value="PSG" @if (old('department_id') == 'PSG') selected @endif>Plasma
-                                                Sourcing Group</option>
-                                            <option value="CS" @if (old('department_id') == 'CS') selected @endif>Central
-                                                Stores</option>
-                                            <option value="ITG" @if (old('department_id') == 'ITG') selected @endif>
-                                                Information Technology Group</option>
-                                            <option value="MM" @if (old('department_id') == 'MM') selected @endif>
-                                                Molecular Medicine</option>
-                                            <option value="CL" @if (old('department_id') == 'CL') selected @endif>
-                                                Central Laboratory</option>
-                                            <option value="TT" @if (old('department_id') == 'TT') selected @endif>Tech
-                                                Team</option>
-                                            <option value="QA" @if (old('department_id') == 'QA') selected @endif>
-                                                Quality Assurance</option>
-                                            <option value="QM" @if (old('department_id') == 'QM') selected @endif>
-                                                Quality Management</option>
-                                            <option value="IA" @if (old('department_id') == 'IA') selected @endif>IT
-                                                Administration</option>
-                                            <option value="ACC" @if (old('department_id') == 'ACC') selected @endif>
-                                                Accounting</option>
-                                            <option value="LOG" @if (old('department_id') == 'LOG') selected @endif>
-                                                Logistics</option>
-                                            <option value="SM" @if (old('department_id') == 'SM') selected @endif>
-                                                Senior Management</option>
-                                            <option value="BA" @if (old('department_id') == 'BA') selected @endif>
-                                                Business Administration</option>
-                                            <option value="others" @if (old('department_id') == 'others') selected @endif>
-                                                Others</option>
+                                            @foreach (Helpers::getDepartments() as $code => $department)
+                                                <option value="{{ $code }}">{{ $department }}</option>
+                                            @endforeach
                                             {{-- @foreach ($departments as $department)
                                                 <option data-id="{{ $department->dc }}" value="{{ $department->id }}">
                                                     {{ $department->name }}</option>
@@ -314,7 +284,7 @@
                                 </div> --}}
                                 <div class="col-6">
                                     <div class="group-input">
-                                        <label for="major">Major<span class="text-danger">*</span>
+                                        <label for="major">Document Version <small>(Major)</small> <span class="text-danger">*</span>
                                         <span  class="text-primary" data-bs-toggle="modal"
                                         data-bs-target="#document-management-system-modal"
                                         style="font-size: 0.8rem; font-weight: 400;">
@@ -328,7 +298,7 @@
 
                                 <div class="col-6">
                                     <div class="group-input">
-                                        <label for="minor">Minor<span class="text-danger">*</span> 
+                                        <label for="minor">Document Version <small>(Minor)</small><span class="text-danger">*</span> 
                                             <span  class="text-primary" data-bs-toggle="modal"
                                             data-bs-target="#document-management-system-modal-minor"
                                             style="font-size: 0.8rem; font-weight: 400;">
@@ -345,9 +315,9 @@
                                         <label for="doc-type">Document Type<span class="text-danger">*</span></label>
                                         <select name="document_type_id" id="doc-type" required>
                                             <option value="" selected>Enter your Selection</option>
-                                            @foreach ($documentTypes as $type)
-                                                <option data-id="{{ $type->typecode }}" value="{{ $type->id }}">
-                                                    {{ $type->name }}</option>
+                                            @foreach (Helpers::getDocumentTypes() as $code => $type)
+                                                <option data-id="{{ $code }}" value="{{ $code }}">
+                                                    {{ $type }}</option>
                                             @endforeach
                                         </select>
                                     </div>
@@ -535,11 +505,10 @@
                             </div>
                             <div class="row">
 
-                                <div class="col-md-6">
+                                {{-- <div class="col-md-6">
 
                                     <div class="group-input">
                                         <label for="reviewers-group">Reviewers Group</label>
-                                        {{--  <select class="form-control"  name="reviewers_group" required/>  --}}
                                         <select id="choices-multiple-remove-button" name="reviewers_group[]"
                                             placeholder="Select Reviewers" class="is-hidden" aria-hidden="true" multiple>
 
@@ -552,11 +521,10 @@
                                             @endif
                                         </select>
                                     </div>
-                                </div>
-                                <div class="col-md-6">
+                                </div> --}}
+                                {{-- <div class="col-md-6">
                                     <div class="group-input">
                                         <label for="approvers-group">Approvers Group</label>
-                                        {{--  <select class="form-control"   name="approver_group"/>  --}}
 
                                         <select id="choices-multiple-remove-button" name="approver_group[]"
                                             placeholder="Select Approvers" multiple>
@@ -569,7 +537,7 @@
                                             @endif
                                         </select>
                                     </div>
-                                </div>
+                                </div> --}}
                                 <div class="col-12">
                                     <div class="group-input">
                                         <label  for="revision-type">Revision Type</label>
@@ -725,7 +693,7 @@
                             <div class="row">
                                 <div class="col-md-12">
                                     <div class="group-input">
-                                        <label for="purpose">Purpose</label>
+                                        <label for="purpose">Objective</label>
                                         <textarea name="purpose"></textarea>
                                     </div>
                                 </div>
@@ -735,6 +703,7 @@
                                         <textarea name="scope"></textarea>
                                     </div>
                                 </div>
+                                
                                 <div class="col-md-12">
                                     <div class="group-input">
                                         
@@ -760,6 +729,58 @@
                                             </div>
                                         </div>
 
+                                    </div>
+                                </div>
+
+                                <div class="col-md-12">
+                                    <div class="group-input">
+                                        
+                                        <label for="accountability" id="accountability">
+                                            Accountability<button type="button" id="accountabilitybtnadd"
+                                                name="button">+</button>
+                                                <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
+                                        </label>
+                                        
+                                        <div id="accountabilitydiv">
+                                            <div class="singleAccountabilityBlock">
+                                                <div class="row">
+                                                    <div class="col-sm-10">
+                                                        <textarea name="accountability[]" class="myclassname"></textarea>
+                                                    </div>
+                                                    <div class="col-sm-1">
+                                                        <button class="btn btn-dark subAccountabilityAdd">+</button>
+                                                    </div>
+                                                    <div class="col-sm-1">
+                                                        <button class="btn btn-danger removeAllBlocks">Remove</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+
+                                <div class="col-md-12">
+                                    <div class="group-input">
+                                        <label for="references" id="references">
+                                            References<button type="button" id="referencesbtadd" >+</button>
+                                        </label>
+                                        <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
+                                        <div id="referencesdiv">
+                                            <div class="singleReferencesBlock">
+                                                <div class="row">
+                                                    <div class="col-sm-10">
+                                                        <textarea name="references[]" class="myclassname"></textarea>
+                                                    </div>
+                                                    <div class="col-sm-1">
+                                                        <button class="btn btn-dark subReferencesAdd">+</button>
+                                                    </div>
+                                                    <div class="col-sm-1">
+                                                        <button class="btn btn-danger removeAllBlocks">Remove</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
 
@@ -826,7 +847,7 @@
                                 <div class="col-md-12">
                                     <div class="group-input">
                                         <label for="reporting" id="newreport">
-                                            Materials and Equipments<button type="button" id="materialsbtadd"
+                                            General Instructions<button type="button" id="materialsbtadd"
                                                 name="button">+</button>
                                                 <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
                                         </label>
@@ -850,16 +871,6 @@
                                     </div>
                                 </div>
 
-                                {{-- SAFETY & PRECATIONS START --}}
-                                    <div class="col-md-12">
-                                        <div class="group-input">
-                                            <label for="procedure">Safety & Precautions</label>
-                                            <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
-                                            <textarea name="safety_precautions" class="summernote"></textarea>
-                                        </div>
-                                    </div>
-                                {{-- SAFETY & PRECATIONS END --}}
-
                                 <div class="col-md-12 mb-3">
                                     <div class="group-input">
                                         <label for="procedure">Procedure</label>
@@ -874,7 +885,7 @@
                                 <div class="col-md-12">
                                     <div class="group-input">
                                         <label for="reporting" id="newreport">
-                                            Reporting<button type="button" id="reportingbtadd" name="button">+</button> 
+                                            Cross References<button type="button" id="reportingbtadd" name="button">+</button> 
                                         </label>
                                         <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
                                         
@@ -897,29 +908,8 @@
                                     </div>
                                 </div>
 
-                                <div class="col-md-12">
-                                    <div class="group-input">
-                                        <label for="references" id="references">
-                                            References<button type="button" id="referencesbtadd" >+</button>
-                                        </label>
-                                        <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
-                                        <div id="referencesdiv">
-                                            <div class="singleReferencesBlock">
-                                                <div class="row">
-                                                    <div class="col-sm-10">
-                                                        <textarea name="references[]" class="myclassname"></textarea>
-                                                    </div>
-                                                    <div class="col-sm-1">
-                                                        <button class="btn btn-dark subReferencesAdd">+</button>
-                                                    </div>
-                                                    <div class="col-sm-1">
-                                                        <button class="btn btn-danger removeAllBlocks">Remove</button>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
+                                
+
                                 <div class="col-md-12">
                                     <div class="group-input">
                                         <label for="ann" id="ann">
@@ -1044,86 +1034,12 @@
 
                     <div id="annexures" class="tabcontent">
                         <div class="input-fields">
-                            <div class="group-input">
-                                <label for="annexure-1">Annexure</label>
-                                <textarea class="summernote" name="annexuredata[]" id="annexure-1"></textarea>
-                            </div>
-                            <div class="group-input">
-                                <label for="annexure-2">Annexure</label>
-                                <textarea class="summernote" name="annexuredata[]" id="annexure-2"></textarea>
-                            </div>
-                            <div class="group-input">
-                                <label for="annexure-3">Annexure</label>
-                                <textarea class="summernote" name="annexuredata[]" id="annexure-3"></textarea>
-                            </div>
-                            <div class="group-input">
-                                <label for="annexure-4">Annexure</label>
-                                <textarea class="summernote" name="annexuredata[]" id="annexure-4"></textarea>
-                            </div>
-                            <div class="group-input">
-                                <label for="annexure-5">Annexure</label>
-                                <textarea class="summernote" name="annexuredata[]" id="annexure-5"></textarea>
-                            </div>
-                            <div class="group-input">
-                                <label for="annexure-6">Annexure</label>
-                                <textarea class="summernote" name="annexuredata[]" id="annexure-6"></textarea>
-                            </div>
-                            <div class="group-input">
-                                <label for="annexure-7">Annexure</label>
-                                <textarea class="summernote" name="annexuredata[]" id="annexure-7"></textarea>
-                            </div>
-                            <div class="group-input">
-                                <label for="annexure-8">Annexure</label>
-                                <textarea class="summernote" name="annexuredata[]" id="annexure-8"></textarea>
-                            </div>
-                            <div class="group-input">
-                                <label for="annexure-9">Annexure</label>
-                                <textarea class="summernote" name="annexuredata[]" id="annexure-9"></textarea>
-                            </div>
-                            <div class="group-input">
-                                <label for="annexure-10">Annexure</label>
-                                <textarea class="summernote" name="annexuredata[]" id="annexure-10"></textarea>
-                            </div>
-                            <div class="group-input">
-                                <label for="annexure-11">Annexure</label>
-                                <textarea class="summernote" name="annexuredata[]" id="annexure-11"></textarea>
-                            </div>
-                            <div class="group-input">
-                                <label for="annexure-12">Annexure</label>
-                                <textarea class="summernote" name="annexuredata[]" id="annexure-12"></textarea>
-                            </div>
-                            <div class="group-input">
-                                <label for="annexure-13">Annexure</label>
-                                <textarea class="summernote" name="annexuredata[]" id="annexure-13"></textarea>
-                            </div>
-                            <div class="group-input">
-                                <label for="annexure-14">Annexure</label>
-                                <textarea class="summernote" name="annexuredata[]" id="annexure-14"></textarea>
-                            </div>
-                            <div class="group-input">
-                                <label for="annexure-15">Annexure</label>
-                                <textarea class="summernote" name="annexuredata[]" id="annexure-15"></textarea>
-                            </div>
-                            <div class="group-input">
-                                <label for="annexure-16">Annexure</label>
-                                <textarea class="summernote" name="annexuredata[]" id="annexure-16"></textarea>
-                            </div>
-                            <div class="group-input">
-                                <label for="annexure-17">Annexure</label>
-                                <textarea class="summernote" name="annexuredata[]" id="annexure-17"></textarea>
-                            </div>
-                            <div class="group-input">
-                                <label for="annexure-18">Annexure</label>
-                                <textarea class="summernote" name="annexuredata[]" id="annexure-18"></textarea>
-                            </div>
-                            <div class="group-input">
-                                <label for="annexure-19">Annexure</label>
-                                <textarea class="summernote" name="annexuredata[]" id="annexure-19"></textarea>
-                            </div>
-                            <div class="group-input">
-                                <label for="annexure-20">Annexure</label>
-                                <textarea class="summernote" name="annexuredata[]" id="annexure-20"></textarea>
-                            </div>
+                            @for ($i = 1; $i <= 30; $i++)
+                                <div class="group-input">
+                                    <label for="annexure-{{ $i }}">Annexure</label>
+                                    <textarea class="summernote" name="annexuredata[]" id="annexure-{{ $i }}"></textarea>
+                                </div>
+                            @endfor
                         </div>
                         <div class="button-block">
                             <button type="submit" value="save" name="submit" class="saveButton">Save</button>

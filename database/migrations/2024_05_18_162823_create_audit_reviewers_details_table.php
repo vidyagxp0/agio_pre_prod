@@ -16,10 +16,13 @@ return new class extends Migration
         Schema::create('audit_reviewers_details', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('deviation_id');
+            $table->unsignedBigInteger('doc_id')->nullable();
             $table->unsignedBigInteger('user_id');
             $table->longText('reviewer_comment')->nullable();
             $table->longText('reviewer_comment_by')->nullable();
-            $table->date('reviewer_comment_on')->nullable();
+            $table->text('reviewer_comment_on')->nullable();
+            $table->text('type')->nullable();
+
 
             $table->timestamps();
             $table->softDeletes();

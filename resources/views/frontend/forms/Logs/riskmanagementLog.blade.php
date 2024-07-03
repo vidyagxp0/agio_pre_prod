@@ -76,36 +76,51 @@
                                     <div class="filter-bar d-flex justify-content-between">
                                         <div class="filter-item">
                                             <label for="process">Department</label>
-                                            <select class="custom-select" id="process">
-                                                <option value="all">All Records</option>
-
+                                            <select name="Initiator_Group" id="initiator_group" class="form-control">
+                                                <option value="">Enter Your Selection Here</option>
+                                                <option value="CQA">Corporate Quality Assurance</option>
+                                                <option value="QAB">Quality Assurance Biopharma</option>
+                                                <option value="CQC">Central Quality Control</option>
+                                                <option value="MANU">Manufacturing</option>
+                                                <option value="PSG">Plasma Sourcing Group</option>
+                                                <option value="CS">Central Stores</option>
+                                                <option value="ITG">Information Technology Group</option>
+                                                <option value="MM">Molecular Medicine</option>
+                                                <option value="CL">Central Laboratory</option>
+                                                <option value="TT">Tech team</option>
+                                                <option value="QA">Quality Assurance</option>
+                                                <option value="QM">Quality Management</option>
+                                                <option value="IA">IT Administration</option>
+                                                <option value="ACC">Accounting</option>
+                                                <option value="LOG">Logistics</option>
+                                                <option value="SM">Senior Management</option>
+                                                <option value="BA">Business Administration</option>
                                             </select>
                                         </div>
                                         <div class="filter-item">
                                             <label for="criteria">Division</label>
-                                            <select class="custom-select" id="criteria">
-                                                <option value="all">All Records</option>
-
+                                            <select class="custom-select" id="division_id">
+                                                <option value="Null">Select Records</option>
+                                                <option value="1">Corporate</option>
+                                                <option value="2">Plant</option>
                                             </select>
                                         </div>
                                         <div class="filter-item">
-                                            <label for="division">Date From</label>
-                                            <select class="custom-select" id="division">
-                                                <option value="all">All Records</option>
-
-                                            </select>
+                                            <label for="date_from">Date From</label>
+                                            <input type="date" class="custom-select" id="date_from">
                                         </div>
                                         <div class="filter-item">
-                                            <label for="originator">Date To</label>
+                                            <label for="date_to">Date To</label>
+                                            <input type="date" class="custom-select" id="date_to">
+                                        </div>
+                                        <div class="filter-item">
+                                            <label for="originator">Source of Risk/Opportunity</label>
                                             <select class="custom-select" id="originator">
-                                                <option value="all">All Records</option>
-
-                                            </select>
-                                        </div>
-                                        <div class="filter-item">
-                                            <label for="originator">Type of Area/Equipment/Activity/ Process_System/Other</label>
-                                            <select class="custom-select" id="originator">
-                                                <option value="all">All Records</option>
+                                                <option value="NA">Search Records</option>
+                                                <option value="Audi">Audit</option>
+                                                <option value="Complaint">Complaint</option>
+                                                <option value="Employee">Employee</option>
+                                                <option value="Others">Others</option>
 
                                             </select>
                                         </div>
@@ -136,10 +151,10 @@
                                             <th>Originator</th>
                                             <th>Department</th>
                                             <th>Division</th>
-                                            <th>Area / Equipment / Activity / Process System / Other</th>
+                                            <th>Source of Risk/Opportunity</th>
                                             <th>Periodic Review / Action Plan</th>
-                                            <th>Details of the Risk Review</th>
-                                            <th>Output of Risk Management Review </th>
+                                            <th>Type</th>
+                                            {{-- <th>Output of Risk Management Review </th> --}}
                                             <th>Due Date</th>
                                             <th>Date of Clouser</th>
                                             <th>Status</th>
@@ -150,26 +165,17 @@
 
                                     </thead>
 
-                                    <tbody>
-                                        <tr>
+                                    <tbody id="tableData">
+                                        @include('frontend.forms.logs.filterData.riskmanagement_data')
 
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-
-                                        </tr>
 
                                     </tbody>
+                                    
+                                    <div class="d-flex justify-content-center" style="margin-top: 10px;">
+                                        <div class="spinner-border text-primary" role="status" id="spinner">
+                                            <span class="sr-only">Loading...</span>
+                                        </div>
+                                    </div>
                                 </table>
                             </div>
                         </div>
@@ -182,10 +188,84 @@
     </div>
 
     </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.7.2/axios.min.js" integrity="sha512-JSCFHhKDilTRRXe9ak/FJ28dcpOJxzQaCd3Xg8MyF6XFjODhy/YMCM8HW0TFDckNHWUewW+kfvhin43hKtJxAw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
     <script>
         VirtualSelect.init({
             ele: '#Facility, #Group, #Audit, #Auditee ,#capa_related_record ,#classRoom_training'
         });
+        $('#spinner').hide();
+
+const filterData = {
+    department_risk: null,
+    division_id_risk: null,
+    period: null,
+    date_from_risk: null,
+    date_to_risk: null,
+    sor:null
+
+
+}
+$('#initiator_group').change(function() {
+    filterData.department_risk = $(this).val();
+    filterRecords()
+});
+
+ // Division ID change event
+
+ $('#division_id').change(function() {
+    filterData.division_id_risk = $(this).val();
+    filterRecords();
+ });
+
+
+ $('#date_from').change(function() {
+filterData.date_from_risk = $(this).val();
+filterRecords();
+});
+
+$('#date_to').change(function() {
+    filterData.date_to_risk = $(this).val();
+    filterRecords();
+});
+
+
+$('#datewise').change(function() {
+filterData.period = $(this).val();
+filterRecords();
+});
+
+$('#originator').change(function() {
+    filterData.sor = $(this).val();
+    filterRecords()
+});
+
+
+
+
+async function filterRecords()
+{
+    $('#tableData').html('');
+    $('#spinner').show();
+    
+    try {
+
+
+        const postUrl = "{{ route('api.riskmanagement.filter') }}";
+
+        const res = await axios.post(postUrl, filterData);
+
+        if (res.data.status == 'ok') {
+            $('#tableData').html(res.data.body);
+        }
+
+    } catch (err) {
+        console.log('Error in filterRecords', err.message);
+    }
+    
+    $('#spinner').hide();
+}
+
+
     </script>
 @endsection

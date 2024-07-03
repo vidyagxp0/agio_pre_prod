@@ -52,13 +52,13 @@ return new class extends Migration
             $table->longtext('duration')->nullable();
             $table->string('hazard')->nullable();
             $table->string('room2')->nullable();
-            $table->string('regulatory_climate')->nullable();
+            $table->longtext('regulatory_climate')->nullable();
             $table->string('Number_of_employees')->nullable();
             $table->string('risk_management_strategy')->nullable();
             $table->string('schedule_start_date1')->nullable();
             $table->string('schedule_end_date1')->nullable();
-            $table->string('estimated_man_hours')->nullable();
-            $table->string('estimated_cost')->nullable();
+            $table->longtext('estimated_man_hours')->nullable();
+            $table->longtext('estimated_cost')->nullable();
             $table->string('currency')->nullable();
             //$table->string('team_members2')->nullable();
             //$table->string('training_require')->nullable();

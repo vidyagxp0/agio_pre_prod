@@ -5,7 +5,6 @@
             <div class="col-md-12 mb-4">
                 <div class="group-input">
                     <label for="Description Deviation">Summary of Exp./Hyp.</label>
-                    <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
                     <textarea class="summernote" name="summary_of_exp_hyp_piiqcr" id="summernote-1">
                 {{$data->summary_of_exp_hyp_piiqcr ?  $data->summary_of_exp_hyp_piiqcr : ''}}
                 </textarea>
@@ -42,15 +41,14 @@
                     <select name="oos_category_reason_identified_piiqcr">
                         <option value="0" {{ $data->oos_category_reason_identified_piiqcr === '0' ?
                             'selected' : '' }}>Enter Your Selection Here</option>
-                        <option value="analyst_error" {{ $data->oos_category_reason_identified_piiqcr ===
-                            'analyst_error' ? 'selected' : '' }}>Analyst Error</option>
-                        <option value="instrument_error" {{ $data->oos_category_reason_identified_piiqcr ===
-                            'instrument_error' ? 'selected' : '' }}>Instrument Error</option>
-                        <option value="product_material_related_error" {{ $data->
-                            oos_category_reason_identified_piiqcr === 'product_material_related_error' ?
-                            'selected' : '' }}>Product/Material Related Error</option>
-                        <option value="other_error" {{ $data->oos_category_reason_identified_piiqcr ===
-                            'other_error' ? 'selected' : '' }}>Other Error</option>
+                        <option value="Analyst Error"{{ $data->oos_category_reason_identified_piiqcr ===
+                            'Analyst Error' ? 'selected' : '' }}>Analyst Error</option>
+                        <option value="Instrument Error"{{ $data->oos_category_reason_identified_piiqcr ===
+                            'Instrument Error' ? 'selected' : '' }}>Instrument Error</option>
+                        <option value="Product/Material Related Error"{{ $data->oos_category_reason_identified_piiqcr ===
+                            'Product/Material Related Error' ? 'selected' : '' }}>Product/Material Related Error</option>
+                        <option value="Other Error"{{ $data->oos_category_reason_identified_piiqcr ===
+                            'Other Error' ? 'selected' : '' }}>Other Error</option>
                     </select>
                 </div>
             </div>
@@ -66,7 +64,7 @@
                     <label for="Description Deviation">Details of Root Cause</label>
                     <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
                     <textarea class="summernote" name="details_of_root_cause_piiqcr" id="summernote-1">
-                {{$data->impact_assessment_piiqcr ? $data->impact_assessment_piiqcr : ''}}
+                {{$data->details_of_root_cause_piiqcr ? $data->details_of_root_cause_piiqcr : ''}}
                 </textarea>
                 </div>
             </div>

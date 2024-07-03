@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('start_date')->nullable();
             $table->string('joining_date')->nullable();
             $table->string('employee_id')->nullable();
+            // $table->string('employee_name')->nullable();
             $table->string('gender')->nullable();
             $table->string('department')->nullable();
             $table->string('job_title')->nullable();
