@@ -22,7 +22,6 @@
             $userRoleIds = $userRoles->pluck('q_m_s_roles_id')->toArray();
             @endphp
                  <button class="button_theme1"> <a class="text-white" href="{{ route('oos_micro.audit_trial', $micro_data->id) }}"> Audit Trail </a> </button>
-
             @if ($micro_data->stage == 1 && (in_array(3, $userRoleIds) || in_array(18, $userRoleIds)))
                 <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">Submit</button>
                 <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#cancel-modal"> Cancel  </button>
@@ -47,9 +46,9 @@
                 <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">No Assignable Cause Found</button>
                 <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal">Child</button>
             @elseif($micro_data->stage == 7 && (in_array(9, $userRoleIds) || in_array(18, $userRoleIds)))
-                <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#request-more-info-modal">Request More Info</button>
-                <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal-AssignableCause">Repeat Analysis Completed</button>
-                <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal">Child</button>
+            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#request-more-info-modal">Request More Info</button>
+            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal-AssignableCause">Repeat Analysis Completed</button>
+            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal">Child</button>
             @elseif($micro_data->stage == 8 && (in_array(9, $userRoleIds) || in_array(18, $userRoleIds)))
             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#request-more-info-modal">Request More Info</button>
             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">Full Scale Investigation</button>

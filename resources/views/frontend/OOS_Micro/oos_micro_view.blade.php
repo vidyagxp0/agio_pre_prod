@@ -484,11 +484,5 @@
             $(this).closest('tr').remove();
         })
     </script>
-    <script>
-    // function showAlertIfDisabled(event) {
-    //     if (event.target.disabled) {
-    //         alert('Save button is disabled, Beacuse workflow is already close done ');
-    //     }
-    // }
-</script>
+   
 @endsection

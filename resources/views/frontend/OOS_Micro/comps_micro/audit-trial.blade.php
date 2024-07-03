@@ -198,16 +198,9 @@
                             <div style="color: red; font-weight: 600">The Audit Trail has is yet to be reviewed.</div>
                         @endif
                         <div class="buttons-new">
-                            @if ($document->stage < 7 && !(count($userRoleIds) === 1 && in_array(3, $userRoleIds)))
-                                <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#auditReviewer">
-                                    Review
-                                </button>
-                            @endif
-                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#auditViewers">
-                                View
-                            </button>
+                           
                             <button class="button_theme1"><a class="text-white"
-                                    href="url"> Back
+                                    href="{{ route('oos_micro.edit', $document->id) }}"> Back
                                 </a>
                             </button>
                             <button class="button_theme1" onclick="window.print();">
