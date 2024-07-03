@@ -252,7 +252,10 @@
                     <tr>
                         <th class="w-20">If Other</th>
                         <td class="w-80">{!! $data->if_other_gi ?? 'Not Applicable' !!}</td>
-                        
+                    </tr>
+                </table>
+                <table>
+                    <tr>
                             <th class="w-20">Due Date</th>
                             <td class="w-80">{{  Helpers::getdateFormat($data->due_date_gi) ?? 'Not Applicable' }}</td>
                         
@@ -262,7 +265,7 @@
                         <td class="w-80">{!! $data->repeat_nature_gi ?? 'Not Applicable' !!}</td>
                     </tr>
                     <tr>
-                        <th class="w-20">Description</th>
+                        <th class="w-20">Short Description</th>
                         <td class="w-80">{{ $data->description_gi ?? 'Not Applicable' }}</td>
                     </tr>
                 </table>

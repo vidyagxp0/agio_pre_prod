@@ -203,7 +203,7 @@
                                         {{-- <input disabled type="text" name="record" value=""> --}}
                                         {{-- <input disabled type="text" name="record" value=" {{ Helpers::getDivisionName(session()->get('division')) }}/LI/{{ date('Y') }}/{{ $record}}"> --}}
                                         <input disabled type="text" name="record" id="record" 
-                                        value="{{ Helpers::getDivisionName(session()->get('division')) }}/---/MC/{{ date('y') }}/{{ $record }}">
+                                        value="{{ Helpers::getDivisionName(session()->get('division')) }}/MC/{{ date('y') }}/{{ $record }}">
                                     </div>
                                 </div>
                                
@@ -969,7 +969,7 @@
                                 <div class="button-block">
                                     <button type="submit" class="saveButton">Save</button>
                                     <button type="button" class="nextButton" onclick="nextStep()">Next</button>
-
+                                    <button type="button" class="backButton" onclick="previousStep()">Back</button>
                                     <button type="button"> <a class="text-white" href="{{ url('rcms/qms-dashboard') }}">
                                             Exit </a> </button>
 
@@ -2017,7 +2017,7 @@
 
 
 {{-- ---------------------======================record number script  --}}
-<script>
+{{-- <script>
     document.addEventListener('DOMContentLoaded', function() {
 var originalRecordNumber = document.getElementById('record').value;
 var initialPlaceholder = '---';
@@ -2040,5 +2040,5 @@ document.getElementById('initiator_group').addEventListener('change', function()
 });
 });
 
-</script>
+</script> --}}
 @endsection

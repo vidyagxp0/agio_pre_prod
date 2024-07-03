@@ -201,7 +201,10 @@
                                 :{{ $document->initiator ? $document->initiator : '' }}</div>
                             <div style="margin-bottom: 5px; font-weight: bold;">Short Description :
                                 {{ $document->short_description }}</div>
-                            <div style="margin-bottom: 5px;  font-weight: bold;">Due Date : {{ $document->due_date }}</div>
+                                @php
+                                use Carbon\Carbon;
+                                @endphp
+                            <div style="margin-bottom: 5px;  font-weight: bold;">Due Date : {{ Carbon::parse($document->due_date)->format('j F Y') }}</div>
 
                         </div>
         </div>
@@ -248,7 +251,7 @@
                                     @if($dataDemo->activity_type == "Activity Log")
                                         <strong>Change From :</strong>{{ $dataDemo->change_from ? $dataDemo->change_from : 'Not Applicable' }}
                                     @else
-                                        <strong>Change From :</strong>{{ $dataDemo->previous ? $dataDemo->previous : 'Not Applicable' }}
+                                        <strong>Change From :</strong>{{ $dataDemo->previous ? $dataDemo->previous : 'Null' }}
                                     @endif
                                 </div>
                                 <br>
@@ -274,9 +277,11 @@
                                 <div><strong> Peformed By
                                         :</strong>{{ $dataDemo->user_name ? $dataDemo->user_name : 'Not Applicable' }}
                                 </div>
-                                <div style="margin-top: 5px;"> <strong>Performed On
-                                        :</strong>{{ $dataDemo->created_at ? $dataDemo->created_at : 'Not Applicable' }}
+                                <div style="margin-top: 5px;">
+                                    <strong>Performed On:</strong>
+                                    {{ $dataDemo->created_at ? \Carbon\Carbon::parse($dataDemo->created_at)->format('j F Y H:i') : 'Not Applicable' }}
                                 </div>
+                                
                                 <div style="margin-top: 5px;"><strong> Comments
                                         :</strong>{{ $dataDemo->comment ? $dataDemo->comment : 'Not Applicable' }}</div>
 

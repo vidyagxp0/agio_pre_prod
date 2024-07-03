@@ -257,12 +257,16 @@
                                             </div>
                                         </div>
                                         <div class="col-lg-6">
-                                        <div class="group-input ">
-                                            <label for="Date Due"><b>Date of Initiation</b></label>
-                                            <input disabled type="text" value="{{ date('d-M-Y') }}" name="intiation_date">
-                                            <input type="hidden" value="{{ date('d-m-Y') }}" name="intiation_date">
+                                            <div class="group-input">
+                                                <label for="Date Due"><b>Date of Initiation</b></label>
+                                                @php
+                                                    $formattedDate = \Carbon\Carbon::parse($data->intiation_date)->format('j F Y');
+                                                @endphp
+                                                <input disabled type="text" value="{{ $formattedDate }}" name="intiation_date_display">
+                                                <input type="hidden" value="{{ date('d-m-Y') }}" name="intiation_date">
+                                            </div>
                                         </div>
-                                    </div>
+                                        
                                         <div class="col-md-6">
                                             <div class="group-input">
                                                 <label for="search">
@@ -309,13 +313,14 @@
                                     <div class="group-input input-date">
                                         <label for="due-date">Due Date <span class="text-danger">*</span></label>
                                         <div class="calenderauditee">
-                                            <!-- Display the formatted date in a readonly input -->
-                                            <input type="text" id="due_date_display" readonly placeholder="DD-MMM-YYYY" value="{{ Helpers::getDueDate(30, true) }}" />
-                                           
-                                            <input type="date" name="due_date" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" value="{{ Helpers::getDueDate(30, false) }}" class="hide-input" readonly />
+                                            <!-- Format ki hui date dikhane ke liye readonly input -->
+                                            <input type="text" id="due_date_display" readonly placeholder="DD-MMM-YYYY" value="{{ Helpers::getDueDate123($data->intiation_date, true) }}" />
+                                            <!-- Hidden input date format ke sath -->
+                                            <input type="date" name="due_date" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" value="{{ Helpers::getDueDate123($data->intiation_date, true, 'Y-m-d') }}" class="hide-input" readonly />
                                         </div>
                                     </div>
                                 </div>
+                                
                                 <script>
                                     function handleDateInput(dateInput, displayId) {
                                         const date = new Date(dateInput.value);
@@ -640,7 +645,7 @@
                                     <div class="button-block">
                                         <button type="submit" id="ChangesaveButton" class="saveButton"
                                             {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>Save</button>
-                                        {{-- <button type="button" id="ChangeNextButton" class="nextButton">Next</button> --}}
+                                        <button type="button" id="ChangeNextButton" class="nextButton">Next</button>
                                         <button type="button"> <a class="text-white"
                                                 href="{{ url('rcms/qms-dashboard') }}"> Exit </a> </button>
                                     </div>
@@ -721,7 +726,7 @@
                                                 <label for="severity-level">Severity Level</label>
                                                 <span class="text-primary">Severity levels in a QMS record gauge issue seriousness, guiding priority for corrective actions. Ranging from low to high, they ensure quality standards and mitigate critical risks.</span>
                                                 <select {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} name="severity_level_form">
-                                                    <option  value="0">-- Select --</option>
+                                                    <option  value="">-- Select --</option>
                                                     <option @if ($data->severity_level_form=='minor') selected @endif value="minor">Minor</option>
                                                     <option @if ($data->severity_level_form=='major') selected @endif value="major">Major</option>
                                                     <option @if ($data->severity_level_form=='critical') selected @endif value="critical">Critical</option>
@@ -1016,8 +1021,8 @@
                                     <div class="button-block">
                                         <button type="submit" class="saveButton"
                                             {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>Save</button>
-                                        {{-- <button type="button" class="backButton" onclick="previousStep()">Back</button>
-                                        <button type="button" class="nextButton" onclick="nextStep()">Next</button> --}}
+                                        <button type="button" class="backButton" onclick="previousStep()">Back</button>
+                                        <button type="button" class="nextButton" onclick="nextStep()">Next</button>
                                         <button type="button"> <a class="text-white"
                                                 href="{{ url('rcms/qms-dashboard') }}"> Exit </a> </button>
                                     </div>
@@ -1561,8 +1566,8 @@
         </div>
         <div class="button-block">
             <button type="submit" class="saveButton">Save</button>
-            <!-- <button type="button" class="backButton" onclick="previousStep()">Back</button>
-            <button type="button" class="nextButton" onclick="nextStep()">Next</button> -->
+           <button type="button" class="backButton" onclick="previousStep()">Back</button>
+            <button type="button" class="nextButton" onclick="nextStep()">Next</button>
             <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"> Exit </a> </button>
         </div>
     </div>
@@ -2155,7 +2160,7 @@
                                 </div>
                                 <div class="group-input">
                                     <label for="comment">Comment <span class="text-danger">*</span></label>
-                                    <input type="comment" name="comment" required>
+                                    <input type="comment" name="comment" required >
                                 </div>
                             </div>
 
@@ -2292,7 +2297,7 @@
                                 </div>
                                 <div class="group-input">
                                     <label for="comment">Comment<span class="text-danger">*</span></label>
-                                    <input type="comment" name="comment">
+                                    <input type="comment" name="comment" required>
                                 </div>
                             </div>
 

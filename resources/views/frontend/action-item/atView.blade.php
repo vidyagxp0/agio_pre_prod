@@ -171,11 +171,22 @@
                                             {{-- <div class="static"> </div> --}}
                                         </div>
                                     </div>
-                                    <div class="col-lg-6">
+                                    {{-- <div class="col-lg-6">
                                         <div class="group-input">
                                             <label for="Date Due"><b>Date of Initiation</b></label>
                                             <input disabled type="text" name="intiation_date"
                                                 value="{{ Helpers::getdateFormat($data->intiation_date) }}">
+                                        </div>
+                                    </div> --}}
+
+                                    <div class="col-lg-6">
+                                        <div class="group-input">
+                                            <label for="Date Due"><b>Date of Initiation</b></label>
+                                            @php
+                                                $formattedDate = \Carbon\Carbon::parse($data->intiation_date)->format('j F Y');
+                                            @endphp
+                                            <input disabled type="text" value="{{ $formattedDate }}" name="intiation_date_display">
+                                            <input type="hidden" value="{{ date('d-m-Y') }}" name="intiation_date">
                                         </div>
                                     </div>
                                     <div class="col-md-6">
@@ -193,7 +204,7 @@
 
                                         </div>
                                     </div>
-                                    <div class="col-md-6 new-date-data-field">
+                                    {{-- <div class="col-md-6 new-date-data-field">
                                         <div class="group-input input-date">
                                             <label for="due-date">Due Date <span class="text-danger"></span></label>
                                             <!-- <input type="date" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
@@ -205,7 +216,19 @@
                                                     <input type="date" name="due_date_gi" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" value="{{ Helpers::getDueDate(30, false) }}" class="hide-input" readonly />
                                                 </div>
                                         </div>
+                                    </div> --}}
+                                    <div class="col-md-6 new-date-data-field">
+                                        <div class="group-input input-date">
+                                            <label for="due-date">Due Date <span class="text-danger">*</span></label>
+                                            <div class="calenderauditee">
+                                                <!-- Format ki hui date dikhane ke liye readonly input -->
+                                                <input type="text" id="due_date_display" readonly placeholder="DD-MMM-YYYY" value="{{ Helpers::getDueDate123($data->intiation_date, true) }}" />
+                                                <!-- Hidden input date format ke sath -->
+                                                <input type="date" name="due_date_gi" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" value="{{ Helpers::getDueDate123($data->intiation_date, true, 'Y-m-d') }}" class="hide-input" readonly />
+                                            </div>
+                                        </div>
                                     </div>
+
                                     <div class="col-12">
                                     <div class="group-input">
                                         <label for="Short Description">Short Description<span

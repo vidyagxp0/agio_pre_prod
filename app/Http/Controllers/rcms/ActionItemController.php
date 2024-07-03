@@ -165,6 +165,9 @@ class ActionItemController extends Controller
         $history->user_name = Auth::user()->name;
         $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
         $history->origin_state = $openState->status;
+        $history->change_to = "Opened";
+        $history->change_from = "Initiator";
+        $history->action_name = "store";
         $history->save();
         }
 
@@ -179,6 +182,9 @@ class ActionItemController extends Controller
         $history->user_name = Auth::user()->name;
         $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
         $history->origin_state = $openState->status;
+        $history->change_to = "Opened";
+        $history->change_from = "Initiator";
+        $history->action_name = "store";
         $history->save();
         }
         
@@ -193,6 +199,9 @@ class ActionItemController extends Controller
         $history->user_name = Auth::user()->name;
         $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
         $history->origin_state = $openState->status;
+        $history->change_to = "Opened";
+        $history->change_from = "Initiator";
+        $history->action_name = "store";
         $history->save();
         }
         
@@ -200,7 +209,7 @@ class ActionItemController extends Controller
         if (!empty($openState->short_description)) {
         $history = new ActionItemHistory();
         $history->cc_id =   $openState->id;
-        $history->activity_type = 'Short Description';
+        $history->activity_type = 'Shortjnj Description';
         $history->previous = "Null";
         $history->current =  $openState->short_description;
         $history->comment = "NA";
@@ -540,9 +549,9 @@ class ActionItemController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastopenState->status;
-            $history->change_to = "Opened";
-            $history->change_from = "Initiator";
-            $history->action_name = "store";
+            $history->change_to = "Not Applicable";
+            $history->change_from = $openState->status;
+            $history->action_name = "Update";
    
             $history->save();
         }
@@ -558,9 +567,9 @@ class ActionItemController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastopenState->status;
-            $history->change_to = "Opened";
-            $history->change_from = "Initiator";
-            $history->action_name = "store";
+            $history->change_to = "Not Applicable";
+            $history->change_from = $openState->status;
+            $history->action_name = "Update";
    
             $history->save();
         }  
@@ -575,9 +584,9 @@ class ActionItemController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastopenState->status;
-            $history->change_to = "Opened";
-            $history->change_from = "Initiator";
-            $history->action_name = "store";
+            $history->change_to = "Not Applicable";
+            $history->change_from = $openState->status;
+            $history->action_name = "Update";
    
             $history->save();
         }  
@@ -593,30 +602,48 @@ class ActionItemController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastopenState->status;
-            $history->change_to = "Opened";
-            $history->change_from = "Initiator";
-            $history->action_name = "store";
+            $history->change_to = "Not Applicable";
+            $history->change_from = $openState->status;
+            $history->action_name = "Update";
    
             $history->save();
         }
 
-        if ($lastopenState->short_description != $openState->short_description || !empty($request->short_description_comment)) {
-            $history = new ActionItemHistory;
-            $history->cc_id = $id;
+        // if ($lastopenState->short_description != $openState->short_description) {
+        //     $history = new ActionItemHistory;
+        //     $history->cc_id = $id;
+        //     $history->activity_type = 'Short Description';
+        //     $history->previous = $lastopenState->short_description;
+        //     $history->current = $openState->short_description;
+        //     $history->comment = $request->short_description_comment;
+        //     $history->user_id = Auth::user()->id;
+        //     $history->user_name = Auth::user()->name;
+        //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        //     $history->origin_state = $lastopenState->status;
+        //     $history->change_to = "Not Applicable";
+        //     $history->change_from = $openState->status;
+        //     $history->action_name = "Update";
+   
+        //     $history->save();
+        // }
+        // if (!empty($openState->short_description)) {
+            if ($lastopenState->short_description != $openState->short_description) {
+                $history = new ActionItemHistory();
+            $history->cc_id =   $openState->id;
             $history->activity_type = 'Short Description';
             $history->previous = $lastopenState->short_description;
-            $history->current = $openState->short_description;
-            $history->comment = $request->short_description_comment;
+            $history->current =  $openState->short_description;
+            $history->comment = "NA";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state = $lastopenState->status;
+            $history->origin_state = $openState->status;
             $history->change_to = "Opened";
-            $history->change_from = "Initiator";
-            $history->action_name = "store";
-   
+             $history->change_from = $openState->status;
+             $history->action_name = "updated";
+    
             $history->save();
-        }
+            }
         if ($lastopenState->description != $openState->description || !empty($request->description_comment)) {
             $history = new ActionItemHistory;
             $history->cc_id = $id;
@@ -628,9 +655,9 @@ class ActionItemController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastopenState->status;
-            $history->change_to = "Opened";
-            $history->change_from = "Initiator";
-            $history->action_name = "store";
+            $history->change_to = "Not Applicable";
+            $history->change_from = $openState->status;
+            $history->action_name = "Update";
    
             $history->save();
         }
@@ -645,9 +672,9 @@ class ActionItemController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastopenState->status;
-            $history->change_to = "Opened";
-            $history->change_from = "Initiator";
-            $history->action_name = "store";
+            $history->change_to = "Not Applicable";
+            $history->change_from = $openState->status;
+            $history->action_name = "Update";
    
             $history->save();
         }
@@ -663,9 +690,9 @@ class ActionItemController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastopenState->status;
-            $history->change_to = "Opened";
-            $history->change_from = "Initiator";
-            $history->action_name = "store";
+            $history->change_to = "Not Applicable";
+            $history->change_from = $openState->status;
+            $history->action_name = "Update";
    
             $history->save();
         }
@@ -680,6 +707,9 @@ class ActionItemController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastopenState->status;
+            $history->change_to = "Not Applicable";
+            $history->change_from = $openState->status;
+            $history->action_name = "Update";
             $history->save();
         }
         if ($lastopenState->start_date != $openState->start_date || !empty($request->start_date_comment)) {
@@ -693,9 +723,9 @@ class ActionItemController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastopenState->status;
-             $history->change_to = "Opened";
-            $history->change_from = "Initiator";
-            $history->action_name = "store";
+            $history->change_to = "Not Applicable";
+            $history->change_from = $openState->status;
+            $history->action_name = "Update";
 
             $history->save();
         }
@@ -710,9 +740,9 @@ class ActionItemController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastopenState->status;
-            $history->change_to = "Opened";
-            $history->change_from = "Initiator";
-            $history->action_name = "store";
+            $history->change_to = "Not Applicable";
+            $history->change_from = $openState->status;
+            $history->action_name = "Update";
    
             $history->save();
         }
@@ -727,9 +757,9 @@ class ActionItemController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastopenState->status;
-            $history->change_to = "Opened";
-            $history->change_from = "Initiator";
-            $history->action_name = "store";
+            $history->change_to = "Not Applicable";
+            $history->change_from = $openState->status;
+            $history->action_name = "Update";
    
             $history->save();
         }
@@ -744,10 +774,9 @@ class ActionItemController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastopenState->status;
-            $history->change_to = "Opened";
-            $history->change_from = "Initiator";
-            $history->action_name = "store";
-   
+            $history->change_to = "Not Applicable";
+            $history->change_from = $openState->status;
+            $history->action_name = "Update";
             $history->save();
         }
         if ($lastopenState->due_date_extension != $openState->due_date_extension || !empty($request->due_date_extension_comment)) {
@@ -761,9 +790,9 @@ class ActionItemController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastopenState->status;
-            $history->change_to = "Opened";
-            $history->change_from = "Initiator";
-            $history->action_name = "store";
+            $history->change_to = "Not Applicable";
+            $history->change_from = $openState->status;
+            $history->action_name = "Update";
    
             $history->save();
         }
@@ -778,6 +807,9 @@ class ActionItemController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastopenState->status;
+            $history->change_to = "Not Applicable";
+            $history->change_from = $openState->status;
+            $history->action_name = "Update";
             $history->save();
         }
         if ($lastopenState->Support_doc != $openState->Support_doc || !empty($request->Support_doc_comment)) {
@@ -791,9 +823,9 @@ class ActionItemController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastopenState->status;
-            $history->change_to = "Opened";
-            $history->change_from = "Initiator";
-            $history->action_name = "store";
+            $history->change_to = "Not Applicable";
+            $history->change_from = $openState->status;
+            $history->action_name = "Update";
    
             $history->save();
         }
