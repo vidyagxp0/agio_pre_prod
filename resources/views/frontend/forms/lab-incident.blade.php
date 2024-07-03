@@ -33,7 +33,7 @@
             <div class="cctab">
                 <button class="cctablinks active" onclick="openCity(event, 'CCForm1')">General Information</button>
                 <button class="cctablinks" onclick="openCity(event, 'CCForm2')">Immediate Actions</button>
-                <button class="cctablinks" onclick="openCity(event, 'CCForm3')">Extension</button>
+                {{-- <button class="cctablinks" onclick="openCity(event, 'CCForm3')">Extension</button> --}}
                 <button class="cctablinks" onclick="openCity(event, 'CCForm8')">Incident Details</button>
                 <button class="cctablinks" onclick="openCity(event, 'CCForm9')">Investigation Details</button>
                 <button class="cctablinks" onclick="openCity(event, 'CCForm4')">CAPA</button>
@@ -56,14 +56,14 @@
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="RLS Record Number"><b>Record Number</b></label>
-                                        <input disabled type="text" name="record_number" id="record_number" 
-                                            value="---/LI/{{ date('y') }}/{{ $record_number }}">
+                                        {{-- <input disabled type="text" name="record_number" id="record_number" 
+                                            value="---/LI/{{ date('y') }}/{{ $record_number }}"> --}}
                                             {{-- <span id="record_number_suffix"></span> --}}
                                       
                                             {{-- <div class="static">QMS-EMEA/CAPA/{{ date('Y') }}/{{ $record_number }}</div> --}}
-                                        {{-- <input disabled type="text" name="record_number"
+                                        <input disabled type="text" name="record_number"
                                         value="{{ Helpers::getDivisionName(session()->get('division')) }}/LI/{{ date('y') }}/{{ $record_number }}">
-                                    <div class="static">QMS-EMEA/CAPA/{{ date('Y') }}/{{ $record_number }}</div> --}}
+                                    {{-- <div class="static">QMS-EMEA/CAPA/{{ date('Y') }}/{{ $record_number }}</div> --}}
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
@@ -123,8 +123,9 @@
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="group-input">
-                                        <label for="Initiator Group"><b>Initiator Group</b></label>
-                                        <select name="Initiator_Group" id="initiator_group">
+                                        <label for="Initiator Group"><b>Initiator Group</b><span
+                                            class="text-danger">*</span></label>
+                                        <select name="Initiator_Group" id="initiator_group" required>
                                             <option value="">-- Select --</option>
                                             <option value="CQA" @if(old('Initiator_Group') =="CQA") selected @endif>Corporate Quality Assurance</option>
                                             <option value="QAB" @if(old('Initiator_Group') =="QAB") selected @endif>Quality Assurance Biopharma</option>
@@ -135,7 +136,6 @@
                                             <option value="ITG" @if(old('Initiator_Group') =="ITG") selected @endif>Information Technology Group</option>
                                             <option value="MM"  @if(old('Initiator_Group') == "MM") selected @endif>Molecular Medicine</option>
                                             <option value="CL"  @if(old('Initiator_Group') == "CL") selected @endif>Central Laboratory</option>
-
                                             <option value="TT"  @if(old('Initiator_Group') == "TT") selected @endif>Tech team</option>
                                             <option value="QA"  @if(old('Initiator_Group') == "QA") selected @endif> Quality Assurance</option>
                                             <option value="QM"  @if(old('Initiator_Group') == "QM") selected @endif>Quality Management</option>
@@ -150,9 +150,10 @@
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Initiator Group Code">Initiator Group Code</label>
-                                        <input type="text" name="initiator_group_code" id="initiator_group_code" value="" readonly>
+                                        <input type="text" name="initiator_group_code" id="initiator_group_code" value="" readonly required>
                                     </div>
                                 </div>
+                                
 
                                 <div class="col-12">
                                     <div class="group-input">
@@ -807,16 +808,16 @@
                                         <textarea name="Supervisor_Review_Comments"></textarea>
                                     </div>
                                 </div>
-                                <div class="col-12">
+                                <div class="col-lg-12">
                                     <div class="group-input">
-                                        <label for="Attachments">Attachments</label>
+                                        <label for="ccf_attachments">File Attachment</label>
                                         <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
-                                        {{-- <input type="file" id="myfile" name="Attachments"> --}}
+                                        {{-- <input type="file" id="myfile" name="Initial_Attachment"> --}}
                                         <div class="file-attachment-field">
                                             <div class="file-attachment-list" id="ccf_attachments"></div>
                                             <div class="add-btn">
                                                 <div>Add</div>
-                                                <input type="file" id="myfile" name="ccf_attachments[]"
+                                                <input type="file" id="ccf_attachments" name="ccf_attachments[]"
                                                     oninput="addMultipleFiles(this, 'ccf_attachments')" multiple>
                                             </div>
                                         </div>
@@ -1224,7 +1225,7 @@
                                                             <div class="group-input" id="Incident_invlvolved_others">
                                                                 <label for="instrument_involved_SSFI">Instrument Involved<span
                                                                         class="text-danger d-none">*</span></label>
-                                                                <textarea name="instrument_involved_SSFI"></textarea>
+                                                                <textarea name="involved_ssfi"></textarea>
                                                             </div>
 
                                                         </div>
@@ -1234,7 +1235,7 @@
                                                             <div class="group-input" id="Incident_stage">
                                                                 <label for="stage_SSFI">Stage<span
                                                                         class="text-danger d-none">*</span></label>
-                                                                <input type="text" name="stage_SSFI">
+                                                                <input type="text" name="stage_stage_ssfi">
                                                             </div>
 
                                                         </div><br>
@@ -1242,7 +1243,7 @@
                                                             <div class="group-input" id="stability_condition_SSFI">
                                                                 <label for="stability_condition_SSFI">Stability Condition (If Applicable)<span
                                                                         class="text-danger d-none">*</span></label>
-                                                                <input type="text" name="stability_condition_SSFI">
+                                                                <input type="text" name="Incident_stability_cond_ssfi">
                                                             </div>
 
                                                         </div>
@@ -1250,7 +1251,7 @@
                                                             <div class="group-input" id="interval_SSFI">
                                                                 <label for="interval_SSFI">Interval (If Applicable)<span
                                                                         class="text-danger d-none">*</span></label>
-                                                                <input type="text" name="interval_SSFI">
+                                                                <input type="text" name="Incident_interval_ssfi">
                                                             </div>
 
                                                         </div>
@@ -1259,7 +1260,7 @@
                                                             <div class="group-input" id="test_SSFI">
                                                                 <label for="test_SSFI">Test<span
                                                                         class="text-danger d-none">*</span></label>
-                                                                <input type="text" name="test_SSFI">
+                                                                <input type="text" name="test_ssfi">
                                                             </div>
 
                                                         </div>
@@ -1281,26 +1282,26 @@
                                                                 <div><small class="text-primary">Please mention expected date of completion</small>
                                                                 </div>
                                                                 <div class="calenderauditee">
-                                                                    <input type="text" id="Incident_date_analysis" readonly
+                                                                    <input type="text" id="Incident_date_analysis_ssfi" readonly
                                                                         placeholder="DD-MMM-YYYY"/>
-                                                                    <input type="date" name="Incident_date_analysis"  class="hide-input"
-                                                                        oninput="handleDateInput(this, 'Incident_date_analysis')"  />
+                                                                    <input type="date" name="Incident_date_analysis_ssfi"  class="hide-input"
+                                                                        oninput="handleDateInput(this, 'Incident_date_analysis_ssfi')"  />
                                                                 </div>
                                                             </div>
                                                         </div>
                                                         <div class="col-lg-6">
-                                                            <div class="group-input" id="specification_number_SSFI">
-                                                                <label for="specification_number_SSFI">Specification Number<span
+                                                            <div class="group-input" id="Incident_specification_ssfi">
+                                                                <label for="Incident_specification_ssfi">Specification Number<span
                                                                         class="text-danger d-none">*</span></label>
-                                                                <input type="text" name="specification_number_SSFI">
+                                                                <input type="text" name="Incident_specification_ssfi">
                                                             </div>
 
                                                         </div>
                                                         <div class="col-lg-6">
-                                                            <div class="group-input" id="stp_number_SSFI">
-                                                                <label for="stp_number_SSFI">STP Number<span
+                                                            <div class="group-input" id="Incident_stp_ssfi">
+                                                                <label for="Incident_stp_ssfi">STP Number<span
                                                                         class="text-danger d-none">*</span></label>
-                                                                <input type="text" name="stp_number_SSFI">
+                                                                <input type="text" name="Incident_stp_ssfi">
                                                             </div>
 
                                                         </div>
@@ -1346,34 +1347,34 @@
 
                                                         </div>
                                                         <div class="col-lg-12">
-                                                            <div class="group-input" id="description_of_incidence_SSFI">
-                                                                <label for="description_of_incidence_SSFI"> Description Of Incidence<span
+                                                            <div class="group-input" id="Description_incidence_ssfi">
+                                                                <label for="Description_incidence_ssfi"> Description Of Incidence<span
                                                                         class="text-danger d-none">*</span></label>
-                                                                <textarea name="description_of_incidence_SSFI"></textarea>
+                                                                <textarea name="Description_incidence_ssfi"></textarea>
                                                             </div>
 
                                                         </div>
                                                         <div class="col-lg-12">
-                                                            <div class="group-input" id="detail_investigation_SSFI">
-                                                                <label for="detail_investigation_SSFI"> Detail Investigation<span
+                                                            <div class="group-input" id="Detail_investigation_ssfi">
+                                                                <label for="Detail_investigation_ssfi"> Detail Investigation<span
                                                                         class="text-danger d-none">*</span></label>
-                                                                <textarea name="detail_investigation_SSFI"></textarea>
-                                                            </div>
-
-                                                        </div>
-
-                                                        <div class="col-lg-12">
-                                                            <div class="group-input" id="proposed_corrective_action_SSFI">
-                                                                <label for="proposed_corrective_action_SSFI"> Proposed Corrective Action<span
-                                                                        class="text-danger d-none">*</span></label>
-                                                                <textarea name="proposed_corrective_action_SSFI"></textarea>
+                                                                <textarea name="Detail_investigation_ssfi"></textarea>
                                                             </div>
 
                                                         </div>
 
                                                         <div class="col-lg-12">
-                                                            <div class="group-input" id="root_cause_SSFI">
-                                                                <label for="root_cause_SSFI"> Root Cause<span
+                                                            <div class="group-input" id="proposed_corrective_ssfi">
+                                                                <label for="proposed_corrective_ssfi"> Proposed Corrective Action<span
+                                                                        class="text-danger d-none">*</span></label>
+                                                                <textarea name="proposed_corrective_ssfi"></textarea>
+                                                            </div>
+
+                                                        </div>
+
+                                                        <div class="col-lg-12">
+                                                            <div class="group-input" id="root_cause_ssfi">
+                                                                <label for="root_cause_ssfi"> Root Cause<span
                                                                         class="text-danger d-none">*</span></label>
                                                                 <textarea name="root_cause_ssfi"></textarea>
                                                             </div>
@@ -1384,7 +1385,7 @@
                                                             <div class="group-input" id="incident summary ssfi">
                                                                 <label for="incident summary ssfi"> Incident Summary<span
                                                                         class="text-danger d-none">*</span></label>
-                                                                <textarea name="incident_summary_SSFI"></textarea>
+                                                                <textarea name="incident_summary_ssfi"></textarea>
                                                             </div>
 
                                                         </div>
@@ -1424,7 +1425,7 @@
                                                 </div> --}}
                                                 <div class="col-lg-12">
                                                     <div class="group-input">
-                                                        <label for="file_attachment_SSFI">File Attachment</label>
+                                                        <label for="system_suitable_attachments">File Attachment</label>
                                                         <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
                                                         {{-- <input type="file" id="myfile" name="Initial_Attachment"> --}}
                                                         <div class="file-attachment-field">
@@ -1461,38 +1462,27 @@
                             <div class="row">
                                 <div class="col-lg-12">
                                     <div class="group-input">
-                                        <label for="closure_of_incident_closure">Closure Of Incident</label>
-                                        <input type="text" name="closure_of_incident_closure">
+                                        <label for="closure_incident_c">Closure Of Incident</label>
+                                        <input type="text" name="closure_incident_c">
                                     </div>
 
                                 </div>
 
-                                <div class="col-lg-12">
-                                    <div class="group-input">
-                                        <label for="affected documents closed"><b>Affected Documents Closed</b></label>
-                                        <select name="affected_document_closure" id="affected_document_closure">
-                                            <option value="0">-- Select --</option>
-                                            <option value="Yes">Yes</option>
-                                            <option value="No">No</option>
-                                            <option value="NA">NA</option>
-
-                                        </select>
-                                    </div>
-                                </div>
+                                
 
                                 <div class="col-lg-12">
                                     <div class="group-input">
                                         <label for="head remark"><b>QC Head Remark</b></label>
-                                       <textarea name="qc_head_remark_closure"></textarea>
+                                       <textarea name="qc_hear_remark_c"></textarea>
                                     </div>
                                 </div>
 
 
 
-                                <div class="col-md-12">
+                                <div class="col-md-6">
                                     <div class="group-input">
                                           <label for="search">
-                                      QC Head <span class="text-danger"></span>
+                                      QC Head Closure<span class="text-danger"></span>
                                     </label>
                                     <select id="select-state" placeholder="Select..." name="qc_head_closure">
                                       <option value="">Select a value</option>
@@ -1505,27 +1495,28 @@
                                     @enderror
                                              </div>
                             </div>
+                            
 
 
-                            <div class="col-lg-12">
+                            <div class="col-lg-6">
                                 <div class="group-input">
                                     <label for=" qa head remark"><b>QA Head Remark</b></label>
-                                   <textarea name="qa_head_remark_closure"></textarea>
+                                   <textarea name="qa_hear_remark_c"></textarea>
                                 </div>
                             </div>
 
 
                             <div class="col-lg-12">
                                 <div class="group-input">
-                                    <label for="closure_attachments">File Attachment</label>
+                                    <label for="closure_attachment_c">File Attachment</label>
                                     <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
                                     {{-- <input type="file" id="myfile" name="Initial_Attachment"> --}}
                                     <div class="file-attachment-field">
                                         <div class="file-attachment-list" id="closure_attachment_c"></div>
                                         <div class="add-btn">
                                             <div>Add</div>
-                                            <input type="file" id="myfile" name="file_attachment_closure[]"
-                                                oninput="addMultipleFiles(this, 'file_attachment_closure')" multiple>
+                                            <input type="file" id="closure_attachment_c" name="closure_attachment_c[]"
+                                                oninput="addMultipleFiles(this, 'closure_attachment_c')" multiple>
                                         </div>
                                     </div>
                                 </div>

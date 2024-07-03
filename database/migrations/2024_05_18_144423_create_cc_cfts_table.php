@@ -164,6 +164,7 @@ return new class extends Migration
             $table->string('RA_attachment')->nullable();
             $table->text('RA_by')->nullable();
             $table->date('RA_on')->nullable();
+            $table->text('RA_Review')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

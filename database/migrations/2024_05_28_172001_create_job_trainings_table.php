@@ -17,9 +17,12 @@ return new class extends Migration
             $table->id();
            
                 $table->string('name')->nullable();
-                $table->string('department_location')->nullable();
-                $table->date('startdate')->nullable();
-                $table->date('enddate')->nullable();
+                $table->string('department')->nullable();
+                $table->string('location')->nullable();
+                $table->string('hod')->nullable();
+
+                // $table->date('startdate')->nullable();
+                // $table->date('enddate')->nullable();
     
     
     
@@ -31,6 +34,9 @@ return new class extends Migration
                 $table->longText("reference_document_no_$i")->nullable();
                 $table->longText("trainee_name_$i")->nullable();
                 $table->longText("trainer_$i")->nullable();
+
+                $table->date("startdate_$i")->nullable();
+                $table->date("enddate_$i")->nullable();
     
                }
     

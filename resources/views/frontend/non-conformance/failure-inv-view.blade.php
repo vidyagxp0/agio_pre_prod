@@ -520,6 +520,80 @@
             });
         });
     </script>
+<script>
+    $(document).ready(function() {
+        let investigationTeamDataIndex =
+            {{ $investigationTeamData && is_array($investigationTeamData) ? count($investigationTeamData) : 1 }};
+        $('#investigationTeamAdd').click(function(e) {
+            function generateTableRow(serialNumber) {
+                var users = @json($users);
+                var userOptionsHtml = '';
+                users.forEach(user => {
+                    userOptionsHtml = userOptionsHtml.concat(
+                        `<option value="${user.id}">${user.name}</option>`)
+                });
+
+                var html =
+                    '<tr>' +
+                    '<td><input disabled type="text" name="serial[]" value="' + serialNumber +
+                    '"></td>' +
+                    '<td> <select name="investigationTeam[' + investigationTeamDataIndex +
+                    '][teamMember]" id="" class="teamMember"> <option value="">-- Select --</option>' +
+                    userOptionsHtml + ' </select> </td>' +
+                    '<td><input type="text" class="responsibility" name="investigationTeam[' +
+                    investigationTeamDataIndex + '][responsibility]"></td>' +
+                    '<td><input type="text" class="remarks" name="investigationTeam[' +
+                    investigationTeamDataIndex + '][remarks]"></td>' +
+                    '<td><button type="text" class="removeRowBtn" ">Remove</button></td>' +
+                    '</tr>';
+                investigationTeamDataIndex++;
+                return html;
+            }
+
+            var tableBody = $('#investigationTeamDetailTable tbody');
+            var rowCount = tableBody.children('tr').length;
+            var newRow = generateTableRow(rowCount + 1);
+            tableBody.append(newRow);
+        });
+    });
+</script>
+
+<script>
+    $(document).ready(function() {
+        let rootCauseDataIndex = {{ $rootCauseData && is_array($rootCauseData) ? count($rootCauseData) : 1 }};
+        $('#rootCauseAdd').click(function(e) {
+            function generateTableRow(serialNumber) {
+                var users = @json($users);
+
+                var html =
+                    '<tr>' +
+                    '<td><input disabled type="text" name="serial[]" value="' + serialNumber +
+                    '"></td>' +
+                    '<td> <select name="rootCauseData[' + rootCauseDataIndex +
+                    '][rootCauseCategory]" class="Root_Cause_Category_Select" id=""> <option value="">-- Select --</option> <option value="M-Machine(Equipment)">M-Machine(Equipment)</option><option value="M-Maintenance">M-Maintenance</option><option value="M-Man Power (physical work)">M-Man Power (physical work)</option><option value="M-Management">M-Management</option><option value="M-Material (Raw,Consumables etc.)">M-Material (Raw,Consumables etc.)</option><option value="M-Method (Process/Inspection)">M-Method (Process/Inspection)</option><option value="M-Mother Nature (Environment)">M-Mother Nature (Environment)</option><option value="P-Place/Plant">P-Place/Plant</option><option value="P-Policies">P-Policies</option><option value="P-Price">P-Price </option><option value="P-Procedures">P-Procedures</option><option value="P-Process">P-Process </option><option value="P-Product">P-Product</option><option value="S-Suppliers">S-Suppliers</option><option value="S-Surroundings">S-Surroundings</option><option value="S-Systems">S-Systems</option>  </select></td>' +
+                    '<td><select name="rootCauseData[' + rootCauseDataIndex +
+                    '][rootCauseSubCategory]" id="" class="Root_Cause_Sub_Category_Select"><option value="">-- Select --</option> <option value="infrequent_audits">Infrequent Audits </option><option value="No_Preventive_Maintenance">No Preventive Maintenance </option><option value="Other">Other</option><option value="Poor_Maintenance_or_Design">Poor Maintenance or Design </option><option value="Maintenance_Needs_Improvement">Maintenance Needs Improvement </option><option value="Scheduling_Problem">Scheduling Problem </option><option value="system_deficiency">System Deficiency </option><option value="technical_error">Technical Error </option><option value="tolerable_failure">Tolerable Failure </option><option value="calibration_issues">Calibration Issues </option><option value="Infrequent_Audits">Infrequent Audits</option><option value="No_Preventive_Maintenance">No Preventive Maintenance </option><option value="Other">Other</option><option value="Maintenance_Needs_Improvement">Maintenance Needs Improvement</option><option value="Scheduling_Problem ">Scheduling Problem </option><option value="System_Deficiency">System Deficiency </option><option value="Technical_Error ">Technical Error </option><option value="Tolerable_Failure">Tolerable Failure </option><option value="Failure_to_Follow_SOP">Failure to Follow SOP</option><option value="Human_Machine_Interface">Human-Machine Interface</option><option value="Misunderstood_Verbal_Communication">Misunderstood Verbal Communication </option><option value="Other">Other</option><option value="Personnel Error">Personnel Error</option><option value="Personnel not Qualified">Personnel not Qualified</option><option value="Practice Needed">Practice Needed</option><option value="Teamwork Needs Improvement">Teamwork Needs Improvement</option><option value="Attention">Attention</option><option value="Understanding">Understanding</option><option value="Procedural">Procedural</option><option value="Behavioral">Behavioral</option><option value="Skill">Skill</option><option value="Inattention to task">Inattention to task</option><option value="Lack of Process">Lack of Process</option><option value="Methods">Methods</option><option value="No or Poor Management Involvement">No or Poor Management Involvement</option><option value="Other">Other</option><option value="Personnel not Qualified">Personnel not Qualified</option><option value="Poor employee involvement">Poor employee involvement</option><option value="Poor recognition of hazard">Poor recognition of hazard</option><option value="Previously identified hazards were not eliminated">Previously identified hazards were not eliminated</option><option value="Stress demands">Stress demands</option><option value="Task hazards not guarded properly">Task hazards not guarded properly</option><option value="Personnel not Qualified">Personnel not Qualified</option>  </select></td>' +
+                    '<td><input type="text" class="Document_Remarks" name="rootCauseData[' +
+                    rootCauseDataIndex + '][ifOthers]"></td>' +
+                    '<td><input type="text" class="Document_Remarks" name="rootCauseData[' +
+                    rootCauseDataIndex + '][probability]"></td>' +
+                    '<td><input type="text" class="Document_Remarks" name="rootCauseData[' +
+                    rootCauseDataIndex + '][remarks]"></td>' +
+                    '<td><button type="text" class="removeRowBtn" ">Remove</button></td>' +
+                    '</tr>';
+
+                rootCauseDataIndex++;
+                return html;
+            }
+
+            var tableBody = $('#rootCauseAddTable tbody');
+            var rowCount = tableBody.children('tr').length;
+            var newRow = generateTableRow(rowCount + 1);
+            tableBody.append(newRow);
+        });
+    });
+</script>
+
     <script>
         $(document).on('click', '.removeRowBtn', function() {
             $(this).closest('tr').remove();
@@ -549,7 +623,7 @@
                                 ->get();
                             $userRoleIds = $userRoles->pluck('q_m_s_roles_id')->toArray();
                             $cftRolesAssignUsers = collect($userRoleIds); //->contains(fn ($roleId) => $roleId >= 22 && $roleId <= 33);
-                            $cftUsers = DB::table('non_conformances_cfts')
+                            $cftUsers = DB::table('non_conformance_c_f_ts')
                                 ->where(['non_conformances_id' => $data->id])
                                 ->first();
 
@@ -580,7 +654,7 @@
                                     $valuesArray[] = $value;
                                 }
                             }
-                            $cftCompleteUser = DB::table('non_conformances_cft_responses')
+                            $cftCompleteUser = DB::table('non_conformance_c_f_t_responses')
                                 ->whereIn('status', ['In-progress', 'Completed'])
                                 ->where('non_conformances_id', $data->id)
                                 ->where('cft_user_id', Auth::user()->id)
@@ -890,8 +964,8 @@
                                         <div class="group-input">
                                             <label for="record_number"><b>Record Number</b></label>
                                             @if ($data->stage >= 3)
-                                                <input disabled type="text"
-                                                    value="{{ Helpers::getDivisionName($data->division_id) }}/Non Conformance/{{ date('Y') }}/{{ str_pad($data->record, 4, '0', STR_PAD_LEFT) }}">
+                                            <input disabled type="text" name="record" id="record" value="{{ Helpers::getDivisionName($data->division_id) }}/NOC/{{ date('Y') }}/{{ str_pad($data->record, 4, '0', STR_PAD_LEFT) }}">
+                                                {{-- <input disabled type="text" value="{{ Helpers::getDivisionName($data->division_id) }}/Non Conformance/{{ date('Y') }}/{{ str_pad($data->record, 4, '0', STR_PAD_LEFT) }}"> --}}
                                             @else
                                                 <input disabled type="text" name="record">
                                             @endif
@@ -1781,7 +1855,7 @@
                                         </script>
                                     </div>
 
-                                   
+
                                     <div class="col-md-12">
                                         <div class="group-input">
                                             <label for="Description Non Conformance">Description of Non Conformance <span
@@ -1789,13 +1863,13 @@
                                             <div><small class="text-primary">Please insert "NA" in the data field if it
                                                     does not require completion</small></div>
                                             <textarea class="tiny"
-                                                name="Description_non_conformances"{{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }} id="summernote-1">{{ $data->Description_non_conformances }}</textarea>
+                                                name="Description_non_conformanceS"{{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }} id="summernote-1">{{ $data->Description_non_conformanceS }}</textarea>
                                         </div>
                                         @error('Description_non_conformances')
                                             <div class="text-danger">{{ $message }}</div>
                                         @enderror
                                     </div>
-                                    
+
                                     <div class="col-md-12">
                                         <div class="group-input">
                                             <label for="Immediate Action">Immediate Action (if any) <span
@@ -1909,9 +1983,9 @@
                                                 <div><small class="text-primary">Please Attach all relevant or supporting
                                                         documents</small></div>
                                                 <div class="file-attachment-field">
-                                                    <div disabled class="file-attachment-list" id="Audit_file">
-                                                        @if ($data->Audit_file)
-                                                            @foreach (json_decode($data->Audit_file) as $file)
+                                                    <div disabled class="file-attachment-list" id="hod_file">
+                                                        @if ($data->hod_file)
+                                                            @foreach (json_decode($data->hod_file) as $file)
                                                                 <h6 class="file-container text-dark"
                                                                     style="background-color: rgb(243, 242, 240);">
                                                                     <b>{{ $file }}</b>
@@ -1930,9 +2004,9 @@
                                                         <div>Add</div>
                                                         <input
                                                             {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}
-                                                            type="file" id="HOD_Attachments"
-                                                            name="Audit_file[]"{{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
-                                                            oninput="addMultipleFiles(this, 'Audit_file')" multiple>
+                                                            type="file" id="hod_file"
+                                                            name="hod_file[]"{{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
+                                                            oninput="addMultipleFiles(this, 'hod_file')" multiple>
                                                     </div>
                                                 </div>
                                             </div>
@@ -1943,8 +2017,8 @@
                                                         documents</small></div>
                                                 <div class="file-attachment-field">
                                                     <div disabled class="file-attachment-list" id="Audit_file">
-                                                        @if ($data->Audit_file)
-                                                            @foreach (json_decode($data->Audit_file) as $file)
+                                                        @if ($data->hod_file)
+                                                            @foreach (json_decode($data->hod_file) as $file)
                                                                 <h6 class="file-container text-dark"
                                                                     style="background-color: rgb(243, 242, 240);">
                                                                     <b>{{ $file }}</b>
@@ -1963,9 +2037,9 @@
                                                         <div>Add</div>
                                                         <input disabled
                                                             {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}
-                                                            type="file" id="HOD_Attachments"
-                                                            name="Audit_file[]"{{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
-                                                            oninput="addMultipleFiles(this, 'Audit_file')" multiple>
+                                                            type="file" id="hod_file"
+                                                            name="hod_file[]"{{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
+                                                            oninput="addMultipleFiles(this, 'hod_file')" multiple>
                                                     </div>
                                                 </div>
                                             </div>
@@ -2592,7 +2666,7 @@
                                         </script>
                                     </div>
                                 </div>
-                                
+
                                 <div class="col-md-12">
                                     <div class="group-input">
                                         <label for="QAInitialRemark">QA Initial Remarks</label>
@@ -2604,7 +2678,7 @@
                                 </div>
                                 <div class="col-12">
                                     <div class="group-input">
-                                        <label for="QA Initial Attachments">QA Initial Attachments</label>
+                                        <label for="QA Initial Attachments">QA  Initial Attachments</label>
                                         <div><small class="text-primary">Please Attach all relevant or supporting
                                                 documents</small></div>
                                         <div class="file-attachment-field">
@@ -2724,7 +2798,7 @@
                                     });
                                 </script>
                                 @php
-                                    $data1 = DB::table('non_conformances_cfts')
+                                    $data1 = DB::table('non_conformance_c_f_ts')
                                         ->where('non_conformances_id', $data->id)
                                         ->first();
                                 @endphp
@@ -3650,9 +3724,9 @@
                                             value="{{ $data1->QualityAssurance_on }}">
                                     </div>
                                 </div>
-                                <div class="sub-head">
+                                {{-- <div class="sub-head">
                                     Engineering
-                                </div>
+                                </div> --}}
                                 <script>
                                     $(document).ready(function() {
                                         @if($data1->Engineering_review !== 'yes')
@@ -4973,7 +5047,7 @@
                                                 No</option>
                                             <option @if ($data1->Quality_review == 'na') selected @endif value="na">
                                                 NA</option>
-                                        </select>                                        
+                                        </select>
                                     </div>
                                 </div>
                                 @php
@@ -7847,7 +7921,7 @@
                         <div class="col-lg-6">
                             <div class="group-input">
                                 <label for="Proposed Due Date">Proposed Due Date</label>
-                                <input name="investigation_proposed_due_date" id="investigation_proposed_due_date" placeholder="Non Conformance Proposed Due Date"  disabled>
+                                <input name="investigation_proposed_due_date" id="investigation_proposed_due_date" placeholder=""  disabled>
                             </div>
                         </div>
                     @endif
@@ -7891,72 +7965,76 @@
                         <div class="group-input" id="documentsRowna">
                             <label for="audit-agenda-grid">
                                 Investigation team and Responsibilities
-                                <button type="button" name="audit-agenda-grid" id="investigation_Details">+</button>
-                                <span class="text-primary" data-bs-toggle="modal"
-                                    data-bs-target="#investigationn-team-responsibilities"
+                                <button type="button" name="audit-agenda-grid" id="investigationTeamAdd">+</button>
+                                <span class="text-primary" data-bs-toggle="modal" data-bs-target="#investigationTeamDetailTable"
                                     style="font-size: 0.8rem; font-weight: 400; cursor: pointer;">
                                     (Launch Instruction)
                                 </span>
                             </label>
                             <div class="table-responsive">
-                                            <table class="table table-bordered" id="investigation_Details_Details"
-                                                style="width: 100%;">
-                                                <thead>
-                                                    <tr>
-                                                        <th style="width: 4%">Row#</th>
-                                                        <th style="width: 12%">Investigation Team</th>
-                                                        <th style="width: 16%">Responsibility</th>
-                                                        <th style="width: 16%">Remarks</th>
-                                                        <th style="width: 8%">Action</th>
+                                <table class="table table-bordered" id="investigationTeamDetailTable" style="width: 100%;">
+                                    <thead>
+                                        <tr>
+                                            <th style="width: 4%">Row#</th>
+                                            <th style="width: 12%">Investigation Team</th>
+                                            <th style="width: 16%">Responsibility</th>
+                                            <th style="width: 16%">Remarks</th>
+                                            <th style="width: 8%">Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
 
-
-
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-
-                                                    @if ($investigation_data && is_array($investigation_data->data))
-                                                    @foreach ($investigation_data->data as $investigation_data)
-                                                    <tr>
-                                                        <td>
-                                                            <input disabled type="text" name="investication[{{ $loop->index }}][serial]" value="{{ $loop->index+1 }}">
-                                                        </td>
-                                                        <td>
-                                                            <select name="investication[{{ $loop->index }}][investioncation_team]" id="" class="investioncation_team">
-                                                                <option value="">-- Select --</option>
-                                                                @foreach ($users as $user)
-                                                                    <option value="{{ $user->id }}" {{ $investigation_data['investioncation_team'] == $user->id ? 'selected' : '' }}>{{ $user->name }}</option> </select>
-                                                                @endforeach
-                                                        </td>
-                                                        <td>
-                                                            <input type="text" class="numberDetail" name="investication[{{ $loop->index }}][responsibility]" value="{{ $investigation_data['responsibility'] }}">
-                                                        </td>
-                                                        <td>
-                                                            <input type="text" class="Document_Remarks" name="investication[{{ $loop->index }}][remarks]" value="{{ $investigation_data['remarks'] }}">
-                                                        </td>
-                                                        <td><input type="text" class="Action" name=""></td>
-                                                    </tr>
-                                                    @endforeach
-                                                @else
-                                                    <td><input disabled type="text" name="investication[0][serial]" value="1"></td>
+                                        @if ($investigationTeamData && is_array($investigationTeamData))
+                                            @foreach ($investigationTeamData as $investigation_data)
+                                                <tr>
+                                                    <td>
+                                                        <input disabled type="text"
+                                                            name="investigationTeam[{{ $loop->index }}][serial]"
+                                                            value="{{ $loop->index + 1 }}">
+                                                    </td>
+                                                    <td>
+                                                        <select name="investigationTeam[{{ $loop->index }}][teamMember]" id=""
+                                                            class="teamMember">
+                                                            <option value="">-- Select --</option>
+                                                            @foreach ($users as $user)
+                                                                <option value="{{ $user->id }}"
+                                                                    {{ $investigation_data['teamMember'] == $user->id ? 'selected' : '' }}>
+                                                                    {{ $user->name }}</option>
+                                                            @endforeach
+                                                        </select>
+                                                    </td>
+                                                    <td>
+                                                        <input type="text" class="responsibility"
+                                                            name="investigationTeam[{{ $loop->index }}][responsibility]"
+                                                            value="{{ isset($investigation_data['responsibility']) ? $investigation_data['responsibility'] : '' }}">
+                                                    </td>
+                                                    <td>
+                                                        <input type="text" class="remarks"
+                                                            name="investigationTeam[{{ $loop->index }}][remarks]"
+                                                            value="{{ isset($investigation_data['remarks']) ? $investigation_data['remarks'] : '' }}">
+                                                    </td>
+                                                    <td><input type="text" class="Action" name=""></td>
+                                                </tr>
+                                            @endforeach
+                                        @else
+                                            <td><input disabled type="text" name="investigationTeam[0][serial]" value="1"></td>
+                                            <td>
+                                                <select name="investigationTeam[0][teamMember]" id="">
+                                                    <option value="">-- Select --</option>
                                                     @foreach ($users as $user)
-                                                        <td> <select name="investication[0][investioncation_team]" id=""> <option value="">-- Select --</option><option value="{{ $user->id }}">{{ $user->name }}</option> </select> </td>
+                                                        <option value="{{ $user->id }}">{{ $user->name }}</option>
                                                     @endforeach
-                                                    <td><input type="text" class="numberDetail" name="investication[0][responsibility]"></td>
-                                                    <td><input type="text" class="Document_Remarks" name="investication[0][remarks]"></td>
-                                                    <td><input type="text" class="Action" name="" readonly></td>
-                                                @endif
-
-
-
-                                                </tbody>
-
-                                            </table>
-                                        </div>
+                                                </select>
+                                            </td>
+                                            <td><input type="text" class="responsibility" name="investigationTeam[0][responsibility]">
+                                            </td>
+                                            <td><input type="text" class="remarks" name="investigationTeam[0][remarks]"></td>
+                                            <td><input type="text" class="Action" name=""></td>
+                                        @endif
+                                    </tbody>
+                                </table>
+                            </div>
                         </div>
-                        <!-- @error('Product_Batch')
-                                        <div class="text-danger">{{ $message  }}</div>
-                                    @enderror -->
                     </div>
 
                     <div class="col-lg-12">
@@ -7973,31 +8051,27 @@
                             </div>
 
 
-
-                    <div class="col-lg-12">
-                                <div class="group-input" id="documentsRowname" >
+                            <div class="col-lg-12">
+                                <div class="group-input" id="documentsRowname">
                                     <label for="audit-agenda-grid">
-                                      Root Cause
-                                        <button type="button" name="audit-agenda-grid"
-                                            id="root_cause_Details">+</button>
-                                        <span class="text-primary" data-bs-toggle="modal"
-                                            data-bs-target="#root-cause"
+                                        Root Cause
+                                        <button type="button" name="audit-agenda-grid" id="rootCauseAdd">+</button>
+                                        <span class="text-primary" data-bs-toggle="modal" data-bs-target="#root-cause"
                                             style="font-size: 0.8rem; font-weight: 400; cursor: pointer;">
                                             (Launch Instruction)
                                         </span>
                                     </label>
                                     <div class="table-responsive">
-                                        <table class="table table-bordered" id="Root_cause_Details_Details"
-                                            style="width: 100%;">
+                                        <table class="table table-bordered" id="rootCauseAddTable" style="width: 100%;">
                                             <thead>
                                                 <tr>
                                                     <th style="width: 4%">Row#</th>
-                                                    <th style="width: 12%">	Root Cause Category</th>
+                                                    <th style="width: 12%"> Root Cause Category</th>
                                                     <th style="width: 16%">Root Cause Sub-Category</th>
                                                     <th style="width: 16%">If Others</th>
 
-                                                    <th style="width: 16%">	Probability</th>
-                                                    <th style="width: 16%">	Remarks</th>
+                                                    <th style="width: 16%"> Probability</th>
+                                                    <th style="width: 16%"> Remarks</th>
 
                                                     <th style="width: 8%">Action</th>
 
@@ -8006,281 +8080,591 @@
                                             </thead>
 
                                             <tbody>
-                                                @if ($root_cause_data && is_array($root_cause_data->data))
+                                                @if ($rootCauseData && is_array($rootCauseData))
+                                                    @foreach ($rootCauseData as $index => $root_cause_dat)
+                                                        <tr>
+                                                            <td>
+                                                                <input disabled type="text" name="rootCauseData[{{ $loop->index }}][serial]"
+                                                                    value="{{ $loop->index + 1 }}">
+                                                            </td>
+                                                            <td>
+                                                                <select name="rootCauseData[{{ $loop->index }}][rootCauseCategory]"
+                                                                    id="Root_Cause_Category_Select" class="Root_Cause_Category_Select">
+                                                                    <option value="">-- Select --</option>
 
-                                                    <!-- {{ count($root_cause_data->data) }} -->
-                                                    @foreach ($root_cause_data->data as $index => $root_cause_dat)
-                                                    <tr>
-                                                        <td>
-                                                            <input disabled type="text" name="rootCause[{{ $loop->index }}][serial]" value="{{ $loop->index + 1 }}">
-                                                        </td>
-                                                        <td>
-                                                            <select name="rootCause[{{ $loop->index }}][Root_Cause_Category]" id="Root_Cause_Category_Select" class="Root_Cause_Category_Select">
-                                                                <option value="">-- Select --</option>
+                                                                    <option value="M-Machine(Equipment)"
+                                                                        {{ array_key_exists('rootCauseCategory', $root_cause_dat) && $root_cause_dat['rootCauseCategory'] == 'M-Machine(Equipment)' ? 'selected' : '' }}>
+                                                                        M-Machine(Equipment)</option>
+                                                                    <option value="M-Maintenance"
+                                                                        {{ array_key_exists('rootCauseCategory', $root_cause_dat) && $root_cause_dat['rootCauseCategory'] == 'M-Maintenance' ? 'selected' : '' }}>
+                                                                        M-Maintenance</option>
+                                                                    <option value="M-Man Power (physical work)"
+                                                                        {{ array_key_exists('rootCauseCategory', $root_cause_dat) && $root_cause_dat['rootCauseCategory'] == 'M-Man Power (physical work)' ? 'selected' : '' }}>
+                                                                        M-Man Power (physical work)</option>
+                                                                    <option value="M-Management"
+                                                                        {{ array_key_exists('rootCauseCategory', $root_cause_dat) && $root_cause_dat['rootCauseCategory'] == '"M-Management' ? 'selected' : '' }}>
+                                                                        M-Management</option>
+                                                                    <option value="M-Material (Raw,Consumables etc.)"
+                                                                        {{ array_key_exists('rootCauseCategory', $root_cause_dat) && $root_cause_dat['rootCauseCategory'] == 'M-Material (Raw,Consumables etc.)' ? 'selected' : '' }}>
+                                                                        M-Material (Raw,Consumables etc.)</option>
+                                                                    <option value="M-Method (Process/Inspection)"
+                                                                        {{ array_key_exists('rootCauseCategory', $root_cause_dat) && $root_cause_dat['rootCauseCategory'] == 'M-Method (Process/Inspection)' ? 'selected' : '' }}>
+                                                                        M-Method (Process/Inspection)</option>
+                                                                    <option value="M-Mother Nature (Environment)"
+                                                                        {{ array_key_exists('rootCauseCategory', $root_cause_dat) && $root_cause_dat['rootCauseCategory'] == 'M-Mother Nature (Environment)' ? 'selected' : '' }}>
+                                                                        M-Mother Nature (Environment)</option>
+                                                                    <option value="P-Place/Plant"
+                                                                        {{ array_key_exists('rootCauseCategory', $root_cause_dat) && $root_cause_dat['rootCauseCategory'] == 'P-Place/Plant' ? 'selected' : '' }}>
+                                                                        P-Place/Plant</option>
+                                                                    <option value="P-Policies"
+                                                                        {{ array_key_exists('rootCauseCategory', $root_cause_dat) && $root_cause_dat['rootCauseCategory'] == 'P-Policies' ? 'selected' : '' }}>
+                                                                        P-Policies</option>
+                                                                    <option value="P-Price"
+                                                                        {{ array_key_exists('rootCauseCategory', $root_cause_dat) && $root_cause_dat['rootCauseCategory'] == 'P-Price' ? 'selected' : '' }}>
+                                                                        P-Price </option>
+                                                                    <option value="P-Procedures"
+                                                                        {{ array_key_exists('rootCauseCategory', $root_cause_dat) && $root_cause_dat['rootCauseCategory'] == 'P-Procedures' ? 'selected' : '' }}>
+                                                                        P-Procedures</option>
+                                                                    <option value="P-Process"
+                                                                        {{ array_key_exists('rootCauseCategory', $root_cause_dat) && $root_cause_dat['rootCauseCategory'] == 'P-Process' ? 'selected' : '' }}>
+                                                                        P-Process </option>
+                                                                    <option value="P-Product"
+                                                                        {{ array_key_exists('rootCauseCategory', $root_cause_dat) && $root_cause_dat['rootCauseCategory'] == 'P-Product' ? 'selected' : '' }}>
+                                                                        P-Product</option>
+                                                                    <option value="S-Suppliers"
+                                                                        {{ array_key_exists('rootCauseCategory', $root_cause_dat) && $root_cause_dat['rootCauseCategory'] == 'S-Suppliers' ? 'selected' : '' }}>
+                                                                        S-Suppliers</option>
+                                                                    <option value="S-Surroundings"
+                                                                        {{ array_key_exists('rootCauseCategory', $root_cause_dat) && $root_cause_dat['rootCauseCategory'] == 'S-Surroundings' ? 'selected' : '' }}>
+                                                                        S-Surroundings</option>
+                                                                    <option value="S-Systems"
+                                                                        {{ array_key_exists('rootCauseCategory', $root_cause_dat) && $root_cause_dat['rootCauseCategory'] == 'S-Systems' ? 'selected' : '' }}>
+                                                                        S-Systems</option>
 
-                                                                <option value="M-Machine(Equipment)" {{ array_key_exists('Root_Cause_Category', $root_cause_dat) && $root_cause_dat['Root_Cause_Category'] == 'M-Machine(Equipment)' ? 'selected' : '' }}>M-Machine(Equipment)</option>
-                                                                <option value="M-Maintenance" {{ array_key_exists('Root_Cause_Category', $root_cause_dat) && $root_cause_dat['Root_Cause_Category'] == 'M-Maintenance' ? 'selected' : '' }}>M-Maintenance</option>
-                                                                <option value="M-Man Power (physical work)" {{ array_key_exists('Root_Cause_Category', $root_cause_dat) && $root_cause_dat['Root_Cause_Category'] == 'M-Man Power (physical work)' ? 'selected' : '' }}>M-Man Power (physical work)</option>
-                                                                <option value="M-Management" {{ array_key_exists('Root_Cause_Category', $root_cause_dat) && $root_cause_dat['Root_Cause_Category'] == '"M-Management' ? 'selected' : '' }}>M-Management</option>
-                                                                <option value="M-Material (Raw,Consumables etc.)" {{ array_key_exists('Root_Cause_Category', $root_cause_dat) && $root_cause_dat['Root_Cause_Category'] == 'M-Material (Raw,Consumables etc.)' ? 'selected' : '' }}>M-Material (Raw,Consumables etc.)</option>
-                                                                <option value="M-Method (Process/Inspection)" {{ array_key_exists('Root_Cause_Category', $root_cause_dat) && $root_cause_dat['Root_Cause_Category'] == 'M-Method (Process/Inspection)' ? 'selected' : '' }}>M-Method (Process/Inspection)</option>
-                                                                <option value="M-Mother Nature (Environment)" {{ array_key_exists('Root_Cause_Category', $root_cause_dat) && $root_cause_dat['Root_Cause_Category'] == 'M-Mother Nature (Environment)' ? 'selected' : '' }}>M-Mother Nature (Environment)</option>
-                                                                <option value="P-Place/Plant" {{ array_key_exists('Root_Cause_Category', $root_cause_dat) && $root_cause_dat['Root_Cause_Category'] == 'P-Place/Plant' ? 'selected' : '' }}>P-Place/Plant</option>
-                                                                <option value="P-Policies" {{ array_key_exists('Root_Cause_Category', $root_cause_dat) && $root_cause_dat['Root_Cause_Category'] == 'P-Policies' ? 'selected' : '' }}>P-Policies</option>
-                                                                <option value="P-Price" {{ array_key_exists('Root_Cause_Category', $root_cause_dat) && $root_cause_dat['Root_Cause_Category'] == 'P-Price' ? 'selected' : '' }}>P-Price </option>
-                                                                <option value="P-Procedures" {{ array_key_exists('Root_Cause_Category', $root_cause_dat) && $root_cause_dat['Root_Cause_Category'] == 'P-Procedures' ? 'selected' : '' }}>P-Procedures</option>
-                                                                <option value="P-Process" {{ array_key_exists('Root_Cause_Category', $root_cause_dat) && $root_cause_dat['Root_Cause_Category'] == 'P-Process' ? 'selected' : '' }}>P-Process </option>
-                                                                <option value="P-Product" {{ array_key_exists('Root_Cause_Category', $root_cause_dat) && $root_cause_dat['Root_Cause_Category'] == 'P-Product' ? 'selected' : '' }}>P-Product</option>
-                                                                <option value="S-Suppliers" {{ array_key_exists('Root_Cause_Category', $root_cause_dat) && $root_cause_dat['Root_Cause_Category'] == 'S-Suppliers' ? 'selected' : '' }}>S-Suppliers</option>
-                                                                <option value="S-Surroundings" {{ array_key_exists('Root_Cause_Category', $root_cause_dat) && $root_cause_dat['Root_Cause_Category'] == 'S-Surroundings' ? 'selected' : '' }}>S-Surroundings</option>
-                                                                <option value="S-Systems" {{ array_key_exists('Root_Cause_Category', $root_cause_dat) && $root_cause_dat['Root_Cause_Category'] == 'S-Systems' ? 'selected' : '' }}>S-Systems</option>
+                                                                </select>
+                                                            </td>
+                                                            <td>
+                                                                <select name="rootCauseData[{{ $loop->index }}][rootCauseSubCategory]"
+                                                                    id="Root_Cause_Sub_Category_Select" class="Root_Cause_Sub_Category_Select">
+                                                                    <option value="">-- Select --</option>
 
-                                                            </select>
-                                                        </td>
-                                                        <td>
-                                                            <select name="rootCause[{{ $loop->index }}][Root_Cause_Sub_Category]" id="Root_Cause_Sub_Category_Select" class="Root_Cause_Sub_Category_Select">
-                                                                <option value="">-- Select --</option>
+                                                                    <option value="Infrequent_Audits"
+                                                                        {{ array_key_exists('rootCauseSubCategory', $root_cause_dat) && $root_cause_dat['rootCauseSubCategory'] == 'Infrequent_Audits' ? 'selected' : '' }}>
+                                                                        Infrequent Audits </option>
+                                                                    <option
+                                                                        value="No_Preventive_Maintenance {{ array_key_exists('rootCauseSubCategory', $root_cause_dat) && $root_cause_dat['rootCauseSubCategory'] == 'No_Preventive_Maintenance' ? 'selected' : '' }}">
+                                                                        No Preventive Maintenance </option>
+                                                                    <option value="Other"
+                                                                        {{ array_key_exists('rootCauseSubCategory', $root_cause_dat) && $root_cause_dat['rootCauseSubCategory'] == 'Other' ? 'selected' : '' }}>
+                                                                        Other</option>
+                                                                    <option value="Poor_Maintenance_or_Design"
+                                                                        {{ array_key_exists('rootCauseSubCategory', $root_cause_dat) && $root_cause_dat['rootCauseSubCategory'] == 'Poor_Maintenance_or_Design' ? 'selected' : '' }}>
+                                                                        Poor Maintenance or Design </option>
+                                                                    <option value="Maintenance Needs Improvement"
+                                                                        {{ array_key_exists('rootCauseSubCategory', $root_cause_dat) && $root_cause_dat['rootCauseSubCategory'] == 'Maintenance Needs Improvement' ? 'selected' : '' }}>
+                                                                        Maintenance Needs Improvement </option>
+                                                                    <option value="Scheduling Problem"
+                                                                        {{ array_key_exists('rootCauseSubCategory', $root_cause_dat) && $root_cause_dat['rootCauseSubCategory'] == 'Scheduling Problem' ? 'selected' : '' }}>
+                                                                        Scheduling Problem </option>
+                                                                    <option value="System Deficiency"
+                                                                        {{ array_key_exists('rootCauseSubCategory', $root_cause_dat) && $root_cause_dat['rootCauseSubCategory'] == 'System Deficiency' ? 'selected' : '' }}>
+                                                                        System Deficiency </option>
+                                                                    <option value="Technical Error"
+                                                                        {{ array_key_exists('rootCauseSubCategory', $root_cause_dat) && $root_cause_dat['rootCauseSubCategory'] == 'Technical Error' ? 'selected' : '' }}>
+                                                                        Technical Error </option>
+                                                                    <option value="Tolerable Failure"
+                                                                        {{ array_key_exists('rootCauseSubCategory', $root_cause_dat) && $root_cause_dat['rootCauseSubCategory'] == 'Tolerable Failure' ? 'selected' : '' }}>
+                                                                        Tolerable Failure </option>
+                                                                    <option value="Calibration Issues"
+                                                                        {{ array_key_exists('rootCauseSubCategory', $root_cause_dat) && $root_cause_dat['rootCauseSubCategory'] == 'Calibration Issues' ? 'selected' : '' }}>
+                                                                        Calibration Issues </option>
 
-                                                                <option value="Infrequent_Audits" {{ array_key_exists('Root_Cause_Sub_Category', $root_cause_dat) && $root_cause_dat['Root_Cause_Sub_Category'] == 'Infrequent_Audits' ? 'selected' : '' }}>Infrequent Audits </option>
-                                                                <option value="No_Preventive_Maintenance {{ array_key_exists('Root_Cause_Sub_Category', $root_cause_dat) &&  $root_cause_dat['Root_Cause_Sub_Category'] == 'No_Preventive_Maintenance' ? 'selected' : '' }}">No Preventive Maintenance </option>
-                                                                <option value="Other" {{ array_key_exists('Root_Cause_Sub_Category', $root_cause_dat) && $root_cause_dat['Root_Cause_Sub_Category'] == 'Other' ? 'selected' : '' }}>Other</option>
-                                                                <option value="Poor_Maintenance_or_Design" {{ array_key_exists('Root_Cause_Sub_Category', $root_cause_dat) && $root_cause_dat['Root_Cause_Sub_Category'] == 'Poor_Maintenance_or_Design' ? 'selected' : '' }}>Poor Maintenance or Design </option>
-                                                                <option value="Maintenance Needs Improvement" {{ array_key_exists('Root_Cause_Sub_Category', $root_cause_dat) && $root_cause_dat['Root_Cause_Sub_Category'] == 'Maintenance Needs Improvement' ? 'selected' : '' }}>Maintenance Needs Improvement </option>
-                                                                <option value="Scheduling Problem" {{ array_key_exists('Root_Cause_Sub_Category', $root_cause_dat) && $root_cause_dat['Root_Cause_Sub_Category'] == 'Scheduling Problem' ? 'selected' : '' }}>Scheduling Problem </option>
-                                                                <option value="System Deficiency" {{ array_key_exists('Root_Cause_Sub_Category', $root_cause_dat) && $root_cause_dat['Root_Cause_Sub_Category'] == 'System Deficiency' ? 'selected' : '' }}>System Deficiency </option>
-                                                                <option value="Technical Error" {{ array_key_exists('Root_Cause_Sub_Category', $root_cause_dat) && $root_cause_dat['Root_Cause_Sub_Category'] == 'Technical Error' ? 'selected' : '' }}>Technical Error </option>
-                                                                <option value="Tolerable Failure" {{ array_key_exists('Root_Cause_Sub_Category', $root_cause_dat) && $root_cause_dat['Root_Cause_Sub_Category'] == 'Tolerable Failure' ? 'selected' : '' }}>Tolerable Failure </option>
-                                                                <option value="Calibration Issues" {{ array_key_exists('Root_Cause_Sub_Category', $root_cause_dat) && $root_cause_dat['Root_Cause_Sub_Category'] == 'Calibration Issues' ? 'selected' : '' }}>Calibration Issues </option>
+                                                                    <option value="Infrequent_Audits"
+                                                                        {{ array_key_exists('rootCauseSubCategory', $root_cause_dat) && $root_cause_dat['rootCauseSubCategory'] == 'Infrequent_Audits' ? 'selected' : '' }}>
+                                                                        Infrequent Audits </option>
+                                                                    <option
+                                                                        value="No_Preventive_Maintenance {{ array_key_exists('rootCauseSubCategory', $root_cause_dat) && $root_cause_dat['rootCauseSubCategory'] == 'No_Preventive_Maintenance' ? 'selected' : '' }}">
+                                                                        No Preventive Maintenance </option>
+                                                                    <option value="Other"
+                                                                        {{ array_key_exists('rootCauseSubCategory', $root_cause_dat) && $root_cause_dat['rootCauseSubCategory'] == 'Other' ? 'selected' : '' }}>
+                                                                        Other</option>
+                                                                    <option value="Maintenance Needs Improvement"
+                                                                        {{ array_key_exists('rootCauseSubCategory', $root_cause_dat) && $root_cause_dat['rootCauseSubCategory'] == 'Maintenance Needs Improvement' ? 'selected' : '' }}>
+                                                                        Maintenance Needs Improvement </option>
+                                                                    <option value="Scheduling Problem"
+                                                                        {{ array_key_exists('rootCauseSubCategory', $root_cause_dat) && $root_cause_dat['rootCauseSubCategory'] == 'Scheduling Problem' ? 'selected' : '' }}>
+                                                                        Scheduling Problem </option>
+                                                                    <option value="System Deficiency"
+                                                                        {{ array_key_exists('rootCauseSubCategory', $root_cause_dat) && $root_cause_dat['rootCauseSubCategory'] == 'System Deficiency' ? 'selected' : '' }}>
+                                                                        System Deficiency </option>
+                                                                    <option value="Technical Error"
+                                                                        {{ array_key_exists('rootCauseSubCategory', $root_cause_dat) && $root_cause_dat['rootCauseSubCategory'] == 'Technical Error' ? 'selected' : '' }}>
+                                                                        Technical Error </option>
+                                                                    <option value="Tolerable Failure"
+                                                                        {{ array_key_exists('rootCauseSubCategory', $root_cause_dat) && $root_cause_dat['rootCauseSubCategory'] == 'Tolerable Failure' ? 'selected' : '' }}>
+                                                                        Tolerable Failure </option>
 
-                                                                <option value="Infrequent_Audits" {{ array_key_exists('Root_Cause_Sub_Category', $root_cause_dat) && $root_cause_dat['Root_Cause_Sub_Category'] == 'Infrequent_Audits' ? 'selected' : '' }}>Infrequent Audits </option>
-                                                                <option value="No_Preventive_Maintenance {{ array_key_exists('Root_Cause_Sub_Category', $root_cause_dat) &&  $root_cause_dat['Root_Cause_Sub_Category'] == 'No_Preventive_Maintenance' ? 'selected' : '' }}">No Preventive Maintenance </option>
-                                                                <option value="Other" {{ array_key_exists('Root_Cause_Sub_Category', $root_cause_dat) && $root_cause_dat['Root_Cause_Sub_Category'] == 'Other' ? 'selected' : '' }}>Other</option>
-                                                                <option value="Maintenance Needs Improvement" {{ array_key_exists('Root_Cause_Sub_Category', $root_cause_dat) && $root_cause_dat['Root_Cause_Sub_Category'] == 'Maintenance Needs Improvement' ? 'selected' : '' }}>Maintenance Needs Improvement </option>
-                                                                <option value="Scheduling Problem" {{ array_key_exists('Root_Cause_Sub_Category', $root_cause_dat) && $root_cause_dat['Root_Cause_Sub_Category'] == 'Scheduling Problem' ? 'selected' : '' }}>Scheduling Problem </option>
-                                                                <option value="System Deficiency" {{ array_key_exists('Root_Cause_Sub_Category', $root_cause_dat) && $root_cause_dat['Root_Cause_Sub_Category'] == 'System Deficiency' ? 'selected' : '' }}>System Deficiency </option>
-                                                                <option value="Technical Error" {{ array_key_exists('Root_Cause_Sub_Category', $root_cause_dat) && $root_cause_dat['Root_Cause_Sub_Category'] == 'Technical Error' ? 'selected' : '' }}>Technical Error </option>
-                                                                <option value="Tolerable Failure" {{ array_key_exists('Root_Cause_Sub_Category', $root_cause_dat) && $root_cause_dat['Root_Cause_Sub_Category'] == 'Tolerable Failure' ? 'selected' : '' }}>Tolerable Failure </option>
 
+                                                                    <option value="Failure_to_Follow_SOP"
+                                                                        {{ array_key_exists('rootCauseSubCategory', $root_cause_dat) && $root_cause_dat['rootCauseSubCategory'] == 'Failure_to_Follow_SOP' ? 'selected' : '' }}>
+                                                                        Failure to Follow SOP</option>
+                                                                    <option value="Human_Machine_Interface"
+                                                                        {{ array_key_exists('rootCauseSubCategory', $root_cause_dat) && $root_cause_dat['rootCauseSubCategory'] == 'Human_Machine_Interface' ? 'selected' : '' }}>
+                                                                        Human-Machine Interface</option>
+                                                                    <option value="Misunderstood_Verbal_Communication"
+                                                                        {{ array_key_exists('rootCauseSubCategory', $root_cause_dat) && $root_cause_dat['rootCauseSubCategory'] == 'Misunderstood_Verbal_Communication' ? 'selected' : '' }}>
+                                                                        Misunderstood Verbal Communication </option>
+                                                                    <option value="Other"
+                                                                        {{ array_key_exists('rootCauseSubCategory', $root_cause_dat) && $root_cause_dat['rootCauseSubCategory'] == 'Other' ? 'selected' : '' }}>
+                                                                        Other</option>
+                                                                    <option value="Personnel Error"
+                                                                        {{ array_key_exists('rootCauseSubCategory', $root_cause_dat) && $root_cause_dat['rootCauseSubCategory'] == 'Personnel Error' ? 'selected' : '' }}>
+                                                                        Personnel Error</option>
+                                                                    <option value="Personnel not Qualified"
+                                                                        {{ array_key_exists('rootCauseSubCategory', $root_cause_dat) && $root_cause_dat['rootCauseSubCategory'] == 'Personnel not Qualified' ? 'selected' : '' }}>
+                                                                        Personnel not Qualified</option>
+                                                                    <option value="Practice Needed"
+                                                                        {{ array_key_exists('rootCauseSubCategory', $root_cause_dat) && $root_cause_dat['rootCauseSubCategory'] == 'Practice Needed' ? 'selected' : '' }}>
+                                                                        Practice Needed</option>
+                                                                    <option value="Teamwork Needs Improvement"
+                                                                        {{ array_key_exists('rootCauseSubCategory', $root_cause_dat) && $root_cause_dat['rootCauseSubCategory'] == 'Teamwork Needs Improvement' ? 'selected' : '' }}>
+                                                                        Teamwork Needs Improvement</option>
+                                                                    <option value="Attention"
+                                                                        {{ array_key_exists('rootCauseSubCategory', $root_cause_dat) && $root_cause_dat['rootCauseSubCategory'] == 'Attention' ? 'selected' : '' }}>
+                                                                        Attention</option>
+                                                                    <option value="Understanding"
+                                                                        {{ array_key_exists('rootCauseSubCategory', $root_cause_dat) && $root_cause_dat['rootCauseSubCategory'] == 'Understanding' ? 'selected' : '' }}>
+                                                                        Understanding</option>
+                                                                    <option value="Procedural"
+                                                                        {{ array_key_exists('rootCauseSubCategory', $root_cause_dat) && $root_cause_dat['rootCauseSubCategory'] == 'Procedural' ? 'selected' : '' }}>
+                                                                        Procedural</option>
+                                                                    <option value="Behavioral"
+                                                                        {{ array_key_exists('rootCauseSubCategory', $root_cause_dat) && $root_cause_dat['rootCauseSubCategory'] == 'Behavioral' ? 'selected' : '' }}>
+                                                                        Behavioral</option>
+                                                                    <option value="Skill"
+                                                                        {{ array_key_exists('rootCauseSubCategory', $root_cause_dat) && $root_cause_dat['rootCauseSubCategory'] == 'Skill' ? 'selected' : '' }}>
+                                                                        Skill</option>
 
-                                                                <option value="Failure_to_Follow_SOP" {{ array_key_exists('Root_Cause_Sub_Category', $root_cause_dat) && $root_cause_dat['Root_Cause_Sub_Category'] == 'Failure_to_Follow_SOP' ? 'selected' : '' }}>Failure to Follow SOP</option>
-                                                                <option value="Human_Machine_Interface" {{ array_key_exists('Root_Cause_Sub_Category', $root_cause_dat) && $root_cause_dat['Root_Cause_Sub_Category'] == 'Human_Machine_Interface' ? 'selected' : '' }}>Human-Machine Interface</option>
-                                                                <option value="Misunderstood_Verbal_Communication" {{ array_key_exists('Root_Cause_Sub_Category', $root_cause_dat) && $root_cause_dat['Root_Cause_Sub_Category'] == 'Misunderstood_Verbal_Communication' ? 'selected' : '' }}>Misunderstood Verbal Communication </option>
-                                                                <option value="Other" {{ array_key_exists('Root_Cause_Sub_Category', $root_cause_dat) &&$root_cause_dat['Root_Cause_Sub_Category'] == 'Other' ? 'selected' : '' }}>Other</option>
-                                                                <option value="Personnel Error" {{ array_key_exists('Root_Cause_Sub_Category', $root_cause_dat) && $root_cause_dat['Root_Cause_Sub_Category'] == 'Personnel Error' ? 'selected' : '' }}>Personnel Error</option>
-                                                                <option value="Personnel not Qualified" {{ array_key_exists('Root_Cause_Sub_Category', $root_cause_dat) && $root_cause_dat['Root_Cause_Sub_Category'] == 'Personnel not Qualified' ? 'selected' : '' }}>Personnel not Qualified</option>
-                                                                <option value="Practice Needed" {{ array_key_exists('Root_Cause_Sub_Category', $root_cause_dat) && $root_cause_dat['Root_Cause_Sub_Category'] == 'Practice Needed' ? 'selected' : '' }}>Practice Needed</option>
-                                                                <option value="Teamwork Needs Improvement" {{ array_key_exists('Root_Cause_Sub_Category', $root_cause_dat) && $root_cause_dat['Root_Cause_Sub_Category'] == 'Teamwork Needs Improvement' ? 'selected' : '' }}>Teamwork Needs Improvement</option>
-                                                                <option value="Attention" {{ array_key_exists('Root_Cause_Sub_Category', $root_cause_dat) && $root_cause_dat['Root_Cause_Sub_Category'] == 'Attention' ? 'selected' : '' }}>Attention</option>
-                                                                <option value="Understanding" {{ array_key_exists('Root_Cause_Sub_Category', $root_cause_dat) && $root_cause_dat['Root_Cause_Sub_Category'] == 'Understanding' ? 'selected' : '' }}>Understanding</option>
-                                                                <option value="Procedural" {{ array_key_exists('Root_Cause_Sub_Category', $root_cause_dat) && $root_cause_dat['Root_Cause_Sub_Category'] == 'Procedural' ? 'selected' : '' }}>Procedural</option>
-                                                                <option value="Behavioral" {{ array_key_exists('Root_Cause_Sub_Category', $root_cause_dat) && $root_cause_dat['Root_Cause_Sub_Category'] == 'Behavioral' ? 'selected' : '' }}>Behavioral</option>
-                                                                <option value="Skill" {{ array_key_exists('Root_Cause_Sub_Category', $root_cause_dat) && $root_cause_dat['Root_Cause_Sub_Category'] == 'Skill' ? 'selected' : '' }}>Skill</option>
+                                                                    <option value="Inattention to task"
+                                                                        {{ array_key_exists('rootCauseSubCategory', $root_cause_dat) && $root_cause_dat['rootCauseSubCategory'] == 'Inattention to task' ? 'selected' : '' }}>
+                                                                        Inattention to task</option>
+                                                                    <option value="Lack of Process"
+                                                                        {{ array_key_exists('rootCauseSubCategory', $root_cause_dat) && $root_cause_dat['rootCauseSubCategory'] == 'Lack of Process' ? 'selected' : '' }}>
+                                                                        Lack of Process</option>
+                                                                    <option value="Methods"
+                                                                        {{ array_key_exists('rootCauseSubCategory', $root_cause_dat) && $root_cause_dat['rootCauseSubCategory'] == 'Methods' ? 'selected' : '' }}>
+                                                                        Methods</option>
+                                                                    <option value="No or poor management involvement"
+                                                                        {{ array_key_exists('rootCauseSubCategory', $root_cause_dat) && $root_cause_dat['rootCauseSubCategory'] == 'No or poor management involvement' ? 'selected' : '' }}>
+                                                                        No or Poor Management Involvement</option>
+                                                                    <option value="Other"
+                                                                        {{ array_key_exists('rootCauseSubCategory', $root_cause_dat) && $root_cause_dat['rootCauseSubCategory'] == 'Other' ? 'selected' : '' }}>
+                                                                        Other</option>
+                                                                    <option value="Personnel not Qualified"
+                                                                        {{ array_key_exists('rootCauseSubCategory', $root_cause_dat) && $root_cause_dat['rootCauseSubCategory'] == 'Personnel not Qualified' ? 'selected' : '' }}>
+                                                                        Personnel not Qualified</option>
+                                                                    <option value="Poor employee involvement"
+                                                                        {{ array_key_exists('rootCauseSubCategory', $root_cause_dat) && $root_cause_dat['rootCauseSubCategory'] == 'Poor employee involvement' ? 'selected' : '' }}>
+                                                                        Poor employee involvement</option>
+                                                                    <option value="Poor recognition of hazard"
+                                                                        {{ array_key_exists('rootCauseSubCategory', $root_cause_dat) && $root_cause_dat['rootCauseSubCategory'] == 'Poor recognition of hazard' ? 'selected' : '' }}>
+                                                                        Poor recognition of hazard</option>
+                                                                    <option value="Previously identified hazards were not eliminated"
+                                                                        {{ array_key_exists('rootCauseSubCategory', $root_cause_dat) && $root_cause_dat['rootCauseSubCategory'] == 'Previously identified hazards were not eliminated' ? 'selected' : '' }}>
+                                                                        Previously identified hazards were not eliminated</option>
+                                                                    <option value="Stress demands"
+                                                                        {{ array_key_exists('rootCauseSubCategory', $root_cause_dat) && $root_cause_dat['rootCauseSubCategory'] == 'Stress demands' ? 'selected' : '' }}>
+                                                                        Stress demands</option>
+                                                                    <option value="Task hazards not guarded properly"
+                                                                        {{ array_key_exists('rootCauseSubCategory', $root_cause_dat) && $root_cause_dat['rootCauseSubCategory'] == 'Task hazards not guarded properly' ? 'selected' : '' }}>
+                                                                        Task hazards not guarded properly</option>
+                                                                    <option value="Training or education lacking"
+                                                                        {{ array_key_exists('rootCauseSubCategory', $root_cause_dat) && $root_cause_dat['rootCauseSubCategory'] == 'Training or education lacking' ? 'selected' : '' }}>
+                                                                        Training or education lacking</option>
 
-                                                                <option value="Inattention to task" {{ array_key_exists('Root_Cause_Sub_Category', $root_cause_dat) && $root_cause_dat['Root_Cause_Sub_Category'] == 'Inattention to task' ? 'selected' : '' }}>Inattention to task</option>
-                                                                <option value="Lack of Process" {{ array_key_exists('Root_Cause_Sub_Category', $root_cause_dat) && $root_cause_dat['Root_Cause_Sub_Category'] == 'Lack of Process' ? 'selected' : '' }}>Lack of Process</option>
-                                                                <option value="Methods" {{ array_key_exists('Root_Cause_Sub_Category', $root_cause_dat) && $root_cause_dat['Root_Cause_Sub_Category'] == 'Methods' ? 'selected' : '' }}>Methods</option>
-                                                                <option value="No or poor management involvement" {{ array_key_exists('Root_Cause_Sub_Category', $root_cause_dat) && $root_cause_dat['Root_Cause_Sub_Category'] == 'No or poor management involvement' ? 'selected' : '' }}>No or Poor Management Involvement</option>
-                                                                <option value="Other" {{ array_key_exists('Root_Cause_Sub_Category', $root_cause_dat) && $root_cause_dat['Root_Cause_Sub_Category'] == 'Other' ? 'selected' : '' }}>Other</option>
-                                                                <option value="Personnel not Qualified"  {{ array_key_exists('Root_Cause_Sub_Category', $root_cause_dat) && $root_cause_dat['Root_Cause_Sub_Category'] == 'Personnel not Qualified' ? 'selected' : '' }}>Personnel not Qualified</option>
-                                                                <option value="Poor employee involvement" {{ array_key_exists('Root_Cause_Sub_Category', $root_cause_dat) && $root_cause_dat['Root_Cause_Sub_Category'] == 'Poor employee involvement' ? 'selected' : '' }}>Poor employee involvement</option>
-                                                                <option value="Poor recognition of hazard" {{ array_key_exists('Root_Cause_Sub_Category', $root_cause_dat) && $root_cause_dat['Root_Cause_Sub_Category'] == 'Poor recognition of hazard' ? 'selected' : '' }}>Poor recognition of hazard</option>
-                                                                <option value="Previously identified hazards were not eliminated" {{ array_key_exists('Root_Cause_Sub_Category', $root_cause_dat) && $root_cause_dat['Root_Cause_Sub_Category'] == 'Previously identified hazards were not eliminated' ? 'selected' : '' }}>Previously identified hazards were not eliminated</option>
-                                                                <option value="Stress demands" {{ array_key_exists('Root_Cause_Sub_Category', $root_cause_dat) && $root_cause_dat['Root_Cause_Sub_Category'] == 'Stress demands' ? 'selected' : '' }}>Stress demands</option>
-                                                                <option value="Task hazards not guarded properly" {{ array_key_exists('Root_Cause_Sub_Category', $root_cause_dat) && $root_cause_dat['Root_Cause_Sub_Category'] == 'Task hazards not guarded properly' ? 'selected' : '' }}>Task hazards not guarded properly</option>
-                                                                <option value="Training or education lacking" {{ array_key_exists('Root_Cause_Sub_Category', $root_cause_dat) && $root_cause_dat['Root_Cause_Sub_Category'] == 'Training or education lacking' ? 'selected' : '' }}>Training or education lacking</option>
+                                                                    <option value="Defective equipment or tool"
+                                                                        {{ array_key_exists('rootCauseSubCategory', $root_cause_dat) && $root_cause_dat['rootCauseSubCategory'] == 'Defective equipment or tool' ? 'selected' : '' }}>
+                                                                        Defective equipment or tool</option>
+                                                                    <option value="Defective raw material"
+                                                                        {{ array_key_exists('rootCauseSubCategory', $root_cause_dat) && $root_cause_dat['rootCauseSubCategory'] == 'Defective raw material' ? 'selected' : '' }}>
+                                                                        Defective raw material</option>
+                                                                    <option value="Incorrect tool selection"
+                                                                        {{ array_key_exists('rootCauseSubCategory', $root_cause_dat) && $root_cause_dat['rootCauseSubCategory'] == 'Incorrect tool selection' ? 'selected' : '' }}>
+                                                                        Incorrect tool selection</option>
+                                                                    <option value="Lack of raw material"
+                                                                        {{ array_key_exists('rootCauseSubCategory', $root_cause_dat) && $root_cause_dat['rootCauseSubCategory'] == 'Lack of raw material' ? 'selected' : '' }}>
+                                                                        Lack of raw material</option>
+                                                                    <option value="Machine / Equipment"
+                                                                        {{ array_key_exists('rootCauseSubCategory', $root_cause_dat) && $root_cause_dat['rootCauseSubCategory'] == 'Machine / Equipment' ? 'selected' : '' }}>
+                                                                        Machine / Equipment</option>
+                                                                    <option value="Other"
+                                                                        {{ array_key_exists('rootCauseSubCategory', $root_cause_dat) && $root_cause_dat['rootCauseSubCategory'] == 'Other' ? 'selected' : '' }}>
+                                                                        Other</option>
+                                                                    <option value="Poor equipment or tool placement"
+                                                                        {{ array_key_exists('rootCauseSubCategory', $root_cause_dat) && $root_cause_dat['rootCauseSubCategory'] == 'Poor equipment or tool placement' ? 'selected' : '' }}>
+                                                                        Poor equipment or tool placement</option>
+                                                                    <option value="Poor maintenance or design"
+                                                                        {{ array_key_exists('rootCauseSubCategory', $root_cause_dat) && $root_cause_dat['rootCauseSubCategory'] == 'Poor maintenance or design' ? 'selected' : '' }}>
+                                                                        Poor maintenance or design</option>
+                                                                    <option value="Wrong type for job"
+                                                                        {{ array_key_exists('rootCauseSubCategory', $root_cause_dat) && $root_cause_dat['rootCauseSubCategory'] == 'Wrong type for job' ? 'selected' : '' }}>
+                                                                        Wrong type for job</option>
 
-                                                                <option value="Defective equipment or tool" {{ array_key_exists('Root_Cause_Sub_Category', $root_cause_dat) && $root_cause_dat['Root_Cause_Sub_Category'] == 'Defective equipment or tool' ? 'selected' : '' }}>Defective equipment or tool</option>
-                                                                <option value="Defective raw material" {{ array_key_exists('Root_Cause_Sub_Category', $root_cause_dat) && $root_cause_dat['Root_Cause_Sub_Category'] == 'Defective raw material' ? 'selected' : '' }}>Defective raw material</option>
-                                                                <option value="Incorrect tool selection" {{ array_key_exists('Root_Cause_Sub_Category', $root_cause_dat) && $root_cause_dat['Root_Cause_Sub_Category'] == 'Incorrect tool selection' ? 'selected' : '' }}>Incorrect tool selection</option>
-                                                                <option value="Lack of raw material" {{ array_key_exists('Root_Cause_Sub_Category', $root_cause_dat) && $root_cause_dat['Root_Cause_Sub_Category'] == 'Lack of raw material' ? 'selected' : '' }}>Lack of raw material</option>
-                                                                <option value="Machine / Equipment" {{ array_key_exists('Root_Cause_Sub_Category', $root_cause_dat) && $root_cause_dat['Root_Cause_Sub_Category'] == 'Machine / Equipment' ? 'selected' : '' }}>Machine / Equipment</option>
-                                                                <option value="Other" {{ array_key_exists('Root_Cause_Sub_Category', $root_cause_dat) && $root_cause_dat['Root_Cause_Sub_Category'] == 'Other' ? 'selected' : '' }}>Other</option>
-                                                                <option value="Poor equipment or tool placement" {{ array_key_exists('Root_Cause_Sub_Category', $root_cause_dat) && $root_cause_dat['Root_Cause_Sub_Category'] == 'Poor equipment or tool placement' ? 'selected' : '' }}>Poor equipment or tool placement</option>
-                                                                <option value="Poor maintenance or design" {{ array_key_exists('Root_Cause_Sub_Category', $root_cause_dat) && $root_cause_dat['Root_Cause_Sub_Category'] == 'Poor maintenance or design' ? 'selected' : '' }}>Poor maintenance or design</option>
-                                                                <option value="Wrong type for job" {{ array_key_exists('Root_Cause_Sub_Category', $root_cause_dat) && $root_cause_dat['Root_Cause_Sub_Category'] == 'Wrong type for job' ? 'selected' : '' }}>Wrong type for job</option>
+                                                                    <option value="Instruction Needs Improvement"
+                                                                        {{ array_key_exists('rootCauseSubCategory', $root_cause_dat) && $root_cause_dat['rootCauseSubCategory'] == 'Instruction Needs Improvement' ? 'selected' : '' }}>
+                                                                        Instruction Needs Improvement</option>
+                                                                    <option value="Learning Objective Needs Improvement"
+                                                                        {{ array_key_exists('rootCauseSubCategory', $root_cause_dat) && $root_cause_dat['rootCauseSubCategory'] == 'Learning Objective Needs Improvement' ? 'selected' : '' }}>
+                                                                        Learning Objective Needs Improvement</option>
+                                                                    <option value="Other"
+                                                                        {{ array_key_exists('rootCauseSubCategory', $root_cause_dat) && $root_cause_dat['rootCauseSubCategory'] == 'Other' ? 'selected' : '' }}>
+                                                                        Other</option>
+                                                                    <option value="Poor employee involvement"
+                                                                        {{ array_key_exists('rootCauseSubCategory', $root_cause_dat) && $root_cause_dat['rootCauseSubCategory'] == 'Poor employee involvement' ? 'selected' : '' }}>
+                                                                        Poor employee involvement</option>
+                                                                    <option value="Poor recognition of hazard"
+                                                                        {{ array_key_exists('rootCauseSubCategory', $root_cause_dat) && $root_cause_dat['rootCauseSubCategory'] == 'Poor recognition of hazard' ? 'selected' : '' }}>
+                                                                        Poor recognition of hazard</option>
+                                                                    <option value="Previously identified hazards were not eliminated"
+                                                                        {{ array_key_exists('rootCauseSubCategory', $root_cause_dat) && $root_cause_dat['rootCauseSubCategory'] == 'Previously identified hazards were not eliminated' ? 'selected' : '' }}>
+                                                                        Previously identified hazards were not eliminated</option>
+                                                                    <option value="Scheduling Problem"
+                                                                        {{ array_key_exists('rootCauseSubCategory', $root_cause_dat) && $root_cause_dat['rootCauseSubCategory'] == 'Scheduling Problem' ? 'selected' : '' }}>
+                                                                        Scheduling Problem</option>
+                                                                    <option value="Training or education lacking"
+                                                                        {{ array_key_exists('rootCauseSubCategory', $root_cause_dat) && $root_cause_dat['rootCauseSubCategory'] == 'Training or education lacking' ? 'selected' : '' }}>
+                                                                        Training or education lacking</option>
+                                                                    <option value="Wrong Sequence"
+                                                                        {{ array_key_exists('rootCauseSubCategory', $root_cause_dat) && $root_cause_dat['rootCauseSubCategory'] == 'Wrong Sequence' ? 'selected' : '' }}>
+                                                                        Wrong Sequence</option>
 
-                                                                <option value="Instruction Needs Improvement" {{ array_key_exists('Root_Cause_Sub_Category', $root_cause_dat) && $root_cause_dat['Root_Cause_Sub_Category'] == 'Instruction Needs Improvement' ? 'selected' : '' }}>Instruction Needs Improvement</option>
-                                                                <option value="Learning Objective Needs Improvement" {{ array_key_exists('Root_Cause_Sub_Category', $root_cause_dat) && $root_cause_dat['Root_Cause_Sub_Category'] == 'Learning Objective Needs Improvement' ? 'selected' : '' }}>Learning Objective Needs Improvement</option>
-                                                                <option value="Other" {{ array_key_exists('Root_Cause_Sub_Category', $root_cause_dat) && $root_cause_dat['Root_Cause_Sub_Category'] == 'Other' ? 'selected' : '' }}>Other</option>
-                                                                <option value="Poor employee involvement" {{ array_key_exists('Root_Cause_Sub_Category', $root_cause_dat) && $root_cause_dat['Root_Cause_Sub_Category'] == 'Poor employee involvement' ? 'selected' : '' }}>Poor employee involvement</option>
-                                                                <option value="Poor recognition of hazard" {{ array_key_exists('Root_Cause_Sub_Category', $root_cause_dat) && $root_cause_dat['Root_Cause_Sub_Category'] == 'Poor recognition of hazard' ? 'selected' : '' }}>Poor recognition of hazard</option>
-                                                                <option value="Previously identified hazards were not eliminated" {{ array_key_exists('Root_Cause_Sub_Category', $root_cause_dat) && $root_cause_dat['Root_Cause_Sub_Category'] == 'Previously identified hazards were not eliminated' ? 'selected' : '' }}>Previously identified hazards were not eliminated</option>
-                                                                <option value="Scheduling Problem" {{ array_key_exists('Root_Cause_Sub_Category', $root_cause_dat) && $root_cause_dat['Root_Cause_Sub_Category'] == 'Scheduling Problem' ? 'selected' : '' }}>Scheduling Problem</option>
-                                                                <option value="Training or education lacking" {{ array_key_exists('Root_Cause_Sub_Category', $root_cause_dat) && $root_cause_dat['Root_Cause_Sub_Category'] == 'Training or education lacking' ? 'selected' : '' }}>Training or education lacking</option>
-                                                                <option value="Wrong Sequence" {{ array_key_exists('Root_Cause_Sub_Category', $root_cause_dat) && $root_cause_dat['Root_Cause_Sub_Category'] == 'Wrong Sequence' ? 'selected' : '' }}>Wrong Sequence</option>
+                                                                    <option value="Forces of nature"
+                                                                        {{ array_key_exists('rootCauseSubCategory', $root_cause_dat) && $root_cause_dat['rootCauseSubCategory'] == 'Forces of nature' ? 'selected' : '' }}>
+                                                                        Forces of nature</option>
+                                                                    <option value="Job design or layout of work"
+                                                                        {{ array_key_exists('rootCauseSubCategory', $root_cause_dat) && $root_cause_dat['rootCauseSubCategory'] == 'Job design or layout of work' ? 'selected' : '' }}>
+                                                                        Job design or layout of work</option>
+                                                                    <option value="Orderly workplace"
+                                                                        {{ array_key_exists('rootCauseSubCategory', $root_cause_dat) && $root_cause_dat['rootCauseSubCategory'] == 'Orderly workplace' ? 'selected' : '' }}>
+                                                                        Orderly workplace</option>
+                                                                    <option value="Other"
+                                                                        {{ array_key_exists('rootCauseSubCategory', $root_cause_dat) && $root_cause_dat['rootCauseSubCategory'] == 'Other' ? 'selected' : '' }}>
+                                                                        Other</option>
+                                                                    <option value="Physical demands of the task"
+                                                                        {{ array_key_exists('rootCauseSubCategory', $root_cause_dat) && $root_cause_dat['rootCauseSubCategory'] == 'Physical demands of the task' ? 'selected' : '' }}>
+                                                                        Physical demands of the task</option>
+                                                                    <option value="Surfaces poorly maintained"
+                                                                        {{ array_key_exists('rootCauseSubCategory', $root_cause_dat) && $root_cause_dat['rootCauseSubCategory'] == 'Surfaces poorly maintained' ? 'selected' : '' }}>
+                                                                        Surfaces poorly maintained</option>
 
-                                                                <option value="Forces of nature" {{ array_key_exists('Root_Cause_Sub_Category', $root_cause_dat) && $root_cause_dat['Root_Cause_Sub_Category'] == 'Forces of nature' ? 'selected' : '' }}>Forces of nature</option>
-                                                                <option value="Job design or layout of work" {{ array_key_exists('Root_Cause_Sub_Category', $root_cause_dat) && $root_cause_dat['Root_Cause_Sub_Category'] == 'Job design or layout of work' ? 'selected' : '' }}>Job design or layout of work</option>
-                                                                <option value="Orderly workplace" {{ array_key_exists('Root_Cause_Sub_Category', $root_cause_dat) && $root_cause_dat['Root_Cause_Sub_Category'] == 'Orderly workplace' ? 'selected' : '' }}>Orderly workplace</option>
-                                                                <option value="Other" {{ array_key_exists('Root_Cause_Sub_Category', $root_cause_dat) && $root_cause_dat['Root_Cause_Sub_Category'] == 'Other' ? 'selected' : '' }}>Other</option>
-                                                                <option value="Physical demands of the task" {{ array_key_exists('Root_Cause_Sub_Category', $root_cause_dat) && $root_cause_dat['Root_Cause_Sub_Category'] == 'Physical demands of the task' ? 'selected' : '' }}>Physical demands of the task</option>
-                                                                <option value="Surfaces poorly maintained" {{ array_key_exists('Root_Cause_Sub_Category', $root_cause_dat) && $root_cause_dat['Root_Cause_Sub_Category'] == 'Surfaces poorly maintained' ? 'selected' : '' }}>Surfaces poorly maintained</option>
+                                                                    <option value="Forces of nature"
+                                                                        {{ array_key_exists('rootCauseSubCategory', $root_cause_dat) && $root_cause_dat['rootCauseSubCategory'] == 'Forces of nature' ? 'selected' : '' }}>
+                                                                        Forces of nature</option>
+                                                                    <option value="Job design or layout of work"
+                                                                        {{ array_key_exists('rootCauseSubCategory', $root_cause_dat) && $root_cause_dat['rootCauseSubCategory'] == 'Job design or layout of work' ? 'selected' : '' }}>
+                                                                        Job design or layout of work</option>
+                                                                    <option value="Orderly workplace"
+                                                                        {{ array_key_exists('rootCauseSubCategory', $root_cause_dat) && $root_cause_dat['rootCauseSubCategory'] == 'Orderly workplace' ? 'selected' : '' }}>
+                                                                        Orderly workplace</option>
+                                                                    <option value="Other"
+                                                                        {{ array_key_exists('rootCauseSubCategory', $root_cause_dat) && $root_cause_dat['rootCauseSubCategory'] == 'Other' ? 'selected' : '' }}>
+                                                                        Other</option>
+                                                                    <option value="Physical demands of the task"
+                                                                        {{ array_key_exists('rootCauseSubCategory', $root_cause_dat) && $root_cause_dat['rootCauseSubCategory'] == 'Physical demands of the task' ? 'selected' : '' }}>
+                                                                        Physical demands of the task</option>
+                                                                    <option value="Surfaces poorly maintained"
+                                                                        {{ array_key_exists('rootCauseSubCategory', $root_cause_dat) && $root_cause_dat['rootCauseSubCategory'] == 'Surfaces poorly maintained' ? 'selected' : '' }}>
+                                                                        Surfaces poorly maintained</option>
 
-                                                                <option value="Forces of nature" {{ array_key_exists('Root_Cause_Sub_Category', $root_cause_dat) && $root_cause_dat['Root_Cause_Sub_Category'] == 'Forces of nature' ? 'selected' : '' }}>Forces of nature</option>
-                                                                <option value="Job design or layout of work" {{ array_key_exists('Root_Cause_Sub_Category', $root_cause_dat) && $root_cause_dat['Root_Cause_Sub_Category'] == 'Job design or layout of work' ? 'selected' : '' }}>Job design or layout of work</option>
-                                                                <option value="Orderly workplace" {{ array_key_exists('Root_Cause_Sub_Category', $root_cause_dat) && $root_cause_dat['Root_Cause_Sub_Category'] == 'Orderly workplace' ? 'selected' : '' }}>Orderly workplace</option>
-                                                                <option value="Other" {{ array_key_exists('Root_Cause_Sub_Category', $root_cause_dat) && $root_cause_dat['Root_Cause_Sub_Category'] == 'Other' ? 'selected' : '' }}>Other</option>
-                                                                <option value="Physical demands of the task" {{ array_key_exists('Root_Cause_Sub_Category', $root_cause_dat) && $root_cause_dat['Root_Cause_Sub_Category'] == 'Physical demands of the task' ? 'selected' : '' }}>Physical demands of the task</option>
-                                                                <option value="Surfaces poorly maintained" {{ array_key_exists('Root_Cause_Sub_Category', $root_cause_dat) && $root_cause_dat['Root_Cause_Sub_Category'] == 'Surfaces poorly maintained' ? 'selected' : '' }}>Surfaces poorly maintained</option>
+                                                                    <option value="Instruction Needs Improvement"
+                                                                        {{ array_key_exists('rootCauseSubCategory', $root_cause_dat) && $root_cause_dat['rootCauseSubCategory'] == 'Instruction Needs Improvement' ? 'selected' : '' }}>
+                                                                        Instruction Needs Improvement</option>
+                                                                    <option value="Learning Objective Needs Improvement"
+                                                                        {{ array_key_exists('rootCauseSubCategory', $root_cause_dat) && $root_cause_dat['rootCauseSubCategory'] == 'Learning Objective Needs Improvement' ? 'selected' : '' }}>
+                                                                        Learning Objective Needs Improvement</option>
+                                                                    <option value="No Standard / Policy"
+                                                                        {{ array_key_exists('rootCauseSubCategory', $root_cause_dat) && $root_cause_dat['rootCauseSubCategory'] == 'No Standard / Policy' ? 'selected' : '' }}>
+                                                                        No Standard / Policy</option>
+                                                                    <option value="Other"
+                                                                        {{ array_key_exists('rootCauseSubCategory', $root_cause_dat) && $root_cause_dat['rootCauseSubCategory'] == 'Other' ? 'selected' : '' }}>
+                                                                        Other</option>
+                                                                    <option value="Wrong Revision Used"
+                                                                        {{ array_key_exists('rootCauseSubCategory', $root_cause_dat) && $root_cause_dat['rootCauseSubCategory'] == 'Wrong Revision Used' ? 'selected' : '' }}>
+                                                                        Wrong Revision Used</option>
 
-                                                                <option value="Instruction Needs Improvement" {{ array_key_exists('Root_Cause_Sub_Category', $root_cause_dat) && $root_cause_dat['Root_Cause_Sub_Category'] == 'Instruction Needs Improvement' ? 'selected' : '' }}>Instruction Needs Improvement</option>
-                                                                <option value="Learning Objective Needs Improvement" {{ array_key_exists('Root_Cause_Sub_Category', $root_cause_dat) && $root_cause_dat['Root_Cause_Sub_Category'] == 'Learning Objective Needs Improvement' ? 'selected' : '' }}>Learning Objective Needs Improvement</option>
-                                                                <option value="No Standard / Policy" {{ array_key_exists('Root_Cause_Sub_Category', $root_cause_dat) && $root_cause_dat['Root_Cause_Sub_Category'] == 'No Standard / Policy' ? 'selected' : '' }}>No Standard / Policy</option>
-                                                                <option value="Other" {{ array_key_exists('Root_Cause_Sub_Category', $root_cause_dat) && $root_cause_dat['Root_Cause_Sub_Category'] == 'Other' ? 'selected' : '' }}>Other</option>
-                                                                <option value="Wrong Revision Used" {{ array_key_exists('Root_Cause_Sub_Category', $root_cause_dat) && $root_cause_dat['Root_Cause_Sub_Category'] == 'Wrong Revision Used' ? 'selected' : '' }}>Wrong Revision Used</option>
+                                                                    <option value="No Budget"
+                                                                        {{ array_key_exists('rootCauseSubCategory', $root_cause_dat) && $root_cause_dat['rootCauseSubCategory'] == 'No Budget' ? 'selected' : '' }}>
+                                                                        No Budget</option>
+                                                                    <option value="No Preparation"
+                                                                        {{ array_key_exists('rootCauseSubCategory', $root_cause_dat) && $root_cause_dat['rootCauseSubCategory'] == 'No Preparation' ? 'selected' : '' }}>
+                                                                        No Preparation</option>
+                                                                    <option value="No Standard / Policy"
+                                                                        {{ array_key_exists('rootCauseSubCategory', $root_cause_dat) && $root_cause_dat['rootCauseSubCategory'] == 'No Standard / Policy' ? 'selected' : '' }}>
+                                                                        No Standard / Policy</option>
+                                                                    <option value="Other"
+                                                                        {{ array_key_exists('rootCauseSubCategory', $root_cause_dat) && $root_cause_dat['rootCauseSubCategory'] == 'Other' ? 'selected' : '' }}>
+                                                                        Other</option>
+                                                                    <option value="Wrong Estimation"
+                                                                        {{ array_key_exists('rootCauseSubCategory', $root_cause_dat) && $root_cause_dat['rootCauseSubCategory'] == 'Wrong Estimation' ? 'selected' : '' }}>
+                                                                        Wrong Estimation</option>
 
-                                                                <option value="No Budget" {{ array_key_exists('Root_Cause_Sub_Category', $root_cause_dat) && $root_cause_dat['Root_Cause_Sub_Category'] == 'No Budget' ? 'selected' : '' }}>No Budget</option>
-                                                                <option value="No Preparation" {{ array_key_exists('Root_Cause_Sub_Category', $root_cause_dat) && $root_cause_dat['Root_Cause_Sub_Category'] == 'No Preparation' ? 'selected' : '' }}>No Preparation</option>
-                                                                <option value="No Standard / Policy" {{ array_key_exists('Root_Cause_Sub_Category', $root_cause_dat) && $root_cause_dat['Root_Cause_Sub_Category'] == 'No Standard / Policy' ? 'selected' : '' }}>No Standard / Policy</option>
-                                                                <option value="Other" {{ array_key_exists('Root_Cause_Sub_Category', $root_cause_dat) && $root_cause_dat['Root_Cause_Sub_Category'] == 'Other' ? 'selected' : '' }}>Other</option>
-                                                                <option value="Wrong Estimation" {{ array_key_exists('Root_Cause_Sub_Category', $root_cause_dat) && $root_cause_dat['Root_Cause_Sub_Category'] == 'Wrong Estimation' ? 'selected' : '' }}>Wrong Estimation</option>
+                                                                    <option value="Learning Objective Needs Improvement"
+                                                                        {{ array_key_exists('rootCauseSubCategory', $root_cause_dat) && $root_cause_dat['rootCauseSubCategory'] == 'Learning Objective Needs Improvement' ? 'selected' : '' }}>
+                                                                        Learning Objective Needs Improvement</option>
+                                                                    <option value="Management system"
+                                                                        {{ array_key_exists('rootCauseSubCategory', $root_cause_dat) && $root_cause_dat['rootCauseSubCategory'] == 'Management system' ? 'selected' : '' }}>
+                                                                        Management system</option>
+                                                                    <option value="No or poor procedures"
+                                                                        {{ array_key_exists('rootCauseSubCategory', $root_cause_dat) && $root_cause_dat['rootCauseSubCategory'] == 'No or poor procedures' ? 'selected' : '' }}>
+                                                                        No or poor procedures</option>
+                                                                    <option value="Other"
+                                                                        {{ array_key_exists('rootCauseSubCategory', $root_cause_dat) && $root_cause_dat['rootCauseSubCategory'] == 'Other' ? 'selected' : '' }}>
+                                                                        Other</option>
+                                                                    <option value="Poor communication"
+                                                                        {{ array_key_exists('rootCauseSubCategory', $root_cause_dat) && $root_cause_dat['rootCauseSubCategory'] == 'Poor communication' ? 'selected' : '' }}>
+                                                                        Poor communication</option>
+                                                                    <option value="Poor employee involvement"
+                                                                        {{ array_key_exists('rootCauseSubCategory', $root_cause_dat) && $root_cause_dat['rootCauseSubCategory'] == 'Poor employee involvement' ? 'selected' : '' }}>
+                                                                        Poor employee involvement</option>
+                                                                    <option value="Practices are not the same as written procedures"
+                                                                        {{ array_key_exists('rootCauseSubCategory', $root_cause_dat) && $root_cause_dat['rootCauseSubCategory'] == 'Practices are not the same as written procedures' ? 'selected' : '' }}>
+                                                                        Practices are not the same as written procedures</option>
+                                                                    <option value="Previously identified hazards were not eliminated"
+                                                                        {{ array_key_exists('rootCauseSubCategory', $root_cause_dat) && $root_cause_dat['rootCauseSubCategory'] == 'Previously identified hazards were not eliminated' ? 'selected' : '' }}>
+                                                                        Previously identified hazards were not eliminated</option>
+                                                                    <option value="Procedure Difficult to Use"
+                                                                        {{ array_key_exists('rootCauseSubCategory', $root_cause_dat) && $root_cause_dat['rootCauseSubCategory'] == 'Procedure Difficult to Use' ? 'selected' : '' }}>
+                                                                        Procedure Difficult to Use</option>
+                                                                    <option value="Training or education lacking"
+                                                                        {{ array_key_exists('rootCauseSubCategory', $root_cause_dat) && $root_cause_dat['rootCauseSubCategory'] == 'Training or education lacking' ? 'selected' : '' }}>
+                                                                        Training or education lacking</option>
+                                                                    <option value="Wrong Revision Used"
+                                                                        {{ array_key_exists('rootCauseSubCategory', $root_cause_dat) && $root_cause_dat['rootCauseSubCategory'] == 'Wrong Revision Used' ? 'selected' : '' }}>
+                                                                        Wrong Revision Used</option>
 
-                                                                <option value="Learning Objective Needs Improvement" {{ array_key_exists('Root_Cause_Sub_Category', $root_cause_dat) && $root_cause_dat['Root_Cause_Sub_Category'] == 'Learning Objective Needs Improvement' ? 'selected' : '' }}>Learning Objective Needs Improvement</option>
-                                                                <option value="Management system" {{ array_key_exists('Root_Cause_Sub_Category', $root_cause_dat) && $root_cause_dat['Root_Cause_Sub_Category'] == 'Management system' ? 'selected' : '' }}>Management system</option>
-                                                                <option value="No or poor procedures" {{ array_key_exists('Root_Cause_Sub_Category', $root_cause_dat) && $root_cause_dat['Root_Cause_Sub_Category'] == 'No or poor procedures' ? 'selected' : '' }}>No or poor procedures</option>
-                                                                <option value="Other" {{ array_key_exists('Root_Cause_Sub_Category', $root_cause_dat) && $root_cause_dat['Root_Cause_Sub_Category'] == 'Other' ? 'selected' : '' }}>Other</option>
-                                                                <option value="Poor communication" {{ array_key_exists('Root_Cause_Sub_Category', $root_cause_dat) && $root_cause_dat['Root_Cause_Sub_Category'] == 'Poor communication' ? 'selected' : '' }}>Poor communication</option>
-                                                                <option value="Poor employee involvement" {{ array_key_exists('Root_Cause_Sub_Category', $root_cause_dat) && $root_cause_dat['Root_Cause_Sub_Category'] == 'Poor employee involvement' ? 'selected' : '' }}>Poor employee involvement</option>
-                                                                <option value="Practices are not the same as written procedures" {{ array_key_exists('Root_Cause_Sub_Category', $root_cause_dat) && $root_cause_dat['Root_Cause_Sub_Category'] == 'Practices are not the same as written procedures' ? 'selected' : '' }}>Practices are not the same as written procedures</option>
-                                                                <option value="Previously identified hazards were not eliminated" {{ array_key_exists('Root_Cause_Sub_Category', $root_cause_dat) && $root_cause_dat['Root_Cause_Sub_Category'] == 'Previously identified hazards were not eliminated' ? 'selected' : '' }}>Previously identified hazards were not eliminated</option>
-                                                                <option value="Procedure Difficult to Use" {{ array_key_exists('Root_Cause_Sub_Category', $root_cause_dat) && $root_cause_dat['Root_Cause_Sub_Category'] == 'Procedure Difficult to Use' ? 'selected' : '' }}>Procedure Difficult to Use</option>
-                                                                <option value="Training or education lacking" {{ array_key_exists('Root_Cause_Sub_Category', $root_cause_dat) && $root_cause_dat['Root_Cause_Sub_Category'] == 'Training or education lacking' ? 'selected' : '' }}>Training or education lacking</option>
-                                                                <option value="Wrong Revision Used" {{ array_key_exists('Root_Cause_Sub_Category', $root_cause_dat) && $root_cause_dat['Root_Cause_Sub_Category'] == 'Wrong Revision Used' ? 'selected' : '' }}>Wrong Revision Used</option>
+                                                                    <option value="Instruction Needs Improvement"
+                                                                        {{ array_key_exists('rootCauseSubCategory', $root_cause_dat) && $root_cause_dat['rootCauseSubCategory'] == 'Instruction Needs Improvement' ? 'selected' : '' }}>
+                                                                        Instruction Needs Improvement</option>
+                                                                    <option value="Learning Objective Needs Improvement"
+                                                                        {{ array_key_exists('rootCauseSubCategory', $root_cause_dat) && $root_cause_dat['rootCauseSubCategory'] == 'Learning Objective Needs Improvement' ? 'selected' : '' }}>
+                                                                        Learning Objective Needs Improvement</option>
+                                                                    <option value="Other"
+                                                                        {{ array_key_exists('rootCauseSubCategory', $root_cause_dat) && $root_cause_dat['rootCauseSubCategory'] == 'Other' ? 'selected' : '' }}>
+                                                                        Other</option>
+                                                                    <option value="Poor employee involvement"
+                                                                        {{ array_key_exists('rootCauseSubCategory', $root_cause_dat) && $root_cause_dat['rootCauseSubCategory'] == 'Poor employee involvement' ? 'selected' : '' }}>
+                                                                        Poor employee involvement</option>
+                                                                    <option value="Poor recognition of hazard"
+                                                                        {{ array_key_exists('rootCauseSubCategory', $root_cause_dat) && $root_cause_dat['rootCauseSubCategory'] == 'Poor recognition of hazard' ? 'selected' : '' }}>
+                                                                        Poor recognition of hazard</option>
+                                                                    <option value="Previously identified hazards were not eliminated"
+                                                                        {{ array_key_exists('rootCauseSubCategory', $root_cause_dat) && $root_cause_dat['rootCauseSubCategory'] == 'Previously identified hazards were not eliminated' ? 'selected' : '' }}>
+                                                                        Previously identified hazards were not eliminated</option>
+                                                                    <option value="Scheduling Problem"
+                                                                        {{ array_key_exists('rootCauseSubCategory', $root_cause_dat) && $root_cause_dat['rootCauseSubCategory'] == 'Scheduling Problem' ? 'selected' : '' }}>
+                                                                        Scheduling Problem</option>
+                                                                    <option value="Training or education lacking"
+                                                                        {{ array_key_exists('rootCauseSubCategory', $root_cause_dat) && $root_cause_dat['rootCauseSubCategory'] == 'Training or education lacking' ? 'selected' : '' }}>
+                                                                        Training or education lacking</option>
+                                                                    <option value="Wrong Sequence"
+                                                                        {{ array_key_exists('rootCauseSubCategory', $root_cause_dat) && $root_cause_dat['rootCauseSubCategory'] == 'Wrong Sequence' ? 'selected' : '' }}>
+                                                                        Wrong Sequence</option>
 
-                                                                <option value="Instruction Needs Improvement" {{ array_key_exists('Root_Cause_Sub_Category', $root_cause_dat) && $root_cause_dat['Root_Cause_Sub_Category'] == 'Instruction Needs Improvement' ? 'selected' : '' }}>Instruction Needs Improvement</option>
-                                                                <option value="Learning Objective Needs Improvement" {{ array_key_exists('Root_Cause_Sub_Category', $root_cause_dat) && $root_cause_dat['Root_Cause_Sub_Category'] == 'Learning Objective Needs Improvement' ? 'selected' : '' }}>Learning Objective Needs Improvement</option>
-                                                                <option value="Other" {{ array_key_exists('Root_Cause_Sub_Category', $root_cause_dat) && $root_cause_dat['Root_Cause_Sub_Category'] == 'Other' ? 'selected' : '' }}>Other</option>
-                                                                <option value="Poor employee involvement" {{ array_key_exists('Root_Cause_Sub_Category', $root_cause_dat) && $root_cause_dat['Root_Cause_Sub_Category'] == 'Poor employee involvement' ? 'selected' : '' }}>Poor employee involvement</option>
-                                                                <option value="Poor recognition of hazard" {{ array_key_exists('Root_Cause_Sub_Category', $root_cause_dat) && $root_cause_dat['Root_Cause_Sub_Category'] == 'Poor recognition of hazard' ? 'selected' : '' }}>Poor recognition of hazard</option>
-                                                                <option value="Previously identified hazards were not eliminated" {{ array_key_exists('Root_Cause_Sub_Category', $root_cause_dat) && $root_cause_dat['Root_Cause_Sub_Category'] == 'Previously identified hazards were not eliminated' ? 'selected' : '' }}>Previously identified hazards were not eliminated</option>
-                                                                <option value="Scheduling Problem" {{ array_key_exists('Root_Cause_Sub_Category', $root_cause_dat) && $root_cause_dat['Root_Cause_Sub_Category'] == 'Scheduling Problem' ? 'selected' : '' }}>Scheduling Problem</option>
-                                                                <option value="Training or education lacking" {{ array_key_exists('Root_Cause_Sub_Category', $root_cause_dat) && $root_cause_dat['Root_Cause_Sub_Category'] == 'Training or education lacking' ? 'selected' : '' }}>Training or education lacking</option>
-                                                                <option value="Wrong Sequence" {{ array_key_exists('Root_Cause_Sub_Category', $root_cause_dat) && $root_cause_dat['Root_Cause_Sub_Category'] == 'Wrong Sequence' ? 'selected' : '' }}>Wrong Sequence</option>
+                                                                    <option value="Defective equipment or tool"
+                                                                        {{ array_key_exists('rootCauseSubCategory', $root_cause_dat) && $root_cause_dat['rootCauseSubCategory'] == 'Defective equipment or tool' ? 'selected' : '' }}>
+                                                                        Defective equipment or tool</option>
+                                                                    <option value="OtherDefective raw material"
+                                                                        {{ array_key_exists('rootCauseSubCategory', $root_cause_dat) && $root_cause_dat['rootCauseSubCategory'] == 'Defective raw material' ? 'selected' : '' }}>
+                                                                        Defective raw material</option>
+                                                                    <option value="Incorrect tool selection"
+                                                                        {{ array_key_exists('rootCauseSubCategory', $root_cause_dat) && $root_cause_dat['rootCauseSubCategory'] == 'Incorrect tool selection' ? 'selected' : '' }}>
+                                                                        Incorrect tool selection</option>
+                                                                    <option value="Lack of raw material"
+                                                                        {{ array_key_exists('rootCauseSubCategory', $root_cause_dat) && $root_cause_dat['rootCauseSubCategory'] == 'Lack of raw material' ? 'selected' : '' }}>
+                                                                        Lack of raw material</option>
+                                                                    <option value="Machine / Equipment"
+                                                                        {{ array_key_exists('rootCauseSubCategory', $root_cause_dat) && $root_cause_dat['rootCauseSubCategory'] == 'Machine / Equipment' ? 'selected' : '' }}>
+                                                                        Machine / Equipment</option>
+                                                                    <option value="Poor equipment or tool placement"
+                                                                        {{ array_key_exists('rootCauseSubCategory', $root_cause_dat) && $root_cause_dat['rootCauseSubCategory'] == 'Poor equipment or tool placement' ? 'selected' : '' }}>
+                                                                        Poor equipment or tool placement</option>
+                                                                    <option value="Poor maintenance or design"
+                                                                        {{ array_key_exists('rootCauseSubCategory', $root_cause_dat) && $root_cause_dat['rootCauseSubCategory'] == 'Poor maintenance or design' ? 'selected' : '' }}>
+                                                                        Poor maintenance or design</option>
+                                                                    <option value="Wrong type for job"
+                                                                        {{ array_key_exists('rootCauseSubCategory', $root_cause_dat) && $root_cause_dat['rootCauseSubCategory'] == 'Wrong type for job' ? 'selected' : '' }}>
+                                                                        Wrong type for job</option>
 
-                                                                <option value="Defective equipment or tool" {{ array_key_exists('Root_Cause_Sub_Category', $root_cause_dat) && $root_cause_dat['Root_Cause_Sub_Category'] == 'Defective equipment or tool' ? 'selected' : '' }}>Defective equipment or tool</option>
-                                                                <option value="OtherDefective raw material" {{ array_key_exists('Root_Cause_Sub_Category', $root_cause_dat) && $root_cause_dat['Root_Cause_Sub_Category'] == 'Defective raw material' ? 'selected' : '' }}>Defective raw material</option>
-                                                                <option value="Incorrect tool selection" {{ array_key_exists('Root_Cause_Sub_Category', $root_cause_dat) && $root_cause_dat['Root_Cause_Sub_Category'] == 'Incorrect tool selection' ? 'selected' : '' }}>Incorrect tool selection</option>
-                                                                <option value="Lack of raw material" {{ array_key_exists('Root_Cause_Sub_Category', $root_cause_dat) && $root_cause_dat['Root_Cause_Sub_Category'] == 'Lack of raw material' ? 'selected' : '' }}>Lack of raw material</option>
-                                                                <option value="Machine / Equipment" {{ array_key_exists('Root_Cause_Sub_Category', $root_cause_dat) && $root_cause_dat['Root_Cause_Sub_Category'] == 'Machine / Equipment' ? 'selected' : '' }}>Machine / Equipment</option>
-                                                                <option value="Poor equipment or tool placement" {{ array_key_exists('Root_Cause_Sub_Category', $root_cause_dat) && $root_cause_dat['Root_Cause_Sub_Category'] == 'Poor equipment or tool placement' ? 'selected' : '' }}>Poor equipment or tool placement</option>
-                                                                <option value="Poor maintenance or design" {{ array_key_exists('Root_Cause_Sub_Category', $root_cause_dat) && $root_cause_dat['Root_Cause_Sub_Category'] == 'Poor maintenance or design' ? 'selected' : '' }}>Poor maintenance or design</option>
-                                                                <option value="Wrong type for job" {{ array_key_exists('Root_Cause_Sub_Category', $root_cause_dat) && $root_cause_dat['Root_Cause_Sub_Category'] == 'Wrong type for job' ? 'selected' : '' }}>Wrong type for job</option>
+                                                                    <option value="Infrequent Audits"
+                                                                        {{ array_key_exists('rootCauseSubCategory', $root_cause_dat) && $root_cause_dat['rootCauseSubCategory'] == 'Infrequent Audits' ? 'selected' : '' }}>
+                                                                        Infrequent Audits</option>
+                                                                    <option value="Misunderstood Verbal Communication"
+                                                                        {{ array_key_exists('rootCauseSubCategory', $root_cause_dat) && $root_cause_dat['rootCauseSubCategory'] == 'Misunderstood Verbal Communication' ? 'selected' : '' }}>
+                                                                        Misunderstood Verbal Communication</option>
+                                                                    <option value="Other"
+                                                                        {{ array_key_exists('rootCauseSubCategory', $root_cause_dat) && $root_cause_dat['rootCauseSubCategory'] == 'Other' ? 'selected' : '' }}>
+                                                                        Other</option>
+                                                                    <option value="Personnel not Qualified"
+                                                                        {{ array_key_exists('rootCauseSubCategory', $root_cause_dat) && $root_cause_dat['rootCauseSubCategory'] == 'Personnel not Qualified' ? 'selected' : '' }}>
+                                                                        Personnel not Qualified</option>
+                                                                    <option value="Shift Change Communication"
+                                                                        {{ array_key_exists('rootCauseSubCategory', $root_cause_dat) && $root_cause_dat['rootCauseSubCategory'] == 'Shift Change Communication' ? 'selected' : '' }}>
+                                                                        Shift Change Communication</option>
+                                                                    <option value="Task Not Analyzed"
+                                                                        {{ array_key_exists('rootCauseSubCategory', $root_cause_dat) && $root_cause_dat['rootCauseSubCategory'] == 'Task Not Analyzed' ? 'selected' : '' }}>
+                                                                        Task Not Analyzed</option>
 
-                                                                <option value="Infrequent Audits" {{ array_key_exists('Root_Cause_Sub_Category', $root_cause_dat) && $root_cause_dat['Root_Cause_Sub_Category'] == 'Infrequent Audits' ? 'selected' : '' }}>Infrequent Audits</option>
-                                                                <option value="Misunderstood Verbal Communication" {{ array_key_exists('Root_Cause_Sub_Category', $root_cause_dat) && $root_cause_dat['Root_Cause_Sub_Category'] == 'Misunderstood Verbal Communication' ? 'selected' : '' }}>Misunderstood Verbal Communication</option>
-                                                                <option value="Other" {{ array_key_exists('Root_Cause_Sub_Category', $root_cause_dat) && $root_cause_dat['Root_Cause_Sub_Category'] == 'Other' ? 'selected' : '' }}>Other</option>
-                                                                <option value="Personnel not Qualified" {{ array_key_exists('Root_Cause_Sub_Category', $root_cause_dat) && $root_cause_dat['Root_Cause_Sub_Category'] == 'Personnel not Qualified' ? 'selected' : '' }}>Personnel not Qualified</option>
-                                                                <option value="Shift Change Communication" {{ array_key_exists('Root_Cause_Sub_Category', $root_cause_dat) && $root_cause_dat['Root_Cause_Sub_Category'] == 'Shift Change Communication' ? 'selected' : '' }}>Shift Change Communication</option>
-                                                                <option value="Task Not Analyzed" {{ array_key_exists('Root_Cause_Sub_Category', $root_cause_dat) && $root_cause_dat['Root_Cause_Sub_Category'] == 'Task Not Analyzed' ? 'selected' : '' }}>Task Not Analyzed</option>
+                                                                    <option value="Forces of nature"
+                                                                        {{ array_key_exists('rootCauseSubCategory', $root_cause_dat) && $root_cause_dat['rootCauseSubCategory'] == 'Forces of nature' ? 'selected' : '' }}>
+                                                                        Forces of nature</option>
+                                                                    <option value="Job design or layout of work"
+                                                                        {{ array_key_exists('rootCauseSubCategory', $root_cause_dat) && $root_cause_dat['rootCauseSubCategory'] == 'Job design or layout of work' ? 'selected' : '' }}>
+                                                                        Job design or layout of work</option>
+                                                                    <option value="Orderly workplace"
+                                                                        {{ array_key_exists('rootCauseSubCategory', $root_cause_dat) && $root_cause_dat['rootCauseSubCategory'] == 'Orderly workplace' ? 'selected' : '' }}>
+                                                                        Orderly workplace</option>
+                                                                    <option value="Other"
+                                                                        {{ array_key_exists('rootCauseSubCategory', $root_cause_dat) && $root_cause_dat['rootCauseSubCategory'] == 'Other' ? 'selected' : '' }}>
+                                                                        Other</option>
+                                                                    <option value="Physical demands of the task"
+                                                                        {{ array_key_exists('rootCauseSubCategory', $root_cause_dat) && $root_cause_dat['rootCauseSubCategory'] == 'Physical demands of the task' ? 'selected' : '' }}>
+                                                                        Physical demands of the task</option>
+                                                                    <option value="Surfaces poorly maintained"
+                                                                        {{ array_key_exists('rootCauseSubCategory', $root_cause_dat) && $root_cause_dat['rootCauseSubCategory'] == 'Surfaces poorly maintained' ? 'selected' : '' }}>
+                                                                        Surfaces poorly maintained</option>
 
-                                                                <option value="Forces of nature" {{ array_key_exists('Root_Cause_Sub_Category', $root_cause_dat) && $root_cause_dat['Root_Cause_Sub_Category'] == 'Forces of nature' ? 'selected' : '' }}>Forces of nature</option>
-                                                                <option value="Job design or layout of work" {{ array_key_exists('Root_Cause_Sub_Category', $root_cause_dat) && $root_cause_dat['Root_Cause_Sub_Category'] == 'Job design or layout of work' ? 'selected' : '' }}>Job design or layout of work</option>
-                                                                <option value="Orderly workplace" {{ array_key_exists('Root_Cause_Sub_Category', $root_cause_dat) && $root_cause_dat['Root_Cause_Sub_Category'] == 'Orderly workplace' ? 'selected' : '' }}>Orderly workplace</option>
-                                                                <option value="Other" {{ array_key_exists('Root_Cause_Sub_Category', $root_cause_dat) && $root_cause_dat['Root_Cause_Sub_Category'] == 'Other' ? 'selected' : '' }}>Other</option>
-                                                                <option value="Physical demands of the task" {{ array_key_exists('Root_Cause_Sub_Category', $root_cause_dat) && $root_cause_dat['Root_Cause_Sub_Category'] == 'Physical demands of the task' ? 'selected' : '' }}>Physical demands of the task</option>
-                                                                <option value="Surfaces poorly maintained" {{ array_key_exists('Root_Cause_Sub_Category', $root_cause_dat) && $root_cause_dat['Root_Cause_Sub_Category'] == 'Surfaces poorly maintained' ? 'selected' : '' }}>Surfaces poorly maintained</option>
-
-                                                                <option value="Infrequent Audits" {{ array_key_exists('Root_Cause_Sub_Category', $root_cause_dat) && $root_cause_dat['Root_Cause_Sub_Category'] == 'Infrequent Audits' ? 'selected' : '' }}>Infrequent Audits</option>
-                                                                <option value="No Preventive Maintenance" {{ array_key_exists('Root_Cause_Sub_Category', $root_cause_dat) && $root_cause_dat['Root_Cause_Sub_Category'] == 'No Preventive Maintenance' ? 'selected' : '' }}>No Preventive Maintenance</option>
-                                                                <option value="Other" {{ array_key_exists('Root_Cause_Sub_Category', $root_cause_dat) && $root_cause_dat['Root_Cause_Sub_Category'] == 'Other' ? 'selected' : '' }}>Other</option>
-                                                                <option value="Poor maintenance or design" {{ array_key_exists('Root_Cause_Sub_Category', $root_cause_dat) && $root_cause_dat['Root_Cause_Sub_Category'] == 'Poor maintenance or design' ? 'selected' : '' }}>Poor maintenance or design</option>
-                                                                <option value="Maintenance Needs Improvement" {{ array_key_exists('Root_Cause_Sub_Category', $root_cause_dat) && $root_cause_dat['Root_Cause_Sub_Category'] == 'Maintenance Needs Improvement' ? 'selected' : '' }}>Maintenance Needs Improvement</option>
-                                                                <option value="Scheduling Problem" {{ array_key_exists('Root_Cause_Sub_Category', $root_cause_dat) && $root_cause_dat['Root_Cause_Sub_Category'] == 'Scheduling Problem' ? 'selected' : '' }}>Scheduling Problem</option>
-                                                                <option value="System Deficiency" {{ array_key_exists('Root_Cause_Sub_Category', $root_cause_dat) && $root_cause_dat['Root_Cause_Sub_Category'] == 'System Deficiency' ? 'selected' : '' }}>System Deficiency</option>
-                                                                <option value="Technical Error" {{ array_key_exists('Root_Cause_Sub_Category', $root_cause_dat) && $root_cause_dat['Root_Cause_Sub_Category'] == 'Technical Error' ? 'selected' : '' }}>Technical Error</option>
-                                                                <option value="Tolerable Failure" {{ array_key_exists('Root_Cause_Sub_Category', $root_cause_dat) && $root_cause_dat['Root_Cause_Sub_Category'] == 'Tolerable Failure' ? 'selected' : '' }}>Tolerable Failure</option>
-                                                            </select>
-                                                        </td>
-                                                        <td>
-                                                            <input type="text" class="Document_Remarks" name="rootCause[{{ $loop->index }}][ifother]" value="{{ array_key_exists('ifother', $root_cause_dat) ? $root_cause_dat['ifother']  : ''}}">
-                                                        </td>
-                                                        <td>
-                                                            <input type="text" class="Document_Remarks" name="rootCause[{{ $loop->index }}][probability]" value="{{ array_key_exists('probability', $root_cause_dat) ? $root_cause_dat['probability'] : '' }}">
-                                                        </td>
-                                                        <td>
-                                                            <input type="text" class="Document_Remarks" name="rootCause[{{ $loop->index }}][remarks]" value="{{ array_key_exists('remarks', $root_cause_dat) ? $root_cause_dat['remarks'] : '' }}">
-                                                        </td>
-                                                        <td><input type="text" class="Removebtn" name="Action[]"></td>
-                                                    </tr>
+                                                                    <option value="Infrequent Audits"
+                                                                        {{ array_key_exists('rootCauseSubCategory', $root_cause_dat) && $root_cause_dat['rootCauseSubCategory'] == 'Infrequent Audits' ? 'selected' : '' }}>
+                                                                        Infrequent Audits</option>
+                                                                    <option value="No Preventive Maintenance"
+                                                                        {{ array_key_exists('rootCauseSubCategory', $root_cause_dat) && $root_cause_dat['rootCauseSubCategory'] == 'No Preventive Maintenance' ? 'selected' : '' }}>
+                                                                        No Preventive Maintenance</option>
+                                                                    <option value="Other"
+                                                                        {{ array_key_exists('rootCauseSubCategory', $root_cause_dat) && $root_cause_dat['rootCauseSubCategory'] == 'Other' ? 'selected' : '' }}>
+                                                                        Other</option>
+                                                                    <option value="Poor maintenance or design"
+                                                                        {{ array_key_exists('rootCauseSubCategory', $root_cause_dat) && $root_cause_dat['rootCauseSubCategory'] == 'Poor maintenance or design' ? 'selected' : '' }}>
+                                                                        Poor maintenance or design</option>
+                                                                    <option value="Maintenance Needs Improvement"
+                                                                        {{ array_key_exists('rootCauseSubCategory', $root_cause_dat) && $root_cause_dat['rootCauseSubCategory'] == 'Maintenance Needs Improvement' ? 'selected' : '' }}>
+                                                                        Maintenance Needs Improvement</option>
+                                                                    <option value="Scheduling Problem"
+                                                                        {{ array_key_exists('rootCauseSubCategory', $root_cause_dat) && $root_cause_dat['rootCauseSubCategory'] == 'Scheduling Problem' ? 'selected' : '' }}>
+                                                                        Scheduling Problem</option>
+                                                                    <option value="System Deficiency"
+                                                                        {{ array_key_exists('rootCauseSubCategory', $root_cause_dat) && $root_cause_dat['rootCauseSubCategory'] == 'System Deficiency' ? 'selected' : '' }}>
+                                                                        System Deficiency</option>
+                                                                    <option value="Technical Error"
+                                                                        {{ array_key_exists('rootCauseSubCategory', $root_cause_dat) && $root_cause_dat['rootCauseSubCategory'] == 'Technical Error' ? 'selected' : '' }}>
+                                                                        Technical Error</option>
+                                                                    <option value="Tolerable Failure"
+                                                                        {{ array_key_exists('rootCauseSubCategory', $root_cause_dat) && $root_cause_dat['rootCauseSubCategory'] == 'Tolerable Failure' ? 'selected' : '' }}>
+                                                                        Tolerable Failure</option>
+                                                                </select>
+                                                            </td>
+                                                            <td>
+                                                                <input type="text" class="Document_Remarks"
+                                                                    name="rootCauseData[{{ $loop->index }}][ifOthers]"
+                                                                    value="{{ array_key_exists('ifOthers', $root_cause_dat) ? $root_cause_dat['ifOthers'] : '' }}">
+                                                            </td>
+                                                            <td>
+                                                                <input type="text" class="Document_Remarks"
+                                                                    name="rootCauseData[{{ $loop->index }}][probability]"
+                                                                    value="{{ array_key_exists('probability', $root_cause_dat) ? $root_cause_dat['probability'] : '' }}">
+                                                            </td>
+                                                            <td>
+                                                                <input type="text" class="Document_Remarks"
+                                                                    name="rootCauseData[{{ $loop->index }}][remarks]"
+                                                                    value="{{ array_key_exists('remarks', $root_cause_dat) ? $root_cause_dat['remarks'] : '' }}">
+                                                            </td>
+                                                            <td><input type="text" class="Removebtn" name="Action[]"></td>
+                                                        </tr>
                                                     @endforeach
                                                 @else
-                                                    <td><input disabled type="text" name="rootCause[0][serial]" value="1"></td>
-                                                    <td><select name="rootCause[0][Root_Cause_Category]" id="Root_Cause_Category_Select" class="Root_Cause_Category_Select">
-                                                        <option value="">-- Select --</option>
+                                                    <td><input disabled type="text" name="rootCauseData[0][serial]" value="1"></td>
+                                                    <td><select name="rootCauseData[0][rootCauseCategory]" id="Root_Cause_Category_Select"
+                                                            class="Root_Cause_Category_Select">
+                                                            <option value="">-- Select --</option>
 
-                                                        <option value="M-Machine(Equipment)">M-Machine(Equipment)</option>
-                                                        <option value="M-Maintenance">M-Maintenance</option>
-                                                        <option value="M-Man Power (physical work)">M-Man Power (physical work)</option>
-                                                        <option value="M-Management">M-Management</option>
-                                                        <option value="M-Material (Raw,Consumables etc.)">M-Material (Raw,Consumables etc.)</option>
-                                                        <option value="M-Method (Process/Inspection)">M-Method (Process/Inspection)</option>
-                                                        <option value="M-Mother Nature (Environment)">M-Mother Nature (Environment)</option>
-                                                        <option value="P-Place/Plant">P-Place/Plant</option>
-                                                        <option value="P-Policies">P-Policies</option>
-                                                        <option value="P-Price">P-Price </option>
-                                                        <option value="P-Procedures">P-Procedures</option>
-                                                        <option value="P-Process">P-Process </option>
-                                                        <option value="P-Product">P-Product</option>
-                                                        <option value="S-Suppliers">S-Suppliers</option>
-                                                        <option value="S-Surroundings">S-Surroundings</option>
-                                                        <option value="S-Systems">S-Systems</option>
+                                                            <option value="M-Machine(Equipment)">M-Machine(Equipment)</option>
+                                                            <option value="M-Maintenance">M-Maintenance</option>
+                                                            <option value="M-Man Power (physical work)">M-Man Power (physical work)</option>
+                                                            <option value="M-Management">M-Management</option>
+                                                            <option value="M-Material (Raw,Consumables etc.)">M-Material (Raw,Consumables etc.)
+                                                            </option>
+                                                            <option value="M-Method (Process/Inspection)">M-Method (Process/Inspection)</option>
+                                                            <option value="M-Mother Nature (Environment)">M-Mother Nature (Environment)</option>
+                                                            <option value="P-Place/Plant">P-Place/Plant</option>
+                                                            <option value="P-Policies">P-Policies</option>
+                                                            <option value="P-Price">P-Price </option>
+                                                            <option value="P-Procedures">P-Procedures</option>
+                                                            <option value="P-Process">P-Process </option>
+                                                            <option value="P-Product">P-Product</option>
+                                                            <option value="S-Suppliers">S-Suppliers</option>
+                                                            <option value="S-Surroundings">S-Surroundings</option>
+                                                            <option value="S-Systems">S-Systems</option>
 
-                                                    </select></td>
-                                                    <td><select name="rootCause[0][Root_Cause_Sub_Category]" id="Root_Cause_Sub_Category_Select" class="Root_Cause_Sub_Category_Select">
-                                                        <option value="">-- Select --</option>
+                                                        </select></td>
+                                                    <td><select name="rootCauseData[0][rootCauseSubCategory]" id="Root_Cause_Sub_Category_Select"
+                                                            class="Root_Cause_Sub_Category_Select">
+                                                            <option value="">-- Select --</option>
 
-                                                        <option value="infrequent_audits">Infrequent Audits </option>
-                                                        <option value="No_Preventive_Maintenance">No Preventive Maintenance </option>
-                                                        <option value="Other">Other</option>
-                                                        <option value="Poor_Maintenance_or_Design">Poor Maintenance or Design </option>
-                                                        <option value="Maintenance_Needs_Improvement">Maintenance Needs Improvement </option>
-                                                        <option value="Scheduling_Problem">Scheduling Problem </option>
-                                                        <option value="system_deficiency">System Deficiency </option>
-                                                        <option value="technical_error">Technical Error </option>
-                                                        <option value="tolerable_failure">Tolerable Failure </option>
-                                                        <option value="calibration_issues">Calibration Issues </option>
+                                                            <option value="infrequent_audits">Infrequent Audits </option>
+                                                            <option value="No_Preventive_Maintenance">No Preventive Maintenance </option>
+                                                            <option value="Other">Other</option>
+                                                            <option value="Poor_Maintenance_or_Design">Poor Maintenance or Design </option>
+                                                            <option value="Maintenance_Needs_Improvement">Maintenance Needs Improvement </option>
+                                                            <option value="Scheduling_Problem">Scheduling Problem </option>
+                                                            <option value="system_deficiency">System Deficiency </option>
+                                                            <option value="technical_error">Technical Error </option>
+                                                            <option value="tolerable_failure">Tolerable Failure </option>
+                                                            <option value="calibration_issues">Calibration Issues </option>
 
-                                                        <option value="Infrequent_Audits">Infrequent Audits</option>
-                                                        <option value="No_Preventive_Maintenance">No Preventive Maintenance </option>
-                                                        <option value="Other">Other</option>
-                                                        <option value="Maintenance_Needs_Improvement">Maintenance Needs Improvement</option>
-                                                        <option value="Scheduling_Problem ">Scheduling Problem </option>
-                                                        <option value="System_Deficiency">System Deficiency </option>
-                                                        <option value="Technical_Error ">Technical Error </option>
-                                                        <option value="Tolerable_Failure">Tolerable Failure </option>
+                                                            <option value="Infrequent_Audits">Infrequent Audits</option>
+                                                            <option value="No_Preventive_Maintenance">No Preventive Maintenance </option>
+                                                            <option value="Other">Other</option>
+                                                            <option value="Maintenance_Needs_Improvement">Maintenance Needs Improvement</option>
+                                                            <option value="Scheduling_Problem ">Scheduling Problem </option>
+                                                            <option value="System_Deficiency">System Deficiency </option>
+                                                            <option value="Technical_Error ">Technical Error </option>
+                                                            <option value="Tolerable_Failure">Tolerable Failure </option>
 
 
-                                                        <option value="Failure_to_Follow_SOP">Failure to Follow SOP</option>
-                                                        <option value="Human_Machine_Interface">Human-Machine Interface</option>
-                                                        <option value="Misunderstood_Verbal_Communication">Misunderstood Verbal Communication </option>
-                                                        <option value="Other">Other</option>
-                                                        <option value="Personnel Error">Personnel Error</option>
-                                                        <option value="Personnel not Qualified">Personnel not Qualified</option>
-                                                        <option value="Practice Needed">Practice Needed</option>
-                                                        <option value="Teamwork Needs Improvement">Teamwork Needs Improvement</option>
-                                                        <option value="Attention">Attention</option>
-                                                        <option value="Understanding">Understanding</option>
-                                                        <option value="Procedural">Procedural</option>
-                                                        <option value="Behavioral">Behavioral</option>
-                                                        <option value="Skill">Skill</option>
+                                                            <option value="Failure_to_Follow_SOP">Failure to Follow SOP</option>
+                                                            <option value="Human_Machine_Interface">Human-Machine Interface</option>
+                                                            <option value="Misunderstood_Verbal_Communication">Misunderstood Verbal Communication
+                                                            </option>
+                                                            <option value="Other">Other</option>
+                                                            <option value="Personnel Error">Personnel Error</option>
+                                                            <option value="Personnel not Qualified">Personnel not Qualified</option>
+                                                            <option value="Practice Needed">Practice Needed</option>
+                                                            <option value="Teamwork Needs Improvement">Teamwork Needs Improvement</option>
+                                                            <option value="Attention">Attention</option>
+                                                            <option value="Understanding">Understanding</option>
+                                                            <option value="Procedural">Procedural</option>
+                                                            <option value="Behavioral">Behavioral</option>
+                                                            <option value="Skill">Skill</option>
 
-                                                        <option value="Inattention to task">Inattention to task</option>
-                                                        <option value="Lack of Process">Lack of Process</option>
-                                                        <option value="Methods">Methods</option>
-                                                        <option value="No or Poor Management Involvement">No or Poor Management Involvement</option>
-                                                        <option value="Other">Other</option>
-                                                        <option value="Personnel not Qualified">Personnel not Qualified</option>
-                                                        <option value="Poor employee involvement">Poor employee involvement</option>
-                                                        <option value="Poor recognition of hazard">Poor recognition of hazard</option>
-                                                        <option value="Previously identified hazards were not eliminated">Previously identified hazards were not eliminated</option>
-                                                        <option value="Stress demands">Stress demands</option>
-                                                        <option value="Task hazards not guarded properly">Task hazards not guarded properly</option>
-                                                        <option value="Personnel not Qualified">Personnel not Qualified</option>
+                                                            <option value="Inattention to task">Inattention to task</option>
+                                                            <option value="Lack of Process">Lack of Process</option>
+                                                            <option value="Methods">Methods</option>
+                                                            <option value="No or Poor Management Involvement">No or Poor Management Involvement
+                                                            </option>
+                                                            <option value="Other">Other</option>
+                                                            <option value="Personnel not Qualified">Personnel not Qualified</option>
+                                                            <option value="Poor employee involvement">Poor employee involvement</option>
+                                                            <option value="Poor recognition of hazard">Poor recognition of hazard</option>
+                                                            <option value="Previously identified hazards were not eliminated">Previously identified
+                                                                hazards were not eliminated</option>
+                                                            <option value="Stress demands">Stress demands</option>
+                                                            <option value="Task hazards not guarded properly">Task hazards not guarded properly
+                                                            </option>
+                                                            <option value="Personnel not Qualified">Personnel not Qualified</option>
 
-                                                    </select></td>
-                                                    <td><input type="text" class="Document_Remarks" name="rootCause[0][ifother]"></td>
-                                                    <td><input type="text" class="Document_Remarks" name="rootCause[0][probability]"></td>
-                                                    <td><input type="text" class="Document_Remarks" name="rootCause[0][remarks]"></td>
+                                                        </select></td>
+                                                    <td><input type="text" class="Document_Remarks" name="rootCauseData[0][ifOthers]"></td>
+                                                    <td><input type="text" class="Document_Remarks" name="rootCauseData[0][probability]"></td>
+                                                    <td><input type="text" class="Document_Remarks" name="rootCauseData[0][remarks]"></td>
                                                     <td><input type="text" class="Removebtn" name="Action[]" readonly></td>
 
                                                 @endif
@@ -8291,477 +8675,538 @@
                                 </div>
                             </div>
 
+
                             <script>
                                 // $(document).ready(function () {
-                                    // $('#Root_Cause_Category_Select').change(function () {
-                                    $(document).on('change', '.Root_Cause_Category_Select', function () {
-                                        console.log('this', $(this))
-                                        console.log('change')
-                                        var selectedCategory = $(this).val();
-                                        var subCategorySelect = $(this).closest('td').next().find('.Root_Cause_Sub_Category_Select')
-                                        console.log('subCategorySelect', subCategorySelect)
+                                // $('#Root_Cause_Category_Select').change(function () {
+                                $(document).on('change', '.Root_Cause_Category_Select', function() {
+                                    console.log('this', $(this))
+                                    console.log('change')
+                                    var selectedCategory = $(this).val();
+                                    var subCategorySelect = $(this).closest('td').next().find('.Root_Cause_Sub_Category_Select')
+                                    console.log('subCategorySelect', subCategorySelect)
 
-                                        // Clear existing options
-                                        subCategorySelect.empty();
+                                    // Clear existing options
+                                    subCategorySelect.empty();
 
-                                        // Populate options based on selected category
-                                        if (selectedCategory === 'M-Machine(Equipment)') {
-                                            subCategorySelect.append('<option value="Infrequent_Audits">Infrequent Audits</option>');
-                                            subCategorySelect.append('<option value="No_Preventive_Maintenance">No Preventive Maintenance</option>');
-                                            subCategorySelect.append('<option value="Other">Other</option>');
-                                            subCategorySelect.append('<option value="Poor_Maintenance_or_Design">Poor Maintenance or Design</option>');
-                                            subCategorySelect.append('<option value="Maintenance Needs Improvement">Maintenance Needs Improvement</option>');
-                                            subCategorySelect.append('<option value="Scheduling Problem">Scheduling Problem</option>');
-                                            subCategorySelect.append('<option value="System Deficiency">System Deficiency</option>');
-                                            subCategorySelect.append('<option value="Technical Error">Technical Error</option>');
-                                            subCategorySelect.append('<option value="Tolerable Failure">Tolerable Failure</option>');
-                                            subCategorySelect.append('<option value="Calibration Issues">Calibration Issues</option>');
-
-
-
-                                        } else if (selectedCategory === 'M-Maintenance') {
-                                            subCategorySelect.append('<option value="Infrequent_Audits">Infrequent Audits</option>');
-                                            subCategorySelect.append('<option value="No_Preventive_Maintenance">No Preventive Maintenance</option>');
-                                            subCategorySelect.append('<option value="Other">Other</option>');
-                                            subCategorySelect.append('<option value="Maintenance Needs Improvement">Maintenance Needs Improvement</option>');
-                                            subCategorySelect.append('<option value="Scheduling Problem">Scheduling Problem</option>');
-                                            subCategorySelect.append('<option value="System Deficiency">System Deficiency</option>');
-                                            subCategorySelect.append('<option value="Technical Error">Technical Error</option>');
-                                            subCategorySelect.append('<option value="Tolerable Failure">Tolerable Failure</option>');
+                                    // Populate options based on selected category
+                                    if (selectedCategory === 'M-Machine(Equipment)') {
+                                        subCategorySelect.append('<option value="Infrequent_Audits">Infrequent Audits</option>');
+                                        subCategorySelect.append(
+                                            '<option value="No_Preventive_Maintenance">No Preventive Maintenance</option>');
+                                        subCategorySelect.append('<option value="Other">Other</option>');
+                                        subCategorySelect.append(
+                                            '<option value="Poor_Maintenance_or_Design">Poor Maintenance or Design</option>');
+                                        subCategorySelect.append(
+                                            '<option value="Maintenance Needs Improvement">Maintenance Needs Improvement</option>');
+                                        subCategorySelect.append('<option value="Scheduling Problem">Scheduling Problem</option>');
+                                        subCategorySelect.append('<option value="System Deficiency">System Deficiency</option>');
+                                        subCategorySelect.append('<option value="Technical Error">Technical Error</option>');
+                                        subCategorySelect.append('<option value="Tolerable Failure">Tolerable Failure</option>');
+                                        subCategorySelect.append('<option value="Calibration Issues">Calibration Issues</option>');
 
 
 
-                                        } else if (selectedCategory === 'M-Man Power (physical work)') {
-                                            subCategorySelect.append('<option value="Failure_to_Follow_SOP">Failure to Follow SOP</option>');
-                                            subCategorySelect.append('<option value="Human_Machine_Interface">Human-Machine Interface</option>');
-                                            subCategorySelect.append('<option value="Misunderstood_Verbal_Communication">Misunderstood Verbal Communication</option>');
-                                            subCategorySelect.append('<option value="Other">Other</option>');
-                                            subCategorySelect.append('<option value="Personnel Error">Personnel Error</option>');
-                                            subCategorySelect.append('<option value="Personnel not Qualified">Personnel not Qualified</option>');
-                                            subCategorySelect.append('<option value="Practice Needed">Practice Needed</option>');
-                                            subCategorySelect.append('<option value="Teamwork Needs Improvement">Teamwork Needs Improvement</option>');
-                                            subCategorySelect.append('<option value="Attention">Attention</option>');
-                                            subCategorySelect.append('<option value="Understanding">Understanding</option>');
-                                            subCategorySelect.append('<option value="Procedural ">Procedural </option>');
-                                            subCategorySelect.append('<option value="Behavioral">Behavioral</option>');
-                                            subCategorySelect.append('<option value="Skill">Skill</option>');
-
-                                        }
-                                        else if(selectedCategory === 'M-Management'){
-                                            subCategorySelect.append('<option value="Inattention to task">Inattention to task</option>');
-                                            subCategorySelect.append('<option value="Lack of Process">Lack of Process</option>');
-                                            subCategorySelect.append('<option value="Methods">Methods</option>');
-                                            subCategorySelect.append('<option value="No or poor management involvement">No or poor management involvement</option>');
-                                            subCategorySelect.append('<option value="Other">Other</option>');
-                                            subCategorySelect.append('<option value="Personnel not Qualified">Personnel not Qualified</option>');
-                                            subCategorySelect.append('<option value="Poor employee involvement">Poor employee involvement</option>');
-                                            subCategorySelect.append('<option value="Poor recognition of hazard">Poor recognition of hazard</option>');
-                                            subCategorySelect.append('<option value="Previously identified hazards were not eliminated">Previously identified hazards were not eliminated</option>');
-                                            subCategorySelect.append('<option value="Stress demands">Stress demands</option>');
-                                            subCategorySelect.append('<option value="Task hazards not guarded properly">Task hazards not guarded properly</option>');
-                                            subCategorySelect.append('<option value="Training or education lacking">Training or education lacking</option>');
-                                         }
-                                         else if(selectedCategory === 'M-Material (Raw,Consumables etc.)'){
-                                            subCategorySelect.append('<option value="Defective equipment or tool">Defective equipment or tool</option>');
-                                            subCategorySelect.append('<option value="Defective raw material">Defective raw material</option>');
-                                            subCategorySelect.append('<option value="Incorrect tool selection">Incorrect tool selection</option>');
-                                            subCategorySelect.append('<option value="Lack of raw material">Lack of raw material</option>');
-                                            subCategorySelect.append('<option value="Machine / Equipment">Machine / Equipment</option>');
-                                            subCategorySelect.append('<option value="Other">Other</option>');
-                                            subCategorySelect.append('<option value="Poor equipment or tool placement">Poor equipment or tool placement</option>');
-                                            subCategorySelect.append('<option value="Poor maintenance or design">Poor maintenance or design</option>');
-                                            subCategorySelect.append('<option value="Wrong type for job">Wrong type for job</option>');
-
-                                        }
-                                        else if(selectedCategory === 'M-Method (Process/Inspection)'){
-                                            subCategorySelect.append('<option value="Instruction Needs Improvement">Instruction Needs Improvement</option>');
-                                            subCategorySelect.append('<option value="Learning Objective Needs Improvement">Learning Objective Needs Improvement</option>');
-                                            subCategorySelect.append('<option value="Other">Other</option>');
-                                            subCategorySelect.append('<option value="Poor employee involvement">Poor employee involvement</option>');
-                                            subCategorySelect.append('<option value="Poor recognition of hazard">Poor recognition of hazard</option>');
-                                            subCategorySelect.append('<option value="Previously identified hazards were not eliminated">Previously identified hazards were not eliminated</option>');
-                                            subCategorySelect.append('<option value="Scheduling Problem">Scheduling Problem</option>');
-                                            subCategorySelect.append('<option value="Training or education lacking">Training or education lacking</option>');
-                                            subCategorySelect.append('<option value="Wrong Sequence">Wrong Sequence</option>');
-                                         }
-
-                                        else if(selectedCategory === 'M-Mother Nature (Environment)'){
-                                            subCategorySelect.append('<option value="Forces of nature">Forces of nature</option>');
-                                            subCategorySelect.append('<option value="Job design or layout of work">Job design or layout of work</option>');
-                                            subCategorySelect.append('<option value="Orderly workplace">Orderly workplace</option>');
-                                            subCategorySelect.append('<option value="Other">Other</option>');
-                                            subCategorySelect.append('<option value="Physical demands of the task">Physical demands of the task</option>');
-                                            subCategorySelect.append('<option value="Surfaces poorly maintained">Surfaces poorly maintained</option>');
-                                         }
-                                        else if(selectedCategory === 'P-Place/Plant'){
-                                            subCategorySelect.append('<option value="Forces of nature">Forces of nature</option>');
-                                            subCategorySelect.append('<option value="Job design or layout of work">Job design or layout of work</option>');
-                                            subCategorySelect.append('<option value="Orderly workplace">Orderly workplace</option>');
-                                            subCategorySelect.append('<option value="Other">Other</option>');
-                                            subCategorySelect.append('<option value="Physical demands of the task">Physical demands of the task</option>');
-                                            subCategorySelect.append('<option value="Surfaces poorly maintained">Surfaces poorly maintained</option>');
-
-                                        }
-                                        else if(selectedCategory === 'P-Policies'){
-                                            subCategorySelect.append('<option value="Instruction Needs Improvement">Instruction Needs Improvement</option>');
-                                            subCategorySelect.append('<option value="Learning Objective Needs Improvement">Learning Objective Needs Improvement</option>');
-                                            subCategorySelect.append('<option value="No Standard / Policy">No Standard / Policy</option>');
-                                            subCategorySelect.append('<option value="Other">Other</option>');
-                                            subCategorySelect.append('<option value="Wrong Revision Used">Wrong Revision Used</option>');
+                                    } else if (selectedCategory === 'M-Maintenance') {
+                                        subCategorySelect.append('<option value="Infrequent_Audits">Infrequent Audits</option>');
+                                        subCategorySelect.append(
+                                            '<option value="No_Preventive_Maintenance">No Preventive Maintenance</option>');
+                                        subCategorySelect.append('<option value="Other">Other</option>');
+                                        subCategorySelect.append(
+                                            '<option value="Maintenance Needs Improvement">Maintenance Needs Improvement</option>');
+                                        subCategorySelect.append('<option value="Scheduling Problem">Scheduling Problem</option>');
+                                        subCategorySelect.append('<option value="System Deficiency">System Deficiency</option>');
+                                        subCategorySelect.append('<option value="Technical Error">Technical Error</option>');
+                                        subCategorySelect.append('<option value="Tolerable Failure">Tolerable Failure</option>');
 
 
-                                        }
-                                        else if(selectedCategory === 'P-Price'){
-                                            subCategorySelect.append('<option value="No Budget">No Budget</option>');
-                                            subCategorySelect.append('<option value="No Preparation">No Preparation</option>');
-                                            subCategorySelect.append('<option value="No Standard / Policy">No Standard / Policy</option>');
-                                            subCategorySelect.append('<option value="Other">Other</option>');
-                                            subCategorySelect.append('<option value="Wrong Estimation">Wrong Estimation</option>');
+
+                                    } else if (selectedCategory === 'M-Man Power (physical work)') {
+                                        subCategorySelect.append('<option value="Failure_to_Follow_SOP">Failure to Follow SOP</option>');
+                                        subCategorySelect.append(
+                                        '<option value="Human_Machine_Interface">Human-Machine Interface</option>');
+                                        subCategorySelect.append(
+                                            '<option value="Misunderstood_Verbal_Communication">Misunderstood Verbal Communication</option>'
+                                            );
+                                        subCategorySelect.append('<option value="Other">Other</option>');
+                                        subCategorySelect.append('<option value="Personnel Error">Personnel Error</option>');
+                                        subCategorySelect.append(
+                                        '<option value="Personnel not Qualified">Personnel not Qualified</option>');
+                                        subCategorySelect.append('<option value="Practice Needed">Practice Needed</option>');
+                                        subCategorySelect.append(
+                                            '<option value="Teamwork Needs Improvement">Teamwork Needs Improvement</option>');
+                                        subCategorySelect.append('<option value="Attention">Attention</option>');
+                                        subCategorySelect.append('<option value="Understanding">Understanding</option>');
+                                        subCategorySelect.append('<option value="Procedural ">Procedural </option>');
+                                        subCategorySelect.append('<option value="Behavioral">Behavioral</option>');
+                                        subCategorySelect.append('<option value="Skill">Skill</option>');
+
+                                    } else if (selectedCategory === 'M-Management') {
+                                        subCategorySelect.append('<option value="Inattention to task">Inattention to task</option>');
+                                        subCategorySelect.append('<option value="Lack of Process">Lack of Process</option>');
+                                        subCategorySelect.append('<option value="Methods">Methods</option>');
+                                        subCategorySelect.append(
+                                            '<option value="No or poor management involvement">No or poor management involvement</option>'
+                                            );
+                                        subCategorySelect.append('<option value="Other">Other</option>');
+                                        subCategorySelect.append(
+                                        '<option value="Personnel not Qualified">Personnel not Qualified</option>');
+                                        subCategorySelect.append(
+                                            '<option value="Poor employee involvement">Poor employee involvement</option>');
+                                        subCategorySelect.append(
+                                            '<option value="Poor recognition of hazard">Poor recognition of hazard</option>');
+                                        subCategorySelect.append(
+                                            '<option value="Previously identified hazards were not eliminated">Previously identified hazards were not eliminated</option>'
+                                            );
+                                        subCategorySelect.append('<option value="Stress demands">Stress demands</option>');
+                                        subCategorySelect.append(
+                                            '<option value="Task hazards not guarded properly">Task hazards not guarded properly</option>'
+                                            );
+                                        subCategorySelect.append(
+                                            '<option value="Training or education lacking">Training or education lacking</option>');
+                                    } else if (selectedCategory === 'M-Material (Raw,Consumables etc.)') {
+                                        subCategorySelect.append(
+                                            '<option value="Defective equipment or tool">Defective equipment or tool</option>');
+                                        subCategorySelect.append('<option value="Defective raw material">Defective raw material</option>');
+                                        subCategorySelect.append(
+                                            '<option value="Incorrect tool selection">Incorrect tool selection</option>');
+                                        subCategorySelect.append('<option value="Lack of raw material">Lack of raw material</option>');
+                                        subCategorySelect.append('<option value="Machine / Equipment">Machine / Equipment</option>');
+                                        subCategorySelect.append('<option value="Other">Other</option>');
+                                        subCategorySelect.append(
+                                            '<option value="Poor equipment or tool placement">Poor equipment or tool placement</option>'
+                                            );
+                                        subCategorySelect.append(
+                                            '<option value="Poor maintenance or design">Poor maintenance or design</option>');
+                                        subCategorySelect.append('<option value="Wrong type for job">Wrong type for job</option>');
+
+                                    } else if (selectedCategory === 'M-Method (Process/Inspection)') {
+                                        subCategorySelect.append(
+                                            '<option value="Instruction Needs Improvement">Instruction Needs Improvement</option>');
+                                        subCategorySelect.append(
+                                            '<option value="Learning Objective Needs Improvement">Learning Objective Needs Improvement</option>'
+                                            );
+                                        subCategorySelect.append('<option value="Other">Other</option>');
+                                        subCategorySelect.append(
+                                            '<option value="Poor employee involvement">Poor employee involvement</option>');
+                                        subCategorySelect.append(
+                                            '<option value="Poor recognition of hazard">Poor recognition of hazard</option>');
+                                        subCategorySelect.append(
+                                            '<option value="Previously identified hazards were not eliminated">Previously identified hazards were not eliminated</option>'
+                                            );
+                                        subCategorySelect.append('<option value="Scheduling Problem">Scheduling Problem</option>');
+                                        subCategorySelect.append(
+                                            '<option value="Training or education lacking">Training or education lacking</option>');
+                                        subCategorySelect.append('<option value="Wrong Sequence">Wrong Sequence</option>');
+                                    } else if (selectedCategory === 'M-Mother Nature (Environment)') {
+                                        subCategorySelect.append('<option value="Forces of nature">Forces of nature</option>');
+                                        subCategorySelect.append(
+                                            '<option value="Job design or layout of work">Job design or layout of work</option>');
+                                        subCategorySelect.append('<option value="Orderly workplace">Orderly workplace</option>');
+                                        subCategorySelect.append('<option value="Other">Other</option>');
+                                        subCategorySelect.append(
+                                            '<option value="Physical demands of the task">Physical demands of the task</option>');
+                                        subCategorySelect.append(
+                                            '<option value="Surfaces poorly maintained">Surfaces poorly maintained</option>');
+                                    } else if (selectedCategory === 'P-Place/Plant') {
+                                        subCategorySelect.append('<option value="Forces of nature">Forces of nature</option>');
+                                        subCategorySelect.append(
+                                            '<option value="Job design or layout of work">Job design or layout of work</option>');
+                                        subCategorySelect.append('<option value="Orderly workplace">Orderly workplace</option>');
+                                        subCategorySelect.append('<option value="Other">Other</option>');
+                                        subCategorySelect.append(
+                                            '<option value="Physical demands of the task">Physical demands of the task</option>');
+                                        subCategorySelect.append(
+                                            '<option value="Surfaces poorly maintained">Surfaces poorly maintained</option>');
+
+                                    } else if (selectedCategory === 'P-Policies') {
+                                        subCategorySelect.append(
+                                            '<option value="Instruction Needs Improvement">Instruction Needs Improvement</option>');
+                                        subCategorySelect.append(
+                                            '<option value="Learning Objective Needs Improvement">Learning Objective Needs Improvement</option>'
+                                            );
+                                        subCategorySelect.append('<option value="No Standard / Policy">No Standard / Policy</option>');
+                                        subCategorySelect.append('<option value="Other">Other</option>');
+                                        subCategorySelect.append('<option value="Wrong Revision Used">Wrong Revision Used</option>');
 
 
-                                        }
-                                        else if(selectedCategory === 'P-Procedures'){
-                                            subCategorySelect.append('<option value="Learning Objective Needs Improvement">Learning Objective Needs Improvement</option>');
-                                            subCategorySelect.append('<option value="Management system">Management system</option>');
-                                            subCategorySelect.append('<option value="No or poor procedures">No or poor procedures</option>');
-                                            subCategorySelect.append('<option value="Other">Other</option>');
-                                            subCategorySelect.append('<option value="Poor communication">Poor communication</option>');
-                                            subCategorySelect.append('<option value="Poor employee involvement">Poor employee involvement</option>');
-                                            subCategorySelect.append('<option value="Practices are not the same as written procedures">Practices are not the same as written procedures</option>');
-                                            subCategorySelect.append('<option value="Previously identified hazards were not eliminated">Previously identified hazards were not eliminated</option>');
-                                            subCategorySelect.append('<option value="Procedure Difficult to Use">Procedure Difficult to Use</option>');
-                                            subCategorySelect.append('<option value="Training or education lacking">Training or education lacking</option>');
-                                            subCategorySelect.append('<option value="Wrong Revision Used">Wrong Revision Used</option>');
-
-                                        }
-
-                                        else if(selectedCategory === 'P-Process'){
-                                            subCategorySelect.append('<option value="Instruction Needs Improvement">Instruction Needs Improvement</option>');
-                                            subCategorySelect.append('<option value="Learning Objective Needs Improvement">Learning Objective Needs Improvement</option>');
-                                            subCategorySelect.append('<option value="Other">Other</option>');
-                                            subCategorySelect.append('<option value="Poor employee involvement">Poor employee involvement</option>');
-                                            subCategorySelect.append('<option value="Poor recognition of hazard">Poor recognition of hazard</option>');
-                                            subCategorySelect.append('<option value="Previously identified hazards were not eliminated">Previously identified hazards were not eliminated</option>');
-                                            subCategorySelect.append('<option value="Scheduling Problem">Scheduling Problem</option>');
-                                            subCategorySelect.append('<option value="Training or education lacking">Training or education lacking</option>');
-                                            subCategorySelect.append('<option value="Wrong Sequence">Wrong Sequence</option>');
+                                    } else if (selectedCategory === 'P-Price') {
+                                        subCategorySelect.append('<option value="No Budget">No Budget</option>');
+                                        subCategorySelect.append('<option value="No Preparation">No Preparation</option>');
+                                        subCategorySelect.append('<option value="No Standard / Policy">No Standard / Policy</option>');
+                                        subCategorySelect.append('<option value="Other">Other</option>');
+                                        subCategorySelect.append('<option value="Wrong Estimation">Wrong Estimation</option>');
 
 
-                                        }
+                                    } else if (selectedCategory === 'P-Procedures') {
+                                        subCategorySelect.append(
+                                            '<option value="Learning Objective Needs Improvement">Learning Objective Needs Improvement</option>'
+                                            );
+                                        subCategorySelect.append('<option value="Management system">Management system</option>');
+                                        subCategorySelect.append('<option value="No or poor procedures">No or poor procedures</option>');
+                                        subCategorySelect.append('<option value="Other">Other</option>');
+                                        subCategorySelect.append('<option value="Poor communication">Poor communication</option>');
+                                        subCategorySelect.append(
+                                            '<option value="Poor employee involvement">Poor employee involvement</option>');
+                                        subCategorySelect.append(
+                                            '<option value="Practices are not the same as written procedures">Practices are not the same as written procedures</option>'
+                                            );
+                                        subCategorySelect.append(
+                                            '<option value="Previously identified hazards were not eliminated">Previously identified hazards were not eliminated</option>'
+                                            );
+                                        subCategorySelect.append(
+                                            '<option value="Procedure Difficult to Use">Procedure Difficult to Use</option>');
+                                        subCategorySelect.append(
+                                            '<option value="Training or education lacking">Training or education lacking</option>');
+                                        subCategorySelect.append('<option value="Wrong Revision Used">Wrong Revision Used</option>');
 
-                                        else if(selectedCategory === 'P-Product'){
-                                            subCategorySelect.append('<option value="Defective equipment or tool">Defective equipment or tool</option>');
-                                            subCategorySelect.append('<option value="Defective raw material">Defective raw material</option>');
-                                            subCategorySelect.append('<option value="Incorrect tool selection">Incorrect tool selection</option>');
-                                            subCategorySelect.append('<option value="Lack of raw material">Lack of raw material</option>');
-                                            subCategorySelect.append('<option value="Machine / Equipment">Machine / Equipment</option>');
-                                            subCategorySelect.append('<option value="Poor equipment or tool placement">Poor equipment or tool placement</option>');
-                                            subCategorySelect.append('<option value="Poor maintenance or design">Poor maintenance or design</option>');
-                                            subCategorySelect.append('<option value="Wrong type for job">Wrong type for job</option>');
+                                    } else if (selectedCategory === 'P-Process') {
+                                        subCategorySelect.append(
+                                            '<option value="Instruction Needs Improvement">Instruction Needs Improvement</option>');
+                                        subCategorySelect.append(
+                                            '<option value="Learning Objective Needs Improvement">Learning Objective Needs Improvement</option>'
+                                            );
+                                        subCategorySelect.append('<option value="Other">Other</option>');
+                                        subCategorySelect.append(
+                                            '<option value="Poor employee involvement">Poor employee involvement</option>');
+                                        subCategorySelect.append(
+                                            '<option value="Poor recognition of hazard">Poor recognition of hazard</option>');
+                                        subCategorySelect.append(
+                                            '<option value="Previously identified hazards were not eliminated">Previously identified hazards were not eliminated</option>'
+                                            );
+                                        subCategorySelect.append('<option value="Scheduling Problem">Scheduling Problem</option>');
+                                        subCategorySelect.append(
+                                            '<option value="Training or education lacking">Training or education lacking</option>');
+                                        subCategorySelect.append('<option value="Wrong Sequence">Wrong Sequence</option>');
 
 
-                                        }
-
-                                        else if(selectedCategory === 'S-Suppliers'){
-                                            subCategorySelect.append('<option value="Infrequent Audits">Infrequent Audits</option>');
-                                            subCategorySelect.append('<option value="Misunderstood Verbal Communication">Misunderstood Verbal Communication</option>');
-                                            subCategorySelect.append('<option value="Other">Other</option>');
-                                            subCategorySelect.append('<option value="Personnel not Qualified">Personnel not Qualified</option>');
-                                            subCategorySelect.append('<option value="Shift Change Communication">Shift Change Communication</option>');
-                                            subCategorySelect.append('<option value="Task Not Analyzed">Task Not Analyzed</option>');
-                                           }
-
-                                        else if(selectedCategory === 'S-Surroundings'){
-                                            subCategorySelect.append('<option value="Forces of nature">Forces of nature</option>');
-                                            subCategorySelect.append('<option value="Job design or layout of work">Job design or layout of work</option>');
-                                            subCategorySelect.append('<option value="Orderly workplace">Orderly workplace</option>');
-                                            subCategorySelect.append('<option value="Other">Other</option>');
-                                            subCategorySelect.append('<option value="Physical demands of the task">Physical demands of the task</option>');
-                                            subCategorySelect.append('<option value="Surfaces poorly maintained">Surfaces poorly maintained</option>');
+                                    } else if (selectedCategory === 'P-Product') {
+                                        subCategorySelect.append(
+                                            '<option value="Defective equipment or tool">Defective equipment or tool</option>');
+                                        subCategorySelect.append('<option value="Defective raw material">Defective raw material</option>');
+                                        subCategorySelect.append(
+                                            '<option value="Incorrect tool selection">Incorrect tool selection</option>');
+                                        subCategorySelect.append('<option value="Lack of raw material">Lack of raw material</option>');
+                                        subCategorySelect.append('<option value="Machine / Equipment">Machine / Equipment</option>');
+                                        subCategorySelect.append(
+                                            '<option value="Poor equipment or tool placement">Poor equipment or tool placement</option>'
+                                            );
+                                        subCategorySelect.append(
+                                            '<option value="Poor maintenance or design">Poor maintenance or design</option>');
+                                        subCategorySelect.append('<option value="Wrong type for job">Wrong type for job</option>');
 
 
-                                        }
+                                    } else if (selectedCategory === 'S-Suppliers') {
+                                        subCategorySelect.append('<option value="Infrequent Audits">Infrequent Audits</option>');
+                                        subCategorySelect.append(
+                                            '<option value="Misunderstood Verbal Communication">Misunderstood Verbal Communication</option>'
+                                            );
+                                        subCategorySelect.append('<option value="Other">Other</option>');
+                                        subCategorySelect.append(
+                                        '<option value="Personnel not Qualified">Personnel not Qualified</option>');
+                                        subCategorySelect.append(
+                                            '<option value="Shift Change Communication">Shift Change Communication</option>');
+                                        subCategorySelect.append('<option value="Task Not Analyzed">Task Not Analyzed</option>');
+                                    } else if (selectedCategory === 'S-Surroundings') {
+                                        subCategorySelect.append('<option value="Forces of nature">Forces of nature</option>');
+                                        subCategorySelect.append(
+                                            '<option value="Job design or layout of work">Job design or layout of work</option>');
+                                        subCategorySelect.append('<option value="Orderly workplace">Orderly workplace</option>');
+                                        subCategorySelect.append('<option value="Other">Other</option>');
+                                        subCategorySelect.append(
+                                            '<option value="Physical demands of the task">Physical demands of the task</option>');
+                                        subCategorySelect.append(
+                                            '<option value="Surfaces poorly maintained">Surfaces poorly maintained</option>');
 
-                                        else if(selectedCategory === 'S-Systems'){
-                                            subCategorySelect.append('<option value="Infrequent Audits">Infrequent Audits</option>');
-                                            subCategorySelect.append('<option value="No Preventive Maintenance">No Preventive Maintenance</option>');
-                                            subCategorySelect.append('<option value="Other">Other</option>');
-                                            subCategorySelect.append('<option value="Poor maintenance or design">Poor maintenance or design</option>');
-                                            subCategorySelect.append('<option value="Maintenance Needs Improvement">Maintenance Needs Improvement</option>');
-                                            subCategorySelect.append('<option value="Scheduling Problem">Scheduling Problem</option>');
-                                            subCategorySelect.append('<option value="System Deficiency">System Deficiency</option>');
-                                            subCategorySelect.append('<option value="Technical Error">Technical Error</option>');
-                                            subCategorySelect.append('<option value="Tolerable Failure">Tolerable Failure</option>');
 
-                                        }
-                                    });
+                                    } else if (selectedCategory === 'S-Systems') {
+                                        subCategorySelect.append('<option value="Infrequent Audits">Infrequent Audits</option>');
+                                        subCategorySelect.append(
+                                            '<option value="No Preventive Maintenance">No Preventive Maintenance</option>');
+                                        subCategorySelect.append('<option value="Other">Other</option>');
+                                        subCategorySelect.append(
+                                            '<option value="Poor maintenance or design">Poor maintenance or design</option>');
+                                        subCategorySelect.append(
+                                            '<option value="Maintenance Needs Improvement">Maintenance Needs Improvement</option>');
+                                        subCategorySelect.append('<option value="Scheduling Problem">Scheduling Problem</option>');
+                                        subCategorySelect.append('<option value="System Deficiency">System Deficiency</option>');
+                                        subCategorySelect.append('<option value="Technical Error">Technical Error</option>');
+                                        subCategorySelect.append('<option value="Tolerable Failure">Tolerable Failure</option>');
+
+                                    }
+                                });
                                 // });
-                    </script>
+                            </script>
 
 
-                    <div class="col-12 sub-head"></div>
-                    <div class="col-12">
-                        <div class="group-input">
-                            <label for="fishbone">
-                                Fishbone or Ishikawa Diagram
-                                <button type="button" name="agenda"
-                                    onclick="addFishBone('.top-field-group', '.bottom-field-group')">+</button>
-                                <button type="button" name="agenda" class="fishbone-del-btn"
-                                    onclick="deleteFishBone('.top-field-group', '.bottom-field-group')">
-                                    <i class="fa-solid fa-trash-can"></i>
-                                </button>
-                                <span class="text-primary" data-bs-toggle="modal"
-                                    data-bs-target="#fishbone-instruction-modal"
-                                    style="font-size: 0.8rem; font-weight: 400;">
-                                    (Launch Instruction)
-                                </span>
-                            </label>
-                            <div class="fishbone-ishikawa-diagram">
-                                @if($fishbone_data && is_array($fishbone_data->data))
-                                    <div class="left-group">
-                                        <div class="grid-field field-name">
-                                            <div>Measurement</div>
-                                            <div>Materials</div>
-                                            <div>Methods</div>
-                                        </div>
-                                        <div class="top-field-group">
-                                            <div class="grid-field fields top-field">
 
-                                                @foreach ($fishbone_data->data['measurement'] as $measurement)
-                                                    <div><input type="text" name="fishbone[measurement][{{ $loop->index }}]" value="{{ $measurement }}"></div>
-                                                @endforeach
-                                                @foreach ($fishbone_data->data['materials'] as $materials)
-                                                    <div><input type="text" name="fishbone[materials][{{ $loop->index }}]" value="{{ $materials }}"></div>
-                                                @endforeach
-                                                @foreach ($fishbone_data->data['methods'] as $methods)
-                                                    <div><input type="text" name="fishbone[methods][{{ $loop->index }}]" value="{{ $methods }}"></div>
-                                                @endforeach
-                                            </div>
-                                        </div>
-                                        <div class="mid"></div>
-                                        <div class="bottom-field-group">
-                                            <div class="grid-field fields bottom-field">
-                                                @foreach ($fishbone_data->data['environment'] as $environment)
-                                                    <div><input type="text" name="fishbone[environment][{{ $loop->index }}]" value="{{ $environment }}"></div>
-                                                @endforeach
-                                                @foreach ($fishbone_data->data['manpower'] as $manpower)
-                                                    <div><input type="text" name="fishbone[manpower][{{ $loop->index }}]" value="{{ $manpower }}"></div>
-                                                @endforeach
-                                                @foreach ($fishbone_data->data['machine'] as $machine)
-                                                    <div><input type="text" name="fishbone[machine][{{ $loop->index }}]" value="{{ $machine }}"></div>
-                                                @endforeach
-                                            </div>
-                                        </div>
-                                        <div class="grid-field field-name">
-                                            <div>Environment</div>
-                                            <div>Manpower</div>
-                                            <div>Machine</div>
-                                        </div>
-                                    </div>
-                                    <div class="right-group">
-                                        <div class="field-name">
-                                            Problem Statement
-                                        </div>
-                                        <div class="field">
-                                            <textarea name="fishbone[fishbone_problem_statement]">{{ $fishbone_data->data['fishbone_problem_statement'] }}</textarea>
-                                        </div>
-                                    </div>
-                                @else
-                                    <div class="left-group">
-                                        <div class="grid-field field-name">
-                                            <div>Measurement</div>
-                                            <div>Materials</div>
-                                            <div>Methods</div>
-                                        </div>
-                                        <div class="top-field-group">
-                                            <div class="grid-field fields top-field">
-                                                <div><input type="text" name="fishbone[measurement][0]"></div>
-                                                <div><input type="text" name="fishbone[materials][0]"></div>
-                                                <div><input type="text" name="fishbone[methods][0]"></div>
-                                            </div>
-                                        </div>
-                                        <div class="mid"></div>
-                                        <div class="bottom-field-group">
-                                            <div class="grid-field fields bottom-field">
-                                                <div><input type="text" name="fishbone[environment][0]"></div>
-                                                <div><input type="text" name="fishbone[manpower][0]"></div>
-                                                <div><input type="text" name="fishbone[machine][0]"></div>
-                                            </div>
-                                        </div>
-                                        <div class="grid-field field-name">
-                                            <div>Environment</div>
-                                            <div>Manpower</div>
-                                            <div>Machine</div>
-                                        </div>
-                                    </div>
-                                    <div class="right-group">
-                                        <div class="field-name">
-                                            Problem Statement
-                                        </div>
-                                        <div class="field">
-                                            <textarea name="fishbone[fishbone_problem_statement]"></textarea>
-                                        </div>
-                                    </div>
-                                @endif
-                            </div>
+<div class="col-12 sub-head"></div>
+<div class="col-12">
+    <div class="group-input">
+        <label for="fishbone">
+            Fishbone or Ishikawa Diagram
+            <button type="button" name="agenda"
+                onclick="addFishBone('.top-field-group', '.bottom-field-group')">+</button>
+            <button type="button" name="agenda" class="fishbone-del-btn"
+                onclick="deleteFishBone('.top-field-group', '.bottom-field-group')">
+                <i class="fa-solid fa-trash-can"></i>
+            </button>
+            <span class="text-primary" data-bs-toggle="modal" data-bs-target="#fishbone-instruction-modal"
+                style="font-size: 0.8rem; font-weight: 400;">
+                (Launch Instruction)
+            </span>
+        </label>
+        <div class="fishbone-ishikawa-diagram">
+            @if ($fishbone_data && is_array($fishbone_data))
+                <div class="left-group">
+                    <div class="grid-field field-name">
+                        <div>Measurement</div>
+                        <div>Materials</div>
+                        <div>Methods</div>
+                    </div>
+                    <div class="top-field-group">
+                        <div class="grid-field fields top-field">
+
+                            @foreach ($fishbone_data['measurement'] as $measurement)
+                                <div><input type="text" name="fishbone[measurement][{{ $loop->index }}]"
+                                        value="{{ $measurement }}"></div>
+                            @endforeach
+                            @foreach ($fishbone_data['materials'] as $materials)
+                                <div><input type="text" name="fishbone[materials][{{ $loop->index }}]"
+                                        value="{{ $materials }}"></div>
+                            @endforeach
+                            @foreach ($fishbone_data['methods'] as $methods)
+                                <div><input type="text" name="fishbone[methods][{{ $loop->index }}]"
+                                        value="{{ $methods }}"></div>
+                            @endforeach
                         </div>
                     </div>
-                    <div class="col-12 sub-head"></div>
-                    <div class="col-12">
-                        <div class="group-input">
-                            <label for="why-why-chart">
-                                Why-Why Chart
-                                <span class="text-primary" data-bs-toggle="modal"
-                                    data-bs-target="#why_chart-instruction-modal"
-                                    style="font-size: 0.8rem; font-weight: 400;">
-                                    (Launch Instruction)
-                                </span>
-                            </label>
-                            <div class="why-why-chart">
-                                <table class="table table-bordered">
-                                    <tbody>
-                                        @if($why_data && is_array($why_data->data))
-                                            <tr style="background: #f4bb22">
-                                                <th style="width:150px;">Problem Statement :</th>
-                                                <td>
-                                                    <textarea name="why[problem_statement]">{{ $why_data->data['problem_statement'] }}</textarea>
-                                                </td>
-                                            </tr>
-                                            <tr class="why-row">
-                                                <th style="width:150px; color: #393cd4;">
-                                                    Why 1 <span onclick="addWhyField('why_1_block', 'why[why_1][index]')">+</span>
-                                                </th>
-                                                <td>
-                                                    @foreach ($why_data->data['why_1'] as $why_one)
-                                                    <div class="why_1_block">
-                                                        <textarea name="why[why_1][{{ $loop->index }}]">{{ $why_one }}</textarea>
-                                                    </div>
-                                                    @endforeach
-                                                </td>
-                                            </tr>
-                                            <tr class="why-row">
-                                                <th style="width:150px; color: #393cd4;">
-                                                    Why 2 <span onclick="addWhyField('why_2_block', 'why[why_2][index]')">+</span>
-                                                </th>
-                                                <td>
-                                                    @foreach ($why_data->data['why_2'] as $why_two)
-                                                        <div class="why_2_block">
-                                                            <textarea name="why[why_2][{{ $loop->index }}]">{{ $why_two }}</textarea>
-                                                        </div>
-                                                    @endforeach
-                                                </td>
-                                            </tr>
-                                            <tr class="why-row">
-                                                <th style="width:150px; color: #393cd4;">
-                                                    Why 3 <span onclick="addWhyField('why_3_block', 'why[why_3][index]')">+</span>
-                                                </th>
-                                                <td>
-                                                    @foreach ($why_data->data['why_3'] as $why_three)
-                                                        <div class="why_3_block">
-                                                            <textarea name="why[why_3][{{ $loop->index }}]">{{ $why_three }}</textarea>
-                                                        </div>
-                                                    @endforeach
-                                                </td>
-                                            </tr>
-                                            <tr class="why-row">
-                                                <th style="width:150px; color: #393cd4;">
-                                                    Why 4 <span onclick="addWhyField('why_4_block', 'why[why_4][index]')">+</span>
-                                                </th>
-                                                <td>
-                                                    @foreach ($why_data->data['why_4'] as $why_four)
-                                                        <div class="why_4_block">
-                                                            <textarea name="why[why_4][{{ $loop->index }}]">{{ $why_four }}</textarea>
-                                                        </div>
-                                                    @endforeach
-                                                </td>
-                                            </tr>
-                                            <tr class="why-row">
-                                                <th style="width:150px; color: #393cd4;">
-                                                    Why 5 <span onclick="addWhyField('why_5_block', 'why[why_5][index]')">+</span>
-                                                </th>
-                                                <td>
-                                                    @foreach ($why_data->data['why_5'] as $why_five)
-                                                        <div class="why_5_block">
-                                                            <textarea name="why[why_5][{{ $loop->index }}]">{{ $why_five }}</textarea>
-                                                        </div>
-                                                    @endforeach
-                                                </td>
-                                            </tr>
-                                            <tr style="background: #0080006b;">
-                                                <th style="width:150px;">Root Cause :</th>
-                                                <td>
-                                                    <textarea name="why[root-cause]">{{ $why_data->data['root-cause'] }}</textarea>
-                                                </td>
-                                            </tr>
-                                        @else
-                                            <tr style="background: #f4bb22">
-                                                <th style="width:150px;">Problem Statement :</th>
-                                                <td>
-                                                    <textarea name="why[problem_statement]"></textarea>
-                                                </td>
-                                            </tr>
-                                            <tr class="why-row">
-                                                <th style="width:150px; color: #393cd4;">
-                                                    Why 1 <span onclick="addWhyField('why_1_block', 'why[why_1][]')">+</span>
-                                                </th>
-                                                <td>
-                                                    <div class="why_1_block">
-                                                        <textarea name="why[why_1][0]"></textarea>
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                            <tr class="why-row">
-                                                <th style="width:150px; color: #393cd4;">
-                                                    Why 2 <span onclick="addWhyField('why_2_block', 'why[why_2][]')">+</span>
-                                                </th>
-                                                <td>
-                                                    <div class="why_2_block">
-                                                        <textarea name="why[why_2][0]"></textarea>
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                            <tr class="why-row">
-                                                <th style="width:150px; color: #393cd4;">
-                                                    Why 3 <span onclick="addWhyField('why_3_block', 'why[why_3][]')">+</span>
-                                                </th>
-                                                <td>
-                                                    <div class="why_3_block">
-                                                        <textarea name="why[why_3][0]"></textarea>
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                            <tr class="why-row">
-                                                <th style="width:150px; color: #393cd4;">
-                                                    Why 4 <span onclick="addWhyField('why_4_block', 'why[why_4][]')">+</span>
-                                                </th>
-                                                <td>
-                                                    <div class="why_4_block">
-                                                        <textarea name="why[why_4][0]"></textarea>
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                            <tr class="why-row">
-                                                <th style="width:150px; color: #393cd4;">
-                                                    Why 5 <span onclick="addWhyField('why_5_block', 'why[why_5][]')">+</span>
-                                                </th>
-                                                <td>
-                                                    <div class="why_5_block">
-                                                        <textarea name="why[why_5][0]"></textarea>
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                            <tr style="background: #0080006b;">
-                                                <th style="width:150px;">Root Cause :</th>
-                                                <td>
-                                                    <textarea name="why[root-cause]"></textarea>
-                                                </td>
-                                            </tr>
-                                        @endif
-                                    </tbody>
-                                </table>
-                            </div>
+                    <div class="mid"></div>
+                    <div class="bottom-field-group">
+                        <div class="grid-field fields bottom-field">
+                            @foreach ($fishbone_data['environment'] as $environment)
+                                <div><input type="text" name="fishbone[environment][{{ $loop->index }}]"
+                                        value="{{ $environment }}"></div>
+                            @endforeach
+                            @foreach ($fishbone_data['manpower'] as $manpower)
+                                <div><input type="text" name="fishbone[manpower][{{ $loop->index }}]"
+                                        value="{{ $manpower }}"></div>
+                            @endforeach
+                            @foreach ($fishbone_data['machine'] as $machine)
+                                <div><input type="text" name="fishbone[machine][{{ $loop->index }}]"
+                                        value="{{ $machine }}"></div>
+                            @endforeach
                         </div>
                     </div>
+                    <div class="grid-field field-name">
+                        <div>Environment</div>
+                        <div>Manpower</div>
+                        <div>Machine</div>
+                    </div>
+                </div>
+                <div class="right-group">
+                    <div class="field-name">
+                        Problem Statement
+                    </div>
+                    <div class="field">
+                        <textarea name="fishbone[fishbone_problem_statement]">{{ $fishbone_data['fishbone_problem_statement'] }}</textarea>
+                    </div>
+                </div>
+            @else
+                <div class="left-group">
+                    <div class="grid-field field-name">
+                        <div>Measurement</div>
+                        <div>Materials</div>
+                        <div>Methods</div>
+                    </div>
+                    <div class="top-field-group">
+                        <div class="grid-field fields top-field">
+                            <div><input type="text" name="fishbone[measurement][0]"></div>
+                            <div><input type="text" name="fishbone[materials][0]"></div>
+                            <div><input type="text" name="fishbone[methods][0]"></div>
+                        </div>
+                    </div>
+                    <div class="mid"></div>
+                    <div class="bottom-field-group">
+                        <div class="grid-field fields bottom-field">
+                            <div><input type="text" name="fishbone[environment][0]"></div>
+                            <div><input type="text" name="fishbone[manpower][0]"></div>
+                            <div><input type="text" name="fishbone[machine][0]"></div>
+                        </div>
+                    </div>
+                    <div class="grid-field field-name">
+                        <div>Environment</div>
+                        <div>Manpower</div>
+                        <div>Machine</div>
+                    </div>
+                </div>
+                <div class="right-group">
+                    <div class="field-name">
+                        Problem Statement
+                    </div>
+                    <div class="field">
+                        <textarea name="fishbone[fishbone_problem_statement]"></textarea>
+                    </div>
+                </div>
+            @endif
+        </div>
+    </div>
+</div>
+<div class="col-12 sub-head"></div>
+<div class="col-12">
+    <div class="group-input">
+        <label for="why-why-chart">
+            Why-Why Chart
+            <span class="text-primary" data-bs-toggle="modal" data-bs-target="#why_chart-instruction-modal"
+                style="font-size: 0.8rem; font-weight: 400;">
+                (Launch Instruction)
+            </span>
+        </label>
+        <div class="why-why-chart">
+            <table class="table table-bordered">
+                <tbody>
+                    @if ($why_data && is_array($why_data))
+                        <tr style="background: #f4bb22">
+                            <th style="width:150px;">Problem Statement :</th>
+                            <td>
+                                <textarea name="why[problem_statement]">{{ $why_data['problem_statement'] }}</textarea>
+                            </td>
+                        </tr>
+                        <tr class="why-row">
+                            <th style="width:150px; color: #393cd4;">
+                                Why 1 <span onclick="addWhyField('why_1_block', 'why[why_1][index]')">+</span>
+                            </th>
+                            <td>
+                                @foreach ($why_data['why_1'] as $why_one)
+                                    <div class="why_1_block whyblock-bottom">
+                                        <textarea name="why[why_1][{{ $loop->index }}]">{{ $why_one }}</textarea>
+                                    </div>
+                                @endforeach
+                            </td>
+                        </tr>
+                        <tr class="why-row">
+                            <th style="width:150px; color: #393cd4;">
+                                Why 2 <span onclick="addWhyField('why_2_block', 'why[why_2][index]')">+</span>
+                            </th>
+                            <td>
+                                @foreach ($why_data['why_2'] as $why_two)
+                                    <div class="why_2_block  whyblock-bottom">
+                                        <textarea name="why[why_2][{{ $loop->index }}]">{{ $why_two }}</textarea>
+                                    </div>
+                                @endforeach
+                            </td>
+                        </tr>
+                        <tr class="why-row">
+                            <th style="width:150px; color: #393cd4;">
+                                Why 3 <span onclick="addWhyField('why_3_block', 'why[why_3][index]')">+</span>
+                            </th>
+                            <td>
+                                @foreach ($why_data['why_3'] as $why_three)
+                                    <div class="why_3_block whyblock-bottom">
+                                        <textarea name="why[why_3][{{ $loop->index }}]">{{ $why_three }}</textarea>
+                                    </div>
+                                @endforeach
+                            </td>
+                        </tr>
+                        <tr class="why-row">
+                            <th style="width:150px; color: #393cd4;">
+                                Why 4 <span onclick="addWhyField('why_4_block', 'why[why_4][index]')">+</span>
+                            </th>
+                            <td>
+                                @foreach ($why_data['why_4'] as $why_four)
+                                    <div class="why_4_block whyblock-bottom">
+                                        <textarea name="why[why_4][{{ $loop->index }}]">{{ $why_four }}</textarea>
+                                    </div>
+                                @endforeach
+                            </td>
+                        </tr>
+                        <tr class="why-row">
+                            <th style="width:150px; color: #393cd4;">
+                                Why 5 <span onclick="addWhyField('why_5_block', 'why[why_5][index]')">+</span>
+                            </th>
+                            <td>
+                                @foreach ($why_data['why_5'] as $why_five)
+                                    <div class="why_5_block whyblock-bottom">
+                                        <textarea name="why[why_5][{{ $loop->index }}]">{{ $why_five }}</textarea>
+                                    </div>
+                                @endforeach
+                            </td>
+                        </tr>
+                        <tr style="background: #0080006b;">
+                            <th style="width:150px;">Root Cause :</th>
+                            <td>
+                                <textarea name="why[root-cause]">{{ $why_data['root-cause'] }}</textarea>
+                            </td>
+                        </tr>
+                    @else
+                        <tr style="background: #f4bb22">
+                            <th style="width:150px;">Problem Statement :</th>
+                            <td>
+                                <textarea name="why[problem_statement]"></textarea>
+                            </td>
+                        </tr>
+                        <tr class="why-row">
+                            <th style="width:150px; color: #393cd4;">
+                                Why 1 <span onclick="addWhyField('why_1_block', 'why[why_1][]')">+</span>
+                            </th>
+                            <td>
+                                <div class="why_1_block">
+                                    <textarea name="why[why_1][0]"></textarea>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr class="why-row">
+                            <th style="width:150px; color: #393cd4;">
+                                Why 2 <span onclick="addWhyField('why_2_block', 'why[why_2][]')">+</span>
+                            </th>
+                            <td>
+                                <div class="why_2_block">
+                                    <textarea name="why[why_2][0]"></textarea>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr class="why-row">
+                            <th style="width:150px; color: #393cd4;">
+                                Why 3 <span onclick="addWhyField('why_3_block', 'why[why_3][]')">+</span>
+                            </th>
+                            <td>
+                                <div class="why_3_block">
+                                    <textarea name="why[why_3][0]"></textarea>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr class="why-row">
+                            <th style="width:150px; color: #393cd4;">
+                                Why 4 <span onclick="addWhyField('why_4_block', 'why[why_4][]')">+</span>
+                            </th>
+                            <td>
+                                <div class="why_4_block">
+                                    <textarea name="why[why_4][0]"></textarea>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr class="why-row">
+                            <th style="width:150px; color: #393cd4;">
+                                Why 5 <span onclick="addWhyField('why_5_block', 'why[why_5][]')">+</span>
+                            </th>
+                            <td>
+                                <div class="why_5_block">
+                                    <textarea name="why[why_5][0]"></textarea>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr style="background: #0080006b;">
+                            <th style="width:150px;">Root Cause :</th>
+                            <td>
+                                <textarea name="why[root-cause]"></textarea>
+                            </td>
+                        </tr>
+                    @endif
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
                     <div class="sub-head"></div>
                     <div class="col-12">
                         <div class="group-input">
@@ -10390,12 +10835,12 @@
                         Non Conformance Extension
                     </div>
 
-                    @if($failureInvestigationExtension && $failureInvestigationExtension->dev_proposed_due_date)
+                    @if($NonConformanceExtension && $NonConformanceExtension->dev_proposed_due_date)
                         <div class="col-lg-6 new-date-data-field">
                             <div class="group-input input-date">
                                 <label for="Audit Schedule End Date">Proposed Due Date (Non Conformance)</label>
                                 <div class="calenderauditee">
-                                    <input type="text" id="dev_proposed_due_date" id="dev_proposed_due_date" readonly value="{{Helpers::getdateFormat($failureInvestigationExtension->dev_proposed_due_date)}}" />
+                                    <input type="text" id="dev_proposed_due_date" id="dev_proposed_due_date" readonly value="{{Helpers::getdateFormat($NonConformanceExtension->dev_proposed_due_date)}}" />
                                 </div>
                             </div>
                         </div>
@@ -10411,12 +10856,12 @@
                     @endif
 
 
-                    @if($failureInvestigationExtension && $failureInvestigationExtension->dev_extension_justification)
+                    @if($NonConformanceExtension && $NonConformanceExtension->dev_extension_justification)
                         <div class="col-md-12 mb-3">
                             <div class="group-input">
                                 <label for="Extension_Justification_non_conformances">Extension Justification (Non Conformance)</label>
                                 <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
-                                <textarea name="dev_extension_justification" placeholder="Non Conformance Extension Justification" disabled id="dev_extension_justification" value="{{$failureInvestigationExtension->dev_extension_justification}}">{{$failureInvestigationExtension->dev_extension_justification}}</textarea>
+                                <textarea name="dev_extension_justification" placeholder="Non Conformance Extension Justification" disabled id="dev_extension_justification" value="{{$NonConformanceExtension->dev_extension_justification}}">{{$NonConformanceExtension->dev_extension_justification}}</textarea>
                             </div>
                         </div>
                     @else
@@ -10429,14 +10874,14 @@
                         </div>
                     @endif
 
-                    @if($failureInvestigationExtension && $failureInvestigationExtension->dev_extension_completed_by)
+                    @if($NonConformanceExtension && $NonConformanceExtension->dev_extension_completed_by)
                         <div class="col-lg-6">
                             <div class="group-input">
                                 <label for=" dev_extension_completed_by"> Non Conformance Extension Completed By </label>
                                 <select name="dev_extension_completed_by" id="dev_extension_completed_by" disabled>
                                     <option value="">-- Select --</option>
                                     @foreach ($users as $user)
-                                        <option value="{{ $user->id }}" @if($user->id == $failureInvestigationExtension->dev_extension_completed_by) selected @endif >{{ $user->name }}</option>
+                                        <option value="{{ $user->id }}" @if($user->id == $NonConformanceExtension->dev_extension_completed_by) selected @endif >{{ $user->name }}</option>
                                     @endforeach
                                 </select>
                             </div>
@@ -10455,12 +10900,12 @@
                         </div>
                     @endif
 
-                    @if($failureInvestigationExtension && $failureInvestigationExtension->dev_completed_on)
+                    @if($NonConformanceExtension && $NonConformanceExtension->dev_completed_on)
                         <div class="col-lg-6 new-date-data-field">
                             <div class="group-input input-date">
                                 <label for="Audit Schedule End Date">Non Conformance Extension Completed On</label>
                                 <div class="calenderauditee">
-                                    <input type="text" id="dev_completed_on" readonly name="dev_completed_on" placeholder="DD-MMM-YYYY" value="{{Helpers::getdateFormat($failureInvestigationExtension->dev_completed_on)}}" />
+                                    <input type="text" id="dev_completed_on" readonly name="dev_completed_on" placeholder="DD-MMM-YYYY" value="{{Helpers::getdateFormat($NonConformanceExtension->dev_completed_on)}}" />
                                 </div>
                             </div>
                         </div>
@@ -11288,7 +11733,7 @@
                             <label for="QA Final Review Comments">QA Head/Manager Designee Approval Comments :-</label>
                             <div class="">{{ $data->QA_head_approved_comment }}</div>
                         </div>
-                    </div>                    
+                    </div>
 
                     <div class="sub-head">Initiator Update</div>
                     <div class="col-lg-3">
@@ -11521,7 +11966,7 @@
                             </li>
                             <li>
                                 <div>
-                                    @if($failureInvestigationExtension && $failureInvestigationExtension->counter == 3)
+                                    @if($NonConformanceExtension && $NonConformanceExtension->counter == 3)
                                         <a>-------</a>
                                     @else
                                         <a href="" data-bs-toggle="modal" data-bs-target="#non_conformances_extension"> Non Conformance</a>
@@ -12404,7 +12849,7 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                 </div>
 
-                <form action="{{ route('non_conformances_reject', $data->id) }}" method="POST">
+                <form action="{{ route('non_conformance_reject', $data->id) }}" method="POST">
                     @csrf
                     <!-- Modal body -->
                     <div class="modal-body">
@@ -12415,15 +12860,15 @@
                         </div>
                         <div class="group-input">
                             <label for="username">Username <span class="text-danger">*</span></label>
-                            <input type="text" name="username" required>
+                            <input type="text" class="form-control" name="username" required>
                         </div>
                         <div class="group-input">
                             <label for="password">Password <span class="text-danger">*</span></label>
-                            <input type="password" name="password" required>
+                            <input type="password" class="form-control" name="password" required>
                         </div>
                         <div class="group-input">
                             <label for="comment">Comment <span class="text-danger">*</span></label>
-                            <input type="comment" name="comment" required>
+                            <input type="comment" class="form-control" name="comment" required>
                         </div>
                     </div>
 
@@ -12464,15 +12909,15 @@
                         </div>
                         <div class="group-input">
                             <label for="username">Username <span class="text-danger">*</span></label>
-                            <input type="text" name="username" required>
+                            <input type="text" class="form-control" name="username" required>
                         </div>
                         <div class="group-input">
                             <label for="password">Password <span class="text-danger">*</span></label>
-                            <input type="password" name="password" required>
+                            <input type="password" class="form-control" name="password" required>
                         </div>
                         <div class="group-input">
                             <label for="comment">Comment <span class="text-danger">*</span></label>
-                            <input type="comment" name="comment" required>
+                            <input type="comment" class="form-control" name="comment" required>
                         </div>
                     </div>
 
@@ -12512,15 +12957,15 @@
                         </div>
                         <div class="group-input">
                             <label for="username">Username <span class="text-danger">*</span></label>
-                            <input type="text" name="username" required>
+                            <input type="text"   class="form-control" name="username" required>
                         </div>
                         <div class="group-input">
                             <label for="password">Password <span class="text-danger">*</span></label>
-                            <input type="password" name="password" required>
+                            <input type="password" class="form-control" name="password" required>
                         </div>
                         <div class="group-input">
                             <label for="comment">Comment <span class="text-danger">*</span></label>
-                            <input type="comment" name="comment" required>
+                            <input type="comment" class="form-control" name="comment" required>
                         </div>
                     </div>
 
@@ -12547,7 +12992,7 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                 </div>
 
-                <form action="{{ route('failureInvestigationCheck', $data->id) }}" method="POST">
+                <form action="{{ route('nonConformaceCheck', $data->id) }}" method="POST">
                     @csrf
                     <!-- Modal body -->
                     <div class="modal-body">
@@ -12558,15 +13003,15 @@
                         </div>
                         <div class="group-input">
                             <label for="username">Username <span class="text-danger">*</span></label>
-                            <input type="text" name="username" required>
+                            <input type="text" class="form-control" name="username" required>
                         </div>
                         <div class="group-input">
                             <label for="password">Password <span class="text-danger">*</span></label>
-                            <input type="password" name="password" required>
+                            <input type="password" class="form-control" name="password" required>
                         </div>
                         <div class="group-input">
                             <label for="comment">Comment <span class="text-danger">*</span></label>
-                            <input type="comment" name="comment" required>
+                            <input type="comment" class="form-control" name="comment" required>
                         </div>
                     </div>
 
@@ -12593,7 +13038,7 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                 </div>
 
-                <form action="{{ route('failureInvestigationCheck2', $data->id) }}" method="POST">
+                <form action="{{ route('nonConformaceCheck2', $data->id) }}" method="POST">
                     @csrf
                     <!-- Modal body -->
                     <div class="modal-body">
@@ -12604,15 +13049,15 @@
                         </div>
                         <div class="group-input">
                             <label for="username">Username <span class="text-danger">*</span></label>
-                            <input type="text" name="username" required>
+                            <input type="text" class="form-control" name="username" required>
                         </div>
                         <div class="group-input">
                             <label for="password">Password <span class="text-danger">*</span></label>
-                            <input type="password" name="password" required>
+                            <input type="password" class="form-control" name="password" required>
                         </div>
                         <div class="group-input">
                             <label for="comment">Comment <span class="text-danger">*</span></label>
-                            <input type="comment" name="comment" required>
+                            <input type="comment" class="form-control" name="comment" required>
                         </div>
                     </div>
 
@@ -12639,7 +13084,7 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                 </div>
 
-                <form action="{{ route('failureInvestigationCheck3', $data->id) }}" method="POST">
+                <form action="{{ route('nonConformaceCheck3', $data->id) }}" method="POST">
                     @csrf
                     <!-- Modal body -->
                     <div class="modal-body">
@@ -12650,15 +13095,15 @@
                         </div>
                         <div class="group-input">
                             <label for="username">Username <span class="text-danger">*</span></label>
-                            <input type="text" name="username" required>
+                            <input type="text" class="form-control" name="username" required>
                         </div>
                         <div class="group-input">
                             <label for="password">Password <span class="text-danger">*</span></label>
-                            <input type="password" name="password" required>
+                            <input type="password" class="form-control" name="password" required>
                         </div>
                         <div class="group-input">
                             <label for="comment">Comment <span class="text-danger">*</span></label>
-                            <input type="comment" name="comment" required>
+                            <input type="comment" class="form-control" name="comment" required>
                         </div>
                     </div>
 
@@ -12695,15 +13140,15 @@
                         </div>
                         <div class="group-input">
                             <label for="username">Username <span class="text-danger">*</span></label>
-                            <input type="text" name="username" required>
+                            <input type="text" class="form-control" name="username" required>
                         </div>
                         <div class="group-input">
                             <label for="password">Password <span class="text-danger">*</span></label>
-                            <input type="password" name="password" required>
+                            <input type="password"  class="form-control" name="password" required>
                         </div>
                         <div class="group-input">
                             <label for="comment">Comment</label>
-                            <input type="comment" name="comment">
+                            <input type="comment" class="form-control" name="comment">
                         </div>
                     </div>
                     <div class="modal-footer">
@@ -12728,7 +13173,7 @@
                     <h4 class="modal-title">E-Signature</h4>
                     <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                 </div>
-                <form action="{{ route('failureInvestigationStageChange', $data->id) }}" method="POST"
+                <form action="{{ route('nonConformaceStageChange', $data->id) }}" method="POST"
                     id="signatureModalForm">
                     @csrf
                     <div class="modal-body">
@@ -12739,15 +13184,15 @@
                         </div>
                         <div class="group-input">
                             <label for="username">Username <span class="text-danger">*</span></label>
-                            <input type="text" name="username" required>
+                            <input type="text" class="form-control" name="username" required>
                         </div>
                         <div class="group-input">
                             <label for="password">Password <span class="text-danger">*</span></label>
-                            <input type="password" name="password" required>
+                            <input type="password" class="form-control" name="password" required>
                         </div>
                         <div class="group-input">
                             <label for="comment">Comment</label>
-                            <input type="comment" name="comment">
+                            <input type="comment" class="form-control" name="comment">
                         </div>
                     </div>
                     <div class="modal-footer">
@@ -12773,7 +13218,7 @@
                     <h4 class="modal-title">E-Signature</h4>
                     <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                 </div>
-                <form action="{{ route('failureInvestigationCftnotreqired', $data->id) }}" method="POST">
+                <form action="{{ route('nonConformaceCftnotreqired', $data->id) }}" method="POST">
                     @csrf
                     <!-- Modal body -->
                     <div class="modal-body">
@@ -12784,15 +13229,15 @@
                         </div>
                         <div class="group-input">
                             <label for="username">Username <span class="text-danger">*</span></label>
-                            <input type="text" name="username" required>
+                            <input type="text" class="form-control" name="username" required>
                         </div>
                         <div class="group-input">
                             <label for="password">Password <span class="text-danger">*</span></label>
-                            <input type="password" name="password" required>
+                            <input type="password" class="form-control" name="password" required>
                         </div>
                         <div class="group-input">
                             <label for="comment">Comment</label>
-                            <input type="comment" name="comment">
+                            <input type="comment" class="form-control" name="comment">
                         </div>
                     </div>
 
@@ -12829,15 +13274,15 @@
                         </div>
                         <div class="group-input">
                             <label for="username">Username</label>
-                            <input type="text" name="username" required>
+                            <input type="text" class="fomr-control" name="username" required>
                         </div>
                         <div class="group-input">
                             <label for="password">Password</label>
-                            <input type="password" name="password" required>
+                            <input type="password" class="form-control" name="password" required>
                         </div>
                         <div class="group-input">
                             <label for="comment">Comment</label>
-                            <input type="comment" name="comment">
+                            <input type="comment" class="form-control" name="comment">
                         </div>
                     </div>
 

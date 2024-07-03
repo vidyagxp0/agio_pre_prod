@@ -17,22 +17,22 @@ return new class extends Migration
             $table->id();
             $table->integer('failure_investigation_id')->nullable();
             $table->text('dev_proposed_due_date')->nullable();
-            $table->string('dev_extension_justification')->nullable();
+            $table->longText('dev_extension_justification')->nullable();
             $table->string('dev_extension_completed_by')->nullable();
             $table->text('dev_completed_on')->nullable();
 
             $table->text('capa_proposed_due_date')->nullable();
-            $table->string('capa_extension_justification')->nullable();
+            $table->longText('capa_extension_justification')->nullable();
             $table->string('capa_extension_completed_by')->nullable();
             $table->text('capa_completed_on')->nullable();
 
             $table->text('investigation_proposed_due_date')->nullable();
-            $table->string('investigation_extension_justification')->nullable();
+            $table->longText('investigation_extension_justification')->nullable();
             $table->string('investigation_extension_completed_by')->nullable();
             $table->text('investigation_completed_on')->nullable();
 
             $table->text('qrm_proposed_due_date')->nullable();
-            $table->string('qrm_extension_justification')->nullable();
+            $table->longText('qrm_extension_justification')->nullable();
             $table->string('qrm_extension_completed_by')->nullable();
             $table->text('qrm_completed_on')->nullable();
 
@@ -68,6 +68,8 @@ return new class extends Migration
             $table->text('qrm_next_review_date')->nullable();
             $table->string('qrm_effective_check_closed_by')->nullable();
             $table->text('qrm_effective_check_closed_on')->nullable();
+
+            $table->integer('counter')->nullable();
 
             $table->timestamps();
         });

@@ -139,7 +139,7 @@
 
     .inner-block .block-head {
         font-weight: bold;
-        font-size: 1.1rem;
+        font-size: 1.1rem; 
         padding-bottom: 5px;
         border-bottom: 2px solid #4274da;
         margin-bottom: 10px;
@@ -177,14 +177,30 @@
                     {{-- <strong>Lab Incident No.</strong> --}}
                 </td>
                 <td class="w-40">
-                   {{ Helpers::divisionNameForQMS($data->division_id) }}/{{ Helpers::year($data->created_at) }}/{{ str_pad($data->record_number, 4, '0', STR_PAD_LEFT) }}
+                   {{ Helpers::divisionNameForQMS($data->division_id) }}/MC/{{ Helpers::year($data->created_at) }}/{{ str_pad($data->record, 4, '0', STR_PAD_LEFT) }}
                 </td>
                 <td class="w-30">
-                    <strong>Record No.</strong> {{ str_pad($data->record_number, 4, '0', STR_PAD_LEFT) }}
+                    <strong>Record No.</strong> {{ str_pad($data->record, 4, '0', STR_PAD_LEFT) }}
                 </td>
             </tr>
         </table>
     </header>
+
+    <footer>
+        <table>
+            <tr>
+                <td class="w-30">
+                    <strong>Printed On :</strong> {{ date('d-M-Y') }}
+                </td>
+                <td class="w-40">
+                    <strong>Printed By :</strong> {{ Auth::user()->name }}
+                </td>
+                {{-- <td class="w-30">
+                    <strong>Page :</strong> 1 of 1
+                </td> --}}
+            </tr>
+        </table>
+    </footer>
 
     <div class="inner-block">
         <div class="content-table">
@@ -202,9 +218,33 @@
                     </tr>
                     <tr>
                         <th class="w-20">Initiator Group</th>
-                        <td class="w-30">{{ $data->initiator_group ?? 'Not Applicable' }}</td>
+                        {{-- <td class="w-30">{{ $data->initiator_group ?? 'Not Applicable' }}</td> --}}
+                        @php
+                            $departments = [
+                                'CQA' => 'Corporate Quality Assurance',
+                                'QAB' => 'Quality Assurance Biopharma',
+                                'CQC' => 'Central Quality Control',
+                                'PSG' => 'Plasma Sourcing Group',
+                                'CS' => 'Central Stores',
+                                'ITG' => 'Information Technology Group',
+                                'MM' => 'Molecular Medicine',
+                                'CL' => 'Central Laboratory',
+                                'TT' => 'Tech Team',
+                                'QA' => 'Quality Assurance',
+                                'QM' => 'Quality Management',
+                                'IA' => 'IT Administration',
+                                'ACC' => 'Accounting',
+                                'LOG' => 'Logistics',
+                                'SM' => 'Senior Management',
+                                'BA' => 'Business Administration',
+                            ];
+                        @endphp
+                        <td class="w-80">{{ $departments[$data->initiator_group] ?? 'Unknown Department' }}</td>
+ 
                         <th class="w-20">Initiator Group Code</th>
-                        <td class="w-30">{{ $data->initiator_group_code ?? 'Not Applicable' }}</td>
+                        {{-- <td class="w-30">{{ $data->initiator_group ?? 'Not Applicable' }}</td> --}}
+                        <td class="w-30">{{ $data->initiator_group_code_gi ?? 'Not Applicable' }}</td>
+
                     </tr>
                     <tr>
                         <th class="w-20">If Other</th>
@@ -576,10 +616,10 @@
                         <td class="w-30">{{ $data->submitted_on }}</td>
                     </tr>
                     <tr>
-                        <th class="w-20">Incident Review Completed By</th>
-                        <td class="w-30">{{ $data->incident_review_completed_by }}</td>
-                        <th class="w-20">Incident Review Completed On</th>
-                        <td class="w-30">{{ $data->incident_review_completed_on }}</td>
+                        <th class="w-20">Complete Review By :</th>
+                        <td class="w-30">{{  $data->complete_review_by }}</td>
+                        <th class="w-20">Complete Review On :</th>
+                        <td class="w-30">{{ $data->complete_review_on }}</td>
                     </tr>
                     <tr>
                         <th class="w-20">Investigation Completed By</th>
@@ -588,22 +628,34 @@
                         <td class="w-30">{{ $data->investigation_completed_on}}</td>
                     </tr>
                     <tr>
-                        <th class="w-20">QA Review Completed By</th>
-                        <td class="w-30">{{ $data->qA_review_completed_by }}</td>
-                        <th class="w-20">QA Review Completed On</th>
-                        <td class="w-30">{{ $data->qA_review_completed_on }}</td>
+                        <th class="w-20">Propose Plan By :</th>
+                        <td class="w-30">{{ $data->propose_plan_by }}</td>
+                        <th class="w-20">Propose Plan On :</th>
+                        <td class="w-30">{{ $data->propose_plan_on }}</td>
                     </tr>
-                    <tr>
+                    {{-- <tr>
                         <th class="w-20">QA Head Approval Completed By</th>
                         <td class="w-30">{{ $data->qA_head_approval_completed_by }}</td>
                         <th class="w-20">QA Head Approval Completed On</th>
                         <td class="w-30">{{ $data->qA_head_approval_completed_on }}</td>
+                    </tr> --}}
+                    <tr>
+                        <th class="w-20">Approve Plan By</th>
+                        <td class="w-30">{{ $data->approve_plan_by }}</td>
+                        <th class="w-20">Approve Plan On</th>
+                        <td class="w-30">{{ $data->approve_plan_on }}</td>
                     </tr>
                     <tr>
-                        <th class="w-20">All Activities Completed By</th>
-                        <td class="w-30">{{ $data->all_activities_completed_by }}</td>
-                        <th class="w-20">All Activities Completed On</th>
-                        <td class="w-30">{{ $data->all_activities_completed_on }}</td>
+                        <th class="w-20">All CAPA Closed By</th>
+                        <td class="w-30">{{ $data->all_capa_closed_by }}</td>
+                        <th class="w-20">All CAPA Closed On</th>
+                        <td class="w-30">{{ $data->all_capa_closed_on }}</td>
+                    </tr>
+                    <tr>
+                        <th class="w-20">Closure Done By</th>
+                        <td class="w-30">{{ $data->closed_done_by }}</td>
+                        <th class="w-20">Closure Done On</th>
+                        <td class="w-30">{{ $data->closed_done_on }}</td>
                     </tr>
                     <tr>
                         <th class="w-20">Cancelled By</th>
@@ -616,21 +668,7 @@
         </div>
     </div>
 
-    <footer>
-        <table>
-            <tr>
-                <td class="w-30">
-                    <strong>Printed On :</strong> {{ date('d-M-Y') }}
-                </td>
-                <td class="w-40">
-                    <strong>Printed By :</strong> {{ Auth::user()->name }}
-                </td>
-                <td class="w-30">
-                    <strong>Page :</strong> 1 of 1
-                </td>
-            </tr>
-        </table>
-    </footer>
+
 
 </body>
 

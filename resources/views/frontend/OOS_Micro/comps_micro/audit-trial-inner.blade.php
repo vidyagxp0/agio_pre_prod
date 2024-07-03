@@ -29,6 +29,7 @@
                     </div>
 
                 </div>
+                
                 @foreach($detail_data as $temp)
                     <div class="inner-block audit-main">
                         <div class="info-list">

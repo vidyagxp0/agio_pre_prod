@@ -2005,7 +2005,13 @@
                     </tr>
                     <tr>
                         <th class="w-20">Control of Non-conforming Outputs </th>
-                        <td class="w-80">@if($managementReview->control_nonconforming_outputs){{ $managementReview->control_nonconforming_outputs }}@else Not Applicable @endif</td>
+                        <td class="w-80">
+                            @if($managementReview->control_nonconforming_outputs)
+                            {{ $managementReview->control_nonconforming_outputs }}
+                            @else
+                            Not Applicable
+                            @endif
+                        </td>
                     </tr>
 
                     <tr>

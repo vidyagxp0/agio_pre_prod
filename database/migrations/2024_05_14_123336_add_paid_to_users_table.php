@@ -16,7 +16,6 @@ return new class extends Migration
         Schema::table('ootcs', function (Blueprint $table) { 
             $table->string('status')->nullable();
             $table->string('stage')->nullable();
-            $table->string('comments')->nullable();
             $table->string('refrence_record')->nullable();
         });
     }

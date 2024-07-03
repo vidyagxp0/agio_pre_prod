@@ -10,13 +10,48 @@
 </head>
 
 <style>
-    body {
+
+.imageContainer {
+    /* max-height: 700px;
+    page-break-inside: auto;
+    overflow: visible;
+    max-height: 100%;
+    white-space: wrap;
+  overflow: hidden;
+  text-overflow: ellipsis; */
+}
+
+.imageContainer p,span {
+    /* margin: 0;
+    padding: 0;
+    page-break-inside: auto;  */
+}
+.imageContainer p span{
+    /* margin: 0;
+    padding: 0;
+    page-break-inside: auto;
+    page-break-after: always; */
+
+}
+.imageContainer p img {
+    width: 350px !important;
+    height: 200px;
+}
+
+@media print {
+    .imageContainer {
+        page-break-inside: auto; /* Allow page breaks inside container for printing */
+        /* page-break-after: always; */
+    }
+}
+body {
         font-family: 'Roboto', sans-serif;
         margin: 0;
         padding: 0;
         min-width: 100vw;
         min-height: 100vh;
     }
+
 
     .w-10 {
         width: 10%;
@@ -68,6 +103,7 @@
         border: 1px solid black;
         border-collapse: collapse;
         font-size: 0.9rem;
+
     }
 
     table {
@@ -144,6 +180,109 @@
         background: #4274da57;
     }
 </style>
+{{-- <style>
+
+
+    table {
+        width: 100%;
+        table-layout: fixed; /* Ensures table respects defined column widths */
+        border-collapse: collapse;
+    }
+
+    th, td {
+        border: 1px solid black;
+        font-size: 0.9rem;
+        padding: 10px;
+        text-align: left;
+        word-wrap: break-word; /* Ensures text wraps within cell */
+    }
+
+    header .head {
+        font-weight: bold;
+        text-align: center;
+        font-size: 1.2rem;
+    }
+
+    @page {
+        size: A4;
+        margin-top: 160px;
+        margin-bottom: 60px;
+    }
+
+    header {
+        position: fixed;
+        top: -140px;
+        left: 0;
+        width: 100%;
+        display: block;
+    }
+
+    footer {
+        position: fixed;
+        bottom: -40px;
+        left: 0;
+        width: 100%;
+    }
+
+    .inner-block {
+        padding: 10px;
+    }
+
+    .inner-block .head {
+        font-weight: bold;
+        font-size: 1.2rem;
+        margin-bottom: 5px;
+    }
+
+    .inner-block .division {
+        margin-bottom: 10px;
+    }
+
+    .first-table {
+        border-top: 1px solid black;
+        margin-bottom: 20px;
+    }
+
+    .first-table table td,
+    .first-table table th,
+    .first-table table {
+        border: 0;
+    }
+
+    .second-table td:nth-child(1)>div {
+        margin-bottom: 10px;
+    }
+
+    .second-table td:nth-child(1)>div:nth-last-child(1) {
+        margin-bottom: 0px;
+    }
+
+    .table_bg {
+        background: #4274da57;
+    }
+
+    /* Define fixed widths for each column */
+    .table-field-history th:nth-child(1),
+    .table-field-history td:nth-child(1) {
+        width: 70%; /* Adjust as necessary */
+    }
+
+    .table-field-history th:nth-child(2),
+    .table-field-history td:nth-child(2) {
+        width: 10%; /* Adjust as necessary */
+    }
+
+    .table-field-history th:nth-child(3),
+    .table-field-history td:nth-child(3) {
+        width: 10%; /* Adjust as necessary */
+    }
+
+    .table-field-history th:nth-child(4),
+    .table-field-history td:nth-child(4) {
+        width: 10%; /* Adjust as necessary */
+    }
+
+</style> --}}
 
 <body>
 
@@ -222,14 +361,14 @@
                                 @if($datas->activity_type == "Activity Log")
                                     <div><strong>Changed From :</strong></div>
                                     @if(!empty($datas->change_from))
-                                        <div>{!! $datas->change_from !!}</div>
+                                        <div class="imageContainer">{!! str_replace(',', ', ', $datas->change_from) !!}</div>
                                     @else
                                         <div>Not Applicable</div>
                                     @endif
                                 @else
                                     <div><strong>Changed From :</strong></div>
                                     @if(!empty($datas->previous))
-                                        <div>{!! $datas->previous !!}</div>
+                                        <div class="imageContainer">{!!str_replace(',', ', ', $datas->previous) !!}</div>
                                     @else
                                         <div>Null</div>
                                     @endif
@@ -246,14 +385,14 @@
                                 @if($datas->activity_type == "Activity Log")
                                     <div><strong>Changed To :</strong></div>
                                     @if(!empty($datas->change_to))
-                                        <div>{!! $datas->change_to !!}</div>
+                                        <div class="imageContainer">{!!str_replace(',', ', ', $datas->change_to) !!}</div>
                                     @else
                                         <div>Not Applicable</div>
                                     @endif
                                 @else
                                     <div><strong>Changed To :</strong></div>
                                     @if(!empty($datas->current))
-                                        <div>{!! $datas->current !!}</div>
+                                        <div class="imageContainer">{!! str_replace(',', ', ',$datas->current) !!}</div>
                                     @else
                                         <div>Null</div>
                                     @endif

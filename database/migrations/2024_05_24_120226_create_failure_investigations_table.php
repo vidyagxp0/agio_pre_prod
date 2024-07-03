@@ -30,7 +30,7 @@ return new class extends Migration
             $table->string('Initiator_Group')->nullable();
             $table->longText('short_description')->nullable();
             $table->string('short_description_required')->nullable();
-            $table->string('nature_of_repeat')->nullable();
+            $table->longText('nature_of_repeat')->nullable();
             $table->date('failure_investigation_date')->nullable();
             $table->date('failure_investigation_reported_date')->nullable();
             $table->string('Facility')->nullable();
@@ -78,6 +78,7 @@ return new class extends Migration
             $table->longText('Capa_attachment')->nullable();
             $table->longText('QA_attachments')->nullable();
             $table->longText('closure_attachment')->nullable();
+            $table->longText('initial_file')->nullable();
 
             $table->string('submit_on')->nullable();
             $table->string('submit_by')->nullable();
@@ -120,8 +121,8 @@ return new class extends Migration
             $table->string('capa_required')->nullable();
             $table->string('qrm_required')->nullable();
 
-            $table->string('Conclusion')->nullable();
-            $table->string('Identified_Risk')->nullable();
+            $table->longText('Conclusion')->nullable();
+            $table->longText('Identified_Risk')->nullable();
             $table->string('severity_rate')->nullable();
             $table->string('Occurrence')->nullable();
             $table->string('detection')->nullable();

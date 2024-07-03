@@ -68,6 +68,7 @@
 
         <div class="division-bar">
             <strong>Site Division/Project</strong> :
+            {{ Helpers::getDivisionName(session()->get('division')) }} / 
             {{-- {{ Helpers::getDivisionName($data->division_id) }} / --}}
             Extension
         </div>
@@ -97,20 +98,18 @@
             @csrf
             <!-- Tab content -->
             <div id="step-form">
-
                 <div id="CCForm1" class="inner-block cctabcontent">
                     <div class="inner-block-content">
                         <div class="row">
                             @if (!empty($parent_id))
-                            <input type="hidden" name="parent_id" value="{{ $parent_id }}">
-                            <input type="hidden" name="parent_type" value="{{ $parent_type }}">
-                            <input type="hidden" name="parent_record" value="{{ $parent_record }}">
+                            <input type="hidden" name="parent_id" id="parent_id" value="{{ $parent_id }}">
+                            <input type="hidden" name="parent_record" id="parent_record" value="{{ $parent_record }}">
                         @endif
                         <div class="col-lg-6">
                             <div class="group-input">
                                 <label for="RLS Record Number"><b>Record Number</b></label>
-                                <input disabled type="text" name="record_number">
-                                {{-- value="{{ Helpers::getDivisionName(session()->get('division')) }}/DEV/{{ date('Y') }}/{{ $record_number }}"> --}}
+                                <input disabled type="text" name="record_number"
+                                value="{{ Helpers::getDivisionName(session()->get('division')) }}/Ext/{{ date('y') }}/{{ $record_number }}">
                                 {{-- <div class="static">QMS-EMEA/CAPA/{{ date('Y') }}/{{ $record_number }}</div> --}}
                             </div>
                         </div>
@@ -160,15 +159,21 @@
                                     <div class="text-danger">{{ $message }}</div>
                                 @enderror --}}
                             </div>
+                            <script>
+                                var maxLength = 255;
+                                $('#docname').keyup(function() {
+                                    var textlen = maxLength - $(this).val().length;
+                                    $('#rchars').text(textlen);});
+                            </script>
                             <div class="col-lg-6">
                                 <div class="group-input">
                                     <label for="Assigned To">Reviewer </label>
                                     <select id="choices-multiple-remove" class="choices-multiple-reviewe"
                                         name="reviewers" placeholder="Select Reviewers"  >
                                         <option value="">-- Select --</option>
-                                        @if (!empty($reviewer))
+                                        @if (!empty($reviewers))
                                         
-                                            @foreach ($reviewer as $lan)
+                                            @foreach ($reviewers as $lan)
                                                 @if(Helpers::checkUserRolesreviewer($lan))
                                                     <option value="{{ $lan->id }}">
                                                         {{ $lan->name }}
@@ -225,8 +230,8 @@
                             </div>
                             <div class="col-12">
                                 <div class="group-input">
-                                    <label for="Short Description"> Description</label><span id="rchars">255</span>
-                                    Characters remaining
+                                    <label for="Short Description"> Description</label>
+                                
                                  <textarea name="description" id="description" cols="30"  ></textarea>
                                 </div>
                                 {{-- @error('short_description')

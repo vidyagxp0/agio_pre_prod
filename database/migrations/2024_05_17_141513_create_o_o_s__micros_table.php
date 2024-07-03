@@ -17,22 +17,22 @@ return new class extends Migration
             $table->id();
             $table->integer('record')->nullable();
             $table->string('form_type')->nullable();
-            $table->string('division_code')->nullable();
+            $table->string('division_id')->nullable();
             $table->integer('initiator_id')->nullable();
             $table->string('intiation_date')->nullable();
             $table->string('due_date')->nullable();
+            $table->longText('description_gi')->nullable();
             $table->string('severity_level_gi')->nullable();
             $table->string('initiator_Group')->nullable();
             $table->string('initiator_group_code')->nullable();
             $table->text('initiated_through')->nullable();
-            $table->text('if_others_gi')->nullable();
-            $table->longText('is_repeat_gi')->nullable();
+            $table->longText('if_others_gi')->nullable();
+            $table->string('is_repeat_gi')->nullable();
             $table->longText('repeat_nature_gi')->nullable();
             $table->string('nature_of_change_gi')->nullable();
             $table->string('deviation_occured_on_gi')->nullable();
-            $table->longText('description_gi')->nullable();
             $table->longText('initial_attachment_gi')->nullable();
-            $table->longText('source_document_type_gi')->nullable();
+            $table->string('source_document_type_gi')->nullable();
             $table->longText('reference_system_document_gi')->nullable();
             $table->longText('reference_document_gi')->nullable();
             $table->text('sample_type_gi')->nullable();
@@ -76,19 +76,14 @@ return new class extends Migration
 
             // checklist investigation of bacteria endotoxin test
             $table->longtext('attachment_details_cibet')->nullable();
-
             //checklist investigation of sterility
             $table->longtext('attachment_details_cis')->nullable();
-
             //checklist investigation of microbial limit bioburden and water test
             $table->longtext('attachment_details_cimlbwt')->nullable();
-
             //checklist investigation of microbial assay
             $table->longtext('attachment_details_cima')->nullable();
-
             //checklist investigation of environmental monitoring
             $table->longtext('attachment_details_ciem')->nullable();
-
             //checklist investigation of media suitability test
             $table->longtext('attachment_details_cimst')->nullable();
 
@@ -185,8 +180,10 @@ return new class extends Migration
             $table->longText('phase_III_inves_reference_BI')->nullable();
             $table->longText('justify_for_delay_BI')->nullable();
             $table->longText('disposition_attachment_BI')->nullable();
-
-
+            $table->longText('reopen_approval_comments')->nullable();
+            $table->longText('addendum_review_comments')->nullable();
+            // $table->longText('reopen_approval_comments')->nullable();
+            
             //REOpen
             $table->string('reopen_request')->nullable();
             $table->longText('reopen_attachment')->nullable();
@@ -198,16 +195,28 @@ return new class extends Migration
             $table->text('parent_record')->nullable();
             $table->text('Description_Deviation')->nullable();
 
-
-
+            // extra field add by sonali
+            $table->text('action_task_required')->nullable(); 
+            $table->text('action_task_reference_no')->nullable();
+            $table->text('addi_testing_ref')->nullable(); 
+            $table->text('investigation_ref')->nullable();
+            $table->text('hypo_exp_ref')->nullable(); 
+            $table->longtext('verification_comments')->nullable(); 
+            
+            // attechment
+            $table->longtext('ua_approval_attachment')->nullable();
+            $table->longtext('ua_Execution_attachments')->nullable();
+            $table->longtext('uar_required_attachment')->nullable();
+            $table->longtext('uav_verification_attachment')->nullable(); 
+            $table->longtext('impact_assessment_piiqc')->nullable();
+            
             //Extras
             $table->text('initiator_group_gi')->nullable();
             $table->text('initiator_group_code_gi')->nullable();
-            $table->text('division_id')->nullable();
             $table->text('initiated_through_gi')->nullable();
 
 
-
+            //====== write code by sonali ===========
             // workflow start stage
             $table->text('cancelled_by')->nullable();
             $table->text('cancelled_on')->nullable();
@@ -254,14 +263,9 @@ return new class extends Migration
             $table->text('completed_by_close_done')->nullable();
             $table->text('completed_on_close_done')->nullable();
             $table->text('comment_close_done')->nullable();
-
-
-
-
+            $table->text('Capachild')->nullable();
+            $table->text('actionchild')->nullable();
             $table->timestamps();
-
-
-
         });
     }
 
