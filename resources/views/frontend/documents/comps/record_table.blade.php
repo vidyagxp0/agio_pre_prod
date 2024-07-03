@@ -45,7 +45,7 @@
                     </a>
                 </td>
                 <td class="division">
-                    {{ $doc->document_type_id }}
+                    {{ $doc->document_type_name}}
                 </td>
 
                 <td class="division">

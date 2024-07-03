@@ -308,7 +308,7 @@
                 {{ $tempHistory->created_at }}
             </p>
             <input class="input-field" style="background: #ffff0061;
-                                    color: black;" type="text" value="{{ $tempHistory->comment }}" disabled>
+                color: black;" type="text" value="{{ $tempHistory->comment }}" disabled>
             @endif
             @endforeach
         </div>
@@ -429,9 +429,10 @@
                         /000{{ $document->document_number }}/R{{$document->major}}.{{$document->minor}}
 
                         @else
-                        {{ Helpers::getDivisionName($document->division_id) }}
+                        <!-- {{ Helpers::getDivisionName($document->division_id) }}
                         /@if($document->document_type_name){{ $temp }} /@endif{{ $year }}
-                        /000{{ $document->document_number }}/R{{$document->major}}.{{$document->minor}}
+                        /000{{ $document->document_number }}/R{{$document->major}}.{{$document->minor}} -->
+                        {{$document->sop_type_short}}/{{$document->department_id}}/000{{ $document->id }}/R{{$document->major}}.{{$document->minor}}
 
                         @endif
                     </div>
@@ -456,7 +457,8 @@
                         @foreach ($document_data as $temp)
 
                         <option value="{{ $temp->id }}" {{ str_contains($document->reference_record, $temp->id) ? 'selected' : '' }}>
-                            {{ Helpers::getDivisionName($temp->division_id) }}/{{ $temp->typecode }}/{{ $temp->year }}/000{{ $temp->id }}/R{{$temp->major}}.{{$temp->minor}}/{{$temp->document_name}}
+                            <!-- {{ Helpers::getDivisionName($temp->division_id) }}/{{ $temp->typecode }}/{{ $temp->year }}/000{{ $temp->id }}/R{{$temp->major}}.{{$temp->minor}}/{{$temp->document_name}} -->
+                            {{$temp->sop_type_short}}/{{$temp->department_id}}/000{{ $temp->id }}/R{{$temp->major}}.{{$temp->minor}}/{{$temp->document_name}}
                         </option>
                         @endforeach
                         @endif
@@ -549,7 +551,7 @@
                                     <div class="default-name"> <span id="department-code">
                                             @if (!empty($departments))
                                                 @foreach ($departments as $department)
-                                                    {{ $document->department_id == $department->id ? $department->dc : '' }}
+                                            {{ $document->department_id == $department->id ? $department->dc : '' }}
     @endforeach
     @else
     Not Selected

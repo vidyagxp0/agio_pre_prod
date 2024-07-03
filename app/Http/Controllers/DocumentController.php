@@ -69,9 +69,6 @@ class DocumentController extends Controller
     }
     public function division_old(Request $request)
     {
-        // $request->dd();
-        // return $request;
-
         $new = new Document;
         $new->originator_id = $request->originator_id;
         $new->division_id = $request->division_id;
@@ -482,6 +479,7 @@ class DocumentController extends Controller
 
             $document->minor = $request->minor;
             $document->sop_type = $request->sop_type;
+            $document->sop_type_short = $request->sop_type_short;
             $document->notify_to = json_encode($request->notify_to);
             //$document->purpose = $request->purpose;
 

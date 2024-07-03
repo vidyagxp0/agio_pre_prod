@@ -1244,6 +1244,7 @@
                                     @endphp
                                     <tr>
                                         <td class="text-left w-25">{{ $user->name }}</td>
+
                                         <td class="text-left w-25">{{ $dept }}</td>
                                         @if ($date)
                                         <td class="text-left w-25">HOD Review Complete</td>
