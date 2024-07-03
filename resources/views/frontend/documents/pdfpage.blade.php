@@ -526,12 +526,12 @@
             <tbody>
                 <tr>
                     <td class="doc-num w-50">
-                        Effective Date : {{($data->effective_date)}}
-
+                        Effective Date: {{ \Carbon\Carbon::parse($data->effective_date)->format('d-M-Y') }}
                     </td>
                     <td class="doc-num w-50">
-                        Next Review Date : {{$data->next_review_date}}
+                        Next Review Date: {{ \Carbon\Carbon::parse($data->next_review_date)->format('d-M-Y') }}
                     </td>
+
                 </tr>
             </tbody>
         </table>
@@ -1086,10 +1086,7 @@
                                         /000{{ $data->document_number }}/R{{$data->major}}.{{$data->minor}}
 
                                         @else
-                                        {{ Helpers::getDivisionName($data->division_id) }}
-                                        /@if($data->document_type_name){{ $temp }} /@endif{{ $data->year }}
-                                        /000{{ $data->document_number }}/R{{$data->major}}.{{$data->minor}}
-
+                                        {{$data->sop_type_short}}/{{$data->department_id}}/000{{ $data->id }}/R{{$data->major}}.{{$data->minor}}
                                         @endif
                                     </td>
                                 </tr>
@@ -1122,9 +1119,11 @@
                                     <th class="w-30 text-left vertical-baseline">Last Changed</th>
                                     <td class="w-70 text-left">
                                         @if ($last)
-                                        {{ $last->created_at }}
+                                        <!-- {{ $last->created_at }} -->
+                                        {{ \Carbon\Carbon::parse($last->created_at )->format('d-M-Y') }}
                                         @else
-                                        {{ $data->created_at }}
+                                        <!-- {{ $data->created_at }} -->
+                                        {{ \Carbon\Carbon::parse($data->created_at )->format('d-M-Y') }}
                                         @endif
                                     </td>
                                 </tr>

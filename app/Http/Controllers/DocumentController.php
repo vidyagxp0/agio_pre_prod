@@ -457,8 +457,8 @@ class DocumentController extends Controller
             $document->document_type_id = $request->document_type_id;
             $document->document_subtype_id = $request->document_subtype_id;
             $document->document_language_id = $request->document_language_id;
-            // $document->effective_date = $request->effective_date;
-            $document->effective_date = Carbon::parse($document->effective_date)->format('d-m-y');
+            $document->effective_date = $request->effective_date;
+            // $document->effective_date = Carbon::parse($document->effective_date)->format('d-m-y');
 
             try {
                 if ($request->effective_date) {

@@ -1059,6 +1059,25 @@
     </div>
 </div>
 
+
+
+<div id="annexures" class="tabcontent">
+    <div class="input-fields">
+        @for ($i = 1; $i <= 30; $i++) <div class="group-input">
+            <label for="annexure-{{ $i }}">Annexure</label>
+            <textarea class="summernote" name="annexuredata[]" id="annexure-{{ $i }}"></textarea>
+    </div>
+    @endfor
+</div>
+<div class="button-block">
+    <button type="submit" value="save" name="submit" class="saveButton">Save</button>
+    <button type="button" class="backButton" onclick="previousStep()">Back</button>
+    <button type="button" class="nextButton" onclick="nextStep()">Next</button>
+    <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"> Exit </a>
+    </button>
+</div>
+</div>
+
 {{-- HOD REMARKS TAB START --}}
 <div id="hod-remarks-tab" class="tabcontent">
 
@@ -1087,22 +1106,6 @@
 </div>
 {{-- HOD REMARKS TAB END --}}
 
-<div id="annexures" class="tabcontent">
-    <div class="input-fields">
-        @for ($i = 1; $i <= 30; $i++) <div class="group-input">
-            <label for="annexure-{{ $i }}">Annexure</label>
-            <textarea class="summernote" name="annexuredata[]" id="annexure-{{ $i }}"></textarea>
-    </div>
-    @endfor
-</div>
-<div class="button-block">
-    <button type="submit" value="save" name="submit" class="saveButton">Save</button>
-    <button type="button" class="backButton" onclick="previousStep()">Back</button>
-    <button type="button" class="nextButton" onclick="nextStep()">Next</button>
-    <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"> Exit </a>
-    </button>
-</div>
-</div>
 
 <div id="distribution-retrieval" class="tabcontent">
     <div class="orig-head">
