@@ -554,7 +554,9 @@
                         @else
                         {{$data->sop_type_short}}/{{$data->department_id}}/000{{ $data->id }}/R{{$data->major}}.{{$data->minor}}
                         @endif
-                    <td class="w-42">Printed On : {{ $time }}</td>
+                        <!-- <td class="w-42">Printed On : {{ \Carbon\Carbon::parse($time)->format('d-M-Y') }}</td> -->
+
+                    <td class="w-42">Printed On: {{ \Carbon\Carbon::parse($time)->format('d-M-Y h:i A') }}</td>
                     <td class="text-right w-20"></td>
                 </tr>
             </tbody>
