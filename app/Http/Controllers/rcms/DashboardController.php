@@ -198,6 +198,7 @@ class DashboardController extends Controller
                 "id" => $data->id,
                 "parent" => $data->parent_record ? $data->parent_record : "-",
                 "record" => $data->record,
+                "due_date" => $data->due_date,
                 "type" => "Capa",
                 "parent_id" => $data->parent_id,
                 "parent_type" => $data->parent_type,

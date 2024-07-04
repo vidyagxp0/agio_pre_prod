@@ -95,7 +95,7 @@
                                         {{-- <input disabled type="text" name="record" value=""> --}}
                                         {{-- <input disabled type="text" name="record" value=" {{ Helpers::getDivisionName(session()->get('division')) }}/LI/{{ date('Y') }}/{{ $record}}"> --}}
                                         <input disabled type="text" name="record" id="record" 
-                                        value="{{ Helpers::getDivisionName(session()->get('division')) }}/capa/{{ date('y') }}/{{ $record }}">
+                                        value="{{ Helpers::getDivisionName(session()->get('division')) }}/CAPA/{{ date('y') }}/{{ $record }}">
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
@@ -130,7 +130,7 @@
                                         <select id="select-state" placeholder="Select..." name="assign_to">
                                             <option value="">Select a value</option>
                                             @foreach ($users as $value)
-                                                <option value="{{ $value->id }}">{{ $value->name }}</option>
+                                                <option value="{{ $value->name }}">{{ $value->name }}</option>
                                             @endforeach
                                         </select>
                                         @error('assign_to')
@@ -246,7 +246,7 @@
                                     <div class="group-input">
                                         <label for="Initiator Group Code">Department Group Code</label>
                                         <input type="text" name="initiator_group_code" id="initiator_group_code"
-                                            value="">
+                                            value="" readonly >
                                     </div>
                                 </div>
                                 {{-- <div class="col-12">
@@ -452,7 +452,7 @@
                             </div>
                             <div class="button-block">
                                 <button type="submit" id="ChangesaveButton" class="saveButton">Save</button>
-                                <button type="button" id="ChangeNextButton" class="nextButton" onclick="nextStep()">Next</button>
+                                <button type="button" class="nextButton" onclick="nextStep()">Next</button>
                                 <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white">
                                         Exit </a> </button>
 
@@ -565,7 +565,7 @@
                                         guiding priority for corrective actions. Ranging from low to high, they ensure
                                         quality standards and mitigate critical risks.</span>
                                     <select name="severity_level_form">
-                                        <option value="0">-- Select --</option>
+                                        <option value="">-- Select --</option>
                                         <option value="minor">Minor</option>
                                         <option value="major">Major</option>
                                         <option value="critical">Critical</option>
@@ -592,6 +592,8 @@
                                                 <th>Product Batch Disposition Decision</th>
                                                 <th>Product Remark</th>
                                                 <th>Product Batch Status</th>
+                                                <th>Action</th>
+
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -633,12 +635,17 @@
                                                         <option value="quarantine">Quarantine</option>
                                                     </select>
                                                 </td>
+                                                <td><button type="button" class="removeRowBtn">Remove</button></td>
                                             </tr>
                                         </tbody>
                                     </table>
                                 </div>
                             </div>
-                            
+                            <script>
+                                $(document).on('click', '.removeRowBtn', function() {
+                                    $(this).closest('tr').remove();
+                                })
+                            </script>
                             <script>
                                 $(document).ready(function () {
                                     $('#material').click(function (e) {
@@ -662,6 +669,7 @@
                                         
                                         // Append the new row to the table body
                                         $('#productmaterial tbody').append(newRow);
+                                        
                                     });
                                 });
                             </script>
@@ -677,15 +685,16 @@
                                     <div class="group-input">
                                         <label for="Material Details">
                                             Equipment/Instruments Details<button type="button" name="ann"
-                                                id="equipment">+</button>
+                                                id="addequipment">+</button>
                                         </label>
-                                        <table class="table table-bordered" id="equipment_details">
+                                        <table class="table table-bordered" id="equipment_de">
                                             <thead>
                                                 <tr>
                                                     <th>Row #</th>
                                                     <th>Equipment/Instruments Name</th>
                                                     <th>Equipment/Instruments ID</th>
                                                     <th>Equipment/Instruments Comments</th>
+                                                    <th>Action</th>
                                                 </tr>
                                             </thead>
 
@@ -697,10 +706,49 @@
                                                 <td><input type="text" name="equipment[]"></td>
                                                 <td><input type="text" name="equipment_instruments[]"></td>
                                                 <td><input type="text" name="equipment_comments[]"></td>
+                                                <td><button type="button" class="removeRowBtn">Remove</button></td>
                                             </tbody>
                                         </table>
                                     </div>
                                 </div>
+                                <script>
+                                    document.getElementById('addequipment').addEventListener('click', function() {
+                                        const tableBody = document.querySelector('#equipment_de tbody');
+                                        const newRow = document.createElement('tr');
+                            
+                                        const rowCount = tableBody.rows.length + 1;
+                            
+                                        newRow.innerHTML = `
+                                            <td><input disabled type="text" name="serial_number[]" value="${rowCount}"></td>
+                                            <td><input type="text" name="equipment[]"></td>
+                                            <td><input type="text" name="equipment_instruments[]"></td>
+                                            <td><input type="text" name="equipment_comments[]"></td>
+                                            <td><button type="button" class="removeRowBtn">Remove</button></td>
+                                        `;
+                            
+                                        tableBody.appendChild(newRow);
+                            
+                                        updateRemoveRowListeners();
+                                    });
+                            
+                                    function updateRemoveRowListeners() {
+                                        document.querySelectorAll('.removeRowBtn').forEach(button => {
+                                            button.addEventListener('click', function() {
+                                                this.closest('tr').remove();
+                                                updateRowNumbers();
+                                            });
+                                        });
+                                    }
+                            
+                                    function updateRowNumbers() {
+                                        document.querySelectorAll('#equipment_de tbody tr').forEach((row, index) => {
+                                            row.querySelector('input[name="serial_number[]"]').value = index + 1;
+                                        });
+                                    }
+                            
+                                    // Initial call to set up the listeners for the existing row
+                                    updateRemoveRowListeners();
+                                </script>
                                 <div class="col-12 sub-head">
                                     Other type CAPA Details
                                 </div>
@@ -798,8 +846,8 @@
         </div>
         <div class="button-block">
             <button type="submit" class="saveButton">Save</button>
-            <!-- <button type="button" class="backButton" onclick="previousStep()">Back</button>
-            <button type="button" class="nextButton" onclick="nextStep()">Next</button> -->
+             <button type="button" class="backButton" onclick="previousStep()">Back</button>
+            <button type="button" class="nextButton" onclick="nextStep()">Next</button>
             <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"> Exit </a> </button>
         </div>
     </div>
@@ -882,8 +930,8 @@
         </div>
         <div class="button-block">
             <button type="submit" class="saveButton">Save</button>
-            <!-- <button type="button" class="backButton" onclick="previousStep()">Back</button>
-            <button type="button" class="nextButton" onclick="nextStep()">Next</button> -->
+            <button type="button" class="backButton" onclick="previousStep()">Back</button>
+            <button type="button" class="nextButton" onclick="nextStep()">Next</button> 
             <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"> Exit </a> </button>
         </div>
     </div>
@@ -958,254 +1006,15 @@
                         </div>
                         <div class="button-block">
                             <button type="submit" class="saveButton">Save</button>
-                            {{-- <button type="button" class="backButton" onclick="previousStep()">Back</button>
-                                <button type="button" class="nextButton" onclick="nextStep()">Next</button> --}}
+                             <button type="button" class="backButton" onclick="previousStep()">Back</button>
+                                <button type="button" class="nextButton" onclick="nextStep()">Next</button> 
                             <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"> Exit
                                 </a> </button>
                         </div>
                     </div>
                 </div>
-                <div id="CCForm5" class="inner-block cctabcontent">
-                    <div class="inner-block-content">
-                        <div class="sub-head">
-                            CFT Information
-                        </div>
-                        <div class="row">
-
-                            <div class="col-lg-6">
-                                <div class="group-input">
-                                    <label for="Microbiology">CFT Reviewer</label>
-                                    <select name="Microbiology_new">
-                                        <option value="0">-- Select --</option>
-                                        <option value="yes" selected>Yes</option>
-                                        <option value="no">No</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="col-lg-6">
-                                <div class="group-input">
-                                    <label for="Microbiology-Person">CFT Reviewer Person</label>
-                                    <select name="Microbiology_Person[]" placeholder="Select CFT Reviewers"
-                                        data-search="false" data-silent-initial-value-set="true" id="cft_reviewer">
-                                        <option value="0">-- Select --</option>
-                                        @foreach ($cft as $data)
-                                            <option value="{{ $data->id }}" selected>{{ $data->name }}</option>
-                                        @endforeach
-                                    </select>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="sub-head">
-                            Concerned Information
-                        </div>
-                        <div class="row">
-                            <div class="col-12">
-                                <div class="group-input">
-                                    <label for="group_review">Is Concerned Group Review Required?</label>
-                                    <select name="goup_review">
-                                        <option value="0">-- Select --</option>
-                                        <option value="yes">Yes</option>
-                                        <option value="no">No</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="col-lg-6">
-                                <div class="group-input">
-                                    <label for="Production">Production</label>
-                                    <select name="Production_new">
-                                        <option value="0">-- Select --</option>
-                                        <option value="yes">Yes</option>
-                                        <option value="no">No</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="col-lg-6">
-                                <div class="group-input">
-                                    <label for="Production-Person">Production Person</label>
-                                    <select name="Production_Person">
-                                        <option value="0">-- Select --</option>
-                                        @foreach ($users as $data)
-                                            <option value="{{ $data->id }}">{{ $data->name }}</option>
-                                        @endforeach
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="col-lg-6">
-                                <div class="group-input">
-                                    <label for="Quality-Approver">Quality Approver</label>
-                                    <select name="Quality_Approver">
-                                        <option value="0">-- Select --</option>
-                                        <option value="yes">Yes</option>
-                                        <option value="no">No</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="col-lg-6">
-                                <div class="group-input">
-                                    <label for="Quality-Approver-Person">Quality Approver Person</label>
-                                    <select name="Quality_Approver_Person">
-                                        <option value="0">-- Select --</option>
-                                        @foreach ($users as $data)
-                                            <option value="{{ $data->id }}">{{ $data->name }}</option>
-                                        @endforeach
-                                    </select>
-                                </div>
-                            </div>
-
-                            <div class="col-lg-6">
-                                <div class="group-input">
-                                    <label for="bd_domestic">Others</label>
-                                    <select name="bd_domestic">
-                                        <option value="0">-- Select --</option>
-                                        <option value="yes">Yes</option>
-                                        <option value="no">No</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="col-lg-6">
-                                <div class="group-input">
-                                    <label for="bd_domestic-Person">Others Person</label>
-                                    <select name="Bd_Person">
-                                        <option value="0">-- Select --</option>
-                                        @foreach ($users as $data)
-                                            <option value="{{ $data->id }}">{{ $data->name }}</option>
-                                        @endforeach
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="col-12">
-                                <div class="group-input">
-                                    <label for="Additional Attachments">Additional Attachments</label>
-                                    <div><small class="text-primary">Please Attach all relevant or supporting
-                                            documents</small></div>
-                                    <div class="file-attachment-field">
-                                        <div class="file-attachment-list" id="additional_attachments"></div>
-                                        <div class="add-btn">
-                                            <div>Add</div>
-                                            <input type="file" id="myfile" name="additional_attachments[]"
-                                                oninput="addMultipleFiles(this, 'additional_attachments')" multiple>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="button-block">
-                            <button type="submit" class="saveButton">Save</button>
-                            {{-- <button type="button" class="backButton" onclick="previousStep()">Back</button>
-                                <button type="button" class="nextButton" onclick="nextStep()">Next</button> --}}
-                            <button type="button"> <a class="text-white" href="{{ url('rcms/qms-dashboard') }}">
-                                    Exit </a> </button>
-
-                            </div>
-                        </div>
-                    </div>
-                    <div id="CCForm6" class="inner-block cctabcontent">
-                        <div class="inner-block-content">
-                            <div class="sub-head">
-                                CFT Feedback
-                            </div>
-                            <div class="row">
-
-                                <div class="col-lg-12">
-                                    <div class="group-input">
-                                        <label for="comments">CFT Comments</label>
-                                        <textarea name="cft_comments_form"></textarea>
-                                    </div>
-                                </div>
-                                <div class="col-lg-12">
-                                    <div class="group-input">
-                                        <label for="comments">CFT Attachment</label>
-                                        <div><small class="text-primary">Please Attach all relevant or supporting
-                                                documents</small></div>
-                                        <div class="file-attachment-field">
-                                            <div class="file-attachment-list" id="cft_attchament_new"> </div>
-
-                                            <div class="add-btn">
-                                                <div>Add</div>
-                                                <input type="file" id="myfile" name="cft_attchament_new[]"
-                                                    oninput="addMultipleFiles(this, 'cft_attchament_new')" multiple>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="sub-head">
-                                    Concerned Group Feedback
-                                </div>
-                                <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="comments">QA Comments</label>
-                                        <textarea name="qa_comments_new"></textarea>
-                                    </div>
-                                </div>
-                                <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="comments">QA Head Designee Comments</label>
-                                        <textarea name="designee_comments_new"></textarea>
-                                    </div>
-                                </div>
-                                <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="comments">Warehouse Comments</label>
-                                        <textarea name="Warehouse_comments_new"></textarea>
-                                    </div>
-                                </div>
-                                <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="comments">Engineering Comments</label>
-                                        <textarea name="Engineering_comments_new"></textarea>
-                                    </div>
-                                </div>
-                                <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="comments">Instrumentation Comments</label>
-                                        <textarea name="Instrumentation_comments_new"></textarea>
-                                    </div>
-                                </div>
-                                <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="comments">Validation Comments</label>
-                                        <textarea name="Validation_comments_new"></textarea>
-                                    </div>
-                                </div>
-                                <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="comments">Others Comments</label>
-                                        <textarea name="Others_comments_new"></textarea>
-                                    </div>
-                                </div>
-                                <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="comments">Group Comments</label>
-                                        <textarea name="Group_comments_new"></textarea>
-                                    </div>
-                                </div>
-                                <div class="col-12">
-                                    <div class="group-input">
-                                        <label for="group-attachments">Group Attachments</label>
-                                        <div><small class="text-primary">Please Attach all relevant or supporting
-                                                documents</small></div>
-                                        <div class="file-attachment-field">
-                                            <div class="file-attachment-list" id="group_attachments_new"></div>
-                                            <div class="add-btn">
-                                                <div>Add</div>
-                                                <input type="file" id="myfile" name="group_attachments_new[]"
-                                                    oninput="addMultipleFiles(this, 'group_attachments_new')" multiple>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="button-block">
-                                <button type="submit" class="saveButton">Save</button>
-                                <button type="button" class="backButton" onclick="previousStep()">Back</button>
-                                <button type="button" class="nextButton" onclick="nextStep()">Next</button>
-                                <button type="button"> <a class="text-white" href="{{ url('rcms/qms-dashboard') }}">
-                                        Exit </a> </button>
-                            </div>
-                        </div>
-                    </div>
+               
+                    
                     <!-- CAPA Closure content -->
                     <div id="CCForm7" class="inner-block cctabcontent">
                         <div class="inner-block-content">
@@ -1289,8 +1098,8 @@
                             </div>
                             <div class="button-block">
                                 <button type="submit" class="saveButton">Save</button>
-                                <!-- <button type="button" class="backButton" onclick="previousStep()">Back</button>
-                                <button type="button" class="nextButton" onclick="nextStep()">Next</button> -->
+                               <button type="button" class="backButton" onclick="previousStep()">Back</button>
+                                <button type="button" class="nextButton" onclick="nextStep()">Next</button>
                                 <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"> Exit </a> </button>
                             </div>
                         </div>
@@ -1401,8 +1210,8 @@
                             </div>
                         </div>
                         <div class="button-block">
-                            <!-- <button type="submit" class="saveButton">Save</button>
-                                        <button type="button" class="backButton" onclick="previousStep()">Back</button> -->
+                             <button type="submit" class="saveButton">Save</button>
+                                        <button type="button" class="backButton" onclick="previousStep()">Back</button> 
                             <button type="submit">Submit</button>
                             <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"
                                     href="#"> Exit </a> </button>
@@ -1577,7 +1386,7 @@
         });
     
     </script> --}}
-    <script>
+    {{-- <script>
         document.addEventListener('DOMContentLoaded', function() {
             var originalRecordNumber = document.getElementById('record').value;
             var initialPlaceholder = '---';
@@ -1599,6 +1408,6 @@
                 initialPlaceholder = selectedValue;
             });
         });
-    </script>
+    </script> --}}
     
 @endsection

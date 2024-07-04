@@ -176,7 +176,14 @@
             </style>
 
             <body>
-
+                <div style="display: flex; justify-content: flex-end;">
+                    {{-- <button type="button" style="background-color: #007bff; border: none; color: white; padding: 10px 20px; text-align: center; text-decoration: none; font-size: 16px; margin: 4px 2px; cursor: pointer;">
+                        <a href="{{ route('capashow', ['id' => $data->id]) }}" style="color: white; text-decoration: none;">Exit</a>
+                        
+                    </button> --}}
+                    <button type="button"> <a class="text-white"
+                                                href="{{ route('capashow',$data->id) }}"> Exit </a> </button>
+                </div>
                 <header>
                     <table>
                         <tr>

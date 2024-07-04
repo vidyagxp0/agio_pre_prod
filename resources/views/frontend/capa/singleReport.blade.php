@@ -161,7 +161,7 @@
         <table>
             <tr>
                 <td class="w-70 head">
-                   Capa Single Report
+                   CAPA Single Report
                 </td>
                 <td class="w-30">
                     <div class="logo">
@@ -174,10 +174,10 @@
         <table>
             <tr>
                 <td class="w-30">
-                    <strong>Capa No.</strong>
+                    <strong>CAPA No.</strong>
                 </td>
                 <td class="w-40">
-                   {{ Helpers::divisionNameForQMS($data->division_id) }}/{{ Helpers::year($data->created_at) }}/{{ $data->record_number ? str_pad($data->record_number->record_number, 4, '0', STR_PAD_LEFT) : '' }}
+                    {{ Helpers::divisionNameForQMS($data->division_id) }}/{{ Helpers::year($data->created_at) }}/CAPA/{{ str_pad($data->record, 4, '0', STR_PAD_LEFT) }}            
                 </td>
                 <td class="w-30">
                     <strong>Record No.</strong> {{ str_pad($data->record, 4, '0', STR_PAD_LEFT) }}
@@ -202,7 +202,7 @@
                     </tr>
                     <tr>
                         <th class="w-50">Record Number</th>
-                        <td class="w-30">@if($data->record_number){{  str_pad($data->record_number->record_number, 4, '0', STR_PAD_LEFT) }} @else Not Applicable @endif</td>
+                        <td class="w-30">@if($data->record){{ str_pad($data->record, 4, '0', STR_PAD_LEFT) }} @else Not Applicable @endif</td>
                         <th class="w-50">Site/Location Code</th>
                         <td class="w-30">@if($data->division_id){{ Helpers::getDivisionName($data->division_id) }} @else Not Applicable @endif</td>
                     </tr>
@@ -283,53 +283,72 @@
                         <th class="w-20">Others</th>
                         <td class="w-80">@if($data->initiated_through_req){{ $data->initiated_through_req }}@else Not Applicable @endif</td>
                     </tr>
+                </table>
+                <table>
                     <tr>
                         <th class="w-20">Repeat Nature</th>
                         <td class="w-80">@if($data->repeat_nature){{ $data->repeat_nature }}@else Not Applicable @endif</td>
                     </tr>
-                    
+                </table>
+                <table>
                         <tr>
                         <th class="w-20">Repeat</th>
                         <td class="w-80">@if($data->repeat){{ $data->repeat }}@else Not Applicable @endif</td>
                        
                     </tr>
+                </table>
+                <table>
                     <tr>
                         <th class="w-20">Problem Description</th>
                         <td class="w-80">@if($data->problem_description){{ $data->problem_description }}@else Not Applicable @endif</td>
 
                     </tr>
+                </table>
+                <table>
                      <tr>
                         <th class="w-20">CAPA Team</th>
                         <td class="w-80">@if($data->capa_team){{  Helpers::getInitiatorName($data->capa_team) }}@else Not Applicable @endif</td>
-                    </tr>
-                    <tr>
+                    
                             <th class="w-20">Reference Records</th>
                             <td class="w-80">@if($data->capa_related_record){{ Helpers::getDivisionName($data->division_id) }}/CAPA/{{ date('Y') }}/{{ Helpers::recordFormat($data->record) }}@else Not Applicable @endif</td>
 
                     </tr>
-                     
+                </table>
+                <table>
                     <tr>
                         <th class="w-20"> Initial Observation</th>
                         <td class="w-80"> 
                         @if($data->initial_observation){{ $data->initial_observation}}@else Not Applicable @endif </td>
                     </tr>
+                </table>
+                <table>
                     <tr>  
                         <th class="w-20">Interim Containnment</th>
                         <td class="w-80">@if($data->interim_containnment){{ $data->interim_containnment }}@else Not Applicable @endif</td>
                     </tr>
+                </table>
+                <table>
                     <tr>
                         
                         <th class="w-20"> Containment Comments </th>
                         <td class="w-80">@if($data->containment_comments){{ $data->containment_comments }}@else Not Applicable @endif </td>
                     </tr>
+                </table>
+                <table>
                     <tr>
                         <th class="w-20">  CAPA QA Comments  </th>
                         <td class="w-80">@if($data->capa_qa_comments){{ $data->capa_qa_comments }}@else Not Applicable @endif </td>
                     </tr>
+                </table>
+                <table>
                     <tr>
-                        <th class="w-50">  Investigation  </th>
+                        <th class="w-20">  Investigation  </th>
                         <td class="w-80">@if($data->investigation){{ $data->investigation }}@else Not Applicable @endif </td>
-                        <th class="w-50">  Root Cause Analysis  </th>
+                    </tr>
+                </table>
+                <table>
+                    <tr>
+                        <th class="w-20">  Root Cause Analysis  </th>
                         <td class="w-80">@if($data->rcadetails){{ $data->rcadetails }}@else Not Applicable @endif </td>
                     </tr>
                    
@@ -375,7 +394,7 @@
             </div>
 
           
-            <div class="block">
+            {{-- <div class="block">
                 <div class="block-head">
                    Product Material Details
                 </div>
@@ -452,7 +471,7 @@
                         @endif
                     </table>
                 </div>
-            </div>
+            </div> --}}
                     
             <div class="block">
                 <div class="block-head">
@@ -584,6 +603,9 @@
                         <th class="w-20">
                             Plan Proposed On</th>
                         <td class="w-30">{{ $data->plan_proposed_on }}</td>
+                        <th class="w-20">
+                            Comment</th>
+                        <td class="w-30">{{ $data->plan_proposed_on_comment }}</td>
                     </tr>
                     <tr>
                         <th class="w-20">Plan Approved By
@@ -592,14 +614,20 @@
                         <th class="w-20">
                             Plan Approved On</th>
                         <td class="w-30">{{ $data->Plan_approved_on }}</td>
+                        <th class="w-20">
+                            Comment</th>
+                        <td class="w-30">{{ $data->plan_approved_on_comment }}</td>
                     </tr>
                     <tr>
                         <th class="w-20">QA More Info Required By
                         </th>
-                        <td class="w-30">{{ $data->qa_more_info_required_by }}</td>
+                        <td class="w-30">{{ $data->qa_more_info_required_by1 }}</td>
                         <th class="w-20">
                             QA More Info Required On</th>
-                        <td class="w-30">{{ $data->qa_more_info_required_on }}</td>
+                        <td class="w-30">{{ $data->qa_more_info_required_on1 }}</td>
+                        <th class="w-20">
+                            Comment</th>
+                        <td class="w-30">{{ $data->qa_more_info_required_on1_comment }}</td>
                     </tr>
                     <tr>
                         <th class="w-20">Cancelled By
@@ -608,6 +636,9 @@
                         <th class="w-20">
                             Cancelled On</th>
                         <td class="w-30">{{ $data->cancelled_on }}</td>
+                        <th class="w-20">
+                            Comment</th>
+                        <td class="w-30">{{ $data->cancelled_on_comment }}</td>
                     </tr>
                     <tr>
                         <th class="w-20">Completed By
@@ -616,12 +647,29 @@
                         <th class="w-20">
                             Completed On</th>
                         <td class="w-30">{{ $data->completed_on }}</td>
+                        <th class="w-20">
+                            Comment</th>
+                        <td class="w-30">{{ $data->plan_proposed_on_comment }}</td>
+                    </tr>
+                    <tr>
+                        <th class="w-20">QA More Info Required By
+                        </th>
+                        <td class="w-30">{{ $data->qa_more_info_required_by }}</td>
+                        <th class="w-20">
+                            QA More Info Required On</th>
+                        <td class="w-30">{{ $data->qa_more_info_required_on }}</td>
+                        <th class="w-20">
+                            Comment</th>
+                        <td class="w-30">{{ $data->qa_more_info_required_on_comment }}</td>
                     </tr>
                     <tr>
                         <th class="w-20">Approved By</th>
                         <td class="w-30">{{ $data->approved_by }}</td>
                         <th class="w-20">Approved On</th>
                         <td class="w-30">{{ $data->approved_on }}</td>
+                        <th class="w-20">
+                            Comment</th>
+                        <td class="w-30">{{ $data->approved_on_comment }}</td>
                     </tr>
 
                     <tr>
@@ -629,6 +677,18 @@
                         <td class="w-30">{{ $data->rejected_by }}</td>
                         <th class="w-20">Rejected On</th>
                         <td class="w-30">{{ $data->rejected_on }}</td>
+                        <th class="w-20">
+                            Comment</th>
+                        <td class="w-30">{{ $data->rejected_on_comment }}</td>
+                    </tr>
+                    <tr>
+                        <th class="w-20">All Actions Completed By</th>
+                        <td class="w-30">{{ $data->all_actions_completed_by }}</td>
+                        <th class="w-20">All Actions Completed On</th>
+                        <td class="w-30">{{ $data->all_actions_completed_on }}</td>
+                        <th class="w-20">
+                            Comment</th>
+                        <td class="w-30">{{ $data->all_actions_completed_on_comment }}</td>
                     </tr>
 
                 </table>
