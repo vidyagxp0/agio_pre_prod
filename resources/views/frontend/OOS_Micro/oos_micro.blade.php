@@ -296,7 +296,6 @@ $users = DB::table('users')
                     Monitoring</button>
 
                 <button class="cctablinks" onclick="openCity(event, 'CCForm23')">Checklist - Investigation of MediaSuitability Test</button>
-
                 <button class="cctablinks" onclick="openCity(event, 'CCForm5')">Phase II Investigation</button>
                 <button class="cctablinks" onclick="openCity(event, 'CCForm6')">Phase II QC Review</button>
                 <button class="cctablinks" onclick="openCity(event, 'CCForm7')">Additional Testing Proposal </button>
@@ -353,27 +352,30 @@ $users = DB::table('users')
                                         value="{{ Auth::user()->name }}">
                             </div>
                         </div>
-
                         <div class="col-md-6 ">
                             <div class="group-input ">
-                                <label for="intiation-date"> Date Of Initiation<span class="text-danger"></span></label>
-                                <input type="hidden" value="{{ date('Y-m-d') }}" name="intiation_date_gi">
-                                <input readonly type="text" value="{{ date('d-M-Y') }}" name="intiation_date_gi">
+                                <label for="due-date"> Date Of Initiation<span class="text-danger"></span></label>
+                                <input disabled type="text" value="{{ Helpers::getdateFormat($data['intiation_date'] ?? '') }}" name="intiation_date">
+                                <input type="hidden" value="{{ $data->intiation_date }}" name="intiation_date">
                             </div>
                         </div>
                         <div class="col-lg-6 new-date-data-field">
-                            <div class="group-input input-date">
-                                <label for="Date Due"> Due Date </label>
-                                <div><small class="text-primary">If revising Due Date, kindly mention revision
-                                        reason in "Due Date Extension Justification" data field.</small></div>
-                                <div class="calenderauditee">
-                                    <input type="text" id="due_date_gi" readonly placeholder="DD-MM-YYYY" />
-                                    <input type="date" name="due_date_gi" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
-                                     class="hide-input" oninput="handleDateInput(this, 'due_date_gi')" />
-                                    
+                                    <div class="group-input input-date">
+                                        <label for="Due Date"> Due Date </label>
+                                        <div><small class="text-primary">If revising Due Date, kindly mention revision reason in "Due Date Extension Justification" data field.</small></div>
+                                        <div class="calenderauditee">
+                                        <input type="text"  id="due_date"  readonly placeholder="DD-MMM-YYYY"  value="{{ Helpers::getDueDate123(null, false, 'd-M-Y') }}" />
+                                        <input type="date" name="due_date" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
+                                        class="hide-input"
+                                        oninput="handleDateInput(this, 'due_date')"  value="{{ Helpers::getDueDate123(null, false, 'Y-m-d') ?? '' }}"/>
+                                        </div>
+
+                                        {{-- <input type="hidden" value="{{ $due_date }}" name="due_date">
+                                        <input disabled type="text" value="{{ Helpers::getdateFormat($due_date) }}"> --}}
+                                        {{-- <input type="date" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
+                                            value="" name="due_date"> --}}
+                                    </div>
                                 </div>
-                            </div>
-                        </div>
                         <div class="col-lg-6">
                             <div class="group-input">
                                 <label for="Short Description">Short Description

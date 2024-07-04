@@ -433,22 +433,24 @@ class Helpers
     }
 
 
-     public static function getDueDate123($date, $addDays = false, $format = null)
-        {
-            try {
-                if ($date) {
-                    $format = $format ? $format : 'd M Y';
-                    $dateInstance = Carbon::parse($date);
-                    if ($addDays) {
-                        $dateInstance->addDays(30);
-                    }
-                    return $dateInstance->format($format);
+    public static function getDueDate123($date = null, $addDays = false, $format = null)
+    {
+        try {
+            $format = $format ? $format : 'd-M-Y';
+            $dateInstance = $date ? Carbon::parse($date) : Carbon::now();
+            
+            if ($addDays) {
+                $dateInstance->addDays($addDays);
+            } else {
+                // Add 30 days instead of adding a month
+                $dateInstance->addDays(30);
             }
-            } catch (\Exception $e) {
-                return 'NA';
-            }
-        }
 
+            return $dateInstance->format($format);
+        } catch (\Exception $e) {
+            return 'NA';
+        }
+    }
 
     public static function getDepartmentWithString($id)
     {

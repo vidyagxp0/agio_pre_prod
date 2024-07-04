@@ -694,11 +694,8 @@ class OOSMicroController extends Controller
             
             }
 
-             
-
      //---------------------Audit Trail Update-------------------------------/////////////////
      $lastDocument = OOS_micro::find($id);
-     
 
      $general_information = [
         'description_gi' => 'Short Description',
@@ -738,8 +735,12 @@ class OOSMicroController extends Controller
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastDocument->status;
             $history->change_from = $lastDocument->status;
-            $history->change_to = $lastDocument->status;
-            $history->action_name = 'Update';
+            $history->change_to =  "Not Applicable";
+            if (is_null($lastValue) || $lastValue === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
             $history->save();
         }
     }
@@ -770,8 +771,12 @@ foreach ($Preliminary_Lab_Investigation as $key => $value){
         $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
         $history->origin_state = $lastDocument->status;
         $history->change_from = $lastDocument->status;
-        $history->change_to =   $lastDocument->status;
-        $history->action_name = 'Update';
+        $history->change_to =  "Not Applicable";
+        if (is_null($lastValue) || $lastValue === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
         $history->save();
     }
 }
@@ -800,8 +805,12 @@ foreach($Preliminary_Lab_Investigation_Conclusion as $key => $value){
         $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
         $history->origin_state = $lastDocument->status;
         $history->change_from = $lastDocument->status;
-        $history->change_to =   $lastDocument->status;
-        $history->action_name = 'Update';
+        $history->change_to =  "Not Applicable";
+        if (is_null($lastValue) || $lastValue === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
         $history->save();
     }
 }
@@ -826,8 +835,12 @@ if($lastDocument->$key != $request->$key){
     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
     $history->origin_state = $lastDocument->status;
     $history->change_from = $lastDocument->status;
-    $history->change_to =   $lastDocument->status;
-    $history->action_name = 'Update';
+    $history->change_to =  "Not Applicable";
+    if (is_null($lastValue) || $lastValue === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
     $history->save();
 }
 }
@@ -858,8 +871,12 @@ if($lastDocument->$key != $request->$key){
     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
     $history->origin_state = $lastDocument->status;
     $history->change_from = $lastDocument->status;
-    $history->change_to =   $lastDocument->status;
-    $history->action_name = 'Update';
+    $history->change_to =  "Not Applicable";
+    if (is_null($lastValue) || $lastValue === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
     $history->save();
 }
 }
@@ -894,8 +911,12 @@ if($lastDocument->$key != $request->$key){
     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
     $history->origin_state = $lastDocument->status;
     $history->change_from = $lastDocument->status;
-    $history->change_to =   $lastDocument->status;
-    $history->action_name = 'Update';
+    $history->change_to =  "Not Applicable";
+    if (is_null($lastValue) || $lastValue === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
     $history->save();
 }
 }
@@ -923,8 +944,12 @@ if($lastDocument->$key != $request->$key){
     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
     $history->origin_state = $lastDocument->status;
     $history->change_from = $lastDocument->status;
-    $history->change_to =   $lastDocument->status;
-    $history->action_name = 'Update';
+    $history->change_to =  "Not Applicable";
+    if (is_null($lastValue) || $lastValue === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
     $history->save();
 }
 }
@@ -957,8 +982,12 @@ if($lastDocument->$key != $request->$key){
     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
     $history->origin_state = $lastDocument->status;
         $history->change_from = $lastDocument->status;
-        $history->change_to =   $lastDocument->status;
-        $history->action_name = 'Update';
+        $history->change_to =  "Not Applicable";
+        if (is_null($lastValue) || $lastValue === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
     $history->save();
 }
 }
@@ -992,8 +1021,12 @@ if($lastDocument->$key != $request->$key){
     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
     $history->origin_state = $lastDocument->status;
         $history->change_from = $lastDocument->status;
-        $history->change_to =   $lastDocument->status;
-        $history->action_name = 'Update';
+        $history->change_to =  "Not Applicable";
+        if (is_null($lastValue) || $lastValue === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
     $history->save();
 }
 }
@@ -1020,8 +1053,12 @@ if($lastDocument->$key != $request->$key){
     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
     $history->origin_state = $lastDocument->status;
     $history->change_from = $lastDocument->status;
-    $history->change_to =   $lastDocument->status;
-    $history->action_name = 'Update';
+    $history->change_to =  "Not Applicable";
+    if (is_null($lastValue) || $lastValue === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
     $history->save();
 }
 }
@@ -1061,14 +1098,19 @@ if($lastDocument->$key != $request->$key){
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastDocument->status;
             $history->change_from = $lastDocument->status;
-            $history->change_to =   $lastDocument->status;
-            $history->action_name = 'Update';
+            $history->change_to =  "Not Applicable";
+            if (is_null($lastValue) || $lastValue === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
             $history->save();
         }
     }
 
 
     // =========================== Audit Trail Update ===============================// 
+    
     // Find the OOS micro record by ID
         $micro->update($input);
         $micro = OOS_micro::with('grids')->find($id);  
@@ -1987,8 +2029,7 @@ if($lastDocument->$key != $request->$key){
             $data->originator = User::where('id', $data->initiator_id)->value('name');
             $pdf = App::make('dompdf.wrapper');
             $time = Carbon::now();
-        // dd($data);
-            $pdf = PDF::loadview('frontend.OOS_Micro.comps_micro.singleReport', 
+           $pdf = PDF::loadview('frontend.OOS_Micro.comps_micro.singleReport', 
             compact('data','checklist_lab_invs','phase_two_invs','oos_capas','oos_conclusions','oos_conclusion_reviews'))
                            ->setOptions([
                     'defaultFont' => 'sans-serif',
