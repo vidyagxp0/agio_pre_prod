@@ -369,11 +369,6 @@ $users = DB::table('users')
                                 class="hide-input"
                                 oninput="handleDateInput(this, 'due_date')"  value="{{ Helpers::getDueDate123(null, false, 'Y-m-d') ?? '' }}"/>
                                 </div>
-
-                                {{-- <input type="hidden" value="{{ $due_date }}" name="due_date">
-                                <input disabled type="text" value="{{ Helpers::getdateFormat($due_date) }}"> --}}
-                                {{-- <input type="date" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
-                                    value="" name="due_date"> --}}
                             </div>
                         </div>
                         <div class="col-lg-6">
