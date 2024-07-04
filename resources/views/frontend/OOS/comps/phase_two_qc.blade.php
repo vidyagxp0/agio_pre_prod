@@ -37,7 +37,7 @@
             <div class="col-lg-6">
                 <div class="group-input">
                     <label for="Cancelled By">OOS Category-Reason identified </label>
-                    <select name="oos_category_reason_identified_piiqcr" {{Helpers::isOOSChemical($data->stage)}}>
+                    <select name="oos_category_reason_identified_piiqcr" {{Helpers::isOOSChemical($data->stage)}} >
                         <option value="0" {{ $data->oos_category_reason_identified_piiqcr === '0' ?
                             'selected' : '' }}>Enter Your Selection Here</option>
                         <option value="Analyst Error"{{ $data->oos_category_reason_identified_piiqcr ===

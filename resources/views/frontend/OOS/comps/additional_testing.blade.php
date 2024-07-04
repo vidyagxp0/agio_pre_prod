@@ -74,7 +74,8 @@
                     <div class="add-btn">
                         <div>Add</div>
                         <input type="file" id="myfile" name="additional_testing_attachment_atp[]"
-                            oninput="addMultipleFiles(this, 'additional_testing_attachment_atp')" multiple  {{Helpers::isOOSChemical($data->stage)}} >
+                            oninput="addMultipleFiles(this, 'additional_testing_attachment_atp')" 
+                            multiple  {{Helpers::isOOSChemical($data->stage)}} >
                     </div>
                 </div>
 

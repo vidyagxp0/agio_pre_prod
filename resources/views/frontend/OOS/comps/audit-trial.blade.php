@@ -322,16 +322,15 @@
 
                     <table>
                         <div class="heading">
-
                             <div class="heading-new"> Audit Trail </div>
-
                             <div> <strong>Record ID.</strong> {{ str_pad($document->record_number, 4, '0', STR_PAD_LEFT) }}</div>
                             <div style="margin-bottom: 5px;  font-weight: bold;"> Originator
                                 :{{ $document->initiator ? $document->initiator : '' }}</div>
                             <div style="margin-bottom: 5px; font-weight: bold;">Short Description :
                                 {{ $document->description_gi }}</div>
-                            <div style="margin-bottom: 5px;  font-weight: bold;">Due Date : {{ $document->due_date }}</div>
-
+                            <div style="margin-bottom: 5px;  font-weight: bold;">
+                            <p>Due Date: {{ $document->due_date ? \Carbon\Carbon::parse($document->due_date)->format('d-M-Y') : 'Not Applicable' }}</p>
+                            </div>
                         </div>
         </div>
         </table>
@@ -410,7 +409,9 @@
                                         :</strong>{{ $dataDemo->user_name ? $dataDemo->user_name : 'Not Applicable' }}
                                 </div>
                                 <div style="margin-top: 5px;"> <strong>Performed On
-                                        :</strong>{{ $dataDemo->created_at ? $dataDemo->created_at : 'Not Applicable' }}
+                                        :</strong>                            
+                                        {{ $dataDemo->created_at ? \Carbon\Carbon::parse($dataDemo->created_at)->format('d-M-Y H:i:s') : 'Not Applicable' }}</p>
+                                        
                                 </div>
                                 <div style="margin-top: 5px;"><strong> Comments
                                         :</strong>{{ $dataDemo->comment ? $dataDemo->comment : 'Not Applicable' }}</div>
