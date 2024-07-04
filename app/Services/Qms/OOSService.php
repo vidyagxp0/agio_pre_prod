@@ -28,6 +28,7 @@ class OOSService
         try {
 
             $input = $request->all();
+            
             $input['form_type'] = "OOS Chemical";
             $input['status'] = 'Opened';
             $input['stage'] = 1;
@@ -1498,10 +1499,13 @@ class OOSService
                 $history->origin_state = $lastOosRecod->status;
                 $history->change_to =   "Not Applicable";
                 $history->change_from = $lastOosRecod->status;
-                $history->action_name = "Update";
+                if (is_null($lastOosRecod->description_gi) || $lastOosRecod->description_gi === '') {
+                    $history->action_name = "New";
+                } else {
+                    $history->action_name = "Update";
+                }
                 $history->save();
             }
-            
             if ($lastOosRecod->initiator_Group != $request->initiator_Group){
                 $history = new OosAuditTrial();
                 $history->oos_id = $lastOosRecod->id;
@@ -1516,7 +1520,12 @@ class OOSService
                 $history->stage = $lastOosRecod->stage;
                 $history->change_to =   "Opened";
                 $history->change_from = $lastOosRecod->status;
-                $history->action_name = 'update';
+                // $history->action_name = 'update';
+                if (is_null($lastOosRecod->initiator_Group) || $lastOosRecod->initiator_Group === '') {
+                    $history->action_name = "New";
+                } else {
+                    $history->action_name = "Update";
+                }
                 $history->save();
             }
             if ($lastOosRecod->initiator_group_code != $request->initiator_group_code){
@@ -1533,7 +1542,11 @@ class OOSService
                 $history->stage = $lastOosRecod->stage;
                 $history->change_to =   "Opened";
                 $history->change_from = $lastOosRecod->status;
-                $history->action_name = 'Update';
+                if (is_null($lastOosRecod->initiator_group_code) || $lastOosRecod->initiator_group_code === '') {
+                        $history->action_name = "New";
+                    } else {
+                        $history->action_name = "Update";
+                    }
                 $history->save();
             }
             if ($lastOosRecod->if_others_gi != $request->if_others_gi){
@@ -1551,7 +1564,11 @@ class OOSService
                 $history->stage = $lastOosRecod->stage;
                 $history->change_to =   "Opened";
                 $history->change_from = $lastOosRecod->status;
-                $history->action_name = 'update';
+                if (is_null($lastOosRecod->if_others_gi) || $lastOosRecod->if_others_gi === '') {
+                    $history->action_name = "New";
+                } else {
+                    $history->action_name = "Update";
+                }
             }
             if ($lastOosRecod->is_repeat_gi != $request->is_repeat_gi){
                 $history = new OosAuditTrial();
@@ -1567,7 +1584,11 @@ class OOSService
                 $history->stage = $lastOosRecod->stage;
                 $history->change_to =   "Opened";
                 $history->change_from = $lastOosRecod->status;
-                $history->action_name = 'Update';
+               if (is_null($lastOosRecod->is_repeat_gi) || $lastOosRecod->is_repeat_gi === '') {
+                    $history->action_name = "New";
+                } else {
+                    $history->action_name = "Update";
+                }
                 $history->save();
             }
             if ($lastOosRecod->nature_of_change_gi != $request->nature_of_change_gi){
@@ -1584,7 +1605,11 @@ class OOSService
                 $history->stage = $lastOosRecod->stage;
                 $history->change_to =   "Opened";
                 $history->change_from = $lastOosRecod->status;
-                $history->action_name = 'Update';
+               if (is_null($lastOosRecod->nature_of_change_gi) || $lastOosRecod->nature_of_change_gi === '') {
+                    $history->action_name = "New";
+                } else {
+                    $history->action_name = "Update";
+                }
                 $history->save();
             }
             if ($lastOosRecod->deviation_occured_on_gi != $request->deviation_occured_on_gi){
@@ -1601,7 +1626,11 @@ class OOSService
                 $history->stage = $lastOosRecod->stage;
                 $history->change_to =   "Opened";
                 $history->change_from = $lastOosRecod->status;
-                $history->action_name = 'Update';
+               if (is_null($lastOosRecod->deviation_occured_on_gi) || $lastOosRecod->deviation_occured_on_gi === '') {
+                    $history->action_name = "New";
+                } else {
+                    $history->action_name = "Update";
+                }
                 $history->save();
             }
             if ($lastOosRecod->source_document_type_gi != $request->source_document_type_gi){
@@ -1618,7 +1647,11 @@ class OOSService
                 $history->stage = $lastOosRecod->stage;
                 $history->change_to =   "Opened";
                 $history->change_from = $lastOosRecod->status;
-                $history->action_name = 'Update';
+               if (is_null($lastOosRecod->source_document_type_gi) || $lastOosRecod->source_document_type_gi === '') {
+                    $history->action_name = "New";
+                } else {
+                    $history->action_name = "Update";
+                }
                 $history->save();
             }
             if ($lastOosRecod->sample_type_gi != $request->sample_type_gi){
@@ -1635,7 +1668,11 @@ class OOSService
                 $history->stage = $lastOosRecod->stage;
                 $history->change_to =   "Opened";
                 $history->change_from = $lastOosRecod->status;
-                $history->action_name = 'Update';
+               if (is_null($lastOosRecod->sample_type_gi) || $lastOosRecod->sample_type_gi === '') {
+                    $history->action_name = "New";
+                } else {
+                    $history->action_name = "Update";
+                }
                 $history->save();
             }
             if ($lastOosRecod->product_material_name_gi != $request->product_material_name_gi){
@@ -1652,7 +1689,11 @@ class OOSService
                 $history->stage = $lastOosRecod->stage;
                 $history->change_to =   "Opened";
                 $history->change_from = $lastOosRecod->status;
-                $history->action_name = 'Update';
+               if (is_null($lastOosRecod->product_material_name_gi) || $lastOosRecod->product_material_name_gi === '') {
+                    $history->action_name = "New";
+                } else {
+                    $history->action_name = "Update";
+                }
                 $history->save();
             }
             if ($lastOosRecod->market_gi != $request->market_gi){
@@ -1669,7 +1710,11 @@ class OOSService
                 $history->stage = $lastOosRecod->stage;
                 $history->change_to =   "Opened";
                 $history->change_from = $lastOosRecod->status;
-                $history->action_name = 'Update';
+               if (is_null($lastOosRecod->market_gi) || $lastOosRecod->market_gi === '') {
+                    $history->action_name = "New";
+                } else {
+                    $history->action_name = "Update";
+                }
                 $history->save();
             }
             if ($lastOosRecod->customer_gi != $request->customer_gi){
@@ -1686,7 +1731,11 @@ class OOSService
                 $history->stage = $lastOosRecod->stage;
                 $history->change_to =   "Opened";
                 $history->change_from = $lastOosRecod->status;
-                $history->action_name = 'Update';
+               if (is_null($lastOosRecod->customer_gi) || $lastOosRecod->customer_gi === '') {
+                    $history->action_name = "New";
+                } else {
+                    $history->action_name = "Update";
+                }
                 $history->save();
             }
             // TapII
@@ -1704,7 +1753,11 @@ class OOSService
                 $history->stage = $lastOosRecod->stage;
                 $history->change_to =   "Opened";
                 $history->change_from = $lastOosRecod->status;
-                $history->action_name = 'Update';
+               if (is_null($lastOosRecod->Comments_plidata) || $lastOosRecod->Comments_plidata === '') {
+                    $history->action_name = "New";
+                } else {
+                    $history->action_name = "Update";
+                }
                 $history->save();
             }
             if ($lastOosRecod->justify_if_no_field_alert_pli != $request->justify_if_no_field_alert_pli){
@@ -1721,7 +1774,11 @@ class OOSService
                 $history->stage = $lastOosRecod->stage;
                 $history->change_to =   "Opened";
                 $history->change_from = $lastOosRecod->status;
-                $history->action_name = 'Update';
+               if (is_null($lastOosRecod->justify_if_no_field_alert_pli) || $lastOosRecod->justify_if_no_field_alert_pli === '') {
+                    $history->action_name = "New";
+                } else {
+                    $history->action_name = "Update";
+                }
                 $history->save();
             }
             if ($lastOosRecod->justify_if_no_analyst_int_pli != $request->justify_if_no_analyst_int_pli){
@@ -1738,7 +1795,11 @@ class OOSService
                 $history->stage = $lastOosRecod->stage;
                 $history->change_to =   "Opened";
                 $history->change_from = $lastOosRecod->status;
-                $history->action_name = 'Update';
+               if (is_null($lastOosRecod->justify_if_no_analyst_int_pli) || $lastOosRecod->justify_if_no_analyst_int_pli === '') {
+                    $history->action_name = "New";
+                } else {
+                    $history->action_name = "Update";
+                }
                 $history->save();
             }
             if ($lastOosRecod->phase_i_investigation_pli != $request->phase_i_investigation_pli){
@@ -1755,7 +1816,11 @@ class OOSService
                 $history->stage = $lastOosRecod->stage;
                 $history->change_to =   "Opened";
                 $history->change_from = $lastOosRecod->status;
-                $history->action_name = 'Update';
+               if (is_null($lastOosRecod->phase_i_investigation_pli) || $lastOosRecod->phase_i_investigation_pli === '') {
+                    $history->action_name = "New";
+                } else {
+                    $history->action_name = "Update";
+                }
                 $history->save();
             }
             if ($lastOosRecod->phase_i_investigation_ref_pli != $request->phase_i_investigation_ref_pli){
@@ -1772,7 +1837,11 @@ class OOSService
                 $history->stage = $lastOosRecod->stage;
                 $history->change_to =   "Opened";
                 $history->change_from = $lastOosRecod->status;
-                $history->action_name = 'Update';
+               if (is_null($lastOosRecod->phase_i_investigation_ref_pli) || $lastOosRecod->phase_i_investigation_ref_pli === '') {
+                    $history->action_name = "New";
+                } else {
+                    $history->action_name = "Update";
+                }
                 $history->save();
             }
             // TapIV
@@ -1790,7 +1859,11 @@ class OOSService
                 $history->stage = $lastOosRecod->stage;
                 $history->change_to =   "Opened";
                 $history->change_from = $lastOosRecod->status;
-                $history->action_name = 'Update';
+               if (is_null($lastOosRecod->summary_of_prelim_investiga_plic) || $lastOosRecod->summary_of_prelim_investiga_plic === '') {
+                    $history->action_name = "New";
+                } else {
+                    $history->action_name = "Update";
+                }
                 $history->save();
             }
             if ($lastOosRecod->root_cause_identified_plic != $request->root_cause_identified_plic){
@@ -1807,7 +1880,11 @@ class OOSService
                 $history->stage = $lastOosRecod->stage;
                 $history->change_to =   "Opened";
                 $history->change_from = $lastOosRecod->status;
-                $history->action_name = 'Update';
+               if (is_null($lastOosRecod->root_cause_identified_plic) || $lastOosRecod->root_cause_identified_plic === '') {
+                    $history->action_name = "New";
+                } else {
+                    $history->action_name = "Update";
+                }
                 $history->save();
             }
             if ($lastOosRecod->oos_category_root_cause_ident_plic != $request->oos_category_root_cause_ident_plic){
@@ -1824,7 +1901,11 @@ class OOSService
                 $history->stage = $lastOosRecod->stage;
                 $history->change_to =   "Opened";
                 $history->change_from = $lastOosRecod->status;
-                $history->action_name = 'Update';
+               if (is_null($lastOosRecod->oos_category_root_cause_ident_plic) || $lastOosRecod->oos_category_root_cause_ident_plic === '') {
+                    $history->action_name = "New";
+                } else {
+                    $history->action_name = "Update";
+                }
                 $history->save();
             }
             if ($lastOosRecod->root_cause_details_plic != $request->root_cause_details_plic){
@@ -1841,7 +1922,11 @@ class OOSService
                 $history->stage = $lastOosRecod->stage;
                 $history->change_to =   "Opened";
                 $history->change_from = $lastOosRecod->status;
-                $history->action_name = 'Update';
+               if (is_null($lastOosRecod->oos_category_root_cause_ident_plic) || $lastOosRecod->oos_category_root_cause_ident_plic === '') {
+                    $history->action_name = "New";
+                } else {
+                    $history->action_name = "Update";
+                }
                 $history->save();
             }
             if ($lastOosRecod->oos_category_others_plic != $request->oos_category_others_plic){
@@ -1858,7 +1943,11 @@ class OOSService
                 $history->stage = $lastOosRecod->stage;
                 $history->change_to =   "Opened";
                 $history->change_from = $lastOosRecod->status;
-                $history->action_name = 'Update';
+               if (is_null($lastOosRecod->description_gi) || $lastOosRecod->description_gi === '') {
+                    $history->action_name = "New";
+                } else {
+                    $history->action_name = "Update";
+                }
                 $history->save();
             }
             if ($lastOosRecod->oos_category_others_plic != $request->oos_category_others_plic){
@@ -1875,7 +1964,11 @@ class OOSService
                 $history->stage = $lastOosRecod->stage;
                 $history->change_to =   "Opened";
                 $history->change_from = $lastOosRecod->status;
-                $history->action_name = 'Update';
+               if (is_null($lastOosRecod->oos_category_others_plic) || $lastOosRecod->oos_category_others_plic === '') {
+                    $history->action_name = "New";
+                } else {
+                    $history->action_name = "Update";
+                }
                 $history->save();
             }
             if ($lastOosRecod->capa_required_plic != $request->capa_required_plic){
@@ -1892,7 +1985,11 @@ class OOSService
                 $history->stage = $lastOosRecod->stage;
                 $history->change_to =   "Opened";
                 $history->change_from = $lastOosRecod->status;
-                $history->action_name = 'Update';
+               if (is_null($lastOosRecod->capa_required_plic) || $lastOosRecod->capa_required_plic === '') {
+                    $history->action_name = "New";
+                } else {
+                    $history->action_name = "Update";
+                }
                 $history->save();
             }
             if ($lastOosRecod->reference_capa_no_plic != $request->reference_capa_no_plic){
@@ -1909,7 +2006,11 @@ class OOSService
                 $history->stage = $lastOosRecod->stage;
                 $history->change_to =   "Opened";
                 $history->change_from = $lastOosRecod->status;
-                $history->action_name = 'Update';
+               if (is_null($lastOosRecod->reference_capa_no_plic) || $lastOosRecod->reference_capa_no_plic === '') {
+                    $history->action_name = "New";
+                } else {
+                    $history->action_name = "Update";
+                }
                 $history->save();
             }
             if ($lastOosRecod->delay_justification_for_pi_plic != $request->delay_justification_for_pi_plic){
@@ -1926,7 +2027,11 @@ class OOSService
                 $history->stage = $lastOosRecod->stage;
                 $history->change_to =   "Opened";
                 $history->change_from = $lastOosRecod->status;
-                $history->action_name = 'Update';
+               if (is_null($lastOosRecod->delay_justification_for_pi_plic) || $lastOosRecod->delay_justification_for_pi_plic === '') {
+                    $history->action_name = "New";
+                } else {
+                    $history->action_name = "Update";
+                }
                 $history->save();
             }
             // TapV5
@@ -1944,7 +2049,11 @@ class OOSService
                 $history->stage = $lastOosRecod->stage;
                 $history->change_to =   "Opened";
                 $history->change_from = $lastOosRecod->status;
-                $history->action_name = 'Update';
+               if (is_null($lastOosRecod->review_comments_plir) || $lastOosRecod->review_comments_plir === '') {
+                    $history->action_name = "New";
+                } else {
+                    $history->action_name = "Update";
+                }
                 $history->save();
             }
             if ($lastOosRecod->phase_ii_inv_required_plir != $request->phase_ii_inv_required_plir){
@@ -1961,7 +2070,11 @@ class OOSService
                 $history->stage = $lastOosRecod->stage;
                 $history->change_to =   "Opened";
                 $history->change_from = $lastOosRecod->status;
-                $history->action_name = 'Update';
+               if (is_null($lastOosRecod->phase_ii_inv_required_plir) || $lastOosRecod->phase_ii_inv_required_plir === '') {
+                    $history->action_name = "New";
+                } else {
+                    $history->action_name = "Update";
+                }
                 $history->save();
             }
             // TapVI6
@@ -1979,7 +2092,11 @@ class OOSService
                 $history->stage = $lastOosRecod->stage;
                 $history->change_to =   "Opened";
                 $history->change_from = $lastOosRecod->status;
-                $history->action_name = 'Update';
+               if (is_null($lastOosRecod->qa_approver_comments_piii) || $lastOosRecod->qa_approver_comments_piii === '') {
+                    $history->action_name = "New";
+                } else {
+                    $history->action_name = "Update";
+                }
                 $history->save();
             }
             if ($lastOosRecod->qa_approver_comments_piii != $request->qa_approver_comments_piii){
@@ -1996,7 +2113,11 @@ class OOSService
                 $history->stage = $lastOosRecod->stage;
                 $history->change_to =   "Opened";
                 $history->change_from = $lastOosRecod->status;
-                $history->action_name = 'Update';
+               if (is_null($lastOosRecod->qa_approver_comments_piii) || $lastOosRecod->qa_approver_comments_piii === '') {
+                    $history->action_name = "New";
+                } else {
+                    $history->action_name = "Update";
+                }
                 $history->save();
             }
             if ($lastOosRecod->manufact_invest_required_piii != $request->manufact_invest_required_piii){
@@ -2013,14 +2134,18 @@ class OOSService
                 $history->stage = $lastOosRecod->stage;
                 $history->change_to =   "Opened";
                 $history->change_from = $lastOosRecod->status;
-                $history->action_name = 'Update';
+               if (is_null($lastOosRecod->manufact_invest_required_piii) || $lastOosRecod->manufact_invest_required_piii === '') {
+                    $history->action_name = "New";
+                } else {
+                    $history->action_name = "Update";
+                }
                 $history->save();
             }
             if ($lastOosRecod->manufacturing_invest_type_piii != $request->manufacturing_invest_type_piii){
                 $history = new OosAuditTrial();
                 $history->oos_id = $lastOosRecod->id;
                 $history->previous = $lastOosRecod->manufacturing_invest_type_piii;
-                $history->activity_type = 'manufacturing_invest_type_piii';
+                $history->activity_type = 'manufacturing invest type_piii';
                 $history->current = $request->manufacturing_invest_type_piii;
                 $history->comment = "Not Applicable";
                 $history->user_id = Auth::user()->id;
@@ -2030,7 +2155,11 @@ class OOSService
                 $history->stage = $lastOosRecod->stage;
                 $history->change_to =   "Opened";
                 $history->change_from = $lastOosRecod->status;
-                $history->action_name = 'Update';
+               if (is_null($lastOosRecod->manufacturing_invest_type_piii) || $lastOosRecod->manufacturing_invest_type_piii === '') {
+                    $history->action_name = "New";
+                } else {
+                    $history->action_name = "Update";
+                }
             }
             if ($lastOosRecod->audit_comments_piii != $request->audit_comments_piii){
                 $history = new OosAuditTrial();
@@ -2046,7 +2175,11 @@ class OOSService
                 $history->stage = $lastOosRecod->stage;
                 $history->change_to =   "Opened";
                 $history->change_from = "Initiator";
-                $history->action_name = 'Update';
+               if (is_null($lastOosRecod->audit_comments_piii) || $lastOosRecod->audit_comments_piii === '') {
+                    $history->action_name = "New";
+                } else {
+                    $history->action_name = "Update";
+                }
                 $history->save();
             }
             if ($lastOosRecod->hypo_exp_required_piii != $request->hypo_exp_required_piii){
@@ -2063,7 +2196,11 @@ class OOSService
                 $history->stage = $lastOosRecod->stage;
                 $history->change_to =   "Opened";
                 $history->change_from = $lastOosRecod->status;
-                $history->action_name = 'Update';
+               if (is_null($lastOosRecod->hypo_exp_required_piii) || $lastOosRecod->hypo_exp_required_piii === '') {
+                    $history->action_name = "New";
+                } else {
+                    $history->action_name = "Update";
+                }
                 $history->save();
             }
             if ($lastOosRecod->hypo_exp_reference_piii != $request->hypo_exp_reference_piii){
@@ -2080,7 +2217,11 @@ class OOSService
                 $history->stage = $lastOosRecod->stage;
                 $history->change_to =   "Opened";
                 $history->change_from = $lastOosRecod->status;
-                $history->action_name = 'Update';
+               if (is_null($lastOosRecod->hypo_exp_reference_piii) || $lastOosRecod->hypo_exp_reference_piii === '') {
+                    $history->action_name = "New";
+                } else {
+                    $history->action_name = "Update";
+                }
                 $history->save();
             }
             // TapVIII8
@@ -2098,7 +2239,11 @@ class OOSService
                 $history->stage = $lastOosRecod->stage;
                 $history->change_to =   "Opened";
                 $history->change_from = $lastOosRecod->status;
-                $history->action_name = 'Update';
+               if (is_null($lastOosRecod->summary_of_exp_hyp_piiqcr) || $lastOosRecod->summary_of_exp_hyp_piiqcr === '') {
+                    $history->action_name = "New";
+                } else {
+                    $history->action_name = "Update";
+                }
                 $history->save();
             }
             if ($lastOosRecod->summary_mfg_investigation_piiqcr != $request->summary_mfg_investigation_piiqcr){
@@ -2115,7 +2260,11 @@ class OOSService
                 $history->stage = $lastOosRecod->stage;
                 $history->change_to =   "Opened";
                 $history->change_from = $lastOosRecod->status;
-                $history->action_name = 'Update';
+               if (is_null($lastOosRecod->summary_mfg_investigation_piiqcr) || $lastOosRecod->summary_mfg_investigation_piiqcr === '') {
+                    $history->action_name = "New";
+                } else {
+                    $history->action_name = "Update";
+                }
                 $history->save();
             }
             if ($lastOosRecod->root_casue_identified_piiqcr != $request->root_casue_identified_piiqcr){
@@ -2132,7 +2281,11 @@ class OOSService
                 $history->stage = $lastOosRecod->stage;
                 $history->change_to =   "Opened";
                 $history->change_from = $lastOosRecod->status;
-                $history->action_name = 'Update';
+               if (is_null($lastOosRecod->root_casue_identified_piiqcr) || $lastOosRecod->root_casue_identified_piiqcr === '') {
+                    $history->action_name = "New";
+                } else {
+                    $history->action_name = "Update";
+                }
                 $history->save();
             }
             if ($lastOosRecod->oos_category_reason_identified_piiqcr != $request->oos_category_reason_identified_piiqcr){
@@ -2149,7 +2302,11 @@ class OOSService
                 $history->stage = $lastOosRecod->stage;
                 $history->change_to =   "Opened";
                 $history->change_from = $lastOosRecod->status;
-                $history->action_name = 'Update';
+               if (is_null($lastOosRecod->oos_category_reason_identified_piiqcr) || $lastOosRecod->oos_category_reason_identified_piiqcr === '') {
+                    $history->action_name = "New";
+                } else {
+                    $history->action_name = "Update";
+                }
                 $history->save();
             }
             
@@ -2167,7 +2324,11 @@ class OOSService
                 $history->stage = $lastOosRecod->stage;
                 $history->change_to =   "Opened";
                 $history->change_from = $lastOosRecod->status;
-                $history->action_name = 'Update';
+               if (is_null($lastOosRecod->others_oos_category_piiqcr) || $lastOosRecod->others_oos_category_piiqcr === '') {
+                    $history->action_name = "New";
+                } else {
+                    $history->action_name = "Update";
+                }
                 $history->save();
             }
             if ($lastOosRecod->nature_of_change_gi != $request->nature_of_change_gi){
@@ -2184,7 +2345,11 @@ class OOSService
                 $history->stage = $lastOosRecod->stage;
                 $history->change_to =   "Opened";
                 $history->change_from = $lastOosRecod->status;
-                $history->action_name = 'Update';
+               if (is_null($lastOosRecod->nature_of_change_gi) || $lastOosRecod->nature_of_change_gi === '') {
+                    $history->action_name = "New";
+                } else {
+                    $history->action_name = "Update";
+                }
                 $history->save();
             }
             if ($lastOosRecod->impact_assessment_piiqcr != $request->impact_assessment_piiqcr){
@@ -2201,7 +2366,11 @@ class OOSService
                 $history->stage = $lastOosRecod->stage;
                 $history->change_to =   "Opened";
                 $history->change_from = $lastOosRecod->status;
-                $history->action_name = 'Update';
+               if (is_null($lastOosRecod->impact_assessment_piiqcr) || $lastOosRecod->impact_assessment_piiqcr === '') {
+                    $history->action_name = "New";
+                } else {
+                    $history->action_name = "Update";
+                }
                 $history->save();
             }
 
@@ -2220,7 +2389,11 @@ class OOSService
                 $history->stage = $lastOosRecod->stage;
                 $history->change_to =   "Opened";
                 $history->change_from = $lastOosRecod->status;
-                $history->action_name = 'Update';
+               if (is_null($lastOosRecod->review_comment_atp) || $lastOosRecod->review_comment_atp === '') {
+                    $history->action_name = "New";
+                } else {
+                    $history->action_name = "Update";
+                }
                 $history->save();
             }
             if ($lastOosRecod->additional_test_proposal_atp != $request->additional_test_proposal_atp){
@@ -2237,7 +2410,11 @@ class OOSService
                 $history->stage = $lastOosRecod->stage;
                 $history->change_to =   "Opened";
                 $history->change_from = $lastOosRecod->status;
-                $history->action_name = 'Update';
+               if (is_null($lastOosRecod->additional_test_proposal_atp) || $lastOosRecod->additional_test_proposal_atp === '') {
+                    $history->action_name = "New";
+                } else {
+                    $history->action_name = "Update";
+                }
                 $history->save();
             }
             if ($lastOosRecod->additional_test_reference_atp != $request->additional_test_reference_atp){
@@ -2254,7 +2431,11 @@ class OOSService
                 $history->stage = $lastOosRecod->stage;
                 $history->change_to =   "Opened";
                 $history->change_from = $lastOosRecod->status;
-                $history->action_name = 'Update';
+               if (is_null($lastOosRecod->additional_test_reference_atp) || $lastOosRecod->additional_test_reference_atp === '') {
+                    $history->action_name = "New";
+                } else {
+                    $history->action_name = "Update";
+                }
                 $history->save();
             }
             if ($lastOosRecod->nature_of_change_gi != $request->nature_of_change_gi){
@@ -2271,7 +2452,11 @@ class OOSService
                 $history->stage = $lastOosRecod->stage;
                 $history->change_to =   "Opened";
                 $history->change_from = $lastOosRecod->status;
-                $history->action_name = 'Update';
+               if (is_null($lastOosRecod->nature_of_change_gi) || $lastOosRecod->nature_of_change_gi === '') {
+                    $history->action_name = "New";
+                } else {
+                    $history->action_name = "Update";
+                }
                 $history->save();
             }
             // =============== OOS Conclusion  =====================
@@ -2289,7 +2474,11 @@ class OOSService
                 $history->stage = $lastOosRecod->stage;
                 $history->change_to =   "Opened";
                 $history->change_from = $lastOosRecod->status;
-                $history->action_name = 'Update';
+               if (is_null($lastOosRecod->conclusion_comments_oosc) || $lastOosRecod->conclusion_comments_oosc === '') {
+                    $history->action_name = "New";
+                } else {
+                    $history->action_name = "Update";
+                }
                 $history->save();
             }
             if ($lastOosRecod->specification_limit_oosc != $request->specification_limit_oosc){
@@ -2306,7 +2495,11 @@ class OOSService
                 $history->stage = $lastOosRecod->stage;
                 $history->change_to =   "Opened";
                 $history->change_from = $lastOosRecod->status;
-                $history->action_name = 'Update';
+               if (is_null($lastOosRecod->specification_limit_oosc) || $lastOosRecod->specification_limit_oosc === '') {
+                    $history->action_name = "New";
+                } else {
+                    $history->action_name = "Update";
+                }
                 $history->save();
             }
             if ($lastOosRecod->results_to_be_reported_oosc != $request->results_to_be_reported_oosc){
@@ -2323,7 +2516,11 @@ class OOSService
                 $history->stage = $lastOosRecod->stage;
                 $history->change_to =   "Opened";
                 $history->change_from = $lastOosRecod->status;
-                $history->action_name = 'Update';
+               if (is_null($lastOosRecod->results_to_be_reported_oosc) || $lastOosRecod->results_to_be_reported_oosc === '') {
+                    $history->action_name = "New";
+                } else {
+                    $history->action_name = "Update";
+                }
                 $history->save();
             }
             if ($lastOosRecod->final_reportable_results_oosc != $request->final_reportable_results_oosc){
@@ -2340,7 +2537,11 @@ class OOSService
                 $history->stage = $lastOosRecod->stage;
                 $history->change_to =   "Opened";
                 $history->change_from = $lastOosRecod->status;
-                $history->action_name = 'Update';
+               if (is_null($lastOosRecod->final_reportable_results_oosc) || $lastOosRecod->final_reportable_results_oosc === '') {
+                    $history->action_name = "New";
+                } else {
+                    $history->action_name = "Update";
+                }
                 $history->save();
             } 
             if ($lastOosRecod->justifi_for_averaging_results_oosc != $request->justifi_for_averaging_results_oosc){
@@ -2357,7 +2558,11 @@ class OOSService
                 $history->stage = $lastOosRecod->stage;
                 $history->change_to =   "Opened";
                 $history->change_from = $lastOosRecod->status;
-                $history->action_name = 'Update';
+               if (is_null($lastOosRecod->justifi_for_averaging_results_oosc) || $lastOosRecod->justifi_for_averaging_results_oosc === '') {
+                    $history->action_name = "New";
+                } else {
+                    $history->action_name = "Update";
+                }
                 $history->save();
             } 
             if ($lastOosRecod->oos_stands_oosc != $request->oos_stands_oosc){
@@ -2374,7 +2579,11 @@ class OOSService
                 $history->stage = $lastOosRecod->stage;
                 $history->change_to =   "Opened";
                 $history->change_from = $lastOosRecod->status;
-                $history->action_name = 'Update';
+               if (is_null($lastOosRecod->oos_stands_oosc) || $lastOosRecod->oos_stands_oosc === '') {
+                    $history->action_name = "New";
+                } else {
+                    $history->action_name = "Update";
+                }
                 $history->save();
             }
             
@@ -2392,7 +2601,11 @@ class OOSService
                 $history->stage = $lastOosRecod->stage;
                 $history->change_to =   "Opened";
                 $history->change_from = $lastOosRecod->status;
-                $history->action_name = 'Update';
+               if (is_null($lastOosRecod->reference_record) || $lastOosRecod->reference_record === '') {
+                    $history->action_name = "New";
+                } else {
+                    $history->action_name = "Update";
+                }
                 $history->save();
             }
             if ($lastOosRecod->justify_if_capa_not_required_oosc != $request->justify_if_capa_not_required_oosc){
@@ -2409,7 +2622,11 @@ class OOSService
                 $history->stage = $lastOosRecod->stage;
                 $history->change_to =   "Opened";
                 $history->change_from = $lastOosRecod->status;
-                $history->action_name = 'Updade';
+                if (is_null($lastOosRecod->justify_if_capa_not_required_oosc) || $lastOosRecod->justify_if_capa_not_required_oosc === '') {
+                    $history->action_name = "New";
+                } else {
+                    $history->action_name = "Update";
+                }
                 $history->save();
             } 
             if ($lastOosRecod->action_plan_req_oosc != $request->action_plan_req_oosc){
@@ -2426,7 +2643,11 @@ class OOSService
                 $history->stage = $lastOosRecod->stage;
                 $history->change_to =   "Opened";
                 $history->change_from = $lastOosRecod->status;
-                $history->action_name = 'Update';
+               if (is_null($lastOosRecod->action_plan_req_oosc) || $lastOosRecod->action_plan_req_oosc === '') {
+                    $history->action_name = "New";
+                } else {
+                    $history->action_name = "Update";
+                }
                 $history->save();
             }
             if ($lastOosRecod->justification_for_delay_oosc != $request->justification_for_delay_oosc){
@@ -2443,7 +2664,11 @@ class OOSService
                 $history->stage = $lastOosRecod->stage;
                 $history->change_to =   "Opened";
                 $history->change_from = $lastOosRecod->status;
-                $history->action_name = 'Update';
+               if (is_null($lastOosRecod->justification_for_delay_oosc) || $lastOosRecod->justification_for_delay_oosc === '') {
+                    $history->action_name = "New";
+                } else {
+                    $history->action_name = "Update";
+                }
                 $history->save();
             }
             // ========= OOS Conclusion Review ==============
@@ -2461,7 +2686,11 @@ class OOSService
                 $history->stage = $lastOosRecod->stage;
                 $history->change_to =   "Opened";
                 $history->change_from = $lastOosRecod->status;
-                $history->action_name = 'Update';
+               if (is_null($lastOosRecod->conclusion_review_comments_ocr) || $lastOosRecod->conclusion_review_comments_ocr === '') {
+                    $history->action_name = "New";
+                } else {
+                    $history->action_name = "Update";
+                }
                 $history->save();
             }
             if ($lastOosRecod->action_taken_on_affec_batch_ocr != $request->action_taken_on_affec_batch_ocr){
@@ -2478,7 +2707,11 @@ class OOSService
                 $history->stage = $lastOosRecod->stage;
                 $history->change_to =   "Opened";
                 $history->change_from = $lastOosRecod->status;
-                $history->action_name = 'Update';
+               if (is_null($lastOosRecod->action_taken_on_affec_batch_ocr) || $lastOosRecod->action_taken_on_affec_batch_ocr === '') {
+                    $history->action_name = "New";
+                } else {
+                    $history->action_name = "Update";
+                }
                 $history->save();
             }
             if ($lastOosRecod->capa_req_ocr != $request->capa_req_ocr){
@@ -2495,7 +2728,11 @@ class OOSService
                 $history->stage = $lastOosRecod->stage;
                 $history->change_to =   "Opened";
                 $history->change_from = $lastOosRecod->status;
-                $history->action_name = 'Update';
+               if (is_null($lastOosRecod->capa_req_ocr) || $lastOosRecod->capa_req_ocr === '') {
+                    $history->action_name = "New";
+                } else {
+                    $history->action_name = "Update";
+                }
                 $history->save();
             }
             if ($lastOosRecod->justify_if_no_risk_assessment_ocr != $request->justify_if_no_risk_assessment_ocr){
@@ -2512,7 +2749,11 @@ class OOSService
                 $history->stage = $lastOosRecod->stage;
                 $history->change_to =   "Opened";
                 $history->change_from = $lastOosRecod->status;
-                $history->action_name = 'Update';
+               if (is_null($lastOosRecod->justify_if_no_risk_assessment_ocr) || $lastOosRecod->justify_if_no_risk_assessment_ocr === '') {
+                    $history->action_name = "New";
+                } else {
+                    $history->action_name = "Update";
+                }
                 $history->save();
             }
             if ($lastOosRecod->cq_approver != $request->cq_approver){
@@ -2529,7 +2770,11 @@ class OOSService
                 $history->stage = $lastOosRecod->stage;
                 $history->change_to =   "Opened";
                 $history->change_from = $lastOosRecod->status;
-                $history->action_name = 'Update';
+               if (is_null($lastOosRecod->cq_approver) || $lastOosRecod->cq_approver === '') {
+                    $history->action_name = "New";
+                } else {
+                    $history->action_name = "Update";
+                }
                 $history->save();
             }
             // =========== CQ Review Comments ==========
@@ -2547,7 +2792,11 @@ class OOSService
                 $history->stage = $lastOosRecod->stage;
                 $history->change_to =   "Opened";
                 $history->change_from = "Initiator";
-                $history->action_name = 'Update';
+               if (is_null($lastOosRecod->cq_review_comments_ocqr) || $lastOosRecod->cq_review_comments_ocqr === '') {
+                    $history->action_name = "New";
+                } else {
+                    $history->action_name = "Update";
+                }
                 $history->save();
             }
             //==========  Batch Disposition =============
@@ -2565,7 +2814,11 @@ class OOSService
                 $history->stage = $lastOosRecod->stage;
                 $history->change_to =   "Opened";
                 $history->change_from = $lastOosRecod->status;
-                $history->action_name = 'Update';
+               if (is_null($lastOosRecod->oos_category_bd) || $lastOosRecod->oos_category_bd === '') {
+                    $history->action_name = "New";
+                } else {
+                    $history->action_name = "Update";
+                }
                 $history->save();
             }
             if ($lastOosRecod->others_bd != $request->others_bd){
@@ -2582,7 +2835,11 @@ class OOSService
                 $history->stage = $lastOosRecod->stage;
                 $history->change_to =   "Opened";
                 $history->change_from = $lastOosRecod->status;
-                $history->action_name = 'Update';
+               if (is_null($lastOosRecod->others_bd) || $lastOosRecod->others_bd === '') {
+                    $history->action_name = "New";
+                } else {
+                    $history->action_name = "Update";
+                }
                 $history->save();
                 
             }
@@ -2600,7 +2857,11 @@ class OOSService
                 $history->stage = $lastOosRecod->stage;
                 $history->change_to =   "Opened";
                 $history->change_from = $lastOosRecod->status;
-                $history->action_name = 'Update';
+               if (is_null($lastOosRecod->material_batch_release_bd) || $lastOosRecod->material_batch_release_bd === '') {
+                    $history->action_name = "New";
+                } else {
+                    $history->action_name = "Update";
+                }
                 $history->save();
             }
             if ($lastOosRecod->other_action_bd != $request->other_action_bd){
@@ -2617,7 +2878,11 @@ class OOSService
                 $history->stage = $lastOosRecod->stage;
                 $history->change_to =   "Opened";
                 $history->change_from = $lastOosRecod->status;
-                $history->action_name = 'Update';
+               if (is_null($lastOosRecod->other_action_bd) || $lastOosRecod->other_action_bd === '') {
+                    $history->action_name = "New";
+                } else {
+                    $history->action_name = "Update";
+                }
                 $history->save();
             }
             if ($lastOosRecod->other_parameters_results_bd != $request->other_parameters_results_bd){
@@ -2634,7 +2899,11 @@ class OOSService
                 $history->stage = $lastOosRecod->stage;
                 $history->change_to =   "Opened";
                 $history->change_from = $lastOosRecod->status;
-                $history->action_name = 'Update';
+               if (is_null($lastOosRecod->other_parameters_results_bd) || $lastOosRecod->other_parameters_results_bd === '') {
+                    $history->action_name = "New";
+                } else {
+                    $history->action_name = "Update";
+                }
                 $history->save();
             }
             if ($lastOosRecod->trend_of_previous_batches_bd != $request->trend_of_previous_batches_bd){
@@ -2651,7 +2920,11 @@ class OOSService
                 $history->stage = $lastOosRecod->stage;
                 $history->change_to =   "Opened";
                 $history->change_from = $lastOosRecod->status;
-                $history->action_name = 'Update';
+               if (is_null($lastOosRecod->trend_of_previous_batches_bd) || $lastOosRecod->trend_of_previous_batches_bd === '') {
+                    $history->action_name = "New";
+                } else {
+                    $history->action_name = "Update";
+                }
                 $history->save();
             }
             if ($lastOosRecod->stability_data_bd != $request->stability_data_bd){
@@ -2668,7 +2941,11 @@ class OOSService
                 $history->stage = $lastOosRecod->stage;
                 $history->change_to =   "Opened";
                 $history->change_from = $lastOosRecod->status;
-                $history->action_name = 'Update';
+               if (is_null($lastOosRecod->stability_data_bd) || $lastOosRecod->stability_data_bd === '') {
+                    $history->action_name = "New";
+                } else {
+                    $history->action_name = "Update";
+                }
                 $history->save();
             }
             if ($lastOosRecod->process_validation_data_bd != $request->process_validation_data_bd){
@@ -2685,7 +2962,11 @@ class OOSService
                 $history->stage = $lastOosRecod->stage;
                 $history->change_to =   "Opened";
                 $history->change_from = $lastOosRecod->status;
-                $history->action_name = 'Update';
+               if (is_null($lastOosRecod->process_validation_data_bd) || $lastOosRecod->process_validation_data_bd === '') {
+                    $history->action_name = "New";
+                } else {
+                    $history->action_name = "Update";
+                }
                 $history->save();
             }
             if ($lastOosRecod->method_validation_bd != $request->method_validation_bd){
@@ -2702,7 +2983,11 @@ class OOSService
                 $history->stage = $lastOosRecod->stage;
                 $history->change_to =   "Opened";
                 $history->change_from = $lastOosRecod->status;
-                $history->action_name = 'Update';
+               if (is_null($lastOosRecod->method_validation_bd) || $lastOosRecod->method_validation_bd === '') {
+                    $history->action_name = "New";
+                } else {
+                    $history->action_name = "Update";
+                }
                 $history->save();
             }
             if ($lastOosRecod->any_market_complaints_bd != $request->any_market_complaints_bd){
@@ -2719,7 +3004,11 @@ class OOSService
                 $history->stage = $lastOosRecod->stage;
                 $history->change_to =   "Opened";
                 $history->change_from = $lastOosRecod->status;
-                $history->action_name = 'Update';
+               if (is_null($lastOosRecod->any_market_complaints_bd) || $lastOosRecod->any_market_complaints_bd === '') {
+                    $history->action_name = "New";
+                } else {
+                    $history->action_name = "Update";
+                }
                 $history->save();
             }
             
@@ -2737,7 +3026,11 @@ class OOSService
                 $history->stage = $lastOosRecod->stage;
                 $history->change_to =   "Opened";
                 $history->change_from = $lastOosRecod->status;
-                $history->action_name = 'Update';
+               if (is_null($lastOosRecod->statistical_evaluation_bd) || $lastOosRecod->statistical_evaluation_bd === '') {
+                    $history->action_name = "New";
+                } else {
+                    $history->action_name = "Update";
+                }
                 $history->save();
             }
             
@@ -2755,7 +3048,11 @@ class OOSService
                 $history->stage = $lastOosRecod->stage;
                 $history->change_to =   "Opened";
                 $history->change_from = $lastOosRecod->status;
-                $history->action_name = 'Update';
+               if (is_null($lastOosRecod->risk_analysis_disposition_bd) || $lastOosRecod->risk_analysis_disposition_bd === '') {
+                    $history->action_name = "New";
+                } else {
+                    $history->action_name = "Update";
+                }
                 $history->save();
             }
             
@@ -2773,14 +3070,22 @@ class OOSService
                 $history->stage = $lastOosRecod->stage;
                 $history->change_to =   "Opened";
                 $history->change_from = $lastOosRecod->status;
-                $history->action_name = 'Update';
+               if (is_null($lastOosRecod->conclusion_bd) || $lastOosRecod->conclusion_bd === '') {
+                    $history->action_name = "New";
+                } else {
+                    $history->action_name = "Update";
+                }
                 $history->save();
             }
             if ($lastOosRecod->justify_for_delay_in_activity_bd != $request->justify_for_delay_in_activity_bd){
                 $history = new OosAuditTrial();
                 $history->oos_id = $lastOosRecod->id;
                 $history->previous = $lastOosRecod->justify_for_delay_in_activity_bd;
-                $history->action_name = 'Update';
+               if (is_null($lastOosRecod->justify_for_delay_in_activity_bd) || $lastOosRecod->justify_for_delay_in_activity_bd === '') {
+                    $history->action_name = "New";
+                } else {
+                    $history->action_name = "Update";
+                }
                 $history->activity_type = 'Justify for delay in activity';
                 $history->current = $request->justify_for_delay_in_activity_bd;
                 $history->comment = "Not Applicable";
@@ -2808,7 +3113,11 @@ class OOSService
                 $history->stage = $lastOosRecod->stage;
                 $history->change_to =   "Opened";
                 $history->change_from = $lastOosRecod->status;
-                $history->action_name = 'Update';
+               if (is_null($lastOosRecod->reopen_approval_comments_uaa) || $lastOosRecod->reopen_approval_comments_uaa === '') {
+                    $history->action_name = "New";
+                } else {
+                    $history->action_name = "Update";
+                }
                 $history->save();
             }
         

@@ -45,10 +45,10 @@
             <div class="col-md-6 ">
                 <div class="group-input ">
                     <label for="due-date"> Date Of Initiation<span class="text-danger"></span></label>
-                    <input disabled type="text" value="{{ date('d-M-Y') }}" name="intiation_date">
-                    <input type="hidden" value="{{ date('Y-m-d') }}" name="intiation_date">
-                    </div>
+                    <input disabled type="text" value="{{ Helpers::getdateFormat($data['intiation_date'] ?? '') }}" name="intiation_date">
+                    <input type="hidden" value="{{ $data->intiation_date }}" name="intiation_date">
                 </div>
+            </div>
 
                 <div class="col-lg-6 new-date-data-field">
                 <div class="group-input input-date">
@@ -62,7 +62,8 @@
                             oninput="handleDateInput(this, 'due_date')" />
                     </div>
                 </div>
-            </div>                                                                                  
+            </div>
+                                                                                              
             <div class="col-lg-6">
                 <div class="group-input">
                     <label for="Short Description"> Severity Level</label>
