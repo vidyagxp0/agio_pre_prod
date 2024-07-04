@@ -230,7 +230,7 @@
                                     </div>
                                 </div>
 
-                                <div class="col-md-6">
+                                <!-- <div class="col-md-6">
                                     <div class="group-input">
                                         <label for="Initiated Through">
                                             Initiated Through <span class="text-danger"></span>
@@ -248,70 +248,63 @@
                                             <option value="Others"{{ $showdata->initiated_by == 'Others' ? 'selected' : '' }}>Others</option>
                                         </select>
                                     </div>
-                                </div>
+                                </div> -->
 
                                 <div class="col-md-6">
-                                    <div class="group-input">
-                                        <label for="Department">
-                                            Department<span class="text-danger"></span>
-                                        </label>
-                                        <select name="Department"
-                                            {{ $showdata->stage == 0 || $showdata->stage == 6 ? 'disabled' : '' }}
-                                            id="selectedOptions" {{ Helpers::disabledErrataFields($showdata->stage) }}>
-                                            <option value="">--Select--</option>
-                                            <option value="CQA" @if ($showdata->Department == 'CQA') selected @endif>
-                                                Corporate
-                                                Quality Assurance</option>
-                                            <option value="QAB" @if ($showdata->Department == 'QAB') selected @endif>
-                                                Quality
-                                                Assurance Biopharma</option>
-                                            <option value="CQC" @if ($showdata->Department == 'CQC') selected @endif>
-                                                Central
-                                                Quality Control</option>
-                                            <option value="CQC" @if ($showdata->Department == 'CQC') selected @endif>
-                                                Manufacturing
-                                            </option>
-                                            <option value="PSG" @if ($showdata->Department == 'PSG') selected @endif>
-                                                Plasma
-                                                Sourcing Group</option>
-                                            <option value="CS" @if ($showdata->Department == 'CS') selected @endif>
-                                                Central
-                                                Stores</option>
-                                            <option value="ITG" @if ($showdata->Department == 'ITG') selected @endif>
-                                                Information
-                                                Technology Group</option>
-                                            <option value="MM" @if ($showdata->Department == 'MM') selected @endif>
-                                                Molecular
-                                                Medicine</option>
-                                            <option value="CL" @if ($showdata->Department == 'CL') selected @endif>
-                                                Central
-                                                Laboratory</option>
-                                            <option value="TT" @if ($showdata->Department == 'TT') selected @endif>Tech
-                                                Team</option>
-                                            <option value="QA" @if ($showdata->Department == 'QA') selected @endif>
-                                                Quality
-                                                Assurance</option>
-                                            <option value="QM" @if ($showdata->Department == 'QM') selected @endif>
-                                                Quality
-                                                Management</option>
-                                            <option value="IA" @if ($showdata->Department == 'IA') selected @endif>IT
-                                                Administration</option>
-                                            <option value="ACC" @if ($showdata->Department == 'ACC') selected @endif>
-                                                Accounting
-                                            </option>
-                                            <option value="LOG" @if ($showdata->Department == 'LOG') selected @endif>
-                                                Logistics
-                                            </option>
-                                            <option value="SM" @if ($showdata->Department == 'SM') selected @endif>
-                                                Senior
-                                                Management</option>
-                                            <option value="BA" @if ($showdata->Department == 'BA') selected @endif>
-                                                Business
-                                                Administration</option>
+    <div class="group-input">
+        <label for="Department">
+            Department<span class="text-danger"></span>
+        </label>
+        <select name="Department"
+            {{ $showdata->stage == 0 || $showdata->stage == 6 ? 'disabled' : '' }}
+            id="selectedOptions" {{ Helpers::disabledErrataFields($showdata->stage) }}>
+            <option value="">--Select--</option>
+            <option value="CQA" @if ($showdata->Department == 'CQA') selected @endif>
+                Corporate Quality Assurance</option>
+            <option value="QA" @if ($showdata->Department == 'QA') selected @endif>
+                Quality Assurance</option>
+            <option value="QC" @if ($showdata->Department == 'QC') selected @endif>
+                Quality Control</option>
+            <option value="QM" @if ($showdata->Department == 'QM') selected @endif>
+                Quality Control (Microbiology department)</option>
+            <option value="PG" @if ($showdata->Department == 'PG') selected @endif>
+                Production General</option>
+            <option value="PL" @if ($showdata->Department == 'PL') selected @endif>
+                Production Liquid Orals</option>
+            <option value="PT" @if ($showdata->Department == 'PT') selected @endif>
+                Production Tablet and Powder</option>
+            <option value="PE" @if ($showdata->Department == 'PE') selected @endif>
+                Production External (Ointment, Gels, Creams and Liquid)</option>
+            <option value="PC" @if ($showdata->Department == 'PC') selected @endif>
+                Production Capsules</option>
+            <option value="PI" @if ($showdata->Department == 'PI') selected @endif>
+                Production Injectable</option>
+            <option value="EN" @if ($showdata->Department == 'EN') selected @endif>
+                Engineering</option>
+            <option value="HR" @if ($showdata->Department == 'HR') selected @endif>
+                Human Resource</option>
+            <option value="ST" @if ($showdata->Department == 'ST') selected @endif>
+                Store</option>
+            <option value="IT" @if ($showdata->Department == 'IT') selected @endif>
+                Electronic Data Processing</option>
+            <option value="FD" @if ($showdata->Department == 'FD') selected @endif>
+                Formulation Development</option>
+            <option value="AL" @if ($showdata->Department == 'AL') selected @endif>
+                Analytical research and Development Laboratory</option>
+            <option value="PD" @if ($showdata->Department == 'PD') selected @endif>
+                Packaging Development</option>
+            <option value="PU" @if ($showdata->Department == 'PU') selected @endif>
+                Purchase Department</option>
+            <option value="DC" @if ($showdata->Department == 'DC') selected @endif>
+                Document Cell</option>
+            <option value="RA" @if ($showdata->Department == 'RA') selected @endif>
+                Regulatory Affairs</option>
+            <option value="PV" @if ($showdata->Department == 'PV') selected @endif>
+                Pharmacovigilance</option>
+        </select>
+    </div>
+</div>
 
-                                        </select>
-                                    </div>
-                                </div>
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Initiator Group Code">Department Code</label>
@@ -351,12 +344,12 @@
                                     </div>
                                 </div> --}}
 
-                                <div class="col-md-6">
+                                <div class="col-md-12">
                                     <div class="group-input">
                                         <label for="Document Type">
                                             Document Type<span class="text-danger"></span>
                                         </label>
-                                        <select id="select-state" placeholder="Select..." name="document_type"
+                                        <!-- <select id="select-state" placeholder="Select..." name="document_type"
                                             {{ Helpers::disabledErrataFields($showdata->stage) }}>
                                             <option value="">--Select--</option>
                                             <option value="Procedure Document"@if ($showdata->document_type == 'Procedure Document') selected @endif>Procedure Document</option>
@@ -368,7 +361,8 @@
                                             <option value="Specification Document"@if ($showdata->document_type == 'Specification Document') selected @endif>Specification Document</option>
                                             <option value="Training Material"@if ($showdata->document_type == 'Training Material') selected @endif>Training Material</option>
                                             <option value="Other"@if ($showdata->document_type == 'Other') selected @endif>Other</option>
-                                        </select>
+                                        </select> -->
+                                        <input type="text" value="{{$showdata->document_type}}">
                                     </div>
                                 </div>
 
@@ -397,7 +391,7 @@
                                         : explode(',', $showdata->reference_document);
                                 @endphp
 
-                                <div class="">
+                                <!-- <div class="">
                                     <div class="group-input">
                                         <label for="reference_record">Reference Documents</label>
                                         <select multiple id="reference_record" name="reference_document[]"
@@ -418,6 +412,14 @@
                                             {{-- <option value="RD02" @if (in_array('RD02', $showdata->reference_document)) selected @endif>RD02</option> --}}
                                         </select>
                                     </div>
+                                </div> -->
+                                <div class="">
+                                    <div class="group-input">
+                                        <label for="reference_record">Reference Documents</label>
+                                        <input  type="text" name="reference" maxlength="255" value="{{ $showdata->reference }}">
+                                        
+
+                                    </div>
                                 </div>
 
                                 <div class="col-12">
@@ -437,23 +439,102 @@
                                     </div>
                                 </div>
 
-                                <div class="">
+
+                                <div class="col-12">
                                     <div class="group-input">
-                                        <label for="Type Of Error">
-                                            Type Of Error<span class="text-danger"></span>
-                                        </label>
-                                        <select id="select-state" placeholder="Select..." name="type_of_error"
-                                            {{ Helpers::disabledErrataFields($showdata->stage) }}>
-                                            <option value="">--Select--</option>
-                                            <option value="Typographical Error (TE)" @if ($showdata->type_of_error == 'Typographical Error (TE)') selected @endif>Typographical Error (TE)
-                                            </option>
-                                            <option value="Calculation Error (CE)" @if ($showdata->type_of_error == 'Calculation Error (CE)') selected @endif>Calculation Error (CE)</option>
-                                            <option value="Grammatical Error (GE)" @if ($showdata->type_of_error == 'Grammatical Error (GE)') selected @endif>Grammatical Error (GE)</option>
-                                            <option value="Missing Word Error (ME)" @if ($showdata->type_of_error == 'Missing Word Error (ME)') selected @endif>Missing Word Error (ME)
-                                            </option>
-                                        </select>
+                                        <label class="mt-4" for="Document title">Document title</label>
+                                        <input type="text" name="document_title" maxlength="255"  value="{{$showdata->document_title}}">
                                     </div>
                                 </div>
+@php
+$users = DB::table('users')->get();
+@endphp
+<div class="col-6">
+    <div class="group-input">
+        <label for="search">
+            Type Of Error<span class="text-danger"></span>
+        </label>
+        <select id="select-state" placeholder="Select..." name="type_of_error">
+            <option value="">-- Select a value --</option>
+            <option value="Typographical Error (TE)" {{ $showdata->type_of_error == 'Typographical Error (TE)' ? 'selected' : '' }}>Typographical Error (TE)</option>
+            <option value="Calculation Error (CE)" {{ $showdata->type_of_error == 'Calculation Error (CE)' ? 'selected' : '' }}>Calculation Error (CE)</option>
+            <option value="Grammatical Error (GE)" {{ $showdata->type_of_error == 'Grammatical Error (GE)' ? 'selected' : '' }}>Grammatical Error (GE)</option>
+            <option value="Missing Word Error (ME)" {{ $showdata->type_of_error == 'Missing Word Error (ME)' ? 'selected' : '' }}>Missing Word Error (ME)</option>
+            <option value="Other" {{ $showdata->type_of_error == 'Other' ? 'selected' : '' }}>Other</option>
+        </select>
+    </div>
+</div>
+<div id="typeOfErrorBlock" class="group-input col-6" >
+    <label for="custom_value">Other</label>
+    <input type="text" name="custom_value" class="form-control" value="{{ $showdata->otherFieldsUser ?? '' }}"/>
+</div>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+<script>
+    $(document).ready(function() {
+        $('select[name=type_of_error]').change(function() {
+            const selectedVal = $(this).val();
+            if (selectedVal == 'Other') {
+                $('#typeOfErrorBlock').show();
+            } else {
+                $('#typeOfErrorBlock').hide();
+            }
+        });
+    });
+</script>
+
+
+
+
+                                <div class="col-md-6">
+                                    <div class="group-input">
+                                        <label for="search">
+                                        Department Head <span class="text-danger"></span>
+                                        </label>
+                                        <select id="select-state" placeholder="Select..." name="department_head_to">
+                                            @foreach ($users as $value)
+                                                <option @if ($showdata->department_head_to == $value->id) selected @endif value="{{ $value->id }}">{{ $value->name }}</option>
+                                            @endforeach
+                                        </select>
+                                        @error('department_head_to')
+                                            <p class="text-danger">{{ $message }}</p>
+                                        @enderror
+                                    </div>
+                                </div>  
+
+                                <!-- <div class="col-md-6">
+                                <div class="group-input">
+                                    <label for="search">
+                                     <span class="text-danger"></span>
+                                    </label>
+                                    <select id="select-state" placeholder="Select..." name="">
+                                        <option value="">Select a value</option>
+                                        @foreach ($users as $key=> $value)
+                                            <option  @if ($showdata->department_head_to == $value->id) selected @endif  value="{{ $value->id }}">{{ $value->name }}</option>
+                                        @endforeach
+                                    </select>
+                                    @error('department_head_to')
+                                        <p class="text-danger">{{ $message }}</p>
+                                    @enderror
+                                </div>
+                            </div> -->
+                            <div class="col-md-6">
+                                <div class="group-input">
+                                    <label for="search">
+                                    QA reviewer <span class="text-danger"></span>
+                                    </label>
+                                    <select id="select-state" placeholder="Select..." name="qa_reviewer">
+                                        {{-- <option value="">Select a value</option> --}}
+                                        @foreach ($users as $key=> $value)
+                                            <option  @if ($showdata->qa_reviewer == $value->id) selected @endif  value="{{ $value->id }}">{{ $value->name }}</option>
+                                        @endforeach
+                                    </select>
+                                    @error('qa_reviewer')
+                                        <p class="text-danger">{{ $message }}</p>
+                                    @enderror
+                                </div>
+                            </div>
 
                                 <div class="group-input">
                                     <label for="audit-agenda-grid">
@@ -544,7 +625,7 @@
                                     @enderror
                                 </div> --}}
 
-                                <div class="new-date-data-field">
+                                <!-- <div class="new-date-data-field">
                                     <div class="group-input input-date">
                                         <label for="Errata_date">Date And Time of Correction</label>
                                         <div class="calenderauditee">
@@ -581,7 +662,7 @@
 
                                         return formattedDateTime;
                                     }
-                                </script>
+                                </script> -->
 
 
 
@@ -2017,6 +2098,26 @@
                         <div class="inner-block-content">
                             <div class="row">
 
+
+                                
+                        
+                                    
+
+
+                                    <div class="col-lg-12 new-date-data-field">
+                            <div class="group-input input-date">
+                                <label for="Date Due">Date Of Correction</label>
+                                <div><small class="text-primary">Please mention expected date of completion</small>
+                                </div>
+                                <div class="calenderauditee">
+                                    <input type="text" id="Date_and_time_of_correction" readonly
+                                        placeholder="DD-MMM-YYYY" value="{{ Helpers::getdateFormat($showdata->Date_and_time_of_correction) }}"/>
+                                    <input type="date" name="Date_and_time_of_correction"  class="hide-input"
+                                        oninput="handleDateInput(this, 'Date_and_time_of_correction')" />
+                                </div>
+                            </div>
+                        
+                                </div>
                                 <div class="col-12">
                                     <div class="group-input">
                                         <label class="mt-4" for="Audit Comments">Closure Comments</label>
@@ -2034,7 +2135,7 @@
                                     </div>
                                 </div> --}}
 
-                                <div class="col-md-6">
+                                <div class="col-md-12">
                                     <div class="group-input">
                                         <label for="All Impacting Documents Corrected">
                                             All Impacting Documents Corrected <span class="text-danger"></span>

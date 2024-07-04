@@ -39,16 +39,29 @@ class ErrataController extends Controller
         $data->initiator_id = Auth::user()->id;
         $data->intiation_date = $request->intiation_date;
         $data->initiated_by = $request->initiated_by;
+        if($request->has('department_head_to')&& $request->department_head_to!==null){
+
+            $labnew->department_head_to = $request->department_head_to;
+        }
+        $data->document_title =$request->document_title;
+        $data->qa_reviewer =$request->qa_reviewer;
         $data->type = "ERRATA";
         $data->Department = $request->Department;
         $data->department_code = $request->department_code;
         $data->document_type = $request->document_type;
         $data->short_description = $request->short_description;
+        // $data->otherFieldsUser =$data->otherFieldsUser;
+            // Only set custom_value if type_of_error is 'Other'
+    if ($request->input('type_of_error') == 'Other') {
+        $data->otherFieldsUser = $request->input('otherFieldsUser');
+    } else {
+        $data->otherFieldsUser = null; // or handle it accordingly
+    }
+
+
         // $data->reference_document = !empty($request->reference_document) ? implode(',', $request->reference_document) : '';
 
-        $data->reference_document = is_array($request->reference_document)
-            ? implode(',', $request->reference_document)
-            : $request->reference_document;
+        $data->reference = $request->reference;
         $data->Observation_on_Page_No = $request->Observation_on_Page_No;
         $data->brief_description = $request->brief_description;
         $data->type_of_error = $request->type_of_error;
@@ -138,7 +151,7 @@ class ErrataController extends Controller
         $data->status = 'Opened';
         $data->stage = 1;
         $data->save();
-
+// dd($data);
 
         $record = RecordNumber::first();
         $record->counter = ((RecordNumber::first()->value('counter')) + 1);
@@ -232,12 +245,12 @@ class ErrataController extends Controller
         }
 
 
-        if (!empty($data->reference_document)) {
+        if (!empty($data->reference)) {
             $history = new ErrataAuditTrail();
             $history->errata_id = $data->id;
             $history->activity_type = 'Reference Documents';
             $history->previous = "Null";
-            $history->current = $data->reference_document;
+            $history->current = $data->reference;
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -458,6 +471,7 @@ class ErrataController extends Controller
         $newDataGridErrata->data = $request->details;
         $newDataGridErrata->save();
         //================================================================
+        
 
         toastr()->success("Record is created Successfully");
         return redirect(url('rcms/qms-dashboard'));
@@ -871,9 +885,15 @@ class ErrataController extends Controller
         $data->department_code = $request->department_code;
         $data->document_type = $request->document_type;
         $data->short_description = $request->short_description;
-        $data->reference_document = is_array($request->reference_document)
-            ? implode(',', $request->reference_document)
-            : $request->reference_document;
+        $data->document_title =$request->document_title;
+        $data->department_head_to =$request->department_head_to;
+        if ($request->input('type_of_error') == 'Other') {
+            $data->otherFieldsUser = $request->input('otherFieldsUser');
+        } else {
+            $data->otherFieldsUser = null; // or handle it accordingly
+        }
+        $data->qa_reviewer =$request->qa_reviewer;
+        $data->reference = $request->reference;
         $data->Observation_on_Page_No = $request->Observation_on_Page_No;
         $data->brief_description = $request->brief_description;
         $data->type_of_error = $request->type_of_error;
@@ -1020,13 +1040,13 @@ class ErrataController extends Controller
             $history->save();
         }
 
-        if ($lastData->reference_document != $data->reference_document || !empty($request->comment)) {
+        if ($lastData->reference != $data->reference || !empty($request->comment)) {
             // return 'history';
             $history = new ErrataAuditTrail;
             $history->errata_id = $id;
             $history->activity_type = 'Reference Documents';
-            $history->previous = $lastData->reference_document;
-            $history->current = $data->reference_document;
+            $history->previous = $lastData->reference;
+            $history->current = $data->reference;
             $history->comment = $request->comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
