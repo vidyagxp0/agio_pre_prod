@@ -149,8 +149,8 @@
             <div class="col-lg-6 new-date-data-field">
                 <div class="group-input input-date">
                     <label for="Deviation Occurred On"> Deviation Occurred On </label>
-                    <div><small class="text-primary">If revising Due Date, kindly mention revision
-                            reason in "Due Date Extension Justification" data field.</small></div>
+                    <div><small class="text-primary">If revising deviation occured Date, kindly mention revision
+                            reason in "deviation occured Date Extension Justification" data field.</small></div>
                     <div class="calenderauditee">
                         <input type="text" id="deviation_occured_on_gi" readonly 
                         value="{{ Helpers::getdateFormat($data['deviation_occured_on_gi'] ?? '') }}" {{Helpers::isOOSChemical($data->stage)}} placeholder="DD-MM-YYYY" />

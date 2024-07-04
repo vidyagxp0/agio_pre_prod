@@ -177,10 +177,10 @@
                     <strong> OOS Chemical No.</strong>
                 </td>
                 <td class="w-40">
-                    {{ Helpers::divisionNameForQMS($data->division_id) }}/{{ Helpers::year($data->created_at) }}/{{ str_pad($data->record, 4, '0', STR_PAD_LEFT) }}
+                    {{ Helpers::divisionNameForQMS($data->division_id) }}/{{ Helpers::year($data->created_at) }}/{{ str_pad($data->record_number, 4, '0', STR_PAD_LEFT) }}
                 </td>
                 <td class="w-30">
-                    <strong>Record No.</strong> {{ str_pad($data->record, 4, '0', STR_PAD_LEFT) }}
+                    <strong>Record No.</strong> {{ str_pad($data->record_number, 4, '0', STR_PAD_LEFT) }}
                 </td>
             </tr>
         </table>
@@ -259,7 +259,7 @@
                     </tr>
                     <tr>
                         <th class="w-20">Due Date</th>
-                        <td class="w-30">@if($data->due_date){{  str_pad($data->due_date, 4, '0', STR_PAD_LEFT) }} @else Not Applicable @endif</td>
+                        <td class="w-30">@if($data->due_date){{ str_pad(Helpers::getdateFormat($data['due_date'] ?? ''), 4, '0', STR_PAD_LEFT) }} @else Not Applicable @endif</td>
                         <th class="w-20"> Severity Level</th>
                         <td class="w-30">@if($data->severity_level_gi){{ $data->severity_level_gi }} @else Not Applicable @endif</td>
                     </tr>
@@ -289,7 +289,10 @@
                     </tr>
                     <tr>
                         <th class="w-20">Deviation Occurred On</th>
-                        <td class="w-80">@if($data->deviation_occured_on_gi){{ $data->deviation_occured_on_gi }}@else Not Applicable @endif</td>
+                        <td class="w-80">
+                        <td class="w-30">@if($data->deviation_occured_on_gi)
+                            {{ str_pad(Helpers::getdateFormat($data['deviation_occured_on_gi'] ?? ''), 4, '0', STR_PAD_LEFT) }} @else Not Applicable @endif</td>
+                        </td>
                         <th class="w-20">Source Document Type</th>
                         <td class="w-80">@if($data->problem_description){{ $data->problem_description }}@else Not Applicable @endif</td>
                     </tr>
