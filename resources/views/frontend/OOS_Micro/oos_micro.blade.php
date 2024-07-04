@@ -360,22 +360,22 @@ $users = DB::table('users')
                             </div>
                         </div>
                         <div class="col-lg-6 new-date-data-field">
-                                    <div class="group-input input-date">
-                                        <label for="Due Date"> Due Date </label>
-                                        <div><small class="text-primary">If revising Due Date, kindly mention revision reason in "Due Date Extension Justification" data field.</small></div>
-                                        <div class="calenderauditee">
-                                        <input type="text"  id="due_date"  readonly placeholder="DD-MMM-YYYY"  value="{{ Helpers::getDueDate123(null, false, 'd-M-Y') }}" />
-                                        <input type="date" name="due_date" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
-                                        class="hide-input"
-                                        oninput="handleDateInput(this, 'due_date')"  value="{{ Helpers::getDueDate123(null, false, 'Y-m-d') ?? '' }}"/>
-                                        </div>
-
-                                        {{-- <input type="hidden" value="{{ $due_date }}" name="due_date">
-                                        <input disabled type="text" value="{{ Helpers::getdateFormat($due_date) }}"> --}}
-                                        {{-- <input type="date" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
-                                            value="" name="due_date"> --}}
-                                    </div>
+                            <div class="group-input input-date">
+                                <label for="Due Date"> Due Date </label>
+                                <div><small class="text-primary">If revising Due Date, kindly mention revision reason in "Due Date Extension Justification" data field.</small></div>
+                                <div class="calenderauditee">
+                                <input type="text"  id="due_date"  readonly placeholder="DD-MMM-YYYY"  value="{{ Helpers::getDueDate123(null, false, 'd-M-Y') }}" />
+                                <input type="date" name="due_date" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
+                                class="hide-input"
+                                oninput="handleDateInput(this, 'due_date')"  value="{{ Helpers::getDueDate123(null, false, 'Y-m-d') ?? '' }}"/>
                                 </div>
+
+                                {{-- <input type="hidden" value="{{ $due_date }}" name="due_date">
+                                <input disabled type="text" value="{{ Helpers::getdateFormat($due_date) }}"> --}}
+                                {{-- <input type="date" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
+                                    value="" name="due_date"> --}}
+                            </div>
+                        </div>
                         <div class="col-lg-6">
                             <div class="group-input">
                                 <label for="Short Description">Short Description
