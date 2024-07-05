@@ -384,10 +384,26 @@
                                 @php
         $users = DB::table('users')->get();
     @endphp
-                                <div class="col-md-12">
+    <!-- <div class="col-md-6">
+    <div class="group-input">
+        <label for="select-state">
+            Department Head  <span class="text-danger"></span>
+        </label>
+        <select id="select-state" placeholder="Select..." name="department_head_to">
+            <option value="">Select a value</option>
+            @foreach ($users as $data)
+                <option value="{{ $data->id }}">{{ $data->name }}</option>
+            @endforeach
+        </select>
+        @error('department_head_to')
+            <p class="text-danger">{{ $message }}</p>
+        @enderror
+    </div>
+</div> -->
+<div class="col-md-6">
                                     <div class="group-input">
                                         <label for="search">
-                                        Department Head  <span class="text-danger"></span>
+                                            Department Head <span class="text-danger"></span>
                                         </label>
                                         <select id="select-state" placeholder="Select..." name="department_head_to">
                                             <option value="">Select a value</option>
@@ -400,6 +416,7 @@
                                         @enderror
                                     </div>
                                 </div>
+
 
                                 <div class="col-md-6">
                                     <div class="group-input">
@@ -1826,7 +1843,8 @@
                                 </div>
                                 <div class="calenderauditee">
                                     <input type="text" id="Date_and_time_of_correction" readonly
-                                        placeholder="DD-MMM-YYYY" value=""/>
+                                        placeholder="DD-MMM-YYYY" value="
+                                        "/>
                                     <input type="date" name="Date_and_time_of_correction"  class="hide-input"
                                         oninput="handleDateInput(this, 'Date_and_time_of_correction')" />
                                 </div>

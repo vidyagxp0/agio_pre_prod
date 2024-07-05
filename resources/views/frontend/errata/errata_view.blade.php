@@ -494,6 +494,7 @@ $users = DB::table('users')->get();
                                         </label>
                                         <select id="select-state" placeholder="Select..." name="department_head_to">
                                             @foreach ($users as $value)
+                                                <option value="">Select a Value</option>
                                                 <option @if ($showdata->department_head_to == $value->id) selected @endif value="{{ $value->id }}">{{ $value->name }}</option>
                                             @endforeach
                                         </select>
@@ -525,7 +526,7 @@ $users = DB::table('users')->get();
                                     QA reviewer <span class="text-danger"></span>
                                     </label>
                                     <select id="select-state" placeholder="Select..." name="qa_reviewer">
-                                        {{-- <option value="">Select a value</option> --}}
+                                        <option value="">Select a value</option> 
                                         @foreach ($users as $key=> $value)
                                             <option  @if ($showdata->qa_reviewer == $value->id) selected @endif  value="{{ $value->id }}">{{ $value->name }}</option>
                                         @endforeach

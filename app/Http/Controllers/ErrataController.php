@@ -41,8 +41,9 @@ class ErrataController extends Controller
         $data->initiated_by = $request->initiated_by;
         if($request->has('department_head_to')&& $request->department_head_to!==null){
 
-            $labnew->department_head_to = $request->department_head_to;
+            $data->department_head_to = $request->department_head_to;
         }
+        // dd($data->department_head_to);
         $data->document_title =$request->document_title;
         $data->qa_reviewer =$request->qa_reviewer;
         $data->type = "ERRATA";
