@@ -353,8 +353,6 @@ Route::group(['prefix' => 'rcms'], function () {
                     Route::get('audit_report/{id}', [OOSMicroController::class, 'auditReport'])->name('audit_report');
                     Route::get('single_report/{id}', [OOSMicroController::class, 'singleReport'])->name('single_report');
            
-
-                    
                     });
     
 
