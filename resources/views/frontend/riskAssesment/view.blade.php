@@ -177,6 +177,7 @@
                         @php
                         $userRoles = DB::table('user_roles')->where(['user_id' => Auth::user()->id])->get();
                         $userRoleIds = $userRoles->pluck('q_m_s_roles_id')->toArray(); 
+                      //  dd($userRoleIds);
                     @endphp
                         {{-- <a href="{{route('riskSingleReport', $data->id)}}"><button class="button_theme1"
                             class="new-doc-btn">Print</button></a> --}}
@@ -358,17 +359,26 @@
                                                     value="{{ $data->initiator_name }}">
                                             </div>
                                         </div>
-                                        <div class="col-lg-6">
+
+
+                                        <div class="col-md-6 ">
+                                            <div class="group-input ">
+                                                <label for="due-date"> Date Of Initiation<span class="text-danger"></span></label>
+                                                <input disabled type="text" value="{{ Helpers::getdateFormat($data['intiation_date'] ?? '') }}" name="intiation_date">
+                                                <input type="hidden" value="{{ $data->intiation_date }}" name="intiation_date"  {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}>
+                                            </div>
+                                        </div>
+                                        {{--  <div class="col-lg-6">
                                             <div class="group-input">
                                                 <label for="Date Due"><b>Date of Initiation</b></label>
                                                 <input disabled type="text"
                                                     value="{{ Helpers::getdateFormat($data->intiation_date) }}"
-                                                    name="intiation_date">
+                                                    name="intiation_date">  --}}
                                                 {{-- <input type="hidden" value="{{ $data->intiation_date }}" name="intiation_date"> --}}
 
                                                 {{-- <div class="static">{{ date('d-M-Y') }}</div> --}}
-                                            </div>
-                                        </div>
+                                            {{--  </div>
+                                        </div>  --}}
                                         <div class="col-md-6">
                                             <div class="group-input">
                                                 <label for="search">

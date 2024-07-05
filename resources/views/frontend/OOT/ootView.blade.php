@@ -257,8 +257,8 @@
                             <div class="col-md-6 ">
                                 <div class="group-input ">
                                     <label for="due-date"> Date Of Initiation<span class="text-danger"></span></label>
-                                    <input disabled type="text" value="{{ date('d-M-Y') }}" name="intiation_date">
-                                    <input type="hidden" value="{{ date('Y-m-d') }}" name="intiation_date">
+                                    <input readonly type="text"  value="{{ Helpers::getdateFormat($data->intiation_date) }}"  name="intiation_date" id="intiation_date"s>
+
                                 </div>
                             </div>
 
@@ -586,8 +586,7 @@
                                                         <td>{{ $loop->index + 1 }}</td>
                                                         <td>
                                                             <input type="text" class="numberDetail"
-                                                                name="product_materiel[][item_product_code]"
-                                                                value="{{ isset($gridData['item_product_code']) ? $gridData['item_product_code'] : '' }}">
+                                                                name="product_materiel[][item_product_code]" value="{{ isset($gridData['item_product_code']) ? $gridData['item_product_code'] : '' }}">
                                                         </td>
                                                         <td>
                                                             <input type="text" class="numberDetail"
@@ -826,8 +825,7 @@
 
                                                         <td>{{ $loop->index + 1 }}</td>
                                                         <td>
-                                                            <input type="text" class="numberDetail"
-                                                                name="oot_result[{{ $loop->index }}][a_r_number]"
+                                                            <input type="text" class="numberDetail"name="oot_result[{{ $loop->index }}][a_r_number]"
                                                                 value="{{ isset($gridData['a_r_number']) ? $gridData['a_r_number'] : '' }}">
                                                         </td>
                                                         <td>
@@ -1163,7 +1161,6 @@
                                     <label for="search">
                                         Analyst Name <span class="text-danger"></span>
                                     </label>
-
                                     <select id="select-state" placeholder="Select..." name="sta_bat_analyst_name">
                                         <option value="">Select a value</option>
                                         @foreach ($users as $key => $value)
@@ -1178,7 +1175,6 @@
                                     <label for="search">
                                         QC/QA Head/Designee <span class="text-danger"></span>
                                     </label>
-
                                     <select id="select-state" placeholder="Select..." name="qa_head_designee">
                                         <option value="">Select a value</option>
                                         @foreach ($users as $key => $value)

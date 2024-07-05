@@ -53,7 +53,7 @@ $users = DB::table('users')
                         '<td><input type="text" name="info_product_material[' + serialNumber + '][info_others_specify]" value=""></td>' +
                         '<td><input type="text" name="info_product_material[' + serialNumber + '][info_process_sample_stage]" value=""></td>' +
                         '<td><select name="info_product_material[' + serialNumber + '][info_packing_material_type]"><option value="">--Select--</option><option value="Primary">Primary</option><option value="Secondary">Secondary</option><option value="Tertiary">Tertiary</option><option value="Not Applicable">Not Applicable</option></select></td>' +
-                        '<td><select name="info_product_material[' + serialNumber + '][info_stability_for]"><option value="">--Select--</option><option vlaue="Submission">Submission</option><option vlaue="Commercial">Commercial</option><option vlaue="Pack Evaluation">Pack Evaluation</option><option vlaue="Not Applicable">Not Applicable</option></select></td>' +
+                        '<td><select name="info_product_material[' + serialNumber + '][info_stability_for]"><option value="">--Select Option--</option><option vlaue="Submission">Submission</option><option vlaue="Commercial">Commercial</option><option vlaue="Pack Evaluation">Pack Evaluation</option><option vlaue="Not Applicable">Not Applicable</option></select></td>' +
                         '<td><button type="text" class="removeRowBtn">Remove</button></td>' +
 
                     '</tr>';
@@ -365,22 +365,25 @@ $users = DB::table('users')
                         </div>
                         <div class="col-lg-6 new-date-data-field">
                             <div class="group-input input-date">
-                                <label for="Date Due"> Due Date </label>
-                                <div><small class="text-primary">If revising Due Date, kindly mention revision
-                                        reason in "Due Date Extension Justification" data field.</small></div>
+                                <label for="Due Date"> Due Date </label>
+                                <div><small class="text-primary">If revising Due Date, kindly mention revision reason in "Due Date Extension Justification" data field.</small></div>
                                 <div class="calenderauditee">
-                                    <input type="text" id="due_date" readonly placeholder="DD-MM-YYYY" />
-                                    <input type="date" name="due_date"
-                                        min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input"
-                                        oninput="handleDateInput(this, 'due_date')" />
+                                <input type="text"  id="due_date"  readonly placeholder="DD-MMM-YYYY"  value="{{ Helpers::getDueDate123(null, false, 'd-M-Y') }}" />
+                                <input type="date" name="due_date" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
+                                class="hide-input"
+                                oninput="handleDateInput(this, 'due_date')"  value="{{ Helpers::getDueDate123(null, false, 'Y-m-d') ?? '' }}"/>
                                 </div>
+
+                                
                             </div>
                         </div>
+                        
+                       
                         <div class="col-lg-6">
                             <div class="group-input">
                                 <label for="Short Description"> Severity Level</label>
                                 <select name="severity_level_gi" >
-                                    <option>Enter Your Selection Here</option>
+                                    <option value="">Enter Your Selection Here</option>
                                     <option  value="Major">Major</option>
                                     <option value="Minor">Minor</option>
                                     <option value="Critical">Critical</option>
@@ -404,7 +407,7 @@ $users = DB::table('users')
                                 <label for="Short Description">Initiator Group <span class="text-danger"></span></label>
                                 
                                 <select name="initiator_group" id="initiator_group">
-                                <option>Enter Your Selection Here</option>
+                                <option value="">Enter Your Selection Here</option>
                                 @foreach (Helpers::getInitiatorGroups() as $code => $initiator_group) 
                                 <option value="{{ $code }}" @if (old('initiator_group') == $code) selected @endif>{{ $initiator_group }}</option> 
                                 @endforeach 
@@ -429,7 +432,7 @@ $users = DB::table('users')
                             <div class="group-input">
                                 <label for="Initiator Group Code">Is Repeat?</label>
                                 <select name="is_repeat_gi">
-                                    <option>Enter Your Selection Here</option>
+                                    <option value="">Enter Your Selection Here</option>
                                     <option value="yes">yes</option>
                                     <option value="No">No</option>
                                 </select>
@@ -448,7 +451,7 @@ $users = DB::table('users')
                             <div class="group-input">
                                 <label for="Initiator Group">Nature of Change</label>
                                 <select name="nature_of_change_gi">
-                                    <option>Enter Your Selection Here</option>
+                                    <option value="">Enter Your Selection Here</option>
                                     <option value="temporary">Temporary</option>
                                     <option value="permanent">Permanent</option>
                                 </select>
@@ -488,7 +491,7 @@ $users = DB::table('users')
                             <div class="group-input">
                                 <label for="Source Document Type">Source Document Type</label>
                                 <select name="source_document_type_gi">
-                                    <option>Enter Your Selection Here</option>
+                                    <option value="">Enter Your Selection Here</option>
                                     <option value="OOT">OOT</option>
                                     <option value="Lab Incident">Lab Incident</option>
                                     <option value="Deviation">Deviation</option>
@@ -502,7 +505,7 @@ $users = DB::table('users')
                             <div class="group-input">
                                 <label for="Reference Recores">Reference System Document</label>
                                 <select multiple id="reference_record" name="reference_system_document_gi" id="">
-                                    <option value="0">--Select---</option>
+                                    <option value="">Enter Your Selection Here</option>
                                     <option value="1">1</option>
                                     <option value="2">2</option>
                                 </select>
@@ -513,7 +516,7 @@ $users = DB::table('users')
                             <div class="group-input">
                                 <label for="Tnitiaror Grouo">Sample Type</label>
                                 <select name="sample_type_gi">
-                                    <option>Enter Your Selection Here</option>
+                                    <option value="">Enter Your Selection Here</option>
                                     <option value="Raw Material">Raw Material</option>
                                     <option value="Packing Material">Packing Material</option>
                                     <option value="Finished Product">Finished Product</option>
@@ -615,7 +618,7 @@ $users = DB::table('users')
                                             <td><input type="text" name="info_product_material[0][info_process_sample_stage]" value=""></td>
                                             <td>
                                                 <select name="info_product_material[0][info_packing_material_type]">
-                                                    <option value="">--Select-- </option>
+                                                <option value="">Enter Your Selection Here</option>
                                                     <option value="Primary">Primary</option>
                                                     <option value="Secondary">Secondary</option>
                                                     <option value="Tertiary">Tertiary</option>
@@ -624,7 +627,7 @@ $users = DB::table('users')
                                             </td>
                                             <td>
                                                 <select name="info_product_material[0][info_stability_for]">
-                                                    <option value="">--Select-- </option>
+                                                    <option value="">Enter Your Selection Here</option>
                                                     <option vlaue="Submission">Submission</option>
                                                     <option vlaue="Commercial">Commercial</option>
                                                     <option vlaue="Pack Evaluation">Pack Evaluation</option>
@@ -920,7 +923,7 @@ $users = DB::table('users')
                                                     <td>
                                                         <div style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                                             <select name="checklist_lab_inv[{{ $loop->index }}][response]" id="response" style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                                <option value="">Select an Option</option>
+                                                                <option value="">Enter Your Selection Here</option>
                                                                 <option value="Yes">Yes</option>
                                                                 <option value="No">No</option>
                                                                 <option value="N/A">N/A</option>
@@ -1161,7 +1164,7 @@ $users = DB::table('users')
                             <div class="group-input">
                                 <label for="Audit Start Date"> Phase II Inv. Required?</label>
                                 <select name="phase_ii_inv_required_plir">
-                                    <option>Enter Your Selection Here</option>
+                                <option value="">Enter Your Selection Here</option>
                                 <option value="yes">Yes</option>
                                 <option value="no">No</option>
                                 </select>
@@ -1227,7 +1230,7 @@ $users = DB::table('users')
                             <label for="Auditee"> Manufacturing Invest. Type </label>
                             <select name="manufacturing_invest_type_piii" placeholder="Select Nature of Deviation"
                                 data-search="false" data-silent-initial-value-set="true" id="auditee">
-                                <option value="">---Enter Select ---</option>
+                                <option value="">Enter Your Selection Here</option>
                                 <option value="Chemical">Chemical</option>
                                 <option value="Microbiology">Microbiology</option>
                             </select>
@@ -1246,7 +1249,7 @@ $users = DB::table('users')
                         <div class="group-input">
                             <label for="Audit Attachments"> Hypo/Exp. Required</label>
                             <select name="hypo_exp_required_piii">
-                               <option value="">--Select---</option>
+                                <option value="">Enter Your Selection Here</option>
                                 <option value="yes">Yes</option>
                                 <option value="no">No</option>
 
@@ -1410,7 +1413,7 @@ $users = DB::table('users')
                         <div class="group-input">
                             <label for="Cancelled By">OOS Category-Reason identified </label>
                             <select name="oos_category_reason_identified_piiqcr">
-                                <option >Enter Your Selection Here</option>
+                                <option value="">Enter Your Selection Here</option>
                                 <option value="Analyst Error">Analyst Error</option>
                                 <option value="Instrument Error">Instrument Error</option>
                                 <option value="Product/Material Related Error">Product/Material Related Error</option>
@@ -1906,13 +1909,14 @@ $users = DB::table('users')
                         <div class="group-input">
                             <label for="Audit Attachments">OOS Category</label>
                              <select name="oos_category_bd">
+                                <option value="">Enter Your Selection Here</option>
                                 <option value="default">Enter Your Selection Here</option>
-                                <option value="analyst_error">Analyst Error</option>
-                                <option value="instrument_error">Instrument Error</option>
-                                <option value="procedure_error">Procedure Error</option>
-                                <option value="product_related_error">Product Related Error</option>
-                                <option value="material_related_error">Material Related Error</option>
-                                <option value="other_error">Other Error</option>
+                                <option value="Analyst Error">Analyst Error</option>
+                                <option value="Instrument Error">Instrument Error</option>
+                                <option value="Procedure Error">Procedure Error</option>
+                                <option value="Product Related Error">Product Related Error</option>
+                                <option value="Material Related Error">Material Related Error</option>
+                                <option value="Other Error">Other Error</option>
                             </select>
                         </div>
                     </div>
@@ -1924,7 +1928,7 @@ $users = DB::table('users')
                     </div>
                     <div class="col-12">
                         <div class="group-input">
-                            <label for="Reference Recores">Material/Batch Release</label>
+                        <label for="Reference Recores">Material/Batch Release</label>
                         <select name="material_batch_release_bd">
                             <option value="">Enter Your Selection Here</option>
                             <option value="release">To Be Released</option>

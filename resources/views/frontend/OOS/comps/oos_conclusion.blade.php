@@ -8,7 +8,7 @@
                 <div class="group-input">
                     <label for="Description Deviation">Conclusion Comments</label>
                     <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
-                    <textarea class="summernote" name="conclusion_comments_oosc" id="summernote-1">
+                    <textarea class="summernote" name="conclusion_comments_oosc" id="summernote-1"  {{Helpers::isOOSChemical($data->stage)}}>
                         {{ $data->conclusion_comments_oosc ?? '' }}
                         </textarea>
                 </div>
@@ -44,11 +44,11 @@
                                 @foreach ($oos_conclusions->data as $oos_conclusion)
                                     <tr>
                                         <td><input disabled type="text" name="oos_conclusion[{{$loop->index }}][serial]" value="{{$loop->index + 1 }}"></td>
-                                        <td><input type="text" name="oos_conclusion[{{$loop->index }}][summary_results_analysis_detials]" value="{{ Helpers::getArrayKey($oos_conclusion, 'summary_results_analysis_detials') }}"></td>
-                                        <td><input type="text" name="oos_conclusion[{{$loop->index }}][summary_results_hypothesis_experimentation_test_pr_no]" value="{{ Helpers::getArrayKey($oos_conclusion, 'summary_results_hypothesis_experimentation_test_pr_no') }}"></td>
-                                        <td><input type="text" name="oos_conclusion[{{$loop->index }}][summary_results]" value="{{ Helpers::getArrayKey($oos_conclusion, 'summary_results') }}"></td>
-                                        <td><input type="text" name="oos_conclusion[{{$loop->index }}][summary_results_analyst_name]" value="{{ Helpers::getArrayKey($oos_conclusion, 'summary_results_analyst_name') }}"></td>
-                                        <td><input type="text" name="oos_conclusion[{{$loop->index }}][summary_results_remarks]" value="{{ Helpers::getArrayKey($oos_conclusion, 'summary_results_remarks') }}"></td> 
+                                        <td><input  {{Helpers::isOOSChemical($data->stage)}} type="text" name="oos_conclusion[{{$loop->index }}][summary_results_analysis_detials]" value="{{ Helpers::getArrayKey($oos_conclusion, 'summary_results_analysis_detials') }}"></td>
+                                        <td><input  {{Helpers::isOOSChemical($data->stage)}} type="text" name="oos_conclusion[{{$loop->index }}][summary_results_hypothesis_experimentation_test_pr_no]" value="{{ Helpers::getArrayKey($oos_conclusion, 'summary_results_hypothesis_experimentation_test_pr_no') }}"></td>
+                                        <td><input  {{Helpers::isOOSChemical($data->stage)}} type="text" name="oos_conclusion[{{$loop->index }}][summary_results]" value="{{ Helpers::getArrayKey($oos_conclusion, 'summary_results') }}"></td>
+                                        <td><input  {{Helpers::isOOSChemical($data->stage)}} type="text" name="oos_conclusion[{{$loop->index }}][summary_results_analyst_name]" value="{{ Helpers::getArrayKey($oos_conclusion, 'summary_results_analyst_name') }}"></td>
+                                        <td><input  {{Helpers::isOOSChemical($data->stage)}}  type="text" name="oos_conclusion[{{$loop->index }}][summary_results_remarks]" value="{{ Helpers::getArrayKey($oos_conclusion, 'summary_results_remarks') }}"></td> 
                                         <td><button type="text" class="removeRowBtn">Remove</button></td>
                                     </tr>  
                                 @endforeach
@@ -57,20 +57,17 @@
                     </table>
                 </div>
             </div>
-
-
-
             <div class="col-lg-6">
                 <div class="group-input">
                     <label for="Report Attachments">Specification Limit </label>
-                    <input type="text" value="{{$data->specification_limit_oosc}}" name="specification_limit_oosc">
+                    <input type="text" value="{{$data->specification_limit_oosc}}" name="specification_limit_oosc"  {{Helpers::isOOSChemical($data->stage)}}>
                 </div>
             </div>
 
             <div class="col-lg-6">
                 <div class="group-input">
                     <label for="Audit Attachments">Results to be Reported</label>
-                    <select name="results_to_be_reported_oosc">
+                    <select name="results_to_be_reported_oosc"  {{Helpers::isOOSChemical($data->stage)}}>
                        <option value="">Enter Your Selection Here</option>
                         <option value="Initial" {{ $data->results_to_be_reported_oosc == 'Initial' ? 'selected' : ''
                             }}>Initial</option>
@@ -86,7 +83,7 @@
                 <div class="group-input">
                     <label for="Reference Recores">Final Reportable Results</label>
                     <input type="text" name="final_reportable_results_oosc"
-                        value="{{ $data->final_reportable_results_oosc ?? '' }}">
+                        value="{{ $data->final_reportable_results_oosc ?? '' }}"  {{Helpers::isOOSChemical($data->stage)}}>
                 </div>
             </div>
 
@@ -94,7 +91,7 @@
                 <div class="group-input">
                     <label for="Description Deviation">Justifi. for Averaging Results</label>
                     <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
-                    <textarea class="summernote" name="justifi_for_averaging_results_oosc" id="summernote-1">
+                    <textarea class="summernote" name="justifi_for_averaging_results_oosc" id="summernote-1"  {{Helpers::isOOSChemical($data->stage)}}>
                                 {{ $data->justifi_for_averaging_results_oosc ?? '' }}
                             </textarea>
                 </div>
@@ -103,7 +100,7 @@
             <div class="col-lg-6">
                 <div class="group-input">
                     <label for="Reference Recores">OOS Stands </label>
-                    <select name="oos_stands_oosc">
+                    <select name="oos_stands_oosc"  {{Helpers::isOOSChemical($data->stage)}}>
                        <option value="">Enter Your Selection Here</option>
                         <option value="Valid" {{ $data->oos_stands_oosc == 'Valid' ? 'selected' : '' }}>Valid
                         </option>
@@ -116,7 +113,7 @@
             <div class="col-lg-6">
                 <div class="group-input">
                     <label for="Audit Attachments">CAPA Req.</label>
-                    <select name="capa_req_oosc">
+                    <select name="capa_req_oosc"  {{Helpers::isOOSChemical($data->stage)}}>
                         <option value="">Enter Your Selection Here</option>
                         <option value="Yes" {{ $data->capa_req_oosc == 'Yes' ? 'selected' : '' }}>Yes</option>
                         <option value="No" {{ $data->capa_req_oosc == 'No' ? 'selected' : '' }}>No</option>
@@ -127,7 +124,7 @@
             <div class="col-lg-6">
                 <div class="group-input">
                     <label for="Reference Records">CAPA Ref No.</label>
-                    <select multiple id="reference_record" name="capa_ref_no_oosc[]">
+                    <select multiple id="reference_record" name="capa_ref_no_oosc[]"  {{Helpers::isOOSChemical($data->stage)}}>
                         <option value="0">--Select---</option>
                         <option value="1" {{ (!empty($data->capa_ref_no_oosc) && str_contains($data->capa_ref_no_oosc, 1)) ? 'selected' : '' }}>1</option>
                         <option value="2" {{ (!empty($data->capa_ref_no_oosc) && str_contains($data->capa_ref_no_oosc, 2)) ? 'selected' : '' }}>2</option>
@@ -138,7 +135,7 @@
             <div class="col-md-12 mb-4">
                 <div class="group-input">
                     <label for="Description Deviation">Justify if CAPA not required</label>
-                    <textarea class="summernote" name="justify_if_capa_not_required_oosc" id="summernote-1">
+                    <textarea class="summernote" name="justify_if_capa_not_required_oosc" id="summernote-1"  {{Helpers::isOOSChemical($data->stage)}}>
                                 {{ $data->justify_if_capa_not_required_oosc ?? '' }}
                             </textarea>
                 </div>
@@ -147,7 +144,7 @@
             <div class="col-lg-6">
                 <div class="group-input">
                     <label for="Audit Attachments">Action Item Req.</label>
-                    <select name="action_plan_req_oosc">
+                    <select name="action_plan_req_oosc"  {{Helpers::isOOSChemical($data->stage)}}>
                         <option value="">Enter Your Selection Here</option>
                         <option value="Yes" {{ $data->action_plan_req_oosc == 'Yes' ? 'selected' : '' }}>Yes
                         </option>
@@ -158,7 +155,7 @@
             <div class="col-lg-6">
                 <div class="group-input">
                     <label for="Reference Recores">Action Item Ref.</label>
-                    <select multiple id="reference_record" name="action_plan_ref_oosc[]" id="">
+                    <select multiple id="reference_record" name="action_plan_ref_oosc[]" id=""  {{Helpers::isOOSChemical($data->stage)}}>
                     <option value="o">Enter Your Selection Here</option>
                     <option value="1" {{ (!empty($data->action_plan_ref_oosc) && in_array('1', explode(',', $data->action_plan_ref_oosc[0]))) ? 'selected' : '' }}>1</option>
                     <option value="2" {{ (!empty($data->action_plan_ref_oosc) && in_array('2', explode(',', $data->action_plan_ref_oosc[0]))) ? 'selected' : '' }}>2</option>
@@ -168,7 +165,7 @@
             <div class="col-md-12 mb-4">
                 <div class="group-input">
                     <label for="Description Deviation">Justification for Delay</label>
-                    <textarea class="summernote" name="justification_for_delay_oosc" id="summernote-1">
+                    <textarea class="summernote" name="justification_for_delay_oosc" id="summernote-1"  {{Helpers::isOOSChemical($data->stage)}}>
                                 {{ $data->justification_for_delay_oosc ?? '' }}
                     </textarea>
                 </div>
@@ -199,7 +196,8 @@
                         <div class="add-btn">
                             <div>Add</div>
                             <input type="file" id="myfile" name="file_attachments_if_any_ooscattach[]"
-                                oninput="addMultipleFiles(this, 'file_attachments_if_any_ooscattach')" multiple>
+                                oninput="addMultipleFiles(this, 'file_attachments_if_any_ooscattach')"
+                                 multiple  {{Helpers::isOOSChemical($data->stage)}}>
                         </div>
                     </div>
 
@@ -207,9 +205,16 @@
             </div>
 
             <div class="button-block">
-                <button type="submit" id="ChangesaveButton" class="saveButton">Save</button>
-                <button type="button" class="backButton" onclick="previousStep()">Back</button>
-                <button type="button" id="ChangeNextButton" class="nextButton" onclick="nextStep()">Next</button>
+            @if ($data->stage == 0  || $data->stage >= 15)
+            <div class="progress-bars">
+                    <div class="bg-danger">Workflow is already Closed-Done</div>
+                </div>
+            @else
+            <button type="submit" id="ChangesaveButton" class="saveButton">Save</button>
+            <button type="button" class="backButton" onclick="previousStep()">Back</button>
+            <button type="button" id="ChangeNextButton" class="nextButton"
+                onclick="nextStep()">Next</button>
+            @endif
                 <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white">
                         Exit </a> </button>
             </div>

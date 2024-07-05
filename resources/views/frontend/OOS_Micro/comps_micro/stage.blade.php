@@ -22,7 +22,6 @@
             $userRoleIds = $userRoles->pluck('q_m_s_roles_id')->toArray();
             @endphp
                  <button class="button_theme1"> <a class="text-white" href="{{ route('oos_micro.audit_trial', $micro_data->id) }}"> Audit Trail </a> </button>
-
             @if ($micro_data->stage == 1 && (in_array(3, $userRoleIds) || in_array(18, $userRoleIds)))
                 <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">Submit</button>
                 <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#cancel-modal"> Cancel  </button>
@@ -47,9 +46,9 @@
                 <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">No Assignable Cause Found</button>
                 <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal">Child</button>
             @elseif($micro_data->stage == 7 && (in_array(9, $userRoleIds) || in_array(18, $userRoleIds)))
-                <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#request-more-info-modal">Request More Info</button>
-                <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal-AssignableCause">Repeat Analysis Completed</button>
-                <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal">Child</button>
+            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#request-more-info-modal">Request More Info</button>
+            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal-AssignableCause">Repeat Analysis Completed</button>
+            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal">Child</button>
             @elseif($micro_data->stage == 8 && (in_array(9, $userRoleIds) || in_array(18, $userRoleIds)))
             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#request-more-info-modal">Request More Info</button>
             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">Full Scale Investigation</button>
@@ -104,11 +103,11 @@
                 which is legally binding equivalent of a hand written signature.
             </div>
             <div class="group-input">
-                <label for="username">Username</label>
+                <label for="username">Username <span> *</span></label>
                 <input type="text" name="username" required>
             </div>
             <div class="group-input">
-                <label for="password">Password</label>
+                <label for="password">Password <span> *</span></label>
                 <input type="password" name="password" required>
             </div>
             <div class="group-input">
@@ -145,15 +144,15 @@
                 which is legally binding equivalent of a hand written signature.
             </div>
             <div class="group-input">
-                <label for="username">Username</label>
+                <label for="username">Username <span> *</span></label>
                 <input type="text" name="username" required>
             </div>
             <div class="group-input">
-                <label for="password">Password</label>
+                <label for="password">Password <span> *</span></label>
                 <input type="password" name="password" required>
             </div>
             <div class="group-input">
-                <label for="comment">Comment</label>
+                <label for="comment">Comment <span> *</span></label>
                 <input type="comment" name="comment" required>
             </div>
             </div>
@@ -186,11 +185,11 @@
                 which is legally binding equivalent of a hand written signature.
             </div>
             <div class="group-input">
-                <label for="username">Username</label>
+                <label for="username">Username <span> *</span></label>
                 <input type="text" name="username" required>
             </div>
             <div class="group-input">
-                <label for="password">Password</label>
+                <label for="password">Password <span> *</span></label>
                 <input type="password" name="password" required>
             </div>
             <div class="group-input">
@@ -227,15 +226,15 @@
                         which is legally binding equivalent of a hand written signature.
                     </div>
                     <div class="group-input">
-                        <label for="username">Username</label>
+                        <label for="username">Username <span> *</span></label>
                         <input type="text" name="username" required>
                     </div>
                     <div class="group-input">
-                        <label for="password">Password</label>
+                        <label for="password">Password <span> *</span></label>
                         <input type="password" name="password" required>
                     </div>
                     <div class="group-input">
-                        <label for="comment">Comment</label>
+                        <label for="comment">Comment <span> *</span></label>
                         <input type="comment" name="comment">
                     </div>
                 </div>
@@ -305,13 +304,13 @@
                 <div class="d-flex justify-items-center align-items-center border border-1 border-dark p-2 border-start-0">Under Phase I Investigation</div>
                 @endif
 
-                @if ($micro_data->stage >= 4 && $micro_data->stage != 5)
+                @if ($micro_data->stage >= 4)
                     <div class=" active d-flex justify-items-center align-items-center border border-1 border-dark p-2 border-start-0"> Under Phase I Correction</div>
                 @else
                     <div class=" d-flex justify-items-center align-items-center border border-1 border-dark p-2 border-start-0"> Under Phase I Correction</div>
                 @endif
 
-                @if ($micro_data->stage >= 5 && $micro_data->stage != 4)
+                @if ($micro_data->stage >= 5)
                 <div class="active d-flex justify-items-center align-items-center border border-1 border-dark p-2 border-start-0">Under Phase I b Investigation</div>
                 @else
                 <div class="d-flex justify-items-center align-items-center border border-1 border-dark p-2 border-start-0">Under Phase I b Investigation</div>

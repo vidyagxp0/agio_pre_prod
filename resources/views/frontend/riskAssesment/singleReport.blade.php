@@ -219,7 +219,7 @@
                         {{--  <th class="w-20">Team Members</th>
                         <td class="w-30">@if($data->team_members){{ Helpers::getInitiatorName($data->team_members) }}@else Not Applicable @endif</td>  --}}
                         <th class="w-20">Due Date</th>
-                        <td class="w-80"> @if($data->due_date){{ $data->due_date }} @else Not Applicable @endif</td>
+                        <td class="w-80"> @if($data->due_date) {{ \Carbon\Carbon::parse($data->due_date)->format('d-M-Y') }} @else Not Applicable @endif</td>
                     </tr>
                     <tr>
                         <th class="w-20">Risk/Opportunity Description</th>
@@ -343,7 +343,7 @@
                     </tr>
                     <tr>
                         <th class="w-20">Justification/Rationale</th>
-                        <td class="w-30">@if($data->justification){{ $data->justification }}@else Not Applicable @endif</td>
+                        <td class="w-80">@if($data->justification){{ $data->justification }}@else Not Applicable @endif</td>
                         
                     </tr>
                     <!-- <tr>
@@ -657,6 +657,9 @@
             - <tr>
                 <th class="w-20">Problem Statement</th>
                 <td class="w-80">@if($riskgrdwhy_chart->why_problem_statement){{ $riskgrdwhy_chart->why_problem_statement }}@else Not Applicable @endif</td>
+                
+                </tr>
+               <tr>
                 <th class="w-20">Why 1 </th>
                 {{-- <td class="w-80">@if($riskgrdwhy_chart->why_1){{ $riskgrdwhy_chart->why_1 }}@else Not Applicable @endif</td> --}}
                 <td class="w-80">
@@ -693,6 +696,9 @@
                         Not Applicable
                     @endif
                       </td>
+
+                      </tr>
+                 <tr>
                 <th class="w-20">Why 3</th>
                 {{-- <td class="w-80">@if($riskgrdwhy_chart->why_3){{ $riskgrdwhy_chart->why_3 }}@else Not Applicable @endif</td> --}}
                 <td class="w-80">
@@ -729,6 +735,9 @@
                         Not Applicable
                     @endif
                       </td>
+
+                      </tr>
+                 <tr>
                 <th class="w-20">Why5</th>
                 {{-- <td class="w-80">@if($riskgrdwhy_chart->why_4){{ $riskgrdwhy_chart->why_4 }}@else Not Applicable @endif</td> --}}
                 <td class="w-80">
@@ -759,10 +768,12 @@
         Is/Is Not Analysis
     </div>
 
-    <table>
+    <table style="max-width: 700px!important; overflow: hidden;">
     <tr>
     <th class="w-20">What Will Be</th>
     <td class="w-80">@if($riskgrdwhat_who_where->what_will_be) {!! nl2br(e($riskgrdwhat_who_where->what_will_be)) !!} @else Not Applicable @endif</td>
+    </tr>
+    <tr>
     <th class="w-20">What Will Not Be</th>
     <td class="w-80">@if($riskgrdwhat_who_where->what_will_not_be) {!! nl2br(e($riskgrdwhat_who_where->what_will_not_be)) !!} @else Not Applicable @endif</td>
    
@@ -770,7 +781,8 @@
     <tr>
     <th class="w-20">What Will Rationale</th>
     <td class="w-80">@if($riskgrdwhat_who_where->what_rationable) {!! nl2br(e($riskgrdwhat_who_where->what_rationable)) !!} @else Not Applicable @endif</td>
-    
+    </tr>
+    <tr>
     <th class="w-20">Where Will Be</th>
     <td class="w-80">@if($riskgrdwhat_who_where->where_will_be) {!! nl2br(e($riskgrdwhat_who_where->where_will_be)) !!} @else Not Applicable @endif</td>
     </tr>
@@ -778,6 +790,8 @@
 
         <th class="w-20">Where Will Not Be</th>
         <td class="w-80">@if($riskgrdwhat_who_where->where_will_not_be) {!! nl2br(e($riskgrdwhat_who_where->where_will_not_be)) !!} @else Not Applicable @endif</td>
+    </tr>
+    <tr>
         <th class="w-20">Where Will Rationale</th>
         <td class="w-80">@if($riskgrdwhat_who_where->where_rationable) {!! nl2br(e($riskgrdwhat_who_where->where_rationable)) !!} @else Not Applicable @endif</td>
     
@@ -785,13 +799,16 @@
     <tr>
         <th class="w-20">When Will Be</th>
         <td class="w-80">@if($riskgrdwhat_who_where->when_will_be) {!! nl2br(e($riskgrdwhat_who_where->when_will_be)) !!} @else Not Applicable @endif</td>
+    </tr>
+    <tr>
         <th class="w-20">When Will Not Be</th>
         <td class="w-80">@if($riskgrdwhat_who_where->when_will_not_be) {!! nl2br(e($riskgrdwhat_who_where->when_will_not_be)) !!} @else Not Applicable @endif</td>
     </tr>
     <tr> 
         <th class="w-20">When Will Rationale</th>
         <td class="w-80">@if($riskgrdwhat_who_where->when_rationable) {!! nl2br(e($riskgrdwhat_who_where->when_rationable)) !!} @else Not Applicable @endif</td>
-   
+   </tr>
+    <tr>
         <th class="w-20">Coverage Will Be</th>
         <td class="w-80">@if($riskgrdwhat_who_where->coverage_will_be) {!! nl2br(e($riskgrdwhat_who_where->coverage_will_be)) !!} @else Not Applicable @endif</td>
     </tr>
@@ -807,6 +824,8 @@
     <tr>
         <th class="w-20">Who Will Be</th>
         <td class="w-80">@if($riskgrdwhat_who_where->who_will_be) {!! nl2br(e($riskgrdwhat_who_where->who_will_be)) !!} @else Not Applicable @endif</td>
+     </tr>
+    <tr> 
         <th class="w-20">Who Will Not Be</th>
         <td class="w-80">@if($riskgrdwhat_who_where->who_will_not_be) {!! nl2br(e($riskgrdwhat_who_where->who_will_not_be)) !!} @else Not Applicable @endif</td>
     </tr>

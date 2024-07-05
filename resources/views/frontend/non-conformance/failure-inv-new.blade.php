@@ -323,8 +323,6 @@
                         '<td><input type="text" name="IDnumber[]"></td>' +
                         '<td><input type="text" name="Remarks[]"></td>' +
                         '<td><button class="removeRowBtn">Remove</button></td>' +
-
-
                         '</tr>';
 
                     for (var i = 0; i < users.length; i++) {
@@ -359,8 +357,6 @@
                         '<td><input type="text" name="ReferenceDocumentName[]"></td>' +
                         '<td><input type="text" name="Document_Remarks[]"></td>' +
                         '<td><button class="removeRowBtn">Remove</button></td>' +
-
-
                         '</tr>';
 
                     for (var i = 0; i < users.length; i++) {
@@ -400,9 +396,6 @@
                         '<td> <select name="product_stage[]" id=""> <option value="">-- Select --</option> <option value="">1 <option value="">2</option> <option value="">3</option><option value="">4</option> <option value="">5</option><option value="">6</option> <option value="">7</option> <option value="">8</option><option value="">9</option><option value="">Final</option> </select></td>' +
                         '<td><input type="text" name="batch_no[]"></td>' +
                         '<td><button class="removeRowBtn">Remove</button></td>' +
-
-
-
                         '</tr>';
 
                     for (var i = 0; i < users.length; i++) {
@@ -443,7 +436,6 @@
                         '<td><input type="text" class="numberDetail" name="Responsibility[]"></td>' +
                         '<td><input type="text" class="Document_Remarks" name="Remarks[]"></td>' +
                         '<td><button type="text" class="removeRowBtn" ">Remove</button></td>' +
-
                         '</tr>';
 
                     for (var i = 0; i < users.length; i++) {
@@ -704,10 +696,10 @@
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Date of Initiation"><b>Date of Initiation</b></label>
-                                        <input readonly type="text" value="{{ date('d-M-Y') }}" name="initiation_date"
+                                        <input readonly type="text" value="{{ date('d-M-Y') }}" name="intiation_date"
                                             id="initiation_date"
                                             style="background-color: light-dark(rgba(239, 239, 239, 0.3), rgba(59, 59, 59, 0.3))">
-                                        <input type="hidden" value="{{ date('Y-m-d') }}" name="initiation_date_hidden">
+                                        <input type="hidden" value="{{ date('Y-m-d') }}" name="intiation_date_hidden">
                                     </div>
                                 </div>
 
@@ -1442,8 +1434,7 @@
                                         <label for="Description Non Conformance">Description of Non Conformance</label>
                                         <div><small class="text-primary">Please insert "NA" in the data field if it does
                                                 not require completion</small></div>
-                                        <textarea class="tiny" name="Description_non_conformanceS[]" id="summernote-1" required>
-                                    </textarea>
+                                        <textarea class="tiny" name="Description_non_conformanceS[]" id="summernote-1" required>  </textarea>
                                     </div>
                                     @error('Description_non_conformanceS[]')
                                         <div class="text-danger">{{ $message }}</div>
@@ -1461,8 +1452,7 @@
                                         <label for="Immediate Action">Immediate Action (if any)</label>
                                         <div><small class="text-primary">Please insert "NA" in the data field if it does
                                                 not require completion</small></div>
-                                        <textarea class="tiny" name="Immediate_Action[]" id="summernote-2"required>
-                                    </textarea>
+                                        <textarea class="tiny" name="Immediate_Action[]" id="summernote-2"required> </textarea>
                                     </div>
                                     @error('record')
                                         <div class="text-danger">{{ $message }}</div>
@@ -1479,8 +1469,7 @@
                                         <label for="Preliminary Impact">Preliminary Impact of Non Conformance </label>
                                         <div><small class="text-primary">Please insert "NA" in the data field if it does
                                                 not require completion</small></div>
-                                        <textarea class="tiny" name="Preliminary_Impact[]" id="summernote-3" required>
-                                    </textarea>
+                                        <textarea class="tiny" name="Preliminary_Impact[]" id="summernote-3" required> </textarea>
                                     </div>
                                     @error('Preliminary_Impact')
                                         <div class="text-danger">{{ $message }}</div>
@@ -1528,14 +1517,12 @@
                         <div class="inner-block-content">
                             <div class="row">
 
-
                                 <div class="col-md-12 mb-3">
                                     <div class="group-input">
                                         <label for="HOD Remarks">HOD Remarks</label>
                                         <div><small class="text-primary">Please insert "NA" in the data field if it does
                                                 not require completion</small></div>
-                                        <textarea class="tiny" name="HOD_Remarks" id="summernote-4">
-                                    </textarea>
+                                        <textarea class="tiny" name="HOD_Remarks" id="summernote-4"> </textarea>
                                     </div>
                                 </div>
                                 <div class="col-lg-12">
@@ -1579,9 +1566,6 @@
                     <div id="CCForm2" class="inner-block cctabcontent">
                         <div class="inner-block-content">
                             <div class="row">
-
-
-
 
                                 <script>
                                     handleInvestigationRequiredChange();
@@ -1657,15 +1641,10 @@
                                             document.getElementById("CAPA_button").style.display = "none";
                                             document.getElementById("QRM_button").style.display = "none";
 
-
-
                                         }
 
                                     }
                                 </script>
-
-
-
 
                                 <div style="margin-bottom: 0px;" class="col-lg-12 new-date-data-field ">
                                     <div class="group-input input-date">
@@ -1719,8 +1698,7 @@
                                             Categorization</label>
                                         <div><small class="text-primary">Please insert "NA" in the data field if it does
                                                 not require completion</small></div>
-                                        <textarea class="tiny" name="Justification_for_categorization" id="summernote-5">
-                                    </textarea>
+                                        <textarea class="tiny" name="Justification_for_categorization" id="summernote-5"></textarea>
                                     </div>
                                 </div>
 
@@ -1737,8 +1715,7 @@
                                                 class="text-danger">*</span></label>
                                         <div><small class="text-primary">Please insert "NA" in the data field if it does
                                                 not require completion</small></div>
-                                        <textarea class=" Investigation_Details" name="Investigation_Details" id="summernote-6">
-                                    </textarea>
+                                        <textarea class=" Investigation_Details" name="Investigation_Details" id="summernote-6"> </textarea>
                                     </div>
                                 </div>
 
@@ -1747,8 +1724,7 @@
                                         <label for="QAInitialRemark">QA Initial Remarks</label>
                                         <div><small class="text-primary">Please insert "NA" in the data field if it does
                                                 not require completion</small></div>
-                                        <textarea class="tiny" name="QAInitialRemark" id="summernote-7">
-                                    </textarea>
+                                        <textarea class="tiny" name="QAInitialRemark" id="summernote-7"></textarea>
                                     </div>
                                 </div>
                                 <div class="col-lg-12">
@@ -4994,7 +4970,6 @@
                                     </div>
                                 </div>
 
-
                                 <div class="col-md-12 mb-3">
                                     <div class="group-input">
                                         <label for="Interim_Control">Interim Control(If Any)</label>
@@ -5233,8 +5208,7 @@
                                         <label for="QA Feedbacks">Initiator Feedbacks</label>
                                         <div><small class="text-primary">Please insert "NA" in the data field if it does
                                                 not require completion</small></div>
-                                        <textarea class="tiny" name="QA_Feedbacks" id="summernote-14">
-                                    </textarea>
+                                        <textarea class="tiny" name="QA_Feedbacks" id="summernote-14"> </textarea>
                                     </div>
                                 </div>
                                 <div class="col-lg-12">
@@ -5300,8 +5274,7 @@
                                             Category</label>
                                         <div><small class="text-primary">Please insert "NA" in the data field if it does
                                                 not require completion</small></div>
-                                        <textarea class="tiny" name="Investigation_Of_Review" id="summernote-13">
-                                    </textarea>
+                                        <textarea class="tiny" name="Investigation_Of_Review" id="summernote-13"></textarea>
                                     </div>
                                 </div>
                                 <div class="col-12">
@@ -6627,10 +6600,9 @@
                                 <input class="extension_modal_signature" type="date" name="non_conformances_due_capa">
                             </div>
                             <div class="group-input">
-                                <label for="password">Extension Justification (Non Conformance)<span
-                                        class="text-danger">*</span></label>
-                                <input class="extension_modal_signature" type="text"
-                                    name="non_conformances_justification">
+                                <label for="password">Extension Justification (Non Conformance)<span  class="text-danger">*</span></label>
+                                <input class="extension_modal_signature" type="text" name="non_conformances_justification">
+
                             </div>
                             <div class="group-input">
                                 <label for="password">Non Conformance Extension Completed By </label>

@@ -144,7 +144,10 @@ class IncidentController extends Controller
         $incident->QA_Feedbacks = $request->QA_Feedbacks;
         $incident->Closure_Comments = $request->Closure_Comments;
         $incident->Disposition_Batch = $request->Disposition_Batch;
+        $incident->department_head = $request->department_head;
+        $incident->qa_reviewer  = $request->qa_reviewer;
         $incident->Facility_Equipment = $request->Facility_Equipment;
+        $incident->detail_of_root = $request->detail_of_root;
         $incident->Document_Details_Required = $request->Document_Details_Required;
 
         if ($request->incident_category == 'major' || $request->incident_category == 'minor' || $request->incident_category == 'critical') {
@@ -443,6 +446,22 @@ if ($incident->Initial_attachment) {
 
 
 
+        $newDataGridqrms = IncidentGridFailureMode::where(['incident_id' => $incident->id, 'identifier' => 'failure_mode_qrms'])->firstOrCreate();
+        $newDataGridqrms->incident_id = $incident->id;
+        $newDataGridqrms->identifier = 'failure_mode_qrms';
+        $newDataGridqrms->data = $request->failure_mode_qrms;
+        // dd($newDataGridqrms->data);
+        $newDataGridqrms->save();
+
+
+        $matrixDataGridqrms = IncidentGridFailureMode::where(['incident_id' => $incident->id, 'identifier' => 'matrix_qrms'])->firstOrCreate();
+        $matrixDataGridqrms->incident_id = $incident->id;
+        $matrixDataGridqrms->identifier = 'matrix_qrms';
+        $matrixDataGridqrms->data = $request->matrix_qrms;
+        $matrixDataGridqrms->save();
+
+
+
         $data3 = new IncidentGrid();
         $data3->incident_grid_id = $incident->id;
         $data3->type = "Incident";
@@ -636,7 +655,6 @@ if ($incident->Initial_attachment) {
                 }
             }
 
-
             $Cft->Warehouse_attachment = json_encode($files);
         }
         if (!empty ($request->Quality_Control_attachment)) {
@@ -649,7 +667,6 @@ if ($incident->Initial_attachment) {
                 }
             }
 
-
             $Cft->Quality_Control_attachment = json_encode($files);
         }
         if (!empty ($request->Quality_Assurance_attachment)) {
@@ -661,7 +678,6 @@ if ($incident->Initial_attachment) {
                     $files[] = $name;
                 }
             }
-
 
             $Cft->Quality_Assurance_attachment = json_encode($files);
         }
@@ -1120,8 +1136,12 @@ if ($incident->Initial_attachment) {
         // $why_data = IncidentGridData::where(['incident_id' => $id, 'identifier' => 'why'])->first();
         // $fishbone_data = IncidentGridData::where(['incident_id' => $id, 'identifier' => 'fishbone'])->first();
 
-        $grid_data_qrms = IncidentGridFailureMode::where(['incident_id' => $id, 'identifier' => 'failure_mode_qrms'])->first();
-        $grid_data_matrix_qrms = IncidentGridFailureMode::where(['incident_id' => $id, 'identifier' => 'matrix_qrms'])->first();
+        $jsonData = IncidentGridFailureMode::where(['incident_id' => $id, 'identifier' => 'failure_mode_qrms'])->first();
+        $grid_data_qrms = json_decode($jsonData->data, true);
+
+
+        $jsonData = IncidentGridFailureMode::where(['incident_id' => $id, 'identifier' => 'matrix_qrms'])->first();
+        $grid_data_matrix_qrms = json_decode($jsonData->data, true);
 
         $capaExtension = IncidentLaunchExtension::where(['incident_id' => $id, "extension_identifier" => "Capa"])->first();
         $qrmExtension = IncidentLaunchExtension::where(['incident_id' => $id, "extension_identifier" => "QRM"])->first();
@@ -1420,6 +1440,9 @@ if ($incident->Initial_attachment) {
             $incident->Related_Records1 =  implode(',', $request->related_records);
         }
         $incident->Facility = $request->Facility;
+        $incident->department_head = $request->department_head;
+        $incident->qa_reviewer  = $request->qa_reviewer;
+        $incident->detail_of_root = $request->detail_of_root;
 
 
         $incident->Immediate_Action = implode(',', $request->Immediate_Action);
@@ -4622,9 +4645,11 @@ if ($incident->Initial_attachment) {
             $qrmExtension = IncidentLaunchExtension::where(['incident_id' => $id, "extension_identifier" => "QRM"])->first();
             $investigationExtension = IncidentLaunchExtension::where(['incident_id' => $id, "extension_identifier" => "Investigation"])->first();
 
-            $grid_data_qrms = IncidentGridFailureMode::where(['incident_id' => $id, 'identifier' => 'failure_mode_qrms'])->first();
-            $grid_data_matrix_qrms = IncidentGridFailureMode::where(['incident_id' => $id, 'identifier' => 'matrix_qrms'])->first();
+            $json_decode = IncidentGridFailureMode::where(['incident_id' => $id, 'identifier' => 'failure_mode_qrms'])->first();
+            $grid_data_qrms =  json_decode($json_decode->data,true);
 
+            $json_decode = IncidentGridFailureMode::where(['incident_id' => $id, 'identifier' => 'matrix_qrms'])->first();
+            $grid_data_matrix_qrms = json_decode($json_decode->data,true);
             $pdf = App::make('dompdf.wrapper');
             $time = Carbon::now();
             $pdf = PDF::loadview('frontend.incident.single-report', compact('data','grid_data_qrms','grid_data_matrix_qrms','data1','capaExtension','qrmExtension','grid_data','grid_data1','investigation_data','root_cause_data','why_data','investigationExtension'))

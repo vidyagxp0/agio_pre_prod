@@ -64,6 +64,10 @@
 
             var cell9 = newRow.insertCell(8);
             cell9.innerHTML = "<input type='text'>";
+
+             let cell10 = newRow.insertCell(5);
+            cell6.innerHTML = "<button type='text' class='removeRowBtn' name='Action[]' readonly>Remove</button>";
+
             for (var i = 1; i < currentRowCount; i++) {
                 var row = table.rows[i];
                 row.cells[0].innerHTML = i;
@@ -104,6 +108,7 @@
                     }
                     html += '</select></td>' +
                         '<td><input type="text" name="remarks[]"></td>' +
+                         '<td><button type="button" class="removeRowBtn">Remove</button></td>'+
                         '</tr>';
 
                     return html;
@@ -169,6 +174,7 @@
                         // +
                         // '<td><input type="text" name="status_Observation[]"></td>' +
                         // '<td><input type="text" name="remark_observation[]"></td>' +
+                         '<td><button type="button" class="removeRowBtn">Remove</button></td>'+
                         '</tr>';
 
                     return html;
@@ -292,9 +298,9 @@
                                         </div>
                                         <div class="calenderauditee">
                                             <input type="text" id="due_date" readonly
-                                                placeholder="DD-MMM-YYYY" />
+                                                placeholder="DD-MMM-YYYY"  value="{{ Helpers::getDueDate123(null, false, 'd-M-Y') }}"  />
                                             <input type="date" name="due_date" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input"
-                                                oninput="handleDateInput(this, 'due_date')" />
+                                                oninput="handleDateInput(this, 'due_date')" value="{{ Helpers::getDueDate123(null, false, 'Y-m-d') ?? '' }}" />
                                         </div>
                                     </div>
                                 </div>
@@ -579,6 +585,7 @@
                                                     <th>Auditor</th>
                                                     <th>Auditee</th>
                                                     <th>Remarks</th>
+                                                    <th>Action</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -629,6 +636,7 @@
                                                         @endforeach
                                                     </select></td>
                                                 <td><input type="text" name="remarks[]"></td>
+                                               <td><button type="text" class="removeRowBtn">Remove</button></td>
                                             </tbody>
                                         </table>
                                     </div>
@@ -893,6 +901,7 @@
                                                         <th>CAPA Completion Date</th>
                                                         <th>Status</th>
                                                         <th>Remarks</th> --}}
+                                                          <th>Action</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
@@ -1303,6 +1312,12 @@
             document.getElementById('initiator_group_code').value = selectedValue;
         });
     </script>
+
+    <script>
+    $(document).on('click', '.removeRowBtn', function() {
+        $(this).closest('tr').remove();
+    })
+</script>
      <script>
         var maxLength = 255;
         $('#docname').keyup(function() {

@@ -177,10 +177,10 @@
                     <strong> OOS Chemical No.</strong>
                 </td>
                 <td class="w-40">
-                    {{ Helpers::divisionNameForQMS($data->division_id) }}/{{ Helpers::year($data->created_at) }}/{{ str_pad($data->record, 4, '0', STR_PAD_LEFT) }}
+                    {{ Helpers::divisionNameForQMS($data->division_id) }}/{{ Helpers::year($data->created_at) }}/{{ str_pad($data->record_number, 4, '0', STR_PAD_LEFT) }}
                 </td>
                 <td class="w-30">
-                    <strong>Record No.</strong> {{ str_pad($data->record, 4, '0', STR_PAD_LEFT) }}
+                    <strong>Record No.</strong> {{ str_pad($data->record_number, 4, '0', STR_PAD_LEFT) }}
                 </td>
             </tr>
         </table>
@@ -259,7 +259,7 @@
                     </tr>
                     <tr>
                         <th class="w-20">Due Date</th>
-                        <td class="w-30">@if($data->due_date){{  str_pad($data->due_date, 4, '0', STR_PAD_LEFT) }} @else Not Applicable @endif</td>
+                        <td class="w-30">@if($data->due_date){{ str_pad(Helpers::getdateFormat($data['due_date'] ?? ''), 4, '0', STR_PAD_LEFT) }} @else Not Applicable @endif</td>
                         <th class="w-20"> Severity Level</th>
                         <td class="w-30">@if($data->severity_level_gi){{ $data->severity_level_gi }} @else Not Applicable @endif</td>
                     </tr>
@@ -289,7 +289,10 @@
                     </tr>
                     <tr>
                         <th class="w-20">Deviation Occurred On</th>
-                        <td class="w-80">@if($data->deviation_occured_on_gi){{ $data->deviation_occured_on_gi }}@else Not Applicable @endif</td>
+                        <td class="w-80">
+                        <td class="w-30">@if($data->deviation_occured_on_gi)
+                            {{ str_pad(Helpers::getdateFormat($data['deviation_occured_on_gi'] ?? ''), 4, '0', STR_PAD_LEFT) }} @else Not Applicable @endif</td>
+                        </td>
                         <th class="w-20">Source Document Type</th>
                         <td class="w-80">@if($data->problem_description){{ $data->problem_description }}@else Not Applicable @endif</td>
                     </tr>
@@ -356,8 +359,8 @@
                             <td class="w-15">{{ $datagridI['info_product_code'] ?  $datagridI['info_product_code']: "Not Applicable"}}</td>
 
                             <td class="w-15">{{ $datagridI['info_batch_no'] ?  $datagridI['info_batch_no']: "Not Applicable"}}</td>
-                            <td class="w-15">{{ $datagridI['info_mfg_date'] ?  $datagridI['info_mfg_date']: "Not Applicable"}}</td>
-                            <td class="w-15">{{ $datagridI['info_expiry_date'] ?  $datagridI['info_expiry_date']: "Not Applicable"}}</td>
+                            <td class="w-15">{{ $datagridI['info_mfg_date'] ?  Helpers::getdateFormat($datagridI['info_mfg_date'] ?? ''): "Not Applicable" }}</td>
+                            <td class="w-15">{{ $datagridI['info_expiry_date'] ?  Helpers::getdateFormat($datagridI['info_expiry_date'] ?? ''): "Not Applicable" }}</td>
                             <td class="w-15">{{ $datagridI['info_label_claim'] ?  $datagridI['info_label_claim']: "Not Applicable"}}</td>
                             <td class="w-15">{{ $datagridI['info_pack_size'] ?  $datagridI['info_pack_size']: "Not Applicable"}}</td>
                         </tr>
@@ -492,7 +495,6 @@
                                 <th style="width: 16%">Specification Limit</th>
                                 <th style="width: 16%">Details of Obvious Error</th>
                                 <!-- <th style="width: 16%">File Attachment</th> -->
-                                <th style="width: 16%">Submit By</th>
                                 <th style="width: 16%">Submit On</th>
                         </tr>
                         @if(($data->oos_details) && is_array($data->oos_details->data))
@@ -504,8 +506,9 @@
                             <td class="w-15">{{ $datagridIII['oos_results_obtained'] ?  $datagridIII['oos_results_obtained']: "Not Applicable"}}</td>
                             <td class="w-15">{{ $datagridIII['oos_specification_limit'] ?  $datagridIII['oos_specification_limit']: "Not Applicable"}}</td>
                             <td class="w-15">{{ $datagridIII['oos_details_obvious_error'] ?  $datagridIII['oos_details_obvious_error']: "Not Applicable"}}</td>
-                            <td class="w-15">{{ $datagridIII['oos_submit_by'] ?  $datagridIII['oos_submit_by']: "Not Applicable"}}</td>
-                            <td class="w-15">{{ $datagridIII['oos_submit_on'] ?  $datagridIII['oos_submit_on']: "Not Applicable"}}</td>
+                            <td class="w-15">
+                            {{ $datagridIII['oos_submit_on'] ?  Helpers::getdateFormat($datagridIII['oos_submit_on'] ?? ''): "Not Applicable" }}
+                            </td>
                         </tr>
                         @endforeach
                         @else
@@ -678,25 +681,26 @@
                         <tr class="table_bg">
                             <th style="width: 4%">Row#</th>
                             <th style="width: 30%">OOS Number</th>
-                            <th style="width: 30%"> OOS Reported Date</th>
                             <th style="width: 40%">Description of OOS</th>
                             <th style="width: 20%">Previous OOS Root Cause</th>
                             <th style="width: 20%"> CAPA</th>
+                            <th style="width: 30%"> OOS Reported Date</th>
                             <th style="width: 20% pt-3">Closure Date of CAPA</th>
-                            <th style="width: 16%">Reference CAPA Number</th>
                         </tr>
                         @if(($oos_capas) && is_array($oos_capas->data))
                             @foreach ($oos_capas->data as $key => $datagridIV)
                             <tr>
                                 <td class="w-10">{{ $datagridIV ? $key + 1  : "Not Applicable" }}</td>
                                 <td class="w-10">{{ $datagridIV['info_oos_number'] ?  $datagridIV['info_oos_number']: "Not Applicable"}}</td>
-                                <td class="w-30">{{ $datagridIV['info_oos_reported_date'] ?  $datagridIV['info_oos_reported_date']: "Not Applicable"}}</td>
                                 <td class="w-40">{{ $datagridIV['info_oos_description'] ?  $datagridIV['info_oos_description']: "Not Applicable"}}</td>
                                 <td class="w-0">{{ $datagridIV['info_oos_previous_root_cause'] ?  $datagridIV['info_oos_previous_root_cause']: "Not Applicable"}}</td>
                                 <td class="w-8">{{ $datagridIV['info_oos_capa'] ?  $datagridIV['info_oos_capa']: "Not Applicable"}}</td>
-                                <td class="w-10">{{ $datagridIV['info_oos_closure_date'] ?  $datagridIV['info_oos_closure_date']: "Not Applicable"}}</td>
-                                <td class="w-8">{{ $datagridIV['info_oos_capa_reference_number'] ?  $datagridIV['info_oos_capa_reference_number']: "Not Applicable"}}</td>
-                           
+                                <td class="w-30">
+                                  {{ $datagridIV['info_oos_reported_date'] ?  Helpers::getdateFormat($datagridIV['info_oos_reported_date'] ?? ''): "Not Applicable" }}
+                                </td>
+                                <td class="w-10">
+                                {{ $datagridIV['info_oos_closure_date'] ?  Helpers::getdateFormat($datagridIV['info_oos_closure_date'] ?? ''): "Not Applicable" }}
+                                </td>
                             </tr>
                             @endforeach
                         @else
@@ -718,12 +722,15 @@
                         <tr class="table_bg">
                             <th style="width: 4%">Row#</th>
                             <th style="width: 14%">CAPA Requirement</th>
+                            <th style="width: 14%">CAPA Reference Number</th>
                         </tr>
                         @if ($oos_capas)
                            @foreach ($oos_capas->data as $key => $datagridV)
                             <tr>
                                 <td class="w-2">{{ $datagridIV ? $key + 1  : "Not Applicable" }}</td>
                                 <td class="w-8">{{ $datagridV['info_oos_capa_requirement'] ?  $datagridV['info_oos_capa_requirement']: "Not Applicable"}}</td>
+                               <td class="w-8">{{ $datagridIV['info_oos_capa_reference_number'] ?  $datagridIV['info_oos_capa_reference_number']: "Not Applicable"}}</td>
+                           
                             </tr>
                             @endforeach
                         @else

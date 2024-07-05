@@ -336,7 +336,9 @@ Route::group(['prefix' => 'rcms'], function () {
                 Route::post('cancel_stage/{id}', [OOSController::class, 'cancel_stage'])->name('cancel_stage');;
                 Route::post('thirdStage/{id}', [OOSController::class, 'stageChange'])->name('thirdStage');
                 Route::post('reject_stage/{id}', [OOSController::class, 'reject_stage'])->name('reject_stage');
-                Route::post('capa_child/{id}', [CapaController::class, 'child_change_control'])->name('capa_child_changecontrol');
+                Route::get('capa', [CapaController::class, 'capa'])->name('capa');
+                Route::post('child/{id}', [OOSController::class, 'child'])->name('child');
+    
                 
                 Route::get('AuditTrial/{id}', [OOSController::class, 'AuditTrial'])->name('audit_trial');
                 Route::get('auditDetails/{id}', [OOSController::class, 'auditDetails'])->name('audit_details');
@@ -344,6 +346,7 @@ Route::group(['prefix' => 'rcms'], function () {
                 Route::get('single_report/{id}', [OOSController::class, 'singleReport'])->name('single_report');
     
             });
+    
 
             /** 
              * oos micro
@@ -351,23 +354,23 @@ Route::group(['prefix' => 'rcms'], function () {
 
             Route::group(['prefix' => 'oos_micro', 'as' => 'oos_micro.'], function() {
 
-                    Route::get('/', [OOSMicroController::class, 'index'])->name('index');
-                    Route::post('/store', [OOSMicroController::class, 'store'])->name('store');
-                    Route::get('edit/{id}',[OOSMicroController::class, 'edit'])->name('edit');
-                    Route::post('update/{id}',[OOSMicroController::class, 'update'])->name('update');
-                    Route::post('sendstage/{id}',[OOSMicroController::class,'send_stage'])->name('send_stage');
-                    Route::post('requestmoreinfo_back_stage/{id}',[OOSMicroController::class,'requestmoreinfo_back_stage'])->name('requestmoreinfo_back_stage');
-                    Route::post('child/{id}', [OOSMicroController::class, 'child'])->name('child');
-                    Route::post('assignable_send_stage/{id}',[OOSMicroController::class,'assignable_send_stage'])->name('assignable_send_stage');
-                    Route::post('cancel_stage/{id}', [OOSMicroController::class, 'cancel_stage'])->name('cancel_stage');;
-                    Route::post('thirdStage/{id}', [OOSMicroController::class, 'stageChange'])->name('thirdStage');
-                    Route::post('reject_stage/{id}', [OOSMicroController::class, 'reject_stage'])->name('reject_stage');
-                    
-                    Route::get('AuditTrial/{id}', [OOSMicroController::class, 'AuditTrial'])->name('audit_trial');
-                    Route::get('auditDetails/{id}', [OOSMicroController::class, 'auditDetails'])->name('audit_details');
-                    Route::get('audit_report/{id}', [OOSMicroController::class, 'auditReport'])->name('audit_report');
-                    Route::get('single_report/{id}', [OOSMicroController::class, 'singleReport'])->name('single_report');
-                    
+                Route::get('/', [OOSMicroController::class, 'index'])->name('index');
+                Route::post('/store', [OOSMicroController::class, 'store'])->name('store');
+                Route::get('edit/{id}',[OOSMicroController::class, 'edit'])->name('edit');
+                Route::post('update/{id}',[OOSMicroController::class, 'update'])->name('update');
+                Route::post('sendstage/{id}',[OOSMicroController::class,'send_stage'])->name('send_stage');
+                Route::post('requestmoreinfo_back_stage/{id}',[OOSMicroController::class,'requestmoreinfo_back_stage'])->name('requestmoreinfo_back_stage');
+                Route::post('child/{id}', [OOSMicroController::class, 'child'])->name('child');
+                Route::post('assignable_send_stage/{id}',[OOSMicroController::class,'assignable_send_stage'])->name('assignable_send_stage');
+                Route::post('cancel_stage/{id}', [OOSMicroController::class, 'cancel_stage'])->name('cancel_stage');;
+                Route::post('thirdStage/{id}', [OOSMicroController::class, 'stageChange'])->name('thirdStage');
+                Route::post('reject_stage/{id}', [OOSMicroController::class, 'reject_stage'])->name('reject_stage');
+                
+                Route::get('AuditTrial/{id}', [OOSMicroController::class, 'AuditTrial'])->name('audit_trial');
+                Route::get('auditDetails/{id}', [OOSMicroController::class, 'auditDetails'])->name('audit_details');
+                Route::get('audit_report/{id}', [OOSMicroController::class, 'auditReport'])->name('audit_report');
+                Route::get('single_report/{id}', [OOSMicroController::class, 'singleReport'])->name('single_report');
+           
             });
 
             /**

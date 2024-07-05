@@ -37,12 +37,11 @@ class OOSMicroController extends Controller
         
         if ($division) {
             $last_oos = OOS_micro::where('division_id', $division->id)->latest()->first();
-            if ($last_oos) {
-                $record_number = $last_oos->record ? str_pad($last_oos->record + 1, 4, '0', STR_PAD_LEFT) : '0001';
-                
-            } else {
-                $record_number = '0001';
-            }
+                if ($last_oos) {
+                    $record_number = $last_oos->record ? str_pad($last_oos->record + 1, 4, '0', STR_PAD_LEFT) : '0001';
+                } else {
+                    $record_number = '0001';
+                }
         }
 
         $currentDate = Carbon::now();
@@ -54,6 +53,7 @@ class OOSMicroController extends Controller
 
      public function store(Request $request){
         $micro = $request->all();
+        
         $file_input_names = [
             'initial_attachment_gi',
             'file_attachments_pli',
@@ -170,6 +170,9 @@ class OOSMicroController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $request->status;
+            $history->change_to =   "Opened";
+            $history->change_from = "Initiation";
+            $history->action_name = 'Create';
             $history->save();
         }
         if (!empty($request->due_date)) {
@@ -183,6 +186,9 @@ class OOSMicroController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $request->status;
+            $history->change_to =   "Opened";
+            $history->change_from = "Initiation";
+            $history->action_name = 'Create';
             $history->save();
         }
         
@@ -197,6 +203,9 @@ class OOSMicroController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $request->status;
+            $history->change_to =   "Opened";
+            $history->change_from = "Initiation";
+            $history->action_name = 'Create';
             $history->save();
 
         }
@@ -211,6 +220,9 @@ class OOSMicroController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $request->status;
+            $history->change_to =   "Opened";
+            $history->change_from = "Initiation";
+            $history->action_name = 'Create';
             $history->save();
         }
         if(!empty($request->initiator_group_code_gi)){
@@ -224,6 +236,9 @@ class OOSMicroController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $request->status;
+            $history->change_to =   "Opened";
+            $history->change_from = "Initiation";
+            $history->action_name = 'Create';
             $history->save();
 
         }
@@ -238,6 +253,9 @@ class OOSMicroController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $request->status;
+            $history->change_to =   "Opened";
+            $history->change_from = "Initiation";
+            $history->action_name = 'Create';
             $history->save();
 
         }
@@ -252,6 +270,9 @@ class OOSMicroController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $request->status;
+             $history->change_to =   "Opened";
+            $history->change_from = "Initiation";
+            $history->action_name = 'Create';
             $history->save();
 
         } 
@@ -266,6 +287,9 @@ class OOSMicroController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $request->status;
+             $history->change_to =   "Opened";
+            $history->change_from = "Initiation";
+            $history->action_name = 'Create';
             $history->save();
 
         } 
@@ -280,6 +304,9 @@ class OOSMicroController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $request->status;
+             $history->change_to =   "Opened";
+            $history->change_from = "Initiation";
+            $history->action_name = 'Create';
             $history->save();
 
         } 
@@ -294,6 +321,9 @@ class OOSMicroController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $request->status;
+             $history->change_to =   "Opened";
+            $history->change_from = "Initiation";
+            $history->action_name = 'Create';
             $history->save();
 
         }
@@ -308,6 +338,9 @@ class OOSMicroController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $request->status;
+             $history->change_to =   "Opened";
+            $history->change_from = "Initiation";
+            $history->action_name = 'Create';
             $history->save();
         }
        
@@ -322,6 +355,9 @@ class OOSMicroController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $request->status;
+            $history->change_to =   "Opened";
+            $history->change_from = "Initiation";
+            $history->action_name = 'Create';
             $history->save();
         }
         if (!empty($request->product_material_name_gi)) {
@@ -335,6 +371,9 @@ class OOSMicroController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $request->status;
+             $history->change_to =   "Opened";
+            $history->change_from = "Initiation";
+            $history->action_name = 'Create';
             $history->save();
         }
         if (!empty($request->market_gi)) {
@@ -348,6 +387,9 @@ class OOSMicroController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $request->status;
+             $history->change_to =   "Opened";
+            $history->change_from = "Initiation";
+            $history->action_name = 'Create';
             $history->save();
         }
         if (!empty($request->customer_gi)) {
@@ -361,6 +403,9 @@ class OOSMicroController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $request->status;
+            $history->change_to =   "Opened";
+            $history->change_from = "Initiation";
+            $history->action_name = 'Create';
             $history->save();
         }
         // TapII
@@ -375,7 +420,7 @@ class OOSMicroController extends Controller
             $history->origin_state = $OOSmicro->status;
             $history->stage = $OOSmicro->stage;
             $history->change_to =   "Opened";
-            $history->change_from = "Initiator";
+            $history->change_from = "Initiation";
             $history->action_name = 'Create';
             $history->activity_type = 'Comments Plidata';
             $history->current = $OOSmicro->Comments_plidata;
@@ -392,7 +437,7 @@ class OOSMicroController extends Controller
             $history->origin_state = $OOSmicro->status;
             $history->stage = $OOSmicro->stage;
             $history->change_to =   "Opened";
-            $history->change_from = "Initiator";
+            $history->change_from = "'Initiation";
             $history->action_name = 'Create';
             $history->activity_type = 'Justify If No Field Alert Pli';
             $history->current = $OOSmicro->justify_if_no_field_alert_pli;
@@ -409,7 +454,7 @@ class OOSMicroController extends Controller
             $history->origin_state = $OOSmicro->status;
             $history->stage = $OOSmicro->stage;
             $history->change_to =   "Opened";
-            $history->change_from = "Initiator";
+            $history->change_from = "'Initiation";
             $history->action_name = 'Create';
             $history->activity_type = 'Justify if no Analyst Int';
             $history->current = $request->justify_if_no_analyst_int_pli;
@@ -426,7 +471,7 @@ class OOSMicroController extends Controller
             $history->origin_state = $OOSmicro->status;
             $history->stage = $OOSmicro->stage;
             $history->change_to =   "Opened";
-            $history->change_from = "Initiator";
+            $history->change_from = "Initiation";
             $history->action_name = 'Create';
             $history->activity_type = 'Phase I Investigation';
             $history->current = $request->phase_i_investigation_pli;
@@ -445,7 +490,7 @@ class OOSMicroController extends Controller
             $history->origin_state = $OOSmicro->status;
             $history->stage = $OOSmicro->stage;
             $history->change_to =   "Opened";
-            $history->change_from = "Initiator";
+            $history->change_from = "Initiation";
             $history->action_name = 'Create';
             $history->activity_type = 'Summary of Preliminary Investigation';
             $history->current = $request->summary_of_prelim_investiga_plic;
@@ -462,7 +507,7 @@ class OOSMicroController extends Controller
             $history->origin_state = $OOSmicro->status;
             $history->stage = $OOSmicro->stage;
             $history->change_to =   "Opened";
-            $history->change_from = "Initiator";
+            $history->change_from = "Initiation";
             $history->action_name = 'Create';
             $history->activity_type = 'Root Cause Identified';
             $history->current = $request->root_cause_identified_plic;
@@ -479,7 +524,7 @@ class OOSMicroController extends Controller
             $history->origin_state = $OOSmicro->status;
             $history->stage = $OOSmicro->stage;
             $history->change_to =   "Opened";
-            $history->change_from = "Initiator";
+            $history->change_from = "Initiation";
             $history->action_name = 'Create';
             $history->activity_type = 'OOS Category-Root Cause Ident';
             $history->current = $request->oos_category_root_cause_ident_plic;
@@ -496,7 +541,7 @@ class OOSMicroController extends Controller
             $history->origin_state = $OOSmicro->status;
             $history->stage = $OOSmicro->stage;
             $history->change_to =   "Opened";
-            $history->change_from = "Initiator";
+            $history->change_from = "Initiation";
             $history->action_name = 'Create';
             $history->activity_type = 'OOS Category Others';
             $history->current = $request->root_cause_details_plic;
@@ -513,7 +558,7 @@ class OOSMicroController extends Controller
             $history->origin_state = $OOSmicro->status;
             $history->stage = $OOSmicro->stage;
             $history->change_to =   "Opened";
-            $history->change_from = "Initiator";
+            $history->change_from = "Initiation";
             $history->action_name = 'Create';
             $history->activity_type = 'Root Cause Details';
             $history->current = $request->oos_category_others_plic;
@@ -530,7 +575,7 @@ class OOSMicroController extends Controller
             $history->origin_state = $OOSmicro->status;
             $history->stage = $OOSmicro->stage;
             $history->change_to =   "Opened";
-            $history->change_from = "Initiator";
+            $history->change_from = "Initiation";
             $history->action_name = 'Create';
             $history->activity_type = 'OOS Category-Root Cause Ident';
             $history->current = $request->oos_category_others_plic;
@@ -547,7 +592,7 @@ class OOSMicroController extends Controller
             $history->origin_state = $OOSmicro->status;
             $history->stage = $OOSmicro->stage;
             $history->change_to =   "Opened";
-            $history->change_from = "Initiator";
+            $history->change_from = "Initiation";
             $history->action_name = 'Create';
             $history->activity_type = 'CAPA Required';
             $history->current = $request->capa_required_plic;
@@ -564,7 +609,7 @@ class OOSMicroController extends Controller
             $history->origin_state = $OOSmicro->status;
             $history->stage = $OOSmicro->stage;
             $history->change_to =   "Opened";
-            $history->change_from = "Initiator";
+            $history->change_from = "Initiation";
             $history->action_name = 'Create';
             $history->activity_type = 'Reference CAPA No';
             $history->current = $request->reference_capa_no_plic;
@@ -581,7 +626,7 @@ class OOSMicroController extends Controller
             $history->origin_state = $OOSmicro->status;
             $history->stage = $OOSmicro->stage;
             $history->change_to =   "Opened";
-            $history->change_from = "Initiator";
+            $history->change_from = "Initiation";
             $history->action_name = 'Create';
             $history->activity_type = 'Delay Justification for Preliminary Investigation';
             $history->current = $request->delay_justification_for_pi_plic;
@@ -599,7 +644,7 @@ class OOSMicroController extends Controller
             $history->origin_state = $OOSmicro->status;
             $history->stage = $OOSmicro->stage;
             $history->change_to =   "Opened";
-            $history->change_from = "Initiator";
+            $history->change_from = "Initiation";
             $history->action_name = 'Create';
             $history->activity_type = 'Review Comments';
             $history->current = $request->review_comments_plir;
@@ -609,17 +654,17 @@ class OOSMicroController extends Controller
             $history = new OOSmicroAuditTrail();
             $history->OOS_micro_id = $OOSmicro->id;
             $history->previous = "Null";
+            $history->activity_type = 'Phase II Inv. Required';
+            $history->current = $request->phase_ii_inv_required_plir;
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $OOSmicro->status;
-            $history->stage = $OOSmicro->stage;
+            // $history->stage = $OOSmicro->stage;
+            $history->change_from = "Initiation";
             $history->change_to =   "Opened";
-            $history->change_from = "Initiator";
             $history->action_name = 'Create';
-            $history->activity_type = 'Phase II Inv. Required';
-            $history->current = $request->phase_ii_inv_required_plir;
             $history->save();
         }
        
@@ -694,11 +739,8 @@ class OOSMicroController extends Controller
             
             }
 
-             
-
      //---------------------Audit Trail Update-------------------------------/////////////////
      $lastDocument = OOS_micro::find($id);
-     
 
      $general_information = [
         'description_gi' => 'Short Description',
@@ -738,8 +780,12 @@ class OOSMicroController extends Controller
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastDocument->status;
             $history->change_from = $lastDocument->status;
-            $history->change_to = $lastDocument->status;
-            $history->action_name = 'Update';
+            $history->change_to =  "Not Applicable";
+            if (is_null($lastValue) || $lastValue === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
             $history->save();
         }
     }
@@ -770,8 +816,12 @@ foreach ($Preliminary_Lab_Investigation as $key => $value){
         $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
         $history->origin_state = $lastDocument->status;
         $history->change_from = $lastDocument->status;
-        $history->change_to =   $lastDocument->status;
-        $history->action_name = 'Update';
+        $history->change_to =  "Not Applicable";
+        if (is_null($lastValue) || $lastValue === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
         $history->save();
     }
 }
@@ -800,8 +850,12 @@ foreach($Preliminary_Lab_Investigation_Conclusion as $key => $value){
         $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
         $history->origin_state = $lastDocument->status;
         $history->change_from = $lastDocument->status;
-        $history->change_to =   $lastDocument->status;
-        $history->action_name = 'Update';
+        $history->change_to =  "Not Applicable";
+        if (is_null($lastValue) || $lastValue === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
         $history->save();
     }
 }
@@ -826,8 +880,12 @@ if($lastDocument->$key != $request->$key){
     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
     $history->origin_state = $lastDocument->status;
     $history->change_from = $lastDocument->status;
-    $history->change_to =   $lastDocument->status;
-    $history->action_name = 'Update';
+    $history->change_to =  "Not Applicable";
+    if (is_null($lastValue) || $lastValue === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
     $history->save();
 }
 }
@@ -858,8 +916,12 @@ if($lastDocument->$key != $request->$key){
     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
     $history->origin_state = $lastDocument->status;
     $history->change_from = $lastDocument->status;
-    $history->change_to =   $lastDocument->status;
-    $history->action_name = 'Update';
+    $history->change_to =  "Not Applicable";
+    if (is_null($lastValue) || $lastValue === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
     $history->save();
 }
 }
@@ -894,8 +956,12 @@ if($lastDocument->$key != $request->$key){
     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
     $history->origin_state = $lastDocument->status;
     $history->change_from = $lastDocument->status;
-    $history->change_to =   $lastDocument->status;
-    $history->action_name = 'Update';
+    $history->change_to =  "Not Applicable";
+    if (is_null($lastValue) || $lastValue === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
     $history->save();
 }
 }
@@ -923,8 +989,12 @@ if($lastDocument->$key != $request->$key){
     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
     $history->origin_state = $lastDocument->status;
     $history->change_from = $lastDocument->status;
-    $history->change_to =   $lastDocument->status;
-    $history->action_name = 'Update';
+    $history->change_to =  "Not Applicable";
+    if (is_null($lastValue) || $lastValue === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
     $history->save();
 }
 }
@@ -957,8 +1027,12 @@ if($lastDocument->$key != $request->$key){
     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
     $history->origin_state = $lastDocument->status;
         $history->change_from = $lastDocument->status;
-        $history->change_to =   $lastDocument->status;
-        $history->action_name = 'Update';
+        $history->change_to =  "Not Applicable";
+        if (is_null($lastValue) || $lastValue === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
     $history->save();
 }
 }
@@ -992,8 +1066,12 @@ if($lastDocument->$key != $request->$key){
     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
     $history->origin_state = $lastDocument->status;
         $history->change_from = $lastDocument->status;
-        $history->change_to =   $lastDocument->status;
-        $history->action_name = 'Update';
+        $history->change_to =  "Not Applicable";
+        if (is_null($lastValue) || $lastValue === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
     $history->save();
 }
 }
@@ -1020,8 +1098,12 @@ if($lastDocument->$key != $request->$key){
     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
     $history->origin_state = $lastDocument->status;
     $history->change_from = $lastDocument->status;
-    $history->change_to =   $lastDocument->status;
-    $history->action_name = 'Update';
+    $history->change_to =  "Not Applicable";
+    if (is_null($lastValue) || $lastValue === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
     $history->save();
 }
 }
@@ -1061,14 +1143,19 @@ if($lastDocument->$key != $request->$key){
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastDocument->status;
             $history->change_from = $lastDocument->status;
-            $history->change_to =   $lastDocument->status;
-            $history->action_name = 'Update';
+            $history->change_to =  "Not Applicable";
+            if (is_null($lastValue) || $lastValue === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
             $history->save();
         }
     }
 
 
     // =========================== Audit Trail Update ===============================// 
+    
     // Find the OOS micro record by ID
         $micro->update($input);
         $micro = OOS_micro::with('grids')->find($id);  
@@ -1303,6 +1390,29 @@ if($lastDocument->$key != $request->$key){
                     $history->action = 'No Assignable Cause Found (No Manufacturing Defect)';
                     $history->change_from = $lastDocument->status;
                     $history->change_to =   "Under phase II b Additional Lab Investigation";
+                    $history->action_name = 'Update';
+                    $history->save();
+                $changestage->update();
+                toastr()->success('Document Sent');
+                return back();
+            }
+            if ($changestage->stage == 10) {
+                $changestage->stage = "13";
+                $changestage->status = "Pending Final Approval";
+                $changestage->completed_by_under_batch_disposition= Auth::user()->name;
+                $changestage->completed_on_under_batch_disposition = Carbon::now()->format('d-M-Y');
+                $changestage->comment_under_batch_disposition = $request->comment;
+                    $history = new OOSmicroAuditTrail();
+                    $history->oos_micro_id = $id;
+                    $history->activity_type = 'Activity Log';
+                    $history->comment = $request->comment;
+                    $history->user_id = Auth::user()->id;
+                    $history->user_name = Auth::user()->name;
+                    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                    $history->origin_state = $lastDocument->status;
+                    $history->action = 'Correction Complete';
+                    $history->change_from = $lastDocument->status;
+                    $history->change_to =   "Pending Final Approval";
                     $history->action_name = 'Update';
                     $history->save();
                 $changestage->update();
@@ -1771,7 +1881,6 @@ if($lastDocument->$key != $request->$key){
                 toastr()->success('Document Sent');
                 return back();
             }
-
             if ($changestage->stage == 11) {
                 $changestage->stage = "12";
                 $changestage->status = "Under Batch Disposition";
@@ -1862,7 +1971,7 @@ if($lastDocument->$key != $request->$key){
         $parent_id = $id;
         $parent_type = "Audit_Program";
         $record_number = ((RecordNumber::first()->value('counter')) + 1);
-        $record_number = str_pad($record_number, 4, '0', STR_PAD_LEFT);
+        $record = str_pad($record_number, 4, '0', STR_PAD_LEFT);
         $currentDate = Carbon::now();
         $formattedDate = $currentDate->addDays(30);
         $due_date = $formattedDate->format('d-M-Y');
@@ -1880,27 +1989,27 @@ if($lastDocument->$key != $request->$key){
         if ($request->child_type == "capa") {
             $parent_name = "CAPA";
             $Capachild = OOS_MICRO::find($id);
-            $Capachild->Capachild = $record_number;
+            $Capachild->Capachild = $record;
             $Capachild->save();
 
-            return view('frontend.forms.capa', compact('parent_id', 'parent_record','parent_type', 'record_number', 'due_date', 'parent_short_description', 'parent_initiator_id', 'parent_intiation_date', 'parent_name', 'parent_division_id', 'parent_record', 'old_record', 'cft'));
+            return view('frontend.forms.capa', compact('parent_id', 'parent_record','parent_type', 'record', 'due_date', 'parent_short_description', 'parent_initiator_id', 'parent_intiation_date', 'parent_name', 'parent_division_id', 'parent_record', 'old_record', 'cft'));
         } elseif ($request->child_type == "Action_Item")
          {
             $parent_name = "CAPA";
             $actionchild = OOS_MICRO::find($id);
-            $actionchild->actionchild = $record_number;
+            $actionchild->actionchild = $record;
             $parent_id = $id;
             $actionchild->save();
 
             return view('frontend.action-item.action-item', compact('parent_short_description', 'parent_initiator_id', 'parent_intiation_date', 'parent_name', 'parent_division_id',
-             'parent_record', 'record_number', 'due_date', 'parent_id', 'parent_type', 'old_record'));
+             'parent_record', 'record', 'due_date', 'parent_id', 'parent_type', 'old_record'));
         }
         else {
             $parent_name = "Root";
             $Rootchild = OOS_MICRO::find($id);
-            $Rootchild->Rootchild = $record_number;
+            $Rootchild->Rootchild = $record;
             $Rootchild->save();
-            return view('frontend.forms.root-cause-analysis', compact('parent_id', 'parent_record','parent_type', 'record_number', 'due_date', 'parent_short_description', 'parent_initiator_id', 'parent_intiation_date', 'parent_name', 'parent_division_id', 'parent_record'));
+            return view('frontend.forms.root-cause-analysis', compact('parent_id', 'parent_record','parent_type', 'record', 'due_date', 'parent_short_description', 'parent_initiator_id', 'parent_intiation_date', 'parent_name', 'parent_division_id', 'parent_record'));
         }
     }
 // ================= close workflow ===================
@@ -1965,8 +2074,7 @@ if($lastDocument->$key != $request->$key){
             $data->originator = User::where('id', $data->initiator_id)->value('name');
             $pdf = App::make('dompdf.wrapper');
             $time = Carbon::now();
-        // dd($data);
-            $pdf = PDF::loadview('frontend.OOS_Micro.comps_micro.singleReport', 
+           $pdf = PDF::loadview('frontend.OOS_Micro.comps_micro.singleReport', 
             compact('data','checklist_lab_invs','phase_two_invs','oos_capas','oos_conclusions','oos_conclusion_reviews'))
                            ->setOptions([
                     'defaultFont' => 'sans-serif',

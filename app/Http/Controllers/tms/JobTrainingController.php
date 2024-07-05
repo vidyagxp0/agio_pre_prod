@@ -1,37 +1,43 @@
 <?php
 
 namespace App\Http\Controllers\tms;
+
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\JobTraining;
 use App\Models\Department;
+use App\Models\JobTrainingAudit;
+use App\Models\RoleGroup;
 use App\Models\User;
+use Carbon\Carbon;
 use DB;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 
 class JobTrainingController extends Controller
 {
-    
+
     public function index()
     {
         $jobTraining = JobTraining::all();
         return view('frontend.TMS.Job_Training.job_training', compact('jobTraining'));
     }
 
-   
+
 
     public function store(Request $request)
     {
-       
+
         $jobTraining = new JobTraining();
 
+        $jobTraining->stage = '1';
+        $jobTraining->status = 'Opened';
         $jobTraining->name = $request->input('name');
         $jobTraining->department = $request->input('department');
         $jobTraining->location = $request->input('location');
 
-        // $jobTraining->startdate = $request->input('startdate');
-        // $jobTraining->enddate = $request->input('enddate');
         $jobTraining->hod = $request->input('hod');
-       
+
         for ($i = 1; $i <= 5; $i++) {
             $jobTraining->{"subject_$i"} = $request->input("subject_$i");
             $jobTraining->{"type_of_training_$i"} = $request->input("type_of_training_$i");
@@ -42,37 +48,105 @@ class JobTrainingController extends Controller
             $jobTraining->{"startdate_$i"} = $request->input("startdate_$i");
             $jobTraining->{"enddate_$i"} = $request->input("enddate_$i");
         }
-// dd($jobTraining->trainer_);
         $jobTraining->save();
 
-       
-        // Add other fields as necessary
 
-       
+        if (!empty($request->name)) {
+            $validation2 = new JobTrainingAudit();
+            $validation2->job_id = $jobTraining->id;
+            $validation2->previous = "Null";
+            $validation2->current = $request->name;
+            $validation2->activity_type = 'Name';
+            $validation2->user_id = Auth::user()->id;
+            $validation2->user_name = Auth::user()->name;
+            $validation2->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+
+            $validation2->change_to =   "Opened";
+            $validation2->change_from = "Initiation";
+            $validation2->action_name = 'Create';
+            $validation2->save();
+        }
+
+
+        if (!empty($request->department)) {
+            $validation2 = new JobTrainingAudit();
+            $validation2->job_id = $jobTraining->id;
+            $validation2->activity_type = 'Department';
+            $validation2->previous = "Null";
+            $validation2->current = $request->department;
+            $validation2->comment = "NA";
+            $validation2->user_id = Auth::user()->id;
+            $validation2->user_name = Auth::user()->name;
+            $validation2->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+
+            $validation2->change_to =   "Opened";
+            $validation2->change_from = "Initiation";
+            $validation2->action_name = 'Create';
+            $validation2->save();
+        }
+
+        if (!empty($request->location)) {
+            $validation2 = new JobTrainingAudit();
+            $validation2->job_id = $jobTraining->id;
+            $validation2->activity_type = 'Location';
+            $validation2->previous = "Null";
+            $validation2->current = $request->location;
+            $validation2->comment = "NA";
+            $validation2->user_id = Auth::user()->id;
+            $validation2->user_name = Auth::user()->name;
+            $validation2->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+
+            $validation2->change_to =   "Opened";
+            $validation2->change_from = "Initiation";
+            $validation2->action_name = 'Create';
+
+            $validation2->save();
+        }
+        if (!empty($request->hod)) {
+            $validation2 = new JobTrainingAudit();
+            $validation2->job_id = $jobTraining->id;
+            $validation2->activity_type = 'HOD';
+            $validation2->previous = "Null";
+            $validation2->current = $request->hod;
+            $validation2->comment = "NA";
+            $validation2->user_id = Auth::user()->id;
+            $validation2->user_name = Auth::user()->name;
+            $validation2->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+
+            $validation2->change_to =   "Opened";
+            $validation2->change_from = "Initiation";
+            $validation2->action_name = 'Create';
+
+            $validation2->save();
+        }
+
+
 
         toastr()->success('Job Training created successfully.');
-            return redirect('TMS');
+        return redirect('TMS');
         // return redirect()->route('TMS')->with('success', '');
     }
 
 
-  public function edit($id){
-    
-    $jobTraining = JobTraining::find($id);
-    // dd($jobTraining);
-    $departments = Department::all(); 
-    $users = User::all();
+    public function edit($id)
+    {
 
-    if (!$jobTraining) {
-        return redirect()->route('job_training.index')->with('error', 'Job Training not found');
+        $jobTraining = JobTraining::find($id);
+        // dd($jobTraining);
+        $departments = Department::all();
+        $users = User::all();
+
+        if (!$jobTraining) {
+            return redirect()->route('job_training.index')->with('error', 'Job Training not found');
+        }
+        return view('frontend.TMS.Job_Training.job_training_view', compact('jobTraining', 'id', 'departments', 'users'));
     }
-    return view('frontend.TMS.Job_Training.job_training_view',compact('jobTraining' ,'id','departments', 'users'));
-  }
 
     public function update(Request $request, $id)
     {
         $jobTraining = JobTraining::findOrFail($id);
-    
+        $lastDocument = JobTraining::findOrFail($id);
+
         // Update fields
         $jobTraining->name = $request->input('name');
         $jobTraining->department = $request->input('department');
@@ -80,7 +154,7 @@ class JobTrainingController extends Controller
         $jobTraining->hod = $request->input('hod');
         // $jobTraining->startdate = $request->input('startdate');
         // $jobTraining->enddate = $request->input('enddate');
-    
+
         for ($i = 1; $i <= 5; $i++) {
             $jobTraining->{"subject_$i"} = $request->input("subject_$i");
             $jobTraining->{"type_of_training_$i"} = $request->input("type_of_training_$i");
@@ -91,12 +165,139 @@ class JobTrainingController extends Controller
             $jobTraining->{"startdate_$i"} = $request->input("startdate_$i");
             $jobTraining->{"enddate_$i"} = $request->input("enddate_$i");
         }
-    
+
         $jobTraining->save();
-    
+
+        if ($lastDocument->name != $request->name) {
+            $validation2 = new JobTrainingAudit();
+            $validation2->job_id = $jobTraining->id;
+            $validation2->previous = $lastDocument->name;
+            $validation2->current = $request->name;
+            $validation2->activity_type = 'Name';
+            $validation2->user_id = Auth::user()->id;
+            $validation2->user_name = Auth::user()->name;
+            $validation2->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+
+            $validation2->change_to =   "Not Applicable";
+            $validation2->change_from = $lastDocument->status;
+            if (is_null($lastDocument->name) || $lastDocument->name === '') {
+                $validation2->action_name = 'New';
+            } else {
+                $validation2->action_name = 'Update';
+            }
+            $validation2->save();
+        }
+
+
+        if ($lastDocument->department != $request->department) {
+            $validation2 = new JobTrainingAudit();
+            $validation2->job_id = $jobTraining->id;
+            $validation2->activity_type = 'Department';
+            $validation2->previous = $lastDocument->department;
+            $validation2->current = $request->department;
+            $validation2->comment = "NA";
+            $validation2->user_id = Auth::user()->id;
+            $validation2->user_name = Auth::user()->name;
+            $validation2->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+
+            $validation2->change_to =   "Not Applicable";
+            $validation2->change_from = $lastDocument->status;
+            if (is_null($lastDocument->department) || $lastDocument->department === '') {
+                $validation2->action_name = 'New';
+            } else {
+                $validation2->action_name = 'Update';
+            }
+            $validation2->save();
+        }
+
+        if ($lastDocument->location != $request->location) {
+            $validation2 = new JobTrainingAudit();
+            $validation2->job_id = $jobTraining->id;
+            $validation2->activity_type = 'Location';
+            $validation2->previous = $lastDocument->location;
+            $validation2->current = $request->location;
+            $validation2->comment = "NA";
+            $validation2->user_id = Auth::user()->id;
+            $validation2->user_name = Auth::user()->name;
+            $validation2->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+
+            $validation2->change_to =   "Opened";
+            $validation2->change_from = $lastDocument->status;
+            if (is_null($lastDocument->location) || $lastDocument->location === '') {
+                $validation2->action_name = 'New';
+            } else {
+                $validation2->action_name = 'Update';
+            }
+
+            $validation2->save();
+        }
+        if ($lastDocument->hod != $request->hod) {
+            $validation2 = new JobTrainingAudit();
+            $validation2->job_id = $jobTraining->id;
+            $validation2->activity_type = 'HOD';
+            $validation2->previous = $lastDocument->hod;
+            $validation2->current = $request->hod;
+            $validation2->comment = "NA";
+            $validation2->user_id = Auth::user()->id;
+            $validation2->user_name = Auth::user()->name;
+            $validation2->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+
+            $validation2->change_to =   "Not Applicable";
+            $validation2->change_from = $lastDocument->status;
+            if (is_null($lastDocument->hod) || $lastDocument->hod === '') {
+                $validation2->action_name = 'New';
+            } else {
+                $validation2->action_name = 'Update';
+            }
+            $validation2->save();
+        }
+
         return redirect()->back()->with('success', 'Job Training updated successfully.');
     }
-    
 
+    public function sendStage(Request $request, $id)
+    {
+        try {
 
+            if ($request->username == Auth::user()->email && Hash::check($request->password, Auth::user()->password)) {
+                $jobTraining = JobTraining::find($id);
+                $lastjobTraining = JobTraining::find($id);
+
+                // if ($jobTraining->stage == 1) {
+                //     $jobTraining->stage = "2";
+                //     $jobTraining->status = "Active";
+                //     $jobTraining->activated_by = Auth::user()->name;
+                //     $jobTraining->activated_on = Carbon::now()->format('d-m-Y');
+                //     $jobTraining->activated_comment = $request->comment;
+                //     $jobTraining->update();
+                //     return back();
+                // }
+
+                if ($jobTraining->stage == 1) {
+                    $jobTraining->stage = "2";
+                    $jobTraining->status = "Closed-Retired";
+                    // $jobTraining->retired_by = Auth::user()->name;
+                    // $jobTraining->retired_on = Carbon::now()->format('d-m-Y');
+                    // $jobTraining->retired_comment = $request->comment;
+                    $jobTraining->update();
+                    return back();
+                }
+            }
+        } catch (\Throwable $e) {
+            return response()->json([
+                'success' => false,
+                'message' => $e->getMessage(),
+            ], 500);
+        }
+    }
+
+    public function jobAuditTrial($id)
+    {
+        $jobTraining = JobTraining::find($id);
+        $audit = JobTrainingAudit::where('job_id', $id)->orderByDESC('id')->paginate();
+        $today = Carbon::now()->format('d-m-y');
+        $document = JobTraining::where('id', $id)->first();
+        $document->Initiation = User::where('id', $document->initiator_id)->value('name');
+        return view('frontend.TMS.Job_Training.job_training_audit', compact('audit', 'document', 'today', 'jobTraining'));
+    }
 }
